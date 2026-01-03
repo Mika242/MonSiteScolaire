@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Géométrie dans l’espace – Volumes (4e) | Ton Coach Scolaire</title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --ink:#1f2937;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --accent-2:#10b981;
+  --chip:#eef2ff;
+  --card:#f8fafc;
+  --danger:#ef4444;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.55;
+}
+header{
+  padding:16px 16px 0;
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+}
+header img{
+  width:180px;
+  max-width:60%;
+  margin:8px auto 4px;
+  display:block;
+}
+header h1{
+  font-size:1.35rem;
+  margin:6px 0 12px;
+  font-weight:800;
+}
+main{
+  max-width:920px;
+  margin:0 auto;
+  padding:18px 16px 40px;
+}
+.card{
+  background:var(--card);
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:14px 16px;
+  margin:12px 0;
+}
+h2{font-size:1.1rem;margin:0 0 10px;font-weight:800}
+h3{font-size:1rem;margin:10px 0 6px;font-weight:700}
+p{margin:8px 0}
+ul{margin:6px 0 8px 18px}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:8px 0;
+}
+.chip{
+  background:var(--chip);
+  color:#1e40af;
+  border:1px solid #c7d2fe;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.86rem;
+  font-weight:600;
+}
+.grid{display:grid;gap:12px}
+@media(min-width:760px){
+  .grid.cols-2{grid-template-columns:1fr 1fr}
+}
+.formula{
+  background:#eef3f8;
+  border-left:5px solid var(--accent);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:700;
+}
+.tip{
+  background:#f0fdfa;
+  border:1px solid #ccfbf1;
+  color:#075985;
+  padding:10px 12px;
+  border-radius:10px;
+}
+.warn{
+  background:#fff1f2;
+  border:1px solid #ffe4e6;
+  color:#9f1239;
+  padding:10px 12px;
+  border-radius:10px;
+}
+.exo{
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+}
+.exo h4{margin:0 0 6px;font-size:1rem}
+.btn{
+  margin-top:8px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+.btn-prim{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.result{margin-top:6px;font-weight:700}
+.correct{color:var(--accent-2)}
+.incorrect{color:var(--danger)}
+.footer{
+  margin-top:22px;
+  font-size:.9rem;
+  color:var(--muted);
+  text-align:center;
+}
+</style>
+
+<script>
+function checkAnswer(id, correct){
+  const choices=document.getElementsByName(id);
+  let sel=null;
+  for(let c of choices){ if(c.checked) sel=c.value; }
+  const res=document.getElementById(id+"-result");
+  if(!sel){
+    res.textContent="Choisis une réponse.";
+    res.className="result incorrect";
+    return;
+  }
+  if(sel===correct){
+    res.textContent="Bonne réponse ✔";
+    res.className="result correct";
+  }else{
+    res.textContent="Mauvaise réponse ✘";
+    res.className="result incorrect";
+  }
+}
+</script>
+</head>
+
+<body>
+<header>
+  <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+  <h1>Géométrie dans l’espace – Volumes (4e)</h1>
+</header>
+
+<main>
+
+<section class="card">
+  <div class="chips">
+    <span class="chip">4e</span>
+    <span class="chip">Solides</span>
+    <span class="chip">Patrons</span>
+    <span class="chip">Volumes</span>
+  </div>
+  <p><strong>Objectif :</strong> reconnaître les solides, leurs patrons et calculer des volumes en faisant attention aux unités.</p>
+</section>
+
+<!-- 1 RAPPELS -->
+<section class="grid cols-2">
+  <div class="card">
+    <h2>1) Rappels – Solides usuels</h2>
+    <ul>
+      <li>Prisme droit : base polygonale, faces rectangles</li>
+      <li>Pyramide : base polygonale, faces triangles</li>
+      <li>Cylindre : 2 bases circulaires</li>
+      <li>Cône : 1 base circulaire et un sommet</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Formules de volume</h2>
+    <div class="formula">Prisme : V = Aire base × hauteur</div>
+    <div class="formula">Cylindre : V = π × r² × h</div>
+    <div class="formula">Pyramide : V = ⅓ × Aire base × h</div>
+    <div class="formula">Cône : V = ⅓ × π × r² × h</div>
+  </div>
+</section>
+
+<!-- 2 RECONNAITRE -->
+<section class="card">
+<h2>2) Reconnaître le solide</h2>
+
+<div class="exo">
+<h4>Description → solide</h4>
+<p>Base circulaire et un sommet.</p>
+<input type="radio" name="s1" value="A"> Cylindre<br>
+<input type="radio" name="s1" value="B"> Cône<br>
+<input type="radio" name="s1" value="C"> Pyramide<br>
+<button class="btn" onclick="checkAnswer('s1','B')">Vérifier</button>
+<div id="s1-result"></div>
+</div>
+
+<div class="exo">
+<h4>Faces du solide</h4>
+<p>Base polygonale et faces latérales triangulaires.</p>
+<input type="radio" name="s2" value="A"> Prisme droit<br>
+<input type="radio" name="s2" value="B"> Pyramide<br>
+<input type="radio" name="s2" value="C"> Cylindre<br>
+<button class="btn" onclick="checkAnswer('s2','B')">Vérifier</button>
+<div id="s2-result"></div>
+</div>
+</section>
+
+<!-- 3 PATRONS -->
+<section class="card">
+<h2>3) Patrons de solides</h2>
+
+<div class="exo">
+<h4>Reconnaître un patron</h4>
+<p>Deux cercles et un rectangle.</p>
+<input type="radio" name="p1" value="A"> Prisme droit<br>
+<input type="radio" name="p1" value="B"> Cylindre<br>
+<input type="radio" name="p1" value="C"> Cône<br>
+<button class="btn" onclick="checkAnswer('p1','B')">Vérifier</button>
+<div id="p1-result"></div>
+</div>
+
+<div class="exo">
+<h4>Vrai / Faux</h4>
+<p>Un patron de pyramide possède deux bases.</p>
+<input type="radio" name="p2" value="A"> Vrai<br>
+<input type="radio" name="p2" value="B"> Faux<br>
+<button class="btn" onclick="checkAnswer('p2','B')">Vérifier</button>
+<div id="p2-result"></div>
+</div>
+</section>
+
+<!-- 4 VOLUMES SIMPLES -->
+<section class="card">
+<h2>4) Volumes – calculs simples</h2>
+
+<!-- EXISTANT -->
+<div class="exo">
+<h4>Prisme droit</h4>
+<p>Base 5 cm × 4 cm, hauteur 6 cm.</p>
+<input type="radio" name="v1" value="A"> 120 cm³<br>
+<input type="radio" name="v1" value="B"> 60 cm³<br>
+<input type="radio" name="v1" value="C"> 240 cm³<br>
+<button class="btn" onclick="checkAnswer('v1','A')">Vérifier</button>
+<div id="v1-result"></div>
+</div>
+
+<!-- AJOUT PYRAMIDES -->
+<div class="exo">
+<h4>Pyramide</h4>
+<p>Base carrée de côté 6 cm, hauteur 9 cm.</p>
+<input type="radio" name="v2" value="A"> 324 cm³<br>
+<input type="radio" name="v2" value="B"> 108 cm³<br>
+<input type="radio" name="v2" value="C"> 72 cm³<br>
+<button class="btn" onclick="checkAnswer('v2','B')">Vérifier</button>
+<div id="v2-result"></div>
+</div>
+
+<div class="exo">
+<h4>Pyramide</h4>
+<p>Base rectangulaire 4 cm × 3 cm, hauteur 6 cm.</p>
+<input type="radio" name="v3" value="A"> 72 cm³<br>
+<input type="radio" name="v3" value="B"> 36 cm³<br>
+<input type="radio" name="v3" value="C"> 24 cm³<br>
+<button class="btn" onclick="checkAnswer('v3','C')">Vérifier</button>
+<div id="v3-result"></div>
+</div>
+
+<!-- AJOUT CÔNES -->
+<div class="exo">
+<h4>Cône</h4>
+<p>Rayon 4 cm, hauteur 6 cm.</p>
+<input type="radio" name="v4" value="A"> 32π cm³<br>
+<input type="radio" name="v4" value="B"> 48π cm³<br>
+<input type="radio" name="v4" value="C"> 64π cm³<br>
+<button class="btn" onclick="checkAnswer('v4','A')">Vérifier</button>
+<div id="v4-result"></div>
+</div>
+
+<div class="exo">
+<h4>Cône</h4>
+<p>Rayon 3 cm, hauteur 9 cm.</p>
+<input type="radio" name="v5" value="A"> 27π cm³<br>
+<input type="radio" name="v5" value="B"> 81π cm³<br>
+<input type="radio" name="v5" value="C"> 243π cm³<br>
+<button class="btn" onclick="checkAnswer('v5','A')">Vérifier</button>
+<div id="v5-result"></div>
+</div>
+</section>
+
+<section class="card">
+<h2>5) Volumes – unités mélangées</h2>
+
+<!-- EXISTANT -->
+<div class="exo">
+<h4>Prisme droit</h4>
+<p>Base 4 cm × 5 cm, hauteur 2 dm.</p>
+<input type="radio" name="u1" value="A"> 400 cm³<br>
+<input type="radio" name="u1" value="B"> 40 cm³<br>
+<input type="radio" name="u1" value="C"> 0,4 cm³<br>
+<button class="btn" onclick="checkAnswer('u1','A')">Vérifier</button>
+<div id="u1-result"></div>
+</div>
+
+<div class="exo">
+<h4>Cylindre</h4>
+<p>Rayon 2 cm, hauteur 1 dm.</p>
+<input type="radio" name="u2" value="A"> 4π cm³<br>
+<input type="radio" name="u2" value="B"> 40π cm³<br>
+<input type="radio" name="u2" value="C"> 400π cm³<br>
+<button class="btn btn-prim" onclick="checkAnswer('u2','B')">Vérifier</button>
+<div id="u2-result"></div>
+</div>
+
+<!-- AJOUT PYRAMIDES -->
+<div class="exo">
+<h4>Pyramide</h4>
+<p>Base 4 cm × 5 cm, hauteur 2 dm.</p>
+<input type="radio" name="u3" value="A"> 400 cm³<br>
+<input type="radio" name="u3" value="B"> 133,3 cm³<br>
+<input type="radio" name="u3" value="C"> 40 cm³<br>
+<button class="btn" onclick="checkAnswer('u3','B')">Vérifier</button>
+<div id="u3-result"></div>
+</div>
+
+<div class="exo">
+<h4>Pyramide</h4>
+<p>Base carrée 3 dm × 3 dm, hauteur 40 cm.</p>
+<input type="radio" name="u4" value="A"> 1200 cm³<br>
+<input type="radio" name="u4" value="B"> 3600 cm³<br>
+<input type="radio" name="u4" value="C"> 4000 cm³<br>
+<button class="btn" onclick="checkAnswer('u4','B')">Vérifier</button>
+<div id="u4-result"></div>
+</div>
+
+<!-- AJOUT CÔNES -->
+<div class="exo">
+<h4>Cône</h4>
+<p>Rayon 2 cm, hauteur 1 dm.</p>
+<input type="radio" name="u5" value="A"> 4π cm³<br>
+<input type="radio" name="u5" value="B"> 40π cm³<br>
+<input type="radio" name="u5" value="C"> 400π cm³<br>
+<button class="btn" onclick="checkAnswer('u5','B')">Vérifier</button>
+<div id="u5-result"></div>
+</div>
+
+<div class="exo">
+<h4>Cône</h4>
+<p>Rayon 1 dm, hauteur 30 cm.</p>
+<input type="radio" name="u6" value="A"> 10π cm³<br>
+<input type="radio" name="u6" value="B"> 100π cm³<br>
+<input type="radio" name="u6" value="C"> 300π cm³<br>
+<button class="btn" onclick="checkAnswer('u6','B')">Vérifier</button>
+<div id="u6-result"></div>
+</div>
+</section>
+
+<section class="card warn">
+<h2>6) Erreurs fréquentes</h2>
+<ul>
+  <li>Oublier de convertir dm en cm avant le calcul</li>
+  <li>Oublier le facteur ⅓ pour les pyramides et les cônes</li>
+  <li>Confondre rayon et diamètre</li>
+</ul>
+</section>
+
+<div class="footer">
+© Ton Coach Scolaire – Géométrie 4e • Solides & Volumes
+</div>
+
+</main>
+</body>
+</html>
