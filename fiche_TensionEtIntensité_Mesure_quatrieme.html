@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Physique 4e – Tension et Intensité : Mesures</title>
+
+<style>
+body{font-family:"Segoe UI",Arial,sans-serif;margin:0;background:#f7faff;color:#333}
+header{background:linear-gradient(90deg,#ff6f61,#ffcc70);color:#fff;text-align:center;padding:20px}
+header img{width:120px}
+h1{margin:10px 0}
+section{margin:30px auto;width:85%;max-width:900px}
+.boite{background:#fff;border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 8px rgba(0,0,0,.1)}
+h2{color:#ff6f61;margin-bottom:10px}
+ul{margin-left:20px}
+.exo{background:#f0f8ff;padding:15px;border-radius:10px;margin:15px 0}
+button{margin-top:8px;padding:6px 12px;border:none;border-radius:6px;background:#ff6f61;color:#fff;cursor:pointer}
+button:hover{background:#e05550}
+.result{margin-top:8px;font-weight:bold}
+.correct{color:green}
+.incorrect{color:red}
+select{padding:6px;margin-top:6px}
+footer{text-align:center;padding:20px;background:#ff6f61;color:#fff;margin-top:40px}
+</style>
+
+<script>
+function checkQCM(id,correct){
+  const el=document.querySelector('[name="'+id+'"]:checked')||document.getElementById(id);
+  const res=document.getElementById(id+"-res");
+  if(!el || el.value===""){
+    res.textContent="Choisis une réponse.";
+    res.className="result incorrect";
+    return;
+  }
+  if(el.value===correct){
+    res.textContent="Bonne réponse ✔";
+    res.className="result correct";
+  }else{
+    res.textContent="Mauvaise réponse ✘";
+    res.className="result incorrect";
+  }
+}
+</script>
+</head>
+
+<body>
+
+<header>
+<img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+<h1>⚡ Physique – Tension et Intensité : Mesures</h1>
+<h3>Niveau 4e</h3>
+</header>
+
+<section class="boite">
+<h2>🎯 Objectif</h2>
+<p>Savoir mesurer correctement une <strong>tension</strong> et une <strong>intensité</strong> :
+choisir le bon appareil, le bon branchement et le calibre adapté.</p>
+</section>
+
+<section class="boite">
+<h2>📚 Rappels essentiels</h2>
+<ul>
+<li><strong>Intensité (I)</strong> : ampèremètre, branchement en <strong>série</strong></li>
+<li><strong>Tension (U)</strong> : voltmètre, branchement en <strong>dérivation</strong></li>
+<li>La borne <strong>COM</strong> correspond toujours au pôle négatif</li>
+<li>Le courant va du <strong>+</strong> vers le <strong>−</strong></li>
+<li>Commencer par le <strong>plus grand calibre</strong></li>
+<li>1 A = 1000 mA</li>
+</ul>
+</section>
+
+<section class="boite">
+<h2>✍️ Exercices interactifs</h2>
+
+<!-- EXERCICE 1 -->
+<div class="exo">
+<strong>Exercice 1 – Vrai ou Faux</strong><br><br>
+
+Un ampèremètre se branche en dérivation.<br>
+<input type="radio" name="e1" value="vrai"> Vrai
+<input type="radio" name="e1" value="faux"> Faux
+<button onclick="checkQCM('e1','faux')">Vérifier</button>
+<div id="e1-res"></div>
+</div>
+
+<!-- EXERCICE 2 -->
+<div class="exo">
+<strong>Exercice 2 – Conversions (1)</strong><br><br>
+
+1200 mA =
+<select id="c1">
+<option value="">---</option>
+<option value="1.2">1,2 A</option>
+<option value="0.12">0,12 A</option>
+<option value="12">12 A</option>
+</select>
+<button onclick="checkQCM('c1','1.2')">Vérifier</button>
+<div id="c1-res"></div>
+</div>
+
+<!-- EXERCICE 3 -->
+<div class="exo">
+<strong>Exercice 3 – Conversions (2)</strong><br><br>
+
+0,08 A =
+<select id="c3">
+<option value="">---</option>
+<option value="8">8 mA</option>
+<option value="80">80 mA</option>
+<option value="800">800 mA</option>
+</select>
+<button onclick="checkQCM('c3','80')">Vérifier</button>
+<div id="c3-res"></div>
+</div>
+
+<!-- EXERCICE 4 -->
+<div class="exo">
+<strong>Exercice 4 – Borne COM et sens du courant</strong><br><br>
+
+La borne COM doit être reliée :
+<br>
+<input type="radio" name="com1" value="plus"> au pôle +
+<input type="radio" name="com1" value="moins"> au pôle −
+<button onclick="checkQCM('com1','moins')">Vérifier</button>
+<div id="com1-res"></div>
+</div>
+
+<!-- EXERCICE 5 ENRICHI -->
+<div class="exo">
+<strong>Exercice 5 – Choix du calibre (approfondi)</strong><br><br>
+
+1️⃣ Calibre de départ pour une mesure inconnue :
+<select id="k1">
+<option value="">---</option>
+<option value="2A">2 A</option>
+<option value="200mA">200 mA</option>
+<option value="20mA">20 mA</option>
+</select>
+<button onclick="checkQCM('k1','2A')">Vérifier</button>
+<div id="k1-res"></div>
+
+<br><br>
+
+2️⃣ Intensité mesurée : 0,18 A. Calibre le plus précis :
+<select id="k2">
+<option value="">---</option>
+<option value="2A">2 A</option>
+<option value="200mA">200 mA</option>
+<option value="20mA">20 mA</option>
+</select>
+<button onclick="checkQCM('k2','200mA')">Vérifier</button>
+<div id="k2-res"></div>
+
+<br><br>
+
+3️⃣ Pourquoi ne faut-il pas commencer avec 20 mA ?
+<select id="k3">
+<option value="">---</option>
+<option value="danger">Risque d’endommager l’appareil</option>
+<option value="precision">Mesure moins précise</option>
+<option value="inutile">Valeur inutile</option>
+</select>
+<button onclick="checkQCM('k3','danger')">Vérifier</button>
+<div id="k3-res"></div>
+
+<br><br>
+
+4️⃣ Une intensité vaut 35 mA. Quel calibre choisir ?
+<select id="k4">
+<option value="">---</option>
+<option value="2A">2 A</option>
+<option value="200mA">200 mA</option>
+<option value="20mA">20 mA</option>
+</select>
+<button onclick="checkQCM('k4','200mA')">Vérifier</button>
+<div id="k4-res"></div>
+</div>
+
+<!-- EXERCICE 6 -->
+<div class="exo">
+<strong>Exercice 6 – Valeur nominale</strong><br><br>
+
+Lampe : 6 V – 0,3 A signifie :
+<select id="v1">
+<option value="">---</option>
+<option value="normal">valeurs normales de fonctionnement</option>
+<option value="max">valeurs maximales possibles</option>
+</select>
+<button onclick="checkQCM('v1','normal')">Vérifier</button>
+<div id="v1-res"></div>
+</div>
+
+</section>
+
+<section class="boite">
+<h2>💡 Conseil du coach</h2>
+<p>Avant chaque mesure : <strong>appareil → branchement → calibre → bornes</strong>.</p>
+</section>
+
+<footer>
+✅ Bonne révision ! Tu maîtrises maintenant les mesures comme en TP.
+</footer>
+
+</body>
+</html>
