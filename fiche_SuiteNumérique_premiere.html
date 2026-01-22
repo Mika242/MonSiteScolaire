@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Suites numériques – Première | Ton Coach Scolaire</title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --ink:#1f2937;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --accent-2:#10b981;
+  --chip:#eef2ff;
+  --card:#f8fafc;
+  --danger:#ef4444;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.55;
+}
+header{
+  padding:16px 16px 0;
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+}
+header img{
+  width:180px;
+  max-width:60%;
+  margin:8px auto 4px;
+  display:block;
+}
+header h1{
+  font-size:1.35rem;
+  margin:6px 0 12px;
+  font-weight:800;
+}
+main{
+  max-width:920px;
+  margin:0 auto;
+  padding:18px 16px 40px;
+}
+.card{
+  background:var(--card);
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:14px 16px;
+  margin:12px 0;
+}
+h2{font-size:1.1rem;margin:0 0 10px;font-weight:800}
+h3{font-size:1rem;margin:10px 0 6px;font-weight:700}
+p{margin:8px 0}
+ul{margin:6px 0 8px 18px}
+.formula{
+  background:#eef3f8;
+  border-left:5px solid var(--accent);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:700;
+}
+.exo{
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+}
+.btn{
+  margin-top:8px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+.result{margin-top:6px;font-weight:700}
+.correct{color:var(--accent-2)}
+.incorrect{color:var(--danger)}
+.explain{font-size:.9rem;color:#374151}
+.footer{
+  margin-top:22px;
+  font-size:.9rem;
+  color:#6b7280;
+  text-align:center;
+}
+</style>
+
+<script>
+function checkAnswer(id, correct, explanation){
+  const choices=document.getElementsByName(id);
+  let sel=null;
+  for(let c of choices){ if(c.checked) sel=c.value; }
+  const res=document.getElementById(id+"-result");
+  if(!sel){
+    res.innerHTML="<span class='incorrect'>Choisis une réponse.</span>";
+    return;
+  }
+  if(sel===correct){
+    res.innerHTML="<span class='correct'>Bonne réponse ✔</span><div class='explain'>"+explanation+"</div>";
+  }else{
+    res.innerHTML="<span class='incorrect'>Mauvaise réponse ✘</span><div class='explain'>"+explanation+"</div>";
+  }
+}
+</script>
+</head>
+
+<body>
+<header>
+  <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+  <h1>Suites numériques – Première</h1>
+</header>
+
+<main>
+
+<!-- ================== 1 NOTION DE SUITE ================== -->
+<section class="card">
+<h2>1) Notion de suite numérique – Rappels de cours</h2>
+
+<ul>
+  <li>Une suite associe à chaque entier n un nombre noté uₙ</li>
+  <li>Le nombre uₙ est appelé <strong>terme de rang n</strong></li>
+  <li>Une suite peut être définie :
+    <ul>
+      <li>explicitement : uₙ = f(n)</li>
+      <li>par récurrence : u₀ donné et uₙ₊₁ = f(uₙ)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="formula">Exemple : uₙ = 2n + 1 ⇒ u₃ = 7</div>
+</section>
+
+<section class="card">
+<h3>Exercices (difficulté croissante)</h3>
+
+<div class="exo">
+<p>1️⃣ uₙ = 4n − 3 est :</p>
+<input type="radio" name="s1" value="A"> récurrente<br>
+<input type="radio" name="s1" value="B"> explicite<br>
+<button class="btn" onclick="checkAnswer('s1','B','La formule donne directement uₙ en fonction de n.')">Vérifier</button>
+<div id="s1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Calculer u₂ si uₙ = 3n + 5</p>
+<input type="radio" name="s2" value="A"> 11<br>
+<input type="radio" name="s2" value="B"> 6<br>
+<button class="btn" onclick="checkAnswer('s2','A','u₂ = 3×2 + 5 = 11.')">Vérifier</button>
+<div id="s2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ La suite définie par u₀ = 1 et uₙ₊₁ = uₙ + 2 est :</p>
+<input type="radio" name="s3" value="A"> explicite<br>
+<input type="radio" name="s3" value="B"> récurrente<br>
+<button class="btn" onclick="checkAnswer('s3','B','Le terme suivant dépend du terme précédent.')">Vérifier</button>
+<div id="s3-result"></div>
+</div>
+
+<div class="exo">
+<p>4️⃣ Vrai ou Faux : une suite récurrente ne peut pas être calculée terme par terme.</p>
+<input type="radio" name="s4" value="A"> Vrai<br>
+<input type="radio" name="s4" value="B"> Faux<br>
+<button class="btn" onclick="checkAnswer('s4','B','Au contraire, on la calcule toujours terme par terme.')">Vérifier</button>
+<div id="s4-result"></div>
+</div>
+</section>
+
+<!-- ================== 2 SUITES ARITHMETIQUES ================== -->
+<section class="card">
+<h2>2) Suites arithmétiques – Rappels de cours</h2>
+
+<ul>
+  <li>uₙ₊₁ = uₙ + r</li>
+  <li>uₙ = u₀ + n × r</li>
+  <li>r est la raison (différence constante)</li>
+</ul>
+
+<div class="formula">Exemple : u₀ = 2, r = 3 ⇒ u₄ = 14</div>
+</section>
+
+<section class="card">
+<h3>Exercices</h3>
+
+<div class="exo">
+<p>1️⃣ uₙ = 5 + 2n est :</p>
+<input type="radio" name="a1" value="A"> arithmétique<br>
+<input type="radio" name="a1" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('a1','A','On reconnaît la forme u₀ + n×r.')">Vérifier</button>
+<div id="a1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Donner la raison de uₙ = 10 − 4n</p>
+<input type="radio" name="a2" value="A"> 4<br>
+<input type="radio" name="a2" value="B"> −4<br>
+<button class="btn" onclick="checkAnswer('a2','B','Le coefficient de n est la raison.')">Vérifier</button>
+<div id="a2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ u₀ = 7, r = −3. Calculer u₃.</p>
+<input type="radio" name="a3" value="A"> −2<br>
+<input type="radio" name="a3" value="B"> −5<br>
+<button class="btn" onclick="checkAnswer('a3','A','u₃ = 7 − 9 = −2.')">Vérifier</button>
+<div id="a3-result"></div>
+</div>
+
+<div class="exo">
+<p>4️⃣ Suite arithmétique telle que u₂ = 8 et u₆ = 20. Calculer r.</p>
+<input type="radio" name="a4" value="A"> 3<br>
+<input type="radio" name="a4" value="B"> 4<br>
+<button class="btn" onclick="checkAnswer('a4','A','(20 − 8) ÷ 4 = 3.')">Vérifier</button>
+<div id="a4-result"></div>
+</div>
+</section>
+
+<!-- ================== 3 SUITES GEOMETRIQUES ================== -->
+<section class="card">
+<h2>3) Suites géométriques – Rappels de cours</h2>
+
+<ul>
+  <li>uₙ₊₁ = q × uₙ</li>
+  <li>uₙ = u₀ × qⁿ</li>
+  <li>q est la raison</li>
+</ul>
+
+<div class="formula">Exemple : u₀ = 3, q = 2 ⇒ u₄ = 48</div>
+</section>
+
+<section class="card">
+<h3>Exercices</h3>
+
+<div class="exo">
+<p>1️⃣ uₙ = 2 × 5ⁿ est :</p>
+<input type="radio" name="g1" value="A"> arithmétique<br>
+<input type="radio" name="g1" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('g1','B','La présence de la puissance indique une suite géométrique.')">Vérifier</button>
+<div id="g1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Quelle est la raison ? uₙ = 7 × 3ⁿ</p>
+<input type="radio" name="g2" value="A"> 7<br>
+<input type="radio" name="g2" value="B"> 3<br>
+<button class="btn" onclick="checkAnswer('g2','B','La raison est la base de la puissance.')">Vérifier</button>
+<div id="g2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ u₀ = 4, q = 2. Calculer u₃.</p>
+<input type="radio" name="g3" value="A"> 24<br>
+<input type="radio" name="g3" value="B"> 32<br>
+<button class="btn" onclick="checkAnswer('g3','B','u₃ = 4 × 2³ = 32.')">Vérifier</button>
+<div id="g3-result"></div>
+</div>
+
+<div class="exo">
+<p>4️⃣ u₁ = 6 et u₂ = 18. Trouver q.</p>
+<input type="radio" name="g4" value="A"> 2<br>
+<input type="radio" name="g4" value="B"> 3<br>
+<button class="btn" onclick="checkAnswer('g4','B','q = 18 ÷ 6 = 3.')">Vérifier</button>
+<div id="g4-result"></div>
+</div>
+</section>
+
+<!-- ================== 5 SUITES RECURRENTES ================== -->
+<section class="card">
+<h2>5) Suites définies par récurrence – Rappels de cours</h2>
+
+<ul>
+  <li>Une valeur initiale est indispensable</li>
+  <li>Chaque terme dépend du précédent</li>
+</ul>
+
+<div class="formula">Exemple : u₀ = 1, uₙ₊₁ = 2uₙ</div>
+</section>
+
+<section class="card">
+<h3>Exercices</h3>
+
+<div class="exo">
+<p>1️⃣ u₀ = 2, uₙ₊₁ = uₙ + 3. Calculer u₁.</p>
+<input type="radio" name="r1" value="A"> 5<br>
+<input type="radio" name="r1" value="B"> 6<br>
+<button class="btn" onclick="checkAnswer('r1','A','u₁ = 2 + 3 = 5.')">Vérifier</button>
+<div id="r1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Même suite : calculer u₂.</p>
+<input type="radio" name="r2" value="A"> 8<br>
+<input type="radio" name="r2" value="B"> 11<br>
+<button class="btn" onclick="checkAnswer('r2','A','u₂ = 5 + 3 = 8.')">Vérifier</button>
+<div id="r2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ u₀ = 1, uₙ₊₁ = 3uₙ − 1. Calculer u₁.</p>
+<input type="radio" name="r3" value="A"> 2<br>
+<input type="radio" name="r3" value="B"> 3<br>
+<button class="btn" onclick="checkAnswer('r3','A','u₁ = 3×1 − 1 = 2.')">Vérifier</button>
+<div id="r3-result"></div>
+</div>
+
+<div class="exo">
+<p>4️⃣ Cette suite est :</p>
+<input type="radio" name="r4" value="A"> arithmétique<br>
+<input type="radio" name="r4" value="B"> géométrique<br>
+<input type="radio" name="r4" value="C"> aucune des deux<br>
+<button class="btn" onclick="checkAnswer('r4','C','La relation ne correspond ni à +r ni à ×q.')">Vérifier</button>
+<div id="r4-result"></div>
+</div>
+</section>
+
+<div class="footer">
+© Ton Coach Scolaire – Mathématiques Première • Suites numériques
+</div>
+
+</main>
+</body>
+</html>
