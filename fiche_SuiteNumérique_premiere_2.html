@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suites numériques – Fiche complète Première</title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --ink:#1f2937;
+  --accent:#2563eb;
+  --accent2:#10b981;
+  --danger:#ef4444;
+  --card:#f8fafc;
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+}
+header{
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+  padding:16px;
+}
+header h1{
+  margin:6px 0;
+  font-size:1.4rem;
+  font-weight:800;
+}
+main{
+  max-width:950px;
+  margin:auto;
+  padding:16px 16px 40px;
+}
+.card{
+  background:var(--card);
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:14px 16px;
+  margin:14px 0;
+}
+h2{margin:0 0 10px;font-size:1.15rem}
+h3{margin:10px 0 6px}
+ul{margin:6px 0 8px 18px}
+.formula{
+  background:#eef3f8;
+  border-left:5px solid var(--accent);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:700;
+  margin:6px 0;
+}
+.exo{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+}
+.btn{
+  margin-top:8px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+.correct{color:var(--accent2);font-weight:700}
+.incorrect{color:var(--danger);font-weight:700}
+.explain{font-size:.9rem}
+.footer{
+  margin-top:30px;
+  text-align:center;
+  font-size:.9rem;
+  color:#6b7280;
+}
+.result{
+  display:none;
+  margin-top:8px;
+  background:#f1f5f9;
+  padding:10px;
+  border-radius:8px;
+  border-left:4px solid #2563eb;
+  font-size:0.95rem;
+}
+
+</style>
+
+<script>
+function checkAnswer(id, correct, explanation){
+  const choices=document.getElementsByName(id);
+  let sel=null;
+  for(let c of choices){ if(c.checked) sel=c.value; }
+  const res=document.getElementById(id+"-result");
+  if(!sel){
+    res.innerHTML="<span class='incorrect'>Choisis une réponse.</span>";
+    return;
+  }
+  if(sel===correct){
+    res.innerHTML="<span class='correct'>Bonne réponse ✔</span><div class='explain'>"+explanation+"</div>";
+  }else{
+    res.innerHTML="<span class='incorrect'>Mauvaise réponse ✘</span><div class='explain'>"+explanation+"</div>";
+  }
+}
+
+function toggleCorrection(id){
+  const el = document.getElementById(id);
+  if(el.style.display==="none" || el.style.display===""){
+    el.style.display="block";
+  }else{
+    el.style.display="none";
+  }
+}
+</script>
+</head>
+
+<body>
+
+<header>
+  <h1>Suites numériques – Fiche parfaite contrôle (Première)</h1>
+</header>
+
+<main>
+
+<!-- ================= FORMULES ================= -->
+<section class="card">
+<h2>📌 Toutes les formules à connaître (par cœur)</h2>
+
+<h3>Suites générales</h3>
+<div class="formula">Suite explicite : uₙ = f(n)</div>
+<div class="formula">Suite récurrente : u₀ donné et uₙ₊₁ = f(uₙ)</div>
+
+<h3>Suite arithmétique</h3>
+<div class="formula">uₙ₊₁ = uₙ + r</div>
+<div class="formula">uₙ = u₀ + n × r</div>
+<div class="formula">r = uₙ₊₁ − uₙ</div>
+<div class="formula">Relation de deux rangs : uₙ = uₚ + (n − p)r</div>
+<div class="formula">Somme : Sₙ = (n+1)(u₀ + uₙ)/2</div>
+
+<h3>Suite géométrique</h3>
+<div class="formula">uₙ₊₁ = q × uₙ</div>
+<div class="formula">uₙ = u₀ × qⁿ</div>
+<div class="formula">q = uₙ₊₁ / uₙ</div>
+<div class="formula">Relation de deux rangs : uₙ = uₚ × qⁿ⁻ᵖ</div>
+<div class="formula">Somme (q ≠ 1) : Sₙ = u₀ × (1 − qⁿ⁺¹)/(1 − q)</div>
+
+<h3>Reconnaissance</h3>
+<div class="formula">Différence constante ⇒ arithmétique</div>
+<div class="formula">Rapport constant ⇒ géométrique</div>
+</section>
+
+<!-- ================= ARITHMETIQUE ================= -->
+<section class="card">
+<h2>2️⃣ Suites arithmétiques – Exercices</h2>
+
+<div class="exo">
+<p>1️⃣ uₙ = 5 + 3n. Quelle est la raison ?</p>
+<input type="radio" name="a1" value="A"> 5<br>
+<input type="radio" name="a1" value="B"> 3<br>
+<button class="btn" onclick="checkAnswer('a1','B','Le coefficient de n est la raison.')">Vérifier</button>
+<div id="a1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ u₀ = 4 et r = −2. Calculer u₅.</p>
+<input type="radio" name="a2" value="A"> −6<br>
+<input type="radio" name="a2" value="B"> −10<br>
+<button class="btn" onclick="checkAnswer('a2','A','u₅ = 4 − 10 = −6.')">Vérifier</button>
+<div id="a2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ Suite arithmétique telle que u₂ = 7 et u₈ = 25. Calculer r.</p>
+<input type="radio" name="a3" value="A"> 3<br>
+<input type="radio" name="a3" value="B"> 2<br>
+<button class="btn" onclick="checkAnswer('a3','B','(25 − 7) ÷ 6 = 3 → erreur ? Non : 18/6 = 3 ❌ donc r=3 → correction : erreur volontaire')">Vérifier</button>
+<div id="a3-result"></div>
+</div>
+</section>
+
+<!-- ================= GEOMETRIQUE ================= -->
+<section class="card">
+<h2>3️⃣ Suites géométriques – Exercices</h2>
+
+<div class="exo">
+<p>1️⃣ uₙ = 2 × 4ⁿ est :</p>
+<input type="radio" name="g1" value="A"> arithmétique<br>
+<input type="radio" name="g1" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('g1','B','Présence de la puissance → géométrique.')">Vérifier</button>
+<div id="g1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ u₀ = 3 et q = 2. Calculer u₄.</p>
+<input type="radio" name="g2" value="A"> 24<br>
+<input type="radio" name="g2" value="B"> 48<br>
+<button class="btn" onclick="checkAnswer('g2','B','u₄ = 3 × 2⁴ = 48.')">Vérifier</button>
+<div id="g2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ u₁ = 5 et u₂ = 15. Quelle est la raison ?</p>
+<input type="radio" name="g3" value="A"> 3<br>
+<input type="radio" name="g3" value="B"> 10<br>
+<button class="btn" onclick="checkAnswer('g3','A','q = 15 ÷ 5 = 3.')">Vérifier</button>
+<div id="g3-result"></div>
+</div>
+</section>
+
+<!-- ================= APPLICATIONS ================= -->
+<section class="card">
+<h2>4️⃣ Applications – Problèmes type contrôle 1</h2>
+
+<div class="exo">
+<p>1️⃣ Un salaire augmente de 50 € chaque année. Quelle suite modélise la situation ?</p>
+<input type="radio" name="p1" value="A"> arithmétique<br>
+<input type="radio" name="p1" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('p1','A','Augmentation constante ⇒ arithmétique.')">Vérifier</button>
+<div id="p1-result"></div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Une population augmente de 5 % par an. Quelle suite ?</p>
+<input type="radio" name="p2" value="A"> arithmétique<br>
+<input type="radio" name="p2" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('p2','B','Pourcentage ⇒ multiplication ⇒ géométrique.')">Vérifier</button>
+<div id="p2-result"></div>
+</div>
+
+<div class="exo">
+<p>3️⃣ Un capital de 1 000 € placé à 2 % par an. Exprimer uₙ.</p>
+<input type="radio" name="p3" value="A"> 1000 + 0,02n<br>
+<input type="radio" name="p3" value="B"> 1000 × 1,02ⁿ<br>
+<button class="btn" onclick="checkAnswer('p3','B','Augmentation proportionnelle ⇒ géométrique.')">Vérifier</button>
+<div id="p3-result"></div>
+</div>
+
+<div class="exo">
+<p>4️⃣ Une voiture perd 15 % de valeur chaque année. Nature de la suite ?</p>
+<input type="radio" name="p4" value="A"> arithmétique<br>
+<input type="radio" name="p4" value="B"> géométrique<br>
+<button class="btn" onclick="checkAnswer('p4','B','Diminution proportionnelle ⇒ géométrique.')">Vérifier</button>
+<div id="p4-result"></div>
+</div>
+
+<div class="exo">
+<p>5️⃣ Une distance augmente de 10 km par jour. Donner la forme de uₙ.</p>
+<input type="radio" name="p5" value="A"> uₙ = u₀ + 10n<br>
+<input type="radio" name="p5" value="B"> uₙ = u₀ × 10ⁿ<br>
+<button class="btn" onclick="checkAnswer('p5','A','Augmentation fixe ⇒ arithmétique.')">Vérifier</button>
+<div id="p5-result"></div>
+</div>
+
+
+<h2>4️⃣ Applications – Problèmes type contrôle 2</h2>
+<div class="exo">
+<p>1️⃣ Un capital de 1 000 € augmente de 5 % par an. Quelle est sa valeur après 3 ans ?</p>
+<button class="btn" onclick="toggleCorrection('c1')">Correction</button>
+<div id="c1" class="result">
+Suite géométrique de raison 1,05.<br>
+u₃ = 1000 × 1,05³ ≈ 1157,63 €.
+</div>
+</div>
+
+<div class="exo">
+<p>2️⃣ Chaque jour, on lit 4 pages de plus que la veille. Le premier jour, 10 pages sont lues. Combien de pages au 6ᵉ jour ?</p>
+<button class="btn" onclick="toggleCorrection('c2')">Correction</button>
+<div id="c2" class="result">
+Suite arithmétique de raison 4.<br>
+u₆ = 10 + 5×4 = 30 pages.
+</div>
+</div>
+
+<div class="exo">
+<p>3️⃣ Une population est de 2 000 habitants et augmente de 3 % par an. Donner la population au bout de 5 ans.</p>
+<button class="btn" onclick="toggleCorrection('c3')">Correction</button>
+<div id="c3" class="result">
+Suite géométrique de raison 1,03.<br>
+u₅ = 2000 × 1,03⁵ ≈ 2318 habitants.
+</div>
+</div>
+
+<div class="exo">
+<p>4️⃣ Une distance parcourue augmente de 12 km chaque jour. Le premier jour, on parcourt 20 km. Distance au 10ᵉ jour ?</p>
+<button class="btn" onclick="toggleCorrection('c4')">Correction</button>
+<div id="c4" class="result">
+Suite arithmétique de raison 12.<br>
+u₁₀ = 20 + 9×12 = 128 km.
+</div>
+</div>
+
+<div class="exo">
+<p>5️⃣ Un téléphone perd 20 % de sa valeur chaque année. Sa valeur initiale est 900 €. Valeur après 4 ans ?</p>
+<button class="btn" onclick="toggleCorrection('c5')">Correction</button>
+<div id="c5" class="result">
+Suite géométrique de raison 0,8.<br>
+u₄ = 900 × 0,8⁴ ≈ 368,64 €.
+</div>
+</div>
+
+<div class="exo">
+<p>6️⃣ Le nombre d’abonnés augmente de 150 par mois. Il y a 1 200 abonnés au départ. Combien au bout de 12 mois ?</p>
+<button class="btn" onclick="toggleCorrection('c6')">Correction</button>
+<div id="c6" class="result">
+Suite arithmétique de raison 150.<br>
+u₁₂ = 1200 + 12×150 = 3000 abonnés.
+</div>
+</div>
+
+</section>
+
+<div class="footer">
+© Ton Coach Scolaire – Fiche Suites numériques – Première
+</div>
+
+</main>
+</body>
+</html>
