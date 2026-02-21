@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sens de variation des suites – Première</title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --ink:#1f2937;
+  --accent:#2563eb;
+  --accent2:#10b981;
+  --danger:#ef4444;
+  --warning:#f59e0b;
+  --card:#f8fafc;
+  --card2:#f0f9ff;
+  --card3:#f0fdf4;
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+}
+header{
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+  padding:18px 16px;
+  background:linear-gradient(135deg,#eff6ff,#f0fdf4);
+}
+header h1{
+  margin:6px 0 4px;
+  font-size:1.4rem;
+  font-weight:800;
+  color:#1e40af;
+}
+header p{
+  margin:0;
+  color:#6b7280;
+  font-size:0.92rem;
+}
+main{
+  max-width:950px;
+  margin:auto;
+  padding:16px 16px 40px;
+}
+
+/* ---- Cards ---- */
+.card{
+  background:var(--card);
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:14px 18px;
+  margin:16px 0;
+}
+.card-blue{
+  background:var(--card2);
+  border:1px solid #bfdbfe;
+  border-left:5px solid var(--accent);
+}
+.card-green{
+  background:var(--card3);
+  border:1px solid #bbf7d0;
+  border-left:5px solid var(--accent2);
+}
+.card-orange{
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  border-left:5px solid var(--warning);
+}
+
+h2{margin:0 0 10px;font-size:1.15rem;color:#1e3a8a}
+h3{margin:12px 0 6px;font-size:1rem;color:#374151}
+
+/* ---- Formules ---- */
+.formula{
+  background:#eef3f8;
+  border-left:5px solid var(--accent);
+  padding:8px 14px;
+  border-radius:8px;
+  font-weight:700;
+  margin:7px 0;
+  font-size:0.97rem;
+}
+.formula-green{
+  background:#ecfdf5;
+  border-left:5px solid var(--accent2);
+}
+.formula-orange{
+  background:#fffbeb;
+  border-left:5px solid var(--warning);
+}
+
+/* ---- Tableau méthodes ---- */
+.methode-title{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  font-weight:800;
+  font-size:1rem;
+  border-radius:8px;
+  padding:4px 14px;
+  margin-bottom:10px;
+}
+.methode-title.green{background:var(--accent2);}
+.methode-title.orange{background:var(--warning);color:#1f2937;}
+
+/* ---- Étapes ---- */
+.etape{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin:6px 0;
+}
+.num{
+  min-width:26px;
+  height:26px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:0.85rem;
+  flex-shrink:0;
+}
+.num.green{background:var(--accent2);}
+.num.orange{background:var(--warning);color:#1f2937;}
+
+/* ---- Tableau comparatif ---- */
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.93rem}
+th{background:#1e3a8a;color:#fff;padding:8px 10px;text-align:left}
+td{padding:7px 10px;border-bottom:1px solid #e5e7eb}
+tr:nth-child(even){background:#f1f5f9}
+.oui{color:var(--accent2);font-weight:700}
+.non{color:var(--danger);font-weight:700}
+
+/* ---- Exercices QCM ---- */
+.exo{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:10px;
+}
+.exo p{margin:0 0 8px;font-weight:600}
+label{display:block;margin:3px 0;cursor:pointer}
+.btn{
+  margin-top:9px;
+  padding:8px 14px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.9rem;
+  transition:background .15s;
+}
+.btn:hover{background:#eff6ff}
+.correct{color:var(--accent2);font-weight:700}
+.incorrect{color:var(--danger);font-weight:700}
+.explain{font-size:.88rem;margin-top:4px;color:#374151}
+
+/* ---- Corrections à dévoiler ---- */
+.result{
+  display:none;
+  margin-top:8px;
+  background:#f1f5f9;
+  padding:10px 12px;
+  border-radius:8px;
+  border-left:4px solid var(--accent);
+  font-size:0.93rem;
+}
+.btn-correction{
+  margin-top:8px;
+  padding:8px 14px;
+  border-radius:10px;
+  border:1px solid #2563eb;
+  background:#eff6ff;
+  color:#1e40af;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.9rem;
+}
+.btn-correction:hover{background:#dbeafe}
+
+/* ---- Alerte ---- */
+.alerte{
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  border-left:5px solid var(--danger);
+  border-radius:10px;
+  padding:10px 14px;
+  margin:12px 0;
+  font-size:.93rem;
+}
+.alerte strong{color:var(--danger)}
+
+.footer{
+  margin-top:30px;
+  text-align:center;
+  font-size:.88rem;
+  color:#9ca3af;
+}
+</style>
+
+<script>
+function checkAnswer(id, correct, explanation){
+  const choices = document.getElementsByName(id);
+  let sel = null;
+  for(let c of choices){ if(c.checked) sel = c.value; }
+  const res = document.getElementById(id+"-result");
+  if(!sel){
+    res.innerHTML = "<span class='incorrect'>Choisis une réponse.</span>";
+    res.style.display = "block";
+    return;
+  }
+  if(sel === correct){
+    res.innerHTML = "<span class='correct'>Bonne réponse ✔</span><div class='explain'>" + explanation + "</div>";
+  } else {
+    res.innerHTML = "<span class='incorrect'>Mauvaise réponse ✘</span><div class='explain'>" + explanation + "</div>";
+  }
+  res.style.display = "block";
+}
+
+function toggleCorrection(id){
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+</script>
+</head>
+
+<body>
+
+<header>
+  <h1>📈 Sens de variation d'une suite numérique</h1>
+  <p>Fiche de révision – Classe de Première · Les 3 méthodes</p>
+</header>
+
+<main>
+
+<!-- ===== RAPPEL DÉFINITIONS ===== -->
+<section class="card card-blue">
+<h2>📌 Définitions à connaître par cœur</h2>
+<div class="formula">Une suite (uₙ) est <strong>croissante</strong> si pour tout n : u<sub>n+1</sub> ≥ uₙ</div>
+<div class="formula">Une suite (uₙ) est <strong>décroissante</strong> si pour tout n : u<sub>n+1</sub> ≤ uₙ</div>
+<div class="formula">Une suite est <strong>constante</strong> si pour tout n : u<sub>n+1</sub> = uₙ</div>
+<div class="formula">Une suite est <strong>monotone</strong> si elle est entièrement croissante ou entièrement décroissante</div>
+</section>
+
+<!-- ===== MÉTHODE 1 ===== -->
+<section class="card">
+<span class="methode-title">Méthode 1 — Signe de u<sub>n+1</sub> − uₙ</span>
+<p>C'est la méthode <strong>universelle</strong>, applicable dans tous les cas, que la suite soit explicite ou définie par récurrence.</p>
+
+<h3>📋 Étapes</h3>
+<div class="etape"><div class="num">1</div><div>Calculer <strong>u<sub>n+1</sub> − uₙ</strong> en substituant n par n+1 dans la formule de uₙ.</div></div>
+<div class="etape"><div class="num">2</div><div>Simplifier et <strong>factoriser</strong> l'expression obtenue.</div></div>
+<div class="etape"><div class="num">3</div><div>Étudier le <strong>signe</strong> de cette différence selon les valeurs de n.</div></div>
+<div class="etape"><div class="num">4</div><div>Conclure : signe ≥ 0 → croissante ; signe ≤ 0 → décroissante.</div></div>
+
+<h3>📐 Exemple — uₙ = n² − 2n</h3>
+<div class="exo" style="background:#f8fafc">
+  <p style="font-weight:normal">
+    u<sub>n+1</sub> − uₙ = [(n+1)² − 2(n+1)] − [n² − 2n]<br>
+    = [n² + 2n + 1 − 2n − 2] − n² + 2n<br>
+    = n² + 2n − 1 − n² + 2n  ← <em>attention aux parenthèses !</em><br>
+    = <strong>2n − 1</strong>
+  </p>
+  <p style="font-weight:normal">
+    • Pour n ≥ 1 : 2n − 1 ≥ 1 > 0 → suite <span class="oui">croissante</span> à partir de n = 1.<br>
+    • Pour n = 0 : 2(0) − 1 = −1 &lt; 0 → u₁ &lt; u₀.
+  </p>
+</div>
+
+<div class="formula">Si u<sub>n+1</sub> − uₙ ≥ 0 → <strong>croissante</strong> &nbsp;|&nbsp; Si u<sub>n+1</sub> − uₙ ≤ 0 → <strong>décroissante</strong></div>
+</section>
+
+<!-- ===== MÉTHODE 2 ===== -->
+<section class="card">
+<span class="methode-title green">Méthode 2 — Rapport u<sub>n+1</sub> / uₙ</span>
+<p>Cette méthode s'utilise <strong>uniquement si tous les termes sont strictement positifs</strong>. Elle est particulièrement adaptée aux suites géométriques.</p>
+
+<h3>📋 Étapes</h3>
+<div class="etape"><div class="num green">1</div><div>Vérifier que uₙ &gt; 0 pour tout n.</div></div>
+<div class="etape"><div class="num green">2</div><div>Calculer le rapport <strong>u<sub>n+1</sub> / uₙ</strong>.</div></div>
+<div class="etape"><div class="num green">3</div><div>Comparer ce rapport à 1.</div></div>
+<div class="etape"><div class="num green">4</div><div>Conclure selon le tableau ci-dessous.</div></div>
+
+<div class="formula formula-green">Si u<sub>n+1</sub> / uₙ ≥ 1 → <strong>croissante</strong> &nbsp;|&nbsp; Si u<sub>n+1</sub> / uₙ ≤ 1 → <strong>décroissante</strong></div>
+
+<h3>📐 Exemple — uₙ = 3ⁿ (pour n ≥ 0)</h3>
+<div class="exo" style="background:#f0fdf4">
+  <p style="font-weight:normal">
+    Tous les termes sont positifs (puissance de 3 > 0). ✔<br><br>
+    u<sub>n+1</sub> / uₙ = 3<sup>n+1</sup> / 3ⁿ = <strong>3</strong><br><br>
+    3 ≥ 1, donc la suite est <span class="oui">croissante</span>.
+  </p>
+</div>
+
+<h3>📐 Exemple 2 — uₙ = (1/2)ⁿ</h3>
+<div class="exo" style="background:#f0fdf4">
+  <p style="font-weight:normal">
+    u<sub>n+1</sub> / uₙ = (1/2)<sup>n+1</sup> / (1/2)ⁿ = <strong>1/2</strong><br><br>
+    1/2 ≤ 1, donc la suite est <span class="non">décroissante</span>.
+  </p>
+</div>
+
+<div class="alerte">
+  <strong>⚠️ Attention !</strong> Si certains termes sont négatifs ou nuls, cette méthode ne fonctionne plus. Utiliser la méthode 1.
+</div>
+</section>
+
+<!-- ===== MÉTHODE 3 ===== -->
+<section class="card">
+<span class="methode-title orange">Méthode 3 — Fonction associée</span>
+<p>Applicable uniquement lorsque la suite est <strong>définie par une formule explicite</strong> uₙ = f(n). On utilise la dérivée de f pour conclure plus rapidement.</p>
+
+<h3>📋 Étapes</h3>
+<div class="etape"><div class="num orange">1</div><div>Identifier la fonction f telle que uₙ = f(n).</div></div>
+<div class="etape"><div class="num orange">2</div><div>Calculer la dérivée f'(x).</div></div>
+<div class="etape"><div class="num orange">3</div><div>Étudier le signe de f'(x) sur [0 ; +∞[.</div></div>
+<div class="etape"><div class="num orange">4</div><div>Conclure sur le sens de variation de la suite.</div></div>
+
+<div class="formula formula-orange">f croissante sur [0 ; +∞[ → suite <strong>croissante</strong> &nbsp;|&nbsp; f décroissante → suite <strong>décroissante</strong></div>
+
+<h3>📐 Exemple — uₙ = √(n+1)</h3>
+<div class="exo" style="background:#fffbeb">
+  <p style="font-weight:normal">
+    On pose f(x) = √(x+1).<br><br>
+    f'(x) = 1 / (2√(x+1)) &gt; 0 pour tout x ≥ 0.<br><br>
+    f est croissante sur [0 ; +∞[, donc la suite est <span class="oui">croissante</span>.
+  </p>
+</div>
+
+<h3>📐 Exemple 2 — uₙ = n² − 4n</h3>
+<div class="exo" style="background:#fffbeb">
+  <p style="font-weight:normal">
+    On pose f(x) = x² − 4x.<br><br>
+    f'(x) = 2x − 4, qui s'annule en x = 2.<br><br>
+    • Pour x &lt; 2 : f'(x) &lt; 0 → f décroissante → suite <span class="non">décroissante</span> pour n ≤ 2.<br>
+    • Pour x &gt; 2 : f'(x) &gt; 0 → f croissante → suite <span class="oui">croissante</span> pour n ≥ 2.
+  </p>
+</div>
+
+<div class="alerte">
+  <strong>⚠️ Limite !</strong> Cette méthode est inutilisable pour les suites définies par récurrence (ex : u<sub>n+1</sub> = 2uₙ − 3). Dans ce cas, revenir à la méthode 1.
+</div>
+</section>
+
+<!-- ===== COMPARATIF ===== -->
+<section class="card card-blue">
+<h2>🔍 Tableau comparatif des 3 méthodes</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Méthode</th>
+      <th>Formule explicite ?</th>
+      <th>Récurrence ?</th>
+      <th>Termes positifs requis ?</th>
+      <th>Rapidité</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1 — Différence</strong></td>
+      <td class="oui">✔ Oui</td>
+      <td class="oui">✔ Oui</td>
+      <td class="oui">✔ Non (tous les cas)</td>
+      <td>Moyenne</td>
+    </tr>
+    <tr>
+      <td><strong>2 — Rapport</strong></td>
+      <td class="oui">✔ Oui</td>
+      <td class="non">✘ Difficile</td>
+      <td class="non">✘ Oui (obligatoire)</td>
+      <td>Rapide</td>
+    </tr>
+    <tr>
+      <td><strong>3 — Fonction associée</strong></td>
+      <td class="oui">✔ Oui</td>
+      <td class="non">✘ Non</td>
+      <td class="oui">✔ Non</td>
+      <td>Rapide</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:.9rem;color:#374151">💡 En cas de doute, la méthode 1 fonctionne toujours. Les méthodes 2 et 3 sont des <strong>raccourcis</strong> selon le contexte.</p>
+</section>
+
+<!-- ===== EXERCICES QCM ===== -->
+<section class="card">
+<h2>✏️ Exercices – QCM (choisir la bonne méthode et la bonne réponse)</h2>
+
+<div class="exo">
+  <p>1️⃣ uₙ = 4n + 7. La suite est :</p>
+  <label><input type="radio" name="q1" value="A"> Décroissante</label>
+  <label><input type="radio" name="q1" value="B"> Croissante</label>
+  <label><input type="radio" name="q1" value="C"> Non monotone</label>
+  <button class="btn" onclick="checkAnswer('q1','B','u(n+1) − uₙ = 4(n+1)+7 − (4n+7) = 4 > 0. La suite est croissante (méthode 1 ou 3 : f\'(x)=4>0).')">Vérifier</button>
+  <div id="q1-result" class="result"></div>
+</div>
+
+<div class="exo">
+  <p>2️⃣ uₙ = (2/3)ⁿ avec uₙ > 0. La méthode du rapport donne :</p>
+  <label><input type="radio" name="q2" value="A"> u(n+1)/uₙ = 3/2 ≥ 1 → croissante</label>
+  <label><input type="radio" name="q2" value="B"> u(n+1)/uₙ = 2/3 ≤ 1 → décroissante</label>
+  <button class="btn" onclick="checkAnswer('q2','B','Le rapport est 2/3 < 1, donc la suite est décroissante.')">Vérifier</button>
+  <div id="q2-result" class="result"></div>
+</div>
+
+<div class="exo">
+  <p>3️⃣ uₙ = 1/(n+1). Quelle méthode est la plus rapide ?</p>
+  <label><input type="radio" name="q3" value="A"> Méthode 1 (différence)</label>
+  <label><input type="radio" name="q3" value="B"> Méthode 3 (fonction associée)</label>
+  <label><input type="radio" name="q3" value="C"> Les deux sont équivalentes ici</label>
+  <button class="btn" onclick="checkAnswer('q3','B','La méthode 3 est plus rapide : f(x) = 1/(x+1), f\'(x) = −1/(x+1)² < 0, donc décroissante en une ligne.')">Vérifier</button>
+  <div id="q3-result" class="result"></div>
+</div>
+
+<div class="exo">
+  <p>4️⃣ u(n+1) = 2uₙ + 1 avec u₀ = 3. Quelle méthode peut-on utiliser ?</p>
+  <label><input type="radio" name="q4" value="A"> Méthode 3 uniquement</label>
+  <label><input type="radio" name="q4" value="B"> Méthode 1 uniquement</label>
+  <label><input type="radio" name="q4" value="C"> Les 3 méthodes</label>
+  <button class="btn" onclick="checkAnswer('q4','B','La suite est définie par récurrence : seule la méthode 1 (différence) est applicable.')">Vérifier</button>
+  <div id="q4-result" class="result"></div>
+</div>
+
+<div class="exo">
+  <p>5️⃣ uₙ = n² − 6n. La suite est croissante à partir de quel rang ?</p>
+  <label><input type="radio" name="q5" value="A"> n = 2</label>
+  <label><input type="radio" name="q5" value="B"> n = 3</label>
+  <label><input type="radio" name="q5" value="C"> n = 4</label>
+  <button class="btn" onclick="checkAnswer('q5','B','Méthode 3 : f\'(x) = 2x−6 = 0 → x = 3. La suite est croissante pour n ≥ 3.')">Vérifier</button>
+  <div id="q5-result" class="result"></div>
+</div>
+
+</section>
+
+<!-- ===== EXERCICES OUVERTS ===== -->
+<section class="card">
+<h2>✏️ Exercices – Étude complète (à rédiger)</h2>
+
+<div class="exo">
+  <p>1️⃣ Étudier le sens de variation de uₙ = 3n − 5 (méthode 1).</p>
+  <button class="btn-correction" onclick="toggleCorrection('r1')">Voir la correction</button>
+  <div id="r1" class="result">
+    u<sub>n+1</sub> − uₙ = [3(n+1) − 5] − [3n − 5] = 3n + 3 − 5 − 3n + 5 = <strong>3 &gt; 0</strong><br>
+    La différence est strictement positive pour tout n, donc la suite est <strong>croissante</strong>.
+  </div>
+</div>
+
+<div class="exo">
+  <p>2️⃣ Étudier le sens de variation de uₙ = 5 × (0,8)ⁿ (méthode 2).</p>
+  <button class="btn-correction" onclick="toggleCorrection('r2')">Voir la correction</button>
+  <div id="r2" class="result">
+    Tous les termes sont positifs (5 &gt; 0 et 0,8 &gt; 0). ✔<br>
+    u<sub>n+1</sub> / uₙ = 5 × 0,8<sup>n+1</sup> / (5 × 0,8ⁿ) = <strong>0,8</strong><br>
+    0,8 &lt; 1, donc la suite est <strong>décroissante</strong>.
+  </div>
+</div>
+
+<div class="exo">
+  <p>3️⃣ Étudier le sens de variation de uₙ = √(2n + 3) (méthode 3).</p>
+  <button class="btn-correction" onclick="toggleCorrection('r3')">Voir la correction</button>
+  <div id="r3" class="result">
+    On pose f(x) = √(2x + 3).<br>
+    f'(x) = 2 / (2√(2x+3)) = <strong>1 / √(2x+3)</strong> &gt; 0 pour tout x ≥ 0.<br>
+    f est strictement croissante sur [0 ; +∞[, donc la suite est <strong>croissante</strong>.
+  </div>
+</div>
+
+<div class="exo">
+  <p>4️⃣ u<sub>n+1</sub> = uₙ/3 + 2 avec u₀ = 9. La suite est-elle croissante ou décroissante ?</p>
+  <button class="btn-correction" onclick="toggleCorrection('r4')">Voir la correction</button>
+  <div id="r4" class="result">
+    Suite définie par récurrence → méthode 1.<br>
+    u<sub>n+1</sub> − uₙ = uₙ/3 + 2 − uₙ = <strong>2 − 2uₙ/3</strong><br>
+    On a besoin de connaître le signe de 2 − 2uₙ/3, c'est-à-dire si uₙ &lt; 3 ou uₙ &gt; 3.<br><br>
+    Calcul des premiers termes : u₀ = 9, u₁ = 9/3 + 2 = 5, u₂ = 5/3 + 2 ≈ 3,67...<br>
+    Les termes semblent décroître vers 3. On vérifie : si uₙ &gt; 3, alors 2 − 2uₙ/3 &lt; 0 → suite <strong>décroissante</strong> (tant que uₙ &gt; 3).
+  </div>
+</div>
+
+<div class="exo">
+  <p>5️⃣ uₙ = n² − 8n + 10. Déterminer le sens de variation selon les valeurs de n.</p>
+  <button class="btn-correction" onclick="toggleCorrection('r5')">Voir la correction</button>
+  <div id="r5" class="result">
+    Méthode 3 : f(x) = x² − 8x + 10.<br>
+    f'(x) = 2x − 8 = 0 → x = 4.<br><br>
+    • Pour n &lt; 4 : f'(n) &lt; 0 → suite <strong>décroissante</strong>.<br>
+    • Pour n &gt; 4 : f'(n) &gt; 0 → suite <strong>croissante</strong>.<br><br>
+    La suite est décroissante pour n ≤ 4, puis croissante pour n ≥ 4.
+  </div>
+</div>
+
+</section>
+
+<div class="footer">
+  Fiche de révision – Sens de variation des suites – Première
+</div>
+
+</main>
+</body>
+</html>
