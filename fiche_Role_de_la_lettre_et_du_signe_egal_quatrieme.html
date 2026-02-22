@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le rôle de la lettre et du signe égal – 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #faf7f2;
+  --ink: #1a1a2e;
+  --card: #ffffff;
+  --s1: #e63946;   /* série 1 – rouge */
+  --s2: #2a9d8f;   /* série 2 – vert */
+  --s3: #e9c46a;   /* série 3 – jaune */
+  --s4: #6a4c93;   /* série 4 – violet */
+  --easy: #d4edda;
+  --medium: #fff3cd;
+  --hard: #f8d7da;
+  --easy-ink: #155724;
+  --medium-ink: #856404;
+  --hard-ink: #721c24;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: #fff;
+  padding: 28px 24px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -30px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+}
+header .badge {
+  display: inline-block;
+  background: var(--s1);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+header p {
+  margin-top: 6px;
+  font-size: .9rem;
+  opacity: .7;
+}
+
+/* ── NAV TABS ── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 18px 16px 0;
+  max-width: 960px;
+  margin: auto;
+}
+.tab {
+  flex-shrink: 0;
+  padding: 9px 18px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: .85rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #fff;
+  transition: all .2s;
+}
+.tab:hover { transform: translateY(-2px); }
+.tab.t1 { border-color: var(--s1); color: var(--s1); }
+.tab.t2 { border-color: var(--s2); color: var(--s2); }
+.tab.t3 { border-color: var(--s3); color: #8a6d00; }
+.tab.t4 { border-color: var(--s4); color: var(--s4); }
+.tab.active.t1 { background: var(--s1); color: #fff; }
+.tab.active.t2 { background: var(--s2); color: #fff; }
+.tab.active.t3 { background: var(--s3); color: #4a3700; }
+.tab.active.t4 { background: var(--s4); color: #fff; }
+
+/* ── MAIN ── */
+main {
+  max-width: 960px;
+  margin: auto;
+  padding: 20px 16px 60px;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.section-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.s1-bg { background: #fde8ea; }
+.s2-bg { background: #d7f4f1; }
+.s3-bg { background: #fdf5d9; }
+.s4-bg { background: #ede7f6; }
+
+.section-title h2 { font-size: 1.2rem; font-weight: 900; }
+.section-title p  { font-size: .88rem; color: #555; margin-top: 2px; }
+
+/* ── COURS BOX ── */
+.cours-box {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-left: 5px solid;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+.cours-box.s1 { border-color: var(--s1); }
+.cours-box.s2 { border-color: var(--s2); }
+.cours-box.s3 { border-color: var(--s3); }
+.cours-box.s4 { border-color: var(--s4); }
+
+.cours-box h3 {
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .5;
+  margin-bottom: 10px;
+}
+.formula {
+  font-family: 'Space Mono', monospace;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: .9rem;
+  margin: 6px 0;
+  display: inline-block;
+  width: 100%;
+}
+.ex-inline {
+  margin-top: 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: .9rem;
+}
+.ex-inline strong { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; opacity: .5; margin-bottom: 4px; }
+
+/* ── LEVEL BADGE ── */
+.level {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.lvl-easy   { background: var(--easy);   color: var(--easy-ink); }
+.lvl-medium { background: var(--medium); color: var(--medium-ink); }
+.lvl-hard   { background: var(--hard);   color: var(--hard-ink); }
+
+/* ── EXERCISE CARD ── */
+.exo-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+  border: 1px solid #e5e7eb;
+}
+.exo-card .qnum {
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .4;
+  margin-bottom: 6px;
+}
+.exo-card p {
+  font-size: .97rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* ── RADIO OPTIONS ── */
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: .92rem;
+  font-weight: 600;
+  transition: all .15s;
+}
+.options label:hover { border-color: #aaa; background: #f8fafc; }
+.options input[type=radio] { accent-color: var(--ink); }
+
+/* ── BUTTONS ── */
+.btn-check {
+  margin-top: 10px;
+  padding: 9px 20px;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: #fff;
+  transition: transform .15s, opacity .15s;
+}
+.btn-check:hover { transform: translateY(-1px); opacity: .9; }
+.btn-check.s1 { background: var(--s1); }
+.btn-check.s2 { background: var(--s2); }
+.btn-check.s3 { background: #c49a00; }
+.btn-check.s4 { background: var(--s4); }
+
+.btn-toggle {
+  margin-top: 10px;
+  padding: 9px 20px;
+  border-radius: 10px;
+  border: 2px solid #d1d5db;
+  background: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-toggle:hover { background: #f1f5f9; }
+
+/* ── RESULT ── */
+.result {
+  display: none;
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: .9rem;
+  border-left: 4px solid;
+  line-height: 1.6;
+}
+.result.ok  { border-color: var(--s2); background: #d7f4f1; }
+.result.bad { border-color: var(--s1); background: #fde8ea; }
+.result.info { border-color: #94a3b8; }
+
+.ok-icon  { color: #2a9d8f; font-weight: 800; }
+.bad-icon { color: #e63946; font-weight: 800; }
+.explain  { margin-top: 5px; color: #333; }
+
+/* ── OPEN CORRECTION ── */
+.correction {
+  display: none;
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border-left: 4px solid var(--s2);
+  font-size: .9rem;
+  line-height: 1.7;
+}
+.correction .step { margin: 3px 0; }
+.correction .step::before { content: '▸ '; opacity: .5; }
+
+/* ── PROGRESS ── */
+.progress-bar-wrap {
+  background: #e5e7eb;
+  border-radius: 20px;
+  height: 6px;
+  margin: 16px 0 20px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width .4s;
+}
+.pf1 { background: var(--s1); }
+.pf2 { background: var(--s2); }
+.pf3 { background: var(--s3); }
+.pf4 { background: var(--s4); }
+
+.score-text {
+  font-size: .82rem;
+  color: #555;
+  text-align: right;
+  margin-top: -14px;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #999;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: .82rem;
+  color: #999;
+  border-top: 1px solid #e5e7eb;
+}
+
+@media(max-width:600px){
+  header h1 { font-size: 1.2rem; }
+  .tabs { padding: 14px 12px 0; }
+  main { padding: 16px 12px 50px; }
+}
+</style>
+
+<script>
+// ── Tab navigation ──
+function showTab(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+}
+
+// ── QCM checker ──
+const scores = {1:0,2:0,3:0,4:0};
+const totals = {1:0,2:0,3:0,4:0};
+const answered = {};
+
+function check(id, correct, expl, serie) {
+  const choices = document.getElementsByName(id);
+  let sel = null;
+  for (let c of choices) { if (c.checked) sel = c.value; }
+  const res = document.getElementById(id + '-r');
+  if (!sel) {
+    res.innerHTML = "<span class='bad-icon'>⚠ Choisis une réponse !</span>";
+    res.className = 'result bad';
+    res.style.display = 'block';
+    return;
+  }
+  if (answered[id]) return;
+  answered[id] = true;
+  totals[serie]++;
+  if (sel === correct) {
+    scores[serie]++;
+    res.innerHTML = "<span class='ok-icon'>✔ Bonne réponse !</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result ok';
+  } else {
+    res.innerHTML = "<span class='bad-icon'>✘ Mauvaise réponse</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result bad';
+  }
+  res.style.display = 'block';
+  updateProgress(serie);
+}
+
+function updateProgress(s) {
+  const pct = totals[s] > 0 ? Math.round((scores[s] / totals[s]) * 100) : 0;
+  const bar = document.getElementById('prog' + s);
+  const txt = document.getElementById('score' + s);
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = scores[s] + ' / ' + totals[s] + ' (' + pct + '%)';
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+</head>
+<body>
+
+<header>
+  <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire" style="height:60px; margin-bottom:12px;"><br>
+  <div class="badge">Mathématiques · 4ème</div>
+  <h1>Le rôle de la lettre et du signe égal</h1>
+  <p>4 séries · Niveau graduel · Exercices interactifs</p>
+</header>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab t1 active" id="tab1" onclick="showTab(1)">✏️ Série 1 — Écrire en fonction de x</button>
+  <button class="tab t2" id="tab2" onclick="showTab(2)">🔢 Série 2 — Réduire</button>
+  <button class="tab t3" id="tab3" onclick="showTab(3)">🔄 Série 3 — Substituer</button>
+  <button class="tab t4" id="tab4" onclick="showTab(4)">⚖️ Série 4 — Équations</button>
+</div>
+
+<main>
+
+<!-- ═══════════ SÉRIE 1 ═══════════ -->
+<div class="section active" id="sec1">
+  <div class="section-header">
+    <div class="section-icon s1-bg">✏️</div>
+    <div class="section-title">
+      <h2>Écrire en fonction de x</h2>
+      <p>Traduire une phrase en expression algébrique.</p>
+    </div>
+  </div>
+
+  <div class="cours-box s1">
+    <h3>📖 Cours</h3>
+    <p>Une <strong>lettre</strong> (souvent <em>x</em>) représente un nombre quelconque ou inconnu. On traduit une phrase mathématique en utilisant les opérations :</p>
+    <div class="formula">« augmenté de 5 » → x + 5</div>
+    <div class="formula">« le double » → 2x</div>
+    <div class="formula">« diminué de 7 » → x − 7</div>
+    <div class="formula">« le tiers, augmenté de 4 » → x/3 + 4</div>
+    <div class="formula">« le carré » → x²</div>
+    <div class="ex-inline">
+      <strong>Exemple</strong>
+      Périmètre d'un rectangle de longueur <em>x</em> et de largeur 3 :<br>
+      P = 2 × (x + 3) = <strong>2x + 6</strong>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf1" id="prog1" style="width:0%"></div></div>
+  <div class="score-text" id="score1">0 / 0</div>
+
+  <!-- FACILE -->
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Léa a <em>x</em> bonbons. Elle en reçoit 8 de plus. Combien en a-t-elle ?</p>
+    <div class="options">
+      <label><input type="radio" name="s1q1" value="A"> 8x</label>
+      <label><input type="radio" name="s1q1" value="B"> x + 8</label>
+      <label><input type="radio" name="s1q1" value="C"> x − 8</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q1','B','« Reçoit 8 de plus » = addition : x + 8.',1)">Vérifier</button>
+    <div class="result" id="s1q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Un nombre <em>x</em> est multiplié par 5. Quelle est l'expression ?</p>
+    <div class="options">
+      <label><input type="radio" name="s1q2" value="A"> x + 5</label>
+      <label><input type="radio" name="s1q2" value="B"> x / 5</label>
+      <label><input type="radio" name="s1q2" value="C"> 5x</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q2','C','Multiplier par 5 s\'écrit 5×x = 5x.',1)">Vérifier</button>
+    <div class="result" id="s1q2-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Un rectangle a une largeur de <em>x</em> cm et une longueur de 10 cm. Quelle est son aire ?</p>
+    <div class="options">
+      <label><input type="radio" name="s1q3" value="A"> 2x + 20</label>
+      <label><input type="radio" name="s1q3" value="B"> 10x</label>
+      <label><input type="radio" name="s1q3" value="C"> x + 10</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q3','B','Aire = longueur × largeur = 10 × x = 10x.',1)">Vérifier</button>
+    <div class="result" id="s1q3-r"></div>
+  </div>
+
+  <!-- MOYEN -->
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Exprime le périmètre d'un carré de côté <em>x</em> cm.</p>
+    <div class="options">
+      <label><input type="radio" name="s1q4" value="A"> x²</label>
+      <label><input type="radio" name="s1q4" value="B"> 4x</label>
+      <label><input type="radio" name="s1q4" value="C"> 2x + 2</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q4','B','Un carré a 4 côtés égaux : P = 4 × x = 4x.',1)">Vérifier</button>
+    <div class="result" id="s1q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Ali gagne <em>x</em> euros par heure et travaille 7 heures. Mais il doit payer 15 € de frais. Quelle est son expression de gain net ?</p>
+    <div class="options">
+      <label><input type="radio" name="s1q5" value="A"> 7x − 15</label>
+      <label><input type="radio" name="s1q5" value="B"> x + 7 − 15</label>
+      <label><input type="radio" name="s1q5" value="C"> 7(x − 15)</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q5','A','Gain = 7 × x, puis on soustrait 15 : 7x − 15.',1)">Vérifier</button>
+    <div class="result" id="s1q5-r"></div>
+  </div>
+
+  <!-- DIFFICILE -->
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Un triangle isocèle a deux côtés de longueur <em>x</em> et une base de (x − 3) cm. Exprime son périmètre.</p>
+    <div class="options">
+      <label><input type="radio" name="s1q6" value="A"> 3x − 3</label>
+      <label><input type="radio" name="s1q6" value="B"> 2x + (x − 3)</label>
+      <label><input type="radio" name="s1q6" value="C"> Les deux réponses A et B sont équivalentes</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q6','C','P = x + x + (x−3) = 3x − 3. La réponse B donne aussi 3x−3 après réduction. Les deux sont correctes !',1)">Vérifier</button>
+    <div class="result" id="s1q6-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Un carré a un côté de (2x + 1) cm. Exprime son aire.</p>
+    <button class="btn-toggle" onclick="toggle('s1c7')">📋 Voir la correction</button>
+    <div class="correction" id="s1c7">
+      <div class="step">Aire d'un carré = côté²</div>
+      <div class="step">Aire = (2x + 1)²</div>
+      <div class="step">= (2x + 1)(2x + 1)</div>
+      <div class="step">= 4x² + 2x + 2x + 1</div>
+      <div class="step">= <strong>4x² + 4x + 1</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SÉRIE 2 ═══════════ -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-icon s2-bg">🔢</div>
+    <div class="section-title">
+      <h2>Réduire une somme algébrique</h2>
+      <p>Regrouper les termes semblables.</p>
+    </div>
+  </div>
+
+  <div class="cours-box s2">
+    <h3>📖 Cours</h3>
+    <p><strong>Termes semblables</strong> = même lettre, même degré. On les additionne ou soustrait.</p>
+    <div class="formula">3x + 5x = (3+5)x = 8x</div>
+    <div class="formula">7x − 2x + 4 = 5x + 4</div>
+    <div class="formula">4x² + 2x − x² + 5x = 3x² + 7x</div>
+    <div class="ex-inline">
+      <strong>Attention !</strong>
+      On ne peut <em>pas</em> additionner x et x², ni x et un nombre seul.<br>
+      2x + 3 ≠ 5x
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf2" id="prog2" style="width:0%"></div></div>
+  <div class="score-text" id="score2">0 / 0</div>
+
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Réduis : 4x + 3x</p>
+    <div class="options">
+      <label><input type="radio" name="s2q1" value="A"> 7</label>
+      <label><input type="radio" name="s2q1" value="B"> 7x</label>
+      <label><input type="radio" name="s2q1" value="C"> 12x</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q1','B','4x + 3x = (4+3)x = 7x.',2)">Vérifier</button>
+    <div class="result" id="s2q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Réduis : 9x − 5x + 2</p>
+    <div class="options">
+      <label><input type="radio" name="s2q2" value="A"> 4x + 2</label>
+      <label><input type="radio" name="s2q2" value="B"> 6x</label>
+      <label><input type="radio" name="s2q2" value="C"> 4x</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q2','A','9x − 5x = 4x, puis on garde +2 : 4x + 2.',2)">Vérifier</button>
+    <div class="result" id="s2q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Réduis : 3x + 7 + 5x − 4</p>
+    <div class="options">
+      <label><input type="radio" name="s2q3" value="A"> 8x − 3</label>
+      <label><input type="radio" name="s2q3" value="B"> 8x + 3</label>
+      <label><input type="radio" name="s2q3" value="C"> 15x</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q3','B','3x + 5x = 8x et 7 − 4 = 3 → 8x + 3.',2)">Vérifier</button>
+    <div class="result" id="s2q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Réduis : 6x − 2 − 4x + 9</p>
+    <div class="options">
+      <label><input type="radio" name="s2q4" value="A"> 2x + 7</label>
+      <label><input type="radio" name="s2q4" value="B"> 2x − 11</label>
+      <label><input type="radio" name="s2q4" value="C"> 10x + 7</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q4','A','6x − 4x = 2x et −2 + 9 = 7 → 2x + 7.',2)">Vérifier</button>
+    <div class="result" id="s2q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Réduis : x² + 4x + 3x² − 2x</p>
+    <div class="options">
+      <label><input type="radio" name="s2q5" value="A"> 4x² + 2x</label>
+      <label><input type="radio" name="s2q5" value="B"> 4x² + 6x</label>
+      <label><input type="radio" name="s2q5" value="C"> 4x⁴ + 2x</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q5','A','x² + 3x² = 4x² et 4x − 2x = 2x → 4x² + 2x.',2)">Vérifier</button>
+    <div class="result" id="s2q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Réduis : 2x² − 3x + 5 + x² + 7x − 8</p>
+    <div class="options">
+      <label><input type="radio" name="s2q6" value="A"> 3x² + 4x − 3</label>
+      <label><input type="radio" name="s2q6" value="B"> 3x² + 4x + 13</label>
+      <label><input type="radio" name="s2q6" value="C"> 3x² − 4x − 3</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q6','A','2x²+x²=3x², −3x+7x=4x, 5−8=−3 → 3x²+4x−3.',2)">Vérifier</button>
+    <div class="result" id="s2q6-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Réduis et ordonne : 5 − 4x + 2x² + 3x − x² − 7</p>
+    <button class="btn-toggle" onclick="toggle('s2c7')">📋 Voir la correction</button>
+    <div class="correction" id="s2c7">
+      <div class="step">Regrouper les x² : 2x² − x² = x²</div>
+      <div class="step">Regrouper les x : −4x + 3x = −x</div>
+      <div class="step">Regrouper les nombres : 5 − 7 = −2</div>
+      <div class="step">Résultat ordonné : <strong>x² − x − 2</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SÉRIE 3 ═══════════ -->
+<div class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-icon s3-bg">🔄</div>
+    <div class="section-title">
+      <h2>Substituer une lettre par une valeur</h2>
+      <p>Remplacer x par un nombre et calculer.</p>
+    </div>
+  </div>
+
+  <div class="cours-box s3">
+    <h3>📖 Cours</h3>
+    <p><strong>Substituer</strong> = remplacer la lettre par un nombre donné, puis calculer.</p>
+    <div class="formula">Si x = 4, alors 3x + 2 = 3×4 + 2 = 14</div>
+    <div class="formula">Si x = 3, alors x² − 1 = 3² − 1 = 8</div>
+    <div class="ex-inline">
+      <strong>Conseil</strong>
+      Toujours mettre la valeur entre parenthèses pour éviter les erreurs :<br>
+      x = −2 → 3x = 3×(−2) = −6
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf3" id="prog3" style="width:0%"></div></div>
+  <div class="score-text" id="score3">0 / 0</div>
+
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Calcule 2x + 3 pour x = 5.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q1" value="A"> 13</label>
+      <label><input type="radio" name="s3q1" value="B"> 10</label>
+      <label><input type="radio" name="s3q1" value="C"> 16</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q1','A','2×5 + 3 = 10 + 3 = 13.',3)">Vérifier</button>
+    <div class="result" id="s3q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Calcule 4x − 1 pour x = 3.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q2" value="A"> 11</label>
+      <label><input type="radio" name="s3q2" value="B"> 12</label>
+      <label><input type="radio" name="s3q2" value="C"> 9</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q2','A','4×3 − 1 = 12 − 1 = 11.',3)">Vérifier</button>
+    <div class="result" id="s3q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Calcule x² + 2x pour x = 4.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q3" value="A"> 20</label>
+      <label><input type="radio" name="s3q3" value="B"> 24</label>
+      <label><input type="radio" name="s3q3" value="C"> 18</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q3','B','4² + 2×4 = 16 + 8 = 24.',3)">Vérifier</button>
+    <div class="result" id="s3q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Calcule 3x − 7 pour x = −2.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q4" value="A"> 1</label>
+      <label><input type="radio" name="s3q4" value="B"> −1</label>
+      <label><input type="radio" name="s3q4" value="C"> −13</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q4','C','3×(−2) − 7 = −6 − 7 = −13. Attention aux négatifs !',3)">Vérifier</button>
+    <div class="result" id="s3q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Calcule (x + 2)(x − 3) pour x = 5.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q5" value="A"> 14</label>
+      <label><input type="radio" name="s3q5" value="B"> 10</label>
+      <label><input type="radio" name="s3q5" value="C"> 21</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q5','A','(5+2)(5−3) = 7 × 2 = 14.',3)">Vérifier</button>
+    <div class="result" id="s3q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Calcule 2x² − 3x + 1 pour x = −3.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q6" value="A"> 28</label>
+      <label><input type="radio" name="s3q6" value="B"> 10</label>
+      <label><input type="radio" name="s3q6" value="C"> −26</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q6','A','2×(−3)² − 3×(−3) + 1 = 2×9 + 9 + 1 = 18 + 9 + 1 = 28.',3)">Vérifier</button>
+    <div class="result" id="s3q6-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Vérifie si les expressions <strong>A = x² + x</strong> et <strong>B = x(x+1)</strong> donnent le même résultat pour x = 6 et pour x = −4.</p>
+    <button class="btn-toggle" onclick="toggle('s3c7')">📋 Voir la correction</button>
+    <div class="correction" id="s3c7">
+      <div class="step">Pour x = 6 : A = 36 + 6 = 42 et B = 6×7 = 42 ✔</div>
+      <div class="step">Pour x = −4 : A = 16 + (−4) = 12 et B = (−4)×(−3) = 12 ✔</div>
+      <div class="step"><strong>Conclusion :</strong> A et B sont égales dans les deux cas. C'est normal car x(x+1) = x² + x (développement).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SÉRIE 4 ═══════════ -->
+<div class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-icon s4-bg">⚖️</div>
+    <div class="section-title">
+      <h2>Vérifier si un nombre est solution d'une équation</h2>
+      <p>Tester une valeur dans une équation.</p>
+    </div>
+  </div>
+
+  <div class="cours-box s4">
+    <h3>📖 Cours</h3>
+    <p>Une <strong>équation</strong> est une égalité contenant une inconnue. <strong>Vérifier</strong> une solution = substituer et tester l'égalité.</p>
+    <div class="formula">2x + 1 = 7 → tester x = 3 : 2(3)+1 = 7 ✔ → solution !</div>
+    <div class="formula">2x + 1 = 7 → tester x = 2 : 2(2)+1 = 5 ≠ 7 ✘ → pas solution</div>
+    <div class="ex-inline">
+      <strong>Méthode</strong>
+      1) Remplace x par la valeur testée<br>
+      2) Calcule le membre gauche et le membre droit séparément<br>
+      3) Si les deux membres sont égaux → c'est une solution
+    </div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf4" id="prog4" style="width:0%"></div></div>
+  <div class="score-text" id="score4">0 / 0</div>
+
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>x = 4 est-il solution de <strong>3x − 2 = 10</strong> ?</p>
+    <div class="options">
+      <label><input type="radio" name="s4q1" value="A"> Oui</label>
+      <label><input type="radio" name="s4q1" value="B"> Non</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q1','A','3×4 − 2 = 12 − 2 = 10 ✔',4)">Vérifier</button>
+    <div class="result" id="s4q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>x = 5 est-il solution de <strong>2x + 1 = 12</strong> ?</p>
+    <div class="options">
+      <label><input type="radio" name="s4q2" value="A"> Oui</label>
+      <label><input type="radio" name="s4q2" value="B"> Non</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q2','B','2×5 + 1 = 11 ≠ 12 ✘ Ce n\'est pas une solution.',4)">Vérifier</button>
+    <div class="result" id="s4q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>x = 6 est-il solution de <strong>x² = 36</strong> ?</p>
+    <div class="options">
+      <label><input type="radio" name="s4q3" value="A"> Oui</label>
+      <label><input type="radio" name="s4q3" value="B"> Non</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q3','A','6² = 36 ✔ Oui, c\'est une solution (−6 aussi !)',4)">Vérifier</button>
+    <div class="result" id="s4q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>x = 4 est-il solution de <strong>x + 7 = 3x − 1</strong> ?</p>
+    <div class="options">
+      <label><input type="radio" name="s4q4" value="A"> Oui</label>
+      <label><input type="radio" name="s4q4" value="B"> Non</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q4','A','Membre gauche : 4+7=11. Membre droit : 3×4−1=11. 11=11 ✔',4)">Vérifier</button>
+    <div class="result" id="s4q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Parmi les valeurs x = 1, x = 2 et x = 3, laquelle est solution de <strong>4x − 3 = 5</strong> ?</p>
+    <div class="options">
+      <label><input type="radio" name="s4q5" value="A"> x = 1</label>
+      <label><input type="radio" name="s4q5" value="B"> x = 2</label>
+      <label><input type="radio" name="s4q5" value="C"> x = 3</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q5','B','4×2−3 = 8−3 = 5 ✔. Les autres : 4×1−3=1≠5, 4×3−3=9≠5.',4)">Vérifier</button>
+    <div class="result" id="s4q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Vérifie que x = 3 ET x = −2 sont toutes deux solutions de <strong>(x − 3)(x + 2) = 0</strong>.</p>
+    <div class="options">
+      <label><input type="radio" name="s4q6" value="A"> Oui pour les deux</label>
+      <label><input type="radio" name="s4q6" value="B"> Seulement x = 3</label>
+      <label><input type="radio" name="s4q6" value="C"> Seulement x = −2</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q6','A','x=3 → (3−3)(3+2)=0×5=0 ✔. x=−2 → (−2−3)(−2+2)=(−5)×0=0 ✔ Les deux sont solutions !',4)">Vérifier</button>
+    <div class="result" id="s4q6-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Un rectangle a un périmètre de 26 cm. Sa largeur est <em>x</em> et sa longueur est (x + 3). Quelle équation traduit cette situation ? Puis vérifie que x = 5 est la solution.</p>
+    <button class="btn-toggle" onclick="toggle('s4c7')">📋 Voir la correction</button>
+    <div class="correction" id="s4c7">
+      <div class="step">Périmètre = 2 × (longueur + largeur)</div>
+      <div class="step">Équation : 2(x + x + 3) = 26, soit 2(2x + 3) = 26</div>
+      <div class="step">Vérification avec x = 5 :</div>
+      <div class="step">2(2×5 + 3) = 2×13 = 26 ✔</div>
+      <div class="step"><strong>Oui, x = 5 est solution !</strong> La largeur est 5 cm et la longueur est 8 cm.</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 8 — Problème complet</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Marie pense à un nombre. Elle le multiplie par 3, lui ajoute 5 et obtient 20. Traduis cela par une équation, puis vérifie que x = 5 est la solution.</p>
+    <button class="btn-toggle" onclick="toggle('s4c8')">📋 Voir la correction</button>
+    <div class="correction" id="s4c8">
+      <div class="step">Traduction : 3x + 5 = 20</div>
+      <div class="step">Vérification avec x = 5 :</div>
+      <div class="step">Membre gauche : 3×5 + 5 = 15 + 5 = 20</div>
+      <div class="step">Membre droit : 20</div>
+      <div class="step">20 = 20 ✔ → <strong>x = 5 est bien la solution.</strong></div>
+      <div class="step">Marie avait pensé au nombre 5.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  © Fiche interactive – Le rôle de la lettre et du signe égal – Mathématiques 4ème
+</footer>
+
+<script>showTab(1);</script>
+</body>
+</html>
