@@ -1,328 +1,1040 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Suites numériques – Première | Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#ffffff;
-  --ink:#1f2937;
-  --muted:#6b7280;
-  --accent:#2563eb;
-  --accent-2:#10b981;
-  --chip:#eef2ff;
-  --card:#f8fafc;
-  --danger:#ef4444;
+:root {
+  --bg: #faf7f2;
+  --ink: #1a1a2e;
+  --card: #ffffff;
+  --s1: #2563eb;
+  --s2: #10b981;
+  --s3: #f59e0b;
+  --s4: #8b5cf6;
+  --s5: #e11d48;
+  --easy: #d4edda;   --easy-ink: #155724;
+  --medium: #fff3cd; --medium-ink: #856404;
+  --hard: #f8d7da;   --hard-ink: #721c24;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
-  color:var(--ink);
-  background:var(--bg);
-  line-height:1.55;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
 }
-header{
-  padding:16px 16px 0;
-  text-align:center;
-  border-bottom:1px solid #e5e7eb;
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: #fff;
+  padding: 28px 24px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-header img{
-  width:180px;
-  max-width:60%;
-  margin:8px auto 4px;
-  display:block;
+header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
 }
-header h1{
-  font-size:1.35rem;
-  margin:6px 0 12px;
-  font-weight:800;
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -30px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
 }
-main{
-  max-width:920px;
-  margin:0 auto;
-  padding:18px 16px 40px;
+header .badge {
+  display: inline-block;
+  background: var(--s1);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
-.card{
-  background:var(--card);
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:14px 16px;
-  margin:12px 0;
+header h1 { font-size: 1.5rem; font-weight: 900; line-height: 1.25; }
+header p  { margin-top: 6px; font-size: .9rem; opacity: .7; }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 18px 16px 0;
+  max-width: 1000px;
+  margin: auto;
+  scrollbar-width: none;
 }
-h2{font-size:1.1rem;margin:0 0 10px;font-weight:800}
-h3{font-size:1rem;margin:10px 0 6px;font-weight:700}
-p{margin:8px 0}
-ul{margin:6px 0 8px 18px}
-.formula{
-  background:#eef3f8;
-  border-left:5px solid var(--accent);
-  padding:8px 12px;
-  border-radius:8px;
-  font-weight:700;
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: .82rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: #fff;
+  transition: all .2s;
 }
-.exo{
-  background:#ffffff;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:12px;
-  margin-top:10px;
+.tab:hover { transform: translateY(-2px); }
+.tab.t1 { border-color: var(--s1); color: var(--s1); }
+.tab.t2 { border-color: var(--s2); color: var(--s2); }
+.tab.t3 { border-color: var(--s3); color: #92400e; }
+.tab.t4 { border-color: var(--s4); color: var(--s4); }
+.tab.t5 { border-color: var(--s5); color: var(--s5); }
+.tab.active.t1 { background: var(--s1); color: #fff; }
+.tab.active.t2 { background: var(--s2); color: #fff; }
+.tab.active.t3 { background: var(--s3); color: #fff; }
+.tab.active.t4 { background: var(--s4); color: #fff; }
+.tab.active.t5 { background: var(--s5); color: #fff; }
+
+/* ── MAIN ── */
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px 16px 60px;
 }
-.btn{
-  margin-top:8px;
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid #d1d5db;
-  background:#fff;
-  cursor:pointer;
-  font-weight:600;
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
 }
-.result{margin-top:6px;font-weight:700}
-.correct{color:var(--accent-2)}
-.incorrect{color:var(--danger)}
-.explain{font-size:.9rem;color:#374151}
-.footer{
-  margin-top:22px;
-  font-size:.9rem;
-  color:#6b7280;
-  text-align:center;
+.section-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.s1-bg { background: #dbeafe; }
+.s2-bg { background: #d1fae5; }
+.s3-bg { background: #fef3c7; }
+.s4-bg { background: #ede9fe; }
+.s5-bg { background: #ffe4e6; }
+.section-title h2 { font-size: 1.2rem; font-weight: 900; }
+.section-title p  { font-size: .88rem; color: #555; margin-top: 2px; }
+
+/* ── MEMO FORMULES ── */
+.memo {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+  border-left: 5px solid;
+}
+.memo.s1 { border-color: var(--s1); }
+.memo.s2 { border-color: var(--s2); }
+.memo.s3 { border-color: var(--s3); }
+.memo.s4 { border-color: var(--s4); }
+.memo.s5 { border-color: var(--s5); }
+
+.memo-title {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .45;
+  margin-bottom: 10px;
+}
+.formula {
+  font-family: 'Space Mono', monospace;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: .82rem;
+  margin: 5px 0;
+  display: block;
+}
+.formula.blue   { background: #dbeafe; border-left: 3px solid var(--s1); }
+.formula.green  { background: #d1fae5; border-left: 3px solid var(--s2); }
+.formula.amber  { background: #fef3c7; border-left: 3px solid var(--s3); }
+.formula.violet { background: #ede9fe; border-left: 3px solid var(--s4); }
+.formula.red    { background: #ffe4e6; border-left: 3px solid var(--s5); }
+.formula.warn   { background: #fef2f2; border-left: 3px solid #dc2626; }
+
+.memo-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+@media(max-width:600px){ .memo-cols { grid-template-columns: 1fr; } }
+
+.memo-block h4 {
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: .5;
+  margin-bottom: 5px;
+}
+
+/* ── ÉTAPES ── */
+.etapes { margin: 8px 0 10px; }
+.etape  { display: flex; gap: 9px; align-items: flex-start; margin: 6px 0; font-size: .91rem; }
+.num-badge {
+  min-width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: .78rem;
+  color: #fff; flex-shrink: 0;
+}
+.nb1 { background: var(--s1); }
+.nb2 { background: var(--s2); }
+.nb3 { background: var(--s3); }
+.nb4 { background: var(--s4); }
+.nb5 { background: var(--s5); }
+
+/* ── LEVEL BADGE ── */
+.level {
+  display: inline-block;
+  font-size: .7rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px; margin-bottom: 8px;
+}
+.lvl-easy   { background: var(--easy);   color: var(--easy-ink); }
+.lvl-medium { background: var(--medium); color: var(--medium-ink); }
+.lvl-hard   { background: var(--hard);   color: var(--hard-ink); }
+
+/* ── EXO CARD ── */
+.exo-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+  border: 1px solid #e5e7eb;
+}
+.exo-card .qnum {
+  font-size: .75rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  opacity: .38; margin-bottom: 5px;
+}
+.exo-card > p {
+  font-size: .97rem; font-weight: 700;
+  line-height: 1.5; margin-bottom: 10px;
+}
+
+/* ── OPTIONS ── */
+.options label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; border-radius: 10px;
+  border: 2px solid #e5e7eb; margin: 5px 0;
+  cursor: pointer; font-size: .92rem; font-weight: 600;
+  transition: all .15s;
+}
+.options label:hover { border-color: #aaa; background: #f8fafc; }
+.options input[type=radio] { accent-color: var(--ink); }
+
+/* ── BUTTONS ── */
+.btn-check {
+  margin-top: 10px; padding: 9px 20px;
+  border-radius: 10px; border: none;
+  font-family: 'Nunito', sans-serif; font-size: .88rem; font-weight: 800;
+  cursor: pointer; color: #fff; transition: transform .15s, opacity .15s;
+}
+.btn-check:hover { transform: translateY(-1px); opacity: .9; }
+.btn-check.s1 { background: var(--s1); }
+.btn-check.s2 { background: var(--s2); }
+.btn-check.s3 { background: #d97706; }
+.btn-check.s4 { background: var(--s4); }
+.btn-check.s5 { background: var(--s5); }
+
+.btn-toggle {
+  margin-top: 10px; padding: 9px 20px;
+  border-radius: 10px; border: 2px solid #d1d5db;
+  background: #fff; font-family: 'Nunito', sans-serif;
+  font-size: .88rem; font-weight: 800; cursor: pointer; transition: all .15s;
+}
+.btn-toggle:hover { background: #f1f5f9; }
+
+/* ── RESULT ── */
+.result {
+  display: none; margin-top: 10px; padding: 12px 16px;
+  border-radius: 10px; font-size: .9rem; border-left: 4px solid; line-height: 1.6;
+}
+.result.ok  { border-color: var(--s2); background: #d1fae5; }
+.result.bad { border-color: #e63946; background: #fde8ea; }
+.ok-icon    { color: #10b981; font-weight: 800; }
+.bad-icon   { color: #e63946; font-weight: 800; }
+.explain    { margin-top: 5px; color: #333; }
+
+/* ── CORRECTION ── */
+.correction {
+  display: none; margin-top: 10px; padding: 12px 16px;
+  border-radius: 10px; background: #f0fdf4;
+  border-left: 4px solid var(--s2); font-size: .9rem; line-height: 1.75;
+}
+.correction .step { margin: 3px 0; }
+.correction .step::before { content: '▸ '; opacity: .45; }
+
+/* ── PROGRESS ── */
+.progress-bar-wrap {
+  background: #e5e7eb; border-radius: 20px;
+  height: 6px; margin: 16px 0 4px; overflow: hidden;
+}
+.progress-bar-fill { height: 100%; border-radius: 20px; transition: width .4s; }
+.pf1 { background: var(--s1); }
+.pf2 { background: var(--s2); }
+.pf3 { background: var(--s3); }
+.pf4 { background: var(--s4); }
+.pf5 { background: var(--s5); }
+.score-text {
+  font-size: .8rem; color: #555; text-align: right;
+  margin-bottom: 18px; font-weight: 700;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 0 16px; font-size: .76rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase; color: #999;
+}
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
+
+/* ── TABLEAU ── */
+.comp-table {
+  width: 100%; border-collapse: collapse; margin: 10px 0; font-size: .86rem;
+}
+.comp-table th {
+  background: var(--ink); color: #fff;
+  padding: 9px 10px; text-align: left; font-family: 'Nunito', sans-serif;
+}
+.comp-table td { padding: 8px 10px; border-bottom: 1px solid #e5e7eb; }
+.comp-table tr:nth-child(even) td { background: #f8fafc; }
+.tag-oui { color: #059669; font-weight: 800; }
+.tag-non { color: #dc2626; font-weight: 800; }
+.tag-a { background:#dbeafe; color:#1e40af; border-radius:6px; padding:2px 7px; font-size:.75rem; font-weight:800; }
+.tag-g { background:#d1fae5; color:#065f46; border-radius:6px; padding:2px 7px; font-size:.75rem; font-weight:800; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 24px;
+  font-size: .82rem; color: #999; border-top: 1px solid #e5e7eb;
+}
+@media(max-width:600px){
+  header h1 { font-size: 1.2rem; }
+  main { padding: 16px 12px 50px; }
 }
 </style>
 
 <script>
-function checkAnswer(id, correct, explanation){
-  const choices=document.getElementsByName(id);
-  let sel=null;
-  for(let c of choices){ if(c.checked) sel=c.value; }
-  const res=document.getElementById(id+"-result");
-  if(!sel){
-    res.innerHTML="<span class='incorrect'>Choisis une réponse.</span>";
-    return;
+function showTab(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+}
+
+const scores = {1:0,2:0,3:0,4:0,5:0};
+const totals = {1:0,2:0,3:0,4:0,5:0};
+const answered = {};
+
+function check(id, correct, expl, serie) {
+  const choices = document.getElementsByName(id);
+  let sel = null;
+  for (let c of choices) { if (c.checked) sel = c.value; }
+  const res = document.getElementById(id + '-r');
+  if (!sel) {
+    res.innerHTML = "<span class='bad-icon'>⚠ Choisis une réponse !</span>";
+    res.className = 'result bad'; res.style.display = 'block'; return;
   }
-  if(sel===correct){
-    res.innerHTML="<span class='correct'>Bonne réponse ✔</span><div class='explain'>"+explanation+"</div>";
-  }else{
-    res.innerHTML="<span class='incorrect'>Mauvaise réponse ✘</span><div class='explain'>"+explanation+"</div>";
+  if (answered[id]) return;
+  answered[id] = true;
+  totals[serie]++;
+  if (sel === correct) {
+    scores[serie]++;
+    res.innerHTML = "<span class='ok-icon'>✔ Bonne réponse !</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result ok';
+  } else {
+    res.innerHTML = "<span class='bad-icon'>✘ Mauvaise réponse</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result bad';
   }
+  res.style.display = 'block';
+  updateProgress(serie);
+}
+
+function updateProgress(s) {
+  const pct = totals[s] > 0 ? Math.round((scores[s] / totals[s]) * 100) : 0;
+  const bar = document.getElementById('prog' + s);
+  const txt = document.getElementById('score' + s);
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = scores[s] + ' / ' + totals[s] + ' (' + pct + '%)';
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === 'block') ? 'none' : 'block';
 }
 </script>
 </head>
-
 <body>
+
 <header>
-  <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
-  <h1>Suites numériques – Première</h1>
+  <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire" style="height:60px; margin-bottom:12px;"><br>
+  <div class="badge">Mathématiques · Première</div>
+  <h1>Suites numériques – Fiche complète</h1>
+  <p>5 thèmes · Cours + Mémo formules + Exercices gradués</p>
 </header>
+
+<div class="tabs">
+  <button class="tab t1 active" id="tab1" onclick="showTab(1)">📐 Notion de suite</button>
+  <button class="tab t2" id="tab2" onclick="showTab(2)">➕ Suites arithmétiques</button>
+  <button class="tab t3" id="tab3" onclick="showTab(3)">✖️ Suites géométriques</button>
+  <button class="tab t4" id="tab4" onclick="showTab(4)">🔄 Suites récurrentes</button>
+  <button class="tab t5" id="tab5" onclick="showTab(5)">📈 Sens de variation</button>
+</div>
 
 <main>
 
-<!-- ================== 1 NOTION DE SUITE ================== -->
-<section class="card">
-<h2>1) Notion de suite numérique – Rappels de cours</h2>
+<!-- ══════════════════════════════════════════
+     SÉRIE 1 — NOTION DE SUITE
+══════════════════════════════════════════ -->
+<div class="section active" id="sec1">
+  <div class="section-header">
+    <div class="section-icon s1-bg">📐</div>
+    <div class="section-title">
+      <h2>Notion de suite numérique</h2>
+      <p>Définitions, termes, suites explicites et récurrentes.</p>
+    </div>
+  </div>
 
-<ul>
-  <li>Une suite associe à chaque entier n un nombre noté uₙ</li>
-  <li>Le nombre uₙ est appelé <strong>terme de rang n</strong></li>
-  <li>Une suite peut être définie :
-    <ul>
-      <li>explicitement : uₙ = f(n)</li>
-      <li>par récurrence : u₀ donné et uₙ₊₁ = f(uₙ)</li>
-    </ul>
-  </li>
-</ul>
+  <!-- MÉMO -->
+  <div class="memo s1">
+    <div class="memo-title">📌 Mémo formules</div>
+    <div class="formula blue">Suite : à chaque entier n on associe un terme uₙ</div>
+    <div class="formula blue">Suite explicite : uₙ = f(n) → calcul direct</div>
+    <div class="formula blue">Suite récurrente : u₀ donné + uₙ₊₁ = f(uₙ) → terme par terme</div>
+    <div class="formula blue">Exemple : uₙ = 2n + 1 → u₃ = 2×3 + 1 = 7</div>
+  </div>
 
-<div class="formula">Exemple : uₙ = 2n + 1 ⇒ u₃ = 7</div>
-</section>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf1" id="prog1" style="width:0%"></div></div>
+  <div class="score-text" id="score1">0 / 0</div>
 
-<section class="card">
-<h3>Exercices (difficulté croissante)</h3>
+  <div class="divider">⭐ Niveau facile</div>
 
-<div class="exo">
-<p>1️⃣ uₙ = 4n − 3 est :</p>
-<input type="radio" name="s1" value="A"> récurrente<br>
-<input type="radio" name="s1" value="B"> explicite<br>
-<button class="btn" onclick="checkAnswer('s1','B','La formule donne directement uₙ en fonction de n.')">Vérifier</button>
-<div id="s1-result"></div>
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>La suite uₙ = 4n − 3 est :</p>
+    <div class="options">
+      <label><input type="radio" name="s1q1" value="A"> Récurrente</label>
+      <label><input type="radio" name="s1q1" value="B"> Explicite</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q1','B','La formule donne directement uₙ en fonction de n, sans dépendre du terme précédent.',1)">Vérifier</button>
+    <div class="result" id="s1q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Calculer u₂ si uₙ = 3n + 5.</p>
+    <div class="options">
+      <label><input type="radio" name="s1q2" value="A"> 11</label>
+      <label><input type="radio" name="s1q2" value="B"> 6</label>
+      <label><input type="radio" name="s1q2" value="C"> 8</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q2','A','u₂ = 3×2 + 5 = 6 + 5 = 11.',1)">Vérifier</button>
+    <div class="result" id="s1q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>La suite définie par u₀ = 1 et uₙ₊₁ = uₙ + 2 est :</p>
+    <div class="options">
+      <label><input type="radio" name="s1q3" value="A"> Explicite</label>
+      <label><input type="radio" name="s1q3" value="B"> Récurrente</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q3','B','Le terme suivant dépend du terme précédent : c\'est la définition d\'une suite récurrente.',1)">Vérifier</button>
+    <div class="result" id="s1q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Parmi ces suites, laquelle est définie par récurrence ?</p>
+    <div class="options">
+      <label><input type="radio" name="s1q4" value="A"> uₙ = n² + 1</label>
+      <label><input type="radio" name="s1q4" value="B"> u₀ = 3 et uₙ₊₁ = 2uₙ − 1</label>
+      <label><input type="radio" name="s1q4" value="C"> uₙ = 5 × n</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q4','B','Seule la réponse B fournit une valeur initiale u₀ et une relation de passage uₙ₊₁ = f(uₙ).',1)">Vérifier</button>
+    <div class="result" id="s1q4-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Vrai ou faux : une suite récurrente ne peut pas être calculée terme par terme.</p>
+    <div class="options">
+      <label><input type="radio" name="s1q5" value="A"> Vrai</label>
+      <label><input type="radio" name="s1q5" value="B"> Faux</label>
+    </div>
+    <button class="btn-check s1" onclick="check('s1q5','B','C\'est justement le principe : on calcule une suite récurrente toujours terme par terme en partant de u₀.',1)">Vérifier</button>
+    <div class="result" id="s1q5-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Soit u₀ = 2 et uₙ₊₁ = uₙ² − 1. Calculer u₁ et u₂. Cette suite est-elle arithmétique ou géométrique ?</p>
+    <button class="btn-toggle" onclick="toggle('s1c6')">📋 Voir la correction</button>
+    <div class="correction" id="s1c6">
+      <div class="step">u₁ = u₀² − 1 = 2² − 1 = 4 − 1 = <strong>3</strong></div>
+      <div class="step">u₂ = u₁² − 1 = 3² − 1 = 9 − 1 = <strong>8</strong></div>
+      <div class="step">Ni arithmétique (3−2=1 mais 8−3=5) ni géométrique (3/2≠8/3) : c'est une <strong>suite récurrente générale</strong>.</div>
+    </div>
+  </div>
 </div>
 
-<div class="exo">
-<p>2️⃣ Calculer u₂ si uₙ = 3n + 5</p>
-<input type="radio" name="s2" value="A"> 11<br>
-<input type="radio" name="s2" value="B"> 6<br>
-<button class="btn" onclick="checkAnswer('s2','A','u₂ = 3×2 + 5 = 11.')">Vérifier</button>
-<div id="s2-result"></div>
+<!-- ══════════════════════════════════════════
+     SÉRIE 2 — SUITES ARITHMÉTIQUES
+══════════════════════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-icon s2-bg">➕</div>
+    <div class="section-title">
+      <h2>Suites arithmétiques</h2>
+      <p>Raison, terme général, calculs et applications.</p>
+    </div>
+  </div>
+
+  <!-- MÉMO -->
+  <div class="memo s2">
+    <div class="memo-title">📌 Mémo formules</div>
+    <div class="memo-cols">
+      <div class="memo-block">
+        <h4>Définition &amp; raison</h4>
+        <div class="formula green">uₙ₊₁ = uₙ + r</div>
+        <div class="formula green">r = uₙ₊₁ − uₙ (différence constante)</div>
+      </div>
+      <div class="memo-block">
+        <h4>Terme général</h4>
+        <div class="formula green">uₙ = u₀ + n × r</div>
+        <div class="formula green">uₙ = uₚ + (n − p) × r</div>
+      </div>
+    </div>
+    <div class="formula green" style="margin-top:6px;">Somme : Sₙ = (n+1)(u₀ + uₙ) / 2</div>
+    <div class="formula" style="margin-top:6px; background:#f8fafc;">💡 Augmentation fixe (€, km, pages…) → arithmétique</div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf2" id="prog2" style="width:0%"></div></div>
+  <div class="score-text" id="score2">0 / 0</div>
+
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>La suite uₙ = 5 + 2n est arithmétique. Quelle est sa raison ?</p>
+    <div class="options">
+      <label><input type="radio" name="s2q1" value="A"> 5</label>
+      <label><input type="radio" name="s2q1" value="B"> 2</label>
+      <label><input type="radio" name="s2q1" value="C"> 7</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q1','B','Dans uₙ = u₀ + n×r, le coefficient de n est la raison : r = 2. Le terme initial est u₀ = 5.',2)">Vérifier</button>
+    <div class="result" id="s2q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Quelle est la raison de uₙ = 10 − 4n ?</p>
+    <div class="options">
+      <label><input type="radio" name="s2q2" value="A"> 4</label>
+      <label><input type="radio" name="s2q2" value="B"> −4</label>
+      <label><input type="radio" name="s2q2" value="C"> 10</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q2','B','r = −4 : la suite est décroissante. La raison peut être négative.',2)">Vérifier</button>
+    <div class="result" id="s2q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>u₀ = 7 et r = −3. Calculer u₃.</p>
+    <div class="options">
+      <label><input type="radio" name="s2q3" value="A"> −2</label>
+      <label><input type="radio" name="s2q3" value="B"> −5</label>
+      <label><input type="radio" name="s2q3" value="C"> 16</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q3','A','u₃ = u₀ + 3×r = 7 + 3×(−3) = 7 − 9 = −2.',2)">Vérifier</button>
+    <div class="result" id="s2q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Suite arithmétique avec u₂ = 8 et u₆ = 20. Calculer r.</p>
+    <div class="options">
+      <label><input type="radio" name="s2q4" value="A"> 3</label>
+      <label><input type="radio" name="s2q4" value="B"> 4</label>
+      <label><input type="radio" name="s2q4" value="C"> 6</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q4','A','u₆ − u₂ = (6−2)×r → 12 = 4r → r = 3.',2)">Vérifier</button>
+    <div class="result" id="s2q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Un salaire augmente de 50 € par an. 1ʳᵉ année : 1 800 €. Quel salaire à la 6ᵉ année ?</p>
+    <div class="options">
+      <label><input type="radio" name="s2q5" value="A"> 2 050 €</label>
+      <label><input type="radio" name="s2q5" value="B"> 2 100 €</label>
+      <label><input type="radio" name="s2q5" value="C"> 1 850 €</label>
+    </div>
+    <button class="btn-check s2" onclick="check('s2q5','A','Suite arithmétique r = 50, u₀ = 1800. 6ᵉ année = rang 5 : u₅ = 1800 + 5×50 = 2 050 €.',2)">Vérifier</button>
+    <div class="result" id="s2q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Suite arithmétique avec u₂ = 7 et u₈ = 25. Calculer r et u₀, puis exprimer uₙ.</p>
+    <button class="btn-toggle" onclick="toggle('s2c6')">📋 Voir la correction</button>
+    <div class="correction" id="s2c6">
+      <div class="step">r = (u₈ − u₂) / (8 − 2) = 18 / 6 = <strong>3</strong></div>
+      <div class="step">u₂ = u₀ + 2r → 7 = u₀ + 6 → u₀ = <strong>1</strong></div>
+      <div class="step">Terme général : <strong>uₙ = 1 + 3n</strong></div>
+      <div class="step">Vérification : u₂ = 1 + 6 = 7 ✔ &nbsp;&nbsp; u₈ = 1 + 24 = 25 ✔</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Chaque jour, on lit 4 pages de plus que la veille. Le 1ᵉʳ jour : 10 pages. Combien au 6ᵉ jour ? Et combien de pages en tout sur les 6 jours ?</p>
+    <button class="btn-toggle" onclick="toggle('s2c7')">📋 Voir la correction</button>
+    <div class="correction" id="s2c7">
+      <div class="step">Suite arithmétique : u₀ = 10, r = 4. Le 6ᵉ jour = rang 5.</div>
+      <div class="step">u₅ = 10 + 5×4 = <strong>30 pages</strong> au 6ᵉ jour.</div>
+      <div class="step">Somme des 6 premiers termes (rang 0 à 5) :</div>
+      <div class="step">S = (6) × (u₀ + u₅) / 2 = 6 × (10 + 30) / 2 = 6 × 20 = <strong>120 pages</strong> au total.</div>
+    </div>
+  </div>
 </div>
 
-<div class="exo">
-<p>3️⃣ La suite définie par u₀ = 1 et uₙ₊₁ = uₙ + 2 est :</p>
-<input type="radio" name="s3" value="A"> explicite<br>
-<input type="radio" name="s3" value="B"> récurrente<br>
-<button class="btn" onclick="checkAnswer('s3','B','Le terme suivant dépend du terme précédent.')">Vérifier</button>
-<div id="s3-result"></div>
+<!-- ══════════════════════════════════════════
+     SÉRIE 3 — SUITES GÉOMÉTRIQUES
+══════════════════════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-icon s3-bg">✖️</div>
+    <div class="section-title">
+      <h2>Suites géométriques</h2>
+      <p>Raison, terme général, calculs et applications.</p>
+    </div>
+  </div>
+
+  <!-- MÉMO -->
+  <div class="memo s3">
+    <div class="memo-title">📌 Mémo formules</div>
+    <div class="memo-cols">
+      <div class="memo-block">
+        <h4>Définition &amp; raison</h4>
+        <div class="formula amber">uₙ₊₁ = q × uₙ</div>
+        <div class="formula amber">q = uₙ₊₁ / uₙ (rapport constant)</div>
+      </div>
+      <div class="memo-block">
+        <h4>Terme général</h4>
+        <div class="formula amber">uₙ = u₀ × qⁿ</div>
+        <div class="formula amber">uₙ = uₚ × qⁿ⁻ᵖ</div>
+      </div>
+    </div>
+    <div class="formula amber" style="margin-top:6px;">Somme (q ≠ 1) : Sₙ = u₀ × (1 − qⁿ⁺¹) / (1 − q)</div>
+    <div class="formula" style="margin-top:6px; background:#f8fafc;">💡 % d'augmentation → q &gt; 1 &nbsp;|&nbsp; % de diminution → q &lt; 1</div>
+  </div>
+
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf3" id="prog3" style="width:0%"></div></div>
+  <div class="score-text" id="score3">0 / 0</div>
+
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>uₙ = 2 × 5ⁿ est :</p>
+    <div class="options">
+      <label><input type="radio" name="s3q1" value="A"> Arithmétique</label>
+      <label><input type="radio" name="s3q1" value="B"> Géométrique</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q1','B','La présence de 5ⁿ indique une suite géométrique : u₀ = 2 et q = 5.',3)">Vérifier</button>
+    <div class="result" id="s3q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Quelle est la raison de uₙ = 7 × 3ⁿ ?</p>
+    <div class="options">
+      <label><input type="radio" name="s3q2" value="A"> 7</label>
+      <label><input type="radio" name="s3q2" value="B"> 3</label>
+      <label><input type="radio" name="s3q2" value="C"> 21</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q2','B','q = 3 (base de la puissance). Le 7 est le terme initial u₀.',3)">Vérifier</button>
+    <div class="result" id="s3q2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>u₀ = 4 et q = 2. Calculer u₃.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q3" value="A"> 24</label>
+      <label><input type="radio" name="s3q3" value="B"> 32</label>
+      <label><input type="radio" name="s3q3" value="C"> 16</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q3','B','u₃ = 4 × 2³ = 4 × 8 = 32.',3)">Vérifier</button>
+    <div class="result" id="s3q3-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>u₁ = 6 et u₂ = 18. Trouver q.</p>
+    <div class="options">
+      <label><input type="radio" name="s3q4" value="A"> 2</label>
+      <label><input type="radio" name="s3q4" value="B"> 3</label>
+      <label><input type="radio" name="s3q4" value="C"> 12</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q4','B','q = u₂ / u₁ = 18 / 6 = 3.',3)">Vérifier</button>
+    <div class="result" id="s3q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Un capital de 1 000 € est placé à 2 % par an. L'expression de uₙ est :</p>
+    <div class="options">
+      <label><input type="radio" name="s3q5" value="A"> 1000 + 0,02n</label>
+      <label><input type="radio" name="s3q5" value="B"> 1000 × 1,02ⁿ</label>
+      <label><input type="radio" name="s3q5" value="C"> 1000 × 0,02ⁿ</label>
+    </div>
+    <button class="btn-check s3" onclick="check('s3q5','B','+2 % par an = ×1,02 → géométrique : uₙ = 1000 × 1,02ⁿ.',3)">Vérifier</button>
+    <div class="result" id="s3q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Une population de 2 000 habitants augmente de 3 % par an. Population après 5 ans ?</p>
+    <button class="btn-toggle" onclick="toggle('s3c6')">📋 Voir la correction</button>
+    <div class="correction" id="s3c6">
+      <div class="step">Suite géométrique : u₀ = 2 000, q = 1,03</div>
+      <div class="step">u₅ = 2000 × 1,03⁵ = 2000 × 1,1593 ≈ <strong>2 319 habitants</strong></div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Un téléphone vaut 900 €. Il perd 20 % de sa valeur chaque année. Valeur après 4 ans ?</p>
+    <button class="btn-toggle" onclick="toggle('s3c7')">📋 Voir la correction</button>
+    <div class="correction" id="s3c7">
+      <div class="step">−20 % → il reste 80 % → q = 0,8</div>
+      <div class="step">u₄ = 900 × 0,8⁴ = 900 × 0,4096 ≈ <strong>368,64 €</strong></div>
+    </div>
+  </div>
 </div>
 
-<div class="exo">
-<p>4️⃣ Vrai ou Faux : une suite récurrente ne peut pas être calculée terme par terme.</p>
-<input type="radio" name="s4" value="A"> Vrai<br>
-<input type="radio" name="s4" value="B"> Faux<br>
-<button class="btn" onclick="checkAnswer('s4','B','Au contraire, on la calcule toujours terme par terme.')">Vérifier</button>
-<div id="s4-result"></div>
-</div>
-</section>
+<!-- ══════════════════════════════════════════
+     SÉRIE 4 — SUITES RÉCURRENTES
+══════════════════════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-icon s4-bg">🔄</div>
+    <div class="section-title">
+      <h2>Suites définies par récurrence</h2>
+      <p>Calculer terme à terme à partir d'une valeur initiale.</p>
+    </div>
+  </div>
 
-<!-- ================== 2 SUITES ARITHMETIQUES ================== -->
-<section class="card">
-<h2>2) Suites arithmétiques – Rappels de cours</h2>
+  <!-- MÉMO -->
+  <div class="memo s4">
+    <div class="memo-title">📌 Mémo formules</div>
+    <div class="formula violet">Nécessite : une valeur initiale u₀ ET une relation uₙ₊₁ = f(uₙ)</div>
+    <div class="formula violet">On calcule : u₁ = f(u₀), puis u₂ = f(u₁), etc.</div>
+    <div class="formula violet">Point fixe L : résoudre L = f(L) → limite éventuelle de la suite</div>
+    <div class="formula" style="background:#f8fafc;">⚠️ Pour étudier le sens de variation → méthode 1 (différence) obligatoire</div>
+  </div>
 
-<ul>
-  <li>uₙ₊₁ = uₙ + r</li>
-  <li>uₙ = u₀ + n × r</li>
-  <li>r est la raison (différence constante)</li>
-</ul>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf4" id="prog4" style="width:0%"></div></div>
+  <div class="score-text" id="score4">0 / 0</div>
 
-<div class="formula">Exemple : u₀ = 2, r = 3 ⇒ u₄ = 14</div>
-</section>
+  <div class="divider">⭐ Niveau facile</div>
 
-<section class="card">
-<h3>Exercices</h3>
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>u₀ = 2 et uₙ₊₁ = uₙ + 3. Calculer u₁.</p>
+    <div class="options">
+      <label><input type="radio" name="s4q1" value="A"> 5</label>
+      <label><input type="radio" name="s4q1" value="B"> 6</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q1','A','u₁ = u₀ + 3 = 2 + 3 = 5.',4)">Vérifier</button>
+    <div class="result" id="s4q1-r"></div>
+  </div>
 
-<div class="exo">
-<p>1️⃣ uₙ = 5 + 2n est :</p>
-<input type="radio" name="a1" value="A"> arithmétique<br>
-<input type="radio" name="a1" value="B"> géométrique<br>
-<button class="btn" onclick="checkAnswer('a1','A','On reconnaît la forme u₀ + n×r.')">Vérifier</button>
-<div id="a1-result"></div>
-</div>
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>Suite précédente (u₀ = 2, uₙ₊₁ = uₙ + 3). Calculer u₂.</p>
+    <div class="options">
+      <label><input type="radio" name="s4q2" value="A"> 8</label>
+      <label><input type="radio" name="s4q2" value="B"> 11</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q2','A','u₂ = u₁ + 3 = 5 + 3 = 8.',4)">Vérifier</button>
+    <div class="result" id="s4q2-r"></div>
+  </div>
 
-<div class="exo">
-<p>2️⃣ Donner la raison de uₙ = 10 − 4n</p>
-<input type="radio" name="a2" value="A"> 4<br>
-<input type="radio" name="a2" value="B"> −4<br>
-<button class="btn" onclick="checkAnswer('a2','B','Le coefficient de n est la raison.')">Vérifier</button>
-<div id="a2-result"></div>
-</div>
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
 
-<div class="exo">
-<p>3️⃣ u₀ = 7, r = −3. Calculer u₃.</p>
-<input type="radio" name="a3" value="A"> −2<br>
-<input type="radio" name="a3" value="B"> −5<br>
-<button class="btn" onclick="checkAnswer('a3','A','u₃ = 7 − 9 = −2.')">Vérifier</button>
-<div id="a3-result"></div>
-</div>
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>u₀ = 1 et uₙ₊₁ = 3uₙ − 1. Calculer u₁ et u₂.</p>
+    <div class="options">
+      <label><input type="radio" name="s4q3" value="A"> u₁ = 2 et u₂ = 5</label>
+      <label><input type="radio" name="s4q3" value="B"> u₁ = 3 et u₂ = 8</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q3','A','u₁ = 3×1 − 1 = 2. u₂ = 3×2 − 1 = 5.',4)">Vérifier</button>
+    <div class="result" id="s4q3-r"></div>
+  </div>
 
-<div class="exo">
-<p>4️⃣ Suite arithmétique telle que u₂ = 8 et u₆ = 20. Calculer r.</p>
-<input type="radio" name="a4" value="A"> 3<br>
-<input type="radio" name="a4" value="B"> 4<br>
-<button class="btn" onclick="checkAnswer('a4','A','(20 − 8) ÷ 4 = 3.')">Vérifier</button>
-<div id="a4-result"></div>
-</div>
-</section>
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>La suite uₙ₊₁ = 3uₙ − 1 est :</p>
+    <div class="options">
+      <label><input type="radio" name="s4q4" value="A"> Arithmétique</label>
+      <label><input type="radio" name="s4q4" value="B"> Géométrique</label>
+      <label><input type="radio" name="s4q4" value="C"> Aucune des deux</label>
+    </div>
+    <button class="btn-check s4" onclick="check('s4q4','C','La relation n\'est ni de la forme uₙ + r (arith.) ni q×uₙ pur (géo.) : c\'est une récurrence générale.',4)">Vérifier</button>
+    <div class="result" id="s4q4-r"></div>
+  </div>
 
-<!-- ================== 3 SUITES GEOMETRIQUES ================== -->
-<section class="card">
-<h2>3) Suites géométriques – Rappels de cours</h2>
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
 
-<ul>
-  <li>uₙ₊₁ = q × uₙ</li>
-  <li>uₙ = u₀ × qⁿ</li>
-  <li>q est la raison</li>
-</ul>
-
-<div class="formula">Exemple : u₀ = 3, q = 2 ⇒ u₄ = 48</div>
-</section>
-
-<section class="card">
-<h3>Exercices</h3>
-
-<div class="exo">
-<p>1️⃣ uₙ = 2 × 5ⁿ est :</p>
-<input type="radio" name="g1" value="A"> arithmétique<br>
-<input type="radio" name="g1" value="B"> géométrique<br>
-<button class="btn" onclick="checkAnswer('g1','B','La présence de la puissance indique une suite géométrique.')">Vérifier</button>
-<div id="g1-result"></div>
-</div>
-
-<div class="exo">
-<p>2️⃣ Quelle est la raison ? uₙ = 7 × 3ⁿ</p>
-<input type="radio" name="g2" value="A"> 7<br>
-<input type="radio" name="g2" value="B"> 3<br>
-<button class="btn" onclick="checkAnswer('g2','B','La raison est la base de la puissance.')">Vérifier</button>
-<div id="g2-result"></div>
-</div>
-
-<div class="exo">
-<p>3️⃣ u₀ = 4, q = 2. Calculer u₃.</p>
-<input type="radio" name="g3" value="A"> 24<br>
-<input type="radio" name="g3" value="B"> 32<br>
-<button class="btn" onclick="checkAnswer('g3','B','u₃ = 4 × 2³ = 32.')">Vérifier</button>
-<div id="g3-result"></div>
+  <div class="exo-card">
+    <div class="qnum">Question 5 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>u₀ = 9 et uₙ₊₁ = uₙ/3 + 2. Calculer u₁, u₂, u₃ et trouver le point fixe L.</p>
+    <button class="btn-toggle" onclick="toggle('s4c5')">📋 Voir la correction</button>
+    <div class="correction" id="s4c5">
+      <div class="step">u₁ = 9/3 + 2 = 3 + 2 = <strong>5</strong></div>
+      <div class="step">u₂ = 5/3 + 2 ≈ <strong>3,67</strong></div>
+      <div class="step">u₃ = (5/3 + 2)/3 + 2 ≈ <strong>3,22</strong></div>
+      <div class="step">Point fixe : L = L/3 + 2 → 2L/3 = 2 → <strong>L = 3</strong></div>
+      <div class="step">La suite décroît et converge vers 3.</div>
+    </div>
+  </div>
 </div>
 
-<div class="exo">
-<p>4️⃣ u₁ = 6 et u₂ = 18. Trouver q.</p>
-<input type="radio" name="g4" value="A"> 2<br>
-<input type="radio" name="g4" value="B"> 3<br>
-<button class="btn" onclick="checkAnswer('g4','B','q = 18 ÷ 6 = 3.')">Vérifier</button>
-<div id="g4-result"></div>
-</div>
-</section>
+<!-- ══════════════════════════════════════════
+     SÉRIE 5 — SENS DE VARIATION
+══════════════════════════════════════════ -->
+<div class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-icon s5-bg">📈</div>
+    <div class="section-title">
+      <h2>Sens de variation d'une suite</h2>
+      <p>Les 3 méthodes : différence, rapport, fonction associée.</p>
+    </div>
+  </div>
 
-<!-- ================== 5 SUITES RECURRENTES ================== -->
-<section class="card">
-<h2>5) Suites définies par récurrence – Rappels de cours</h2>
+  <!-- MÉMO -->
+  <div class="memo s5">
+    <div class="memo-title">📌 Mémo — Les 3 méthodes</div>
+    <div class="memo-cols">
+      <div class="memo-block">
+        <h4>Définitions</h4>
+        <div class="formula red">Croissante : uₙ₊₁ ≥ uₙ pour tout n</div>
+        <div class="formula red">Décroissante : uₙ₊₁ ≤ uₙ pour tout n</div>
+      </div>
+      <div class="memo-block">
+        <h4>Méthode 1 — Différence (universelle)</h4>
+        <div class="formula red">Calculer uₙ₊₁ − uₙ, étudier son signe</div>
+        <div class="formula red">≥ 0 → croissante | ≤ 0 → décroissante</div>
+      </div>
+    </div>
+    <div class="memo-cols" style="margin-top:8px;">
+      <div class="memo-block">
+        <h4>Méthode 2 — Rapport (si uₙ &gt; 0)</h4>
+        <div class="formula red">Calculer uₙ₊₁ / uₙ, comparer à 1</div>
+        <div class="formula red">≥ 1 → croissante | ≤ 1 → décroissante</div>
+      </div>
+      <div class="memo-block">
+        <h4>Méthode 3 — Fonction (si explicite)</h4>
+        <div class="formula red">f'(x) &gt; 0 → croissante</div>
+        <div class="formula red">f'(x) &lt; 0 → décroissante</div>
+      </div>
+    </div>
+    <table class="comp-table" style="margin-top:12px;">
+      <thead><tr><th>Méthode</th><th>Explicite ?</th><th>Récurrence ?</th><th>uₙ &gt; 0 requis ?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 — Différence</strong></td><td class="tag-oui">✔ Oui</td><td class="tag-oui">✔ Oui</td><td class="tag-oui">✔ Non</td></tr>
+        <tr><td><strong>2 — Rapport</strong></td><td class="tag-oui">✔ Oui</td><td class="tag-non">✘ Non</td><td class="tag-non">✘ Oui</td></tr>
+        <tr><td><strong>3 — Fonction</strong></td><td class="tag-oui">✔ Oui</td><td class="tag-non">✘ Non</td><td class="tag-oui">✔ Non</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-<ul>
-  <li>Une valeur initiale est indispensable</li>
-  <li>Chaque terme dépend du précédent</li>
-</ul>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill pf5" id="prog5" style="width:0%"></div></div>
+  <div class="score-text" id="score5">0 / 0</div>
 
-<div class="formula">Exemple : u₀ = 1, uₙ₊₁ = 2uₙ</div>
-</section>
+  <div class="divider">⭐ Niveau facile</div>
 
-<section class="card">
-<h3>Exercices</h3>
+  <div class="exo-card">
+    <div class="qnum">Question 1</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>uₙ = 4n + 7. On calcule uₙ₊₁ − uₙ et on obtient :</p>
+    <div class="options">
+      <label><input type="radio" name="s5q1" value="A"> 7</label>
+      <label><input type="radio" name="s5q1" value="B"> 4</label>
+      <label><input type="radio" name="s5q1" value="C"> n + 4</label>
+    </div>
+    <button class="btn-check s5" onclick="check('s5q1','B','uₙ₊₁ = 4(n+1)+7 = 4n+11. Différence = (4n+11)−(4n+7) = 4 &gt; 0 → croissante.',5)">Vérifier</button>
+    <div class="result" id="s5q1-r"></div>
+  </div>
 
-<div class="exo">
-<p>1️⃣ u₀ = 2, uₙ₊₁ = uₙ + 3. Calculer u₁.</p>
-<input type="radio" name="r1" value="A"> 5<br>
-<input type="radio" name="r1" value="B"> 6<br>
-<button class="btn" onclick="checkAnswer('r1','A','u₁ = 2 + 3 = 5.')">Vérifier</button>
-<div id="r1-result"></div>
-</div>
+  <div class="exo-card">
+    <div class="qnum">Question 2</div>
+    <span class="level lvl-easy">⭐ Facile</span>
+    <p>uₙ = (2/3)ⁿ avec uₙ > 0. Le rapport uₙ₊₁ / uₙ vaut :</p>
+    <div class="options">
+      <label><input type="radio" name="s5q2" value="A"> 3/2 ≥ 1 → croissante</label>
+      <label><input type="radio" name="s5q2" value="B"> 2/3 ≤ 1 → décroissante</label>
+    </div>
+    <button class="btn-check s5" onclick="check('s5q2','B','(2/3)ⁿ⁺¹ / (2/3)ⁿ = 2/3 &lt; 1 → décroissante.',5)">Vérifier</button>
+    <div class="result" id="s5q2-r"></div>
+  </div>
 
-<div class="exo">
-<p>2️⃣ Même suite : calculer u₂.</p>
-<input type="radio" name="r2" value="A"> 8<br>
-<input type="radio" name="r2" value="B"> 11<br>
-<button class="btn" onclick="checkAnswer('r2','A','u₂ = 5 + 3 = 8.')">Vérifier</button>
-<div id="r2-result"></div>
-</div>
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
 
-<div class="exo">
-<p>3️⃣ u₀ = 1, uₙ₊₁ = 3uₙ − 1. Calculer u₁.</p>
-<input type="radio" name="r3" value="A"> 2<br>
-<input type="radio" name="r3" value="B"> 3<br>
-<button class="btn" onclick="checkAnswer('r3','A','u₁ = 3×1 − 1 = 2.')">Vérifier</button>
-<div id="r3-result"></div>
-</div>
+  <div class="exo-card">
+    <div class="qnum">Question 3</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>Pour uₙ = n² − 6n, on pose f(x) = x² − 6x. À partir de quel rang la suite est-elle croissante ?</p>
+    <div class="options">
+      <label><input type="radio" name="s5q3" value="A"> n = 2</label>
+      <label><input type="radio" name="s5q3" value="B"> n = 3</label>
+      <label><input type="radio" name="s5q3" value="C"> n = 4</label>
+    </div>
+    <button class="btn-check s5" onclick="check('s5q3','B','f\'(x) = 2x − 6 = 0 → x = 3. La suite est croissante pour n ≥ 3.',5)">Vérifier</button>
+    <div class="result" id="s5q3-r"></div>
+  </div>
 
-<div class="exo">
-<p>4️⃣ Cette suite est :</p>
-<input type="radio" name="r4" value="A"> arithmétique<br>
-<input type="radio" name="r4" value="B"> géométrique<br>
-<input type="radio" name="r4" value="C"> aucune des deux<br>
-<button class="btn" onclick="checkAnswer('r4','C','La relation ne correspond ni à +r ni à ×q.')">Vérifier</button>
-<div id="r4-result"></div>
-</div>
-</section>
+  <div class="exo-card">
+    <div class="qnum">Question 4</div>
+    <span class="level lvl-medium">⭐⭐ Intermédiaire</span>
+    <p>uₙ₊₁ = 2uₙ + 1 avec u₀ = 3. Quelle méthode utiliser pour étudier la variation ?</p>
+    <div class="options">
+      <label><input type="radio" name="s5q4" value="A"> Méthode 3 (fonction associée)</label>
+      <label><input type="radio" name="s5q4" value="B"> Méthode 1 (différence)</label>
+      <label><input type="radio" name="s5q4" value="C"> Les 3 méthodes</label>
+    </div>
+    <button class="btn-check s5" onclick="check('s5q4','B','Suite récurrente → seule la méthode 1 est applicable. Les méthodes 2 et 3 requièrent une formule explicite.',5)">Vérifier</button>
+    <div class="result" id="s5q4-r"></div>
+  </div>
 
-<div class="footer">
-© Ton Coach Scolaire – Mathématiques Première • Suites numériques
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 5 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Étudier le sens de variation de uₙ = 3n − 5 par la méthode 1.</p>
+    <button class="btn-toggle" onclick="toggle('s5c5')">📋 Voir la correction</button>
+    <div class="correction" id="s5c5">
+      <div class="step">uₙ₊₁ = 3(n+1) − 5 = 3n − 2</div>
+      <div class="step">uₙ₊₁ − uₙ = (3n−2) − (3n−5) = <strong>3 &gt; 0</strong></div>
+      <div class="step">La différence est strictement positive pour tout n → suite <strong>croissante</strong>.</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 6 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Étudier le sens de variation de uₙ = 5 × (0,8)ⁿ par la méthode 2.</p>
+    <button class="btn-toggle" onclick="toggle('s5c6')">📋 Voir la correction</button>
+    <div class="correction" id="s5c6">
+      <div class="step">Tous les termes sont positifs (5 &gt; 0 et 0,8 &gt; 0) ✔</div>
+      <div class="step">uₙ₊₁ / uₙ = 5 × 0,8ⁿ⁺¹ / (5 × 0,8ⁿ) = <strong>0,8</strong></div>
+      <div class="step">0,8 &lt; 1 → la suite est <strong>décroissante</strong>.</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 7 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>Étudier le sens de variation de uₙ = n² − 8n + 10 par la méthode 3, selon les valeurs de n.</p>
+    <button class="btn-toggle" onclick="toggle('s5c7')">📋 Voir la correction</button>
+    <div class="correction" id="s5c7">
+      <div class="step">f(x) = x² − 8x + 10 → f'(x) = 2x − 8</div>
+      <div class="step">f'(x) = 0 → x = 4</div>
+      <div class="step">Pour n &lt; 4 : f'(n) &lt; 0 → suite <strong>décroissante</strong></div>
+      <div class="step">Pour n &gt; 4 : f'(n) &gt; 0 → suite <strong>croissante</strong></div>
+      <div class="step">Conclusion : décroissante pour n ≤ 4, croissante pour n ≥ 4.</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="qnum">Question 8 — Problème ouvert</div>
+    <span class="level lvl-hard">⭐⭐⭐ Avancé</span>
+    <p>u₀ = 9 et uₙ₊₁ = uₙ/3 + 2. La suite est-elle croissante ou décroissante ?</p>
+    <button class="btn-toggle" onclick="toggle('s5c8')">📋 Voir la correction</button>
+    <div class="correction" id="s5c8">
+      <div class="step">Suite récurrente → <strong>méthode 1</strong> obligatoire.</div>
+      <div class="step">uₙ₊₁ − uₙ = uₙ/3 + 2 − uₙ = 2 − 2uₙ/3</div>
+      <div class="step">Signe négatif si uₙ &gt; 3. Or u₀ = 9, u₁ = 5, u₂ ≈ 3,67 : tous &gt; 3.</div>
+      <div class="step">→ La suite est <strong>décroissante</strong>, elle converge vers L = 3.</div>
+    </div>
+  </div>
 </div>
 
 </main>
+
+<footer>
+  © Fiche interactive – Suites numériques – Mathématiques Première · Ton Coach Scolaire
+</footer>
+
+<script>showTab(1);</script>
 </body>
 </html>
