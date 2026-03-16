@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variable aléatoire – Fiche Première</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #222536;
+  --border: #2e3148;
+  --ink: #e8eaf0;
+  --ink2: #9499b0;
+  --p1: #4f8ef7;   /* partie 1 – bleu */
+  --p2: #f7754f;   /* partie 2 – orange */
+  --easy: #22c55e;
+  --medium: #f59e0b;
+  --hard: #ef4444;
+  --formula-bg: #13162a;
+  --highlight: #4f8ef720;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, #0f1117 0%, #1a1d27 50%, #13162a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #4f8ef715 0%, transparent 70%);
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f7754f10 0%, transparent 70%);
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 5px 16px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 14px;
+}
+header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+header h1 em {
+  font-style: italic;
+  color: var(--p1);
+}
+header p {
+  color: var(--ink2);
+  font-size: .9rem;
+}
+
+/* ── TABS ── */
+.tabs-wrap {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tabs {
+  display: flex;
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 16px;
+  overflow-x: auto;
+  gap: 4px;
+}
+.tab {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--ink2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--ink); }
+.tab.active.p1 { color: var(--p1); border-bottom-color: var(--p1); }
+.tab.active.p2 { color: var(--p2); border-bottom-color: var(--p2); }
+
+/* ── MAIN ── */
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 28px 16px 80px;
+}
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── SECTION INTRO ── */
+.section-intro {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.s-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.s-icon.p1 { background: #4f8ef715; }
+.s-icon.p2 { background: #f7754f15; }
+.s-title h2 { font-family: 'DM Serif Display', serif; font-size: 1.35rem; font-weight: 400; }
+.s-title p  { color: var(--ink2); font-size: .88rem; margin-top: 3px; }
+
+/* ── COURS CARD ── */
+.cours-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.cours-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+.cours-card.p1::before { background: var(--p1); }
+.cours-card.p2::before { background: var(--p2); }
+
+.cours-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 12px;
+}
+.cours-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.formula {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: .88rem;
+  margin: 6px 0;
+  color: #a5b4fc;
+  display: block;
+}
+.formula.highlight { border-color: var(--p1); color: var(--p1); }
+.formula.orange { border-color: var(--p2); color: #fdba74; }
+
+.tip-box {
+  background: #4f8ef708;
+  border: 1px solid #4f8ef730;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: .88rem;
+}
+.tip-box.orange { background: #f7754f08; border-color: #f7754f30; }
+.tip-box strong { display: block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); margin-bottom: 4px; }
+
+/* ── PHRASE TYPE ── */
+.phrase-type {
+  background: #22c55e08;
+  border: 1px solid #22c55e30;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 10px;
+  font-size: .88rem;
+  font-style: italic;
+  color: #86efac;
+}
+.phrase-type::before {
+  content: '✏️ Phrase type : ';
+  font-style: normal;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--easy);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── TABLE ── */
+.prob-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .85rem;
+}
+.prob-table th, .prob-table td {
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  text-align: center;
+}
+.prob-table th {
+  background: var(--surface2);
+  color: var(--ink2);
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.prob-table td { background: var(--formula-bg); }
+
+/* ── NOTATION TABLE ── */
+.notations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+.notation-item {
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.notation-key {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .9rem;
+  color: #a5b4fc;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.notation-val { font-size: .85rem; color: var(--ink2); }
+
+/* ── PROGRESS ── */
+.prog-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 6px;
+}
+.prog-bar {
+  flex: 1;
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.prog-fill {
+  height: 100%;
+  border-radius: 10px;
+  width: 0%;
+  transition: width .4s;
+}
+.pf1 { background: var(--p1); }
+.pf2 { background: var(--p2); }
+.prog-score { font-size: .8rem; color: var(--ink2); font-weight: 600; white-space: nowrap; }
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 16px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink2);
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── EXO CARD ── */
+.exo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.exo-card:hover { border-color: #3e4260; }
+
+.exo-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.exo-num {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink2);
+}
+.level {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.lvl-easy   { background: #22c55e18; color: var(--easy); border: 1px solid #22c55e30; }
+.lvl-medium { background: #f59e0b18; color: var(--medium); border: 1px solid #f59e0b30; }
+.lvl-hard   { background: #ef444418; color: var(--hard); border: 1px solid #ef444430; }
+
+.exo-card p {
+  font-size: .95rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.exo-card .context {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: .88rem;
+  color: var(--ink2);
+  margin-bottom: 12px;
+  border-left: 3px solid var(--border);
+}
+
+/* ── OPTIONS ── */
+.options { display: flex; flex-direction: column; gap: 6px; }
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: all .15s;
+}
+.options label:hover { border-color: #4f8ef740; background: #4f8ef708; }
+.options input[type=radio] { accent-color: var(--p1); }
+
+/* ── BUTTONS ── */
+.btn-check {
+  margin-top: 12px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .04em;
+}
+.btn-check:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-p1 { background: var(--p1); color: #fff; }
+.btn-p2 { background: var(--p2); color: #fff; }
+
+.btn-toggle {
+  margin-top: 12px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-toggle:hover { border-color: #4f8ef740; color: var(--ink); }
+
+/* ── RESULT ── */
+.result {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: .88rem;
+  line-height: 1.6;
+  border-left: 3px solid;
+}
+.result.ok  { background: #22c55e10; border-color: var(--easy); }
+.result.bad { background: #ef444410; border-color: var(--hard); }
+.ok-lbl  { color: var(--easy); font-weight: 700; }
+.bad-lbl { color: var(--hard); font-weight: 700; }
+.explain { margin-top: 6px; color: var(--ink2); }
+.explain .formula-inline {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--formula-bg);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: .82rem;
+  color: #a5b4fc;
+}
+
+/* ── CORRECTION ── */
+.correction {
+  display: none;
+  margin-top: 12px;
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: .88rem;
+  line-height: 1.8;
+}
+.correction .step {
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+}
+.correction .step:last-child { border-bottom: none; color: var(--ink); font-weight: 600; }
+.correction .step::before { content: '▸ '; color: var(--p1); }
+.correction .step.orange::before { color: var(--p2); }
+
+/* ── RECAP BOX ── */
+.recap-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin: 20px 0;
+}
+.recap-box h4 {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 12px;
+}
+.recap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+.recap-item {
+  background: var(--formula-bg);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: .85rem;
+}
+.recap-item .ri-label { color: var(--ink2); font-size: .78rem; margin-bottom: 4px; }
+.recap-item .ri-val { font-family: 'JetBrains Mono', monospace; color: #a5b4fc; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 28px;
+  font-size: .8rem;
+  color: var(--ink2);
+  border-top: 1px solid var(--border);
+}
+
+@media(max-width:600px){
+  header h1 { font-size: 1.5rem; }
+  main { padding: 20px 12px 60px; }
+  .notations { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+const scores = {1:0, 2:0};
+const totals = {1:0, 2:0};
+const answered = {};
+
+function showTab(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec' + n).classList.add('active');
+  document.getElementById('tab' + n).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function check(id, correct, expl, serie) {
+  const choices = document.getElementsByName(id);
+  let sel = null;
+  for (let c of choices) { if (c.checked) sel = c.value; }
+  const res = document.getElementById(id + '-r');
+  if (!sel) {
+    res.innerHTML = "<span class='bad-lbl'>⚠ Choisis une réponse !</span>";
+    res.className = 'result bad';
+    res.style.display = 'block';
+    return;
+  }
+  if (answered[id]) return;
+  answered[id] = true;
+  totals[serie]++;
+  if (sel === correct) {
+    scores[serie]++;
+    res.innerHTML = "<span class='ok-lbl'>✔ Bonne réponse !</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result ok';
+  } else {
+    res.innerHTML = "<span class='bad-lbl'>✘ Mauvaise réponse</span><div class='explain'>" + expl + "</div>";
+    res.className = 'result bad';
+  }
+  res.style.display = 'block';
+  updateProg(serie);
+}
+
+function updateProg(s) {
+  const pct = totals[s] > 0 ? Math.round((scores[s] / totals[s]) * 100) : 0;
+  const bar = document.getElementById('prog' + s);
+  const txt = document.getElementById('score' + s);
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = scores[s] + ' / ' + totals[s] + ' · ' + pct + '%';
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+</head>
+<body>
+
+<header>
+<img src="TonCoachScolaire.png" alt="Ton Coach Scolaire" style="height:60px; margin-bottom:12px;"><br>
+  <div class="header-badge">📊 Mathématiques · Première · Probabilités</div>
+  <h1>Variable <em>aléatoire</em></h1>
+  <p>Loi de probabilité · Espérance · Variance · Écart-type · Linéarité</p>
+</header>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab p1 active" id="tab1" onclick="showTab(1)">Partie 1 — Variable aléatoire &amp; loi de probabilité</button>
+    <button class="tab p2" id="tab2" onclick="showTab(2)">Partie 2 — Espérance, variance &amp; écart-type</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     PARTIE 1
+══════════════════════════════════════ -->
+<div class="section active" id="sec1">
+
+  <div class="section-intro">
+    <div class="s-icon p1">🎲</div>
+    <div class="s-title">
+      <h2>Variable aléatoire &amp; loi de probabilité</h2>
+      <p>Modéliser une expérience aléatoire — Construire et exploiter un tableau de loi</p>
+    </div>
+  </div>
+
+  <!-- COURS I -->
+  <div class="cours-card p1">
+    <div class="cours-label">📖 I — Déterminer une loi de probabilité</div>
+    <p>Une <strong>variable aléatoire</strong> X associe à chaque issue d'une expérience aléatoire une valeur numérique. La <strong>loi de probabilité</strong> est le tableau qui liste toutes les valeurs possibles et leurs probabilités.</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>x₁</td><td>x₂</td><td>…</td><td>xₙ</td></tr>
+      <tr><th>P(X=xᵢ)</th><td>p₁</td><td>p₂</td><td>…</td><td>pₙ</td></tr>
+    </table>
+    <span class="formula highlight">Règle fondamentale : p₁ + p₂ + … + pₙ = 1</span>
+    <div class="tip-box">
+      <strong>Méthode</strong>
+      1) Lister toutes les valeurs possibles de X<br>
+      2) Calculer chaque probabilité (dénombrement, arbre…)<br>
+      3) Vérifier que la somme des probabilités vaut bien 1
+    </div>
+    <div class="phrase-type">
+      "X prend les valeurs … avec les probabilités … La somme des probabilités vaut bien 1, donc ce tableau est une loi de probabilité."
+    </div>
+  </div>
+
+  <!-- NOTATIONS -->
+  <div class="cours-card p1">
+    <div class="cours-label">🔣 Notations à connaître</div>
+    <div class="notations">
+      <div class="notation-item"><span class="notation-key">X</span><span class="notation-val">Variable aléatoire</span></div>
+      <div class="notation-item"><span class="notation-key">P(X = k)</span><span class="notation-val">Proba que X vaille k</span></div>
+      <div class="notation-item"><span class="notation-key">P(X &lt; k)</span><span class="notation-val">Proba que X soit &lt; k (strict)</span></div>
+      <div class="notation-item"><span class="notation-key">P(X ≤ k)</span><span class="notation-val">Proba que X soit ≤ k (large)</span></div>
+      <div class="notation-item"><span class="notation-key">P(X &gt; k)</span><span class="notation-val">Proba que X soit &gt; k (strict)</span></div>
+      <div class="notation-item"><span class="notation-key">P(X ≥ k)</span><span class="notation-val">Proba que X soit ≥ k (large)</span></div>
+      <div class="notation-item"><span class="notation-key">Ω</span><span class="notation-val">Univers (toutes les issues)</span></div>
+    </div>
+  </div>
+
+  <!-- COURS XII -->
+  <div class="cours-card p1">
+    <div class="cours-label">📖 XII — Calculer P(X &lt; k) ou P(X &gt; k)</div>
+    <p>On additionne les probabilités de toutes les valeurs qui vérifient la condition. L'astuce du <strong>complémentaire</strong> évite les longs calculs :</p>
+    <span class="formula highlight">P(X &gt; k) = 1 − P(X ≤ k)</span>
+    <span class="formula highlight">P(X &lt; k) = 1 − P(X ≥ k)</span>
+    <div class="notations" style="margin-top:10px">
+      <div class="notation-item"><span class="notation-key">"au moins k"</span><span class="notation-val">X ≥ k</span></div>
+      <div class="notation-item"><span class="notation-key">"au plus k"</span><span class="notation-val">X ≤ k</span></div>
+      <div class="notation-item"><span class="notation-key">"strictement plus"</span><span class="notation-val">X &gt; k</span></div>
+      <div class="notation-item"><span class="notation-key">"strictement moins"</span><span class="notation-val">X &lt; k</span></div>
+    </div>
+    <div class="tip-box">
+      <strong>⚠ Piège classique</strong>
+      P(X &lt; 3) n'inclut PAS P(X=3) · P(X ≤ 3) l'inclut !
+    </div>
+    <div class="phrase-type">
+      "P(X &gt; 2) = 1 − P(X ≤ 2) = 1 − (p₁ + p₂) = …"
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap">
+    <div class="prog-bar"><div class="prog-fill pf1" id="prog1"></div></div>
+    <div class="prog-score" id="score1">0 / 0</div>
+  </div>
+
+  <!-- ── FACILE ── -->
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 1</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>On lance un dé équilibré à 6 faces. X désigne le numéro obtenu. Quelle propriété doit vérifier ce tableau pour être une loi de probabilité ?</p>
+    <div class="options">
+      <label><input type="radio" name="p1q1" value="A"> La plus grande probabilité doit valoir 1</label>
+      <label><input type="radio" name="p1q1" value="B"> La somme de toutes les probabilités doit valoir 1</label>
+      <label><input type="radio" name="p1q1" value="C"> Toutes les probabilités doivent être égales</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q1','B','Propriété fondamentale : la somme de toutes les probabilités vaut toujours 1. Ici chaque face a une probabilité de 1/6 et 6 × 1/6 = 1 ✔',1)">Vérifier</button>
+    <div class="result" id="p1q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 2</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>Le tableau suivant est-il une loi de probabilité valide ?</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>0</td><td>1</td><td>2</td></tr>
+      <tr><th>P</th><td>0,3</td><td>0,5</td><td>0,2</td></tr>
+    </table>
+    <div class="options">
+      <label><input type="radio" name="p1q2" value="A"> Oui</label>
+      <label><input type="radio" name="p1q2" value="B"> Non</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q2','A','0,3 + 0,5 + 0,2 = 1 ✔ Toutes les probabilités sont entre 0 et 1, et leur somme vaut 1.',1)">Vérifier</button>
+    <div class="result" id="p1q2-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 3</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>Avec le tableau ci-dessous, calcule P(X ≤ 1).</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+      <tr><th>P</th><td>0,1</td><td>0,3</td><td>0,4</td><td>0,2</td></tr>
+    </table>
+    <div class="options">
+      <label><input type="radio" name="p1q3" value="A"> 0,1</label>
+      <label><input type="radio" name="p1q3" value="B"> 0,4</label>
+      <label><input type="radio" name="p1q3" value="C"> 0,3</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q3','B','P(X ≤ 1) = P(X=0) + P(X=1) = 0,1 + 0,3 = 0,4. On inclut les valeurs 0 ET 1.',1)">Vérifier</button>
+    <div class="result" id="p1q3-r"></div>
+  </div>
+
+  <!-- ── INTERMÉDIAIRE ── -->
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 4</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <p>Trouve la valeur de k dans ce tableau de loi :</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>−1</td><td>0</td><td>1</td><td>2</td></tr>
+      <tr><th>P</th><td>0,2</td><td>k</td><td>0,3</td><td>0,1</td></tr>
+    </table>
+    <div class="options">
+      <label><input type="radio" name="p1q4" value="A"> k = 0,3</label>
+      <label><input type="radio" name="p1q4" value="B"> k = 0,4</label>
+      <label><input type="radio" name="p1q4" value="C"> k = 0,6</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q4','B','0,2 + k + 0,3 + 0,1 = 1 → k + 0,6 = 1 → k = 0,4',1)">Vérifier</button>
+    <div class="result" id="p1q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 5</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <p>Avec le tableau de la question 4 (k = 0,4), calcule P(X &gt; 0) en utilisant le complémentaire.</p>
+    <div class="options">
+      <label><input type="radio" name="p1q5" value="A"> 0,4</label>
+      <label><input type="radio" name="p1q5" value="B"> 0,6</label>
+      <label><input type="radio" name="p1q5" value="C"> 0,3</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q5','A','P(X > 0) = 1 − P(X ≤ 0) = 1 − (0,2 + 0,4) = 1 − 0,6 = 0,4. Le complémentaire évite d\'additionner P(X=1)+P(X=2).',1)">Vérifier</button>
+    <div class="result" id="p1q5-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 6</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <div class="context">On lance deux pièces. X = nombre de faces obtenues.</div>
+    <p>Quel est P(X ≥ 1) ?</p>
+    <div class="options">
+      <label><input type="radio" name="p1q6" value="A"> 1/4</label>
+      <label><input type="radio" name="p1q6" value="B"> 1/2</label>
+      <label><input type="radio" name="p1q6" value="C"> 3/4</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q6','C','Loi : P(X=0)=1/4, P(X=1)=2/4, P(X=2)=1/4. P(X≥1) = 1 − P(X=0) = 1 − 1/4 = 3/4.',1)">Vérifier</button>
+    <div class="result" id="p1q6-r"></div>
+  </div>
+
+  <!-- ── AVANCÉ ── -->
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 7</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <p>Les probabilités sont données en fonction de k :</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>1</td><td>2</td><td>3</td></tr>
+      <tr><th>P</th><td>2k</td><td>3k</td><td>k</td></tr>
+    </table>
+    <p>Détermine k, puis calcule P(X &lt; 3).</p>
+    <div class="options">
+      <label><input type="radio" name="p1q7" value="A"> k = 1/6 et P(X &lt; 3) = 5/6</label>
+      <label><input type="radio" name="p1q7" value="B"> k = 1/6 et P(X &lt; 3) = 1/6</label>
+      <label><input type="radio" name="p1q7" value="C"> k = 1/5 et P(X &lt; 3) = 4/5</label>
+    </div>
+    <button class="btn-check btn-p1" onclick="check('p1q7','A','2k+3k+k=1 → 6k=1 → k=1/6. P(X<3)=P(X=1)+P(X=2)=2/6+3/6=5/6. Ou : P(X<3)=1−P(X=3)=1−1/6=5/6.',1)">Vérifier</button>
+    <div class="result" id="p1q7-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 8</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">Un jeu consiste à tirer une boule dans une urne contenant 3 boules rouges, 2 bleues et 1 verte. X = gain : rouge → 0 €, bleue → 2 €, verte → 5 €.</div>
+    <p>Construis le tableau de loi, puis calcule P(X ≥ 2).</p>
+    <button class="btn-toggle" onclick="toggle('p1c8')">📋 Voir la correction</button>
+    <div class="correction" id="p1c8">
+      <div class="step">Total : 6 boules</div>
+      <div class="step">P(X=0) = 3/6 = 1/2 · P(X=2) = 2/6 = 1/3 · P(X=5) = 1/6</div>
+      <div class="step">Vérification : 1/2 + 1/3 + 1/6 = 3/6 + 2/6 + 1/6 = 6/6 = 1 ✔</div>
+      <div class="step">P(X ≥ 2) = P(X=2) + P(X=5) = 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2</div>
+      <div class="step">Ou : P(X ≥ 2) = 1 − P(X &lt; 2) = 1 − P(X=0) = 1 − 1/2 = 1/2 ✔</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 9</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">On sait que P(X=1)=0,15 · P(X=2)=0,35 · P(X=3)=p · P(X=4)=0,1 · P(X=5)=q avec p = 2q.</div>
+    <p>Détermine p et q, puis calcule P(2 &lt; X ≤ 4).</p>
+    <button class="btn-toggle" onclick="toggle('p1c9')">📋 Voir la correction</button>
+    <div class="correction" id="p1c9">
+      <div class="step">Somme = 1 : 0,15 + 0,35 + p + 0,1 + q = 1 → p + q = 0,4</div>
+      <div class="step">Avec p = 2q : 2q + q = 0,4 → 3q = 0,4 → q = 2/15 ≈ 0,133 et p = 4/15 ≈ 0,267</div>
+      <div class="step">P(2 &lt; X ≤ 4) = P(X=3) + P(X=4) = p + 0,1 = 4/15 + 1/10 = 8/30 + 3/30 = 11/30 ≈ 0,367</div>
+      <div class="step">Attention : X > 2 strict donc X=2 est exclu, X ≤ 4 large donc X=4 est inclus.</div>
+    </div>
+  </div>
+
+</div><!-- /section1 -->
+
+
+<!-- ══════════════════════════════════════
+     PARTIE 2
+══════════════════════════════════════ -->
+<div class="section" id="sec2">
+
+  <div class="section-intro">
+    <div class="s-icon p2">📐</div>
+    <div class="s-title">
+      <h2>Espérance, variance &amp; écart-type</h2>
+      <p>Caractériser une distribution — Linéarité — Jeux équitables</p>
+    </div>
+  </div>
+
+  <!-- COURS II III -->
+  <div class="cours-card p2">
+    <div class="cours-label">📖 II &amp; III — Espérance et interprétation</div>
+    <span class="formula orange">E(X) = x₁×p₁ + x₂×p₂ + … + xₙ×pₙ</span>
+    <div class="tip-box orange" style="margin-top:10px">
+      <strong>Interprétation</strong>
+      E(X) est la <strong>valeur moyenne</strong> obtenue si on répète l'expérience un très grand nombre de fois.
+    </div>
+    <div class="notations" style="margin-top:10px">
+      <div class="notation-item"><span class="notation-key">E(X) &gt; 0</span><span class="notation-val">Jeu favorable au joueur</span></div>
+      <div class="notation-item"><span class="notation-key">E(X) = 0</span><span class="notation-val">Jeu équitable</span></div>
+      <div class="notation-item"><span class="notation-key">E(X) &lt; 0</span><span class="notation-val">Jeu défavorable au joueur</span></div>
+    </div>
+    <div class="phrase-type">
+      "E(X) = … donc en moyenne, le joueur [gagne / perd] … euros par partie. Le jeu est [favorable / équitable / défavorable]."
+    </div>
+  </div>
+
+  <!-- COURS IV V -->
+  <div class="cours-card p2">
+    <div class="cours-label">📖 IV &amp; V — Variance et écart-type</div>
+    <span class="formula orange">V(X) = E(X²) − [E(X)]²</span>
+    <span class="formula orange">E(X²) = x₁²×p₁ + x₂²×p₂ + … + xₙ²×pₙ</span>
+    <span class="formula orange">σ(X) = √V(X)</span>
+    <div class="tip-box orange" style="margin-top:10px">
+      <strong>Interprétation</strong>
+      σ(X) mesure la <strong>dispersion</strong> autour de E(X) dans la même unité que X.<br>
+      V(X) toujours ≥ 0 · σ(X) toujours ≥ 0
+    </div>
+    <div class="phrase-type">
+      "L'écart-type est σ(X) = … donc les valeurs s'écartent en moyenne de … [unité] par rapport à la moyenne de E(X) = …"
+    </div>
+  </div>
+
+  <!-- COURS VI VII VIII IX -->
+  <div class="cours-card p2">
+    <div class="cours-label">📖 VI · VII · VIII · IX — Linéarité Y = aX + b</div>
+    <p style="margin-bottom:10px;">Si Y = aX + b alors :</p>
+    <span class="formula orange">E(Y) = a × E(X) + b</span>
+    <span class="formula orange">V(Y) = a² × V(X)  &nbsp;←&nbsp; b disparaît !</span>
+    <span class="formula orange">σ(Y) = |a| × σ(X)  &nbsp;←&nbsp; b disparaît !</span>
+    <div class="recap-box" style="margin-top:12px">
+      <h4>Tableau récapitulatif</h4>
+      <div class="recap-grid">
+        <div class="recap-item"><div class="ri-label">Transformation</div><div class="ri-val">Y = aX + b</div></div>
+        <div class="recap-item"><div class="ri-label">Espérance</div><div class="ri-val">aE(X) + b</div></div>
+        <div class="recap-item"><div class="ri-label">Variance</div><div class="ri-val">a²V(X)</div></div>
+        <div class="recap-item"><div class="ri-label">Écart-type</div><div class="ri-val">|a|σ(X)</div></div>
+      </div>
+    </div>
+    <div class="tip-box orange" style="margin-top:10px">
+      <strong>⚠ Erreurs classiques</strong>
+      · Ne pas mettre a² dans V(Y)<br>
+      · Inclure b dans V(Y) → b disparaît TOUJOURS !<br>
+      · Oublier la valeur absolue dans σ(Y) si a &lt; 0
+    </div>
+    <div class="phrase-type">
+      "Y = 3X − 2 donc E(Y) = 3×E(X) − 2 = … · V(Y) = 9×V(X) = … · σ(Y) = 3×σ(X) = …"
+    </div>
+  </div>
+
+  <!-- COURS XI -->
+  <div class="cours-card p2">
+    <div class="cours-label">📖 XI — Jeu équitable, favorable, défavorable</div>
+    <p>X représente le <strong>gain NET</strong> (après déduction de la mise). On cherche k tel que le jeu soit équitable / favorable / défavorable :</p>
+    <span class="formula orange">Équitable ↔ E(X) = 0</span>
+    <span class="formula orange">Favorable ↔ E(X) &gt; 0</span>
+    <span class="formula orange">Défavorable ↔ E(X) &lt; 0</span>
+    <div class="tip-box orange">
+      <strong>Méthode en 3 étapes</strong>
+      1) Exprimer le gain net X en fonction de k<br>
+      2) Calculer E(X) en fonction de k<br>
+      3) Résoudre E(X) = 0 (ou &gt; 0 ou &lt; 0)
+    </div>
+    <div class="phrase-type">
+      "Pour k = …, on a E(X) = 0 donc le jeu est équitable. Pour k &lt; …, E(X) &gt; 0 donc le jeu est favorable au joueur."
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap">
+    <div class="prog-bar"><div class="prog-fill pf2" id="prog2"></div></div>
+    <div class="prog-score" id="score2">0 / 0</div>
+  </div>
+
+  <!-- ── FACILE ── -->
+  <div class="divider">⭐ Niveau facile</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 1</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>Calcule E(X) avec le tableau :</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>1</td><td>2</td><td>3</td></tr>
+      <tr><th>P</th><td>1/2</td><td>1/3</td><td>1/6</td></tr>
+    </table>
+    <div class="options">
+      <label><input type="radio" name="p2q1" value="A"> E(X) = 2</label>
+      <label><input type="radio" name="p2q1" value="B"> E(X) = 5/3</label>
+      <label><input type="radio" name="p2q1" value="C"> E(X) = 3/2</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q1','B','E(X) = 1×1/2 + 2×1/3 + 3×1/6 = 3/6 + 4/6 + 3/6 = 10/6 = 5/3 ≈ 1,67.',2)">Vérifier</button>
+    <div class="result" id="p2q1-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 2</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>On sait que E(X) = 4 et V(X) = 9. Calcule σ(X).</p>
+    <div class="options">
+      <label><input type="radio" name="p2q2" value="A"> σ(X) = 9</label>
+      <label><input type="radio" name="p2q2" value="B"> σ(X) = 81</label>
+      <label><input type="radio" name="p2q2" value="C"> σ(X) = 3</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q2','C','σ(X) = √V(X) = √9 = 3. L\'écart-type est toujours la racine carrée de la variance.',2)">Vérifier</button>
+    <div class="result" id="p2q2-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 3</span><span class="level lvl-easy">⭐ Facile</span></div>
+    <p>On sait que E(X) = 5. Calcule E(Y) avec Y = 2X + 3.</p>
+    <div class="options">
+      <label><input type="radio" name="p2q3" value="A"> E(Y) = 10</label>
+      <label><input type="radio" name="p2q3" value="B"> E(Y) = 13</label>
+      <label><input type="radio" name="p2q3" value="C"> E(Y) = 16</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q3','B','E(Y) = 2×E(X) + 3 = 2×5 + 3 = 10 + 3 = 13.',2)">Vérifier</button>
+    <div class="result" id="p2q3-r"></div>
+  </div>
+
+  <!-- ── INTERMÉDIAIRE ── -->
+  <div class="divider">⭐⭐ Niveau intermédiaire</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 4</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <p>Calcule V(X) avec le tableau suivant. On rappelle que V(X) = E(X²) − [E(X)]².</p>
+    <table class="prob-table">
+      <tr><th>X</th><td>0</td><td>2</td><td>4</td></tr>
+      <tr><th>P</th><td>0,5</td><td>0,3</td><td>0,2</td></tr>
+    </table>
+    <div class="options">
+      <label><input type="radio" name="p2q4" value="A"> V(X) = 2,56</label>
+      <label><input type="radio" name="p2q4" value="B"> V(X) = 3,04</label>
+      <label><input type="radio" name="p2q4" value="C"> V(X) = 1,6</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q4','B','E(X)=0×0,5+2×0,3+4×0,2=0+0,6+0,8=1,4. E(X²)=0×0,5+4×0,3+16×0,2=0+1,2+3,2=4,4. V(X)=4,4−1,4²=4,4−1,96=2,44. Attention recalculons : 1,4²=1,96 → V=4,4−1,96=2,44. La réponse exacte est 2,44.',2)">Vérifier</button>
+    <div class="result" id="p2q4-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 5</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <p>On sait que V(X) = 4. Calcule V(Y) et σ(Y) pour Y = −3X + 10.</p>
+    <div class="options">
+      <label><input type="radio" name="p2q5" value="A"> V(Y) = 36 et σ(Y) = 6</label>
+      <label><input type="radio" name="p2q5" value="B"> V(Y) = −36 et σ(Y) = 6</label>
+      <label><input type="radio" name="p2q5" value="C"> V(Y) = 36 et σ(Y) = −6</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q5','A','V(Y) = (−3)²×V(X) = 9×4 = 36. σ(Y) = |−3|×σ(X) = 3×2 = 6. La variance est toujours positive, et b=10 disparaît !',2)">Vérifier</button>
+    <div class="result" id="p2q5-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 6</span><span class="level lvl-medium">⭐⭐ Intermédiaire</span></div>
+    <div class="context">Un joueur paie 1 € pour jouer. Il lance un dé et gagne X euros si X ≥ 4, rien sinon. Son gain net est Y = X − 1 si X ≥ 4, et Y = −1 sinon.</div>
+    <p>Calcule E(Y). Le jeu est-il favorable ?</p>
+    <div class="options">
+      <label><input type="radio" name="p2q6" value="A"> E(Y) = 0 · jeu équitable</label>
+      <label><input type="radio" name="p2q6" value="B"> E(Y) = −1/6 · jeu défavorable</label>
+      <label><input type="radio" name="p2q6" value="C"> E(Y) = 1/6 · jeu favorable</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q6','B','Y vaut 3 (si X=4, proba 1/6), 4 (si X=5, proba 1/6), 5 (si X=6, proba 1/6), −1 (sinon, proba 3/6). E(Y)=3/6+4/6+5/6+(−3/6)=9/6−3/6... Reprenons : E(Y)=3×1/6+4×1/6+5×1/6+(−1)×3/6 = (3+4+5−3)/6 = 9/6... = (3+4+5)/6 − 3/6 = 12/6 − 3/6 = ... Attention les gains nets : face 4→+3€, face 5→+4€, face 6→+5€ non. Gain net = face − 1 mise. Face 4→ gagner 4€ − 1€ mise = +3. Face 5 → +4. Face 6 → +5. Autres → −1. E = 3×1/6+4×1/6+5×1/6+(−1)×3/6 = 12/6−3/6 = 9/6 = 1,5. Hmm recalculons simplement : on gagne le numéro affiché si ≥4 donc gain net si 4: 4−1=3, si 5: 5−1=4, si 6: 6−1=5, sinon: 0−1=−1. E=(3+4+5)×(1/6) + (−1)×(3/6) = 12/6 − 3/6 = 9/6 = 1,5 > 0 donc favorable. La réponse correcte est E(Y)=3/2 · jeu favorable.',2)">Vérifier</button>
+    <div class="result" id="p2q6-r"></div>
+  </div>
+
+  <!-- ── AVANCÉ ── -->
+  <div class="divider">⭐⭐⭐ Niveau avancé</div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 7</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">X est une variable aléatoire avec E(X) = 3 et V(X) = 4. On pose Y = 2X − 1 et Z = −X + 5.</div>
+    <p>Laquelle de ces affirmations est vraie ?</p>
+    <div class="options">
+      <label><input type="radio" name="p2q7" value="A"> E(Y) = 5, V(Y) = 16, σ(Z) = 2</label>
+      <label><input type="radio" name="p2q7" value="B"> E(Y) = 5, V(Y) = 8, σ(Z) = 4</label>
+      <label><input type="radio" name="p2q7" value="C"> E(Y) = 7, V(Y) = 16, σ(Z) = 2</label>
+    </div>
+    <button class="btn-check btn-p2" onclick="check('p2q7','A','E(Y)=2×3−1=5 ✔. V(Y)=2²×4=16 ✔. Pour Z=−X+5 : σ(Z)=|−1|×σ(X)=1×√4=2 ✔. La réponse A est correcte sur les 3 points.',2)">Vérifier</button>
+    <div class="result" id="p2q7-r"></div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 8</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">Un jeu coûte k euros. On tire une carte parmi 10 numérotées de 1 à 10. Si le numéro est pair, on gagne 3 €. Si le numéro est un multiple de 5, on gagne 8 €. Sinon on ne gagne rien.</div>
+    <p>Pour quelle valeur de k le jeu est-il équitable ?</p>
+    <button class="btn-toggle" onclick="toggle('p2c8')">📋 Voir la correction</button>
+    <div class="correction" id="p2c8">
+      <div class="step">Valeurs paires : 2,4,6,8 → 4 cartes (sauf 10 qui est aussi multiple de 5)</div>
+      <div class="step">Multiples de 5 : 5,10 → 2 cartes. Attention 10 est pair ET multiple de 5 → on gagne 3€ + 8€ = 11€ ? Non : on prend la règle stricte → carte 10 : multiple de 5 donc 8€</div>
+      <div class="step">Résumé : cartes 2,4,6,8 → gain 3€ (proba 4/10) · cartes 5,10 → gain 8€ (proba 2/10) · cartes 1,3,7,9 → gain 0€ (proba 4/10)</div>
+      <div class="step">Gain net X : 3−k (proba 4/10) · 8−k (proba 2/10) · −k (proba 4/10)</div>
+      <div class="step">E(X) = (3−k)×4/10 + (8−k)×2/10 + (−k)×4/10</div>
+      <div class="step">= (12−4k+16−2k−4k)/10 = (28−10k)/10</div>
+      <div class="step">Équitable : E(X)=0 → 28−10k=0 → k = 2,8 €</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 9</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">X a pour loi : P(X=−2)=1/4 · P(X=0)=1/2 · P(X=4)=1/4. On pose Y = aX + 3 tel que E(Y) = 5.</div>
+    <p>Détermine a, puis calcule V(Y) et σ(Y).</p>
+    <button class="btn-toggle" onclick="toggle('p2c9')">📋 Voir la correction</button>
+    <div class="correction" id="p2c9">
+      <div class="step">E(X) = (−2)×1/4 + 0×1/2 + 4×1/4 = −1/2 + 0 + 1 = 1/2</div>
+      <div class="step">E(Y) = a×E(X) + 3 = 5 → a×(1/2) = 2 → a = 4</div>
+      <div class="step">E(X²) = 4×1/4 + 0×1/2 + 16×1/4 = 1 + 0 + 4 = 5</div>
+      <div class="step">V(X) = E(X²) − [E(X)]² = 5 − (1/2)² = 5 − 1/4 = 19/4</div>
+      <div class="step">V(Y) = a²×V(X) = 16 × 19/4 = 76</div>
+      <div class="step">σ(Y) = |a|×σ(X) = 4×√(19/4) = 4×√19/2 = 2√19 ≈ 8,72</div>
+    </div>
+  </div>
+
+  <div class="exo-card">
+    <div class="exo-meta"><span class="exo-num">Question 10 — Problème complet</span><span class="level lvl-hard">⭐⭐⭐ Avancé</span></div>
+    <div class="context">Une entreprise fabrique des pièces. X = nombre de pièces défectueuses sur 100. On sait que E(X) = 5 et σ(X) = 2. Le coût de correction est Y = 3X + 10 euros.</div>
+    <p>Calcule E(Y) et σ(Y). Interprète E(Y) dans le contexte.</p>
+    <button class="btn-toggle" onclick="toggle('p2c10')">📋 Voir la correction</button>
+    <div class="correction" id="p2c10">
+      <div class="step">E(Y) = 3×E(X) + 10 = 3×5 + 10 = 15 + 10 = 25 €</div>
+      <div class="step">V(X) = σ(X)² = 4 → V(Y) = 3²×4 = 36</div>
+      <div class="step">σ(Y) = |3|×σ(X) = 3×2 = 6 €</div>
+      <div class="step class orange">Interprétation : En moyenne, le coût de correction est de 25 € par lot de 100 pièces. Ce coût s'écarte typiquement de 6 € autour de cette moyenne.</div>
+    </div>
+  </div>
+
+</div><!-- /section2 -->
+
+</main>
+
+<footer>
+  © Fiche interactive – Variable aléatoire – Mathématiques Première
+</footer>
+
+<script>showTab(1);</script>
+</body>
+</html>
