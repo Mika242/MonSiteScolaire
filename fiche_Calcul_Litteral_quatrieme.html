@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calcul Littéral – 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdfaf5;--ink:#1a1410;--ink2:#6e6256;--card:#ffffff;--border:#e8e0d4;--s1:#d97706;--s2:#0f766e;--s3:#7c3aed;--easy:#16a34a;--med:#d97706;--hard:#dc2626}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{background:var(--ink);color:#fff;padding:32px 24px 26px;text-align:center;position:relative;overflow:hidden}
+header::before{content:'x\00b2';position:absolute;font-family:'Fraunces',serif;font-size:14rem;font-weight:900;opacity:.04;top:-40px;right:-20px;line-height:1;pointer-events:none}
+.hbadge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:5px 16px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px}
+header h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;line-height:1.1;margin-bottom:8px}
+header h1 em{font-style:italic;color:#fbbf24}
+header p{color:rgba(255,255,255,.5);font-size:.88rem}
+.tabs-bar{background:#fff;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 14px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:14px 20px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.t1.active{color:var(--s1);border-bottom-color:var(--s1)}
+.tab.t2.active{color:var(--s2);border-bottom-color:var(--s2)}
+.tab.t3.active{color:var(--s3);border-bottom-color:var(--s3)}
+main{max-width:980px;margin:auto;padding:24px 14px 80px}
+.section{display:none}
+.section.active{display:block}
+.sec-intro{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sec-ico{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1rem;font-weight:900;color:#fff;flex-shrink:0;text-align:center}
+.ico1{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.ico2{background:linear-gradient(135deg,#0f766e,#14b8a6)}
+.ico3{background:linear-gradient(135deg,#7c3aed,#a855f7)}
+.sec-intro h2{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700}
+.sec-intro p{font-size:.85rem;color:var(--ink2);margin-top:3px}
+.cours{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 22px;margin-bottom:14px;border-left:5px solid}
+.cours.s1{border-left-color:var(--s1)}
+.cours.s2{border-left-color:var(--s2)}
+.cours.s3{border-left-color:var(--s3)}
+.cours-lbl{font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.cours h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;margin-bottom:10px}
+.formula{font-family:'JetBrains Mono',monospace;background:#f8f4ee;border-radius:9px;padding:9px 14px;font-size:.88rem;margin:6px 0;display:block;border-left:3px solid var(--border)}
+.formula.s1c{border-left-color:var(--s1);color:#78350f;background:#fffbeb}
+.formula.s2c{border-left-color:var(--s2);color:#134e4a;background:#f0fdfa}
+.formula.s3c{border-left-color:var(--s3);color:#4c1d95;background:#f5f3ff}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;font-size:.86rem;margin-top:10px;line-height:1.6}
+.tip strong{display:block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#92400e;margin-bottom:4px}
+.ex-box{background:#f8f4ee;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.87rem;border:1px solid var(--border);line-height:1.7}
+.ex-box strong{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:4px}
+.mono{font-family:'JetBrains Mono',monospace;font-size:.9rem}
+.phrase-type{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.86rem;line-height:1.6}
+.phrase-type::before{content:'Methode : ';font-weight:800;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#15803d;display:block;margin-bottom:4px}
+.prog-row{display:flex;align-items:center;gap:12px;margin:20px 0 8px}
+.prog-bar{flex:1;height:5px;background:#e8e0d4;border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--s1)} .pf2{background:var(--s2)} .pf3{background:var(--s3)}
+.prog-score{font-size:.8rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.divider{display:flex;align-items:center;gap:10px;margin:24px 0 14px;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.exo{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px;transition:border-color .15s}
+.exo:hover{border-color:#c8bfb0}
+.exo-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.exo-num{font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.lvl{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.lvl-e{background:#dcfce7;color:#15803d}
+.lvl-m{background:#fef9c3;color:#a16207}
+.lvl-h{background:#fee2e2;color:#b91c1c}
+.exo p{font-size:.95rem;font-weight:600;line-height:1.55;margin-bottom:10px}
+.exo .context{background:#f8f4ee;border-radius:9px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;border-left:3px solid var(--border);font-style:italic;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opts label{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f8f4ee;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;font-size:.88rem;transition:all .15s;font-family:'JetBrains Mono',monospace}
+.opts label:hover{border-color:#a8956e;background:#fdf8ef}
+.opts input[type=radio]{flex-shrink:0}
+.fill-wrap{margin-top:6px}
+.fill-wrap label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:5px}
+.fill-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:.92rem;background:#f8f4ee;outline:none;transition:border .15s,background .15s}
+.fill-input:focus{border-color:#a8956e;background:#fff}
+.btn{padding:9px 20px;border-radius:9px;border:none;font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;transition:all .15s;margin-top:10px;margin-right:6px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.93)}
+.btn-s1{background:var(--s1);color:#fff}
+.btn-s2{background:var(--s2);color:#fff}
+.btn-s3{background:var(--s3);color:#fff}
+.btn-ghost{background:#fff;border:1.5px solid var(--border);color:var(--ink2)}
+.btn-ghost:hover{background:#f8f4ee;border-color:#a8956e}
+.result{display:none;margin-top:10px;padding:11px 14px;border-radius:9px;font-size:.87rem;line-height:1.6;border-left:3px solid}
+.result.ok{background:#dcfce7;border-color:var(--easy)}
+.result.bad{background:#fee2e2;border-color:var(--hard)}
+.ok-lbl{color:#15803d;font-weight:800}
+.bad-lbl{color:#b91c1c;font-weight:800}
+.explain{margin-top:5px;color:#374151;font-family:'JetBrains Mono',monospace;font-size:.84rem}
+.correction{display:none;margin-top:10px;background:#f8f4ee;border:1px solid var(--border);border-radius:11px;padding:13px 16px;font-size:.87rem;line-height:1.9;font-family:'JetBrains Mono',monospace}
+.correction .step{color:var(--ink2);border-bottom:1px dashed var(--border);padding:2px 0}
+.correction .step:last-child{border-bottom:none;color:var(--ink);font-weight:700}
+.correction .step::before{content:'> ';color:var(--s2)}
+.recap-table{width:100%;border-collapse:collapse;font-size:.85rem;margin:10px 0}
+.recap-table th{background:var(--ink);color:#fff;padding:9px 14px;text-align:left;font-size:.76rem;letter-spacing:.07em;text-transform:uppercase}
+.recap-table td{padding:8px 14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.83rem}
+.recap-table tr:nth-child(even) td{background:#f8f4ee}
+.recap-table td:first-child{color:#78350f;font-weight:600}
+.recap-table td:nth-child(2){color:#134e4a}
+footer{text-align:center;padding:24px;font-size:.8rem;color:var(--ink2);border-top:1px solid var(--border)}
+@media(max-width:600px){header h1{font-size:1.6rem}main{padding:16px 10px 60px}.opts label{font-size:.8rem}}
+</style>
+<script>
+const scores={s1:0,s2:0,s3:0};
+const totals={s1:0,s2:0,s3:0};
+const answered={};
+function showTab(id){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('sec-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,correct,expl,cat){
+  var choices=document.getElementsByName(id);
+  var sel=null;
+  for(var c of choices){if(c.checked)sel=c.value;}
+  var res=document.getElementById(id+'-r');
+  if(!sel){res.innerHTML="<span class='bad-lbl'>Choisis une reponse !</span>";res.className='result bad';res.style.display='block';return;}
+  if(answered[id])return;
+  answered[id]=true;totals[cat]++;
+  if(sel===correct){scores[cat]++;res.innerHTML="<span class='ok-lbl'>Correct !</span><div class='explain'>"+expl+"</div>";res.className='result ok';}
+  else{res.innerHTML="<span class='bad-lbl'>Incorrect</span><div class='explain'>"+expl+"</div>";res.className='result bad';}
+  res.style.display='block';
+  updateProg(cat);
+}
+function checkFill(id,correct,expl,cat){
+  var inp=document.getElementById(id+'-inp');
+  var res=document.getElementById(id+'-r');
+  var val=inp.value.trim().toLowerCase().replace(/\s+/g,'');
+  if(!val){res.innerHTML="<span class='bad-lbl'>Ecris ta reponse !</span>";res.className='result bad';res.style.display='block';return;}
+  if(answered[id])return;
+  answered[id]=true;totals[cat]++;
+  var cors=correct.split('|').map(function(c){return c.trim().toLowerCase().replace(/\s+/g,'')});
+  if(cors.includes(val)){scores[cat]++;res.innerHTML="<span class='ok-lbl'>Correct !</span><div class='explain'>"+expl+"</div>";res.className='result ok';}
+  else{res.innerHTML="<span class='bad-lbl'>Incorrect - Reponse : "+correct.split('|')[0]+"</span><div class='explain'>"+expl+"</div>";res.className='result bad';}
+  res.style.display='block';
+  updateProg(cat);
+}
+function updateProg(cat){
+  var pct=totals[cat]>0?Math.round((scores[cat]/totals[cat])*100):0;
+  var bar=document.getElementById('prog-'+cat);
+  var txt=document.getElementById('score-'+cat);
+  if(bar)bar.style.width=pct+'%';
+  if(txt)txt.textContent=scores[cat]+' / '+totals[cat]+' - '+pct+'%';
+}
+function toggle(id){
+  var el=document.getElementById(id);
+  el.style.display=(el.style.display==='block')?'none':'block';
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="hbadge">Mathematiques - 4eme - Algebre</div>
+  <h1>Calcul <em>litteral</em></h1>
+  <p>Factoriser - Reduire - Developper - Resoudre des problemes</p>
+</header>
+<div class="tabs-bar">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-s1" onclick="showTab('s1')">S1 - Factoriser &amp; Reduire</button>
+    <button class="tab t2" id="tab-s2" onclick="showTab('s2')">S2 - Developper</button>
+    <button class="tab t3" id="tab-s3" onclick="showTab('s3')">S3 - Problemes</button>
+  </div>
+</div>
+<main>
+
+<!-- SERIE 1 -->
+<div class="section active" id="sec-s1">
+  <div class="sec-intro">
+    <div class="sec-ico ico1">f(x)</div>
+    <div><h2>Serie 1 - Factoriser &amp; Reduire</h2><p>Regrouper les termes - Mettre en facteur commun</p></div>
+  </div>
+  <div class="cours s1">
+    <div class="cours-lbl">Cours - Reduire une expression</div>
+    <p>Reduire = regrouper les <strong>termes semblables</strong> (meme lettre, meme degre).</p>
+    <span class="formula s1c">3x + 5x = 8x</span>
+    <span class="formula s1c">4x2 + 2x - x2 + 3x = 3x2 + 5x</span>
+    <div class="tip"><strong>Attention</strong>On ne peut PAS additionner des termes de degres differents : 3x + 2x2 est deja reduit !</div>
+    <div class="phrase-type">Identifier les termes en x2, les termes en x, et les nombres. Regrouper chaque famille, puis simplifier.</div>
+  </div>
+  <div class="cours s1">
+    <div class="cours-lbl">Cours - Factoriser par un nombre</div>
+    <p>On cherche le <strong>facteur commun</strong> a tous les termes et on le met devant une parenthese.</p>
+    <span class="formula s1c">6x + 9 = 3(2x + 3)  --- facteur commun : 3</span>
+    <span class="formula s1c">10x - 15 = 5(2x - 3)  --- facteur commun : 5</span>
+    <div class="phrase-type">1) Trouver le PGCD des coefficients  2) Diviser chaque terme par ce PGCD  3) Verifier en developpant</div>
+  </div>
+  <div class="cours s1">
+    <div class="cours-lbl">Cours - Factoriser par une lettre</div>
+    <span class="formula s1c">x2 + 3x = x(x + 3)  --- facteur commun : x</span>
+    <span class="formula s1c">4x2 - 2x = 2x(2x - 1)  --- facteur commun : 2x</span>
+    <div class="tip"><strong>Verification</strong>Toujours redevplopper mentalement : x(x+3) = x2+3x. OK !</div>
+  </div>
+  <div class="cours s1">
+    <div class="cours-lbl">Cours - Factoriser par une expression</div>
+    <p>Quand la meme expression apparait dans plusieurs termes, elle devient le facteur commun.</p>
+    <span class="formula s1c">3(x+2) + 5(x+2) = (x+2)(3+5) = 8(x+2)</span>
+    <span class="formula s1c">x(x-1) + 4(x-1) = (x-1)(x+4)</span>
+    <div class="phrase-type">1) Identifier l'expression commune  2) La mettre devant  3) Ecrire ce qui reste dans la 2e parenthese</div>
+  </div>
+  <div class="cours s1">
+    <div class="cours-lbl">Recapitulatif - Les 4 types</div>
+    <table class="recap-table">
+      <tr><th>Type</th><th>Exemple</th><th>Resultat</th></tr>
+      <tr><td>Reduire</td><td>3x + 5x - 2</td><td>8x - 2</td></tr>
+      <tr><td>Facteur nombre</td><td>6x + 9</td><td>3(2x + 3)</td></tr>
+      <tr><td>Facteur lettre</td><td>x2 + 3x</td><td>x(x + 3)</td></tr>
+      <tr><td>Facteur expression</td><td>3(x+2) + 5(x+2)</td><td>8(x+2)</td></tr>
+    </table>
+  </div>
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf1" id="prog-s1"></div></div><div class="prog-score" id="score-s1">0 / 0</div></div>
+  <div class="divider">Niveau facile</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q1</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Reduis : <span class="mono">7x + 3x - 2</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q1" value="A"> 10x - 2</label>
+      <label><input type="radio" name="s1q1" value="B"> 8x</label>
+      <label><input type="radio" name="s1q1" value="C"> 10x + 2</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q1','A','7x + 3x = 10x (termes semblables), le -2 reste. Resultat : 10x - 2','s1')">Verifier</button>
+    <div class="result" id="s1q1-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q2</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Reduis : <span class="mono">5x2 + 2x - 3x2 + x</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q2" value="A"> 5x2</label>
+      <label><input type="radio" name="s1q2" value="B"> 2x2 + 3x</label>
+      <label><input type="radio" name="s1q2" value="C"> 8x2 + 3x</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q2','B','5x2 - 3x2 = 2x2 et 2x + x = 3x. Resultat : 2x2 + 3x','s1')">Verifier</button>
+    <div class="result" id="s1q2-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q3</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Factorise par un nombre : <span class="mono">4x + 8</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q3" value="A"> 2(2x + 4)</label>
+      <label><input type="radio" name="s1q3" value="B"> 4(x + 2)</label>
+      <label><input type="radio" name="s1q3" value="C"> 4(x + 8)</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q3','B','Facteur commun = 4. 4x/4 = x et 8/4 = 2. Donc 4(x+2). Verif : 4x + 4x2 = 4x+8 OK','s1')">Verifier</button>
+    <div class="result" id="s1q3-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q4</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Factorise par une lettre : <span class="mono">x2 + 5x</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q4" value="A"> x(x + 5)</label>
+      <label><input type="radio" name="s1q4" value="B"> 5(x2 + x)</label>
+      <label><input type="radio" name="s1q4" value="C"> x2(1 + 5)</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q4','A','Facteur commun = x. x2/x = x et 5x/x = 5. Donc x(x+5). Verif : x*x + x*5 = x2+5x OK','s1')">Verifier</button>
+    <div class="result" id="s1q4-r"></div>
+  </div>
+  <div class="divider">Niveau intermediaire</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q5</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Factorise : <span class="mono">6x2 - 9x</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q5" value="A"> 3(2x2 - 3x)</label>
+      <label><input type="radio" name="s1q5" value="B"> 3x(2x - 3)</label>
+      <label><input type="radio" name="s1q5" value="C"> 6x(x - 9)</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q5','B','Facteur commun = 3x (PGCD de 6 et 9 est 3, facteur lettre commun est x). 6x2/3x = 2x et 9x/3x = 3. Donc 3x(2x-3)','s1')">Verifier</button>
+    <div class="result" id="s1q5-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q6</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Identifie le facteur commun et factorise : <span class="mono">5(x+3) + 2(x+3)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q6" value="A"> 7(x+3)</label>
+      <label><input type="radio" name="s1q6" value="B"> (x+3)(5+2)</label>
+      <label><input type="radio" name="s1q6" value="C"> Les deux reponses sont equivalentes</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q6','C','(x+3) est le facteur commun. On obtient (x+3)(5+2) = (x+3)*7 = 7(x+3). Les deux ecritures sont correctes !','s1')">Verifier</button>
+    <div class="result" id="s1q6-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q7</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Reduis puis factorise : <span class="mono">4x2 + 8x - 2x2 + 4x</span></p>
+    <div class="fill-wrap">
+      <label>Ta reponse factorisee :</label>
+      <input class="fill-input" id="s1q7-inp" placeholder="ex: 2x(x+6)">
+    </div>
+    <button class="btn btn-s1" onclick="checkFill('s1q7','2x(x+6)|2x(6+x)','Reduction : 4x2-2x2 = 2x2 et 8x+4x = 12x. Donc 2x2+12x. Factorisation : facteur commun = 2x. Resultat : 2x(x+6)','s1')">Verifier</button>
+    <div class="result" id="s1q7-r"></div>
+  </div>
+  <div class="divider">Niveau avance</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q8</span><span class="lvl lvl-h">Avance</span></div>
+    <p>Factorise completement : <span class="mono">x(x-4) + 3(x-4)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s1q8" value="A"> (x-4)(x+3)</label>
+      <label><input type="radio" name="s1q8" value="B"> x2-4x+3x-12</label>
+      <label><input type="radio" name="s1q8" value="C"> (x+3)(x+4)</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q8','A','Facteur commun = (x-4). On sort (x-4) et il reste (x+3). Resultat : (x-4)(x+3). B est le developpement, pas la factorisation !','s1')">Verifier</button>
+    <div class="result" id="s1q8-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q9</span><span class="lvl lvl-h">Avance</span></div>
+    <p>Factorise : <span class="mono">2x(x+1) - 5(x+1)</span></p>
+    <div class="fill-wrap">
+      <label>Ta reponse factorisee :</label>
+      <input class="fill-input" id="s1q9-inp" placeholder="ex: (...)(...) ">
+    </div>
+    <button class="btn btn-s1" onclick="checkFill('s1q9','(x+1)(2x-5)|(2x-5)(x+1)','Facteur commun = (x+1). Il reste 2x dans le 1er terme et -5 dans le 2e. Resultat : (x+1)(2x-5)','s1')">Verifier</button>
+    <div class="result" id="s1q9-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q10</span><span class="lvl lvl-h">Avance</span></div>
+    <p>Factorise entierement : <span class="mono">3x2 - 12x + 3x(x-4)</span></p>
+    <button class="btn btn-ghost" onclick="toggle('s1c10')">Voir la correction</button>
+    <div class="correction" id="s1c10">
+      <div class="step">Factoriser d'abord : 3x2 - 12x = 3x(x - 4)</div>
+      <div class="step">L'expression devient : 3x(x-4) + 3x(x-4)</div>
+      <div class="step">Facteur commun = 3x(x-4)</div>
+      <div class="step">Resultat : 3x(x-4) x (1+1) = 6x(x-4)</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERIE 2 -->
+<div class="section" id="sec-s2">
+  <div class="sec-intro">
+    <div class="sec-ico ico2">k(a+b)</div>
+    <div><h2>Serie 2 - Developper</h2><p>Distributivite simple et double distributivite</p></div>
+  </div>
+  <div class="cours s2">
+    <div class="cours-lbl">Cours - Distributivite simple</div>
+    <span class="formula s2c">k(a + b) = ka + kb</span>
+    <span class="formula s2c">k(a - b) = ka - kb</span>
+    <div class="ex-box">
+      <strong>Exemples</strong>
+      3(x + 5) = 3x + 15<br>
+      -2(x - 4) = -2x + 8  (attention aux signes !)<br>
+      x(2x + 3) = 2x2 + 3x
+    </div>
+    <div class="tip"><strong>Pieges frequents</strong>moins x moins = plus. moins x plus = moins. Toujours distribuer sur TOUS les termes de la parenthese.</div>
+    <div class="phrase-type">Multiplier le facteur exterieur par CHAQUE terme a l'interieur de la parenthese, un par un.</div>
+  </div>
+  <div class="cours s2">
+    <div class="cours-lbl">Cours - Double distributivite (a+b)(c+d)</div>
+    <span class="formula s2c">(a+b)(c+d) = ac + ad + bc + bd</span>
+    <div class="ex-box">
+      <strong>Exemple detaille</strong>
+      (x+2)(x+3)<br>
+      = x*x + x*3 + 2*x + 2*3<br>
+      = x2 + 3x + 2x + 6<br>
+      = x2 + 5x + 6
+    </div>
+    <div class="tip"><strong>Methode aide-memoire</strong>Chaque terme du 1er facteur multiplie chaque terme du 2e. 4 produits au total, puis on reduit.</div>
+    <div class="phrase-type">Chaque terme du 1er facteur multiplie chaque terme du 2e facteur. 4 produits au total, puis on reduit les termes semblables.</div>
+  </div>
+  <div class="cours s2">
+    <div class="cours-lbl">Recapitulatif</div>
+    <table class="recap-table">
+      <tr><th>Expression</th><th>Developpee et reduite</th></tr>
+      <tr><td>3(x+4)</td><td>3x + 12</td></tr>
+      <tr><td>-2(x-5)</td><td>-2x + 10</td></tr>
+      <tr><td>x(x-7)</td><td>x2 - 7x</td></tr>
+      <tr><td>(x+1)(x+4)</td><td>x2 + 5x + 4</td></tr>
+      <tr><td>(x+3)(x-2)</td><td>x2 + x - 6</td></tr>
+      <tr><td>(2x+1)(x-3)</td><td>2x2 - 5x - 3</td></tr>
+    </table>
+  </div>
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf2" id="prog-s2"></div></div><div class="prog-score" id="score-s2">0 / 0</div></div>
+  <div class="divider">Niveau facile</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q1</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Developpe et reduis : <span class="mono">4(x + 3)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q1" value="A"> 4x + 3</label>
+      <label><input type="radio" name="s2q1" value="B"> 4x + 12</label>
+      <label><input type="radio" name="s2q1" value="C"> 4x + 7</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q1','B','4 x x = 4x et 4 x 3 = 12. Resultat : 4x + 12','s2')">Verifier</button>
+    <div class="result" id="s2q1-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q2</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Developpe et reduis : <span class="mono">-3(x - 5)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q2" value="A"> -3x - 15</label>
+      <label><input type="radio" name="s2q2" value="B"> -3x + 15</label>
+      <label><input type="radio" name="s2q2" value="C"> 3x - 15</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q2','B','-3 x x = -3x et -3 x (-5) = +15. Attention : moins fois moins = plus !','s2')">Verifier</button>
+    <div class="result" id="s2q2-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q3</span><span class="lvl lvl-e">Facile</span></div>
+    <p>Developpe : <span class="mono">x(x + 6)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q3" value="A"> x2 + 6x</label>
+      <label><input type="radio" name="s2q3" value="B"> x + 6x</label>
+      <label><input type="radio" name="s2q3" value="C"> 2x + 6</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q3','A','x x x = x2 et x x 6 = 6x. Resultat : x2 + 6x','s2')">Verifier</button>
+    <div class="result" id="s2q3-r"></div>
+  </div>
+  <div class="divider">Niveau intermediaire</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q4</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Developpe et reduis : <span class="mono">(x + 2)(x + 5)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q4" value="A"> x2 + 7x + 10</label>
+      <label><input type="radio" name="s2q4" value="B"> x2 + 10x + 7</label>
+      <label><input type="radio" name="s2q4" value="C"> x2 + 3x + 10</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q4','A','x*x=x2, x*5=5x, 2*x=2x, 2*5=10. Total : x2+5x+2x+10 = x2+7x+10','s2')">Verifier</button>
+    <div class="result" id="s2q4-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q5</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Developpe et reduis : <span class="mono">(x - 3)(x + 4)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q5" value="A"> x2 + 7x - 12</label>
+      <label><input type="radio" name="s2q5" value="B"> x2 + x - 12</label>
+      <label><input type="radio" name="s2q5" value="C"> x2 - x - 12</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q5','B','x*x=x2, x*4=4x, -3*x=-3x, -3*4=-12. Total : x2+4x-3x-12 = x2+x-12','s2')">Verifier</button>
+    <div class="result" id="s2q5-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q6</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Developpe et reduis : <span class="mono">2(x + 3) + (x - 1)(x + 2)</span></p>
+    <div class="fill-wrap">
+      <label>Developpe puis reduis :</label>
+      <input class="fill-input" id="s2q6-inp" placeholder="ex: x2+3x+4">
+    </div>
+    <button class="btn btn-s2" onclick="checkFill('s2q6','x2+3x+4','2(x+3) = 2x+6. (x-1)(x+2) = x2+2x-x-2 = x2+x-2. Total : 2x+6+x2+x-2 = x2+3x+4','s2')">Verifier</button>
+    <div class="result" id="s2q6-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q7</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <p>Developpe et reduis : <span class="mono">(2x + 1)(x - 3)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="s2q7" value="A"> 2x2 - 5x - 3</label>
+      <label><input type="radio" name="s2q7" value="B"> 2x2 + 5x - 3</label>
+      <label><input type="radio" name="s2q7" value="C"> 2x2 - 5x + 3</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q7','A','2x*x=2x2, 2x*(-3)=-6x, 1*x=x, 1*(-3)=-3. Total : 2x2-6x+x-3 = 2x2-5x-3','s2')">Verifier</button>
+    <div class="result" id="s2q7-r"></div>
+  </div>
+  <div class="divider">Niveau avance</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q8</span><span class="lvl lvl-h">Avance</span></div>
+    <p>Developpe et reduis : <span class="mono">(x + 4)2 - (x - 2)(x + 2)</span></p>
+    <div class="context">On peut developper (x+4)2 comme (x+4)(x+4)</div>
+    <button class="btn btn-ghost" onclick="toggle('s2c8')">Voir la correction</button>
+    <div class="correction" id="s2c8">
+      <div class="step">(x+4)2 = (x+4)(x+4) = x2+4x+4x+16 = x2+8x+16</div>
+      <div class="step">(x-2)(x+2) = x2+2x-2x-4 = x2-4</div>
+      <div class="step">x2+8x+16 - (x2-4) = x2+8x+16-x2+4</div>
+      <div class="step">= 8x + 20</div>
+    </div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q9</span><span class="lvl lvl-h">Avance</span></div>
+    <p>Developpe et reduis : <span class="mono">3(x-1)(x+2) - 2x(x+3)</span></p>
+    <button class="btn btn-ghost" onclick="toggle('s2c9')">Voir la correction</button>
+    <div class="correction" id="s2c9">
+      <div class="step">(x-1)(x+2) = x2+2x-x-2 = x2+x-2</div>
+      <div class="step">3(x2+x-2) = 3x2+3x-6</div>
+      <div class="step">2x(x+3) = 2x2+6x</div>
+      <div class="step">3x2+3x-6 - (2x2+6x) = 3x2+3x-6-2x2-6x</div>
+      <div class="step">= x2 - 3x - 6</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERIE 3 -->
+<div class="section" id="sec-s3">
+  <div class="sec-intro">
+    <div class="sec-ico ico3">P(x)</div>
+    <div><h2>Serie 3 - Resoudre des problemes</h2><p>Modeliser - Programme de calcul - Geometrie - Comparer</p></div>
+  </div>
+  <div class="cours s3">
+    <div class="cours-lbl">Cours - Programme de calcul</div>
+    <p>Un programme de calcul decrit des operations sur un nombre. On traduit chaque etape en expression algebrique.</p>
+    <div class="ex-box">
+      <strong>Exemple</strong>
+      Programme : Choisir x - Multiplier par 3 - Ajouter 2 - Soustraire x<br>
+      Expression : 3x + 2 - x = 2x + 2
+    </div>
+    <div class="phrase-type">1) Appeler le nombre de depart x  2) Traduire chaque operation  3) Reduire l'expression finale</div>
+  </div>
+  <div class="cours s3">
+    <div class="cours-lbl">Cours - Probleme de geometrie</div>
+    <p>On exprime le perimetre ou l'aire en fonction de x, puis on developpe et reduit.</p>
+    <div class="ex-box">
+      <strong>Exemple - Perimetre</strong>
+      Rectangle de longueur (x+3) et largeur (x-1) :<br>
+      P = 2 x [(x+3) + (x-1)] = 2 x [2x+2] = 4x + 4<br><br>
+      <strong>Exemple - Aire</strong>
+      Carre de cote (x+2) : A = (x+2)2 = x2+4x+4
+    </div>
+    <div class="phrase-type">Exprimer la dimension en fonction de x, appliquer la formule, developper et reduire.</div>
+  </div>
+  <div class="cours s3">
+    <div class="cours-lbl">Cours - Comparer deux expressions</div>
+    <p>Pour comparer A et B, on calcule <strong>A - B</strong> et on etudie son signe.</p>
+    <span class="formula s3c">Si A - B > 0 alors A > B</span>
+    <span class="formula s3c">Si A - B = 0 alors A = B</span>
+    <span class="formula s3c">Si A - B &lt; 0 alors A &lt; B</span>
+    <div class="phrase-type">Calculer A-B, developper et reduire, puis conclure selon le signe obtenu.</div>
+  </div>
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf3" id="prog-s3"></div></div><div class="prog-score" id="score-s3">0 / 0</div></div>
+  <div class="divider">Niveau facile</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q1</span><span class="lvl lvl-e">Facile</span></div>
+    <div class="context">Programme de calcul : Choisir un nombre x - Le doubler - Ajouter 6</div>
+    <p>Quelle expression algebrique traduit ce programme ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q1" value="A"> 2x + 6</label>
+      <label><input type="radio" name="s3q1" value="B"> 2(x + 6)</label>
+      <label><input type="radio" name="s3q1" value="C"> x + 2 + 6</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q1','A','Doubler = multiplier par 2 donc 2x. Puis ajouter 6 donne 2x+6. B serait doubler APRES avoir ajoute 6, ce qui est different.','s3')">Verifier</button>
+    <div class="result" id="s3q1-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q2</span><span class="lvl lvl-e">Facile</span></div>
+    <div class="context">Un carre a un cote de longueur x cm.</div>
+    <p>Exprime le perimetre P en fonction de x.</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q2" value="A"> P = x2</label>
+      <label><input type="radio" name="s3q2" value="B"> P = 4x</label>
+      <label><input type="radio" name="s3q2" value="C"> P = 2x</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q2','B','Perimetre d\'un carre = 4 x cote = 4x. x2 serait l\'aire du carre.','s3')">Verifier</button>
+    <div class="result" id="s3q2-r"></div>
+  </div>
+  <div class="divider">Niveau intermediaire</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q3</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <div class="context">Programme A : Choisir x - Ajouter 3 - Multiplier le resultat par 2<br>Programme B : Choisir x - Multiplier par 2 - Ajouter 6</div>
+    <p>Ces deux programmes donnent-ils toujours le meme resultat ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q3" value="A"> Non, les resultats sont differents</label>
+      <label><input type="radio" name="s3q3" value="B"> Oui, ils sont toujours egaux</label>
+      <label><input type="radio" name="s3q3" value="C"> Seulement quand x = 0</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q3','B','Programme A : 2(x+3) = 2x+6. Programme B : 2x+6. Les deux expressions sont identiques : toujours egaux !','s3')">Verifier</button>
+    <div class="result" id="s3q3-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q4</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <div class="context">Un rectangle a une longueur de (x + 5) cm et une largeur de (x - 1) cm.</div>
+    <p>Exprime l'aire A en fonction de x, developpee et reduite.</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q4" value="A"> A = x2 + 4x - 5</label>
+      <label><input type="radio" name="s3q4" value="B"> A = x2 + 6x - 5</label>
+      <label><input type="radio" name="s3q4" value="C"> A = 2x + 8</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q4','A','Aire = longueur x largeur = (x+5)(x-1). Developpement : x2-x+5x-5 = x2+4x-5','s3')">Verifier</button>
+    <div class="result" id="s3q4-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q5</span><span class="lvl lvl-m">Intermediaire</span></div>
+    <div class="context">Programme de calcul : Choisir x - Ajouter 4 - Elever au carre - Soustraire x2</div>
+    <p>Exprime le resultat en fonction de x, developpe et reduit.</p>
+    <div class="fill-wrap">
+      <label>Ton expression finale :</label>
+      <input class="fill-input" id="s3q5-inp" placeholder="ex: 8x+16">
+    </div>
+    <button class="btn btn-s3" onclick="checkFill('s3q5','8x+16','(x+4)2 - x2 = x2+8x+16 - x2 = 8x+16','s3')">Verifier</button>
+    <div class="result" id="s3q5-r"></div>
+  </div>
+  <div class="divider">Niveau avance</div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q6</span><span class="lvl lvl-h">Avance</span></div>
+    <div class="context">On considere deux expressions : A = (x+3)2 et B = (x+1)(x+5)</div>
+    <p>Developpe A et B, puis determine laquelle est la plus grande pour tout x.</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q6" value="A"> A est toujours plus grande que B</label>
+      <label><input type="radio" name="s3q6" value="B"> B est toujours plus grande que A</label>
+      <label><input type="radio" name="s3q6" value="C"> A et B sont toujours egales</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q6','A','A = x2+6x+9. B = x2+6x+5. A-B = 4. Donc A = B+4 : A est toujours superieur de 4 par rapport a B.','s3')">Verifier</button>
+    <div class="result" id="s3q6-r"></div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q7</span><span class="lvl lvl-h">Avance</span></div>
+    <div class="context">Une figure est composee d'un grand carre de cote (x+3) et d'un petit carre de cote x retire d'un coin.</div>
+    <p>Exprime l'aire de la figure restante en fonction de x, developpee et factorisee.</p>
+    <button class="btn btn-ghost" onclick="toggle('s3c7')">Voir la correction</button>
+    <div class="correction" id="s3c7">
+      <div class="step">Aire grand carre - Aire petit carre</div>
+      <div class="step">(x+3)2 - x2</div>
+      <div class="step">= x2+6x+9 - x2</div>
+      <div class="step">= 6x + 9</div>
+      <div class="step">Factorisation : 3(2x + 3)</div>
+    </div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q8</span><span class="lvl lvl-h">Avance</span></div>
+    <div class="context">Programme A : Choisir x - Ajouter 2 - Multiplier par (x-1)<br>Programme B : Choisir x - Mettre au carre - Ajouter x - Soustraire 2</div>
+    <p>Montre que les deux programmes donnent toujours le meme resultat.</p>
+    <button class="btn btn-ghost" onclick="toggle('s3c8')">Voir la correction</button>
+    <div class="correction" id="s3c8">
+      <div class="step">Programme A : (x+2)(x-1) = x2-x+2x-2 = x2+x-2</div>
+      <div class="step">Programme B : x2+x-2</div>
+      <div class="step">A = B = x2+x-2 pour tout x</div>
+      <div class="step">Les deux programmes donnent toujours le meme resultat.</div>
+    </div>
+  </div>
+  <div class="exo">
+    <div class="exo-meta"><span class="exo-num">Q9 - Defi</span><span class="lvl lvl-h">Avance</span></div>
+    <div class="context">Un terrain rectangulaire a une longueur de (2x+1) m et une largeur de (x+3) m. On enleve un carre de cote x m dans un coin.</div>
+    <p>Exprime l'aire restante en fonction de x, developpee et reduite.</p>
+    <button class="btn btn-ghost" onclick="toggle('s3c9')">Voir la correction</button>
+    <div class="correction" id="s3c9">
+      <div class="step">Aire rectangle = (2x+1)(x+3) = 2x2+6x+x+3 = 2x2+7x+3</div>
+      <div class="step">Aire carre retire = x2</div>
+      <div class="step">Aire restante = 2x2+7x+3 - x2</div>
+      <div class="step">= x2 + 7x + 3</div>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer>Fiche interactive - Calcul Litteral - Mathematiques 4eme</footer>
+<script>showTab('s1')</script>
+</body>
+</html>
