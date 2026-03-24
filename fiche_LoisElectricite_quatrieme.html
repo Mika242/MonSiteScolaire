@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Lois de l'électricité – 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Familjen+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #f0f4f8;
+  --ink:     #0d1b2a;
+  --ink2:    #5a7080;
+  --card:    #ffffff;
+  --border:  #dde6ef;
+  --elec:    #0077cc;   /* bleu électrique */
+  --elec2:   #00b4d8;   /* cyan */
+  --serie:   #e85d04;   /* orange – série */
+  --deriv:   #2d6a4f;   /* vert – dérivation */
+  --tension: #7b2d8b;   /* violet – tension */
+  --intensi: #c1440e;   /* rouge – intensité */
+  --easy:    #16a34a;
+  --med:     #ca8a04;
+  --hard:    #dc2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Familjen Grotesk',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ══ HEADER avec rating ══ */
+header {
+  background: linear-gradient(135deg, #0d1b2a 0%, #0a2a4a 60%, #0077cc 100%);
+  padding: 28px 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -60px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,180,216,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -40px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,119,204,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-inner {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.header-text { flex: 1; }
+.hbadge {
+  display: inline-block;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 30px;
+  padding: 4px 14px;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  margin-bottom: 10px;
+}
+header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+header h1 span { color: #00b4d8; }
+header p { font-size: .86rem; color: rgba(255,255,255,.5); }
+
+/* ── RATING BOX dans le header ── */
+.rating-box {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 18px;
+  padding: 14px 20px;
+  text-align: center;
+  min-width: 160px;
+  flex-shrink: 0;
+  backdrop-filter: blur(6px);
+}
+.rating-box .rb-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 6px;
+}
+.rating-stars {
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  margin-bottom: 4px;
+  display: block;
+}
+.rating-score {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.rating-score .rs-total { font-size: .85rem; color: rgba(255,255,255,.4); font-weight: 500; }
+.rating-pct {
+  font-size: .75rem;
+  color: rgba(255,255,255,.5);
+  margin-top: 3px;
+}
+.rating-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,.12);
+  border-radius: 10px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.rating-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00b4d8, #0077cc);
+  width: 0%;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* ══ TABS ══ */
+.tabs-wrap { background: var(--card); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.tabs { display: flex; max-width: 960px; margin: auto; padding: 0 14px; overflow-x: auto; gap: 2px; }
+.tab { flex-shrink:0; padding:13px 18px; background:transparent; border:none; border-bottom:3px solid transparent; font-family:'Familjen Grotesk',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; color:var(--ink2); transition:all .2s; white-space:nowrap; }
+.tab:hover { color:var(--ink); }
+.tab.t1.active { color:var(--serie);  border-bottom-color:var(--serie); }
+.tab.t2.active { color:var(--deriv);  border-bottom-color:var(--deriv); }
+.tab.t3.active { color:var(--tension);border-bottom-color:var(--tension); }
+.tab.t4.active { color:var(--intensi);border-bottom-color:var(--intensi); }
+
+/* ══ MAIN ══ */
+main { max-width:960px; margin:auto; padding:24px 14px 80px; }
+.section { display:none; } .section.active { display:block; }
+
+.sec-intro { display:flex; align-items:center; gap:16px; margin-bottom:22px; padding-bottom:18px; border-bottom:2px solid var(--border); }
+.sec-ico { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+.ico1 { background:#fff3e8; } .ico2 { background:#e8f5ee; } .ico3 { background:#f0e8f8; } .ico4 { background:#fde8e8; }
+.sec-title h2 { font-family:'Space Grotesk',sans-serif; font-size:1.2rem; font-weight:700; }
+.sec-title p  { color:var(--ink2); font-size:.85rem; margin-top:3px; }
+
+/* ══ COURS ══ */
+.cours { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 22px; margin-bottom:14px; border-left:5px solid; }
+.cours.c1 { border-left-color:var(--serie); }
+.cours.c2 { border-left-color:var(--deriv); }
+.cours.c3 { border-left-color:var(--tension); }
+.cours.c4 { border-left-color:var(--intensi); }
+.cours-lbl { font-size:.67rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); margin-bottom:10px; }
+
+/* Math inline */
+.math { font-family:'JetBrains Mono',monospace; font-size:.92rem; background:#eef4fa; padding:2px 7px; border-radius:5px; color:#0d1b2a; white-space:nowrap; display:inline-block; }
+.formula { font-family:'JetBrains Mono',monospace; background:#eef4fa; border-radius:9px; padding:10px 16px; font-size:.92rem; margin:6px 0; display:block; border-left:3px solid #94b4cc; color:#0d1b2a; line-height:1.8; }
+.formula.f1 { border-left-color:var(--serie);   background:#fff3e8; color:#7c2d06; }
+.formula.f2 { border-left-color:var(--deriv);   background:#e8f5ee; color:#1b4332; }
+.formula.f3 { border-left-color:var(--tension); background:#f0e8f8; color:#4a1460; }
+.formula.f4 { border-left-color:var(--intensi); background:#fde8e8; color:#7f1d1d; }
+.formula.felec { border-left-color:var(--elec); background:#e8f4ff; color:#003d73; }
+
+.tip { background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:10px 14px; font-size:.86rem; margin-top:10px; line-height:1.7; }
+.tip strong { display:block; font-size:.67rem; text-transform:uppercase; letter-spacing:.1em; color:#92400e; margin-bottom:4px; }
+.ex-box { background:#f5f9fd; border-radius:10px; padding:12px 14px; margin-top:10px; font-size:.87rem; line-height:1.9; border:1px solid var(--border); }
+.ex-box strong { display:block; font-size:.67rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink2); margin-bottom:5px; }
+.phrase-type { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; margin-top:10px; font-size:.86rem; font-style:italic; color:#14532d; line-height:1.6; }
+.phrase-type::before { content:'Rédaction attendue : '; font-style:normal; font-weight:800; font-size:.67rem; letter-spacing:.1em; text-transform:uppercase; color:var(--easy); display:block; margin-bottom:4px; }
+
+/* Tableau */
+.rule-table { width:100%; border-collapse:collapse; font-size:.86rem; margin:10px 0; }
+.rule-table th { background:var(--ink); color:#fff; padding:9px 13px; text-align:left; font-size:.74rem; letter-spacing:.07em; text-transform:uppercase; }
+.rule-table td { padding:9px 13px; border-bottom:1px solid var(--border); line-height:1.6; }
+.rule-table tr:nth-child(even) td { background:#f7fafd; }
+.rule-table td:first-child { font-family:'JetBrains Mono',monospace; font-size:.83rem; font-weight:700; }
+
+/* Schéma circuit simplifié */
+.circuit-schema {
+  background: #f5f9fd;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .82rem;
+  line-height: 2;
+  color: var(--ink2);
+}
+.circuit-schema .node { color: var(--elec); font-weight: 700; }
+.circuit-schema .val  { color: var(--serie); font-weight: 700; }
+
+/* ══ NIVEAU ══ */
+.lvl { font-size:.66rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:20px; margin-left:6px; }
+.lvl-e { background:#dcfce7; color:#166534; }
+.lvl-m { background:#fef9c3; color:#854d0e; }
+.lvl-h { background:#fee2e2; color:#991b1b; }
+
+/* ══ DIVIDER ══ */
+.divider { display:flex; align-items:center; gap:10px; margin:24px 0 14px; font-size:.67rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); }
+.divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ══ PROGRESSION ══ */
+.prog-row { display:flex; align-items:center; gap:12px; margin:18px 0 6px; }
+.prog-bar { flex:1; height:5px; background:#dde6ef; border-radius:10px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:10px; width:0%; transition:width .4s; }
+.pf1 { background:var(--serie); } .pf2 { background:var(--deriv); } .pf3 { background:var(--tension); } .pf4 { background:var(--intensi); }
+.prog-score { font-size:.78rem; color:var(--ink2); font-weight:700; white-space:nowrap; }
+
+/* ══ EXERCICE ══ */
+.exo { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 20px; margin-bottom:10px; transition:border-color .2s; }
+.exo:hover { border-color:#aac4d8; }
+.exo-meta { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink2); }
+.exo > p { font-size:.95rem; font-weight:600; line-height:1.6; margin-bottom:10px; }
+.context { background:#f5f9fd; border-radius:9px; padding:9px 13px; font-size:.86rem; color:var(--ink2); margin-bottom:10px; border-left:3px solid var(--border); line-height:1.7; }
+
+/* Options */
+.opts { display:flex; flex-direction:column; gap:5px; }
+.opts label { display:flex; align-items:center; gap:10px; padding:9px 14px; background:#f5f9fd; border:1.5px solid var(--border); border-radius:9px; cursor:pointer; font-size:.9rem; transition:all .15s; line-height:1.5; }
+.opts label:hover { border-color:#7ab0cc; background:#eaf3fb; }
+
+/* Saisie */
+.fill-wrap { margin-top:6px; }
+.fill-wrap label { font-size:.71rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink2); display:block; margin-bottom:4px; }
+.fill-input { width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:9px; font-family:'JetBrains Mono',monospace; font-size:.92rem; background:#f5f9fd; color:var(--ink); outline:none; transition:border .15s; }
+.fill-input:focus { border-color:#7ab0cc; background:#fff; }
+
+/* Boutons */
+.btn { padding:9px 20px; border-radius:9px; border:none; font-family:'Familjen Grotesk',sans-serif; font-size:.83rem; font-weight:700; cursor:pointer; transition:all .15s; margin-top:10px; margin-right:6px; }
+.btn:hover { transform:translateY(-1px); filter:brightness(.92); }
+.btn-s1 { background:var(--serie);   color:#fff; }
+.btn-s2 { background:var(--deriv);   color:#fff; }
+.btn-s3 { background:var(--tension); color:#fff; }
+.btn-s4 { background:var(--intensi); color:#fff; }
+.btn-ghost { background:var(--card); border:1.5px solid var(--border); color:var(--ink2); }
+.btn-ghost:hover { background:#eaf3fb; color:var(--ink); }
+
+/* Résultat */
+.result { display:none; margin-top:10px; padding:11px 15px; border-radius:9px; font-size:.87rem; line-height:1.6; border-left:3px solid; }
+.result.ok  { background:#f0fdf4; border-color:var(--easy); }
+.result.bad { background:#fef2f2; border-color:var(--hard); }
+.ok-lbl  { color:#166534; font-weight:800; }
+.bad-lbl { color:#991b1b; font-weight:800; }
+.explain { margin-top:5px; color:#374151; }
+
+/* Correction */
+.correction { display:none; margin-top:10px; background:#f5f9fd; border:1px solid var(--border); border-radius:12px; padding:14px 18px; font-size:.87rem; line-height:2; }
+.correction .step { color:var(--ink2); border-bottom:1px dashed var(--border); padding:3px 0; }
+.correction .step:last-child { border:none; color:var(--ink); font-weight:700; }
+.correction .step::before { content:'▸ '; color:var(--easy); }
+.correction .m { font-family:'JetBrains Mono',monospace; font-size:.85rem; background:#dde6ef; padding:1px 6px; border-radius:4px; color:var(--ink); }
+
+/* Footer */
+footer { text-align:center; padding:24px; font-size:.78rem; color:var(--ink2); border-top:1px solid var(--border); line-height:1.9; }
+/* ── CTA INSTAGRAM ── */
+.cta-banner {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2a4a 50%, #0077cc 100%);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin: 32px 0 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,180,216,.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -30px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(225,48,108,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-inner { position: relative; z-index: 1; }
+.cta-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+.cta-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.cta-title span { color: #00b4d8; }
+.cta-sub {
+  font-size: .86rem;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 18px;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-steps {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.cta-step {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: .78rem;
+  color: rgba(255,255,255,.85);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+  transition: all .2s;
+  box-shadow: 0 4px 20px rgba(220,39,67,.35);
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(220,39,67,.45); }
+.cta-note {
+  margin-top: 12px;
+  font-size: .72rem;
+  color: rgba(255,255,255,.4);
+  font-style: italic;
+}
+.footer-copy { font-size:.71rem; color:#94a3b8; margin-top:6px; }
+.footer-copy strong { color:var(--ink2); }
+footer a { color:var(--elec); text-decoration:none; font-weight:600; }
+
+/* ── CTA STRIP ── */
+.cta-strip {
+  background: linear-gradient(90deg, #1a0a2e 0%, #2d1060 50%, #1a0a2e 100%);
+  border-bottom: 1px solid rgba(225,48,108,.3);
+  padding: 9px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.cta-strip-text {
+  font-size: .8rem;
+  color: rgba(255,255,255,.75);
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.cta-strip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 800;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.cta-strip-btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+
+@media(max-width:600px) {
+  header h1 { font-size:1.4rem; }
+  .header-inner { flex-direction:column; align-items:flex-start; }
+  .rating-box { align-self:stretch; text-align:left; display:flex; align-items:center; gap:16px; }
+  main { padding:16px 10px 60px; }
+}
+</style>
+
+<script>
+// ── Score global ──
+let totalAnswered = 0;
+let totalCorrect  = 0;
+
+const scores  = {s1:0,s2:0,s3:0,s4:0};
+const totals  = {s1:0,s2:0,s3:0,s4:0};
+const answered = {};
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function check(id, correct, expl, serie) {
+  const choices = document.getElementsByName(id);
+  let sel = null;
+  for (let c of choices) { if (c.checked) sel = c.value; }
+  const res = document.getElementById(id+'-r');
+  if (!sel) {
+    res.innerHTML = "<span class='bad-lbl'>⚠ Choisis une réponse !</span>";
+    res.className = 'result bad'; res.style.display = 'block'; return;
+  }
+  if (answered[id]) return;
+  answered[id] = true;
+  totals[serie]++; totalAnswered++;
+  if (sel === correct) {
+    scores[serie]++; totalCorrect++;
+    res.innerHTML = "<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+expl+"</div>";
+    res.className = 'result ok';
+  } else {
+    res.innerHTML = "<span class='bad-lbl'>✘ Incorrect</span><div class='explain'>"+expl+"</div>";
+    res.className = 'result bad';
+  }
+  res.style.display = 'block';
+  updateProg(serie);
+  updateGlobalRating();
+}
+
+function checkFill(id, correct, expl, serie) {
+  const inp = document.getElementById(id+'-inp');
+  const res = document.getElementById(id+'-r');
+  const val = inp.value.trim().toLowerCase().replace(/\s+/g,'');
+  const answers = correct.split('|').map(a => a.trim().toLowerCase().replace(/\s+/g,''));
+  if (!val) {
+    res.innerHTML = "<span class='bad-lbl'>⚠ Écris ta réponse !</span>";
+    res.className = 'result bad'; res.style.display = 'block'; return;
+  }
+  if (answered[id]) return;
+  answered[id] = true;
+  totals[serie]++; totalAnswered++;
+  if (answers.includes(val)) {
+    scores[serie]++; totalCorrect++;
+    res.innerHTML = "<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+expl+"</div>";
+    res.className = 'result ok';
+  } else {
+    res.innerHTML = "<span class='bad-lbl'>✘ Incorrect — Réponse : <span style='font-family:monospace'>"+correct.split('|')[0]+"</span></span><div class='explain'>"+expl+"</div>";
+    res.className = 'result bad';
+  }
+  res.style.display = 'block';
+  updateProg(serie);
+  updateGlobalRating();
+}
+
+function updateProg(s) {
+  const pct = totals[s]>0 ? Math.round(scores[s]/totals[s]*100) : 0;
+  const bar = document.getElementById('prog-'+s);
+  const txt = document.getElementById('score-'+s);
+  if (bar) bar.style.width = pct+'%';
+  if (txt) txt.textContent = scores[s]+' / '+totals[s]+' · '+pct+'%';
+}
+
+function updateGlobalRating() {
+  const pct = totalAnswered > 0 ? Math.round(totalCorrect / totalAnswered * 100) : 0;
+
+  // Score texte
+  document.getElementById('r-correct').textContent = totalCorrect;
+  document.getElementById('r-total').textContent   = totalAnswered;
+  document.getElementById('r-pct').textContent     = totalAnswered > 0 ? pct + '%' : '—';
+
+  // Barre
+  document.getElementById('r-bar').style.width = pct + '%';
+
+  // Étoiles (sur 5)
+  const stars = pct >= 90 ? 5 : pct >= 75 ? 4 : pct >= 55 ? 3 : pct >= 35 ? 2 : pct >= 10 ? 1 : 0;
+  const starStr = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+  document.getElementById('r-stars').textContent = starStr;
+
+  // Couleur dynamique de la barre
+  const bar = document.getElementById('r-bar');
+  if (pct >= 75) bar.style.background = 'linear-gradient(90deg,#22c55e,#16a34a)';
+  else if (pct >= 50) bar.style.background = 'linear-gradient(90deg,#f59e0b,#ca8a04)';
+  else bar.style.background = 'linear-gradient(90deg,#00b4d8,#0077cc)';
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+</script>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire" style="height:52px; border-radius:12px; margin-bottom:12px; border:1px solid rgba(255,255,255,.15); padding:4px; background:rgba(255,255,255,.06); display:block;">
+      <div class="hbadge">Physique · 4ème · Électricité</div>
+      <h1>Lois de <span>l'électricité</span></h1>
+      <p>Circuits · Tension · Intensité · Loi d'Ohm</p>
+    </div>
+    <!-- RATING BOX -->
+    <div class="rating-box">
+      <div class="rb-label">Mon score global</div>
+      <span class="rating-stars" id="r-stars">☆☆☆☆☆</span>
+      <div class="rating-score">
+        <span id="r-correct">0</span><span class="rs-total"> / <span id="r-total">0</span></span>
+      </div>
+      <div class="rating-pct" id="r-pct">—</div>
+      <div class="rating-bar"><div class="rating-bar-fill" id="r-bar"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ CTA STRIP ══ -->
+<div class="cta-strip">
+  <span class="cta-strip-text">📲 Nouvelles fiches annoncées en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-strip-btn">
+    ◈ &nbsp;@toncoachscolaire
+  </a>
+</div>
+
+<!-- ══ TABS ══ -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-s1" onclick="showTab('s1')">🔌 S1 — Circuits électriques</button>
+    <button class="tab t2" id="tab-s2" onclick="showTab('s2')">⚡ S2 — Tension (U)</button>
+    <button class="tab t3" id="tab-s3" onclick="showTab('s3')">🔁 S3 — Intensité (I)</button>
+    <button class="tab t4" id="tab-s4" onclick="showTab('s4')">📐 S4 — Loi d'Ohm</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════
+     S1 — CIRCUITS ÉLECTRIQUES
+═══════════════════════════ -->
+<div class="section active" id="sec-s1">
+  <div class="sec-intro">
+    <div class="sec-ico ico1">🔌</div>
+    <div class="sec-title">
+      <h2>Série 1 — Circuits électriques</h2>
+      <p>Dipôles · Circuit en série · Circuit en dérivation · Court-circuit</p>
+    </div>
+  </div>
+
+  <div class="cours c1">
+    <div class="cours-lbl">📖 Cours — Vocabulaire essentiel</div>
+    <table class="rule-table">
+      <tr><th>Terme</th><th>Définition</th><th>Symbole</th></tr>
+      <tr><td>Dipôle</td><td>Composant à deux bornes (lampe, résistance, générateur…)</td><td>selon le composant</td></tr>
+      <tr><td>Générateur</td><td>Fournit l'énergie électrique (pile, batterie)</td><td>⊣⊢</td></tr>
+      <tr><td>Résistance</td><td>Dipôle qui s'oppose au passage du courant</td><td>▭</td></tr>
+      <tr><td>Interrupteur</td><td>Ouvre ou ferme le circuit</td><td>—/—</td></tr>
+      <tr><td>Court-circuit</td><td>Connexion directe entre les bornes d'un dipôle (dangereux !)</td><td>—</td></tr>
+    </table>
+  </div>
+
+  <div class="cours c1">
+    <div class="cours-lbl">📖 Cours — Circuit en série vs en dérivation</div>
+    <table class="rule-table">
+      <tr><th></th><th>Circuit en série</th><th>Circuit en dérivation</th></tr>
+      <tr><td>Disposition</td><td>Tous les dipôles sur <strong>un seul</strong> chemin</td><td>Dipôles sur <strong>plusieurs</strong> chemins</td></tr>
+      <tr><td>Si un dipôle est retiré</td><td>Tout s'éteint</td><td>Les autres fonctionnent encore</td></tr>
+      <tr><td>Exemple</td><td>Guirlande classique</td><td>Installation électrique d'une maison</td></tr>
+    </table>
+    <div class="tip">
+      <strong>⚠ Court-circuit</strong>
+      Un court-circuit contourne un dipôle par un fil conducteur. La lampe court-circuitée s'éteint (aucune tension à ses bornes). Cela peut endommager le générateur ou déclencher un incendie !
+    </div>
+    <div class="phrase-type">
+      "Dans un circuit en série, les dipôles sont branchés les uns à la suite des autres sur un seul chemin pour le courant."
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf1" id="prog-s1"></div></div><div class="prog-score" id="score-s1">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans un circuit en série avec 3 lampes, on retire une lampe. Que se passe-t-il ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q1" value="A"> Les 2 autres lampes s'allument plus fort</label>
+      <label><input type="radio" name="s1q1" value="B"> Les 2 autres lampes continuent de fonctionner normalement</label>
+      <label><input type="radio" name="s1q1" value="C"> Tout le circuit s'éteint</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q1','C','En série, il n\'y a qu\'un seul chemin pour le courant. Si un dipôle est retiré ou défaillant, le circuit est ouvert et tout s\'éteint.','s1')">Vérifier</button>
+    <div class="result" id="s1q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Comment appelle-t-on un composant électrique possédant deux bornes ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q2" value="A"> Un circuit</label>
+      <label><input type="radio" name="s1q2" value="B"> Un dipôle</label>
+      <label><input type="radio" name="s1q2" value="C"> Un générateur</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q2','B','Un dipôle est tout composant qui possède exactement deux bornes : lampe, résistance, pile, interrupteur… sont tous des dipôles.','s1')">Vérifier</button>
+    <div class="result" id="s1q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans quel type de circuit les dipôles sont-ils branchés sur plusieurs chemins différents ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q3" value="A"> Circuit en série</label>
+      <label><input type="radio" name="s1q3" value="B"> Circuit en dérivation</label>
+      <label><input type="radio" name="s1q3" value="C"> Circuit ouvert</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q3','B','Dans un circuit en dérivation (ou parallèle), il existe plusieurs chemins possibles pour le courant. Chaque branche est indépendante des autres.','s1')">Vérifier</button>
+    <div class="result" id="s1q3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>L'installation électrique d'une maison utilise un montage en dérivation. Pourquoi ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q4" value="A"> Pour que tous les appareils reçoivent la même tension et fonctionnent indépendamment</label>
+      <label><input type="radio" name="s1q4" value="B"> Pour économiser du fil électrique</label>
+      <label><input type="radio" name="s1q4" value="C"> Pour que le courant soit plus fort dans chaque appareil</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q4','A','En dérivation, chaque appareil reçoit la même tension (230 V en France) et peut fonctionner indépendamment. Si un appareil tombe en panne, les autres continuent de fonctionner.','s1')">Vérifier</button>
+    <div class="result" id="s1q4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Qu'est-ce qu'un court-circuit et quel est le danger principal ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q5" value="A"> Un circuit trop long — danger : surchauffe du fil</label>
+      <label><input type="radio" name="s1q5" value="B"> Une connexion directe entre les bornes d'un dipôle — danger : surchauffe, incendie ou détérioration du générateur</label>
+      <label><input type="radio" name="s1q5" value="C"> Un circuit sans générateur — danger : pas de courant</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q5','B','Un court-circuit relie directement les deux bornes d\'un dipôle par un fil. Le courant contourne le dipôle. L\'intensité devient très élevée, ce qui peut détruire le générateur ou provoquer un incendie.','s1')">Vérifier</button>
+    <div class="result" id="s1q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un circuit contient une pile, une lampe L1 et une lampe L2 en série. On place un interrupteur K en dérivation sur L2 seulement.</div>
+    <p>Que se passe-t-il quand on ferme l'interrupteur K ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s1q6" value="A"> L1 et L2 s'allument toutes les deux plus fort</label>
+      <label><input type="radio" name="s1q6" value="B"> L2 est court-circuitée et s'éteint, L1 s'allume plus fort</label>
+      <label><input type="radio" name="s1q6" value="C"> Tout le circuit s'éteint</label>
+    </div>
+    <button class="btn btn-s1" onclick="check('s1q6','B','Fermer K court-circuite L2 : toute la tension se retrouve aux bornes de L1 uniquement. L2 n\'a plus de tension à ses bornes (0 V) → elle s\'éteint. L1 reçoit plus de tension → elle brille plus fort.','s1')">Vérifier</button>
+    <div class="result" id="s1q6-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un circuit comporte une pile de 9 V, une lampe L1 et une résistance R montées en série, et une lampe L2 montée en dérivation sur R.</div>
+    <p>Explique comment identifier ce circuit comme un montage mixte (série ET dérivation) et décris le chemin du courant.</p>
+    <button class="btn-ghost btn" onclick="toggle('s1c7')">📋 Correction</button>
+    <div class="correction" id="s1c7">
+      <div class="step">L1 est en série avec l'ensemble (R // L2) → montage mixte</div>
+      <div class="step">Le courant quitte la pile, passe obligatoirement par L1</div>
+      <div class="step">Puis il se divise : une partie passe par R, l'autre par L2</div>
+      <div class="step">Les deux chemins se rejoignent et retournent à la pile</div>
+      <div class="step">L1 est en série avec le reste → si L1 est retirée, tout s'éteint</div>
+      <div class="step">R et L2 sont en dérivation → si R est retirée, L2 continue de fonctionner</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════
+     S2 — TENSION (U)
+═══════════════════ -->
+<div class="section" id="sec-s2">
+  <div class="sec-intro">
+    <div class="sec-ico ico2">⚡</div>
+    <div class="sec-title">
+      <h2>Série 2 — La tension électrique (U)</h2>
+      <p>Définition · Voltmètre · Loi des tensions en série et en dérivation</p>
+    </div>
+  </div>
+
+  <div class="cours c2">
+    <div class="cours-lbl">📖 Cours — La tension</div>
+    <p>La <strong>tension électrique</strong> (ou différence de potentiel) mesure l'énergie fournie par unité de charge entre deux points.</p>
+    <span class="formula f2">Unité : le Volt (V) — mesuré avec un VOLTMÈTRE</span>
+    <div class="tip">
+      <strong>💡 Branchement du voltmètre</strong>
+      Le voltmètre se branche TOUJOURS <strong>en dérivation</strong> (en parallèle) aux bornes du dipôle à mesurer. Sa résistance est très grande pour ne pas modifier le circuit.
+    </div>
+    <div class="ex-box">
+      <strong>Valeurs usuelles</strong>
+      Pile AA : 1,5 V · Pile 9 V : 9 V · Secteur France : 230 V · Batterie voiture : 12 V
+    </div>
+  </div>
+
+  <div class="cours c2">
+    <div class="cours-lbl">📖 Cours — Lois des tensions</div>
+    <span class="formula f2">En série : U = U₁ + U₂ + U₃ + …</span>
+    <span class="formula f2">En dérivation : U₁ = U₂ = U₃ = … = U (toutes égales)</span>
+    <div class="circuit-schema">
+      <span class="node">Série :</span> pile(9V) — L1(<span class="val">3V</span>) — L2(<span class="val">6V</span>) → 3 + 6 = <span class="val">9V ✔</span><br>
+      <span class="node">Dérivation :</span> pile(6V) — L1(<span class="val">6V</span>) // L2(<span class="val">6V</span>) → toutes à <span class="val">6V ✔</span>
+    </div>
+    <div class="phrase-type">
+      "En série, la tension du générateur est égale à la somme des tensions aux bornes de chaque dipôle : U = U₁ + U₂."
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf2" id="prog-s2"></div></div><div class="prog-score" id="score-s2">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est l'unité de la tension électrique ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s2q1" value="A"> L'Ampère (A)</label>
+      <label><input type="radio" name="s2q1" value="B"> Le Volt (V)</label>
+      <label><input type="radio" name="s2q1" value="C"> L'Ohm (Ω)</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q1','B','La tension se mesure en Volts (V) avec un voltmètre. L\'Ampère mesure l\'intensité, l\'Ohm mesure la résistance.','s2')">Vérifier</button>
+    <div class="result" id="s2q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Comment branche-t-on un voltmètre dans un circuit ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s2q2" value="A"> En série dans le circuit</label>
+      <label><input type="radio" name="s2q2" value="B"> En dérivation aux bornes du dipôle à mesurer</label>
+      <label><input type="radio" name="s2q2" value="C"> N'importe comment, ça ne change pas le circuit</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q2','B','Le voltmètre se branche TOUJOURS en dérivation (en parallèle) aux bornes du dipôle dont on veut mesurer la tension. Sa très grande résistance fait qu\'il ne perturbe pas le circuit.','s2')">Vérifier</button>
+    <div class="result" id="s2q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans un circuit en dérivation alimenté par une pile de 6 V, quelle est la tension aux bornes de chaque lampe ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s2q3" value="A"> 3 V chacune</label>
+      <label><input type="radio" name="s2q3" value="B"> 6 V chacune</label>
+      <label><input type="radio" name="s2q3" value="C"> Cela dépend du nombre de lampes</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q3','B','Loi des tensions en dérivation : toutes les tensions sont égales à la tension du générateur. Chaque lampe reçoit donc 6 V.','s2')">Vérifier</button>
+    <div class="result" id="s2q3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Circuit en série : une pile, une lampe L1 et une résistance R. On mesure U<sub>L1</sub> = 4 V et U<sub>pile</sub> = 9 V.</div>
+    <p>Calcule la tension U<sub>R</sub> aux bornes de la résistance.</p>
+    <div class="opts">
+      <label><input type="radio" name="s2q4" value="A"> 5 V</label>
+      <label><input type="radio" name="s2q4" value="B"> 13 V</label>
+      <label><input type="radio" name="s2q4" value="C"> 4 V</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q4','A','Loi des tensions en série : U_pile = U_L1 + U_R. Donc U_R = U_pile − U_L1 = 9 − 4 = 5 V.','s2')">Vérifier</button>
+    <div class="result" id="s2q4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Circuit en série : pile de 12 V, trois résistances R1, R2, R3. On sait que U<sub>R1</sub> = 3 V et U<sub>R2</sub> = 5 V.</div>
+    <p>Calcule U<sub>R3</sub>.</p>
+    <div class="fill-wrap">
+      <label>U<sub>R3</sub> = ? (en V)</label>
+      <input class="fill-input" id="s2q5-inp" placeholder="ex: 4">
+    </div>
+    <button class="btn btn-s2" onclick="checkFill('s2q5','4','U_pile = U_R1 + U_R2 + U_R3. Donc U_R3 = 12 − 3 − 5 = 4 V.','s2')">Vérifier</button>
+    <div class="result" id="s2q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un circuit contient une pile de 9 V. L1 est en série avec un groupe (L2 // L3) en dérivation. On mesure U<sub>L1</sub> = 3 V.</div>
+    <p>Quelle est la tension aux bornes de L2 et L3 ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s2q6" value="A"> U<sub>L2</sub> = U<sub>L3</sub> = 6 V</label>
+      <label><input type="radio" name="s2q6" value="B"> U<sub>L2</sub> = U<sub>L3</sub> = 3 V</label>
+      <label><input type="radio" name="s2q6" value="C"> U<sub>L2</sub> = 4 V et U<sub>L3</sub> = 2 V</label>
+    </div>
+    <button class="btn btn-s2" onclick="check('s2q6','A','U_pile = U_L1 + U_(L2//L3). Donc U_(L2//L3) = 9 − 3 = 6 V. L2 et L3 sont en dérivation entre elles → elles ont la même tension : U_L2 = U_L3 = 6 V.','s2')">Vérifier</button>
+    <div class="result" id="s2q6-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un voltmètre branché aux bornes d'un interrupteur ouvert affiche 9 V. Ce même voltmètre branché aux bornes de l'interrupteur fermé affiche 0 V.</div>
+    <p>Explique ce résultat à l'aide de la loi des tensions en série.</p>
+    <button class="btn-ghost btn" onclick="toggle('s2c7')">📋 Correction</button>
+    <div class="correction" id="s2c7">
+      <div class="step">Interrupteur ouvert : le circuit est ouvert → aucun courant ne circule</div>
+      <div class="step">Toute la tension du générateur (9 V) se retrouve aux bornes de l'interrupteur ouvert</div>
+      <div class="step">Les autres dipôles ont 0 V (pas de courant → pas de chute de tension)</div>
+      <div class="step">Interrupteur fermé : sa résistance est nulle → tension à ses bornes = 0 V</div>
+      <div class="step">La tension se distribue alors entre les autres dipôles du circuit : U = U₁ + U₂ + …</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════
+     S3 — INTENSITÉ (I)
+════════════════════ -->
+<div class="section" id="sec-s3">
+  <div class="sec-intro">
+    <div class="sec-ico ico3">🔁</div>
+    <div class="sec-title">
+      <h2>Série 3 — L'intensité du courant (I)</h2>
+      <p>Définition · Ampèremètre · Loi des intensités en série et en dérivation</p>
+    </div>
+  </div>
+
+  <div class="cours c3">
+    <div class="cours-lbl">📖 Cours — L'intensité</div>
+    <p>L'<strong>intensité</strong> mesure la quantité de charges électriques qui traversent un fil par seconde — c'est le débit du courant.</p>
+    <span class="formula f3">Unité : l'Ampère (A) — mesuré avec un AMPÈREMÈTRE</span>
+    <div class="tip">
+      <strong>💡 Branchement de l'ampèremètre</strong>
+      L'ampèremètre se branche TOUJOURS <strong>en série</strong> dans le circuit, à l'endroit où l'on veut mesurer l'intensité. Sa résistance est quasi nulle pour ne pas gêner le courant.
+    </div>
+  </div>
+
+  <div class="cours c3">
+    <div class="cours-lbl">📖 Cours — Lois des intensités</div>
+    <span class="formula f3">En série : I = I₁ = I₂ = I₃ (intensité identique partout)</span>
+    <span class="formula f3">En dérivation : I = I₁ + I₂ + I₃ (intensité se divise)</span>
+    <div class="circuit-schema">
+      <span class="node">Série :</span> I = <span class="val">2 A</span> partout dans le circuit<br>
+      <span class="node">Dérivation :</span> I = <span class="val">5 A</span> → branche 1 : <span class="val">3 A</span> + branche 2 : <span class="val">2 A</span> = <span class="val">5 A ✔</span>
+    </div>
+    <div class="phrase-type">
+      "En dérivation, l'intensité du courant principal est égale à la somme des intensités dans chaque branche : I = I₁ + I₂."
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf3" id="prog-s3"></div></div><div class="prog-score" id="score-s3">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Comment branche-t-on un ampèremètre dans un circuit ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q1" value="A"> En dérivation aux bornes du dipôle à mesurer</label>
+      <label><input type="radio" name="s3q1" value="B"> En série dans le fil, à l'endroit voulu</label>
+      <label><input type="radio" name="s3q1" value="C"> N'importe où, le résultat est le même</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q1','B','L\'ampèremètre se branche TOUJOURS en série dans le circuit. Il faut couper le fil et insérer l\'ampèremètre pour que le courant le traverse.','s3')">Vérifier</button>
+    <div class="result" id="s3q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans un circuit en série, un ampèremètre placé avant L1 mesure 300 mA. Quelle est l'intensité mesurée après L1 ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q2" value="A"> 150 mA</label>
+      <label><input type="radio" name="s3q2" value="B"> 600 mA</label>
+      <label><input type="radio" name="s3q2" value="C"> 300 mA</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q2','C','Loi des intensités en série : l\'intensité est la même partout dans le circuit. Donc I = 300 mA partout, avant ET après L1.','s3')">Vérifier</button>
+    <div class="result" id="s3q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est l'unité de l'intensité électrique ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q3" value="A"> Le Volt (V)</label>
+      <label><input type="radio" name="s3q3" value="B"> L'Ohm (Ω)</label>
+      <label><input type="radio" name="s3q3" value="C"> L'Ampère (A)</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q3','C','L\'intensité se mesure en Ampères (A) avec un ampèremètre. Le Volt mesure la tension, l\'Ohm mesure la résistance.','s3')">Vérifier</button>
+    <div class="result" id="s3q3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Circuit en dérivation : courant principal I = 800 mA. Branche 1 : I₁ = 500 mA.</div>
+    <p>Calcule l'intensité I₂ dans la branche 2.</p>
+    <div class="opts">
+      <label><input type="radio" name="s3q4" value="A"> 1300 mA</label>
+      <label><input type="radio" name="s3q4" value="B"> 300 mA</label>
+      <label><input type="radio" name="s3q4" value="C"> 400 mA</label>
+    </div>
+    <button class="btn btn-s3" onclick="check('s3q4','B','Loi des intensités en dérivation : I = I₁ + I₂. Donc I₂ = I − I₁ = 800 − 500 = 300 mA.','s3')">Vérifier</button>
+    <div class="result" id="s3q4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Circuit en dérivation à 3 branches : I₁ = 0,2 A, I₂ = 0,5 A, I₃ = 0,3 A.</div>
+    <p>Calcule l'intensité totale I délivrée par le générateur.</p>
+    <div class="fill-wrap">
+      <label>I = ? (en A)</label>
+      <input class="fill-input" id="s3q5-inp" placeholder="ex: 1.0">
+    </div>
+    <button class="btn btn-s3" onclick="checkFill('s3q5','1|1.0|1,0','I = I₁ + I₂ + I₃ = 0,2 + 0,5 + 0,3 = 1,0 A.','s3')">Vérifier</button>
+    <div class="result" id="s3q5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Circuit mixte : une lampe L1 est en série avec un groupe en dérivation composé de L2 et L3. On mesure I = 600 mA (courant principal) et I₂ = 250 mA (branche L2).</div>
+    <p>Calcule I₃ (intensité dans L3) et I₁ (intensité dans L1).</p>
+    <button class="btn-ghost btn" onclick="toggle('s3c6')">📋 Correction</button>
+    <div class="correction" id="s3c6">
+      <div class="step">L2 et L3 sont en dérivation : I = I₂ + I₃ → I₃ = 600 − 250 = 350 mA</div>
+      <div class="step">L1 est en série avec l'ensemble du circuit</div>
+      <div class="step">L'intensité en série est la même partout → I₁ = I = 600 mA</div>
+      <div class="step">Résultat : I₁ = 600 mA · I₂ = 250 mA · I₃ = 350 mA</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Explique pourquoi l'ampèremètre a une résistance quasi nulle et le voltmètre une résistance très grande. Que se passerait-il si c'était l'inverse ?</p>
+    <button class="btn-ghost btn" onclick="toggle('s3c7')">📋 Correction</button>
+    <div class="correction" id="s3c7">
+      <div class="step">L'ampèremètre est en série → une résistance élevée réduirait l'intensité du circuit → mesure faussée</div>
+      <div class="step">Sa résistance quasi nulle garantit qu'il ne perturbe pas le courant mesuré</div>
+      <div class="step">Le voltmètre est en dérivation → une résistance faible court-circuiterait le dipôle → mesure faussée ET risque de dommage</div>
+      <div class="step">Sa très grande résistance garantit qu'il ne dévie pas le courant du dipôle mesuré</div>
+      <div class="step">Si on inversait : l'ampèremètre avec grande résistance bloquerait le courant ; le voltmètre avec petite résistance provoquerait un court-circuit</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════
+     S4 — LOI D'OHM
+══════════════════ -->
+<div class="section" id="sec-s4">
+  <div class="sec-intro">
+    <div class="sec-ico ico4">📐</div>
+    <div class="sec-title">
+      <h2>Série 4 — La loi d'Ohm</h2>
+      <p>Relation U = R × I · Calcul de U, R ou I</p>
+    </div>
+  </div>
+
+  <div class="cours c4">
+    <div class="cours-lbl">📖 Cours — La loi d'Ohm</div>
+    <p>La loi d'Ohm relie la tension U aux bornes d'une résistance, sa résistance R et l'intensité I qui la traverse.</p>
+    <span class="formula f4">U = R × I</span>
+    <span class="formula felec">R = U ÷ I</span>
+    <span class="formula felec">I = U ÷ R</span>
+    <table class="rule-table" style="margin-top:10px">
+      <tr><th>Grandeur</th><th>Symbole</th><th>Unité</th><th>Instrument</th></tr>
+      <tr><td>Tension</td><td>U</td><td>Volt (V)</td><td>Voltmètre</td></tr>
+      <tr><td>Intensité</td><td>I</td><td>Ampère (A)</td><td>Ampèremètre</td></tr>
+      <tr><td>Résistance</td><td>R</td><td>Ohm (Ω)</td><td>Ohmmètre</td></tr>
+    </table>
+    <div class="tip">
+      <strong>💡 Triangle d'Ohm — méthode rapide</strong>
+      Cache la grandeur cherchée dans le triangle :<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[U]<br>
+      &nbsp;&nbsp;[R] × [I]<br>
+      → Cache U : U = R × I<br>
+      → Cache R : R = U ÷ I<br>
+      → Cache I : I = U ÷ R
+    </div>
+    <div class="phrase-type">
+      "D'après la loi d'Ohm, U = R × I. Donc avec U = … V et I = … A, on calcule R = U ÷ I = … Ω."
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pf4" id="prog-s4"></div></div><div class="prog-score" id="score-s4">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est la formule de la loi d'Ohm ?</p>
+    <div class="opts">
+      <label><input type="radio" name="s4q1" value="A"> <span class="math">U = R + I</span></label>
+      <label><input type="radio" name="s4q1" value="B"> <span class="math">U = R × I</span></label>
+      <label><input type="radio" name="s4q1" value="C"> <span class="math">R = U + I</span></label>
+    </div>
+    <button class="btn btn-s4" onclick="check('s4q1','B','La loi d\'Ohm s\'écrit U = R × I. La tension (en V) est égale au produit de la résistance (en Ω) par l\'intensité (en A).','s4')">Vérifier</button>
+    <div class="result" id="s4q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Une résistance de 50 Ω est traversée par un courant de 2 A. Calcule la tension à ses bornes.</p>
+    <div class="opts">
+      <label><input type="radio" name="s4q2" value="A"> 25 V</label>
+      <label><input type="radio" name="s4q2" value="B"> 52 V</label>
+      <label><input type="radio" name="s4q2" value="C"> 100 V</label>
+    </div>
+    <button class="btn btn-s4" onclick="check('s4q2','C','U = R × I = 50 × 2 = 100 V.','s4')">Vérifier</button>
+    <div class="result" id="s4q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>La tension aux bornes d'une résistance est 12 V et l'intensité qui la traverse est 0,5 A. Calcule sa résistance.</p>
+    <div class="opts">
+      <label><input type="radio" name="s4q3" value="A"> 6 Ω</label>
+      <label><input type="radio" name="s4q3" value="B"> 24 Ω</label>
+      <label><input type="radio" name="s4q3" value="C"> 12,5 Ω</label>
+    </div>
+    <button class="btn btn-s4" onclick="check('s4q3','B','R = U ÷ I = 12 ÷ 0,5 = 24 Ω.','s4')">Vérifier</button>
+    <div class="result" id="s4q3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Une résistance R = 220 Ω est branchée sur une pile de 9 V.</div>
+    <p>Calcule l'intensité I qui traverse la résistance (arrondie au centième).</p>
+    <div class="fill-wrap">
+      <label>I = ? (en A)</label>
+      <input class="fill-input" id="s4q4-inp" placeholder="ex: 0.04">
+    </div>
+    <button class="btn btn-s4" onclick="checkFill('s4q4','0.04|0,04','I = U ÷ R = 9 ÷ 220 ≈ 0,041 A ≈ 0,04 A.','s4')">Vérifier</button>
+    <div class="result" id="s4q4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">Deux résistances R1 = 30 Ω et R2 = 70 Ω sont montées en série avec une pile de 12 V.</div>
+    <p>Calcule l'intensité I dans le circuit, puis les tensions U<sub>R1</sub> et U<sub>R2</sub>.</p>
+    <button class="btn-ghost btn" onclick="toggle('s4c5')">📋 Correction</button>
+    <div class="correction" id="s4c5">
+      <div class="step">En série, l'intensité est la même partout : I = U_pile ÷ (R1 + R2)</div>
+      <div class="step">I = 12 ÷ (30 + 70) = 12 ÷ 100 = 0,12 A</div>
+      <div class="step">U_R1 = R1 × I = 30 × 0,12 = 3,6 V</div>
+      <div class="step">U_R2 = R2 × I = 70 × 0,12 = 8,4 V</div>
+      <div class="step">Vérification : U_R1 + U_R2 = 3,6 + 8,4 = 12 V = U_pile ✔</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Deux résistances R1 = 100 Ω et R2 = 150 Ω sont montées en dérivation sur une pile de 6 V.</div>
+    <p>Calcule I₁, I₂ et l'intensité totale I délivrée par la pile.</p>
+    <button class="btn-ghost btn" onclick="toggle('s4c6')">📋 Correction</button>
+    <div class="correction" id="s4c6">
+      <div class="step">En dérivation, les deux résistances ont la même tension : U = 6 V</div>
+      <div class="step">I₁ = U ÷ R1 = 6 ÷ 100 = 0,06 A</div>
+      <div class="step">I₂ = U ÷ R2 = 6 ÷ 150 = 0,04 A</div>
+      <div class="step">I = I₁ + I₂ = 0,06 + 0,04 = 0,10 A = 100 mA</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un circuit série contient une pile de 9 V, une résistance R1 = 60 Ω et une lampe L. On mesure I = 0,1 A dans le circuit.</div>
+    <p>Calcule U<sub>R1</sub>, puis en déduire U<sub>L</sub> et la résistance de la lampe R<sub>L</sub>.</p>
+    <button class="btn-ghost btn" onclick="toggle('s4c7')">📋 Correction</button>
+    <div class="correction" id="s4c7">
+      <div class="step">U_R1 = R1 × I = 60 × 0,1 = 6 V</div>
+      <div class="step">Loi des tensions en série : U_pile = U_R1 + U_L</div>
+      <div class="step">U_L = 9 − 6 = 3 V</div>
+      <div class="step">Résistance de la lampe : R_L = U_L ÷ I = 3 ÷ 0,1 = 30 Ω</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══ CTA INSTAGRAM ══ -->
+<div style="max-width:960px;margin:auto;padding:0 14px">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir<br>les <span>prochaines fiches</span> ?</div>
+      <p class="cta-sub">
+        Abonne-toi à notre compte Instagram et active les notifications 🔔<br>
+        Chaque nouvelle fiche est annoncée en story — ne rate plus rien !
+      </p>
+      <div class="cta-steps">
+        <span class="cta-step">1️⃣ Clique sur le bouton</span>
+        <span class="cta-step">2️⃣ Abonne-toi au compte</span>
+        <span class="cta-step">3️⃣ Active la clochette 🔔</span>
+      </div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">
+        ◈ &nbsp;Suivre @toncoachscolaire
+      </a>
+      <div class="cta-note">Nouvelles fiches annoncées en story · Maths · Physique · Anglais · SVT</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>
+    Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).
+  </div>
+</footer>
+
+<script>showTab('s1');</script>
+</body>
+</html>
