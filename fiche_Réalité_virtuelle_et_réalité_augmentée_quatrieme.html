@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Chap 8 — Réalité virtuelle / Réalité augmentée · 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#faf5ff; --ink:#1a0a2e; --ink2:#6b4f8a; --card:#fff; --border:#ddd6fe;
+  --acc:#8b5cf6; --acc2:#6d28d9; --acc-bg:#f5f3ff;
+  --easy:#16a34a; --med:#ca8a04; --hard:#dc2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{background:linear-gradient(135deg,#1a0a2e 0%,#2d1060 55%,#8b5cf6 100%);padding:28px 24px 22px;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-60px;left:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(236,72,153,.15) 0%,transparent 70%);pointer-events:none}
+.header-inner{max-width:960px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.header-text img{height:50px;border-radius:12px;margin-bottom:10px;display:block;border:1px solid rgba(255,255,255,.15);padding:4px;background:rgba(255,255,255,.06)}
+.hbadge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:4px 14px;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:10px}
+header h1{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3.5vw,2.1rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:5px}
+header h1 span{color:#c4b5fd}
+header p{font-size:.85rem;color:rgba(255,255,255,.5)}
+.rating-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:14px 20px;text-align:center;min-width:155px;flex-shrink:0}
+.rb-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.rating-stars{font-size:1.35rem;letter-spacing:3px;margin-bottom:4px;display:block}
+.rating-score{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;line-height:1}
+.rating-score .rs-t{font-size:.82rem;color:rgba(255,255,255,.4);font-weight:500}
+.rating-pct{font-size:.74rem;color:rgba(255,255,255,.5);margin-top:3px}
+.rating-bar{width:100%;height:4px;background:rgba(255,255,255,.12);border-radius:10px;margin-top:8px;overflow:hidden}
+.rating-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#c4b5fd,#8b5cf6);width:0%;transition:width .5s}
+.cta-strip{background:linear-gradient(90deg,#1a0a2e,#2d1060,#1a0a2e);border-bottom:1px solid rgba(139,92,246,.3);padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-strip-text{font-size:.79rem;color:rgba(255,255,255,.75);font-weight:600}
+.cta-strip-btn{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:800;transition:all .2s;white-space:nowrap}
+.cta-strip-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+main{max-width:960px;margin:auto;padding:24px 14px 80px}
+.sec-intro{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sec-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;background:var(--acc-bg)}
+.sec-title h2{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+.sec-title p{color:var(--ink2);font-size:.84rem;margin-top:3px}
+.fc-section{margin-bottom:28px}
+.fc-section-title{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fc-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.fc-controls{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.fc-mode-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .15s}
+.fc-mode-btn.active-mode{background:var(--acc-bg);color:var(--acc);border-color:var(--acc)}
+.flashcard{background:var(--card);border:2px solid var(--border);border-radius:20px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:24px;text-align:center;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.06);max-width:520px}
+.flashcard:hover{box-shadow:0 8px 30px rgba(0,0,0,.1);transform:translateY(-2px)}
+.fc-hint{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink2);margin-bottom:10px}
+.fc-word{font-size:1.4rem;font-weight:900;line-height:1.3}
+.fc-answer{display:none;font-size:.95rem;font-weight:600;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);width:100%;color:var(--acc2);line-height:1.5}
+.fc-tap{font-size:.74rem;color:var(--ink2);margin-top:12px}
+.fc-zone{display:flex;flex-direction:column;align-items:center;gap:14px}
+.fc-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.fc-num{font-size:.8rem;color:var(--ink2);font-weight:600}
+.fc-stat{font-size:.84rem;font-weight:700;color:var(--ink2)}
+.cours{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 22px;margin-bottom:14px;border-left:5px solid var(--acc)}
+.cours-lbl{font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.formula{font-family:'JetBrains Mono',monospace;background:var(--acc-bg);border-radius:9px;padding:10px 16px;font-size:.9rem;margin:6px 0;display:block;border-left:3px solid var(--acc);color:#3b0764;line-height:1.8}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;font-size:.86rem;margin-top:10px;line-height:1.7}
+.tip strong{display:block;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:#92400e;margin-bottom:4px}
+.ex-box{background:#f8fafc;border-radius:10px;padding:12px 14px;margin-top:10px;font-size:.87rem;line-height:1.9;border:1px solid var(--border)}
+.ex-box strong{display:block;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:5px}
+.phrase-type{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.86rem;font-style:italic;color:#14532d;line-height:1.6}
+.phrase-type::before{content:'Rédaction attendue : ';font-style:normal;font-weight:800;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--easy);display:block;margin-bottom:4px}
+.rtable{width:100%;border-collapse:collapse;font-size:.86rem;margin:10px 0}
+.rtable th{background:var(--ink);color:#fff;padding:9px 13px;text-align:left;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase}
+.rtable td{padding:9px 13px;border-bottom:1px solid var(--border);line-height:1.6}
+.rtable tr:nth-child(even) td{background:var(--acc-bg)}
+.lvl{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:6px}
+.lvl-e{background:#dcfce7;color:#166534}.lvl-m{background:#fef9c3;color:#854d0e}.lvl-h{background:#fee2e2;color:#991b1b}
+.divider{display:flex;align-items:center;gap:10px;margin:24px 0 14px;font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.prog-row{display:flex;align-items:center;gap:12px;margin:18px 0 6px}
+.prog-bar{flex:1;height:5px;background:var(--border);border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;background:var(--acc);width:0%;transition:width .4s}
+.prog-score{font-size:.78rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.exo{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px;transition:border-color .2s}
+.exo:hover{border-color:var(--acc)}
+.exo-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.94rem;font-weight:600;line-height:1.6;margin-bottom:10px}
+.context{background:var(--acc-bg);border-radius:9px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;border-left:3px solid var(--acc);line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opts label{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f8fafc;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;font-size:.9rem;transition:all .15s;line-height:1.5}
+.opts label:hover{border-color:var(--acc);background:var(--acc-bg)}
+.btn{padding:9px 20px;border-radius:9px;border:none;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:800;cursor:pointer;transition:all .15s;margin-top:10px;margin-right:6px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.92)}
+.btn-acc{background:var(--acc);color:#fff}
+.btn-ghost{background:var(--card);border:1.5px solid var(--border);color:var(--ink2)}
+.btn-ghost:hover{background:var(--acc-bg);color:var(--ink)}
+.result{display:none;margin-top:10px;padding:11px 15px;border-radius:9px;font-size:.87rem;line-height:1.6;border-left:3px solid}
+.result.ok{background:#f0fdf4;border-color:var(--easy)}.result.bad{background:#fef2f2;border-color:var(--hard)}
+.ok-lbl{color:#166534;font-weight:800}.bad-lbl{color:#991b1b;font-weight:800}
+.explain{margin-top:5px;color:#374151}
+.correction{display:none;margin-top:10px;background:var(--acc-bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.87rem;line-height:2}
+.correction .step{color:var(--ink2);border-bottom:1px dashed var(--border);padding:3px 0}
+.correction .step:last-child{border:none;color:var(--ink);font-weight:700}
+.correction .step::before{content:'▸ ';color:var(--easy)}
+.cta-banner{background:linear-gradient(135deg,#1a0a2e,#2d1060,#8b5cf6);border-radius:20px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
+.cta-title span{color:#c4b5fd}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-steps{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:6px 14px;font-size:.77rem;color:rgba(255,255,255,.85);font-weight:600}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:12px 28px;border-radius:30px;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;transition:all .2s;box-shadow:0 4px 20px rgba(220,39,67,.3)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(220,39,67,.4)}
+.cta-note{margin-top:12px;font-size:.71rem;color:rgba(255,255,255,.4);font-style:italic}
+footer{text-align:center;padding:24px;font-size:.78rem;color:var(--ink2);border-top:1px solid var(--border);line-height:1.9}
+.footer-copy{font-size:.71rem;color:#94a3b8;margin-top:6px}
+.footer-copy strong{color:var(--ink2)}
+footer a{color:var(--acc);text-decoration:none;font-weight:600}
+@media(max-width:600px){header h1{font-size:1.3rem}.header-inner{flex-direction:column;align-items:flex-start}.rating-box{align-self:stretch}main{padding:14px 10px 60px}}
+</style>
+<script>
+let ta=0,tc=0; const sc={},to={},ans={};
+function check(id,cor,ex){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch){if(c.checked)sel=c.value;}
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-lbl'>⚠ Choisis une réponse !</span>";r.className='result bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;
+  to.q=(to.q||0)+1; ta++;
+  if(sel===cor){sc.q=(sc.q||0)+1;tc++;r.innerHTML="<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+ex+"</div>";r.className='result ok';}
+  else{r.innerHTML="<span class='bad-lbl'>✘ Incorrect</span><div class='explain'>"+ex+"</div>";r.className='result bad';}
+  r.style.display='block';
+  const p=to.q>0?Math.round(sc.q/to.q*100):0;
+  document.getElementById('prog-q').style.width=p+'%';
+  document.getElementById('score-q').textContent=(sc.q||0)+' / '+to.q+' · '+p+'%';
+  updateR();
+}
+function updateR(){
+  const p=ta>0?Math.round(tc/ta*100):0;
+  document.getElementById('r-c').textContent=tc;
+  document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'—';
+  document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='★'.repeat(s)+'☆'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  if(p>=75)b.style.background='linear-gradient(90deg,#22c55e,#16a34a)';
+  else if(p>=50)b.style.background='linear-gradient(90deg,#f59e0b,#ca8a04)';
+  else b.style.background='linear-gradient(90deg,#c4b5fd,#8b5cf6)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+const fc=[
+  {q:'Réalité augmentée (RA)',r:'Technologie qui ajoute des éléments numériques (images, sons, objets 3D) à l\'environnement réel perçu par l\'utilisateur.'},
+  {q:'Réalité virtuelle (RV)',r:'Technologie qui plonge l\'utilisateur dans un environnement entièrement numérique en 3D, coupé du monde réel.'},
+  {q:'Image flashable',r:'Image reconnue par un logiciel de réalité augmentée qui déclenche l\'affichage d\'un objet numérique en 3D.'},
+  {q:'QR Code',r:'Image codée lisible par une caméra qui redirige vers un contenu numérique (site web, objet 3D, vidéo…).'},
+  {q:'Différence RA / RV',r:'La RA ajoute du numérique au monde réel (l\'utilisateur voit encore le réel). La RV remplace totalement le réel par du numérique.'},
+  {q:'Étape 1 — intégration objet 3D en RA',r:'Créer un objet numérique en 3D à l\'aide d\'un modeleur volumique.'},
+  {q:'Étape 2 — intégration objet 3D en RA',r:'Associer l\'image flashable à l\'objet numérique en 3D grâce au logiciel de réalité augmentée.'},
+  {q:'Étape 3 — intégration objet 3D en RA',r:'Flasher l\'image avec la caméra de la tablette depuis le logiciel de réalité augmentée.'},
+  {q:'Étape 4 — intégration objet 3D en RA',r:'Choisir une image flashable reconnaissable par le logiciel de réalité augmentée.'},
+  {q:'Exemple de RA',r:'Visualiser un meuble en 3D dans son salon via une tablette · Voir le corps humain en 3D en médecine.'},
+  {q:'Exemple de RV',r:'Simuler un vol en avion pour la formation de pilotes · Visiter un château reconstitué en 3D avec un casque.'},
+];
+let idx=0,order=[],cor=0,tot=0,rev=false,mode='def';
+function initFC(){order=[...Array(fc.length).keys()].sort(()=>Math.random()-.5);idx=0;cor=0;tot=0;rev=false;renderFC();}
+function renderFC(){
+  rev=false;
+  const item=fc[order[idx%order.length]];
+  const front=mode==='def'?item.q:item.r;
+  const back=mode==='def'?item.r:item.q;
+  document.getElementById('fc-hint').textContent=mode==='def'?'🥽 Terme':'💡 Définition';
+  document.getElementById('fc-word').textContent=front;
+  const a=document.getElementById('fc-answer');
+  a.textContent='→ '+back; a.style.display='none';
+  document.getElementById('fc-tap').style.display='block';
+  document.getElementById('fc-num').textContent=(idx%order.length+1)+' / '+fc.length;
+  updateFcStat();
+}
+function revealFC(){if(rev)return;rev=true;document.getElementById('fc-answer').style.display='block';document.getElementById('fc-tap').style.display='none';}
+function voteFC(ok){if(!rev){revealFC();return;}tot++;if(ok)cor++;idx++;rev=false;renderFC();}
+function updateFcStat(){const p=tot>0?Math.round(cor/tot*100):0;const e=document.getElementById('fc-stat');if(e)e.textContent=tot>0?'✅ '+cor+' / '+tot+' · '+p+'%':'';}
+function setMode(m){mode=m;document.querySelectorAll('.fc-mode-btn').forEach(b=>b.classList.toggle('active-mode',b.dataset.mode===m));renderFC();}
+window.onload=function(){initFC();};
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbadge">Technologie · 4ème · Chapitre 8</div>
+      <h1>Réalité virtuelle et <span>réalité augmentée</span></h1>
+      <p>RA vs RV · QR Code · Image flashable · Intégration 3D</p>
+    </div>
+    <div class="rating-box">
+      <div class="rb-label">Mon score</div>
+      <span class="rating-stars" id="r-s">☆☆☆☆☆</span>
+      <div class="rating-score"><span id="r-c">0</span><span class="rs-t"> / <span id="r-t">0</span></span></div>
+      <div class="rating-pct" id="r-p">—</div>
+      <div class="rating-bar"><div class="rating-bar-fill" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+<div class="cta-strip">
+  <span class="cta-strip-text">📲 Nouvelles fiches annoncées en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-strip-btn">◈ &nbsp;@toncoachscolaire</a>
+</div>
+<main>
+  <div class="sec-intro">
+    <div class="sec-ico">🥽</div>
+    <div class="sec-title">
+      <h2>Chapitre 8 — Réalité virtuelle et réalité augmentée</h2>
+      <p>Définitions · Différences · QR Code · Étapes d'intégration 3D</p>
+    </div>
+  </div>
+
+  <div class="fc-section">
+    <div class="fc-section-title">🃏 Flashcards — Vocabulaire</div>
+    <div class="fc-controls">
+      <button class="fc-mode-btn active-mode" data-mode="def" onclick="setMode('def')">🥽 Terme → Définition</button>
+      <button class="fc-mode-btn" data-mode="rev" onclick="setMode('rev')">💡 Définition → Terme</button>
+      <button class="btn-ghost btn" style="padding:5px 12px;font-size:.76rem" onclick="initFC()">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="flashcard" onclick="revealFC()">
+        <div class="fc-hint" id="fc-hint">🥽 Terme</div>
+        <div class="fc-word" id="fc-word">Chargement…</div>
+        <div class="fc-answer" id="fc-answer"></div>
+        <div class="fc-tap" id="fc-tap">👆 Clique pour voir la définition</div>
+      </div>
+      <div class="fc-num" id="fc-num">1 / 11</div>
+      <div class="fc-btns">
+        <button class="btn" style="background:#fee2e2;color:#991b1b;border:none" onclick="voteFC(false)">✘ Je ne savais pas</button>
+        <button class="btn" style="background:#dcfce7;color:#166534;border:none" onclick="voteFC(true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fc-stat"></div>
+    </div>
+  </div>
+
+  <div class="cours">
+    <div class="cours-lbl">📖 RA vs RV — Tableau comparatif</div>
+    <table class="rtable">
+      <tr><th></th><th>Réalité Augmentée (RA)</th><th>Réalité Virtuelle (RV)</th></tr>
+      <tr><td><strong>Principe</strong></td><td>Ajoute du numérique au monde réel</td><td>Remplace le monde réel par un environnement numérique</td></tr>
+      <tr><td><strong>Équipement</strong></td><td>Smartphone, tablette, lunettes RA</td><td>Casque VR (Meta Quest, HTC Vive…)</td></tr>
+      <tr><td><strong>Lien avec le réel</strong></td><td>L'utilisateur voit encore le réel</td><td>L'utilisateur est coupé du monde réel</td></tr>
+      <tr><td><strong>Exemple cours</strong></td><td>Voir un meuble 3D dans son salon · Voir le corps humain en 3D</td><td>Simuler un vol pour la formation · Visiter un château reconstitué</td></tr>
+    </table>
+    <div class="phrase-type">"La réalité augmentée ajoute des éléments numériques à l'environnement réel, tandis que la réalité virtuelle plonge l'utilisateur dans un monde entièrement numérique, coupé du réel."</div>
+  </div>
+
+  <div class="cours">
+    <div class="cours-lbl">📖 Les 4 étapes d'intégration d'un objet 3D en RA</div>
+    <span class="formula">Étape 1 → Créer l'objet numérique en 3D (modeleur volumique)</span>
+    <span class="formula">Étape 2 → Associer l'image flashable à l'objet 3D (logiciel RA)</span>
+    <span class="formula">Étape 3 → Flasher l'image avec la caméra de la tablette</span>
+    <span class="formula">Étape 4 → Choisir une image flashable reconnaissable</span>
+    <div class="tip">
+      <strong>⚠ Attention à l'ordre dans le cours</strong>
+      Dans le cahier, l'ordre était numéroté 2-4-3-1 pour remettre dans l'ordre. L'ordre chronologique logique est bien : Créer → Associer → Flasher → Choisir l'image.
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill" id="prog-q"></div></div><div class="prog-score" id="score-q">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle technologie ajoute des éléments numériques à l'environnement réel ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q1" value="A"> La réalité virtuelle</label>
+      <label><input type="radio" name="q1" value="B"> La réalité augmentée</label>
+      <label><input type="radio" name="q1" value="C"> La modélisation 3D</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q1','B','La réalité augmentée (RA) ajoute des éléments numériques à l\'environnement réel que l\'utilisateur perçoit. Il voit toujours le monde réel en plus des éléments numériques ajoutés.')">Vérifier</button>
+    <div class="result" id="q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Qu'est-ce qu'un QR Code et à quoi sert-il ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q2" value="A"> Un objet numérique en 3D créé avec un modeleur</label>
+      <label><input type="radio" name="q2" value="B"> Une image codée lisible par une caméra qui redirige vers un contenu numérique</label>
+      <label><input type="radio" name="q2" value="C"> Un logiciel de réalité virtuelle</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q2','B','Un QR Code est une image codée en noir et blanc lisible par une caméra de smartphone ou tablette. Il permet d\'accéder directement à un contenu numérique : site web, objet 3D, vidéo…')">Vérifier</button>
+    <div class="result" id="q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Relier les utilisations à leur technologie. La simulation d'un vol en avion avec un casque, c'est :</p>
+    <div class="opts">
+      <label><input type="radio" name="q3" value="A"> Réalité augmentée</label>
+      <label><input type="radio" name="q3" value="B"> Réalité virtuelle</label>
+      <label><input type="radio" name="q3" value="C"> Les deux à la fois</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q3','B','La simulation de vol avec un casque = réalité virtuelle. Le casque coupe l\'utilisateur du monde réel et le plonge dans un environnement numérique 3D. C\'est une immersion totale.')">Vérifier</button>
+    <div class="result" id="q3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">a. La visite d'un parc d'un château avec un casque fourni à l'accueil, qui reconstitue les jardins comme ils étaient aménagés à l'époque.</div>
+    <p>S'agit-il de réalité augmentée ou virtuelle ? Justifie.</p>
+    <div class="opts">
+      <label><input type="radio" name="q4" value="A"> Réalité augmentée — on ajoute des éléments numériques aux jardins réels</label>
+      <label><input type="radio" name="q4" value="B"> Réalité virtuelle — le casque plonge l'utilisateur dans une reconstitution 3D, coupée du château réel</label>
+      <label><input type="radio" name="q4" value="C"> Cela dépend du type de casque utilisé</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q4','B','C\'est de la réalité virtuelle : le casque VR remplace ce que l\'utilisateur voit par une reconstitution numérique 3D des jardins. Il ne voit plus les jardins réels actuels, il est plongé dans un environnement entièrement numérique.')">Vérifier</button>
+    <div class="result" id="q4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <div class="context">b. Une application de jeu vidéo permet d'ajouter ses propres créations au monde réel à travers l'écran de son smartphone.</div>
+    <p>S'agit-il de réalité augmentée ou virtuelle ? Justifie.</p>
+    <div class="opts">
+      <label><input type="radio" name="q5" value="A"> Réalité virtuelle — le jeu crée un monde entièrement numérique</label>
+      <label><input type="radio" name="q5" value="B"> Réalité augmentée — des éléments numériques (créations) sont ajoutés au monde réel vu par la caméra</label>
+      <label><input type="radio" name="q5" value="C"> Ni l'un ni l'autre — c'est un simple jeu vidéo</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q5','B','C\'est de la réalité augmentée : l\'utilisateur voit le monde réel à travers l\'écran de son smartphone et des éléments numériques (ses créations) y sont ajoutés. Il ne quitte pas le monde réel.')">Vérifier</button>
+    <div class="result" id="q5-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Quelle est la 1ère étape pour intégrer un objet 3D en réalité augmentée ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q6" value="A"> Flasher l'image avec la caméra de la tablette</label>
+      <label><input type="radio" name="q6" value="B"> Choisir une image flashable reconnaissable</label>
+      <label><input type="radio" name="q6" value="C"> Créer un objet numérique en 3D à l'aide d'un modeleur volumique</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q6','C','La 1ère étape est de créer l\'objet 3D. On ne peut pas associer ou flasher quoi que ce soit si l\'objet 3D n\'existe pas encore. L\'ordre logique : Créer → Associer → Choisir l\'image → Flasher.')">Vérifier</button>
+    <div class="result" id="q6-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Relie chaque technologie à sa bonne description. La visualisation sur tablette d'une paire de baskets en 3D dans un magasin, c'est :</p>
+    <div class="opts">
+      <label><input type="radio" name="q7" value="A"> Réalité virtuelle</label>
+      <label><input type="radio" name="q7" value="B"> Réalité augmentée</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q7','B','Réalité augmentée : le client est dans le magasin (monde réel) et voit en plus la chaussure en 3D superposée sur sa tablette. Il n\'est pas coupé du monde réel.')">Vérifier</button>
+    <div class="result" id="q7-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q8 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Une marque de jeux de briques en plastique veut que le public puisse voir chaque modèle assemblé en 3D, mais les grandes surfaces refusent de les exposer car ça prend trop de place.</div>
+    <p>Comment la réalité augmentée peut-elle résoudre ce problème ? Explique en détail.</p>
+    <button class="btn-ghost btn" onclick="toggle('c8')">📋 Correction</button>
+    <div class="correction" id="c8">
+      <div class="step">La RA permet d'afficher le modèle assemblé en 3D sur une tablette ou smartphone sans l'exposer physiquement</div>
+      <div class="step">Le client flashe la boîte du produit (image flashable) → le modèle assemblé apparaît en 3D sur l'écran</div>
+      <div class="step">Avantage : aucune place nécessaire en magasin — seule la boîte (petite) est présente sur le rayon</div>
+      <div class="step">Le client voit exactement le produit fini sans qu'il soit physiquement exposé : économie d'espace et de coût d'exposition</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q9 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Propose un exemple concret d'utilisation de la réalité augmentée dans chacun des domaines suivants : médecine · architecture · éducation. Explique brièvement ce qu'elle apporte dans chaque cas.</p>
+    <button class="btn-ghost btn" onclick="toggle('c9')">📋 Exemples de correction</button>
+    <div class="correction" id="c9">
+      <div class="step">Médecine : visualiser le corps humain ou des organes en 3D sur une tablette pour expliquer une opération au patient ou former des étudiants sans risque</div>
+      <div class="step">Architecture : projeter le rendu d'un bâtiment ou d'un intérieur en 3D sur un terrain vide pour visualiser le résultat avant construction</div>
+      <div class="step">Éducation : flasher une image dans un manuel et voir apparaître un modèle 3D animé (l'ADN, le système solaire, un moteur…) pour mieux comprendre</div>
+    </div>
+  </div>
+</main>
+
+<div style="max-width:960px;margin:auto;padding:0 14px">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir<br>les <span>prochaines fiches</span> ?</div>
+      <p class="cta-sub">Abonne-toi à notre compte Instagram et active les notifications 🔔<br>Chaque nouvelle fiche est annoncée en story — ne rate plus rien !</p>
+      <div class="cta-steps">
+        <span class="cta-step">1️⃣ Clique sur le bouton</span>
+        <span class="cta-step">2️⃣ Abonne-toi au compte</span>
+        <span class="cta-step">3️⃣ Active la clochette 🔔</span>
+      </div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ &nbsp;Suivre @toncoachscolaire</a>
+      <div class="cta-note">Nouvelles fiches annoncées en story · Maths · Physique · Anglais · Technologie · SVT</div>
+    </div>
+  </div>
+</div>
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy"><strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).</div>
+</footer>
+</body>
+</html>

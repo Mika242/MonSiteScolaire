@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Chap 9 — Le prototypage · 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff8f0; --ink:#1c0a00; --ink2:#7c4a1a; --card:#fff; --border:#fed7aa;
+  --acc:#f97316; --acc2:#ea580c; --acc-bg:#fff7ed;
+  --easy:#16a34a; --med:#ca8a04; --hard:#dc2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+header{background:linear-gradient(135deg,#1c0a00 0%,#431407 55%,#f97316 100%);padding:28px 24px 22px;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,.2) 0%,transparent 70%);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-60px;left:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(234,88,12,.15) 0%,transparent 70%);pointer-events:none}
+.header-inner{max-width:960px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.header-text img{height:50px;border-radius:12px;margin-bottom:10px;display:block;border:1px solid rgba(255,255,255,.15);padding:4px;background:rgba(255,255,255,.06)}
+.hbadge{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:4px 14px;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:10px}
+header h1{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,3.5vw,2.1rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:5px}
+header h1 span{color:#fdba74}
+header p{font-size:.85rem;color:rgba(255,255,255,.5)}
+.rating-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:14px 20px;text-align:center;min-width:155px;flex-shrink:0}
+.rb-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.rating-stars{font-size:1.35rem;letter-spacing:3px;margin-bottom:4px;display:block}
+.rating-score{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;line-height:1}
+.rating-score .rs-t{font-size:.82rem;color:rgba(255,255,255,.4);font-weight:500}
+.rating-pct{font-size:.74rem;color:rgba(255,255,255,.5);margin-top:3px}
+.rating-bar{width:100%;height:4px;background:rgba(255,255,255,.12);border-radius:10px;margin-top:8px;overflow:hidden}
+.rating-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#fdba74,#f97316);width:0%;transition:width .5s}
+.cta-strip{background:linear-gradient(90deg,#1a0a2e,#2d1060,#1a0a2e);border-bottom:1px solid rgba(139,92,246,.3);padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-strip-text{font-size:.79rem;color:rgba(255,255,255,.75);font-weight:600}
+.cta-strip-btn{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:800;transition:all .2s;white-space:nowrap}
+.cta-strip-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+main{max-width:960px;margin:auto;padding:24px 14px 80px}
+.sec-intro{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sec-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;background:var(--acc-bg)}
+.sec-title h2{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800}
+.sec-title p{color:var(--ink2);font-size:.84rem;margin-top:3px}
+.fc-section{margin-bottom:28px}
+.fc-section-title{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fc-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.fc-controls{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.fc-mode-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .15s}
+.fc-mode-btn.active-mode{background:var(--acc-bg);color:var(--acc);border-color:var(--acc)}
+.flashcard{background:var(--card);border:2px solid var(--border);border-radius:20px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:24px;text-align:center;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.06);max-width:520px}
+.flashcard:hover{box-shadow:0 8px 30px rgba(0,0,0,.1);transform:translateY(-2px)}
+.fc-hint{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink2);margin-bottom:10px}
+.fc-word{font-size:1.4rem;font-weight:900;line-height:1.3}
+.fc-answer{display:none;font-size:.95rem;font-weight:600;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);width:100%;color:var(--acc2);line-height:1.5}
+.fc-tap{font-size:.74rem;color:var(--ink2);margin-top:12px}
+.fc-zone{display:flex;flex-direction:column;align-items:center;gap:14px}
+.fc-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.fc-num{font-size:.8rem;color:var(--ink2);font-weight:600}
+.fc-stat{font-size:.84rem;font-weight:700;color:var(--ink2)}
+.cours{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 22px;margin-bottom:14px;border-left:5px solid var(--acc)}
+.cours-lbl{font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.formula{font-family:'JetBrains Mono',monospace;background:var(--acc-bg);border-radius:9px;padding:10px 16px;font-size:.9rem;margin:6px 0;display:block;border-left:3px solid var(--acc);color:#7c2d12;line-height:1.8}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;font-size:.86rem;margin-top:10px;line-height:1.7}
+.tip strong{display:block;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:#92400e;margin-bottom:4px}
+.ex-box{background:#f8fafc;border-radius:10px;padding:12px 14px;margin-top:10px;font-size:.87rem;line-height:1.9;border:1px solid var(--border)}
+.ex-box strong{display:block;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:5px}
+.phrase-type{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.86rem;font-style:italic;color:#14532d;line-height:1.6}
+.phrase-type::before{content:'Rédaction attendue : ';font-style:normal;font-weight:800;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--easy);display:block;margin-bottom:4px}
+.rtable{width:100%;border-collapse:collapse;font-size:.86rem;margin:10px 0}
+.rtable th{background:var(--ink);color:#fff;padding:9px 13px;text-align:left;font-size:.74rem;letter-spacing:.07em;text-transform:uppercase}
+.rtable td{padding:9px 13px;border-bottom:1px solid var(--border);line-height:1.6}
+.rtable tr:nth-child(even) td{background:var(--acc-bg)}
+.lvl{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:6px}
+.lvl-e{background:#dcfce7;color:#166534}.lvl-m{background:#fef9c3;color:#854d0e}.lvl-h{background:#fee2e2;color:#991b1b}
+.divider{display:flex;align-items:center;gap:10px;margin:24px 0 14px;font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.prog-row{display:flex;align-items:center;gap:12px;margin:18px 0 6px}
+.prog-bar{flex:1;height:5px;background:var(--border);border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;background:var(--acc);width:0%;transition:width .4s}
+.prog-score{font-size:.78rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.exo{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px;transition:border-color .2s}
+.exo:hover{border-color:var(--acc)}
+.exo-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.94rem;font-weight:600;line-height:1.6;margin-bottom:10px}
+.context{background:var(--acc-bg);border-radius:9px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;border-left:3px solid var(--acc);line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opts label{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#f8fafc;border:1.5px solid var(--border);border-radius:9px;cursor:pointer;font-size:.9rem;transition:all .15s;line-height:1.5}
+.opts label:hover{border-color:var(--acc);background:var(--acc-bg)}
+.btn{padding:9px 20px;border-radius:9px;border:none;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:800;cursor:pointer;transition:all .15s;margin-top:10px;margin-right:6px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.92)}
+.btn-acc{background:var(--acc);color:#fff}
+.btn-ghost{background:var(--card);border:1.5px solid var(--border);color:var(--ink2)}
+.btn-ghost:hover{background:var(--acc-bg);color:var(--ink)}
+.result{display:none;margin-top:10px;padding:11px 15px;border-radius:9px;font-size:.87rem;line-height:1.6;border-left:3px solid}
+.result.ok{background:#f0fdf4;border-color:var(--easy)}.result.bad{background:#fef2f2;border-color:var(--hard)}
+.ok-lbl{color:#166534;font-weight:800}.bad-lbl{color:#991b1b;font-weight:800}
+.explain{margin-top:5px;color:#374151}
+.correction{display:none;margin-top:10px;background:var(--acc-bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.87rem;line-height:2}
+.correction .step{color:var(--ink2);border-bottom:1px dashed var(--border);padding:3px 0}
+.correction .step:last-child{border:none;color:var(--ink);font-weight:700}
+.correction .step::before{content:'▸ ';color:var(--easy)}
+.correction .m{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:#fed7aa;padding:1px 6px;border-radius:4px;color:var(--ink)}
+.cta-banner{background:linear-gradient(135deg,#1c0a00,#431407,#f97316);border-radius:20px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,.2) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3}
+.cta-title span{color:#fdba74}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-steps{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:6px 14px;font-size:.77rem;color:rgba(255,255,255,.85);font-weight:600}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:12px 28px;border-radius:30px;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;transition:all .2s;box-shadow:0 4px 20px rgba(220,39,67,.3)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(220,39,67,.4)}
+.cta-note{margin-top:12px;font-size:.71rem;color:rgba(255,255,255,.4);font-style:italic}
+footer{text-align:center;padding:24px;font-size:.78rem;color:var(--ink2);border-top:1px solid var(--border);line-height:1.9}
+.footer-copy{font-size:.71rem;color:#94a3b8;margin-top:6px}
+.footer-copy strong{color:var(--ink2)}
+footer a{color:var(--acc);text-decoration:none;font-weight:600}
+@media(max-width:600px){header h1{font-size:1.3rem}.header-inner{flex-direction:column;align-items:flex-start}.rating-box{align-self:stretch}main{padding:14px 10px 60px}}
+</style>
+<script>
+let ta=0,tc=0; const sc={},to={},ans={};
+function check(id,cor,ex){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch){if(c.checked)sel=c.value;}
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-lbl'>⚠ Choisis une réponse !</span>";r.className='result bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;
+  to.q=(to.q||0)+1; ta++;
+  if(sel===cor){sc.q=(sc.q||0)+1;tc++;r.innerHTML="<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+ex+"</div>";r.className='result ok';}
+  else{r.innerHTML="<span class='bad-lbl'>✘ Incorrect</span><div class='explain'>"+ex+"</div>";r.className='result bad';}
+  r.style.display='block';
+  const p=to.q>0?Math.round(sc.q/to.q*100):0;
+  document.getElementById('prog-q').style.width=p+'%';
+  document.getElementById('score-q').textContent=(sc.q||0)+' / '+to.q+' · '+p+'%';
+  updateR();
+}
+function updateR(){
+  const p=ta>0?Math.round(tc/ta*100):0;
+  document.getElementById('r-c').textContent=tc;
+  document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'—';
+  document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='★'.repeat(s)+'☆'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  if(p>=75)b.style.background='linear-gradient(90deg,#22c55e,#16a34a)';
+  else if(p>=50)b.style.background='linear-gradient(90deg,#f59e0b,#ca8a04)';
+  else b.style.background='linear-gradient(90deg,#fdba74,#f97316)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+const fc=[
+  {q:'Prototypage',r:'Processus de création d\'une version provisoire et simplifiée d\'un objet pour le tester avant fabrication définitive.'},
+  {q:'Microcontrôleur',r:'Circuit intégré qui regroupe les éléments essentiels d\'un ordinateur (microprocesseur, mémoire, ports) sur une seule puce.'},
+  {q:'Impression 3D',r:'Technique de prototypage par ajout de matière couche par couche. Format de fichier : .STL'},
+  {q:'Fraisage numérique',r:'Technique de prototypage par retrait de matière à l\'aide d\'une fraiseuse numérique. Format de fichier : .DXF'},
+  {q:'Format .STL',r:'Format de fichier numérique utilisé pour l\'impression 3D. Décrit la surface de l\'objet par des triangles.'},
+  {q:'Format .DXF',r:'Format de fichier numérique utilisé pour le fraisage. Décrit les contours à usiner.'},
+  {q:'Fab lab',r:'Lieu ouvert au public proposant des outils en accès libre (imprimante 3D, fraiseuse, micro:bit…) pour prototyper des projets personnels ou scolaires.'},
+  {q:'Shield',r:'Carte d\'extension qui se branche sur le microcontrôleur pour lui ajouter des fonctions (connecter des capteurs, actionneurs…).'},
+  {q:'Capteur',r:'Composant qui mesure une grandeur physique (lumière, distance, température…) et la convertit en signal électrique.'},
+  {q:'Actionneur',r:'Composant qui convertit un signal électrique en action physique (moteur, LED, buzzer, afficheur…).'},
+  {q:'Alimentation électrique',r:'Composant qui fournit l\'énergie nécessaire au fonctionnement du circuit électronique.'},
+  {q:'Prototypage de structure vs circuit',r:'Structure = pièce mécanique (fraisage ou impression 3D). Circuit = connexion de capteurs et actionneurs sur microcontrôleur.'},
+];
+let idx=0,order=[],cor=0,tot=0,rev=false,mode='def';
+function initFC(){order=[...Array(fc.length).keys()].sort(()=>Math.random()-.5);idx=0;cor=0;tot=0;rev=false;renderFC();}
+function renderFC(){
+  rev=false;
+  const item=fc[order[idx%order.length]];
+  const front=mode==='def'?item.q:item.r;
+  const back=mode==='def'?item.r:item.q;
+  document.getElementById('fc-hint').textContent=mode==='def'?'🖨️ Terme':'💡 Définition';
+  document.getElementById('fc-word').textContent=front;
+  const a=document.getElementById('fc-answer');
+  a.textContent='→ '+back; a.style.display='none';
+  document.getElementById('fc-tap').style.display='block';
+  document.getElementById('fc-num').textContent=(idx%order.length+1)+' / '+fc.length;
+  updateFcStat();
+}
+function revealFC(){if(rev)return;rev=true;document.getElementById('fc-answer').style.display='block';document.getElementById('fc-tap').style.display='none';}
+function voteFC(ok){if(!rev){revealFC();return;}tot++;if(ok)cor++;idx++;rev=false;renderFC();}
+function updateFcStat(){const p=tot>0?Math.round(cor/tot*100):0;const e=document.getElementById('fc-stat');if(e)e.textContent=tot>0?'✅ '+cor+' / '+tot+' · '+p+'%':'';}
+function setMode(m){mode=m;document.querySelectorAll('.fc-mode-btn').forEach(b=>b.classList.toggle('active-mode',b.dataset.mode===m));renderFC();}
+window.onload=function(){initFC();};
+</script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbadge">Technologie · 4ème · Chapitre 9</div>
+      <h1>Le <span>prototypage</span></h1>
+      <p>Impression 3D · Fraisage · Microcontrôleur · Fab lab · Circuit de commande</p>
+    </div>
+    <div class="rating-box">
+      <div class="rb-label">Mon score</div>
+      <span class="rating-stars" id="r-s">☆☆☆☆☆</span>
+      <div class="rating-score"><span id="r-c">0</span><span class="rs-t"> / <span id="r-t">0</span></span></div>
+      <div class="rating-pct" id="r-p">—</div>
+      <div class="rating-bar"><div class="rating-bar-fill" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+<div class="cta-strip">
+  <span class="cta-strip-text">📲 Nouvelles fiches annoncées en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-strip-btn">◈ &nbsp;@toncoachscolaire</a>
+</div>
+<main>
+  <div class="sec-intro">
+    <div class="sec-ico">🖨️</div>
+    <div class="sec-title">
+      <h2>Chapitre 9 — Le prototypage</h2>
+      <p>Prototypage de structure · Circuit de commande · Microcontrôleur · Fab lab</p>
+    </div>
+  </div>
+
+  <div class="fc-section">
+    <div class="fc-section-title">🃏 Flashcards — Vocabulaire</div>
+    <div class="fc-controls">
+      <button class="fc-mode-btn active-mode" data-mode="def" onclick="setMode('def')">🖨️ Terme → Définition</button>
+      <button class="fc-mode-btn" data-mode="rev" onclick="setMode('rev')">💡 Définition → Terme</button>
+      <button class="btn-ghost btn" style="padding:5px 12px;font-size:.76rem" onclick="initFC()">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="flashcard" onclick="revealFC()">
+        <div class="fc-hint" id="fc-hint">🖨️ Terme</div>
+        <div class="fc-word" id="fc-word">Chargement…</div>
+        <div class="fc-answer" id="fc-answer"></div>
+        <div class="fc-tap" id="fc-tap">👆 Clique pour voir la définition</div>
+      </div>
+      <div class="fc-num" id="fc-num">1 / 12</div>
+      <div class="fc-btns">
+        <button class="btn" style="background:#fee2e2;color:#991b1b;border:none" onclick="voteFC(false)">✘ Je ne savais pas</button>
+        <button class="btn" style="background:#dcfce7;color:#166534;border:none" onclick="voteFC(true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fc-stat"></div>
+    </div>
+  </div>
+
+  <div class="cours">
+    <div class="cours-lbl">📖 Prototypage de structure — 2 technologies</div>
+    <table class="rtable">
+      <tr><th>Technologie</th><th>Principe</th><th>Machine</th><th>Format fichier</th></tr>
+      <tr><td><strong>Fraisage numérique</strong></td><td>Retrait de matière (usinage)</td><td>Fraiseuse numérique</td><td>.DXF</td></tr>
+      <tr><td><strong>Impression 3D</strong></td><td>Ajout de matière couche par couche</td><td>Imprimante 3D</td><td>.STL</td></tr>
+    </table>
+    <div class="tip">
+      <strong>💡 Comment choisir la bonne technologie ?</strong>
+      Forme complexe en 3D (arrondie, avec évidements, organique) → <strong>Impression 3D</strong> (.STL)<br>
+      Forme plane à découper dans une plaque → <strong>Fraisage numérique</strong> (.DXF)<br>
+      Exemples : lunettes, prothèse de hanche, roue de robot → Impression 3D · Pièce plate, châssis → Fraisage
+    </div>
+    <div class="phrase-type">"Le prototypage permet de créer une version provisoire d'un objet pour le tester. Le fraisage retire de la matière (.DXF) tandis que l'impression 3D en ajoute couche par couche (.STL)."</div>
+  </div>
+
+  <div class="cours">
+    <div class="cours-lbl">📖 Microcontrôleur et circuit de commande</div>
+    <p style="font-size:.9rem;margin-bottom:10px">Un microcontrôleur (ex : micro:bit, Arduino) regroupe sur une seule puce les éléments essentiels d'un ordinateur : microprocesseur, mémoire et ports de communication.</p>
+    <table class="rtable">
+      <tr><th>Composant</th><th>Rôle</th><th>Exemples</th></tr>
+      <tr><td><strong>Microcontrôleur</strong></td><td>Cerveau — traite les infos et commande les actionneurs</td><td>micro:bit, Arduino, Raspberry Pi</td></tr>
+      <tr><td><strong>Capteur</strong></td><td>Mesure une grandeur physique → signal électrique</td><td>Distance ultrason, luminosité, température</td></tr>
+      <tr><td><strong>Actionneur</strong></td><td>Produit une action physique</td><td>Moteur, LED, buzzer, afficheur</td></tr>
+      <tr><td><strong>Shield</strong></td><td>Carte d'extension du microcontrôleur</td><td>Shield moteur, shield Wifi</td></tr>
+      <tr><td><strong>Câbles</strong></td><td>Relient les composants entre eux</td><td>Fils de connexion, jumpers</td></tr>
+      <tr><td><strong>Alimentation</strong></td><td>Fournit l'énergie au circuit</td><td>Pile, batterie, USB</td></tr>
+    </table>
+    <div class="phrase-type">"Le prototypage d'un circuit de commande consiste à connecter des capteurs et des actionneurs à un microcontrôleur via des câbles et des shields, puis à le programmer."</div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill" id="prog-q"></div></div><div class="prog-score" id="score-q">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle technologie de prototypage fonctionne par <strong>ajout de matière</strong> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q1" value="A"> Le fraisage numérique</label>
+      <label><input type="radio" name="q1" value="B"> L'impression 3D</label>
+      <label><input type="radio" name="q1" value="C"> La découpe laser</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q1','B','L\'impression 3D fonctionne par ajout de matière couche par couche (dépôt de filament fondu). Le fraisage fonctionne par retrait de matière (usinage). La découpe laser n\'est pas au programme.')">Vérifier</button>
+    <div class="result" id="q1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quel est le format de fichier utilisé pour l'impression 3D ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q2" value="A"> .DXF</label>
+      <label><input type="radio" name="q2" value="B"> .STL</label>
+      <label><input type="radio" name="q2" value="C"> .PDF</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q2','B','Le format .STL (STereoLithography) est utilisé pour l\'impression 3D. Il décrit la surface de l\'objet par des triangles. Le format .DXF est utilisé pour le fraisage numérique.')">Vérifier</button>
+    <div class="result" id="q2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quel composant mesure une grandeur physique (lumière, distance, température…) ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q3" value="A"> Un actionneur</label>
+      <label><input type="radio" name="q3" value="B"> Un microcontrôleur</label>
+      <label><input type="radio" name="q3" value="C"> Un capteur</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q3','C','Un capteur mesure une grandeur physique et la convertit en signal électrique envoyé au microcontrôleur. Exemples : capteur ultrason (distance), capteur de lumière, thermomètre.')">Vérifier</button>
+    <div class="result" id="q3-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans le tableau du cours, quel format de fichier correspond au fraisage numérique ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q4" value="A"> .STL</label>
+      <label><input type="radio" name="q4" value="B"> .DXF</label>
+      <label><input type="radio" name="q4" value="C"> .OBJ</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q4','B','Le fraisage numérique utilise le format .DXF (Drawing Exchange Format). Ce format décrit les contours 2D ou 3D à usiner par la fraiseuse.')">Vérifier</button>
+    <div class="result" id="q4-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Pour prototyper une paire de lunettes avec une monture aux formes complexes et arrondies, quelle technologie utiliser ? Justifie.</p>
+    <div class="opts">
+      <label><input type="radio" name="q5" value="A"> Fraisage numérique (.DXF) — retire la matière pour former les contours</label>
+      <label><input type="radio" name="q5" value="B"> Impression 3D (.STL) — permet de créer des formes complexes en 3D par ajout de matière</label>
+      <label><input type="radio" name="q5" value="C"> Les deux se valent exactement pour cet objet</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q5','B','Les lunettes ont des formes courbées et complexes en 3D. L\'impression 3D est la bonne technologie car elle peut réaliser n\'importe quelle forme 3D par ajout de matière. Le fraisage est limité aux formes plus planes.')">Vérifier</button>
+    <div class="result" id="q5-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Dans le montage d'un télémètre à ultrason, quel composant affiche la distance mesurée ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q6" value="A"> Le capteur ultrason</label>
+      <label><input type="radio" name="q6" value="B"> Le microcontrôleur</label>
+      <label><input type="radio" name="q6" value="C"> L'afficheur numérique (actionneur)</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q6','C','L\'afficheur numérique est un actionneur : il reçoit un signal électrique du microcontrôleur et l\'affiche sous forme lisible. Le capteur ultrason mesure la distance. Le microcontrôleur traite l\'information.')">Vérifier</button>
+    <div class="result" id="q6-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Coche la technologie utilisée pour chacun de ces objets :</p>
+    <div class="context">Roues métalliques usinées avec des trous de vissage · Montures de lunettes imprimées · Prothèse de hanche en plastique biocompatible · Châssis plat découpé dans une plaque</div>
+    <div class="opts">
+      <label><input type="radio" name="q7" value="A"> Roues = Fraisage · Lunettes = Impression 3D · Prothèse = Impression 3D · Châssis = Fraisage</label>
+      <label><input type="radio" name="q7" value="B"> Roues = Impression 3D · Lunettes = Fraisage · Prothèse = Fraisage · Châssis = Impression 3D</label>
+      <label><input type="radio" name="q7" value="C"> Tout = Impression 3D</label>
+    </div>
+    <button class="btn btn-acc" onclick="check('q7','A','Roues métalliques usinées → Fraisage (.DXF). Lunettes formes complexes → Impression 3D (.STL). Prothèse de hanche organique → Impression 3D (.STL). Châssis plat → Fraisage (.DXF).')">Vérifier</button>
+    <div class="result" id="q7-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q8 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Une roue de robot a été modélisée en 3D sur BlocksCAD. Elle est ronde, avec des rayons et un moyeu central creux.</div>
+    <p>Quelle technologie faut-il employer pour la prototyper ? Justifie précisément.</p>
+    <button class="btn-ghost btn" onclick="toggle('c8')">📋 Correction</button>
+    <div class="correction" id="c8">
+      <div class="step">Il faut utiliser l'impression 3D avec le format .STL</div>
+      <div class="step">Justification 1 : la roue est un objet en 3D avec des formes complexes (rayons, moyeu creux, arrondi)</div>
+      <div class="step">Justification 2 : le fraisage travaille par retrait de matière — impossible de créer un objet circulaire avec des évidements intérieurs et des rayons fins</div>
+      <div class="step">Justification 3 : BlocksCAD exporte en .STL, format compatible avec l'impression 3D</div>
+      <div class="step">L'impression 3D construit la pièce couche par couche et reproduit exactement le modèle numérique</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q9 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Légender le montage d'un télémètre à ultrason avec les termes : Capteur · Microcontrôleur · Alimentation électrique · Câbles · Shield · Actionneur.</p>
+    <button class="btn-ghost btn" onclick="toggle('c9')">📋 Correction</button>
+    <div class="correction" id="c9">
+      <div class="step">Capteur ultrason → mesure la distance (en haut à gauche du montage)</div>
+      <div class="step">Microcontrôleur (micro:bit) → cerveau qui traite l'information (au centre)</div>
+      <div class="step">Shield → carte d'extension branchée sur le micro:bit</div>
+      <div class="step">Câbles → relient le capteur et l'afficheur au microcontrôleur</div>
+      <div class="step">Actionneur → afficheur numérique (affiche la distance en bas du montage)</div>
+      <div class="step">Alimentation électrique → batterie qui alimente le circuit</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q10 <span class="lvl lvl-h">Avancé</span></div>
+    <div class="context">Un fab lab dispose de : imprimante 3D, fraiseuse numérique, perceuse à colonne, carte microcontrôleur, ordinateur, outillage classique.</div>
+    <p>Explique comment un élève pourrait réaliser un robot complet (structure + circuit de commande) en utilisant ce fab lab.</p>
+    <button class="btn-ghost btn" onclick="toggle('c10')">📋 Correction</button>
+    <div class="correction" id="c10">
+      <div class="step">Structure — pièces complexes (roues, coque) : modéliser sur ordinateur → imprimer en 3D (.STL)</div>
+      <div class="step">Structure — pièces planes (châssis) : modéliser sur ordinateur → fraiser en .DXF</div>
+      <div class="step">Assemblage : perceuse à colonne pour les trous de fixation + outillage classique pour assembler les pièces</div>
+      <div class="step">Circuit de commande : connecter les capteurs (distance, lumière…) et actionneurs (moteurs, LED…) au microcontrôleur via câbles et shields</div>
+      <div class="step">Programmation : utiliser l'ordinateur du fab lab pour programmer le comportement du robot</div>
+      <div class="step">Résultat : robot avec structure prototypée + circuit de commande programmable</div>
+    </div>
+  </div>
+</main>
+
+<div style="max-width:960px;margin:auto;padding:0 14px">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir<br>les <span>prochaines fiches</span> ?</div>
+      <p class="cta-sub">Abonne-toi à notre compte Instagram et active les notifications 🔔<br>Chaque nouvelle fiche est annoncée en story — ne rate plus rien !</p>
+      <div class="cta-steps">
+        <span class="cta-step">1️⃣ Clique sur le bouton</span>
+        <span class="cta-step">2️⃣ Abonne-toi au compte</span>
+        <span class="cta-step">3️⃣ Active la clochette 🔔</span>
+      </div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ &nbsp;Suivre @toncoachscolaire</a>
+      <div class="cta-note">Nouvelles fiches annoncées en story · Maths · Physique · Anglais · Technologie · SVT</div>
+    </div>
+  </div>
+</div>
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy"><strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).</div>
+</footer>
+</body>
+</html>
