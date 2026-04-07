@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Trigonométrie – Première</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0b0f1a;
+  --surface: #111827;
+  --surf2:   #1a2236;
+  --border:  #1e2d45;
+  --ink:     #eef2ff;
+  --ink2:    #8b9fc4;
+  --ink3:    #3a4f6e;
+
+  --ta: #38bdf8;   /* bleu ciel – cercle */
+  --tb: #a78bfa;   /* violet – sin/cos */
+  --tc: #34d399;   /* vert – équations */
+  --td: #fb923c;   /* orange – inéquations */
+  --te: #f472b6;   /* rose – fonctions */
+
+  --sin: #f472b6;
+  --cos: #38bdf8;
+  --easy: #22c55e;
+  --med:  #f59e0b;
+  --hard: #ef4444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ══ HEADER ══ */
+header{
+  background:linear-gradient(135deg,#0b0f1a 0%,#0f1f3a 55%,#1a3a6e 100%);
+  padding:32px 24px 26px;position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+header::before{content:'';position:absolute;top:-80px;right:-60px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.1) 0%,transparent 70%);pointer-events:none}
+header::after{content:'';position:absolute;bottom:-80px;left:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.08) 0%,transparent 70%);pointer-events:none}
+.header-inner{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.header-text img{height:48px;border-radius:12px;margin-bottom:12px;display:block;border:1px solid rgba(255,255,255,.12);padding:4px;background:rgba(255,255,255,.05)}
+.hbadge{display:inline-block;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);border-radius:30px;padding:4px 14px;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(56,189,248,.8);margin-bottom:12px}
+header h1{font-family:'Instrument Serif',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:400;color:#fff;line-height:1.1;margin-bottom:7px}
+header h1 em{font-style:italic;color:var(--ta)}
+header p{font-size:.87rem;color:var(--ink2)}
+
+/* Rating */
+.rating-box{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:18px;padding:14px 20px;text-align:center;min-width:155px;flex-shrink:0;backdrop-filter:blur(6px)}
+.rb-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.rating-stars{font-size:1.35rem;letter-spacing:3px;margin-bottom:4px;display:block;color:var(--ta)}
+.rating-score{font-family:'Instrument Serif',serif;font-size:1.5rem;color:#fff;line-height:1}
+.rating-score .rs-t{font-size:.82rem;color:var(--ink3);font-style:normal}
+.rating-pct{font-size:.74rem;color:var(--ink2);margin-top:3px}
+.rating-bar{width:100%;height:4px;background:rgba(255,255,255,.08);border-radius:10px;margin-top:8px;overflow:hidden}
+.rating-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--ta),var(--tb));width:0%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+/* CTA Strip */
+.cta-strip{background:linear-gradient(90deg,#0b0f1a,#1a0a2e,#0b0f1a);border-bottom:1px solid rgba(167,139,250,.2);padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-strip-text{font-size:.79rem;color:rgba(255,255,255,.6);font-weight:600}
+.cta-strip-btn{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:700;transition:all .2s;white-space:nowrap}
+.cta-strip-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+
+/* ══ TABS ══ */
+.tabs-wrap{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 14px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:13px 18px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Instrument Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--ink2);transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.ta.active{color:var(--ta);border-bottom-color:var(--ta)}
+.tab.tb.active{color:var(--tb);border-bottom-color:var(--tb)}
+.tab.tc.active{color:var(--tc);border-bottom-color:var(--tc)}
+.tab.td.active{color:var(--td);border-bottom-color:var(--td)}
+.tab.te.active{color:var(--te);border-bottom-color:var(--te)}
+
+/* ══ MAIN ══ */
+main{max-width:980px;margin:auto;padding:24px 14px 80px}
+.section{display:none}.section.active{display:block}
+.sec-intro{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.sec-ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.ico-a{background:rgba(56,189,248,.1)}.ico-b{background:rgba(167,139,250,.1)}.ico-c{background:rgba(52,211,153,.1)}.ico-d{background:rgba(251,146,60,.1)}.ico-e{background:rgba(244,114,182,.1)}
+.sec-title h2{font-family:'Instrument Serif',serif;font-size:1.3rem;font-weight:400}
+.sec-title p{color:var(--ink2);font-size:.84rem;margin-top:3px}
+
+/* ══ COURS ══ */
+.cours{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 22px;margin-bottom:14px;border-left:5px solid}
+.cours.ca{border-left-color:var(--ta)}.cours.cb{border-left-color:var(--tb)}.cours.cc{border-left-color:var(--tc)}.cours.cd{border-left-color:var(--td)}.cours.ce{border-left-color:var(--te)}
+.cours-lbl{font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+
+/* Math notation */
+.math{font-family:'JetBrains Mono',monospace;font-size:.9rem;background:var(--surf2);padding:2px 7px;border-radius:5px;color:var(--ink);display:inline-block}
+.formula{font-family:'JetBrains Mono',monospace;background:var(--surf2);border-radius:10px;padding:11px 16px;font-size:.9rem;margin:6px 0;display:block;border-left:3px solid var(--border);color:var(--ink);line-height:1.9}
+.formula.fa{border-left-color:var(--ta);background:#071622;color:#7dd3fc}
+.formula.fb{border-left-color:var(--tb);background:#130d22;color:#c4b5fd}
+.formula.fc{border-left-color:var(--tc);background:#071a12;color:#6ee7b7}
+.formula.fd{border-left-color:var(--td);background:#1a0e05;color:#fdba74}
+.formula.fe{border-left-color:var(--te);background:#1a0816;color:#f9a8d4}
+sup{font-size:.72em;vertical-align:super;line-height:0;font-weight:700}
+
+.tip{background:#1a1400;border:1px solid #3d2e00;border-radius:10px;padding:10px 14px;font-size:.86rem;margin-top:10px;line-height:1.7;color:#fde68a}
+.tip strong{display:block;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:#ca8a04;margin-bottom:4px}
+.phrase-type{background:#071a12;border:1px solid rgba(52,211,153,.25);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:.86rem;font-style:italic;color:#6ee7b7;line-height:1.6}
+.phrase-type::before{content:'✏️ Rédaction attendue : ';font-style:normal;font-weight:700;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--easy);display:block;margin-bottom:4px}
+
+/* Tableau */
+.rtable{width:100%;border-collapse:collapse;font-size:.85rem;margin:10px 0}
+.rtable th{background:var(--surf2);color:var(--ink2);padding:9px 13px;text-align:left;font-size:.73rem;letter-spacing:.07em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.rtable td{padding:9px 13px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.84rem;line-height:1.7}
+.rtable td.lab{font-family:'Instrument Sans',sans-serif;font-size:.85rem;color:var(--ink2)}
+.rtable tr:last-child td{border:none}
+.sin-val{color:var(--sin)}.cos-val{color:var(--cos)}.tan-val{color:var(--tc)}
+
+/* ══ CERCLE TRIGONOMÉTRIQUE SVG ══ */
+.circle-wrap{background:var(--surf2);border:1px solid var(--border);border-radius:16px;padding:20px;margin:14px 0;display:flex;flex-direction:column;align-items:center;gap:14px}
+.circle-wrap p{font-size:.84rem;color:var(--ink2);text-align:center}
+#trig-circle{cursor:crosshair}
+.circle-info{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.ci-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:.88rem;text-align:center}
+.ci-item span{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:3px;font-family:'Instrument Sans',sans-serif}
+
+/* ══ NIVEAU ══ */
+.lvl{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-left:6px}
+.lvl-e{background:rgba(34,197,94,.15);color:var(--easy);border:1px solid rgba(34,197,94,.2)}
+.lvl-m{background:rgba(245,158,11,.15);color:var(--med);border:1px solid rgba(245,158,11,.2)}
+.lvl-h{background:rgba(239,68,68,.15);color:var(--hard);border:1px solid rgba(239,68,68,.2)}
+
+/* ══ DIVIDER ══ */
+.divider{display:flex;align-items:center;gap:10px;margin:24px 0 14px;font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ══ PROGRESS ══ */
+.prog-row{display:flex;align-items:center;gap:12px;margin:18px 0 6px}
+.prog-bar{flex:1;height:5px;background:var(--surf2);border-radius:10px;overflow:hidden}
+.prog-fill{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pfa{background:var(--ta)}.pfb{background:var(--tb)}.pfc{background:var(--tc)}.pfd{background:var(--td)}.pfe{background:var(--te)}
+.prog-score{font-size:.78rem;color:var(--ink2);font-weight:600;white-space:nowrap}
+
+/* ══ EXERCICE ══ */
+.exo{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px;transition:border-color .2s}
+.exo:hover{border-color:var(--ink3)}
+.exo-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.exo>p{font-size:.94rem;font-weight:500;line-height:1.6;margin-bottom:10px;color:var(--ink)}
+.context{background:var(--surf2);border-radius:9px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;border-left:3px solid var(--border);line-height:1.7}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:5px}
+.opts label{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--surf2);border:1.5px solid var(--border);border-radius:9px;cursor:pointer;font-size:.88rem;transition:all .15s;line-height:1.5;color:var(--ink)}
+.opts label:hover{border-color:var(--ink3);background:#1f2d45}
+.opts label .math{background:#0d1a2a}
+
+/* Saisie */
+.fill-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:.9rem;background:var(--surf2);color:var(--ink);outline:none;transition:border .15s;margin-top:6px}
+.fill-input:focus{border-color:var(--ink3);background:#1a2236}
+
+/* Boutons */
+.btn{padding:9px 20px;border-radius:9px;border:none;font-family:'Instrument Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;margin-top:10px;margin-right:6px}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.bta{background:var(--ta);color:#000}.btb{background:var(--tb);color:#fff}.btc{background:var(--tc);color:#000}.btd{background:var(--td);color:#000}.bte{background:var(--te);color:#000}
+.btn-ghost{background:var(--surf2);border:1.5px solid var(--border);color:var(--ink2)}
+.btn-ghost:hover{background:var(--surf2);color:var(--ink)}
+
+/* Résultat */
+.result{display:none;margin-top:10px;padding:11px 15px;border-radius:9px;font-size:.87rem;line-height:1.6;border-left:3px solid}
+.result.ok{background:rgba(34,197,94,.08);border-color:var(--easy)}
+.result.bad{background:rgba(239,68,68,.08);border-color:var(--hard)}
+.ok-lbl{color:var(--easy);font-weight:700}.bad-lbl{color:var(--hard);font-weight:700}
+.explain{margin-top:5px;color:var(--ink2)}
+
+/* Correction */
+.correction{display:none;margin-top:10px;background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.87rem;line-height:2;color:var(--ink2)}
+.correction .step{border-bottom:1px solid var(--border);padding:3px 0}
+.correction .step:last-child{border:none;color:var(--ink);font-weight:600}
+.correction .step::before{content:'▸ ';color:var(--easy)}
+.correction .m{font-family:'JetBrains Mono',monospace;font-size:.85rem;background:#0d1a2a;padding:1px 6px;border-radius:4px;color:var(--ta)}
+
+/* ══ CTA BOTTOM ══ */
+.cta-banner{background:linear-gradient(135deg,#0b0f1a,#0f1f3a,#1a3a6e);border-radius:20px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden;border:1px solid var(--border)}
+.cta-banner::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.15) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Instrument Serif',serif;font-size:1.15rem;font-weight:400;color:#fff;margin-bottom:8px;line-height:1.3}
+.cta-title em{font-style:italic;color:var(--ta)}
+.cta-sub{font-size:.85rem;color:var(--ink2);margin-bottom:18px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-steps{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:30px;padding:6px 14px;font-size:.77rem;color:var(--ink2);font-weight:600}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:12px 28px;border-radius:30px;font-family:'Instrument Sans',sans-serif;font-size:.88rem;font-weight:700;transition:all .2s;box-shadow:0 4px 20px rgba(220,39,67,.25)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(220,39,67,.35)}
+.cta-note{margin-top:12px;font-size:.71rem;color:var(--ink3);font-style:italic}
+
+footer{text-align:center;padding:24px;font-size:.78rem;color:var(--ink3);border-top:1px solid var(--border);line-height:1.9}
+.footer-copy{font-size:.71rem;color:var(--ink3);margin-top:6px}
+.footer-copy strong{color:var(--ink2)}
+footer a{color:var(--ta);text-decoration:none;font-weight:600}
+
+@media(max-width:600px){
+  header h1{font-size:1.5rem}
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .rating-box{align-self:stretch}
+  main{padding:16px 10px 60px}
+}
+</style>
+
+<script>
+let ta=0,tc2=0;
+const scores={a:0,b:0,c:0,d:0,e:0};
+const totals={a:0,b:0,c:0,d:0,e:0};
+const answered={};
+
+function showTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function check(id,cor,ex,serie){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch){if(c.checked)sel=c.value;}
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-lbl'>⚠ Choisis une réponse !</span>";r.className='result bad';r.style.display='block';return;}
+  if(answered[id])return;
+  answered[id]=true;totals[serie]++;ta++;
+  if(sel===cor){scores[serie]++;tc2++;r.innerHTML="<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+ex+"</div>";r.className='result ok';}
+  else{r.innerHTML="<span class='bad-lbl'>✘ Incorrect</span><div class='explain'>"+ex+"</div>";r.className='result bad';}
+  r.style.display='block';
+  const p=totals[serie]>0?Math.round(scores[serie]/totals[serie]*100):0;
+  document.getElementById('prog-'+serie).style.width=p+'%';
+  document.getElementById('score-'+serie).textContent=scores[serie]+' / '+totals[serie]+' · '+p+'%';
+  updateR();
+}
+
+function checkFill(id,cor,ex,serie){
+  const inp=document.getElementById(id+'-inp'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'');
+  const answers=cor.split('|').map(a=>a.trim().toLowerCase().replace(/\s+/g,''));
+  if(!val){r.innerHTML="<span class='bad-lbl'>⚠ Écris ta réponse !</span>";r.className='result bad';r.style.display='block';return;}
+  if(answered[id])return;
+  answered[id]=true;totals[serie]++;ta++;
+  if(answers.includes(val)){scores[serie]++;tc2++;r.innerHTML="<span class='ok-lbl'>✔ Correct !</span><div class='explain'>"+ex+"</div>";r.className='result ok';}
+  else{r.innerHTML="<span class='bad-lbl'>✘ Incorrect — Réponse : <span class='m'>"+cor.split('|')[0]+"</span></span><div class='explain'>"+ex+"</div>";r.className='result bad';}
+  r.style.display='block';
+  const p=totals[serie]>0?Math.round(scores[serie]/totals[serie]*100):0;
+  document.getElementById('prog-'+serie).style.width=p+'%';
+  document.getElementById('score-'+serie).textContent=scores[serie]+' / '+totals[serie]+' · '+p+'%';
+  updateR();
+}
+
+function updateR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;
+  document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'—';
+  document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='★'.repeat(s)+'☆'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  if(p>=75)b.style.background='linear-gradient(90deg,#22c55e,#16a34a)';
+  else if(p>=50)b.style.background='linear-gradient(90deg,#f59e0b,#ca8a04)';
+  else b.style.background='linear-gradient(90deg,#38bdf8,#a78bfa)';
+}
+
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+
+// ══ CERCLE TRIGONOMÉTRIQUE INTERACTIF ══
+function initCircle(){
+  const svg=document.getElementById('trig-circle');
+  if(!svg)return;
+  const W=300,H=300,cx=150,cy=150,R=110;
+
+  svg.addEventListener('mousemove',function(e){
+    const rect=svg.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    const dx=mx-cx, dy=-(my-cy);
+    const angle=Math.atan2(dy,dx);
+    const deg=Math.round(angle*180/Math.PI);
+    const sinV=Math.sin(angle).toFixed(3);
+    const cosV=Math.cos(angle).toFixed(3);
+
+    // Update dot
+    const dot=document.getElementById('tc-dot');
+    const dotX=cx+R*Math.cos(angle);
+    const dotY=cy-R*Math.sin(angle);
+    dot.setAttribute('cx',dotX);dot.setAttribute('cy',dotY);
+
+    // Update projection lines
+    document.getElementById('tc-sin-line').setAttribute('x2',dotX);
+    document.getElementById('tc-sin-line').setAttribute('y1',dotY);
+    document.getElementById('tc-sin-line').setAttribute('y2',dotY);
+    document.getElementById('tc-sin-line').setAttribute('x1',cx);
+
+    document.getElementById('tc-cos-line').setAttribute('x1',dotX);
+    document.getElementById('tc-cos-line').setAttribute('x2',dotX);
+    document.getElementById('tc-cos-line').setAttribute('y1',dotY);
+    document.getElementById('tc-cos-line').setAttribute('y2',cy);
+
+    // Update radius line
+    document.getElementById('tc-radius').setAttribute('x2',dotX);
+    document.getElementById('tc-radius').setAttribute('y2',dotY);
+
+    // Update angle arc
+    const arcR=30;
+    const endX=cx+arcR*Math.cos(angle);
+    const endY=cy-arcR*Math.sin(angle);
+    const largeArc=angle<0?1:0;
+    document.getElementById('tc-arc').setAttribute('d',
+      `M ${cx+arcR} ${cy} A ${arcR} ${arcR} 0 ${largeArc} 0 ${endX} ${endY}`
+    );
+
+    // Update info
+    document.getElementById('ci-angle').textContent=deg+'°';
+    document.getElementById('ci-sin').textContent=sinV;
+    document.getElementById('ci-cos').textContent=cosV;
+  });
+}
+window.onload=function(){showTab('a');initCircle();};
+</script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbadge">Mathématiques · Première · Analyse</div>
+      <h1>Trigono<em>métrie</em></h1>
+      <p>Cercle trigonométrique · sin & cos · Équations · Inéquations · Fonctions</p>
+    </div>
+    <div class="rating-box">
+      <div class="rb-label">Mon score global</div>
+      <span class="rating-stars" id="r-s">☆☆☆☆☆</span>
+      <div class="rating-score"><span id="r-c">0</span><span class="rs-t"> / <span id="r-t">0</span></span></div>
+      <div class="rating-pct" id="r-p">—</div>
+      <div class="rating-bar"><div class="rating-bar-fill" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <span class="cta-strip-text">📲 Nouvelles fiches annoncées en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-strip-btn">◈ &nbsp;@toncoachscolaire</a>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab ta active" id="tab-a" onclick="showTab('a')">⭕ a. Cercle trigonométrique</button>
+    <button class="tab tb" id="tab-b" onclick="showTab('b')">📐 b. sin et cos</button>
+    <button class="tab tc" id="tab-c" onclick="showTab('c')">⚖️ c. Équations</button>
+    <button class="tab td" id="tab-d" onclick="showTab('d')">📏 d. Inéquations</button>
+    <button class="tab te" id="tab-e" onclick="showTab('e')">📈 e. Fonctions trig.</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════
+     A — CERCLE TRIGONOMÉTRIQUE
+═══════════════════════════════════ -->
+<div class="section active" id="sec-a">
+  <div class="sec-intro">
+    <div class="sec-ico ico-a">⭕</div>
+    <div class="sec-title">
+      <h2>a. Le cercle trigonométrique</h2>
+      <p>Enroulement de la droite réelle · Angles remarquables · Parité et périodicité</p>
+    </div>
+  </div>
+
+  <!-- CERCLE INTERACTIF -->
+  <div class="circle-wrap">
+    <p>🖱️ Déplace ta souris sur le cercle pour lire les valeurs de sin et cos en temps réel</p>
+    <svg id="trig-circle" width="300" height="300" viewBox="0 0 300 300">
+      <!-- Grille -->
+      <line x1="0" y1="150" x2="300" y2="150" stroke="#1e2d45" stroke-width="1"/>
+      <line x1="150" y1="0" x2="150" y2="300" stroke="#1e2d45" stroke-width="1"/>
+      <!-- Cercle unité -->
+      <circle cx="150" cy="150" r="110" fill="none" stroke="#1e2d45" stroke-width="1.5"/>
+      <!-- Quadrants labels -->
+      <text x="220" y="130" fill="#3a4f6e" font-size="11" font-family="Instrument Sans">I</text>
+      <text x="70" y="130" fill="#3a4f6e" font-size="11" font-family="Instrument Sans">II</text>
+      <text x="70" y="180" fill="#3a4f6e" font-size="11" font-family="Instrument Sans">III</text>
+      <text x="220" y="180" fill="#3a4f6e" font-size="11" font-family="Instrument Sans">IV</text>
+      <!-- Angles remarquables points -->
+      <circle cx="260" cy="150" r="3" fill="#38bdf8" opacity=".7"/>
+      <circle cx="150" cy="40" r="3" fill="#38bdf8" opacity=".7"/>
+      <circle cx="40" cy="150" r="3" fill="#38bdf8" opacity=".7"/>
+      <circle cx="150" cy="260" r="3" fill="#38bdf8" opacity=".7"/>
+      <!-- π/6 = 30° -->
+      <circle cx="245" cy="95" r="2.5" fill="#a78bfa" opacity=".8"/>
+      <!-- π/4 = 45° -->
+      <circle cx="228" cy="72" r="2.5" fill="#a78bfa" opacity=".8"/>
+      <!-- π/3 = 60° -->
+      <circle cx="205" cy="57" r="2.5" fill="#a78bfa" opacity=".8"/>
+      <!-- Labels axes -->
+      <text x="265" y="145" fill="#38bdf8" font-size="10" font-family="JetBrains Mono">1</text>
+      <text x="130" y="35" fill="#38bdf8" font-size="10" font-family="JetBrains Mono">1</text>
+      <text x="25" y="145" fill="#38bdf8" font-size="10" font-family="JetBrains Mono">-1</text>
+      <text x="130" y="272" fill="#38bdf8" font-size="10" font-family="JetBrains Mono">-1</text>
+      <!-- Angle labels -->
+      <text x="248" y="90" fill="#a78bfa" font-size="9" font-family="JetBrains Mono">π/6</text>
+      <text x="230" y="65" fill="#a78bfa" font-size="9" font-family="JetBrains Mono">π/4</text>
+      <text x="204" y="50" fill="#a78bfa" font-size="9" font-family="JetBrains Mono">π/3</text>
+      <text x="160" y="33" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">π/2</text>
+      <!-- Projection lines (dynamiques) -->
+      <line id="tc-cos-line" x1="260" y1="150" x2="260" y2="150" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4,3" opacity=".7"/>
+      <line id="tc-sin-line" x1="150" y1="150" x2="260" y2="150" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="4,3" opacity=".7"/>
+      <!-- Radius (dynamique) -->
+      <line id="tc-radius" x1="150" y1="150" x2="260" y2="150" stroke="#64748b" stroke-width="1.5"/>
+      <!-- Arc angle -->
+      <path id="tc-arc" d="M 180 150 A 30 30 0 0 0 180 150" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+      <!-- Point mobile -->
+      <circle id="tc-dot" cx="260" cy="150" r="6" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+      <!-- Origine -->
+      <circle cx="150" cy="150" r="3" fill="#64748b"/>
+      <!-- Légende couleurs -->
+      <rect x="10" y="270" width="10" height="3" fill="#f472b6" rx="2"/>
+      <text x="24" y="274" fill="#f472b6" font-size="9" font-family="Instrument Sans">sin</text>
+      <rect x="55" y="270" width="10" height="3" fill="#38bdf8" rx="2"/>
+      <text x="69" y="274" fill="#38bdf8" font-size="9" font-family="Instrument Sans">cos</text>
+    </svg>
+    <div class="circle-info">
+      <div class="ci-item"><span>Angle</span><span id="ci-angle" style="color:#fbbf24;font-size:1.1rem">0°</span></div>
+      <div class="ci-item"><span>sin(x)</span><span id="ci-sin" style="color:var(--sin);font-size:1.1rem">0.000</span></div>
+      <div class="ci-item"><span>cos(x)</span><span id="ci-cos" style="color:var(--cos);font-size:1.1rem">1.000</span></div>
+    </div>
+  </div>
+
+  <!-- COURS A -->
+  <div class="cours ca">
+    <div class="cours-lbl">📖 Définition — Le cercle trigonométrique</div>
+    <p style="margin-bottom:10px;font-size:.9rem;">Le <strong>cercle trigonométrique</strong> est le cercle de centre O et de rayon 1 dans un repère orthonormé. On enroule la droite réelle autour de ce cercle : à tout réel x on associe un point M(x) sur ce cercle.</p>
+    <span class="formula fa">M est le point du cercle unité tel que arc(I, M) = x (sens trigonométrique = positif)</span>
+    <div class="tip">
+      <strong>💡 Sens trigonométrique</strong>
+      Sens antihoraire (sens inverse des aiguilles d'une montre). On part de I = (1, 0).
+    </div>
+  </div>
+
+  <div class="cours ca">
+    <div class="cours-lbl">📖 Valeurs remarquables — Tableau</div>
+    <div style="overflow-x:auto">
+    <table class="rtable">
+      <tr><th class="lab">x</th><th>0</th><th>π/6</th><th>π/4</th><th>π/3</th><th>π/2</th><th>π</th><th>3π/2</th><th>2π</th></tr>
+      <tr><td class="lab">sin x</td>
+        <td class="sin-val">0</td>
+        <td class="sin-val">1/2</td>
+        <td class="sin-val">√2/2</td>
+        <td class="sin-val">√3/2</td>
+        <td class="sin-val">1</td>
+        <td class="sin-val">0</td>
+        <td class="sin-val">-1</td>
+        <td class="sin-val">0</td>
+      </tr>
+      <tr><td class="lab">cos x</td>
+        <td class="cos-val">1</td>
+        <td class="cos-val">√3/2</td>
+        <td class="cos-val">√2/2</td>
+        <td class="cos-val">1/2</td>
+        <td class="cos-val">0</td>
+        <td class="cos-val">-1</td>
+        <td class="cos-val">0</td>
+        <td class="cos-val">1</td>
+      </tr>
+    </table>
+    </div>
+    <div class="tip">
+      <strong>🔑 Moyen mémo — sin croît de 0 à π/2</strong>
+      sin : 0 · 1/2 · √2/2 · √3/2 · 1 — retiens 0, 1/2, racine2/2, racine3/2, 1<br>
+      cos : c'est sin lu à l'envers (sin(x) = cos(π/2 − x))
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pfa" id="prog-a"></div></div><div class="prog-score" id="score-a">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est la valeur de <span class="math">cos(π/3)</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="aq1" value="A"> <span class="math">√3/2</span></label>
+      <label><input type="radio" name="aq1" value="B"> <span class="math">1/2</span></label>
+      <label><input type="radio" name="aq1" value="C"> <span class="math">√2/2</span></label>
+    </div>
+    <button class="btn bta" onclick="check('aq1','B','cos(π/3) = 1/2. Retiens : à π/3 (60°), sin = √3/2 et cos = 1/2. Les deux permutent par rapport à π/4.','a')">Vérifier</button>
+    <div class="result" id="aq1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est la valeur de <span class="math">sin(π/4)</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="aq2" value="A"> <span class="math">1/2</span></label>
+      <label><input type="radio" name="aq2" value="B"> <span class="math">√3/2</span></label>
+      <label><input type="radio" name="aq2" value="C"> <span class="math">√2/2</span></label>
+    </div>
+    <button class="btn bta" onclick="check('aq2','C','sin(π/4) = √2/2 ≈ 0,707. À π/4 (45°), sin = cos = √2/2 car le point est sur la diagonale du cercle.','a')">Vérifier</button>
+    <div class="result" id="aq2-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-e">Facile</span></div>
+    <p>Dans quel quadrant se trouve le point M(x) quand <span class="math">π/2 &lt; x &lt; π</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="aq3" value="A"> Quadrant I (sin > 0, cos > 0)</label>
+      <label><input type="radio" name="aq3" value="B"> Quadrant II (sin > 0, cos &lt; 0)</label>
+      <label><input type="radio" name="aq3" value="C"> Quadrant III (sin &lt; 0, cos &lt; 0)</label>
+    </div>
+    <button class="btn bta" onclick="check('aq3','B','Entre π/2 et π (de 90° à 180°) : le point est dans le quadrant II. sin est positive (ordonnée > 0) et cos est négative (abscisse < 0).','a')">Vérifier</button>
+    <div class="result" id="aq3-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Donne les coordonnées du point M(x) sur le cercle unité.</p>
+    <div class="opts">
+      <label><input type="radio" name="aq4" value="A"> M(x) = (sin x ; cos x)</label>
+      <label><input type="radio" name="aq4" value="B"> M(x) = (cos x ; sin x)</label>
+      <label><input type="radio" name="aq4" value="C"> M(x) = (x ; x)</label>
+    </div>
+    <button class="btn bta" onclick="check('aq4','B','Les coordonnées du point M(x) sont (cos x ; sin x). L\'abscisse est cos x (projection sur l\'axe horizontal) et l\'ordonnée est sin x (projection sur l\'axe vertical).','a')">Vérifier</button>
+    <div class="result" id="aq4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Calcule <span class="math">sin(5π/6)</span> en utilisant les symétries du cercle.</p>
+    <div class="opts">
+      <label><input type="radio" name="aq5" value="A"> <span class="math">-1/2</span></label>
+      <label><input type="radio" name="aq5" value="B"> <span class="math">√3/2</span></label>
+      <label><input type="radio" name="aq5" value="C"> <span class="math">1/2</span></label>
+    </div>
+    <button class="btn bta" onclick="check('aq5','C','5π/6 = π − π/6. Par symétrie par rapport à l\'axe des ordonnées : sin(π − x) = sin(x). Donc sin(5π/6) = sin(π/6) = 1/2.','a')">Vérifier</button>
+    <div class="result" id="aq5-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Calcule <span class="math">cos(2π/3)</span>.</p>
+    <div class="opts">
+      <label><input type="radio" name="aq6" value="A"> <span class="math">1/2</span></label>
+      <label><input type="radio" name="aq6" value="B"> <span class="math">-1/2</span></label>
+      <label><input type="radio" name="aq6" value="C"> <span class="math">√3/2</span></label>
+    </div>
+    <button class="btn bta" onclick="check('aq6','B','2π/3 = π − π/3. Par symétrie : cos(π − x) = −cos(x). Donc cos(2π/3) = −cos(π/3) = −1/2.','a')">Vérifier</button>
+    <div class="result" id="aq6-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Sans calculatrice, donne les valeurs exactes de <span class="math">sin(−π/3)</span> et <span class="math">cos(7π/4)</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('ac7')">📋 Correction</button>
+    <div class="correction" id="ac7">
+      <div class="step">sin(−π/3) : sin est impaire → sin(−x) = −sin(x) → sin(−π/3) = −sin(π/3) = <span class="m">−√3/2</span></div>
+      <div class="step">cos(7π/4) : 7π/4 = 2π − π/4. Par périodicité : cos(2π − x) = cos(x)</div>
+      <div class="step">cos(7π/4) = cos(−π/4) = cos(π/4) = <span class="m">√2/2</span> (cos est paire)</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q8 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Démontre que <span class="math">sin²x + cos²x = 1</span> à partir de la définition sur le cercle unité.</p>
+    <button class="btn-ghost btn" onclick="toggle('ac8')">📋 Correction</button>
+    <div class="correction" id="ac8">
+      <div class="step">M(x) est un point sur le cercle de centre O et de rayon 1</div>
+      <div class="step">Ses coordonnées sont (cos x ; sin x)</div>
+      <div class="step">Or OM = 1 donc par Pythagore : OM² = cos²x + sin²x = 1²</div>
+      <div class="step">Conclusion : <span class="m">sin²x + cos²x = 1</span> pour tout réel x ✔</div>
+      <div class="step">Cette relation est appelée la <strong>relation fondamentale de la trigonométrie</strong>.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     B — SIN ET COS D'UN RÉEL
+═══════════════════════════════ -->
+<div class="section" id="sec-b">
+  <div class="sec-intro">
+    <div class="sec-ico ico-b">📐</div>
+    <div class="sec-title">
+      <h2>b. Sinus et cosinus d'un nombre réel</h2>
+      <p>Propriétés · Parité · Périodicité · Relation fondamentale</p>
+    </div>
+  </div>
+
+  <div class="cours cb">
+    <div class="cours-lbl">📖 Propriétés fondamentales</div>
+    <span class="formula fb">Relation fondamentale : sin²x + cos²x = 1</span>
+    <span class="formula fb">Périodicité : sin(x + 2π) = sin(x)  ·  cos(x + 2π) = cos(x)</span>
+    <span class="formula fb">sin paire/impaire : sin(−x) = −sin(x)  (impaire)</span>
+    <span class="formula fb">cos paire/impaire : cos(−x) = cos(x)   (paire)</span>
+    <table class="rtable" style="margin-top:12px">
+      <tr><th>Symétrie</th><th>sin</th><th>cos</th></tr>
+      <tr><td class="lab">x → −x (axe des abscisses)</td><td class="sin-val">sin(−x) = −sin x</td><td class="cos-val">cos(−x) = cos x</td></tr>
+      <tr><td class="lab">x → π − x (axe des ordonnées)</td><td class="sin-val">sin(π−x) = sin x</td><td class="cos-val">cos(π−x) = −cos x</td></tr>
+      <tr><td class="lab">x → π + x (symétrie centrale O)</td><td class="sin-val">sin(π+x) = −sin x</td><td class="cos-val">cos(π+x) = −cos x</td></tr>
+      <tr><td class="lab">x → 2π − x (axe abscisses)</td><td class="sin-val">sin(2π−x) = −sin x</td><td class="cos-val">cos(2π−x) = cos x</td></tr>
+    </table>
+    <div class="phrase-type">"On utilise sin(π − x) = sin x pour ramener à un angle du 1er quadrant, puis on lit la valeur dans le tableau des valeurs remarquables."</div>
+  </div>
+
+  <div class="cours cb">
+    <div class="cours-lbl">📖 Signe de sin et cos par quadrant</div>
+    <table class="rtable">
+      <tr><th>Quadrant</th><th>x ∈</th><th>sin x</th><th>cos x</th></tr>
+      <tr><td class="lab">I</td><td>]0 ; π/2[</td><td class="sin-val">+</td><td class="cos-val">+</td></tr>
+      <tr><td class="lab">II</td><td>]π/2 ; π[</td><td class="sin-val">+</td><td class="cos-val">−</td></tr>
+      <tr><td class="lab">III</td><td>]π ; 3π/2[</td><td class="sin-val">−</td><td class="cos-val">−</td></tr>
+      <tr><td class="lab">IV</td><td>]3π/2 ; 2π[</td><td class="sin-val">−</td><td class="cos-val">+</td></tr>
+    </table>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pfb" id="prog-b"></div></div><div class="prog-score" id="score-b">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>La fonction sinus est :</p>
+    <div class="opts">
+      <label><input type="radio" name="bq1" value="A"> Paire (sin(−x) = sin(x))</label>
+      <label><input type="radio" name="bq1" value="B"> Impaire (sin(−x) = −sin(x))</label>
+      <label><input type="radio" name="bq1" value="C"> Ni paire ni impaire</label>
+    </div>
+    <button class="btn btb" onclick="check('bq1','B','sin est une fonction impaire : sin(−x) = −sin(x). Graphiquement, la courbe est symétrique par rapport à l\'origine O. cos est paire : cos(−x) = cos(x).','b')">Vérifier</button>
+    <div class="result" id="bq1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Quelle est la période de la fonction cosinus ?</p>
+    <div class="opts">
+      <label><input type="radio" name="bq2" value="A"> π</label>
+      <label><input type="radio" name="bq2" value="B"> 2π</label>
+      <label><input type="radio" name="bq2" value="C"> π/2</label>
+    </div>
+    <button class="btn btb" onclick="check('bq2','B','cos a pour période 2π : cos(x + 2π) = cos(x) pour tout réel x. Il faut faire un tour complet du cercle pour retrouver la même valeur. sin a aussi la période 2π.','b')">Vérifier</button>
+    <div class="result" id="bq2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>On sait que <span class="math">sin x = 3/5</span> et <span class="math">π/2 &lt; x &lt; π</span>. Calcule <span class="math">cos x</span>.</p>
+    <div class="opts">
+      <label><input type="radio" name="bq3" value="A"> <span class="math">cos x = 4/5</span></label>
+      <label><input type="radio" name="bq3" value="B"> <span class="math">cos x = −4/5</span></label>
+      <label><input type="radio" name="bq3" value="C"> <span class="math">cos x = −3/5</span></label>
+    </div>
+    <button class="btn btb" onclick="check('bq3','B','sin²x + cos²x = 1 → cos²x = 1 − 9/25 = 16/25 → cos x = ±4/5. Or x ∈ ]π/2 ; π[ (quadrant II) → cos x < 0 → cos x = −4/5.','b')">Vérifier</button>
+    <div class="result" id="bq3-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Simplifie <span class="math">sin(π + x) + cos(2π − x)</span>.</p>
+    <div class="opts">
+      <label><input type="radio" name="bq4" value="A"> <span class="math">−sin x + cos x</span></label>
+      <label><input type="radio" name="bq4" value="B"> <span class="math">sin x − cos x</span></label>
+      <label><input type="radio" name="bq4" value="C"> <span class="math">0</span></label>
+    </div>
+    <button class="btn btb" onclick="check('bq4','A','sin(π + x) = −sin x. cos(2π − x) = cos(−x) = cos x (car cos est paire et 2π-périodique). Donc : −sin x + cos x.','b')">Vérifier</button>
+    <div class="result" id="bq4-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Sachant que <span class="math">cos x = −√3/2</span> et que x ∈ [π ; 2π], détermine <span class="math">sin x</span> et précise dans quel quadrant se trouve M(x).</p>
+    <button class="btn-ghost btn" onclick="toggle('bc5')">📋 Correction</button>
+    <div class="correction" id="bc5">
+      <div class="step">cos x = −√3/2 → x est dans les quadrants II ou III (cos négatif)</div>
+      <div class="step">Mais x ∈ [π ; 2π] → x est dans les quadrants III ou IV</div>
+      <div class="step">L'intersection : quadrant III → x ∈ ]π ; 3π/2[</div>
+      <div class="step">sin²x = 1 − cos²x = 1 − 3/4 = 1/4 → sin x = ±1/2</div>
+      <div class="step">Quadrant III → sin x < 0 → <span class="m">sin x = −1/2</span></div>
+      <div class="step">Conclusion : M(x) est dans le quadrant III, x correspond à 5π/6 + π = 7π/6</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Calcule la valeur exacte de <span class="math">sin²(π/12) + cos²(π/12)</span>, puis de <span class="math">4sin(π/6)·cos(π/6)</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('bc6')">📋 Correction</button>
+    <div class="correction" id="bc6">
+      <div class="step">sin²(π/12) + cos²(π/12) = 1 par la relation fondamentale (quelle que soit la valeur)</div>
+      <div class="step">4sin(π/6)·cos(π/6) = 4 × (1/2) × (√3/2) = 4 × √3/4 = <span class="m">√3</span></div>
+      <div class="step">Note : 4sin(x)cos(x) = 2sin(2x) → 2sin(π/3) = 2 × √3/2 = √3 ✔ (formule de duplication)</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     C — ÉQUATIONS
+═══════════════════════════════ -->
+<div class="section" id="sec-c">
+  <div class="sec-intro">
+    <div class="sec-ico ico-c">⚖️</div>
+    <div class="sec-title">
+      <h2>c. Équations trigonométriques</h2>
+      <p>sin x = a · cos x = a · Méthode sur le cercle</p>
+    </div>
+  </div>
+
+  <div class="cours cc">
+    <div class="cours-lbl">📖 Résoudre sin x = a</div>
+    <span class="formula fc">Si |a| > 1 : pas de solution</span>
+    <span class="formula fc">Si a ∈ [−1;1] : sin x = a ⟺ x = arcsin(a) + 2kπ  ou  x = π − arcsin(a) + 2kπ,  k ∈ ℤ</span>
+    <div class="ex-box" style="background:#071a12;border-color:#1a3a2a">
+      <strong style="color:#34d399">Exemple : sin x = 1/2</strong>
+      <span style="color:#6ee7b7">arcsin(1/2) = π/6<br>
+      Solution : x = π/6 + 2kπ &nbsp;ou&nbsp; x = π − π/6 + 2kπ = 5π/6 + 2kπ,  k ∈ ℤ</span>
+    </div>
+  </div>
+
+  <div class="cours cc">
+    <div class="cours-lbl">📖 Résoudre cos x = a</div>
+    <span class="formula fc">Si |a| > 1 : pas de solution</span>
+    <span class="formula fc">Si a ∈ [−1;1] : cos x = a ⟺ x = ±arccos(a) + 2kπ,  k ∈ ℤ</span>
+    <div class="ex-box" style="background:#071a12;border-color:#1a3a2a">
+      <strong style="color:#34d399">Exemple : cos x = √3/2</strong>
+      <span style="color:#6ee7b7">arccos(√3/2) = π/6<br>
+      Solution : x = π/6 + 2kπ &nbsp;ou&nbsp; x = −π/6 + 2kπ,  k ∈ ℤ</span>
+    </div>
+    <div class="tip">
+      <strong>💡 Méthode sur le cercle</strong>
+      1) Tracer le cercle · 2) Placer la valeur sur l'axe correspondant · 3) Trouver les 2 points d'intersection · 4) Lire les angles · 5) Ajouter + 2kπ
+    </div>
+    <div class="phrase-type">"sin x = a admet deux familles de solutions : x = arcsin(a) + 2kπ et x = π − arcsin(a) + 2kπ, k ∈ ℤ."</div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pfc" id="prog-c"></div></div><div class="prog-score" id="score-c">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Combien de familles de solutions a l'équation <span class="math">sin x = 1/2</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="cq1" value="A"> 1 famille</label>
+      <label><input type="radio" name="cq1" value="B"> 2 familles</label>
+      <label><input type="radio" name="cq1" value="C"> Infinité de solutions distinctes</label>
+    </div>
+    <button class="btn btc" onclick="check('cq1','B','sin x = a (avec |a| ≠ 1) donne toujours 2 familles de solutions : x = arcsin(a) + 2kπ et x = π − arcsin(a) + 2kπ, k ∈ ℤ. Chaque famille contient infiniment de valeurs (une par k).','c')">Vérifier</button>
+    <div class="result" id="cq1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Résous <span class="math">cos x = 0</span>.</p>
+    <div class="opts">
+      <label><input type="radio" name="cq2" value="A"> <span class="math">x = kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="cq2" value="B"> <span class="math">x = π/2 + kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="cq2" value="C"> <span class="math">x = π/2 + 2kπ,  k ∈ ℤ</span></label>
+    </div>
+    <button class="btn btc" onclick="check('cq2','B','cos x = 0 ⟺ x = ±π/2 + 2kπ. Ces deux familles se résument en x = π/2 + kπ, k ∈ ℤ (car −π/2 + 2kπ = π/2 + (2k−1)π).','c')">Vérifier</button>
+    <div class="result" id="cq2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Résous <span class="math">sin x = √3/2</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="cq3" value="A"> <span class="math">x = π/3</span> seulement</label>
+      <label><input type="radio" name="cq3" value="B"> <span class="math">x = π/3</span> et <span class="math">x = 2π/3</span></label>
+      <label><input type="radio" name="cq3" value="C"> <span class="math">x = π/6</span> et <span class="math">x = 5π/6</span></label>
+    </div>
+    <button class="btn btc" onclick="check('cq3','B','arcsin(√3/2) = π/3. Solutions générales : x = π/3 + 2kπ ou x = π − π/3 + 2kπ = 2π/3 + 2kπ. Sur [0;2π] : x = π/3 et x = 2π/3.','c')">Vérifier</button>
+    <div class="result" id="cq3-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Résous <span class="math">cos x = −1/2</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="cq4" value="A"> <span class="math">x = 2π/3</span> et <span class="math">x = 4π/3</span></label>
+      <label><input type="radio" name="cq4" value="B"> <span class="math">x = π/3</span> et <span class="math">x = 5π/3</span></label>
+      <label><input type="radio" name="cq4" value="C"> <span class="math">x = π/3</span> seulement</label>
+    </div>
+    <button class="btn btc" onclick="check('cq4','A','arccos(−1/2) = 2π/3. Solutions générales : x = ±2π/3 + 2kπ. Sur [0;2π] : x = 2π/3 et x = −2π/3 + 2π = 4π/3.','c')">Vérifier</button>
+    <div class="result" id="cq4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Résous dans ℝ : <span class="math">2sin x − 1 = 0</span>.</p>
+    <div class="opts">
+      <label><input type="radio" name="cq5" value="A"> <span class="math">x = π/6 + 2kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="cq5" value="B"> <span class="math">x = π/6 + 2kπ</span> ou <span class="math">x = 5π/6 + 2kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="cq5" value="C"> <span class="math">x = π/2 + 2kπ,  k ∈ ℤ</span></label>
+    </div>
+    <button class="btn btc" onclick="check('cq5','B','2sin x − 1 = 0 ⟺ sin x = 1/2. arcsin(1/2) = π/6. Solutions : x = π/6 + 2kπ ou x = π − π/6 + 2kπ = 5π/6 + 2kπ, k ∈ ℤ.','c')">Vérifier</button>
+    <div class="result" id="cq5-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Résous dans ℝ : <span class="math">2cos²x − cos x − 1 = 0</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('cc6')">📋 Correction</button>
+    <div class="correction" id="cc6">
+      <div class="step">On pose X = cos x. L'équation devient : 2X² − X − 1 = 0</div>
+      <div class="step">Discriminant : Δ = 1 + 8 = 9 → √Δ = 3</div>
+      <div class="step">X₁ = (1+3)/4 = 1 &nbsp;·&nbsp; X₂ = (1−3)/4 = −1/2</div>
+      <div class="step">cos x = 1 : x = 0 + 2kπ = <span class="m">2kπ, k ∈ ℤ</span></div>
+      <div class="step">cos x = −1/2 : arccos(−1/2) = 2π/3 → <span class="m">x = ±2π/3 + 2kπ, k ∈ ℤ</span></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Résous sur [0 ; 2π] : <span class="math">sin²x = 3cos²x</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('cc7')">📋 Correction</button>
+    <div class="correction" id="cc7">
+      <div class="step">sin²x = 3cos²x ⟺ sin²x/cos²x = 3 ⟺ tan²x = 3 (si cos x ≠ 0)</div>
+      <div class="step">tan x = ±√3 → x = ±π/3 + kπ, k ∈ ℤ</div>
+      <div class="step">Sur [0;2π] : x = π/3, x = 2π/3, x = 4π/3, x = 5π/3</div>
+      <div class="step">Vérification cos ≠ 0 : aucune de ces valeurs n'annule cos ✔</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     D — INÉQUATIONS
+═══════════════════════════════ -->
+<div class="section" id="sec-d">
+  <div class="sec-intro">
+    <div class="sec-ico ico-d">📏</div>
+    <div class="sec-title">
+      <h2>d. Inéquations trigonométriques</h2>
+      <p>sin x ≥ a · cos x ≤ a · Méthode par arc sur le cercle</p>
+    </div>
+  </div>
+
+  <div class="cours cd">
+    <div class="cours-lbl">📖 Méthode générale — Inéquations trig.</div>
+    <p style="font-size:.9rem;margin-bottom:10px">Pour résoudre une inéquation, on utilise le cercle trigonométrique et les variations de sin et cos.</p>
+    <table class="rtable">
+      <tr><th>Inéquation</th><th>Méthode sur le cercle</th></tr>
+      <tr><td class="lab">sin x ≥ a</td><td>Tracer la droite y = a, lire les arcs où sin est au-dessus</td></tr>
+      <tr><td class="lab">sin x ≤ a</td><td>Tracer la droite y = a, lire les arcs où sin est en-dessous</td></tr>
+      <tr><td class="lab">cos x ≥ a</td><td>Tracer la droite x = a, lire les arcs où cos est à droite</td></tr>
+      <tr><td class="lab">cos x ≤ a</td><td>Tracer la droite x = a, lire les arcs où cos est à gauche</td></tr>
+    </table>
+    <div class="ex-box" style="background:#1a0e05;border-color:#3d2200">
+      <strong style="color:#fb923c">Exemple : sin x ≥ 1/2 sur [0;2π]</strong>
+      <span style="color:#fdba74">sin x = 1/2 en x = π/6 et x = 5π/6<br>
+      sin est au-dessus de 1/2 entre ces deux valeurs.<br>
+      Solution : <strong>x ∈ [π/6 ; 5π/6]</strong></span>
+    </div>
+    <div class="phrase-type">"Pour sin x ≥ a, on résout d'abord sin x = a pour trouver les bornes, puis on détermine l'intervalle où sin dépasse la valeur a grâce aux variations."</div>
+  </div>
+
+  <div class="cours cd">
+    <div class="cours-lbl">📖 Résumé des solutions sur [0 ; 2π]</div>
+    <span class="formula fd">sin x ≥ 0 ⟺ x ∈ [0 ; π]</span>
+    <span class="formula fd">sin x ≤ 0 ⟺ x ∈ [π ; 2π]</span>
+    <span class="formula fd">cos x ≥ 0 ⟺ x ∈ [0 ; π/2] ∪ [3π/2 ; 2π]</span>
+    <span class="formula fd">cos x ≤ 0 ⟺ x ∈ [π/2 ; 3π/2]</span>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pfd" id="prog-d"></div></div><div class="prog-score" id="score-d">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>Résous <span class="math">sin x ≥ 0</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="dq1" value="A"> <span class="math">x ∈ [0 ; π]</span></label>
+      <label><input type="radio" name="dq1" value="B"> <span class="math">x ∈ [π ; 2π]</span></label>
+      <label><input type="radio" name="dq1" value="C"> <span class="math">x ∈ [0 ; π/2] ∪ [3π/2 ; 2π]</span></label>
+    </div>
+    <button class="btn btd" onclick="check('dq1','A','sin x ≥ 0 quand le point M(x) est dans la partie haute du cercle (ordonnée positive), c\'est-à-dire pour x ∈ [0;π] (quadrants I et II).','d')">Vérifier</button>
+    <div class="result" id="dq1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Résous <span class="math">cos x ≤ 0</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="dq2" value="A"> <span class="math">x ∈ [0 ; π/2] ∪ [3π/2 ; 2π]</span></label>
+      <label><input type="radio" name="dq2" value="B"> <span class="math">x ∈ [π/2 ; 3π/2]</span></label>
+      <label><input type="radio" name="dq2" value="C"> <span class="math">x ∈ [0 ; π]</span></label>
+    </div>
+    <button class="btn btd" onclick="check('dq2','B','cos x ≤ 0 quand l\'abscisse du point M(x) est négative, c\'est-à-dire dans les quadrants II et III : x ∈ [π/2 ; 3π/2].','d')">Vérifier</button>
+    <div class="result" id="dq2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Résous <span class="math">sin x ≥ 1/2</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="dq3" value="A"> <span class="math">x ∈ [π/6 ; 5π/6]</span></label>
+      <label><input type="radio" name="dq3" value="B"> <span class="math">x ∈ [0 ; π/6] ∪ [5π/6 ; 2π]</span></label>
+      <label><input type="radio" name="dq3" value="C"> <span class="math">x ∈ [π/6 ; π/2]</span></label>
+    </div>
+    <button class="btn btd" onclick="check('dq3','A','sin x = 1/2 en π/6 et 5π/6. sin est croissante sur [−π/2;π/2] et décroissante sur [π/2;3π/2]. La partie où sin ≥ 1/2 est l\'arc entre π/6 et 5π/6 : x ∈ [π/6 ; 5π/6].','d')">Vérifier</button>
+    <div class="result" id="dq3-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Résous <span class="math">cos x ≥ 1/2</span> sur [0 ; 2π].</p>
+    <div class="opts">
+      <label><input type="radio" name="dq4" value="A"> <span class="math">x ∈ [π/3 ; 5π/3]</span></label>
+      <label><input type="radio" name="dq4" value="B"> <span class="math">x ∈ [0 ; π/3] ∪ [5π/3 ; 2π]</span></label>
+      <label><input type="radio" name="dq4" value="C"> <span class="math">x ∈ [0 ; π/3]</span></label>
+    </div>
+    <button class="btn btd" onclick="check('dq4','B','cos x = 1/2 en π/3 et −π/3 (soit 5π/3). cos est décroissante sur [0;π]. cos ≥ 1/2 quand le point est à droite de la droite x=1/2 : x ∈ [0;π/3] ∪ [5π/3;2π].','d')">Vérifier</button>
+    <div class="result" id="dq4-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Résous dans ℝ : <span class="math">sin x &lt; −√2/2</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('dc5')">📋 Correction</button>
+    <div class="correction" id="dc5">
+      <div class="step">sin x = −√2/2 en x = −π/4 et x = π + π/4 = 5π/4 (sur [−π;π])</div>
+      <div class="step">sin x &lt; −√2/2 quand M(x) est dans la partie basse du cercle en-dessous de l'ordonnée −√2/2</div>
+      <div class="step">Sur [0;2π] : x ∈ ]5π/4 ; 7π/4[</div>
+      <div class="step">Solution dans ℝ : <span class="m">x ∈ ]5π/4 + 2kπ ; 7π/4 + 2kπ[,  k ∈ ℤ</span></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Résous dans ℝ : <span class="math">2cos²x − 1 ≥ 0</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('dc6')">📋 Correction</button>
+    <div class="correction" id="dc6">
+      <div class="step">2cos²x − 1 ≥ 0 ⟺ cos²x ≥ 1/2 ⟺ |cos x| ≥ √2/2</div>
+      <div class="step">⟺ cos x ≥ √2/2 ou cos x ≤ −√2/2</div>
+      <div class="step">cos x ≥ √2/2 : x ∈ [−π/4 ; π/4] + 2kπ</div>
+      <div class="step">cos x ≤ −√2/2 : x ∈ [3π/4 ; 5π/4] + 2kπ</div>
+      <div class="step">Solution : <span class="m">x ∈ [−π/4 + kπ ; π/4 + kπ],  k ∈ ℤ</span> (en notant que la période est π)</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     E — FONCTIONS TRIGONOMÉTRIQUES
+═══════════════════════════════════ -->
+<div class="section" id="sec-e">
+  <div class="sec-intro">
+    <div class="sec-ico ico-e">📈</div>
+    <div class="sec-title">
+      <h2>e. Étude des fonctions trigonométriques</h2>
+      <p>Domaine · Parité · Périodicité · Variations · Limites</p>
+    </div>
+  </div>
+
+  <div class="cours ce">
+    <div class="cours-lbl">📖 Tableau de variation de sin et cos</div>
+    <table class="rtable">
+      <tr><th></th><th>Fonction sinus</th><th>Fonction cosinus</th></tr>
+      <tr><td class="lab">Domaine</td><td>ℝ</td><td>ℝ</td></tr>
+      <tr><td class="lab">Période</td><td class="sin-val">2π</td><td class="cos-val">2π</td></tr>
+      <tr><td class="lab">Parité</td><td class="sin-val">Impaire</td><td class="cos-val">Paire</td></tr>
+      <tr><td class="lab">Image</td><td>[−1 ; 1]</td><td>[−1 ; 1]</td></tr>
+      <tr><td class="lab">Croissance sur</td><td class="sin-val">[−π/2 ; π/2]</td><td class="cos-val">[0 ; π]</td></tr>
+      <tr><td class="lab">Décroissance sur</td><td class="sin-val">[π/2 ; 3π/2]</td><td class="cos-val">[−π ; 0]</td></tr>
+      <tr><td class="lab">Max (= 1)</td><td class="sin-val">x = π/2 + 2kπ</td><td class="cos-val">x = 2kπ</td></tr>
+      <tr><td class="lab">Min (= −1)</td><td class="sin-val">x = −π/2 + 2kπ</td><td class="cos-val">x = π + 2kπ</td></tr>
+    </table>
+  </div>
+
+  <!-- COURBES SVG -->
+  <div class="cours ce">
+    <div class="cours-lbl">📈 Courbes de sin et cos sur [−2π ; 2π]</div>
+    <svg viewBox="0 0 560 200" style="width:100%;background:#0b0f1a;border-radius:10px;padding:10px" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grilles -->
+      <line x1="20" y1="100" x2="540" y2="100" stroke="#1e2d45" stroke-width="1"/>
+      <line x1="280" y1="10" x2="280" y2="190" stroke="#1e2d45" stroke-width="1"/>
+      <!-- x-ticks -->
+      <line x1="150" y1="95" x2="150" y2="105" stroke="#3a4f6e" stroke-width="1"/>
+      <line x1="215" y1="95" x2="215" y2="105" stroke="#3a4f6e" stroke-width="1"/>
+      <line x1="345" y1="95" x2="345" y2="105" stroke="#3a4f6e" stroke-width="1"/>
+      <line x1="410" y1="95" x2="410" y2="105" stroke="#3a4f6e" stroke-width="1"/>
+      <text x="145" y="118" fill="#3a4f6e" font-size="9" font-family="JetBrains Mono">-π</text>
+      <text x="205" y="118" fill="#3a4f6e" font-size="9" font-family="JetBrains Mono">-π/2</text>
+      <text x="275" y="118" fill="#3a4f6e" font-size="9" font-family="JetBrains Mono">0</text>
+      <text x="340" y="118" fill="#3a4f6e" font-size="9" font-family="JetBrains Mono">π/2</text>
+      <text x="404" y="118" fill="#3a4f6e" font-size="9" font-family="JetBrains Mono">π</text>
+      <!-- Courbe sin (rose) -->
+      <polyline fill="none" stroke="#f472b6" stroke-width="2"
+        points="20,100 46,44 85,100 124,156 150,100 176,44 215,100 254,156 280,100 306,44 345,100 384,156 410,100 436,44 475,100 514,156 540,100"/>
+      <!-- Courbe cos (bleu) -->
+      <polyline fill="none" stroke="#38bdf8" stroke-width="2"
+        points="20,156 46,100 85,44 124,100 150,156 176,100 215,44 254,100 280,44 306,100 345,156 384,100 410,44 436,100 475,156 514,100 540,44"/>
+      <!-- Légende -->
+      <line x1="30" y1="175" x2="50" y2="175" stroke="#f472b6" stroke-width="2"/>
+      <text x="54" y="179" fill="#f472b6" font-size="10" font-family="Instrument Sans">y = sin x</text>
+      <line x1="130" y1="175" x2="150" y2="175" stroke="#38bdf8" stroke-width="2"/>
+      <text x="154" y="179" fill="#38bdf8" font-size="10" font-family="Instrument Sans">y = cos x</text>
+    </svg>
+    <div class="phrase-type">"La fonction sin est impaire (courbe symétrique par rapport à O) et de période 2π. La fonction cos est paire (courbe symétrique par rapport à l'axe des ordonnées) et de période 2π."</div>
+  </div>
+
+  <div class="cours ce">
+    <div class="cours-lbl">📖 Transformations des fonctions trig.</div>
+    <span class="formula fe">f(x) = A·sin(ωx + φ) + d</span>
+    <table class="rtable" style="margin-top:10px">
+      <tr><th>Paramètre</th><th>Effet sur la courbe</th></tr>
+      <tr><td class="lab">A (amplitude)</td><td>Étire verticalement — la courbe oscille entre −|A| et |A|</td></tr>
+      <tr><td class="lab">ω (pulsation)</td><td>Période T = 2π/ω — comprime ou étire horizontalement</td></tr>
+      <tr><td class="lab">φ (phase)</td><td>Translate horizontalement de −φ/ω</td></tr>
+      <tr><td class="lab">d (décalage)</td><td>Translate verticalement — valeur moyenne de la fonction</td></tr>
+    </table>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="prog-fill pfe" id="prog-e"></div></div><div class="prog-score" id="score-e">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q1 <span class="lvl lvl-e">Facile</span></div>
+    <p>La fonction cosinus atteint son maximum de 1 en :</p>
+    <div class="opts">
+      <label><input type="radio" name="eq1" value="A"> <span class="math">x = π/2 + 2kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="eq1" value="B"> <span class="math">x = 2kπ,  k ∈ ℤ</span></label>
+      <label><input type="radio" name="eq1" value="C"> <span class="math">x = kπ,  k ∈ ℤ</span></label>
+    </div>
+    <button class="btn bte" onclick="check('eq1','B','cos x = 1 quand x = 0, ±2π, ±4π… soit x = 2kπ, k ∈ ℤ. C\'est au début de chaque période complète. sin atteint son max en x = π/2 + 2kπ.','e')">Vérifier</button>
+    <div class="result" id="eq1-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q2 <span class="lvl lvl-e">Facile</span></div>
+    <p>Sur quel intervalle la fonction sin est-elle croissante (sur une période) ?</p>
+    <div class="opts">
+      <label><input type="radio" name="eq2" value="A"> <span class="math">[0 ; π]</span></label>
+      <label><input type="radio" name="eq2" value="B"> <span class="math">[−π/2 ; π/2]</span></label>
+      <label><input type="radio" name="eq2" value="C"> <span class="math">[0 ; 2π]</span></label>
+    </div>
+    <button class="btn bte" onclick="check('eq2','B','sin est croissante sur [−π/2 ; π/2] (de −1 à 1) et décroissante sur [π/2 ; 3π/2] (de 1 à −1). C\'est lisible sur la courbe : elle monte de −90° à 90°.','e')">Vérifier</button>
+    <div class="result" id="eq2-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q3 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Quelle est la période de la fonction <span class="math">f(x) = sin(3x)</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="eq3" value="A"> <span class="math">T = 6π</span></label>
+      <label><input type="radio" name="eq3" value="B"> <span class="math">T = 2π/3</span></label>
+      <label><input type="radio" name="eq3" value="C"> <span class="math">T = 2π</span></label>
+    </div>
+    <button class="btn bte" onclick="check('eq3','B','Pour f(x) = sin(ωx), la période est T = 2π/ω. Ici ω = 3, donc T = 2π/3. La courbe effectue 3 oscillations sur [0 ; 2π].','e')">Vérifier</button>
+    <div class="result" id="eq3-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q4 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>La fonction <span class="math">f(x) = −cos x</span> est-elle paire, impaire ou ni l'un ni l'autre ?</p>
+    <div class="opts">
+      <label><input type="radio" name="eq4" value="A"> Paire</label>
+      <label><input type="radio" name="eq4" value="B"> Impaire</label>
+      <label><input type="radio" name="eq4" value="C"> Ni l'un ni l'autre</label>
+    </div>
+    <button class="btn bte" onclick="check('eq4','A','f(−x) = −cos(−x) = −cos(x) = f(x) car cos est paire. Donc f(x) = −cos x est aussi paire. Multiplier par une constante ne change pas la parité.','e')">Vérifier</button>
+    <div class="result" id="eq4-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q5 <span class="lvl lvl-m">Intermédiaire</span></div>
+    <p>Dresse le tableau de variations de <span class="math">f(x) = sin x</span> sur <span class="math">[0 ; 2π]</span>.</p>
+    <button class="btn-ghost btn" onclick="toggle('ec5')">📋 Correction</button>
+    <div class="correction" id="ec5">
+      <div class="step">f(0) = 0 · f(π/2) = 1 · f(π) = 0 · f(3π/2) = −1 · f(2π) = 0</div>
+      <div class="step">Croissante sur [0 ; π/2] : de 0 à 1</div>
+      <div class="step">Décroissante sur [π/2 ; 3π/2] : de 1 à −1</div>
+      <div class="step">Croissante sur [3π/2 ; 2π] : de −1 à 0</div>
+      <div class="step">Maximum : 1 atteint en x = π/2 · Minimum : −1 atteint en x = 3π/2</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-meta">Q6 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Étude complète de <span class="math">f(x) = 2sin(x − π/4)</span> : période, amplitude, phase, tableau de variations sur [0 ; 2π], maximum et minimum.</p>
+    <button class="btn-ghost btn" onclick="toggle('ec6')">📋 Correction</button>
+    <div class="correction" id="ec6">
+      <div class="step">Amplitude : A = 2 → f oscille entre −2 et 2</div>
+      <div class="step">Période : ω = 1 → T = 2π/1 = 2π</div>
+      <div class="step">Phase : φ = −π/4 → la courbe est décalée de +π/4 vers la droite</div>
+      <div class="step">Maximum = 2 quand x − π/4 = π/2 → x = 3π/4</div>
+      <div class="step">Minimum = −2 quand x − π/4 = −π/2 → x = −π/4 (hors [0;2π]) ou x = 3π/2 + π/4 = 7π/4</div>
+      <div class="step">f(0) = 2sin(−π/4) = −√2 · f(3π/4) = 2 · f(7π/4) = −2 · f(2π) = 2sin(7π/4) = −√2</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-meta">Q7 <span class="lvl lvl-h">Avancé</span></div>
+    <p>Résous sur [0 ; 2π] l'inéquation <span class="math">sin x &gt; cos x</span> en étudiant le signe de sin x − cos x.</p>
+    <button class="btn-ghost btn" onclick="toggle('ec7')">📋 Correction</button>
+    <div class="correction" id="ec7">
+      <div class="step">sin x − cos x = √2 · sin(x − π/4) (formule de linéarisation)</div>
+      <div class="step">sin x &gt; cos x ⟺ √2·sin(x − π/4) &gt; 0 ⟺ sin(x − π/4) &gt; 0</div>
+      <div class="step">sin u &gt; 0 ⟺ u ∈ ]0 ; π[ + 2kπ</div>
+      <div class="step">Donc x − π/4 ∈ ]0 ; π[ ⟺ x ∈ ]π/4 ; π + π/4[ = ]π/4 ; 5π/4[</div>
+      <div class="step">Solution sur [0;2π] : <span class="m">x ∈ ]π/4 ; 5π/4[</span></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- CTA BANNER -->
+<div style="max-width:980px;margin:auto;padding:0 14px">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir<br>les <span class="m" style="background:transparent;color:inherit"><em>prochaines fiches</em></span> ?</div>
+      <p class="cta-sub">Abonne-toi à notre compte Instagram et active les notifications 🔔<br>Chaque nouvelle fiche est annoncée en story — ne rate plus rien !</p>
+      <div class="cta-steps">
+        <span class="cta-step">1️⃣ Clique sur le bouton</span>
+        <span class="cta-step">2️⃣ Abonne-toi au compte</span>
+        <span class="cta-step">3️⃣ Active la clochette 🔔</span>
+      </div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ &nbsp;Suivre @toncoachscolaire</a>
+      <div class="cta-note">Nouvelles fiches annoncées en story · Maths · Physique · Anglais · Technologie · SVT</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>
+    Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).
+  </div>
+</footer>
+</body>
+</html>
