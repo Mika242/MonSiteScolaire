@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Fonction Exponentielle — Première Spé Maths</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;0,800;1,600;1,700&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f3ef;--ink:#14110a;--ink2:#6b5f4a;--card:#fffefb;--border:#e2d9c8;
+  --t1:#065f46;--t2:#92400e;--t3:#1e40af;--t4:#5b21b6;--tc:#b45309;
+  --t1b:#ecfdf5;--t2b:#fffbeb;--t3b:#eff6ff;--t4b:#f5f3ff;--tcb:#fff7ed;
+  --green:#16a34a;--amber:#d97706;--red:#dc2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ══ HEADER ══ */
+header{
+  background:linear-gradient(135deg,#071a0f 0%,#0a2e1b 45%,#064e3b 80%,#065f46 100%);
+  padding:32px 24px 26px;position:relative;overflow:hidden;
+}
+header::before{
+  content:'eˣ';position:absolute;right:-20px;top:-20px;
+  font-family:'Cormorant Garamond',serif;font-size:18rem;font-weight:700;
+  color:rgba(6,95,70,.15);line-height:1;pointer-events:none;
+  font-style:italic;
+}
+header::after{
+  content:'';position:absolute;bottom:-80px;left:-40px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(91,33,182,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.header-inner{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.header-text img{height:46px;border-radius:10px;margin-bottom:10px;display:block;border:1px solid rgba(255,255,255,.12);padding:3px;background:rgba(255,255,255,.06)}
+.hbadge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:3px 12px;font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:8px}
+header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.7rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px}
+header h1 em{font-style:italic;color:#6ee7b7}
+header p{font-size:.85rem;color:rgba(255,255,255,.45)}
+.rating-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px 18px;text-align:center;min-width:150px;flex-shrink:0}
+.rb-label{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px}
+.rating-stars{font-size:1.25rem;letter-spacing:2px;margin-bottom:4px;display:block;color:#6ee7b7}
+.rating-score{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;line-height:1}
+.rating-score .rs-t{font-size:.78rem;color:rgba(255,255,255,.3)}
+.rating-pct{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:2px}
+.rating-bar{width:100%;height:3px;background:rgba(255,255,255,.08);border-radius:10px;margin-top:7px;overflow:hidden}
+.rating-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#6ee7b7,#065f46);width:0%;transition:width .5s}
+
+/* CTA strip */
+.cta-strip{background:linear-gradient(90deg,#0f0520,#1e0a40,#0f0520);border-bottom:1px solid rgba(139,92,246,.2);padding:7px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cta-strip-text{font-size:.77rem;color:rgba(255,255,255,.6);font-weight:600}
+.cta-strip-btn{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:4px 13px;border-radius:20px;font-size:.75rem;font-weight:800;transition:all .2s;white-space:nowrap}
+.cta-strip-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+
+/* ══ TABS ══ */
+.tabs-wrap{background:var(--card);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 14px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:12px 16px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'DM Sans',sans-serif;font-size:.79rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.t1.active{color:var(--t1);border-bottom-color:var(--t1)}
+.tab.t2.active{color:var(--t2);border-bottom-color:var(--t2)}
+.tab.t3.active{color:var(--t3);border-bottom-color:var(--t3)}
+.tab.t4.active{color:var(--t4);border-bottom-color:var(--t4)}
+.tab.tc.active{color:var(--tc);border-bottom-color:var(--tc)}
+.tab.t5.active{color:#0891b2;border-bottom-color:#0891b2}
+
+/* ══ MAIN ══ */
+main{max-width:980px;margin:auto;padding:26px 16px 80px}
+.section{display:none}.section.active{display:block}
+.sec-intro{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-ico{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-weight:700}
+.ico1{background:var(--t1b);color:var(--t1)}.ico2{background:var(--t2b);color:var(--t2)}.ico3{background:var(--t3b);color:var(--t3)}.ico4{background:var(--t4b);color:var(--t4)}.icoc{background:var(--tcb);color:var(--tc)}
+.sec-title h2{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700}
+.sec-title p{color:var(--ink2);font-size:.83rem;margin-top:2px}
+
+/* ══ FLASHCARDS ══ */
+.fc-wrap{margin-bottom:26px}
+.fc-label{font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.fc-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.fc-ctrl{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+.fc-btn-mode{padding:5px 13px;border-radius:18px;border:1.5px solid var(--border);background:var(--card);font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .15s}
+.fc-btn-mode:hover{border-color:var(--ink2)}
+.fc-card{background:var(--card);border:2px solid var(--border);border-radius:18px;min-height:155px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:20px;text-align:center;transition:all .22s;box-shadow:0 3px 16px rgba(0,0,0,.05);max-width:500px}
+.fc-card:hover{box-shadow:0 7px 24px rgba(0,0,0,.09);transform:translateY(-2px);border-color:var(--ink2)}
+.fc-cat{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink2);margin-bottom:8px}
+.fc-q{font-family:'JetBrains Mono',monospace;font-size:1.15rem;font-weight:700;line-height:1.4;color:var(--ink)}
+.fc-a{display:none;font-size:.88rem;font-weight:500;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);width:100%;line-height:1.7;color:var(--ink2);font-family:'DM Sans',sans-serif}
+.fc-hint{font-size:.72rem;color:var(--ink2);margin-top:10px}
+.fc-zone{display:flex;flex-direction:column;align-items:center;gap:10px}
+.fc-actions{display:flex;gap:8px}
+.fc-no{padding:7px 16px;border-radius:8px;background:#fef2f2;color:#991b1b;border:none;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .12s}
+.fc-yes{padding:7px 16px;border-radius:8px;background:#f0fdf4;color:#166534;border:none;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .12s}
+.fc-no:hover{background:#fee2e2}.fc-yes:hover{background:#dcfce7}
+.fc-info{font-size:.78rem;color:var(--ink2);font-weight:600}
+.fc-stat{font-size:.82rem;font-weight:700;color:var(--ink2)}
+
+/* ══ COURS ══ */
+.cours{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:17px 20px;margin-bottom:13px;border-left:4px solid}
+.cours.c1{border-left-color:var(--t1)}.cours.c2{border-left-color:var(--t2)}.cours.c3{border-left-color:var(--t3)}.cours.c4{border-left-color:var(--t4)}
+.clbl{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.formula{font-family:'JetBrains Mono',monospace;border-radius:9px;padding:10px 15px;font-size:.91rem;margin:5px 0;display:block;border-left:3px solid;line-height:2;color:var(--ink)}
+.f1{border-color:var(--t1);background:var(--t1b);color:#064e3b}
+.f2{border-color:var(--t2);background:var(--t2b);color:#78350f}
+.f3{border-color:var(--t3);background:var(--t3b);color:#1e3a8a}
+.f4{border-color:var(--t4);background:var(--t4b);color:#4c1d95}
+.fc{border-color:var(--tc);background:var(--tcb);color:#7c2d12}
+.mn{font-family:'JetBrains Mono',monospace;font-size:.9rem;background:#ede8df;padding:1px 6px;border-radius:4px;color:var(--ink);display:inline-block}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:9px 13px;font-size:.85rem;margin-top:9px;line-height:1.7}
+.tip b{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:#92400e;margin-bottom:3px}
+.ex{background:#f5f3ef;border-radius:9px;padding:11px 15px;margin-top:9px;font-size:.85rem;line-height:2;border:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.ex b{display:block;font-family:'DM Sans',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:4px}
+.pt{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;padding:9px 13px;margin-top:9px;font-size:.85rem;font-style:italic;color:#14532d;line-height:1.6}
+.pt::before{content:'✏️ Rédaction attendue : ';font-style:normal;font-weight:800;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:3px}
+.rtable{width:100%;border-collapse:collapse;font-size:.84rem;margin:9px 0}
+.rtable th{background:var(--ink);color:#fff;padding:8px 12px;text-align:center;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.rtable td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.rtable tr:nth-child(even) td{background:#f8f5ef}
+
+/* Graphique SVG */
+.graph-wrap{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;margin:11px 0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.graph-lbl{font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ink2)}
+
+/* ══ EXERCICES ══ */
+.lvl{font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:18px;margin-left:5px}
+.le{background:#dcfce7;color:#166534}.lm{background:#fef9c3;color:#854d0e}.lh{background:#fee2e2;color:#991b1b}
+.divider{display:flex;align-items:center;gap:9px;margin:22px 0 12px;font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.prog-row{display:flex;align-items:center;gap:11px;margin:16px 0 5px}
+.prog-bar{flex:1;height:4px;background:var(--border);border-radius:10px;overflow:hidden}
+.pf{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--t1)}.pf2{background:var(--t2)}.pf3{background:var(--t3)}.pf4{background:var(--t4)}
+.prog-txt{font-size:.76rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.exo{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:15px 19px;margin-bottom:9px;transition:border-color .18s}
+.exo:hover{border-color:#b8a882}
+.exo-hd{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.93rem;font-weight:600;line-height:1.6;margin-bottom:9px}
+.ctx{background:#f5f3ef;border-radius:8px;padding:8px 12px;font-size:.85rem;color:var(--ink2);margin-bottom:9px;border-left:3px solid var(--border);line-height:1.7;font-family:'JetBrains Mono',monospace}
+.opts{display:flex;flex-direction:column;gap:5px}
+.opts label{display:flex;align-items:flex-start;gap:9px;padding:8px 13px;background:#f8f6f1;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;transition:all .14s;line-height:1.5;font-family:'JetBrains Mono',monospace}
+.opts label:hover{border-color:#b8a882;background:#f0ebe0}
+.fi{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.9rem;background:#f8f6f1;color:var(--ink);outline:none;transition:border .14s;margin-top:5px}
+.fi:focus{border-color:#b8a882;background:var(--card)}
+.btn{padding:8px 18px;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:.81rem;font-weight:700;cursor:pointer;transition:all .14s;margin-top:9px;margin-right:5px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.93)}
+.b1{background:var(--t1);color:#fff}.b2{background:var(--t2);color:#fff}.b3{background:var(--t3);color:#fff}.b4{background:var(--t4);color:#fff}.bc{background:var(--tc);color:#fff}
+.bg{background:var(--card);border:1.5px solid var(--border);color:var(--ink2)}
+.bg:hover{background:#f0ebe0;color:var(--ink)}
+.res{display:none;margin-top:9px;padding:10px 14px;border-radius:8px;font-size:.85rem;line-height:1.6;border-left:3px solid}
+.res.ok{background:#f0fdf4;border-color:var(--green)}.res.bad{background:#fef2f2;border-color:var(--red)}
+.ok-l{color:#166534;font-weight:800}.bad-l{color:#991b1b;font-weight:800}
+.expl{margin-top:4px;color:#374151;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:2}
+.corr{display:none;margin-top:9px;background:#f5f3ef;border:1px solid var(--border);border-radius:11px;padding:13px 17px;font-size:.85rem;line-height:2.1;font-family:'JetBrains Mono',monospace}
+.corr .s{color:var(--ink2);border-bottom:1px dashed var(--border);padding:3px 0}
+.corr .s:last-child{border:none;color:var(--ink);font-weight:700}
+.corr .s::before{content:'▸ ';color:var(--green)}
+.mm{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:#e8e0d0;padding:1px 5px;border-radius:3px}
+
+/* ══ CONTRÔLE ══ */
+.ctrl-hdr{background:linear-gradient(135deg,var(--tcb),#fef3c7);border:1.5px solid #fde68a;border-radius:14px;padding:18px 22px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px}
+.ctrl-badge{background:var(--tc);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 11px;border-radius:18px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.ctrl-info h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--tc);margin-bottom:5px}
+.ctrl-info p{font-size:.84rem;color:#92400e;line-height:1.6}
+.ctrl-info ul{margin-top:7px;padding-left:15px;font-size:.83rem;color:#92400e;line-height:1.8}
+.ctrl-exo{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.ctrl-exo-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:2px solid var(--border);flex-wrap:wrap;gap:7px}
+.ctrl-exo-n{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--tc)}
+.ctrl-pts{background:var(--tcb);color:var(--tc);border:1px solid #fde68a;border-radius:18px;padding:2px 11px;font-size:.76rem;font-weight:800}
+.ctrl-sub{margin-top:11px;padding:11px 15px;background:#f8f6f1;border-radius:9px;border-left:3px solid var(--border);font-size:.9rem;line-height:1.9;font-family:'JetBrains Mono',monospace}
+.ctrl-sub b{font-family:'DM Sans',sans-serif;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:3px}
+.ans{margin-top:9px;min-height:65px;background:repeating-linear-gradient(transparent,transparent 27px,var(--border) 28px);border-radius:7px;border:1px solid var(--border);padding:5px 11px;font-size:.86rem;color:var(--ink2);font-style:italic}
+.ans.tall{min-height:105px}
+.ans.xt{min-height:145px}
+.ctrl-corr{display:none;margin-top:13px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:11px;padding:15px 19px}
+.ctrl-corr-hd{display:flex;align-items:center;gap:7px;margin-bottom:11px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--green)}
+.ctrl-corr-body{font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:2.1;color:var(--ink)}
+.ctrl-corr-body .l{display:block;border-bottom:1px dashed #bbf7d0;padding:3px 0;color:var(--ink2)}
+.ctrl-corr-body .l:last-child{border:none;color:var(--ink);font-weight:600}
+.ctrl-corr-body .l::before{content:'▸ ';color:var(--green)}
+.ctrl-corr-body .hi{color:#166534;font-weight:700}
+
+/* CTA banner */
+.cta-banner{background:linear-gradient(135deg,#071a0f,#0a2e1b,#065f46);border-radius:18px;padding:26px 22px;margin:30px 0 0;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(6,95,70,.3)}
+.cta-banner::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(110,231,183,.12) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:1.9rem;margin-bottom:9px;display:block}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#fff;margin-bottom:7px;line-height:1.3}
+.cta-title em{font-style:italic;color:#6ee7b7}
+.cta-sub{font-size:.83rem;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.5;max-width:460px;margin-left:auto;margin-right:auto}
+.cta-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.cta-step{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:5px 13px;font-size:.75rem;color:rgba(255,255,255,.75);font-weight:600}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:11px 26px;border-radius:28px;font-family:'DM Sans',sans-serif;font-size:.86rem;font-weight:800;transition:all .2s;box-shadow:0 4px 18px rgba(220,39,67,.28)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(220,39,67,.38)}
+.cta-note{margin-top:10px;font-size:.69rem;color:rgba(255,255,255,.35);font-style:italic}
+footer{text-align:center;padding:22px;font-size:.76rem;color:var(--ink2);border-top:1px solid var(--border);line-height:1.9}
+.footer-copy{font-size:.69rem;color:#9ca3af;margin-top:5px}
+.footer-copy strong{color:var(--ink2)}
+footer a{color:var(--t1);text-decoration:none;font-weight:600}
+@media(max-width:600px){header h1{font-size:1.6rem}.header-inner{flex-direction:column;align-items:flex-start}.rating-box{align-self:stretch}main{padding:14px 10px 60px}.fc-card{max-width:100%}}
+</style>
+
+<script>
+// ── SCORE GLOBAL ──
+let ta=0,tc2=0;
+const scores={t1:0,t2:0,t3:0,t4:0},totals={t1:0,t2:0,t3:0,t4:0},ans={};
+
+function showTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,cor,ex,serie){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch)if(c.checked)sel=c.value;
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-l'>⚠ Choisis une réponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;totals[serie]++;ta++;
+  if(sel===cor){scores[serie]++;tc2++;r.innerHTML="<span class='ok-l'>✔ Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>✘ Incorrect</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upProg(serie);upR();
+}
+function checkF(id,cor,ex,serie){
+  const inp=document.getElementById(id+'-i'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  const a=cor.split('|').map(v=>v.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'));
+  if(!val){r.innerHTML="<span class='bad-l'>⚠ Écris ta réponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;totals[serie]++;ta++;
+  if(a.includes(val)){scores[serie]++;tc2++;r.innerHTML="<span class='ok-l'>✔ Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>✘ Incorrect — Réponse : "+cor.split('|')[0]+"</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upProg(serie);upR();
+}
+function upProg(s){
+  const p=totals[s]>0?Math.round(scores[s]/totals[s]*100):0;
+  const b=document.getElementById('pb-'+s),t=document.getElementById('pt-'+s);
+  if(b)b.style.width=p+'%'; if(t)t.textContent=scores[s]+' / '+totals[s]+' · '+p+'%';
+}
+function upR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;
+  document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'—';
+  document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='★'.repeat(s)+'☆'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  b.style.background=p>=75?'linear-gradient(90deg,#22c55e,#16a34a)':p>=50?'linear-gradient(90deg,#f59e0b,#ca8a04)':'linear-gradient(90deg,#6ee7b7,#065f46)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+function showCorr(id){const e=document.getElementById(id);e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+// ── FLASHCARDS ──
+const fcData={
+  t1:[
+    {q:'Définition de exp',a:'Unique fonction f définie et dérivable sur ℝ telle que f\'=f et f(0)=1.'},
+    {q:'e⁰ = ?',a:'e⁰ = 1. Condition de la définition : f(0) = 1.'},
+    {q:'(eˣ)\' = ?',a:'(eˣ)\' = eˣ. La dérivée de l\'exponentielle est elle-même.'},
+    {q:'eᵃ⁺ᵇ = ?',a:'eᵃ⁺ᵇ = eᵃ × eᵇ. Propriété fondamentale des exposants.'},
+    {q:'e⁻ˣ = ?',a:'e⁻ˣ = 1/eˣ. Conséquence de eᵃ⁺ᵇ = eᵃ×eᵇ avec b=−x.'},
+    {q:'eᵃ⁻ᵇ = ?',a:'eᵃ⁻ᵇ = eᵃ / eᵇ. Division des exponentielles.'},
+    {q:'(eᵃ)ⁿ = ?',a:'(eᵃ)ⁿ = eⁿᵃ. La suite (eⁿᵃ) est géométrique de raison eᵃ.'},
+    {q:'Signe de eˣ pour tout réel x',a:'eˣ > 0 pour tout réel x. L\'exponentielle est strictement positive.'},
+  ],
+  t2:[
+    {q:'Variations de eˣ sur ℝ',a:'eˣ est strictement croissante sur ℝ. Sa dérivée eˣ > 0 partout.'},
+    {q:'lim eˣ quand x → +∞',a:'lim eˣ = +∞. La courbe monte indéfiniment vers la droite.'},
+    {q:'lim eˣ quand x → −∞',a:'lim eˣ = 0. La droite y=0 est asymptote horizontale en −∞.'},
+    {q:'Tangente à eˣ en x=0',a:'y = x + 1. Car f\'(0)=1 et f(0)=1, donc y = 1·x + 1.'},
+    {q:'eᵃ = eᵇ ⟺ ?',a:'eᵃ = eᵇ ⟺ a = b. Stricte croissance → injectivité.'},
+    {q:'eᵃ > eᵇ ⟺ ?',a:'eᵃ > eᵇ ⟺ a > b. La fonction est croissante donc conserve l\'ordre.'},
+  ],
+  t3:[
+    {q:'(eᵘ)\' = ?',a:'(eᵘ)\' = u\' × eᵘ. Dérivée de la composée.'},
+    {q:'(e^(2x))\' = ?',a:'2e^(2x). u=2x, u\'=2, donc (e^(2x))\'=2e^(2x).'},
+    {q:'(e^(−x))\' = ?',a:'−e^(−x). u=−x, u\'=−1, donc (e^(−x))\'=−e^(−x).'},
+    {q:'(xeˣ)\' = ?',a:'eˣ(1+x). Règle du produit : 1×eˣ + x×eˣ = eˣ(1+x).'},
+    {q:'((1+x)eˣ)\' = ?',a:'eˣ(2+x). Produit : 1×eˣ+(1+x)×eˣ = eˣ(1+1+x)=eˣ(2+x).'},
+    {q:'(2xe^(−3x²))\' = ?',a:'2e^(−3x²)(1−6x²). Produit+composée.'},
+  ],
+  t4:[
+    {q:'Résoudre eˣ = 1',a:'x = 0. Car eˣ = 1 = e⁰ ⟺ x = 0.'},
+    {q:'Résoudre e^(2x) = e^(x+4)',a:'x = 4. 2x = x+4 ⟺ x = 4.'},
+    {q:'Résoudre eˣ > e³',a:'x > 3. eˣ > e³ ⟺ x > 3 (croissance).'},
+    {q:'lim xⁿ/eˣ quand x → +∞',a:'0. L\'exponentielle l\'emporte sur tout polynôme en +∞.'},
+    {q:'lim x·eˣ quand x → −∞',a:'0. Croissance comparée : eˣ domine |x| en −∞.'},
+  ]
+};
+const fcSt={};
+['t1','t2','t3','t4'].forEach(cat=>{
+  const d=fcData[cat];
+  fcSt[cat]={d,idx:0,ord:[...Array(d.length).keys()].sort(()=>Math.random()-.5),cor:0,tot:0,rev:false,mode:'q'};
+});
+function initFC(cat){const s=fcSt[cat];s.ord=[...Array(s.d.length).keys()].sort(()=>Math.random()-.5);s.idx=0;s.cor=0;s.tot=0;s.rev=false;renderFC(cat);}
+function renderFC(cat){
+  const s=fcSt[cat],it=s.d[s.ord[s.idx%s.ord.length]];
+  s.rev=false;
+  document.getElementById('fq-'+cat).textContent=s.mode==='q'?it.q:it.a;
+  const a=document.getElementById('fa-'+cat);
+  a.textContent=(s.mode==='q'?'→ '+it.a:'→ '+it.q);a.style.display='none';
+  document.getElementById('fh-'+cat).style.display='block';
+  document.getElementById('fn-'+cat).textContent=(s.idx%s.ord.length+1)+' / '+s.d.length;
+  const e=document.getElementById('fs-'+cat);if(e)e.textContent=s.tot>0?'✅ '+s.cor+' / '+s.tot+' · '+Math.round(s.cor/s.tot*100)+'%':'';
+}
+function revFC(cat){const s=fcSt[cat];if(s.rev)return;s.rev=true;document.getElementById('fa-'+cat).style.display='block';document.getElementById('fh-'+cat).style.display='none';}
+function voteFC(cat,ok){const s=fcSt[cat];if(!s.rev){revFC(cat);return;}s.tot++;if(ok)s.cor++;s.idx++;renderFC(cat);}
+function setFCMode(cat,mode){fcSt[cat].mode=mode;renderFC(cat);}
+window.onload=function(){showTab('t1');['t1','t2','t3','t4'].forEach(c=>initFC(c));};
+</script>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbadge">Mathématiques · Première · Spécialité</div>
+      <h1>Fonction <em>exponentielle</em></h1>
+      <p>Définition · Propriétés · Dérivée de eᵘ · Équations · Étude de fonctions</p>
+    </div>
+    <div class="rating-box">
+      <div class="rb-label">Mon score</div>
+      <span class="rating-stars" id="r-s">☆☆☆☆☆</span>
+      <div class="rating-score"><span id="r-c">0</span><span class="rs-t"> / <span id="r-t">0</span></span></div>
+      <div class="rating-pct" id="r-p">—</div>
+      <div class="rating-bar"><div class="rating-bar-fill" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="cta-strip">
+  <span class="cta-strip-text">📲 Nouvelles fiches en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-strip-btn">◈ @toncoachscolaire</a>
+</div>
+
+<!-- ══ TABS ══ -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-t1" onclick="showTab('t1')">🌿 1. Définition &amp; Propriétés</button>
+    <button class="tab t2" id="tab-t2" onclick="showTab('t2')">📈 2. Étude de la fonction</button>
+    <button class="tab t3" id="tab-t3" onclick="showTab('t3')">∂ 3. Dérivée de eᵘ</button>
+    <button class="tab t4" id="tab-t4" onclick="showTab('t4')">⚖️ 4. Équations &amp; Inéquations</button>
+    <button class="tab tc" id="tab-tc" onclick="showTab('tc')">📝 Devoir </button>
+    <button class="tab t5" id="tab-t5" onclick="showTab('t5')">📚 Entraînement </button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     PARTIE 1 — DÉFINITION & PROPRIÉTÉS
+══════════════════════════════════════ -->
+<div class="section active" id="s-t1">
+  <div class="sec-intro">
+    <div class="sec-ico ico1">eˣ</div>
+    <div class="sec-title">
+      <h2>1. Définition et propriétés algébriques</h2>
+      <p>Existence · Notation eˣ · Relations de calcul fondamentales</p>
+    </div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="fc-wrap">
+    <div class="fc-label">🃏 Flashcards — Propriétés à mémoriser</div>
+    <div class="fc-ctrl">
+      <button class="fc-btn-mode" style="background:var(--t1b);color:var(--t1);border-color:var(--t1)" onclick="setFCMode('t1','q')">📖 Propriété → Valeur</button>
+      <button class="fc-btn-mode" onclick="setFCMode('t1','a')">💡 Valeur → Propriété</button>
+      <button class="bg btn" style="padding:4px 11px;font-size:.74rem;margin:0" onclick="initFC('t1')">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="fc-card" onclick="revFC('t1')">
+        <div class="fc-cat">📖 Propriété</div>
+        <div class="fc-q" id="fq-t1">Chargement…</div>
+        <div class="fc-a" id="fa-t1"></div>
+        <div class="fc-hint" id="fh-t1">👆 Clique pour voir la réponse</div>
+      </div>
+      <div class="fc-info" id="fn-t1">1 / 8</div>
+      <div class="fc-actions">
+        <button class="fc-no" onclick="voteFC('t1',false)">✘ Je ne savais pas</button>
+        <button class="fc-yes" onclick="voteFC('t1',true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fs-t1"></div>
+    </div>
+  </div>
+
+  <!-- COURS -->
+  <div class="cours c1">
+    <div class="clbl">📖 Définition de la fonction exponentielle</div>
+    <p style="font-size:.9rem;margin-bottom:9px">Il existe une <strong>unique</strong> fonction f, définie et dérivable sur ℝ, vérifiant :</p>
+    <span class="formula f1">f' = f    et    f(0) = 1</span>
+    <p style="margin-top:9px;font-size:.9rem">Cette fonction est la <strong>fonction exponentielle</strong>, notée <span class="mn">exp</span>. On écrit <span class="mn">exp(x) = eˣ</span> avec <span class="mn">e ≈ 2,718</span>.</p>
+    <div class="tip">
+      <b>💡 Ce que ça signifie</b>
+      (eˣ)' = eˣ — la dérivée est elle-même<br>
+      e⁰ = 1 — elle vaut 1 en x = 0
+    </div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Propriétés algébriques — À connaître par cœur</div>
+    <span class="formula f1">Pour tous réels a et b :</span>
+    <span class="formula f1">eᵃ⁺ᵇ = eᵃ × eᵇ</span>
+    <span class="formula f1">e⁻ˣ = 1 / eˣ</span>
+    <span class="formula f1">eᵃ⁻ᵇ = eᵃ / eᵇ</span>
+    <span class="formula f1">(eᵃ)ⁿ = eⁿᵃ  pour tout entier n</span>
+    <span class="formula f1">eˣ > 0  pour tout réel x</span>
+    <div class="ex">
+      <b>Exemples de simplification</b>
+      e²ˣ × e³ˣ = e^(5x)<br>
+      e^(x+2) / e^(x-1) = e^(x+2−(x−1)) = e³<br>
+      (e^(2x))³ = e^(6x)<br>
+      e^(−x) × eˣ = e⁰ = 1
+    </div>
+    <div class="tip">
+      <b>⚠ Erreurs classiques</b>
+      eˣ × eˣ = e^(2x) ≠ e^(x²)<br>
+      eˣ + eˣ = 2eˣ (pas d'exposant !)<br>
+      (eˣ)² = e^(2x) ≠ e^(x²)
+    </div>
+    <div class="pt">"On utilise eᵃ⁺ᵇ = eᵃ×eᵇ pour grouper ou séparer. On factorise toujours par la puissance la plus petite."</div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="pf pf1" id="pb-t1"></div></div><div class="prog-txt" id="pt-t1">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Valeur de <span class="mn">e⁰</span> ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q11" value="A"> 0</label>
+      <label><input type="radio" name="q11" value="B"> e</label>
+      <label><input type="radio" name="q11" value="C"> 1</label>
+    </div>
+    <button class="btn b1" onclick="check('q11','C','e⁰ = 1. C\'est la condition f(0)=1 de la définition.','t1')">Vérifier</button>
+    <div class="res" id="q11-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Simplifie : <span class="mn">e³ˣ × e²ˣ</span></p>
+    <div class="opts">
+      <label><input type="radio" name="q12" value="A"> e^(6x²)</label>
+      <label><input type="radio" name="q12" value="B"> e^(5x)</label>
+      <label><input type="radio" name="q12" value="C"> e^(6x)</label>
+    </div>
+    <button class="btn b1" onclick="check('q12','B','e³ˣ × e²ˣ = e^(3x+2x) = e^(5x). On additionne les exposants.','t1')">Vérifier</button>
+    <div class="res" id="q12-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <p>Simplifie : <span class="mn">e^(x+3) / e^(x−1)</span></p>
+    <div class="opts">
+      <label><input type="radio" name="q13" value="A"> e²</label>
+      <label><input type="radio" name="q13" value="B"> e⁴</label>
+      <label><input type="radio" name="q13" value="C"> e^(2x+2)</label>
+    </div>
+    <button class="btn b1" onclick="check('q13','B','e^(x+3)/e^(x−1) = e^((x+3)−(x−1)) = e^(x+3−x+1) = e⁴.','t1')">Vérifier</button>
+    <div class="res" id="q13-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Simplifie : <span class="mn">(e^(x+1))² / e</span></p>
+    <button class="bg btn" onclick="toggle('c14')">📋 Correction</button>
+    <div class="corr" id="c14">
+      <div class="s">(e^(x+1))² = e^(2(x+1)) = e^(2x+2)</div>
+      <div class="s">e^(2x+2) / e¹ = e^(2x+2−1) = e^(2x+1)</div>
+      <div class="s">Résultat : e^(2x+1) = e × e^(2x)</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Simplifie et développe : <span class="mn">((e^(−2x))³ × e^(4x) + eˣ)(e^(2x) − 1)</span></p>
+    <button class="bg btn" onclick="toggle('c15')">📋 Correction</button>
+    <div class="corr" id="c15">
+      <div class="s">(e^(−2x))³ = e^(−6x)</div>
+      <div class="s">e^(−6x) × e^(4x) = e^(−2x)</div>
+      <div class="s">Premier facteur : e^(−2x) + eˣ</div>
+      <div class="s">Développement : (e^(−2x) + eˣ)(e^(2x)−1)</div>
+      <div class="s">= e^(−2x)·e^(2x) − e^(−2x) + eˣ·e^(2x) − eˣ</div>
+      <div class="s">= 1 − e^(−2x) + e^(3x) − eˣ</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q6 <span class="lvl lh">Avancé</span></div>
+    <p>Montre que <span class="mn">eˣ > 0</span> pour tout réel x en utilisant les propriétés algébriques uniquement.</p>
+    <button class="bg btn" onclick="toggle('c16')">📋 Correction</button>
+    <div class="corr" id="c16">
+      <div class="s">Pour tout réel x : eˣ = e^(x/2 + x/2) = e^(x/2) × e^(x/2) = (e^(x/2))²</div>
+      <div class="s">(e^(x/2))² est un carré → (e^(x/2))² ≥ 0</div>
+      <div class="s">De plus e^(x/2) ≠ 0 (e⁰=1, et par continuité ne s'annule pas)</div>
+      <div class="s">Donc eˣ = (e^(x/2))² > 0 pour tout réel x. ∎</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q7 <span class="lvl lh">Avancé</span></div>
+    <p>Soit f(x) = e^(2x) − 3eˣ + 2. Montre que ce trinôme peut se factoriser en posant X = eˣ, puis résous f(x) = 0.</p>
+    <button class="bg btn" onclick="toggle('c17')">📋 Correction</button>
+    <div class="corr" id="c17">
+      <div class="s">Posons X = eˣ. Comme eˣ > 0, on a X > 0.</div>
+      <div class="s">e^(2x) = (eˣ)² = X². Donc f(x) = X² − 3X + 2</div>
+      <div class="s">Discriminant : Δ = 9 − 8 = 1. Racines : X₁ = 1, X₂ = 2</div>
+      <div class="s">Cas X=1 : eˣ = 1 = e⁰ ⟹ x = 0</div>
+      <div class="s">Cas X=2 : eˣ = 2 ⟹ x = ln(2) ≈ 0,693</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════
+     PARTIE 2 — ÉTUDE DE LA FONCTION
+════════════════════════════════ -->
+<div class="section" id="s-t2">
+  <div class="sec-intro">
+    <div class="sec-ico ico2">📈</div>
+    <div class="sec-title">
+      <h2>2. Étude de la fonction exponentielle</h2>
+      <p>Signe · Variations · Limites · Courbe · Tangente en 0</p>
+    </div>
+  </div>
+
+  <div class="fc-wrap">
+    <div class="fc-label">🃏 Flashcards — Propriétés globales</div>
+    <div class="fc-ctrl">
+      <button class="fc-btn-mode" style="background:var(--t2b);color:var(--t2);border-color:var(--t2)" onclick="setFCMode('t2','q')">📖 Propriété → Valeur</button>
+      <button class="fc-btn-mode" onclick="setFCMode('t2','a')">💡 Valeur → Propriété</button>
+      <button class="bg btn" style="padding:4px 11px;font-size:.74rem;margin:0" onclick="initFC('t2')">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="fc-card" onclick="revFC('t2')">
+        <div class="fc-cat">📖 Propriété</div>
+        <div class="fc-q" id="fq-t2">Chargement…</div>
+        <div class="fc-a" id="fa-t2"></div>
+        <div class="fc-hint" id="fh-t2">👆 Clique pour voir la réponse</div>
+      </div>
+      <div class="fc-info" id="fn-t2">1 / 6</div>
+      <div class="fc-actions">
+        <button class="fc-no" onclick="voteFC('t2',false)">✘ Je ne savais pas</button>
+        <button class="fc-yes" onclick="voteFC('t2',true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fs-t2"></div>
+    </div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Tableau de valeurs et variations</div>
+    <table class="rtable">
+      <tr><th>x</th><th>−∞</th><th>−2</th><th>−1</th><th>0</th><th>1</th><th>2</th><th>+∞</th></tr>
+      <tr><td>eˣ</td><td>0⁺</td><td>≈0,135</td><td>≈0,368</td><td>1</td><td>≈2,718</td><td>≈7,389</td><td>+∞</td></tr>
+    </table>
+    <span class="formula f2">eˣ > 0 pour tout réel x</span>
+    <span class="formula f2">exp strictement croissante sur ℝ (car (eˣ)' = eˣ > 0)</span>
+    <span class="formula f2">lim(x→+∞) eˣ = +∞</span>
+    <span class="formula f2">lim(x→−∞) eˣ = 0  →  asymptote horizontale y = 0</span>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Courbe représentative de y = eˣ</div>
+    <div class="graph-wrap">
+      <div class="graph-lbl">Représentation graphique de eˣ sur [−3 ; 2,5]</div>
+      <svg viewBox="-3.5 -0.8 6.2 8.5" style="width:100%;max-width:440px;background:#faf8f4;border-radius:10px;border:1px solid var(--border)" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grilles légères -->
+        <line x1="-3.5" y1="1" x2="2.7" y2="1" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="-3.5" y1="2" x2="2.7" y2="2" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="-3.5" y1="3" x2="2.7" y2="3" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="-3.5" y1="5" x2="2.7" y2="5" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="-2" y1="-0.5" x2="-2" y2="7.5" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="-1" y1="-0.5" x2="-1" y2="7.5" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="1" y1="-0.5" x2="1" y2="7.5" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <line x1="2" y1="-0.5" x2="2" y2="7.5" stroke="#e8e0cf" stroke-width="0.04" stroke-dasharray="0.15,0.15"/>
+        <!-- Asymptote y=0 -->
+        <line x1="-3.5" y1="0" x2="0" y2="0" stroke="#92400e" stroke-width="0.06" stroke-dasharray="0.2,0.15"/>
+        <!-- Axes -->
+        <line x1="-3.5" y1="0" x2="2.7" y2="0" stroke="#14110a" stroke-width="0.07"/>
+        <line x1="0" y1="-0.5" x2="0" y2="7.5" stroke="#14110a" stroke-width="0.07"/>
+        <!-- Flèches -->
+        <polygon points="2.7,0 2.55,-0.08 2.55,0.08" fill="#14110a"/>
+        <polygon points="0,-0.5 -0.08,-0.35 0.08,-0.35" fill="#14110a"/>
+        <!-- Tangente y = x+1 en x=0 -->
+        <line x1="-1.5" y1="-0.5" x2="2.5" y2="3.5" stroke="#92400e" stroke-width="0.07" stroke-dasharray="0.2,0.15"/>
+        <!-- Courbe eˣ — 300 points -->
+        <polyline fill="none" stroke="#065f46" stroke-width="0.11" stroke-linecap="round" stroke-linejoin="round"
+          points="-3.5,0.030 -3.3,0.037 -3.1,0.045 -2.9,0.055 -2.7,0.067 -2.5,0.082 -2.3,0.100 -2.1,0.122 -1.9,0.150 -1.7,0.183 -1.5,0.223 -1.3,0.272 -1.1,0.333 -0.9,0.407 -0.7,0.497 -0.5,0.607 -0.3,0.741 -0.1,0.905 0,1 0.1,1.105 0.3,1.350 0.5,1.649 0.7,2.014 0.9,2.460 1.1,3.004 1.3,3.669 1.5,4.482 1.7,5.474 1.9,6.686 2.0,7.389"/>
+        <!-- Points clés -->
+        <circle cx="0" cy="1" r="0.09" fill="#065f46"/>
+        <circle cx="1" cy="2.718" r="0.09" fill="#065f46"/>
+        <circle cx="-1" cy="0.368" r="0.07" fill="#065f46"/>
+        <!-- Labels axes -->
+        <text x="0.08" y="1.22" font-size="0.22" fill="#065f46" font-family="JetBrains Mono">(0;1)</text>
+        <text x="1.08" y="2.5" font-size="0.22" fill="#065f46" font-family="JetBrains Mono">(1;e)</text>
+        <text x="-3.4" y="0.35" font-size="0.2" fill="#92400e" font-family="JetBrains Mono">asymptote y=0</text>
+        <text x="1.5" y="3.2" font-size="0.2" fill="#92400e" font-family="JetBrains Mono">tgte y=x+1</text>
+        <!-- Ticks -->
+        <line x1="-1" y1="-0.07" x2="-1" y2="0.07" stroke="#14110a" stroke-width="0.06"/>
+        <text x="-1.1" y="0.32" font-size="0.2" fill="#14110a" font-family="JetBrains Mono">-1</text>
+        <line x1="1" y1="-0.07" x2="1" y2="0.07" stroke="#14110a" stroke-width="0.06"/>
+        <text x="0.9" y="0.32" font-size="0.2" fill="#14110a" font-family="JetBrains Mono">1</text>
+        <line x1="-0.07" y1="1" x2="0.07" y2="1" stroke="#14110a" stroke-width="0.06"/>
+        <text x="-0.28" y="1.05" font-size="0.2" fill="#14110a" font-family="JetBrains Mono">1</text>
+        <text x="2.6" y="0.28" font-size="0.22" fill="#14110a" font-family="JetBrains Mono">x</text>
+        <text x="0.1" y="-0.3" font-size="0.22" fill="#14110a" font-family="JetBrains Mono">y</text>
+      </svg>
+    </div>
+    <div class="tip">
+      <b>💡 Tangente en x = 0</b>
+      y = f'(0)·(x−0) + f(0) = 1·x + 1 = <strong>x + 1</strong><br>
+      La courbe est toujours au-dessus de cette tangente → eˣ ≥ x + 1 pour tout x ∈ ℝ.
+    </div>
+    <div class="pt">"La fonction eˣ est strictement croissante sur ℝ, strictement positive, admet y=0 comme asymptote en −∞ et diverge vers +∞ en +∞. La tangente en (0;1) est y=x+1."</div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="pf pf2" id="pb-t2"></div></div><div class="prog-txt" id="pt-t2">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>La fonction eˣ peut-elle s'annuler ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q21" value="A"> Oui, en x = 0</label>
+      <label><input type="radio" name="q21" value="B"> Non, eˣ > 0 pour tout réel x</label>
+      <label><input type="radio" name="q21" value="C"> Oui, quand x → −∞</label>
+    </div>
+    <button class="btn b2" onclick="check('q21','B','eˣ > 0 pour tout réel x. Elle ne s\'annule jamais. En x=0 : e⁰=1≠0. En −∞ : elle tend vers 0 mais ne l\'atteint pas.','t2')">Vérifier</button>
+    <div class="res" id="q21-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de eˣ quand x → −∞ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q22" value="A"> −∞</label>
+      <label><input type="radio" name="q22" value="B"> 0</label>
+      <label><input type="radio" name="q22" value="C"> 1</label>
+    </div>
+    <button class="btn b2" onclick="check('q22','B','lim(x→−∞) eˣ = 0. La courbe se rapproche de l\'axe des abscisses sans jamais l\'atteindre → asymptote horizontale y = 0.','t2')">Vérifier</button>
+    <div class="res" id="q22-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Équation de la tangente à y = eˣ au point d'abscisse x = 0 ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q23" value="A"> y = x</label>
+      <label><input type="radio" name="q23" value="B"> y = x + 1</label>
+      <label><input type="radio" name="q23" value="C"> y = eˣ</label>
+    </div>
+    <button class="btn b2" onclick="check('q23','B','y = f\'(0)(x−0) + f(0). f\'(x)=eˣ donc f\'(0)=1. f(0)=1. Donc y = x + 1.','t2')">Vérifier</button>
+    <div class="res" id="q23-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Dresse le tableau de variations complet de f(x) = eˣ sur ℝ.</p>
+    <button class="bg btn" onclick="toggle('c24')">📋 Correction</button>
+    <div class="corr" id="c24">
+      <div class="s">f'(x) = eˣ > 0 pour tout réel x</div>
+      <div class="s">f est strictement CROISSANTE sur ℝ</div>
+      <div class="s">lim(x→−∞) eˣ = 0⁺  ·  lim(x→+∞) eˣ = +∞</div>
+      <div class="s">x :  −∞  ──────────────→  +∞</div>
+      <div class="s">f :  0⁺  ↗ (croissante)  +∞</div>
+      <div class="s">Pas d'extremum (f strictement monotone sur ℝ)</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <p>Montre que <span class="mn">eˣ ≥ x + 1</span> pour tout réel x, avec égalité en x = 0.</p>
+    <button class="bg btn" onclick="toggle('c25')">📋 Correction</button>
+    <div class="corr" id="c25">
+      <div class="s">Posons g(x) = eˣ − x − 1. Montrons g(x) ≥ 0 pour tout x.</div>
+      <div class="s">g'(x) = eˣ − 1. g'(x) = 0 ⟺ eˣ = e⁰ ⟺ x = 0.</div>
+      <div class="s">g'(x) &lt; 0 si x &lt; 0  ·  g'(x) > 0 si x > 0</div>
+      <div class="s">g admet un minimum global en x = 0 : g(0) = e⁰ − 0 − 1 = 0</div>
+      <div class="s">Donc g(x) ≥ 0 pour tout x, soit eˣ ≥ x + 1 avec égalité en x = 0. ∎</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════
+     PARTIE 3 — DÉRIVÉE DE eᵘ
+═══════════════════════ -->
+<div class="section" id="s-t3">
+  <div class="sec-intro">
+    <div class="sec-ico ico3">∂</div>
+    <div class="sec-title">
+      <h2>3. Dérivée de e^u(x)</h2>
+      <p>Règle de composition · Produit × eᵘ · Tableau de variations</p>
+    </div>
+  </div>
+
+  <div class="fc-wrap">
+    <div class="fc-label">🃏 Flashcards — Formules de dérivation</div>
+    <div class="fc-ctrl">
+      <button class="fc-btn-mode" style="background:var(--t3b);color:var(--t3);border-color:var(--t3)" onclick="setFCMode('t3','q')">📖 Fonction → Dérivée</button>
+      <button class="fc-btn-mode" onclick="setFCMode('t3','a')">💡 Dérivée → Fonction</button>
+      <button class="bg btn" style="padding:4px 11px;font-size:.74rem;margin:0" onclick="initFC('t3')">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="fc-card" onclick="revFC('t3')">
+        <div class="fc-cat">📖 Fonction</div>
+        <div class="fc-q" id="fq-t3">Chargement…</div>
+        <div class="fc-a" id="fa-t3"></div>
+        <div class="fc-hint" id="fh-t3">👆 Clique pour voir la dérivée</div>
+      </div>
+      <div class="fc-info" id="fn-t3">1 / 6</div>
+      <div class="fc-actions">
+        <button class="fc-no" onclick="voteFC('t3',false)">✘ Je ne savais pas</button>
+        <button class="fc-yes" onclick="voteFC('t3',true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fs-t3"></div>
+    </div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Règle fondamentale — Dérivée de eᵘ</div>
+    <p style="margin-bottom:9px;font-size:.9rem">Si u est dérivable sur I, alors eᵘ est dérivable sur I et :</p>
+    <span class="formula f3">(eᵘ)' = u' × eᵘ</span>
+    <div class="ex">
+      <b>Exemples — méthode en 3 étapes</b>
+      (e^(3x+1))' : u=3x+1, u'=3 → 3e^(3x+1)<br>
+      (e^(x²))' : u=x², u'=2x → 2x·e^(x²)<br>
+      (e^(−x²+1))' : u=−x²+1, u'=−2x → −2x·e^(−x²+1)<br>
+      (e^(√x))' : u=√x, u'=1/(2√x) → e^(√x)/(2√x)
+    </div>
+    <div class="tip">
+      <b>💡 Méthode : 3 étapes</b>
+      1) Identifier u(x) dans l'exposant<br>
+      2) Calculer u'(x)<br>
+      3) Écrire : (eᵘ)' = u' × eᵘ
+    </div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Produit v(x) × eᵘ⁽ˣ⁾</div>
+    <p style="margin-bottom:9px;font-size:.9rem">Règle du produit (v·eᵘ)' = v'·eᵘ + v·u'·eᵘ, qu'on factorise par eᵘ :</p>
+    <span class="formula f3">(v × eᵘ)' = eᵘ × (v' + v·u')</span>
+    <div class="ex">
+      <b>Exemple : g(x) = (1+x)eˣ</b>
+      v = 1+x, v' = 1  ·  u = x, u' = 1<br>
+      g'(x) = eˣ(1 + (1+x)·1) = eˣ(2+x)
+    </div>
+    <div class="ex">
+      <b>Exemple : h(x) = 2xe^(−3x²)</b>
+      v = 2x, v' = 2  ·  u = −3x², u' = −6x<br>
+      h'(x) = e^(−3x²)(2 + 2x·(−6x)) = 2e^(−3x²)(1−6x²)
+    </div>
+    <div class="pt">"On calcule u' et v', on applique la règle du produit, puis on factorise par eᵘ pour obtenir la forme factorisée."</div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="pf pf3" id="pb-t3"></div></div><div class="prog-txt" id="pt-t3">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Dérivée de <span class="mn">f(x) = 3e^(2x) + 4x − 3</span></p>
+    <div class="opts">
+      <label><input type="radio" name="q31" value="A"> 3e^(2x) + 4</label>
+      <label><input type="radio" name="q31" value="B"> 6e^(2x) + 4</label>
+      <label><input type="radio" name="q31" value="C"> 6e^(2x)</label>
+    </div>
+    <button class="btn b3" onclick="check('q31','B','f\'(x) = 3×2×e^(2x) + 4 = 6e^(2x) + 4. Pour 3e^(2x) : u=2x, u\'=2 → dérivée = 6e^(2x). Pour 4x : dérivée = 4. Constante −3 → 0.','t3')">Vérifier</button>
+    <div class="res" id="q31-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Dérivée de <span class="mn">g(x) = (1+x)eˣ</span></p>
+    <div class="opts">
+      <label><input type="radio" name="q32" value="A"> eˣ(1+x)</label>
+      <label><input type="radio" name="q32" value="B"> eˣ(2+x)</label>
+      <label><input type="radio" name="q32" value="C"> eˣ</label>
+    </div>
+    <button class="btn b3" onclick="check('q32','B','g\'(x) = 1×eˣ + (1+x)×eˣ = eˣ(1+1+x) = eˣ(2+x). Règle du produit avec v=1+x, v\'=1, u=x, u\'=1.','t3')">Vérifier</button>
+    <div class="res" id="q32-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Calcule la dérivée de <span class="mn">h(x) = 2xe^(−3x²)</span> sous forme factorisée.</p>
+    <button class="bg btn" onclick="toggle('c33')">📋 Correction</button>
+    <div class="corr" id="c33">
+      <div class="s">v = 2x, v' = 2  ·  u = −3x², u' = −6x</div>
+      <div class="s">h'(x) = e^(−3x²)·(v' + v·u') = e^(−3x²)(2 + 2x·(−6x))</div>
+      <div class="s">h'(x) = e^(−3x²)(2 − 12x²) = 2e^(−3x²)(1 − 6x²)</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Soit f(x) = e^(−x²+1). Calcule f'(x) puis les équations des tangentes en x = 0 et x = 1.</p>
+    <button class="bg btn" onclick="toggle('c34')">📋 Correction</button>
+    <div class="corr" id="c34">
+      <div class="s">u = −x²+1, u' = −2x → f'(x) = −2x·e^(−x²+1)</div>
+      <div class="s">En x=0 : f'(0) = 0 · f(0) = e^(0+1) = e → tangente : y = e</div>
+      <div class="s">En x=1 : f'(1) = −2×1×e^(0) = −2 · f(1) = e⁰ = 1</div>
+      <div class="s">Tangente en x=1 : y = −2(x−1) + 1 = −2x + 3</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <p>Soit f(x) = (x²−x+1)eˣ. Calcule f'(x) sous forme factorisée et dresse le tableau de variations.</p>
+    <button class="bg btn" onclick="toggle('c35')">📋 Correction</button>
+    <div class="corr" id="c35">
+      <div class="s">f'(x) = (2x−1)eˣ + (x²−x+1)eˣ = eˣ(2x−1+x²−x+1) = eˣ(x²+x)</div>
+      <div class="s">f'(x) = eˣ·x(x+1). eˣ > 0 → signe = signe de x(x+1)</div>
+      <div class="s">Racines : x=0 et x=−1</div>
+      <div class="s">f'(x) > 0 sur ]−∞;−1[ · f'(−1)=0 · f'(x) &lt; 0 sur ]−1;0[ · f'(0)=0 · f'(x) > 0 sur ]0;+∞[</div>
+      <div class="s">Max local en x=−1 : f(−1)=3e⁻¹ · Min local en x=0 : f(0)=1</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════
+     PARTIE 4 — ÉQUATIONS & INÉQUATIONS
+════════════════════════════════════ -->
+<div class="section" id="s-t4">
+  <div class="sec-intro">
+    <div class="sec-ico ico4">⚖️</div>
+    <div class="sec-title">
+      <h2>4. Équations et inéquations</h2>
+      <p>Injectivité · Résolution · Croissance comparée · Étude complète</p>
+    </div>
+  </div>
+
+  <div class="fc-wrap">
+    <div class="fc-label">🃏 Flashcards — Résolution</div>
+    <div class="fc-ctrl">
+      <button class="fc-btn-mode" style="background:var(--t4b);color:var(--t4);border-color:var(--t4)" onclick="setFCMode('t4','q')">📖 Équation → Solution</button>
+      <button class="fc-btn-mode" onclick="setFCMode('t4','a')">💡 Solution → Équation</button>
+      <button class="bg btn" style="padding:4px 11px;font-size:.74rem;margin:0" onclick="initFC('t4')">🔀 Mélanger</button>
+    </div>
+    <div class="fc-zone">
+      <div class="fc-card" onclick="revFC('t4')">
+        <div class="fc-cat">📖 Équation</div>
+        <div class="fc-q" id="fq-t4">Chargement…</div>
+        <div class="fc-a" id="fa-t4"></div>
+        <div class="fc-hint" id="fh-t4">👆 Clique pour voir la solution</div>
+      </div>
+      <div class="fc-info" id="fn-t4">1 / 5</div>
+      <div class="fc-actions">
+        <button class="fc-no" onclick="voteFC('t4',false)">✘ Je ne savais pas</button>
+        <button class="fc-yes" onclick="voteFC('t4',true)">✔ Je savais !</button>
+      </div>
+      <div class="fc-stat" id="fs-t4"></div>
+    </div>
+  </div>
+
+  <div class="cours c4">
+    <div class="clbl">📖 Injectivité — Résoudre eᵃ = eᵇ</div>
+    <p style="margin-bottom:9px;font-size:.9rem">La stricte croissance de exp implique son injectivité :</p>
+    <span class="formula f4">eᵃ = eᵇ  ⟺  a = b</span>
+    <span class="formula f4">eᵃ > eᵇ  ⟺  a > b</span>
+    <span class="formula f4">eᵃ &lt; eᵇ  ⟺  a &lt; b</span>
+    <div class="ex">
+      <b>Exemples</b>
+      e^(2x+1) = e^(x−3) ⟺ 2x+1 = x−3 ⟺ x = −4<br>
+      e^(x²) = eˣ ⟺ x²=x ⟺ x(x−1)=0 ⟺ x=0 ou x=1<br>
+      e^(3x) > e ⟺ 3x > 1 ⟺ x > 1/3
+    </div>
+    <div class="tip">
+      <b>⚠ Si pas de la forme eˣ = e^(cst)</b>
+      Poser X = eˣ (X > 0), résoudre en X, puis eˣ = X₀ ⟹ x = ln(X₀).
+    </div>
+    <div class="pt">"On ramène à eᵃ = eᵇ par injectivité. Si les membres ne sont pas des exponentielles, on pose X = eˣ."</div>
+  </div>
+
+  <div class="cours c4">
+    <div class="clbl">📖 Croissance comparée — À connaître</div>
+    <span class="formula f4">lim(x→+∞) xⁿ / eˣ = 0  pour tout entier n ≥ 0</span>
+    <span class="formula f4">lim(x→+∞) eˣ / xⁿ = +∞</span>
+    <span class="formula f4">lim(x→−∞) |x|ⁿ × eˣ = 0  pour tout entier n ≥ 0</span>
+    <div class="tip">
+      <b>💡 En clair</b>
+      En +∞ : eˣ l'emporte sur tout polynôme (même x^1000).<br>
+      En −∞ : eˣ "tue" tout polynôme, si raide soit-il.
+    </div>
+  </div>
+
+  <div class="prog-row"><div class="prog-bar"><div class="pf pf4" id="pb-t4"></div></div><div class="prog-txt" id="pt-t4">0 / 0</div></div>
+
+  <div class="divider">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Résous : <span class="mn">eˣ = e³</span></p>
+    <input class="fi" id="q41-i" placeholder="x =">
+    <button class="btn b4" onclick="checkF('q41','3','eˣ = e³ ⟺ x = 3 par injectivité de exp.','t4')">Vérifier</button>
+    <div class="res" id="q41-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Résous : <span class="mn">e^(2x) = e^(x+4)</span></p>
+    <input class="fi" id="q42-i" placeholder="x =">
+    <button class="btn b4" onclick="checkF('q42','4','2x = x+4 ⟺ x = 4. On égalise les exposants par injectivité.','t4')">Vérifier</button>
+    <div class="res" id="q42-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <p>Résous l'inéquation : <span class="mn">e^(3x) > e⁶</span></p>
+    <div class="opts">
+      <label><input type="radio" name="q43" value="A"> x > 3</label>
+      <label><input type="radio" name="q43" value="B"> x > 2</label>
+      <label><input type="radio" name="q43" value="C"> x &lt; 2</label>
+    </div>
+    <button class="btn b4" onclick="check('q43','B','e^(3x) > e⁶ ⟺ 3x > 6 ⟺ x > 2. exp strictement croissante → conserve l\'ordre.','t4')">Vérifier</button>
+    <div class="res" id="q43-r"></div>
+  </div>
+
+  <div class="divider">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Résous : <span class="mn">e^(2x) − 6eˣ + 5 = 0</span> en posant X = eˣ.</p>
+    <button class="bg btn" onclick="toggle('c44')">📋 Correction</button>
+    <div class="corr" id="c44">
+      <div class="s">X = eˣ > 0. e^(2x) = X². Équation : X² − 6X + 5 = 0</div>
+      <div class="s">Discriminant : Δ = 36 − 20 = 16. Racines : X=1 ou X=5</div>
+      <div class="s">X=1 : eˣ = e⁰ ⟹ x = 0</div>
+      <div class="s">X=5 : eˣ = 5 ⟹ x = ln(5) ≈ 1,609</div>
+    </div>
+  </div>
+
+  <div class="divider">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <p>Étudie le signe de <span class="mn">f(x) = e^(2x) + 6eˣ − 8x − 4</span> et la position relative de la courbe de <span class="mn">f(x) = e^(2x) + 6eˣ</span> par rapport à la droite <span class="mn">y = 8x + 4</span>.</p>
+    <button class="bg btn" onclick="toggle('c45')">📋 Correction</button>
+    <div class="corr" id="c45">
+      <div class="s">g(x) = f(x) − (8x+4) = e^(2x) + 6eˣ − 8x − 4</div>
+      <div class="s">g'(x) = 2e^(2x) + 6eˣ − 8. Posons X=eˣ > 0 : 2X²+6X−8=0 ⟺ X²+3X−4=0</div>
+      <div class="s">Δ = 9+16 = 25 · X₁=1 (retenu) · X₂=−4 (rejeté car X>0)</div>
+      <div class="s">g'(x)=0 ⟺ eˣ=1 ⟺ x=0. g'(x)&lt;0 si x&lt;0 · g'(x)>0 si x>0</div>
+      <div class="s">g minimum en x=0 : g(0) = 1+6−0−4 = 3 > 0</div>
+      <div class="s">Conclusion : g(x) ≥ 3 > 0 pour tout x → courbe TOUJOURS AU-DESSUS de la droite.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     ONGLET 5 — DEVOIR 2024-2025
+══════════════════════════════════════════ -->
+<div class="section" id="s-tc">
+  <div class="sec-intro">
+    <div class="sec-ico icoc">📝</div>
+    <div class="sec-title">
+      <h2>Devoir — Fonction exponentielle</h2>
+      <p>Vrai devoir 2024-2025 · Correction au clic</p>
+    </div>
+  </div>
+
+  <div class="ctrl-hdr">
+    <div class="ctrl-badge">📝 Vrai devoir</div>
+    <div class="ctrl-info">
+      <h3>Devoir de Mathématiques — Première Spécialité</h3>
+      <p>Sujet posé en spé maths, Première générale, année 2024-2025. Source : <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2024-2025/DS8-exponentielle.php" target="_blank" style="color:var(--t1);font-weight:700">xymaths.fr</a></p>
+      <ul>
+        <li>Durée conseillée : 45 minutes</li>
+        <li>Calculatrice autorisée</li>
+        <li>Montre les calculs — forme factorisée exigée</li>
+        <li>Clique sur Correction après avoir cherché seul</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXERCICE 1 — DÉRIVÉES -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n">Exercice 1 — Calculs de dérivées</div>
+      <div class="ctrl-pts">6 points</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Détermine les dérivées des fonctions suivantes, sous forme <strong>factorisée</strong>.</p>
+
+    <div class="ctrl-sub">
+      <b>Question a) — 2 points</b>
+      f(x) = 3e^(2x) + 4x − 3
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc1a')">📋 Correction a)</button>
+    <div class="ctrl-corr" id="dc1a">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">u = 2x, u' = 2 pour le terme e^(2x)</span>
+        <span class="l">f'(x) = 3 × 2 × e^(2x) + 4 − 0</span>
+        <span class="l"><span class="hi">f'(x) = 6e^(2x) + 4</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question b) — 2 points</b>
+      g(x) = (1 + x)eˣ
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc1b')">📋 Correction b)</button>
+    <div class="ctrl-corr" id="dc1b">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">v = 1+x, v' = 1 · u = x, u' = 1</span>
+        <span class="l">g'(x) = 1 × eˣ + (1+x) × 1 × eˣ = eˣ(1 + 1 + x)</span>
+        <span class="l"><span class="hi">g'(x) = eˣ(2 + x)</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question c) — 2 points</b>
+      h(x) = 2x·e^(−3x²)
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc1c')">📋 Correction c)</button>
+    <div class="ctrl-corr" id="dc1c">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">v = 2x, v' = 2 · u = −3x², u' = −6x</span>
+        <span class="l">h'(x) = e^(−3x²) × (v' + v·u') = e^(−3x²)(2 + 2x·(−6x))</span>
+        <span class="l">h'(x) = e^(−3x²)(2 − 12x²)</span>
+        <span class="l"><span class="hi">h'(x) = 2e^(−3x²)(1 − 6x²)</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCICE 2 — TABLEAUX DE SIGNES -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n">Exercice 2 — Tableaux de signes et variations</div>
+      <div class="ctrl-pts">6 points</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Pour chacune des fonctions f, g, h de l'exercice 1, dresse le tableau de signe de la dérivée, puis le tableau de variations de la fonction.</p>
+
+    <div class="ctrl-sub">
+      <b>a) Tableau de signe de f'(x) = 6e^(2x) + 4 et variations de f</b>
+      <div class="ans tall">Tableau…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc2a')">📋 Correction a)</button>
+    <div class="ctrl-corr" id="dc2a">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">f'(x) = 6e^(2x) + 4. Or 6e^(2x) > 0 et 4 > 0 donc f'(x) > 0 pour tout x.</span>
+        <span class="l">f est <span class="hi">strictement croissante sur ℝ</span>.</span>
+        <span class="l">lim(x→−∞) f(x) = 0 + 0 − 3 = −3 (car 4x→−∞... attendre : 4x→−∞)</span>
+        <span class="l">Correction : lim(x→−∞) f(x) = 0 + (−∞) − 3 = −∞ · lim(x→+∞) f(x) = +∞</span>
+        <span class="l">Tableau : −∞ → f croissante → +∞. f'(x) > 0 partout.</span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>b) Tableau de signe de g'(x) = eˣ(2+x) et variations de g</b>
+      <div class="ans tall">Tableau…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc2b')">📋 Correction b)</button>
+    <div class="ctrl-corr" id="dc2b">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">eˣ > 0 toujours → signe de g'(x) = signe de (2+x)</span>
+        <span class="l">2+x = 0 ⟺ x = −2</span>
+        <span class="l">g'(x) &lt; 0 sur ]−∞;−2[ · g'(−2) = 0 · g'(x) > 0 sur ]−2;+∞[</span>
+        <span class="l">g <span class="hi">décroissante</span> sur ]−∞;−2] puis <span class="hi">croissante</span> sur [−2;+∞[</span>
+        <span class="l">Minimum en x=−2 : g(−2) = (1+(−2))×e^(−2) = −e^(−2)</span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>c) Tableau de signe de h'(x) = 2e^(−3x²)(1−6x²) et variations de h</b>
+      <div class="ans tall">Tableau…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc2c')">📋 Correction c)</button>
+    <div class="ctrl-corr" id="dc2c">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">2e^(−3x²) > 0 → signe de h'(x) = signe de (1−6x²)</span>
+        <span class="l">1−6x² = 0 ⟺ x² = 1/6 ⟺ x = ±1/√6 ≈ ±0,408</span>
+        <span class="l">h'(x) &lt; 0 sur ]−∞;−1/√6[ · h' > 0 sur ]−1/√6 ; 1/√6[ · h' &lt; 0 sur ]1/√6;+∞[</span>
+        <span class="l">Min en x=−1/√6 · Max en x=1/√6 : h(1/√6) = 2/√6 × e^(−1/2)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCICE 3 — TANGENTES -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n">Exercice 3 — Équations de tangentes</div>
+      <div class="ctrl-pts">4 points</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Soit f définie par <strong>f(x) = e^(−x²+1)</strong>. Détermine les équations des tangentes à la courbe de f aux points d'abscisses x = 0 et x = 1.</p>
+
+    <div class="ctrl-sub">
+      <b>Tangente en x = 0 — 2 points</b>
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc3a')">📋 Correction — x = 0</button>
+    <div class="ctrl-corr" id="dc3a">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">u = −x²+1, u' = −2x → f'(x) = −2x·e^(−x²+1)</span>
+        <span class="l">f'(0) = −2×0×e^1 = 0</span>
+        <span class="l">f(0) = e^(0+1) = e</span>
+        <span class="l">Tangente : y = f'(0)(x−0) + f(0) = 0×x + e</span>
+        <span class="l"><span class="hi">Équation de la tangente en x=0 : y = e</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Tangente en x = 1 — 2 points</b>
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc3b')">📋 Correction — x = 1</button>
+    <div class="ctrl-corr" id="dc3b">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">f'(x) = −2x·e^(−x²+1)</span>
+        <span class="l">f'(1) = −2×1×e^(−1+1) = −2×e⁰ = −2</span>
+        <span class="l">f(1) = e^(−1+1) = e⁰ = 1</span>
+        <span class="l">Tangente : y = f'(1)(x−1) + f(1) = −2(x−1) + 1 = −2x + 2 + 1</span>
+        <span class="l"><span class="hi">Équation de la tangente en x=1 : y = −2x + 3</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCICE 4 — ÉTUDE COMPLÈTE -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n">Exercice 4 — Étude de fonction et position relative</div>
+      <div class="ctrl-pts">6 points</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2);margin-bottom:10px">Soit f définie sur ℝ par <strong>f(x) = e^(2x) + 6eˣ</strong> et la droite d d'équation <strong>y = 8x + 4</strong>.</p>
+
+    <div class="ctrl-sub">
+      <b>Question 1 — 3 points</b>
+      Étudie le sens de variation de f.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc4a')">📋 Correction Q1</button>
+    <div class="ctrl-corr" id="dc4a">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">f'(x) = 2e^(2x) + 6eˣ</span>
+        <span class="l">eˣ > 0 donc e^(2x) > 0 et 6eˣ > 0 → f'(x) > 0 pour tout réel x</span>
+        <span class="l"><span class="hi">f est strictement croissante sur ℝ</span></span>
+        <span class="l">lim(x→−∞) f(x) = 0 + 0 = 0 · lim(x→+∞) f(x) = +∞</span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question 2 — 3 points</b>
+      On définit g sur ℝ par g(x) = f(x) − (8x + 4) = e^(2x) + 6eˣ − 8x − 4.
+      Étudie le signe de g(x) et détermine la position relative de la courbe de f et de la droite d.
+      <div class="ans xt">Calcul…</div>
+    </div>
+    <button class="btn bc" onclick="showCorr('dc4b')">📋 Correction Q2</button>
+    <div class="ctrl-corr" id="dc4b">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">g'(x) = 2e^(2x) + 6eˣ − 8. Posons X = eˣ > 0 :</span>
+        <span class="l">2X² + 6X − 8 = 0 ⟺ X² + 3X − 4 = 0</span>
+        <span class="l">Δ = 9 + 16 = 25 · X₁ = (−3+5)/2 = 1 · X₂ = (−3−5)/2 = −4 (rejeté)</span>
+        <span class="l">g'(x) = 0 ⟺ eˣ = 1 ⟺ x = 0</span>
+        <span class="l">g'(x) &lt; 0 sur ]−∞;0[ · g'(0) = 0 · g'(x) > 0 sur ]0;+∞[</span>
+        <span class="l">g admet un minimum en x = 0 : g(0) = e⁰ + 6e⁰ − 0 − 4 = 1 + 6 − 4 = <span class="hi">3</span></span>
+        <span class="l">Donc g(x) ≥ 3 > 0 pour tout réel x.</span>
+        <span class="l"><span class="hi">La courbe de f est TOUJOURS STRICTEMENT AU-DESSUS de la droite d.</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Source -->
+  <div style="background:var(--t1b);border:1px solid rgba(6,95,70,.2);border-radius:11px;padding:13px 17px;margin-top:6px;font-size:.83rem;color:var(--t1)">
+    📌 <strong>Source :</strong> Devoir spé maths Première, année 2024-2025<br>
+    <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2024-2025/DS8-exponentielle.php" target="_blank" style="color:var(--t1);font-weight:700">Voir le sujet et la correction originale →</a>
+  </div>
+</div>
+
+
+
+<!-- ══════════════════════════════════════════════════
+     ONGLET 6 — ENTRAÎNEMENT — EXERCICES
+══════════════════════════════════════════════════ -->
+<div class="section" id="s-t5">
+  <div class="sec-intro">
+    <div class="sec-ico" style="background:#cffafe;color:#0891b2;font-size:1.2rem">📚</div>
+    <div class="sec-title">
+      <h2>Entraînement </h2>
+      <p>Extraits des devoirs 2023-2024 et 2024-2025 · Correction au clic</p>
+    </div>
+  </div>
+
+  <div class="ctrl-hdr" style="background:linear-gradient(135deg,#ecfeff,#cffafe);border-color:#a5f3fc">
+    <div class="ctrl-badge" style="background:#0891b2">📚 Entraînement</div>
+    <div class="ctrl-info">
+      <h3 style="color:#0891b2">Exercices supplémentaires </h3>
+      <p style="color:#155e75">Exercices sur les exponentielles extraits de 4 devoirs corrigés 2023-2025.</p>
+      <ul style="color:#155e75">
+        <li>Simplifications · Équations · Inéquations</li>
+        <li>Variations · Tangentes · Étude complète</li>
+        <li>Exercice de bac (protocole médical)</li>
+        <li>Clique sur Correction après avoir cherché seul</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE A — SIMPLIFICATIONS (DS7 2024-25 + DS7 2023-24) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice A — Simplifications d'expressions</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS7 · 2023-24 &amp; 2024-25</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2);margin-bottom:10px">Simplifier les expressions suivantes.</p>
+
+    <div class="ctrl-sub">
+      <b>a) — DS7 2024-25</b>
+      a = e³ × e⁶ × (e^(−5) / e²)<br>
+      b = (e^(1+2x)) × (eˣ)² / e^(2x+3)<br>
+      c = (eˣ)² × e^(−x) / (e^(2x) × e^(−3x))
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ea1')">📋 Correction a)</button>
+    <div class="ctrl-corr" id="ea1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">a = e³ × e⁶ × e^(−5) / e² = e^(3+6−5−2) = <span class="hi">e²</span></span>
+        <span class="l">b = e^(1+2x) × e^(2x) / e^(2x+3) = e^(1+2x+2x−2x−3) = e^(2x−2) = <span class="hi">e^(2(x−1))</span></span>
+        <span class="l">c = e^(2x) × e^(−x) / (e^(2x) × e^(−3x)) = e^(2x−x−2x+3x) = e^(2x) → <span class="hi">e^(2x)</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>b) — DS7 2023-24</b>
+      a = (e³ × e⁶ × e^(−5)) / e^(−2)<br>
+      b = e^(1+2x) / (e^(x−1))²<br>
+      c = (1 + eˣ)² − (1 − eˣ)²
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ea2')">📋 Correction b)</button>
+    <div class="ctrl-corr" id="ea2">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">a = e^(3+6−5) / e^(−2) = e^4 / e^(−2) = e^(4−(−2)) = <span class="hi">e⁶</span></span>
+        <span class="l">b = e^(1+2x) / e^(2(x−1)) = e^(1+2x) / e^(2x−2) = e^(1+2x−2x+2) = <span class="hi">e³</span></span>
+        <span class="l">c : développons : (1+eˣ)² = 1+2eˣ+e^(2x) · (1−eˣ)² = 1−2eˣ+e^(2x)</span>
+        <span class="l">c = (1+2eˣ+e^(2x)) − (1−2eˣ+e^(2x)) = 4eˣ → <span class="hi">c = 4eˣ</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE B — TANGENTES (DS7 2024-25) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice B — Tangentes à la courbe de eˣ</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS7 · 2024-25</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Soit f(x) = eˣ définie sur ℝ. Donner les équations des tangentes à sa courbe au point d'abscisse 0, puis au point d'abscisse 1. Tracer l'allure de la courbe avec ces deux tangentes.</p>
+
+    <div class="ctrl-sub">
+      <b>Tangentes en x = 0 et x = 1</b>
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('eb1')">📋 Correction</button>
+    <div class="ctrl-corr" id="eb1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">f'(x) = eˣ pour tout x ∈ ℝ</span>
+        <span class="l">Tangente en x₀=0 : y = f'(0)(x−0)+f(0) = 1×x + 1 → <span class="hi">y = x + 1</span></span>
+        <span class="l">Tangente en x₀=1 : f'(1) = e · f(1) = e</span>
+        <span class="l">y = e(x−1) + e = ex − e + e → <span class="hi">y = ex</span></span>
+        <span class="l">Remarque : la tangente en x=1 passe par l'origine (0;0).</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE C — ÉQUATIONS & INÉQUATIONS (DS9 2024-25) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice C — Équations et inéquations</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS9 · 2024-25</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Résoudre les équations et inéquations suivantes.</p>
+
+    <div class="ctrl-sub">
+      <b>E₁ : e^(x+2) = 1</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec1')">📋 Correction E₁</button>
+    <div class="ctrl-corr" id="ec1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">e^(x+2) = 1 = e⁰</span>
+        <span class="l">Par injectivité : x + 2 = 0</span>
+        <span class="l"><span class="hi">x = −2</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>E₂ : e^(3x²−2) = (e^(x+3))²</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec2')">📋 Correction E₂</button>
+    <div class="ctrl-corr" id="ec2">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">(e^(x+3))² = e^(2(x+3)) = e^(2x+6)</span>
+        <span class="l">e^(3x²−2) = e^(2x+6) ⟺ 3x²−2 = 2x+6</span>
+        <span class="l">3x² − 2x − 8 = 0. Δ = 4 + 96 = 100. √Δ = 10</span>
+        <span class="l">x₁ = (2+10)/6 = 2 · x₂ = (2−10)/6 = −4/3</span>
+        <span class="l"><span class="hi">S = {−4/3 ; 2}</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>E₃ : e³ × eˣ &lt; 1</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec3')">📋 Correction E₃</button>
+    <div class="ctrl-corr" id="ec3">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">e³ × eˣ = e^(3+x)</span>
+        <span class="l">e^(3+x) &lt; 1 = e⁰ ⟺ 3+x &lt; 0 (exp strictement croissante)</span>
+        <span class="l"><span class="hi">x &lt; −3 · S = ]−∞ ; −3[</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>E₄ : e^(3x) ≤ e / e^(x−7)</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec4')">📋 Correction E₄</button>
+    <div class="ctrl-corr" id="ec4">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">e / e^(x−7) = e¹ / e^(x−7) = e^(1−(x−7)) = e^(8−x)</span>
+        <span class="l">e^(3x) ≤ e^(8−x) ⟺ 3x ≤ 8−x ⟺ 4x ≤ 8 ⟺ x ≤ 2</span>
+        <span class="l"><span class="hi">S = ]−∞ ; 2]</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>E₅ (DS7 2023-24) : e^(−x+2) − 1 = 0</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec5')">📋 Correction E₅</button>
+    <div class="ctrl-corr" id="ec5">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">e^(−x+2) = 1 = e⁰</span>
+        <span class="l">−x + 2 = 0 ⟺ x = 2</span>
+        <span class="l"><span class="hi">S = {2}</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>E₆ (DS7 2023-24) : e^(x²+x+4) = e² × e^(4x)</b>
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ec6')">📋 Correction E₆</button>
+    <div class="ctrl-corr" id="ec6">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">e² × e^(4x) = e^(2+4x)</span>
+        <span class="l">e^(x²+x+4) = e^(2+4x) ⟺ x²+x+4 = 4x+2</span>
+        <span class="l">x² − 3x + 2 = 0. Δ = 9 − 8 = 1</span>
+        <span class="l">x₁ = (3+1)/2 = 2 · x₂ = (3−1)/2 = 1</span>
+        <span class="l"><span class="hi">S = {1 ; 2}</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE D — VARIATIONS f(x)=2xe^(-3x+1) (DS9 2024-25) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice D — Variations de f(x) = 2xe^(−3x+1)</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS9 · 2024-25</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Étudier le sens de variation de f définie par f(x) = 2xe^(−3x+1) sur ℝ. Préciser l'équation de la tangente au point d'abscisse 0.</p>
+
+    <div class="ctrl-sub">
+      <b>Variations et tangente en x = 0</b>
+      <div class="ans xt">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ed1')">📋 Correction</button>
+    <div class="ctrl-corr" id="ed1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">v = 2x, v' = 2 · u = −3x+1, u' = −3</span>
+        <span class="l">f'(x) = e^(−3x+1)(v' + v·u') = e^(−3x+1)(2 + 2x·(−3)) = e^(−3x+1)(2 − 6x)</span>
+        <span class="l">f'(x) = 2e^(−3x+1)(1 − 3x)</span>
+        <span class="l">e^(−3x+1) > 0 → signe de f'(x) = signe de (1 − 3x)</span>
+        <span class="l">1 − 3x = 0 ⟺ x = 1/3</span>
+        <span class="l">f'(x) > 0 sur ]−∞ ; 1/3[ · f'(1/3) = 0 · f'(x) &lt; 0 sur ]1/3 ; +∞[</span>
+        <span class="l">f croissante sur ]−∞ ; 1/3] · Maximum en x=1/3 : f(1/3) = 2/3 × e⁰ = 2/3</span>
+        <span class="l"><span class="hi">Tangente en x=0 : f'(0) = 2e¹ = 2e · f(0) = 0 → y = 2e(x−0)+0 = 2ex</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE E — VARIATIONS f(x)=e^(3x²-6x) (DS10 2024-25) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice E — Variations de f(x) = e^(3x²−6x)</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS10 · 2024-25</div>
+    </div>
+    <p style="font-size:.88rem;color:var(--ink2)">Étudier le sens de variation de f définie sur ℝ par f(x) = e^(3x²−6x). Préciser l'équation de la tangente au point d'abscisse 0.</p>
+
+    <div class="ctrl-sub">
+      <b>Variations et tangente en x = 0</b>
+      <div class="ans xt">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ee1')">📋 Correction</button>
+    <div class="ctrl-corr" id="ee1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">u = 3x²−6x, u' = 6x−6 = 6(x−1)</span>
+        <span class="l">f'(x) = 6(x−1) × e^(3x²−6x)</span>
+        <span class="l">e^(3x²−6x) > 0 → signe de f'(x) = signe de (x−1)</span>
+        <span class="l">x−1 = 0 ⟺ x = 1</span>
+        <span class="l">f'(x) &lt; 0 sur ]−∞ ; 1[ · f'(1) = 0 · f'(x) > 0 sur ]1 ; +∞[</span>
+        <span class="l">f décroissante sur ]−∞ ; 1] · Minimum en x=1 : f(1) = e^(3−6) = e^(−3)</span>
+        <span class="l">Tangente en x=0 : f'(0) = 6(0−1) × e⁰ = −6 · f(0) = e⁰ = 1</span>
+        <span class="l"><span class="hi">Tangente en x=0 : y = −6(x−0) + 1 = −6x + 1</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXERCICE F — PROTOCOLE MÉDICAL BAC 2022 (DS10 2024-25) ══ -->
+  <div class="ctrl-exo">
+    <div class="ctrl-exo-hd">
+      <div class="ctrl-exo-n" style="color:#0891b2">Exercice F — Protocole médical ⭐ Type Bac 2022</div>
+      <div class="ctrl-pts" style="background:#ecfeff;color:#0891b2;border-color:#a5f3fc">DS10 · 2024-25</div>
+    </div>
+    <div class="ctrl-sub" style="border-left-color:#0891b2">
+      <b>Contexte</b>
+      Un médicament est modélisé par la fonction f définie sur [0 ; 10] par :<br><br>
+      f(t) = 3t × e^(−0,5t + 1)<br><br>
+      où t est le temps en heures depuis la prise du comprimé, et f(t) la quantité de médicament en mg dans le sang.
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question 1 — Tableau de variations sur [0 ; 10]</b>
+      <div class="ans xt">Calcul…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ef1')">📋 Correction Q1</button>
+    <div class="ctrl-corr" id="ef1">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">v = 3t, v' = 3 · u = −0,5t+1, u' = −0,5</span>
+        <span class="l">f'(t) = e^(−0,5t+1)(3 + 3t×(−0,5)) = e^(−0,5t+1)(3 − 1,5t)</span>
+        <span class="l">f'(t) = 1,5e^(−0,5t+1)(2 − t)</span>
+        <span class="l">e^(−0,5t+1) > 0 → signe de f'(t) = signe de (2−t)</span>
+        <span class="l">f'(t) = 0 ⟺ t = 2. f'(t) > 0 sur ]0;2[ · f'(t) &lt; 0 sur ]2;10[</span>
+        <span class="l">f croissante sur [0;2] · Maximum en t=2 · f décroissante sur [2;10]</span>
+        <span class="l">f(0) = 0 · f(2) = 6×e⁰ = 6 mg · f(10) = 30×e^(−4) ≈ 0,55 mg</span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question 2 — Quantité maximale et moment où elle est atteinte</b>
+      <div class="ans">Réponse…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ef2')">📋 Correction Q2</button>
+    <div class="ctrl-corr" id="ef2">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">D'après le tableau de variations, f admet un maximum en t = 2.</span>
+        <span class="l">La quantité maximale est f(2) = 3×2×e^(−1+1) = 6×e⁰ = 6.</span>
+        <span class="l"><span class="hi">La quantité maximale de médicament est 6 mg, atteinte 2 heures après la prise.</span></span>
+      </div>
+    </div>
+
+    <div class="ctrl-sub" style="margin-top:10px">
+      <b>Question 3 — Montrer que f(t) = 0,5 admet une solution unique sur [0 ; 2]</b>
+      <div class="ans xt">Démonstration…</div>
+    </div>
+    <button class="btn bc" style="background:#0891b2" onclick="showCorr('ef3')">📋 Correction Q3</button>
+    <div class="ctrl-corr" id="ef3">
+      <div class="ctrl-corr-hd">✔ Correction</div>
+      <div class="ctrl-corr-body">
+        <span class="l">f est continue et strictement croissante sur [0 ; 2].</span>
+        <span class="l">f(0) = 0 et f(2) = 6.</span>
+        <span class="l">Or 0 &lt; 0,5 &lt; 6, donc par le théorème des valeurs intermédiaires,</span>
+        <span class="l">l'équation f(t) = 0,5 admet une unique solution α sur ]0 ; 2[.</span>
+        <span class="l">Valeur approchée : f(0,1) ≈ 0,31 · f(0,2) ≈ 0,61 → α ∈ ]0,1 ; 0,2[</span>
+        <span class="l"><span class="hi">α ≈ 0,17 heure (à 10⁻¹ près)</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Source -->
+  <div style="background:var(--t1b);border:1px solid rgba(6,95,70,.2);border-radius:11px;padding:13px 17px;margin-top:6px;font-size:.83rem;color:var(--t1)">
+    📌 <strong>Sources :</strong><br>
+    · <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2024-2025/DS7-proba-conditionnelles-exponentielle.php" target="_blank" style="color:var(--t1);font-weight:700">DS7 2024-25 (tangentes + simplifications)</a><br>
+    · <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2024-2025/DS9-exponentielle-suites.php" target="_blank" style="color:var(--t1);font-weight:700">DS9 2024-25 (équations + variations)</a><br>
+    · <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2024-2025/DS10-exponentielle-suites.php" target="_blank" style="color:var(--t1);font-weight:700">DS10 2024-25 (variations + protocole médical bac 2022)</a><br>
+    · <a href="https://xymaths.fr/Lycee/premiere-generale-specialite-mathematiques/Sujets-Devoirs-Corriges/2023-2024/DS7-derivee-probabilite-conditionnelle-bis.php" target="_blank" style="color:var(--t1);font-weight:700">DS7 2023-24 (simplifications + équations)</a>
+  </div>
+</div>
+
+</main>
+
+<!-- CTA BANNER -->
+<div style="max-width:980px;margin:auto;padding:0 16px">
+  <div class="cta-banner">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir<br>les <em>prochaines fiches</em> ?</div>
+      <p class="cta-sub">Abonne-toi à notre compte Instagram et active les notifications 🔔<br>Chaque nouvelle fiche est annoncée en story</p>
+      <div class="cta-steps">
+        <span class="cta-step">1️⃣ Clique</span>
+        <span class="cta-step">2️⃣ Abonne-toi</span>
+        <span class="cta-step">3️⃣ Active la 🔔</span>
+      </div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ &nbsp;Suivre @toncoachscolaire</a>
+      <div class="cta-note">Maths · SVT · Physique · Anglais · Technologie</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>
+    Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).
+  </div>
+</footer>
+</body>
+</html>
