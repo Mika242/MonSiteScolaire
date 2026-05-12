@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Statistiques et Probabilités — 4ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f9;--ink:#141c2b;--ink2:#5a6577;--card:#fff;--border:#dde4ef;
+  --t1:#0369a1;--t2:#065f46;--t3:#7c3aed;--t4:#b45309;
+  --t1b:#e0f2fe;--t2b:#ecfdf5;--t3b:#f5f3ff;--t4b:#fff7ed;
+  --tc1:#9f1239;--tc2:#1e3a8a;
+  --ok:#16a34a;--bad:#dc2626;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* HEADER */
+header{background:linear-gradient(140deg,#0b1220 0%,#0d2340 45%,#0369a1 100%);padding:30px 24px 24px;position:relative;overflow:hidden}
+header::before{content:'σ';position:absolute;right:-10px;top:-20px;font-size:18rem;font-weight:800;color:rgba(3,105,161,.12);line-height:1;pointer-events:none;font-family:'Playfair Display',serif;font-style:italic}
+.hi{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.ht img{height:46px;border-radius:10px;margin-bottom:10px;display:block;border:1px solid rgba(255,255,255,.12);padding:3px;background:rgba(255,255,255,.06)}
+.hb{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:3px 12px;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:8px}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:4px}
+header h1 em{font-style:italic;color:#7dd3fc}
+header p{font-size:.84rem;color:rgba(255,255,255,.45)}
+.rb{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px 18px;text-align:center;min-width:148px;flex-shrink:0}
+.rbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:5px}
+.rs{font-size:1.25rem;letter-spacing:2px;margin-bottom:4px;display:block;color:#7dd3fc}
+.rsc{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;line-height:1}
+.rsc .rst{font-size:.78rem;color:rgba(255,255,255,.3)}
+.rp{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:2px}
+.rbar{width:100%;height:3px;background:rgba(255,255,255,.08);border-radius:10px;margin-top:7px;overflow:hidden}
+.rbar-f{height:100%;border-radius:10px;background:linear-gradient(90deg,#7dd3fc,#0369a1);width:0%;transition:width .5s}
+
+/* CTA STRIP */
+.cs{background:linear-gradient(90deg,#0f0520,#1e0a40,#0f0520);border-bottom:1px solid rgba(139,92,246,.2);padding:7px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cs-t{font-size:.77rem;color:rgba(255,255,255,.6);font-weight:600}
+.cs-b{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:4px 13px;border-radius:20px;font-size:.75rem;font-weight:800;transition:all .2s;white-space:nowrap}
+.cs-b:hover{transform:translateY(-1px);filter:brightness(1.1)}
+
+/* TABS */
+.tw{background:var(--card);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 14px;overflow-x:auto;gap:1px}
+.tab{flex-shrink:0;padding:11px 14px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Sora',sans-serif;font-size:.77rem;font-weight:700;cursor:pointer;color:var(--ink2);transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.t1.active{color:var(--t1);border-bottom-color:var(--t1)}
+.tab.t2.active{color:var(--t2);border-bottom-color:var(--t2)}
+.tab.t3.active{color:var(--t3);border-bottom-color:var(--t3)}
+.tab.t4.active{color:var(--t4);border-bottom-color:var(--t4)}
+.tab.tp.active{color:#0f766e;border-bottom-color:#0f766e}
+.tab.tc1.active{color:var(--tc1);border-bottom-color:var(--tc1)}
+.tab.tc2.active{color:var(--tc2);border-bottom-color:var(--tc2)}
+
+/* MAIN */
+main{max-width:980px;margin:auto;padding:24px 16px 80px}
+.sec{display:none}.sec.active{display:block}
+.si{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sico{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.si1{background:var(--t1b)}.si2{background:var(--t2b)}.si3{background:var(--t3b)}.si4{background:var(--t4b)}.sip{background:#ccfbf1}.sic{background:#ffe4e6}.sic2{background:#dbeafe}
+.st h2{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700}
+.st p{color:var(--ink2);font-size:.83rem;margin-top:2px}
+
+/* COURS */
+.cours{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:12px;border-left:4px solid}
+.c1{border-left-color:var(--t1)}.c2{border-left-color:var(--t2)}.c3{border-left-color:var(--t3)}.c4{border-left-color:var(--t4)}
+.clbl{font-size:.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.form{font-family:'JetBrains Mono',monospace;border-radius:8px;padding:9px 14px;font-size:.89rem;margin:5px 0;display:block;border-left:3px solid;line-height:1.9}
+.f1{border-color:var(--t1);background:var(--t1b);color:#0c4a6e}
+.f2{border-color:var(--t2);background:var(--t2b);color:#064e3b}
+.f3{border-color:var(--t3);background:var(--t3b);color:#4c1d95}
+.f4{border-color:var(--t4);background:var(--t4b);color:#7c2d12}
+.mn{font-family:'JetBrains Mono',monospace;font-size:.87rem;background:#e5eaf2;padding:1px 6px;border-radius:4px;color:var(--ink);display:inline-block}
+.tip{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 13px;font-size:.84rem;margin-top:8px;line-height:1.7}
+.tip b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:#92400e;margin-bottom:3px}
+.ex{background:#f4f6fb;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:.85rem;line-height:1.9;border:1px solid var(--border);font-family:'JetBrains Mono',monospace}
+.ex b{display:block;font-family:'Sora',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:4px}
+.pt{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:9px 13px;margin-top:8px;font-size:.84rem;font-style:italic;color:#14532d;line-height:1.6}
+.pt::before{content:'✏️ Rédaction attendue : ';font-style:normal;font-weight:700;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);display:block;margin-bottom:3px}
+
+/* TABLEAUX */
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:9px 0}
+.tbl th{background:var(--ink);color:#fff;padding:7px 11px;text-align:center;font-size:.71rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Sora',sans-serif}
+.tbl td{padding:7px 11px;border:1px solid var(--border);text-align:center;font-family:'JetBrains Mono',monospace;font-size:.83rem}
+.tbl td.lab{font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;text-align:left;background:#f5f7fb}
+.tbl tr:nth-child(even) td{background:#f8fafc}
+.tbl td.prod{background:#fffbeb;font-weight:700;color:#92400e}
+.tbl td.tot{background:#f0fdf4;font-weight:800;color:#166534}
+
+/* EXERCICES */
+.lvl{font-size:.63rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:18px;margin-left:5px}
+.le{background:#dcfce7;color:#166534}.lm{background:#fef9c3;color:#854d0e}.lh{background:#fee2e2;color:#991b1b}
+.div{display:flex;align-items:center;gap:9px;margin:20px 0 11px;font-size:.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
+.pr{display:flex;align-items:center;gap:10px;margin:14px 0 4px}
+.pb{flex:1;height:4px;background:var(--border);border-radius:10px;overflow:hidden}
+.pf{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--t1)}.pf2{background:var(--t2)}.pf3{background:var(--t3)}.pf4{background:var(--t4)}
+.pt2{font-size:.74rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.exo{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px 19px;margin-bottom:9px;transition:border-color .18s}
+.exo:hover{border-color:#8ba4c8}
+.exo-hd{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p,.exo>.eq{font-size:.92rem;font-weight:600;line-height:1.6;margin-bottom:8px}
+.ctx{background:#f4f6fb;border-radius:8px;padding:8px 12px;font-size:.85rem;color:var(--ink2);margin-bottom:9px;border-left:3px solid var(--border);line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:4px}
+.opts label{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;background:#f7f9fc;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.89rem;transition:all .14s;line-height:1.5;font-family:'JetBrains Mono',monospace}
+.opts label:hover{border-color:#7090b8;background:#edf2f9}
+.fi{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.89rem;background:#f7f9fc;color:var(--ink);outline:none;transition:border .14s;margin-top:5px}
+.fi:focus{border-color:#7090b8;background:var(--card)}
+.btn{padding:8px 17px;border-radius:8px;border:none;font-family:'Sora',sans-serif;font-size:.81rem;font-weight:700;cursor:pointer;transition:all .14s;margin-top:8px;margin-right:5px}
+.btn:hover{transform:translateY(-1px);filter:brightness(.93)}
+.b1{background:var(--t1);color:#fff}.b2{background:var(--t2);color:#fff}.b3{background:var(--t3);color:#fff}.b4{background:var(--t4);color:#fff}.bc1{background:var(--tc1);color:#fff}.bc2{background:var(--tc2);color:#fff}
+.bg{background:var(--card);border:1.5px solid var(--border);color:var(--ink2)}
+.bg:hover{background:#edf2f9;color:var(--ink)}
+.res{display:none;margin-top:8px;padding:9px 13px;border-radius:8px;font-size:.85rem;line-height:1.6;border-left:3px solid}
+.res.ok{background:#f0fdf4;border-color:var(--ok)}.res.bad{background:#fef2f2;border-color:var(--bad)}
+.ok-l{color:#166534;font-weight:800}.bad-l{color:#991b1b;font-weight:800}
+.expl{margin-top:4px;color:#374151;font-family:'JetBrains Mono',monospace;font-size:.81rem;line-height:2}
+.corr{display:none;margin-top:8px;background:#f4f6fb;border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:.85rem;line-height:2}
+.corr .s{color:var(--ink2);border-bottom:1px dashed var(--border);padding:3px 0}
+.corr .s:last-child{border:none;color:var(--ink);font-weight:700}
+.corr .s::before{content:'▸ ';color:var(--ok)}
+
+/* CONTRÔLE */
+.chdr{border-radius:13px;padding:17px 21px;margin-bottom:20px;display:flex;align-items:flex-start;gap:13px}
+.chdr1{background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1.5px solid #fecdd3}
+.chdr2{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1.5px solid #bfdbfe}
+.cbadge{color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:18px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.cbdg1{background:var(--tc1)}.cbdg2{background:var(--tc2)}
+.cinfo h3{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:5px}
+.cinfo p{font-size:.83rem;line-height:1.6}
+.cinfo ul{margin-top:6px;padding-left:14px;font-size:.82rem;line-height:1.8}
+.cexo{background:var(--card);border:1.5px solid var(--border);border-radius:13px;padding:19px 21px;margin-bottom:14px}
+.cehd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--border);flex-wrap:wrap;gap:7px}
+.cen{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700}
+.cen1{color:var(--tc1)}.cen2{color:var(--tc2)}
+.cpts{border-radius:18px;padding:2px 10px;font-size:.75rem;font-weight:800}
+.cpts1{background:#fff1f2;color:var(--tc1);border:1px solid #fecdd3}
+.cpts2{background:#dbeafe;color:var(--tc2);border:1px solid #bfdbfe}
+.csub{margin-top:10px;padding:10px 14px;background:#f7f9fc;border-radius:8px;border-left:3px solid var(--border);font-size:.89rem;line-height:1.9}
+.csub b{font-family:'Sora',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:3px}
+.ans{margin-top:8px;min-height:62px;background:repeating-linear-gradient(transparent,transparent 27px,var(--border) 28px);border-radius:7px;border:1px solid var(--border);padding:5px 10px;font-size:.86rem;color:var(--ink2);font-style:italic}
+.ans.tall{min-height:100px}
+.ans.xt{min-height:140px}
+.cco{display:none;margin-top:11px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:13px 17px}
+.ccoh{font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ok);margin-bottom:9px}
+.ccob{font-size:.85rem;line-height:2.1}
+.ccob .l{display:block;border-bottom:1px dashed #bbf7d0;padding:3px 0;color:var(--ink2);font-family:'JetBrains Mono',monospace;font-size:.83rem}
+.ccob .l:last-child{border:none;color:var(--ink);font-weight:600}
+.ccob .l::before{content:'▸ ';color:var(--ok)}
+.ccob .hi{color:#166534;font-weight:700}
+
+/* DIAGRAMME SVG */
+.dsvg{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.dsvg-lbl{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ink2)}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,#0b1220,#0d2340,#0369a1);border-radius:18px;padding:26px 22px;margin:30px 0 0;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(3,105,161,.3)}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:1.9rem;margin-bottom:9px;display:block}
+.cta-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;margin-bottom:7px}
+.cta-title em{font-style:italic;color:#7dd3fc}
+.cta-sub{font-size:.83rem;color:rgba(255,255,255,.55);margin-bottom:16px;line-height:1.5;max-width:460px;margin-left:auto;margin-right:auto}
+.cta-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.cta-step{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:5px 13px;font-size:.74rem;color:rgba(255,255,255,.75);font-weight:700}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;text-decoration:none;padding:11px 26px;border-radius:28px;font-family:'Sora',sans-serif;font-size:.86rem;font-weight:700;transition:all .2s;box-shadow:0 4px 18px rgba(220,39,67,.28)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(220,39,67,.38)}
+footer{text-align:center;padding:22px;font-size:.76rem;color:var(--ink2);border-top:1px solid var(--border);line-height:1.9}
+.fc{font-size:.69rem;color:#9ca3af;margin-top:5px}
+.fc strong{color:var(--ink2)}
+footer a{color:var(--t1);text-decoration:none;font-weight:700}
+@media(max-width:600px){header h1{font-size:1.35rem}.hi{flex-direction:column;align-items:flex-start}.rb{align-self:stretch}main{padding:14px 10px 60px}}
+</style>
+
+<script>
+let ta=0,tc2=0;
+const sc={t1:0,t2:0,t3:0,t4:0},tot={t1:0,t2:0,t3:0,t4:0},ans={};
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,cor,ex,s){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch)if(c.checked)sel=c.value;
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-l'>⚠ Choisis une réponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;tot[s]++;ta++;
+  if(sel===cor){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>✔ Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>✘ Incorrect</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function checkF(id,cor,ex,s){
+  const inp=document.getElementById(id+'-i'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  const a=cor.split('|').map(v=>v.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'));
+  if(!val){r.innerHTML="<span class='bad-l'>⚠ Écris ta réponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return; ans[id]=true;tot[s]++;ta++;
+  if(a.includes(val)){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>✔ Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>✘ Incorrect — Consulte la correction ci-dessous.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function upP(s){
+  const p=tot[s]>0?Math.round(sc[s]/tot[s]*100):0;
+  const b=document.getElementById('pb-'+s),t=document.getElementById('pt-'+s);
+  if(b)b.style.width=p+'%'; if(t)t.textContent=sc[s]+' / '+tot[s]+' · '+p+'%';
+}
+function upR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'—';document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='★'.repeat(s)+'☆'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  b.style.background=p>=75?'linear-gradient(90deg,#22c55e,#16a34a)':p>=50?'linear-gradient(90deg,#f59e0b,#ca8a04)':'linear-gradient(90deg,#7dd3fc,#0369a1)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+function showCorr(id){const e=document.getElementById(id);e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+window.onload=()=>showTab('t1');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="ht">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hb">Mathématiques · 4ème · Statistiques &amp; Probabilités</div>
+      <h1>Statistiques et <em>Probabilités</em></h1>
+      <p>Moyenne · Médiane · Diagrammes · Probabilité · Programme 4ème complet</p>
+    </div>
+    <div class="rb">
+      <div class="rbl">Mon score</div>
+      <span class="rs" id="r-s">☆☆☆☆☆</span>
+      <div class="rsc"><span id="r-c">0</span><span class="rst"> / <span id="r-t">0</span></span></div>
+      <div class="rp" id="r-p">—</div>
+      <div class="rbar"><div class="rbar-f" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="cs">
+  <span class="cs-t">📲 Nouvelles fiches en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cs-b">◈ @toncoachscolaire</a>
+</div>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-t1" onclick="showTab('t1')">📊 S1 — Moyenne</button>
+    <button class="tab t2" id="tab-t2" onclick="showTab('t2')">📏 S2 — Médiane</button>
+    <button class="tab t3" id="tab-t3" onclick="showTab('t3')">🥧 S3 — Diagrammes</button>
+    <button class="tab t4" id="tab-t4" onclick="showTab('t4')">🎲 S4 — Probabilités</button>
+    <button class="tab tp" id="tab-tp" onclick="showTab('tp')">🧩 Problèmes</button>
+    <button class="tab tc1" id="tab-tc1" onclick="showTab('tc1')">📝 Contrôle S1-S2</button>
+    <button class="tab tc2" id="tab-tc2" onclick="showTab('tc2')">📋 Contrôle complet</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════
+     SÉRIE 1 — MOYENNE
+═══════════════════════════ -->
+<div class="sec active" id="s-t1">
+  <div class="si"><div class="sico si1">📊</div><div class="st"><h2>Série 1 — Moyenne simple et pondérée</h2><p>Additionner · Diviser · Tableau effectifs/valeurs · Étendue</p></div></div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Moyenne simple et étendue</div>
+    <span class="form f1">Moyenne = somme des valeurs ÷ nombre de valeurs</span>
+    <span class="form f1">Étendue = valeur maximale − valeur minimale</span>
+    <div class="tip"><b>💡 2 étapes</b>1) Additionner toutes les valeurs · 2) Diviser par combien il y en a</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Moyenne pondérée — Tableau effectifs/valeurs</div>
+    <span class="form f1">Moyenne = Σ(valeur × effectif) ÷ effectif total</span>
+    <table class="tbl" style="margin-top:10px">
+      <tr><th>Valeur</th><th>Effectif</th><th>Valeur × Effectif</th></tr>
+      <tr><td>v₁</td><td>e₁</td><td class="prod">v₁×e₁</td></tr>
+      <tr><td>…</td><td>…</td><td class="prod">…</td></tr>
+      <tr><td><strong>Total</strong></td><td class="tot">Σe</td><td class="tot">Σ(v×e)</td></tr>
+    </table>
+    <div class="ex"><b>Exemple — Notes d'une classe (26 élèves)</b>
+5×2 + 6×4 + 8×6 + 10×8 + 12×4 + 14×2 = 10+24+48+80+48+28 = 238
+Moyenne = 238 ÷ 26 ≈ 9,15</div>
+    <div class="pt">"On calcule la somme des produits valeur×effectif, puis on divise par l'effectif total."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf1" id="pb-t1"></div></div><div class="pt2" id="pt-t1">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Températures maximales en °C dans une ville en juin : 24 · 25 · 26 · 24 · 28 · 30 · 27. Quelle est la température moyenne ?</p>
+    <input class="fi" id="q11-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q11','26.3|26,3','Somme = 24+25+26+24+28+30+27 = 184. Moyenne = 184÷7 ≈ 26,3 °C.','t1')">Vérifier</button>
+    <div class="res" id="q11-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <div class="ctx">Notes d'un contrôle (25 élèves) :
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Note</th><th>4</th><th>6</th><th>8</th><th>10</th><th>12</th><th>14</th><th>16</th></tr>
+      <tr><td class="lab">Effectif</td><td>1</td><td>3</td><td>5</td><td>6</td><td>5</td><td>3</td><td>2</td></tr>
+    </table></div>
+    <p>Calcule la note moyenne.</p>
+    <input class="fi" id="q12-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q12','10','4×1+6×3+8×5+10×6+12×5+14×3+16×2 = 4+18+40+60+60+42+32 = 256. Moy = 256÷25 = 10,24 ≈ 10.','t1')">Vérifier</button>
+    <div class="res" id="q12-r"></div>
+  </div>
+
+  <div class="div">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Températures à Marseille (°C) — dernière semaine de juin 2021 :<br>24,2 · 23,8 · 24,6 · 24,7 · 24,8 · 26,6 · 27,2</div>
+    <p>Calcule la température moyenne. Arrondie au dixième.</p>
+    <input class="fi" id="q13-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q13','25.1|25,1','Somme = 24,2+23,8+24,6+24,7+24,8+26,6+27,2 = 175,9. Moy = 175,9÷7 ≈ 25,1 °C.','t1')">Vérifier</button>
+    <div class="res" id="q13-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Deux correcteurs au brevet : A a 55 copies avec moyenne 11,4 ; B a 45 copies avec moyenne 9,8.</div>
+    <p>Calcule la moyenne générale des 100 candidats.</p>
+    <input class="fi" id="q14-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q14','10.7|10,7','Total A = 11,4×55 = 627. Total B = 9,8×45 = 441. Total général = 1068. Moy = 1068÷100 = 10,68 ≈ 10,7.','t1')">Vérifier</button>
+    <div class="res" id="q14-r"></div>
+  </div>
+
+  <div class="div">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Lors d'un contrôle sur 10 points, les notes d'une classe de 26 élèves sont :<br>5·3·8·2·8·6·8·3·2·2·7·10·5·1·8·8·6·5·2·4·6·3·2·6·8·10</div>
+    <p>Construis le tableau d'effectifs, puis calcule la moyenne. Arrondie au dixième.</p>
+    <button class="bg btn" onclick="toggle('c15')">📋 Correction</button>
+    <div class="corr" id="c15">
+      <div class="s">Tableau : 1→1 · 2→5 · 3→3 · 4→1 · 5→3 · 6→4 · 7→1 · 8→6 · 10→2</div>
+      <div class="s">1×1+2×5+3×3+4×1+5×3+6×4+7×1+8×6+10×2</div>
+      <div class="s">= 1+10+9+4+15+24+7+48+20 = 138</div>
+      <div class="s">Effectif total = 26. Moyenne = 138÷26 ≈ 5,3 sur 10</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════
+     SÉRIE 2 — MÉDIANE
+═══════════════════════════ -->
+<div class="sec" id="s-t2">
+  <div class="si"><div class="sico si2">📏</div><div class="st"><h2>Série 2 — Médiane et étendue</h2><p>Classer les valeurs · Trouver la valeur centrale · Interpréter</p></div></div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Définition de la médiane</div>
+    <p style="font-size:.89rem;margin-bottom:8px">La médiane d'une série est la valeur qui <strong>partage la série en deux groupes égaux</strong> après classement dans l'ordre croissant.</p>
+    <span class="form f2">Si effectif impair (n valeurs) → médiane = valeur centrale (rang (n+1)/2)</span>
+    <span class="form f2">Si effectif pair (n valeurs) → médiane = moyenne des valeurs de rang n/2 et n/2+1</span>
+    <div class="ex"><b>Exemple — effectif impair : 7 tailles (cm)</b>
+Classées : 158 · 162 · 164 · 165 · 167 · 170 · 175
+Médiane = valeur de rang 4 = 165 cm
+→ Il y a autant de tailles ≤ 165 que de tailles ≥ 165</div>
+    <div class="ex"><b>Exemple — effectif pair : 6 températures (°C)</b>
+Classées : 17 · 19 · 21 · 24 · 26 · 28
+Médiane = (21 + 24) ÷ 2 = 22,5 °C</div>
+    <div class="tip"><b>💡 Différence moyenne / médiane</b>
+La moyenne est sensible aux valeurs extrêmes. La médiane l'est beaucoup moins.<br>
+Ex : salaires 1000 · 1000 · 1000 · 1000 · 20000 → Moy = 4800 € mais Médiane = 1000 €</div>
+    <div class="pt">"La médiane est la valeur qui partage la série ordonnée en deux groupes d'effectif égal. Il y a autant de valeurs inférieures ou égales à la médiane que supérieures ou égales."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf2" id="pb-t2"></div></div><div class="pt2" id="pt-t2">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Série de températures (°C) : 19 · 22 · 17 · 25 · 21 · 26 · 23. Quelle est la médiane ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q21" value="A"> 22 °C</label>
+      <label><input type="radio" name="q21" value="B"> 21,9 °C (la moyenne)</label>
+      <label><input type="radio" name="q21" value="C"> 22,4 °C</label>
+    </div>
+    <button class="btn b2" onclick="check('q21','A','Classées : 17·19·21·22·23·25·26. 7 valeurs → rang central = 4 → médiane = 22 °C. Il y a 3 températures en dessous et 3 au-dessus.','t2')">Vérifier</button>
+    <div class="res" id="q21-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Tailles de 11 basketteurs (cm) — déjà classées :<br>165 · 170 · 174 · 174 · 175 · 176 · 180 · 181 · 184 · 187 · 191</p>
+    <p style="margin-top:8px">Quelle est la médiane ? Que signifie-t-elle ?</p>
+    <input class="fi" id="q22-i" placeholder="Ta réponse…">
+    <button class="btn b2" onclick="checkF('q22','176','11 valeurs → rang central = 6 → médiane = 176 cm. Cela signifie qu\'il y a autant de joueurs mesurant moins de 176 cm que mesurant plus de 176 cm.','t2')">Vérifier</button>
+    <div class="res" id="q22-r"></div>
+  </div>
+
+  <div class="div">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Deux classes ont emprunté des livres. Leurs réponses :<br>
+    Classe 1 : 1·2·2·2·2·3·3·3·3·3·3·3·3·6·6·6·6·6·7·7·7 (21 élèves)<br>
+    Classe 2 : 0·0·1·2·2·3·3·4·4·4·5·5·6·6·7·7·8·9·10·12·15 (21 élèves)</div>
+    <p>Calcule la médiane de chaque classe. Que peut-on conclure ?</p>
+    <button class="bg btn" onclick="toggle('c23')">📋 Correction</button>
+    <div class="corr" id="c23">
+      <div class="s">21 élèves → médiane = valeur de rang 11</div>
+      <div class="s">Classe 1 classée : 1·2·2·2·2·3·3·3·3·3·3·3·3·6·6·6·6·6·7·7·7 → rang 11 = 3</div>
+      <div class="s">Classe 2 classée : 0·0·1·2·2·3·3·4·4·4·5·5·6·6·7·7·8·9·10·12·15 → rang 11 = 5</div>
+      <div class="s">Médiane classe 1 = 3 · Médiane classe 2 = 5</div>
+      <div class="s">Conclusion : les élèves de la classe 2 lisent globalement plus que ceux de la classe 1.</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Clinique vétérinaire — opérations du mois de janvier :
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Nb opérations</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+      <tr><td class="lab">Nb de jours</td><td>2</td><td>4</td><td>8</td><td>9</td><td>5</td><td>3</td></tr>
+    </table></div>
+    <p>Détermine la médiane du nombre d'opérations. Interprète.</p>
+    <button class="bg btn" onclick="toggle('c24')">📋 Correction</button>
+    <div class="corr" id="c24">
+      <div class="s">Effectif total = 2+4+8+9+5+3 = 31 jours</div>
+      <div class="s">Médiane = valeur de rang 16</div>
+      <div class="s">Effectifs cumulés : 0→2 · 1→6 · 2→14 · 3→23. Le rang 16 est dans la valeur 3.</div>
+      <div class="s">Médiane = 3 opérations</div>
+      <div class="s">Interprétation : la moitié des jours, la clinique réalise au plus 3 opérations.</div>
+    </div>
+  </div>
+
+  <div class="div">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Temps de travail quotidien (en min) de 10 élèves :<br>30 · 45 · 60 · 20 · 55 · 40 · 80 · 35 · 50 · 25</div>
+    <p>Calcule la moyenne, la médiane et l'étendue. Que remarques-tu ?</p>
+    <button class="bg btn" onclick="toggle('c25')">📋 Correction</button>
+    <div class="corr" id="c25">
+      <div class="s">Classées : 20·25·30·35·40·45·50·55·60·80</div>
+      <div class="s">Somme = 440. Moyenne = 440÷10 = 44 min</div>
+      <div class="s">10 valeurs → médiane = (rang 5 + rang 6)÷2 = (40+45)÷2 = 42,5 min</div>
+      <div class="s">Étendue = 80 − 20 = 60 min</div>
+      <div class="s">Remarque : moyenne (44) ≈ médiane (42,5) → série homogène, pas de valeur aberrante.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     SÉRIE 3 — DIAGRAMMES
+═══════════════════════════════ -->
+<div class="sec" id="s-t3">
+  <div class="si"><div class="sico si3">🥧</div><div class="st"><h2>Série 3 — Diagrammes et fréquences</h2><p>Fréquence · Diagramme circulaire · Angles · Interprétation</p></div></div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Fréquence et diagramme circulaire</div>
+    <span class="form f3">Fréquence (%) = (effectif ÷ effectif total) × 100</span>
+    <span class="form f3">Angle du secteur (°) = (effectif ÷ effectif total) × 360</span>
+    <div class="tip"><b>💡 Vérification</b>La somme de toutes les fréquences = 100 %. La somme de tous les angles = 360 °.</div>
+    <div class="ex"><b>Exemple — Chaînes TV regardées</b>
+TF1 : 120 téléspectateurs sur 400 total
+Fréquence = 120÷400×100 = 30 %
+Angle = 120÷400×360 = 108 °</div>
+    <div class="pt">"On calcule la fréquence en divisant l'effectif par le total, puis en multipliant par 100 pour un %. Pour l'angle : on multiplie par 360."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf3" id="pb-t3"></div></div><div class="pt2" id="pt-t3">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <div class="ctx">Enquête sur la chaîne TV préférée (200 élèves) :<br>
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Chaîne</th><th>TF1</th><th>France 2</th><th>M6</th><th>Arte</th><th>Autre</th></tr>
+      <tr><td class="lab">Effectif</td><td>80</td><td>40</td><td>50</td><td>10</td><td>20</td></tr>
+    </table></div>
+    <p>Calcule la fréquence (%) de TF1 et l'angle correspondant dans un diagramme circulaire.</p>
+    <div class="opts">
+      <label><input type="radio" name="q31" value="A"> 40 % · 144 °</label>
+      <label><input type="radio" name="q31" value="B"> 40 % · 108 °</label>
+      <label><input type="radio" name="q31" value="C"> 80 % · 288 °</label>
+    </div>
+    <button class="btn b3" onclick="check('q31','A','Fréquence TF1 = 80÷200×100 = 40 %. Angle = 80÷200×360 = 144 °.','t3')">Vérifier</button>
+    <div class="res" id="q31-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <div class="ctx">Clients d'un site internet — nombre de commandes dans l'année :<br>
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Nb commandes</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5 ou +</th></tr>
+      <tr><td class="lab">Nb de clients</td><td>120</td><td>80</td><td>60</td><td>25</td><td>15</td></tr>
+    </table></div>
+    <p>Quel pourcentage des clients a effectué au moins 4 commandes ?</p>
+    <input class="fi" id="q32-i" placeholder="Ta réponse…">
+    <button class="btn b3" onclick="checkF('q32','13.3|13,3','Total = 120+80+60+25+15 = 300. Clients ≥4 commandes = 25+15 = 40. Fréquence = 40÷300×100 ≈ 13,3 %.','t3')">Vérifier</button>
+    <div class="res" id="q32-r"></div>
+  </div>
+
+  <div class="div">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Modes de transport utilisés par 360 élèves pour aller au collège :<br>
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Transport</th><th>À pied</th><th>Vélo</th><th>Bus</th><th>Voiture</th></tr>
+      <tr><td class="lab">Effectif</td><td>144</td><td>36</td><td>108</td><td>72</td></tr>
+    </table></div>
+    <p>Complète le tableau avec les fréquences et les angles, puis décris ce que représenterait le diagramme circulaire.</p>
+    <button class="bg btn" onclick="toggle('c33')">📋 Correction</button>
+    <div class="corr" id="c33">
+      <div class="s">Total = 360 élèves</div>
+      <div class="s">À pied : 144÷360×100 = 40 % · 144÷360×360 = 144°</div>
+      <div class="s">Vélo : 36÷360×100 = 10 % · 36°</div>
+      <div class="s">Bus : 108÷360×100 = 30 % · 108°</div>
+      <div class="s">Voiture : 72÷360×100 = 20 % · 72°</div>
+      <div class="s">Vérif : 40+10+30+20 = 100 % · 144+36+108+72 = 360° ✔</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Dans un diagramme circulaire représentant les sports pratiqués par 240 élèves, le secteur "Football" a un angle de 90°.</div>
+    <p>Combien d'élèves pratiquent le football ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q34" value="A"> 90 élèves</label>
+      <label><input type="radio" name="q34" value="B"> 60 élèves</label>
+      <label><input type="radio" name="q34" value="C"> 25 %</label>
+    </div>
+    <button class="btn b3" onclick="check('q34','B','Effectif = angle÷360 × total = 90÷360 × 240 = 0,25 × 240 = 60 élèves. (La fréquence est 25% mais la question demande le nombre, pas le %).','t3')">Vérifier</button>
+    <div class="res" id="q34-r"></div>
+  </div>
+
+  <div class="div">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Nombre de chaînes TV regardées par jour par un groupe d'utilisateurs TNT :<br>
+    1 chaîne : 25 · 2 chaînes : 56 · 3 chaînes : 72 · 4 chaînes : 65 · 5 chaînes : 12 · 6 chaînes : 7</div>
+    <p>1) Calcule l'effectif total et le nombre moyen de chaînes regardées.<br>2) Si on ajoute des personnes n'ayant pas répondu (0 chaîne), la nouvelle moyenne serait 2,86. Combien ont-elles été ?</p>
+    <button class="bg btn" onclick="toggle('c35')">📋 Correction</button>
+    <div class="corr" id="c35">
+      <div class="s">Effectif total = 25+56+72+65+12+7 = 237</div>
+      <div class="s">Somme = 1×25+2×56+3×72+4×65+5×12+6×7 = 25+112+216+260+60+42 = 715</div>
+      <div class="s">Moyenne = 715÷237 ≈ 3,02 chaînes</div>
+      <div class="s">Avec n abstentions : (715+0×n)÷(237+n) = 2,86</div>
+      <div class="s">715 = 2,86(237+n) = 678,82+2,86n → 2,86n = 36,18 → n ≈ 12,65 → n = 13</div>
+      <div class="s">Vérification : 715÷250 = 2,86 ✔ → 13 personnes se sont abstenues.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     SÉRIE 4 — PROBABILITÉS
+═══════════════════════════════ -->
+<div class="sec" id="s-t4">
+  <div class="si"><div class="sico si4">🎲</div><div class="st"><h2>Série 4 — Probabilités</h2><p>Expérience aléatoire · Événement · Calcul de probabilité</p></div></div>
+
+  <div class="cours c4">
+    <div class="clbl">📖 Définitions et formule</div>
+    <p style="font-size:.89rem;margin-bottom:8px">La <strong>probabilité</strong> d'un événement mesure la chance qu'il se réalise.</p>
+    <span class="form f4">P(A) = nombre de cas favorables ÷ nombre de cas possibles</span>
+    <span class="form f4">0 ≤ P(A) ≤ 1</span>
+    <span class="form f4">P(A) = 0 → impossible · P(A) = 1 → certain · P(A) = 0,5 → une chance sur deux</span>
+    <div class="ex"><b>Exemple — Dé à 6 faces</b>
+P(obtenir 3) = 1÷6 ≈ 0,167
+P(obtenir un nombre pair) = 3÷6 = 0,5
+P(obtenir un nombre > 4) = 2÷6 = 1÷3 ≈ 0,333</div>
+    <div class="tip"><b>💡 Événement complémentaire</b>
+P(Ā) = 1 − P(A). Si P(gagner) = 0,3 alors P(perdre) = 0,7</div>
+    <div class="pt">"P(A) = nombre de cas favorables ÷ nombre de cas possibles. On vérifie que 0 ≤ P(A) ≤ 1."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf4" id="pb-t4"></div></div><div class="pt2" id="pt-t4">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>On lance un dé à 6 faces équilibré. Quelle est la probabilité d'obtenir un nombre impair ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q41" value="A"> 1/6</label>
+      <label><input type="radio" name="q41" value="B"> 1/2</label>
+      <label><input type="radio" name="q41" value="C"> 1/3</label>
+    </div>
+    <button class="btn b4" onclick="check('q41','B','Nombres impairs = {1, 3, 5} → 3 cas favorables sur 6 possibles. P = 3÷6 = 1/2.','t4')">Vérifier</button>
+    <div class="res" id="q41-r"></div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <div class="ctx">Une urne contient 5 boules rouges, 3 bleues et 2 vertes. On tire une boule au hasard.</div>
+    <p>Quelle est la probabilité de tirer une boule rouge ?</p>
+    <input class="fi" id="q42-i" placeholder="Ta réponse…">
+    <button class="btn b4" onclick="checkF('q42','0.5|1/2','Total = 5+3+2 = 10 boules. P(rouge) = 5÷10 = 0,5 = 1/2.','t4')">Vérifier</button>
+    <div class="res" id="q42-r"></div>
+  </div>
+
+  <div class="div">⭐⭐ Intermédiaire</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Une société vend des tickets de loterie à 1 €. Sur 360 000 tickets : 11 gagnent 1000 € · 4 gagnent 500 € · 10 gagnent 200 € · 107 gagnent 100 € · 2900 gagnent 20 € · 8000 gagnent 6 € · 25500 gagnent 2 € · 42300 gagnent 1 €.</div>
+    <p>1) Combien y a-t-il de tickets gagnants ?<br>2) Quelle est la probabilité de gagner quelque chose ?</p>
+    <button class="bg btn" onclick="toggle('c43')">📋 Correction</button>
+    <div class="corr" id="c43">
+      <div class="s">Tickets gagnants = 11+4+10+107+2900+8000+25500+42300 = 78 832</div>
+      <div class="s">P(gagner) = 78832÷360000 ≈ 0,219 ≈ 21,9 %</div>
+      <div class="s">P(perdre) = 1−0,219 = 0,781 ≈ 78,1 %</div>
+      <div class="s">Gain moyen = 225000÷360000 ≈ 0,625 € par ticket. On perd en moyenne 0,375 € par ticket acheté.</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Dans une classe de 26 élèves : 14 filles et 12 garçons. 10 filles et 8 garçons ont la moyenne en maths. On tire un élève au hasard.</div>
+    <p>Calcule : a) P(être une fille) · b) P(avoir la moyenne) · c) P(être un garçon sans la moyenne)</p>
+    <button class="bg btn" onclick="toggle('c44')">📋 Correction</button>
+    <div class="corr" id="c44">
+      <div class="s">a) P(fille) = 14÷26 = 7/13 ≈ 0,538</div>
+      <div class="s">b) P(avoir la moyenne) = (10+8)÷26 = 18÷26 = 9/13 ≈ 0,692</div>
+      <div class="s">c) Garçons sans moyenne = 12−8 = 4. P = 4÷26 = 2/13 ≈ 0,154</div>
+    </div>
+  </div>
+
+  <div class="div">⭐⭐⭐ Avancé</div>
+
+  <div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Un sac contient des jetons numérotés de 1 à 20. On tire un jeton au hasard.</div>
+    <p>Calcule : a) P(multiple de 3) · b) P(nombre premier) · c) P(multiple de 3 OU de 5)</p>
+    <button class="bg btn" onclick="toggle('c45')">📋 Correction</button>
+    <div class="corr" id="c45">
+      <div class="s">a) Multiples de 3 : {3,6,9,12,15,18} → 6 cas. P = 6÷20 = 3/10 = 0,3</div>
+      <div class="s">b) Nombres premiers : {2,3,5,7,11,13,17,19} → 8 cas. P = 8÷20 = 2/5 = 0,4</div>
+      <div class="s">c) Mult. de 3 : {3,6,9,12,15,18} · Mult. de 5 : {5,10,15,20}</div>
+      <div class="s">Union : {3,5,6,9,10,12,15,18,20} → 9 cas (15 compté une seule fois). P = 9÷20 = 0,45</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     PROBLÈMES
+═══════════════════════════════ -->
+<div class="sec" id="s-tp">
+  <div class="si"><div class="sico sip">🧩</div><div class="st"><h2>Problèmes — Contextes variés</h2><p>Mise en situation · Toutes notions mélangées</p></div></div>
+
+  <div class="div">Problème 1 — Sortie scolaire</div>
+  <div class="exo">
+    <div class="exo-hd">Sortie scolaire <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Un collège organise une course d'endurance. Voici les distances parcourues par 30 élèves (en km) :
+    <table class="tbl" style="margin-top:7px">
+      <tr><th>Distance (km)</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>10</th></tr>
+      <tr><td class="lab">Nb d'élèves</td><td>3</td><td>7</td><td>10</td><td>6</td><td>3</td><td>1</td></tr>
+    </table>
+    Les 20 adultes ont parcouru en moyenne 8,2 km chacun. L'an passé, la distance totale de tous était 2650 km. L'objectif était de faire 10% de mieux.</div>
+    <p>1) Calcule la distance moyenne parcourue par un élève (arrondie au dixième).<br>2) Détermine la médiane des distances des élèves.<br>3) Calcule la distance totale parcourue cette année (élèves + adultes).<br>4) L'objectif des 10% a-t-il été atteint ?</p>
+    <button class="bg btn" onclick="toggle('pb1')">📋 Correction</button>
+    <div class="corr" id="pb1">
+      <div class="s">1) 4×3+5×7+6×10+7×6+8×3+10×1 = 12+35+60+42+24+10 = 183. Moy = 183÷30 = 6,1 km</div>
+      <div class="s">2) 30 élèves → médiane = (rang 15 + rang 16)÷2. Eff. cumulés : 4→3, 5→10, 6→20. Rang 15 et 16 → valeur 6. Médiane = 6 km</div>
+      <div class="s">3) Total élèves = 183 km. Total adultes = 8,2×20 = 164 km. Total = 347 km</div>
+      <div class="s">4) Objectif = 2650×1,10 = 2915 km. 347 &lt;&lt; 2915 → non atteint (mais la course n'est que pour une classe).</div>
+    </div>
+  </div>
+
+  <div class="div">Problème 2 — Fréquentation d'une braderie</div>
+  <div class="exo">
+    <div class="exo-hd">La braderie <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Une braderie dure 5 jours. La fréquentation est :<br>
+    Jeudi : 420 · Vendredi : 680 · Samedi : 1850 · Dimanche : 1240 · Lundi : 310</div>
+    <p>1) Quel pourcentage des visiteurs est venu le samedi ?<br>2) Quel est le nombre moyen de visiteurs par jour ?<br>3) Calcule la médiane de la fréquentation quotidienne.</p>
+    <button class="bg btn" onclick="toggle('pb2')">📋 Correction</button>
+    <div class="corr" id="pb2">
+      <div class="s">Total = 420+680+1850+1240+310 = 4500 visiteurs</div>
+      <div class="s">1) Samedi : 1850÷4500×100 ≈ 41,1 %</div>
+      <div class="s">2) Moyenne = 4500÷5 = 900 visiteurs par jour</div>
+      <div class="s">3) Classées : 310·420·680·1240·1850. 5 valeurs → médiane = rang 3 = 680 visiteurs</div>
+    </div>
+  </div>
+
+  <div class="div">Problème 3 — Loterie et probabilités</div>
+  <div class="exo">
+    <div class="exo-hd">La loterie <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Un collège vend des tickets à 2 € pour une tombola. 500 tickets sont imprimés. Les lots sont : 1 vélo (120 €) · 3 bons cadeaux (40 €) · 10 livres (15 €) · 50 stylos (2 €).</div>
+    <p>1) Calcule la probabilité de gagner quelque chose.<br>2) Calcule le gain moyen d'un joueur.<br>3) Le collège gagne-t-il de l'argent ? Combien ?</p>
+    <button class="bg btn" onclick="toggle('pb3')">📋 Correction</button>
+    <div class="corr" id="pb3">
+      <div class="s">1) Tickets gagnants = 1+3+10+50 = 64. P(gagner) = 64÷500 = 12,8 %</div>
+      <div class="s">2) Total lots = 120+3×40+10×15+50×2 = 120+120+150+100 = 490 €</div>
+      <div class="s">Gain moyen = 490÷500 = 0,98 € par ticket (pour un ticket à 2 €, on perd en moyenne 1,02 €)</div>
+      <div class="s">3) Recettes = 500×2 = 1000 €. Dépenses lots = 490 €. Bénéfice = 510 €</div>
+    </div>
+  </div>
+
+  <div class="div">Problème 4 — Comparaison de deux classes</div>
+  <div class="exo">
+    <div class="exo-hd">Comparaison <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Deux classes ont eu le même contrôle de maths (noté sur 20) :<br>
+    Classe A (25 élèves) : moyenne = 12,4 · médiane = 13 · étendue = 16<br>
+    Classe B (25 élèves) : moyenne = 12,4 · médiane = 10 · étendue = 8</div>
+    <p>Les deux classes ont la même moyenne. Que peut-on dire de leurs profils respectifs ?</p>
+    <button class="bg btn" onclick="toggle('pb4')">📋 Correction</button>
+    <div class="corr" id="pb4">
+      <div class="s">Moyenne identique (12,4) → mêmes "performances moyennes" dans les deux classes.</div>
+      <div class="s">Classe A : médiane = 13 (plus de la moitié a ≥ 13) mais étendue = 16 → très hétérogène (de 2 à 18).</div>
+      <div class="s">Classe B : médiane = 10 (moitié a &lt; 10) mais étendue = 8 → plus homogène (de 8 à 16).</div>
+      <div class="s">Conclusion : même moyenne cache des réalités très différentes. La médiane et l'étendue révèlent la dispersion.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     CONTRÔLE S1-S2 (Moyenne + Médiane)
+═══════════════════════════════════ -->
+<div class="sec" id="s-tc1">
+  <div class="si"><div class="sico sic">📝</div><div class="st"><h2>Contrôle — Séries 1 &amp; 2 (Moyenne + Médiane)</h2><p>Durée conseillée : 30 min · Calculatrice autorisée</p></div></div>
+
+  <div class="chdr chdr1">
+    <div class="cbadge cbdg1">📝 Contrôle S1-S2</div>
+    <div class="cinfo">
+      <h3 style="color:var(--tc1)">Contrôle — Moyenne et Médiane · 4ème</h3>
+      <p style="color:#9f1239">Inspiré des évaluations pass-education.fr et Sesamath · niveau 4ème officiel.</p>
+      <ul style="color:#9f1239">
+        <li>Durée : 30 minutes · Calculatrice autorisée</li>
+        <li>Montre tous tes calculs · Rédige des phrases pour les interprétations</li>
+        <li>Clique sur Correction après avoir cherché seul</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 1 -->
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen1">Exercice 1 — Températures (Sesamath)</div><div class="cpts cpts1">7 pts</div></div>
+    <p style="font-size:.87rem;color:var(--ink2);margin-bottom:10px">Températures maximales moyennes relevées dans deux villes (°C) :</p>
+    <table class="tbl">
+      <tr><th></th><th>Jan</th><th>Fév</th><th>Mar</th><th>Avr</th><th>Mai</th><th>Jun</th><th>Jul</th><th>Aoû</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Déc</th></tr>
+      <tr><td class="lab">Ville A</td><td>29</td><td>29</td><td>30</td><td>30</td><td>31</td><td>30</td><td>30</td><td>31</td><td>32</td><td>32</td><td>31</td><td>30</td></tr>
+      <tr><td class="lab">Ville B</td><td>9</td><td>11</td><td>18</td><td>21</td><td>26</td><td>35</td><td>34</td><td>?</td><td>19</td><td>16</td><td>12</td><td>9</td></tr>
+    </table>
+
+    <div class="csub" style="margin-top:12px">
+      <b>a) — 1 pt</b>Sans calcul, encadre la moyenne des températures de la ville A.
+      <div class="ans">Réponse…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1a')">📋 Correction a)</button>
+    <div class="cco" id="cc1a"><div class="ccoh">✔ Correction — Barème : 1 point</div><div class="ccob">
+        <span class="l">Les températures de la ville A varient entre 29 °C et 32 °C.</span>
+        <span class="l"><span class="hi">Donc : 29 ≤ moyenne de la ville A ≤ 32</span> (0,5 pt pour chaque borne)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>b) — 2 pts</b>Calcule la moyenne des températures de la ville A. Arrondie au dixième.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1b')">📋 Correction b)</button>
+    <div class="cco" id="cc1b"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Somme des températures = 29+29+30+30+31+30+30+31+32+32+31+30</span>
+        <span class="l">= <span class="hi">365</span> (1 pt)</span>
+        <span class="l">Nombre de mois = 12</span>
+        <span class="l">Moyenne = 365 ÷ 12 ≈ <span class="hi">30,4 °C</span> (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>c) — 2 pts</b>La moyenne de la ville B est 22 °C exactement. Quelle est la température d'août ?
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1c')">📋 Correction c)</button>
+    <div class="cco" id="cc1c"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">On note t la température d'août. La moyenne est 22 °C.</span>
+        <span class="l">Donc : somme totale = 22 × 12 = 264 (1 pt)</span>
+        <span class="l">Somme des mois connus = 9+11+18+21+26+35+34+19+16+12+9 = 210</span>
+        <span class="l"><span class="hi">Température d'août = 264 − 210 = 54 °C</span> (1 pt)</span>
+        <span class="l">Remarque : cette valeur est très élevée — la ville B est probablement en zone tropicale (Martinique par exemple).</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>d) — 2 pts</b>Calcule la médiane des températures de la ville A et interprète.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1d')">📋 Correction d)</button>
+    <div class="cco" id="cc1d"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">On classe les 12 températures dans l'ordre croissant :</span>
+        <span class="l">29 · 29 · 30 · 30 · 30 · 30 · 30 · 31 · 31 · 31 · 32 · 32</span>
+        <span class="l">12 valeurs (effectif pair) → médiane = moyenne des valeurs de rang 6 et 7</span>
+        <span class="l">Rang 6 = 30 · Rang 7 = 30 → Médiane = (30 + 30) ÷ 2 = <span class="hi">30 °C</span> (1 pt)</span>
+        <span class="l">Interprétation : la moitié des mois de l'année ont une température maximale inférieure ou égale à 30 °C, et l'autre moitié supérieure ou égale à 30 °C. (1 pt)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 2 -->
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen1">Exercice 2 — Contrôle de maths (Sesamath)</div><div class="cpts cpts1">8 pts</div></div>
+    <p style="font-size:.87rem;color:var(--ink2);margin-bottom:10px">Notes sur 10 d'une classe de 26 élèves : 5·3·8·2·8·6·8·3·2·2·7·10·5·1·8·8·6·5·2·4·6·3·2·6·8·10</p>
+
+    <div class="csub">
+      <b>a) — 2 pts</b>Construis le tableau d'effectifs.
+      <div class="ans tall">Tableau…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2a')">📋 Correction a)</button>
+    <div class="cco" id="cc2a"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">On dénombre chaque note dans la liste :</span>
+        <span class="l">Note 1 : 1 élève · Note 2 : 5 élèves · Note 3 : 3 élèves · Note 4 : 1 élève</span>
+        <span class="l">Note 5 : 3 élèves · Note 6 : 4 élèves · Note 7 : 1 élève · Note 8 : 6 élèves · Note 10 : 2 élèves</span>
+        <span class="l">Vérification : 1+5+3+1+3+4+1+6+2 = <span class="hi">26 élèves ✔</span> (1 pt pour le tableau complet + 1 pt pour la vérification)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>b) — 2 pts</b>Calcule la note moyenne. Arrondie au dixième.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2b')">📋 Correction b)</button>
+    <div class="cco" id="cc2b"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">On utilise le tableau d'effectifs :</span>
+        <span class="l">1×1 + 2×5 + 3×3 + 4×1 + 5×3 + 6×4 + 7×1 + 8×6 + 10×2</span>
+        <span class="l">= 1 + 10 + 9 + 4 + 15 + 24 + 7 + 48 + 20 = <span class="hi">138</span> (1 pt)</span>
+        <span class="l">Moyenne = 138 ÷ 26 ≈ <span class="hi">5,3 / 10</span> (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>c) — 2 pts</b>Calcule la médiane des notes et interprète.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2c')">📋 Correction c)</button>
+    <div class="cco" id="cc2c"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">26 élèves (effectif pair) → médiane = moyenne des valeurs de rang 13 et 14</span>
+        <span class="l">Effectifs cumulés croissants : note 1 → 1 · note 2 → 6 · note 3 → 9 · note 4 → 10 · note 5 → 13 · note 6 → 17</span>
+        <span class="l">Rang 13 correspond à la note 5 · Rang 14 correspond à la note 6</span>
+        <span class="l">Médiane = (5 + 6) ÷ 2 = <span class="hi">5,5 / 10</span> (1 pt)</span>
+        <span class="l">Interprétation : la moitié des élèves a obtenu une note inférieure ou égale à 5,5 et l'autre moitié une note supérieure ou égale à 5,5. (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>d) — 2 pts</b>Quel pourcentage des élèves a obtenu au moins 5 sur 10 ?
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2d')">📋 Correction d)</button>
+    <div class="cco" id="cc2d"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Élèves ayant obtenu une note ≥ 5 : 3 + 4 + 1 + 6 + 2 = 16 élèves (1 pt)</span>
+        <span class="l">Pourcentage = 16 ÷ 26 × 100 ≈ <span class="hi">61,5 %</span> (1 pt)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     CONTRÔLE COMPLET S1 à S4
+═══════════════════════════════════ -->
+<div class="sec" id="s-tc2">
+  <div class="si"><div class="sico sic2">📋</div><div class="st"><h2>Contrôle complet — Séries 1 à 4</h2><p>Durée conseillée : 45 min · Calculatrice autorisée · 20 points</p></div></div>
+
+  <div class="chdr chdr2">
+    <div class="cbadge cbdg2">📋 Contrôle complet</div>
+    <div class="cinfo">
+      <h3 style="color:var(--tc2)">Contrôle — Statistiques et Probabilités · 4ème</h3>
+      <p style="color:#1e3a8a">Inspiré des vrais contrôles Sesamath, pass-education.fr et educmat.fr.</p>
+      <ul style="color:#1e3a8a">
+        <li>Durée : 45 minutes · Calculatrice autorisée</li>
+        <li>Moyenne · Médiane · Diagramme circulaire · Probabilité</li>
+        <li>Montre tous tes calculs · Rédige les interprétations</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 1 — MOYENNE + MÉDIANE -->
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 1 — Fléchettes au collège</div><div class="cpts cpts2">7 pts</div></div>
+    <p style="font-size:.87rem;color:var(--ink2);margin-bottom:10px">Dans un club de loisirs, des élèves jouent aux fléchettes. Voici leurs scores sur 20 :</p>
+    <table class="tbl">
+      <tr><th>Score</th><th>6</th><th>8</th><th>10</th><th>12</th><th>14</th><th>16</th><th>18</th></tr>
+      <tr><td class="lab">Effectif</td><td>2</td><td>4</td><td>7</td><td>9</td><td>5</td><td>2</td><td>1</td></tr>
+    </table>
+
+    <div class="csub" style="margin-top:12px">
+      <b>a) — 2 pts</b>Calcule le score moyen. Arrondi au dixième.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc3a')">📋 Correction a)</button>
+    <div class="cco" id="cc3a"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">On calcule la somme pondérée :</span>
+        <span class="l">6×2 + 8×4 + 10×7 + 12×9 + 14×5 + 16×2 + 18×1</span>
+        <span class="l">= 12 + 32 + 70 + 108 + 70 + 32 + 18 = <span class="hi">342</span> (1 pt)</span>
+        <span class="l">Effectif total = 2+4+7+9+5+2+1 = 30</span>
+        <span class="l">Score moyen = 342 ÷ 30 = <span class="hi">11,4</span> (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>b) — 2 pts</b>Détermine la médiane des scores. Interprète.
+      <div class="ans tall">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc3b')">📋 Correction b)</button>
+    <div class="cco" id="cc3b"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">30 joueurs (effectif pair) → médiane = moyenne des valeurs de rang 15 et 16</span>
+        <span class="l">Effectifs cumulés : score 6→2 · score 8→6 · score 10→13 · score 12→22</span>
+        <span class="l">Les rangs 15 et 16 se trouvent dans la valeur 12.</span>
+        <span class="l">Médiane = <span class="hi">12</span> (1 pt)</span>
+        <span class="l">Interprétation : la moitié des joueurs a un score inférieur ou égal à 12 et l'autre moitié supérieur ou égal à 12. (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>c) — 1 pt</b>Calcule l'étendue des scores.
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc3c')">📋 Correction c)</button>
+    <div class="cco" id="cc3c"><div class="ccoh">✔ Correction — Barème : 1 point</div><div class="ccob">
+        <span class="l">Score maximum = 18 · Score minimum = 6</span>
+        <span class="l">Étendue = 18 − 6 = <span class="hi">12 points</span></span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>d) — 2 pts</b>Quel pourcentage des joueurs a obtenu strictement plus de 12 ?
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc3d')">📋 Correction d)</button>
+    <div class="cco" id="cc3d"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Joueurs avec un score strictement supérieur à 12 : 5 + 2 + 1 = 8 joueurs (1 pt)</span>
+        <span class="l">Pourcentage = 8 ÷ 30 × 100 ≈ <span class="hi">26,7 %</span> (1 pt)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 2 — DIAGRAMME CIRCULAIRE -->
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 2 — Transports scolaires</div><div class="cpts cpts2">7 pts</div></div>
+    <p style="font-size:.87rem;color:var(--ink2);margin-bottom:10px">On a interrogé 180 élèves sur leur moyen de transport pour aller au collège :</p>
+    <table class="tbl">
+      <tr><th>Transport</th><th>À pied</th><th>Vélo</th><th>Bus scolaire</th><th>Voiture</th><th>Autre</th></tr>
+      <tr><td class="lab">Effectif</td><td>54</td><td>18</td><td>72</td><td>27</td><td>9</td></tr>
+    </table>
+
+    <div class="csub" style="margin-top:12px">
+      <b>a) — 3 pts</b>Complète le tableau des fréquences et des angles pour le diagramme circulaire.
+      <table class="tbl" style="margin-top:8px">
+        <tr><th>Transport</th><th>Effectif</th><th>Fréquence (%)</th><th>Angle (°)</th></tr>
+        <tr><td class="lab">À pied</td><td>54</td><td class="prod"> </td><td class="prod"> </td></tr>
+        <tr><td class="lab">Vélo</td><td>18</td><td class="prod"> </td><td class="prod"> </td></tr>
+        <tr><td class="lab">Bus scolaire</td><td>72</td><td class="prod"> </td><td class="prod"> </td></tr>
+        <tr><td class="lab">Voiture</td><td>27</td><td class="prod"> </td><td class="prod"> </td></tr>
+        <tr><td class="lab">Autre</td><td>9</td><td class="prod"> </td><td class="prod"> </td></tr>
+        <tr><td class="lab"><strong>Total</strong></td><td class="tot">180</td><td class="tot"> </td><td class="tot"> </td></tr>
+      </table>
+      <div class="ans">Calculs…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc4a')">📋 Correction a)</button>
+    <div class="cco" id="cc4a"><div class="ccoh">✔ Correction — Barème : 3 points</div><div class="ccob">
+        <span class="l">Total = 180 élèves. Pour chaque transport, on calcule : fréquence = effectif ÷ 180 × 100 · angle = effectif ÷ 180 × 360</span>
+        <span class="l">À pied : 54 ÷ 180 × 100 = <span class="hi">30 %</span> · 54 ÷ 180 × 360 = <span class="hi">108 °</span></span>
+        <span class="l">Vélo : 18 ÷ 180 × 100 = <span class="hi">10 %</span> · <span class="hi">36 °</span></span>
+        <span class="l">Bus : 72 ÷ 180 × 100 = <span class="hi">40 %</span> · <span class="hi">144 °</span></span>
+        <span class="l">Voiture : 27 ÷ 180 × 100 = <span class="hi">15 %</span> · <span class="hi">54 °</span></span>
+        <span class="l">Autre : 9 ÷ 180 × 100 = <span class="hi">5 %</span> · <span class="hi">18 °</span></span>
+        <span class="l">Vérification : 30+10+40+15+5 = 100 % ✔ · 108+36+144+54+18 = 360 ° ✔ (1 pt par colonne correcte)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>b) — 2 pts</b>Le principal dit que "plus de la moitié des élèves viennent à pied ou à vélo". A-t-il raison ?
+      <div class="ans">Réponse…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc4b')">📋 Correction b)</button>
+    <div class="cco" id="cc4b"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Nombre d'élèves venant à pied ou à vélo = 54 + 18 = 72 (1 pt)</span>
+        <span class="l">Fréquence = 72 ÷ 180 × 100 = 40 %</span>
+        <span class="l"><span class="hi">Non, le principal a tort.</span> 40 % des élèves viennent à pied ou à vélo, ce qui représente moins de la moitié (50 %). (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>c) — 2 pts</b>Un élève est choisi au hasard parmi les 180. Quelle est la probabilité qu'il vienne en bus scolaire ou à pied ?
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc4c')">📋 Correction c)</button>
+    <div class="cco" id="cc4c"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Événement : "l'élève vient en bus OU à pied"</span>
+        <span class="l">Nombre de cas favorables = 72 + 54 = 126 (1 pt)</span>
+        <span class="l">Nombre de cas possibles = 180</span>
+        <span class="l">P(bus ou à pied) = 126 ÷ 180 = 7/10 = <span class="hi">0,7</span> (1 pt)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EX 3 — PROBABILITÉS -->
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 3 — Tombola et probabilités</div><div class="cpts cpts2">6 pts</div></div>
+
+    <div class="csub">
+      <b>Situation</b>
+      Le foyer du collège organise une tombola. Il y a 200 tickets vendus à 3 €. Les lots : 1 console (150 €) · 2 casques audio (50 €) · 5 livres (12 €) · 20 stylos (2 €) · 30 bonbons (0,50 €).
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>a) — 2 pts</b>Calcule la probabilité de gagner un lot.
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc5a')">📋 Correction a)</button>
+    <div class="cco" id="cc5a"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Nombre total de tickets gagnants = 1 + 2 + 5 + 20 + 30 = 58 (1 pt)</span>
+        <span class="l">Nombre total de tickets = 200</span>
+        <span class="l">P(gagner un lot) = 58 ÷ 200 = <span class="hi">0,29</span> soit 29 % (1 pt)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>b) — 2 pts</b>Calcule le gain moyen d'un joueur. Est-ce rentable d'acheter un ticket ?
+      <div class="ans tall">Calcul et réponse…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc5b')">📋 Correction b)</button>
+    <div class="cco" id="cc5b"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Valeur totale des lots = 1×150 + 2×50 + 5×12 + 20×2 + 30×0,50</span>
+        <span class="l">= 150 + 100 + 60 + 40 + 15 = 365 € (1 pt)</span>
+        <span class="l">Gain moyen = 365 ÷ 200 = 1,83 € par ticket</span>
+        <span class="l">Un ticket coûte 3 €. On perd en moyenne 3 − 1,83 = 1,17 € par ticket.</span>
+        <span class="l"><span class="hi">Non, ce n'est pas rentable d'acheter un ticket.</span> (1 pt pour la conclusion justifiée)</span>
+      </div>
+    </div>
+
+    <div class="csub" style="margin-top:10px">
+      <b>c) — 2 pts</b>Combien le foyer du collège gagne-t-il avec cette tombola ?
+      <div class="ans">Calcul…</div>
+    </div>
+    <button class="btn bc2" onclick="showCorr('cc5c')">📋 Correction c)</button>
+    <div class="cco" id="cc5c"><div class="ccoh">✔ Correction — Barème : 2 points</div><div class="ccob">
+        <span class="l">Recettes du foyer = 200 × 3 = 600 € (1 pt)</span>
+        <span class="l">Dépenses (lots) = 365 €</span>
+        <span class="l"><span class="hi">Bénéfice du foyer = 600 − 365 = 235 €</span> (1 pt)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div style="max-width:980px;margin:auto;padding:0 16px">
+  <div class="cta">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir les <em>prochaines fiches</em> ?</div>
+      <p class="cta-sub">Abonne-toi et active les notifications 🔔 — nouvelles fiches en story</p>
+      <div class="cta-steps"><span class="cta-step">1️⃣ Clique</span><span class="cta-step">2️⃣ Abonne-toi</span><span class="cta-step">3️⃣ Active la 🔔</span></div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ &nbsp;Suivre @toncoachscolaire</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="fc">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Reproduction interdite sans autorisation · L.111-1 CPI<br>
+    Exercices inspirés de : Sesamath · pass-education.fr · educmat.fr · mathezca.org
+  </div>
+</footer>
+</body>
+</html>
