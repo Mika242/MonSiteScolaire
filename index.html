@@ -2,99 +2,721 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Ton Coach Scolaire - Accueil</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ton Coach Scolaire">
+  <meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ton Coach Scolaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0a0e1a;
+      --surface: #111827;
+      --surface2: #1a2236;
+      --border: #1f2d45;
+      --ink: #f0f4ff;
+      --ink2: #7a8ba8;
+      --ink3: #3d4f6b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #ecf4fb;
-      margin: 0;
-      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
     }
 
+    /* ══ HEADER ══ */
     header {
-      background: #3498db;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,26,.94);
+      backdrop-filter: blur(14px);
     }
-
-    header img {
-      max-height: 80px;
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 42px; height: 42px;
+      border-radius: 11px;
+      object-fit: contain;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 4px;
     }
-
-    h1 {
-      color: white;
-      margin: 10px 0;
+    .header-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
     }
-
-    .button-container {
-      margin-top: 20px;
-    }
-
-    .platform-button {
-      display: inline-block;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 30px;
+    .header-title span { color: #4f8ef7; }
+    .header-right { display: flex; gap: 8px; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 9px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.2s ease, background-color 0.3s ease;
+      font-size: .76rem;
+      font-weight: 700;
+      transition: all .2s;
+      border: 1px solid var(--border);
+      color: var(--ink2);
+      background: var(--surface2);
     }
+    .social-btn:hover { transform: translateY(-1px); }
+    .btn-yt:hover  { background: #ff0000; color: #fff; border-color: #ff0000; }
+    .btn-ig:hover  { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; border-color: transparent; }
 
-    .platform-button:hover {
-      transform: scale(1.05);
-    }
-
-    .youtube-button {
-      background-color: #ff0000;
-      color: white;
-    }
-
-    .youtube-button:hover {
-      background-color: #cc0000;
-    }
-
-    .instagram-button {
-      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-      color: white;
-    }
-
-    .instagram-button:hover {
-      opacity: 0.85;
-    }
-
-    .content {
-      padding: 20px;
-    }
-
-    .footer {
+    /* ══ HERO ══ */
+    .hero {
       text-align: center;
-      color: #777;
-      margin-top: 40px;
-      padding-bottom: 20px;
+      padding: 50px 20px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(79,142,247,.09) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 50%, rgba(168,85,247,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(90deg, #4f8ef7, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      color: var(--ink2);
+      font-size: .92rem;
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    /* ══ TILES SECTION ══ */
+    .tiles-section {
+      padding: 28px 16px 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .tiles-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 14px;
+      padding-left: 2px;
+    }
+    .tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 700px) { .tiles-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 440px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── TILE ── */
+    .tile {
+      position: relative;
+      border-radius: 18px;
+      padding: 16px 14px 14px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      border: 1.5px solid transparent;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .tile:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+    .tile.active { box-shadow: 0 0 0 3px rgba(255,255,255,.2), 0 18px 50px rgba(0,0,0,.5); transform: translateY(-2px); }
+
+    .tile-5e  { background: linear-gradient(140deg,#064e3b 0%,#0891b2 100%); border-color: #065f46; }
+    .tile-4e  { background: linear-gradient(140deg,#1e1b4b 0%,#4338ca 100%); border-color: #312e81; }
+    .tile-3e  { background: linear-gradient(140deg,#4a044e 0%,#9333ea 100%); border-color: #581c87; }
+    .tile-2nd { background: linear-gradient(140deg,#451a03 0%,#d97706 100%); border-color: #78350f; }
+    .tile-1re { background: linear-gradient(140deg,#4c0519 0%,#e11d48 100%); border-color: #881337; }
+
+    .tile::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 25% 25%, rgba(255,255,255,.18) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .tile.active::before { background: radial-gradient(circle at 25% 25%, rgba(255,255,255,.28) 0%, transparent 55%); }
+
+    .tile-emoji { font-size: 1.6rem; line-height: 1; margin-bottom: 6px; position: relative; z-index: 1; }
+    .tile-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      font-size: .58rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.18);
+      border-radius: 20px;
+      padding: 3px 7px;
+      color: rgba(255,255,255,.85);
+      z-index: 2;
+    }
+    .tile-bottom { position: relative; z-index: 1; }
+    .tile-level {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .tile-name { font-size: .7rem; font-weight: 600; color: rgba(255,255,255,.65); margin-bottom: 8px; }
+    .tile-pills { display: flex; flex-wrap: wrap; gap: 3px; }
+    .tile-pill {
+      font-size: .58rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.15);
+      color: rgba(255,255,255,.8);
+      white-space: nowrap;
+    }
+
+    /* animations */
+    @keyframes tileIn {
+      from { opacity: 0; transform: translateY(18px) scale(.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tile { animation: tileIn .4s ease both; }
+    .tile:nth-child(1) { animation-delay: .05s; }
+    .tile:nth-child(2) { animation-delay: .10s; }
+    .tile:nth-child(3) { animation-delay: .15s; }
+    .tile:nth-child(4) { animation-delay: .20s; }
+    .tile:nth-child(5) { animation-delay: .25s; }
+
+    /* ══ REVEAL PANEL ══ */
+    #reveal-panel {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .panel-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin-top: 14px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      animation: panelIn .28s ease both;
+    }
+
+    .panel-header {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .panel-header-left { display: flex; align-items: center; gap: 10px; }
+    .panel-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .panel-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; }
+    .panel-close {
+      width: 30px; height: 30px;
+      border-radius: 9px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--ink2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      transition: all .15s;
+      flex-shrink: 0;
+    }
+    .panel-close:hover { background: #2d3748; color: var(--ink); }
+
+    .panel-matieres {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+    }
+
+    /* matière block */
+    .mat-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      overflow: hidden;
+    }
+    .mat-block-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 14px;
+      cursor: pointer;
+      transition: background .15s;
+      user-select: none;
+    }
+    .mat-block-header:hover { background: #1f2d45; }
+    .mat-ico {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .ico-maths    { background: #1e3a5f; }
+    .ico-svt      { background: #064e3b; }
+    .ico-physique { background: #451a03; }
+    .ico-anglais  { background: #4a044e; }
+    .ico-techno   { background: #1a1a2e; }
+    .ico-rev      { background: #3b1f02; }
+
+    .mat-block-title { flex: 1; font-size: .85rem; font-weight: 700; }
+    .mat-block-count {
+      font-size: .67rem; color: var(--ink2);
+      background: var(--border);
+      padding: 2px 7px; border-radius: 20px; font-weight: 700;
+    }
+    .mat-block-arrow { font-size: .65rem; color: var(--ink3); transition: transform .2s; flex-shrink: 0; }
+    .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
+
+    .mat-block-fiches {
+      display: none;
+      padding: 0 10px 10px;
+      border-top: 1px solid var(--border);
+    }
+    .mat-block.open .mat-block-fiches { display: block; }
+
+    .fiche-link {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--ink2);
+      font-size: .82rem;
+      font-weight: 500;
+      margin-top: 4px;
+      transition: all .15s;
+      border: 1px solid transparent;
+    }
+    .fiche-link:hover { background: #1f2d45; color: var(--ink); border-color: var(--border); }
+    .fiche-ico {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem;
+      flex-shrink: 0;
+    }
+    .empty-msg { padding: 12px 8px; font-size: .82rem; color: var(--ink3); font-style: italic; }
+
+    /* ══ FOOTER ══ */
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: var(--ink3);
+      font-size: .78rem;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+      line-height: 1.9;
+    }
+    footer a { color: var(--ink2); text-decoration: none; font-weight: 600; }
+    footer a:hover { color: var(--ink); }
+    .footer-copy {
+      font-size: .72rem;
+      color: var(--ink3);
+      margin-top: 6px;
+      letter-spacing: .03em;
+    }
+    .footer-copy strong { color: var(--ink2); }
+
+    /* ══ BANDEAU PUBLICITAIRE ══ */
+    .ad-banner {
+      display: block;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+      text-decoration: none;
+    }
+    .ad-banner-inner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(120deg, #1a1408 0%, #2b1d0a 55%, #3d2810 100%);
+      border: 1px solid #4a3418;
+      border-radius: 16px;
+      padding: 12px 18px;
+      margin-top: 14px;
+      transition: transform .2s, border-color .2s;
+    }
+    .ad-banner:hover .ad-banner-inner {
+      transform: translateY(-2px);
+      border-color: #8a6a2f;
+    }
+    .ad-banner-tag {
+      flex-shrink: 0;
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #b8935a;
+      background: rgba(184,147,90,.12);
+      border: 1px solid rgba(184,147,90,.3);
+      border-radius: 20px;
+      padding: 3px 9px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      object-fit: contain;
+      background: rgba(184,147,90,.1);
+      border-radius: 10px;
+      padding: 4px;
+      border: 1px solid rgba(184,147,90,.25);
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title {
+      font-family: 'Syne', sans-serif;
+      font-size: .88rem;
+      font-weight: 800;
+      color: #f0e4d0;
+      margin-bottom: 2px;
+    }
+    .ad-banner-sub {
+      font-size: .76rem;
+      color: #a89268;
+    }
+    .ad-banner-cta {
+      flex-shrink: 0;
+      font-size: .74rem;
+      font-weight: 700;
+      color: #1a1408;
+      background: linear-gradient(120deg, #d4af37, #b8935a);
+      padding: 7px 14px;
+      border-radius: 9px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) {
+      .ad-banner-sub { display: none; }
+      .ad-banner-tag { display: none; }
     }
   </style>
 </head>
-
 <body>
 
-  <header>
-    <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire Logo">
-    <h1>Bienvenue sur Ton Coach Scolaire</h1>
-    <div class="button-container">
-      <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank" class="platform-button youtube-button">
-        📺 Regarde les vidéos sur YouTube
-      </a>
-      <a href="https://www.instagram.com/TonCoachScolaire" target="_blank" class="platform-button instagram-button">
-        📸 Suis-nous sur Instagram
-      </a>
-    </div>
-  </header>
-
-  <div class="footer">
-    Fait avec soin pour bien réviser ✏️
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
+  <div class="header-right">
+    <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank" class="social-btn btn-yt">▶ YouTube</a>
+    <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="social-btn btn-ig">◈ Instagram</a>
+  </div>
+</header>
 
+<!-- HERO -->
+<div class="hero">
+  <h1>Révise <span class="accent">intelligemment</span><br>avec tes fiches interactives</h1>
+  <p class="hero-sub">Cours · Exercices · Corrections · Du collège au lycée</p>
+</div>
+
+<!-- BANDEAU PUBLICITAIRE -->
+<a href="https://maguen-chalom.com/collection" target="_blank" class="ad-banner">
+  <div class="ad-banner-inner">
+    <span class="ad-banner-tag">Publicité</span>
+    <img src="maguen-chalom-logo.png" alt="Maguen-Chalom" class="ad-banner-icon">
+    <div class="ad-banner-text">
+      <div class="ad-banner-title">Maguen-Chalom</div>
+      <div class="ad-banner-sub">Découvre la collection de montres — style et élégance</div>
+    </div>
+    <div class="ad-banner-cta">Voir la collection →</div>
+  </div>
+</a>
+
+<!-- TUILES -->
+<div class="tiles-section">
+  <div class="tiles-label">Choisis ton niveau</div>
+  <div class="tiles-grid">
+
+    <div class="tile tile-5e" onclick="openPanel('5e')" id="tile-5e">
+      <div class="tile-badge">18 fiches</div>
+      <div class="tile-emoji">🌿</div>
+      <div class="tile-bottom">
+        <div class="tile-level">5ème</div>
+        <div class="tile-name">Cinquième</div>
+        <div class="tile-pills">
+          <span class="tile-pill">SVT</span>
+          <span class="tile-pill">Physique</span>
+          <span class="tile-pill">Maths</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile tile-4e" onclick="openPanel('4e')" id="tile-4e">
+      <div class="tile-badge">9 fiches</div>
+      <div class="tile-emoji">📐</div>
+      <div class="tile-bottom">
+        <div class="tile-level">4ème</div>
+        <div class="tile-name">Quatrième</div>
+        <div class="tile-pills">
+          <span class="tile-pill">Maths</span>
+          <span class="tile-pill">Anglais</span>
+          <span class="tile-pill">SVT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile tile-3e" onclick="openPanel('3e')" id="tile-3e">
+      <div class="tile-badge">À venir</div>
+      <div class="tile-emoji">🔬</div>
+      <div class="tile-bottom">
+        <div class="tile-level">3ème</div>
+        <div class="tile-name">Troisième</div>
+        <div class="tile-pills">
+          <span class="tile-pill">SVT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile tile-2nd" onclick="openPanel('2nd')" id="tile-2nd">
+      <div class="tile-badge">3 fiches</div>
+      <div class="tile-emoji">⚗️</div>
+      <div class="tile-bottom">
+        <div class="tile-level">2nde</div>
+        <div class="tile-name">Seconde</div>
+        <div class="tile-pills">
+          <span class="tile-pill">Physique</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tile tile-1re" onclick="openPanel('1re')" id="tile-1re">
+      <div class="tile-badge">3 fiches</div>
+      <div class="tile-emoji">📊</div>
+      <div class="tile-bottom">
+        <div class="tile-level">1ère</div>
+        <div class="tile-name">Première</div>
+        <div class="tile-pills">
+          <span class="tile-pill">Maths</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- REVEAL PANEL -->
+<div id="reveal-panel"></div>
+
+<!-- FOOTER -->
+<footer>
+  Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="footer-copy">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.<br>
+    Ce contenu est protégé par le droit d'auteur (L.111-1 du Code de la propriété intellectuelle).
+  </div>
+</footer>
+
+<script>
+const data = {
+  '5e': {
+    label: 'Classe de 5ème', color: '#06d6a0',
+    matieres: [
+      { id: 'svt-5e', label: 'SVT', ico: '🌿', cls: 'ico-svt', fiches: [
+        { name: 'Reproduction Asexuée', href: 'fiche_reproduction_asexuee.html' },
+        { name: 'Le Devenir des Aliments dans le tube digestif', href: 'fiche_leDevenirDesAlimentsDansLeTubeDigestif.html' },
+        { name: 'Le Devenir des Aliments (fiche + contrôle)', href: 'fiche_leDevenirDesAlimentsDansLeTubeDigestifControle.html' },
+        { name: 'La Respiration et la Nutrition chez l\'Homme', href: 'fiche_respirationEtNutritionChezLHomme_cinquieme.html' },
+        { name: 'La Respiration et la Nutrition (exercices)', href: 'fiche_Exo_respirationEtNutritionChezLHomme_cinquieme.html' },
+      ]},
+      { id: 'pc-5e', label: 'Physique-Chimie', ico: '⚗️', cls: 'ico-physique', fiches: [
+        { name: 'Mélanges de Liquides et Solides', href: 'fiche_melangessolidesetliquides.html' },
+        { name: 'Dissolution des Gaz dans l\'Eau', href: 'fiche_dissolutiondesgazdansleau_cinquieme.html' },
+        { name: 'Description de la Transformation Chimique', href: 'fiche_DescriptionDeLaTransformationChimique_cinquieme.html' },
+      ]},
+      { id: 'maths-5e', label: 'Maths', ico: '📐', cls: 'ico-maths', fiches: [
+        { name: 'Les Quadrilatères', href: 'fiche_quadrilatères_cinquieme.html' },
+        { name: 'La Proportionnalité', href: 'fiche_proportionalité_cinquieme.html' },
+        { name: 'Le Calcul Littéral', href: 'fiche_calcul_litteral_cinquieme.html' },
+      ]},
+      { id: 'rev-5e', label: 'Révisions d\'été — Objectifs 4ème', ico: '☀️', cls: 'ico-rev', fiches: [
+        { name: 'Les Priorités Opératoires', href: 'fiche_Priorités_opératoires_revisions_cinquieme.html' },
+        { name: 'Addition et Soustraction de Fractions', href: 'fiche_Addition_Soustraction_Fractions_revisions_cinquieme.html' },
+        { name: 'Multiplication de Fractions', href: 'fiche_Produits_Fractions_revisions_cinquieme.html' },
+        { name: 'Les Puissances de 10', href: 'fiche_Puissances_de_10_revisions_cinquieme.html' },
+        { name: 'Calculer une Fraction d\'un Nombre', href: 'fiche_Fraction_D_Un_Nombre_cinquieme.html' },
+        { name: 'Proportionnalité et Échelles', href: 'fiche_Proportionnalite_et_Echelles_revisions_cinquieme.html' },
+        { name: 'Nombres Relatifs', href: 'fiche_Nombres_Relatifs_revisions_cinquieme.html' },
+      ]},
+    ]
+  },
+  '4e': {
+    label: 'Classe de 4ème', color: '#4f8ef7',
+    matieres: [
+      { id: 'svt-4e', label: 'SVT', ico: '🌿', cls: 'ico-svt', fiches: [
+        { name: 'Le Système Nerveux', href: 'fiche_Le_système_nerveux_quatrieme.html' },
+		{ name: 'Séismes Et Volcans', href: 'fiche_Séismes_Et_Volcans_quatrieme.html' },
+      ]},
+      { id: 'maths-4e', label: 'Maths', ico: '📐', cls: 'ico-maths', fiches: [
+        { name: 'Multiplication & Division des Nombres Relatifs', href: 'fiche_Multiplication_Division_des_nombres_relatifs_quatrieme.html' },
+        { name: 'Géométrie dans l\'Espace – Volumes et Conversions', href: 'fiche_Géométrie_dans_l_espace_quatrieme.html' },
+        { name: 'Le Rôle de la Lettre et du Signe Égal', href: 'fiche_Role_de_la_lettre_et_du_signe_egal_quatrieme.html' },
+        { name: 'Calcul Littéral – Réduire, Factoriser, Développer', href: 'fiche_Calcul_Litteral_quatrieme.html' },
+        { name: 'Équations du 1er degré', href: 'fiche_Equations_du_1er_degre.html' },
+		{ name: 'Statistiques et Probabilités', href: 'fiche_Statistiques_et_Probabilités_quatrieme.html' },
+		{ name: 'Puissances', href: 'fiche_Puissances_quatrieme.html' },
+      ]},
+      { id: 'ang-4e', label: 'Anglais', ico: '🇬🇧', cls: 'ico-anglais', fiches: [
+        { name: 'Prétérit Simple & Prétérit en -ING', href: 'fiche_Prétérit_quatrieme.html' },
+        { name: 'Passive Voice & Slavery in America', href: 'fiche_Slavery_in_America_Grammar_quatrieme.html' },
+      ]},
+      { id: 'pc-4e', label: 'Physique-Chimie', ico: '⚡', cls: 'ico-physique', fiches: [
+        { name: 'Tension et Intensité : Mesures', href: 'fiche_TensionEtIntensité_Mesure_quatrieme.html' },
+		{ name: 'Lois de l\'électricité', href: 'fiche_LoisElectricite_quatrieme.html' },
+		{ name: 'Mouvement et Vitesse', href: 'fiche_Mouvements_Et_Vitesse_quatrieme.html' },
+		{ name: 'Sources de lumière', href: 'fiche_Les_sources_de_lumière_quatrieme.html' }
+      ]},
+      { id: 'tech-4e', label: 'Technologie', ico: '🔧', cls: 'ico-techno', fiches: [
+        { name: 'TP – Réalisation d\'un Quizz Électrique', href: 'fiche_TP_Quizz_Electrique_quatrieme.html' },
+		{ name: 'Démarche de projet', href: 'fiche_Démarche_de_projet_et_planification_quatrieme.html' },
+		{ name: 'Réalité virtuelle / Réalité augmentée', href: 'fiche_Réalité_virtuelle_et_réalité_augmentée_quatrieme.html' },
+		{ name: 'Le prototypage', href: 'fiche_Le_prototypage_quatrieme.html' }
+      ]},
+    ]
+  },
+  '3e': {
+    label: 'Classe de 3ème', color: '#a855f7',
+    matieres: [
+      { id: 'svt-3e', label: 'SVT', ico: '🌿', cls: 'ico-svt', fiches: [] },
+    ]
+  },
+  '2nd': {
+    label: 'Classe de Seconde', color: '#f59e0b',
+    matieres: [
+      { id: 'pc-2nd', label: 'Physique-Chimie', ico: '⚗️', cls: 'ico-physique', fiches: [
+        { name: 'Transformations Physiques & Changements d\'État', href: 'fiche_transformationPhysique_seconde.html' },
+        { name: 'Transformation Chimique', href: 'fiche_transformationChimique_seconde.html' },
+        { name: 'Transformation Nucléaire', href: 'fiche_transformationNucleaire_seconde.html' },
+      ]},
+    ]
+  },
+  '1re': {
+    label: 'Classe de Première', color: '#f43f5e',
+    matieres: [
+      { id: 'maths-1re', label: 'Maths', ico: '📐', cls: 'ico-maths', fiches: [
+        { name: 'Probabilités', href: 'fiche_probabilites_premiere.html' },
+        { name: 'Suites Numériques', href: 'fiche_SuiteNumérique_premiere.html' },
+        { name: 'Variable Aléatoire', href: 'fiche_VariableAleatoire_premiere.html' },
+		{ name: 'Trigonométrie', href: 'fiche_Trigonometrie_premiere.html' },
+		{ name: 'Fonction Exponentielle', href: 'fiche_Fonction_exponentielle_premiere.html' },
+		{ name: 'Equation cartesienne droite et cercle', href: 'fiche_Equation_cartesienne_droite_et_cercle_premiere.html' },
+      ]},
+    ]
+  },
+};
+
+let current = null;
+
+function openPanel(id) {
+  const panel = document.getElementById('reveal-panel');
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+
+  if (current === id) {
+    current = null;
+    panel.innerHTML = '';
+    return;
+  }
+
+  current = id;
+  document.getElementById('tile-' + id).classList.add('active');
+  const d = data[id];
+
+  const matsHtml = d.matieres.map(mat => {
+    const fichesHtml = mat.fiches.length === 0
+      ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
+      : mat.fiches.map(f =>
+          `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
+        ).join('');
+    return `
+      <div class="mat-block" id="mb-${mat.id}">
+        <div class="mat-block-header" onclick="toggleMat('mb-${mat.id}')">
+          <div class="mat-ico ${mat.cls}">${mat.ico}</div>
+          <span class="mat-block-title">${mat.label}</span>
+          <span class="mat-block-count">${mat.fiches.length} fiche${mat.fiches.length !== 1 ? 's' : ''}</span>
+          <span class="mat-block-arrow">▶</span>
+        </div>
+        <div class="mat-block-fiches">${fichesHtml}</div>
+      </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div style="max-width:900px;margin:0 auto;padding:0 16px">
+      <div class="panel-inner">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <div class="panel-dot" style="background:${d.color}"></div>
+            <h3>${d.label}</h3>
+          </div>
+          <button class="panel-close" onclick="closePanel()">✕</button>
+        </div>
+        <div class="panel-matieres">${matsHtml}</div>
+      </div>
+    </div>`;
+
+  // auto-open first
+  const first = panel.querySelector('.mat-block');
+  if (first) first.classList.add('open');
+
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
+function closePanel() {
+  document.getElementById('reveal-panel').innerHTML = '';
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+  current = null;
+}
+
+function toggleMat(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
 </body>
 </html>
