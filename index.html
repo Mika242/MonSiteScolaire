@@ -508,72 +508,8 @@
 <!-- TUILES -->
 <div class="tiles-section">
   <div class="tiles-label">Choisis ton niveau</div>
-  <div class="tiles-grid">
-
-    <div class="tile tile-5e" onclick="openPanel('5e')" id="tile-5e">
-      <div class="tile-badge">18 fiches</div>
-      <div class="tile-emoji">🌿</div>
-      <div class="tile-bottom">
-        <div class="tile-level">5ème</div>
-        <div class="tile-name">Cinquième</div>
-        <div class="tile-pills">
-          <span class="tile-pill">SVT</span>
-          <span class="tile-pill">Physique</span>
-          <span class="tile-pill">Maths</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tile tile-4e" onclick="openPanel('4e')" id="tile-4e">
-      <div class="tile-badge">9 fiches</div>
-      <div class="tile-emoji">📐</div>
-      <div class="tile-bottom">
-        <div class="tile-level">4ème</div>
-        <div class="tile-name">Quatrième</div>
-        <div class="tile-pills">
-          <span class="tile-pill">Maths</span>
-          <span class="tile-pill">Anglais</span>
-          <span class="tile-pill">SVT</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tile tile-3e" onclick="openPanel('3e')" id="tile-3e">
-      <div class="tile-badge">À venir</div>
-      <div class="tile-emoji">🔬</div>
-      <div class="tile-bottom">
-        <div class="tile-level">3ème</div>
-        <div class="tile-name">Troisième</div>
-        <div class="tile-pills">
-          <span class="tile-pill">SVT</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tile tile-2nd" onclick="openPanel('2nd')" id="tile-2nd">
-      <div class="tile-badge">3 fiches</div>
-      <div class="tile-emoji">⚗️</div>
-      <div class="tile-bottom">
-        <div class="tile-level">2nde</div>
-        <div class="tile-name">Seconde</div>
-        <div class="tile-pills">
-          <span class="tile-pill">Physique</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="tile tile-1re" onclick="openPanel('1re')" id="tile-1re">
-      <div class="tile-badge">3 fiches</div>
-      <div class="tile-emoji">📊</div>
-      <div class="tile-bottom">
-        <div class="tile-level">1ère</div>
-        <div class="tile-name">Première</div>
-        <div class="tile-pills">
-          <span class="tile-pill">Maths</span>
-        </div>
-      </div>
-    </div>
-
+  <div class="tiles-grid" id="tiles-grid">
+    <!-- Généré dynamiquement par JS depuis l'objet data, voir <script> en fin de page -->
   </div>
 </div>
 
@@ -693,6 +629,55 @@ const data = {
     ]
   },
 };
+
+// ── Métadonnées fixes par niveau (emoji, style, libellé court) ──
+// Ce qui varie (nombre de fiches, liste des matières) est calculé
+// dynamiquement depuis l'objet `data` ci-dessus par renderTiles(),
+// pour que les tuiles d'accueil ne puissent plus jamais être
+// désynchronisées du contenu réel des fiches.
+const niveauxMeta = {
+  '5e':  { emoji: '🌿', tileClass: 'tile-5e',  court: '5ème',  nom: 'Cinquième' },
+  '4e':  { emoji: '📐', tileClass: 'tile-4e',  court: '4ème',  nom: 'Quatrième' },
+  '3e':  { emoji: '🔬', tileClass: 'tile-3e',  court: '3ème',  nom: 'Troisième' },
+  '2nd': { emoji: '⚗️', tileClass: 'tile-2nd', court: '2nde',  nom: 'Seconde' },
+  '1re': { emoji: '📊', tileClass: 'tile-1re', court: '1ère',  nom: 'Première' },
+};
+
+// Ordre d'affichage des tuiles (l'objet data n'a pas d'ordre garanti)
+const ordreNiveaux = ['5e', '4e', '3e', '2nd', '1re'];
+
+function renderTiles() {
+  const grid = document.getElementById('tiles-grid');
+  if (!grid) return;
+
+  const html = ordreNiveaux.map(id => {
+    const niveau = data[id];
+    const meta = niveauxMeta[id];
+    if (!niveau || !meta) return '';
+
+    const totalFiches = niveau.matieres.reduce((somme, mat) => somme + mat.fiches.length, 0);
+    const badge = totalFiches === 0 ? 'À venir' : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
+
+    const pillsHtml = niveau.matieres
+      .map(mat => `<span class="tile-pill">${mat.label}</span>`)
+      .join('');
+
+    return `
+    <div class="tile ${meta.tileClass}" onclick="openPanel('${id}')" id="tile-${id}">
+      <div class="tile-badge">${badge}</div>
+      <div class="tile-emoji">${meta.emoji}</div>
+      <div class="tile-bottom">
+        <div class="tile-level">${meta.court}</div>
+        <div class="tile-name">${meta.nom}</div>
+        <div class="tile-pills">${pillsHtml}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = html;
+}
+
+renderTiles();
 
 let current = null;
 
