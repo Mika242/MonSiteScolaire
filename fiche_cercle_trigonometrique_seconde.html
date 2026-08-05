@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Cercle Trigonométrique — 2nde</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#F7F9FC;--card:#FFFFFF;--surface2:#EEF3F9;--border:#E2E8F0;
+  --ink:#1A2B3C;--ink2:#5B6B7D;--ink3:#94A3B3;
+  --brand:#58CC02;--brand-dark:#3D9401;--brand-light:#E8F9DA;
+  --accent:#FFC800;--accent-light:#FFF6D9;
+  --t1:#1CB0F6;--t2:#58CC02;--t3:#CE82FF;--t4:#FF9600;--t5:#FF4B4B;--t6:#1CB0F6;
+  --t1b:#E3F5FE;--t2b:#E8F9DA;--t3b:#F5E9FE;--t4b:#FFF1DE;--t5b:#FFE8E8;--t6b:#E3F5FE;
+  --texte-f1:#0B6BA8;--texte-f2:#3D9401;--texte-f3:#7B3FA0;--texte-f4:#B35F00;--texte-f5:#C82929;--texte-f6:#0B6BA8;
+  --tc1:#FF4B4B;--tc2:#1CB0F6;--ok:#3D9401;--bad:#EA2B2B;
+  --shadow-card:0 2px 8px rgba(26,43,60,.06);
+  --shadow-pop:0 4px 14px rgba(26,43,60,.1);
+  --shadow-pop-sm:0 2px 8px rgba(26,43,60,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:17px;line-height:1.65}
+header{background:var(--brand);padding:32px 24px 26px;position:relative;overflow:hidden}
+.hi{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.ht img{height:46px;border-radius:14px;margin-bottom:10px;display:block;background:rgba(255,255,255,.15);padding:4px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:8px}
+header h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:5px}
+header h1 em{font-style:normal;color:#fff}
+header p{font-size:.86rem;color:rgba(255,255,255,.85);font-weight:500}
+.rb{background:rgba(255,255,255,.16);border-radius:16px;padding:14px 18px;text-align:center;min-width:148px;flex-shrink:0}
+.rbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
+.rs{font-size:1.25rem;letter-spacing:2px;margin-bottom:4px;display:block;color:var(--accent)}
+.rsc{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;line-height:1}
+.rst{font-size:.78rem;color:rgba(255,255,255,.65)}
+.rp{font-size:.72rem;color:rgba(255,255,255,.75);margin-top:2px;font-weight:600}
+.rbar{width:100%;height:6px;background:rgba(255,255,255,.2);border-radius:10px;margin-top:7px;overflow:hidden}
+.rbar-f{height:100%;border-radius:10px;background:var(--accent);width:0%;transition:width .5s}
+.cs{background:var(--ink);padding:9px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cs-t{font-size:.77rem;color:rgba(255,255,255,.85);font-weight:600}
+.cs-b{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:var(--ink);text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:800;transition:transform .15s}
+.cs-b:hover{transform:scale(1.04)}
+.tw{background:var(--card);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-card)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 12px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:12px 14px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink3);transition:all .2s;white-space:nowrap;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink2);background:var(--surface2)}
+.tab.t1.active{color:var(--t1);border-bottom-color:var(--t1);background:var(--t1b)}
+.tab.t2.active{color:var(--t2);border-bottom-color:var(--t2);background:var(--t2b)}
+.tab.t3.active{color:var(--t3);border-bottom-color:var(--t3);background:var(--t3b)}
+.tab.t4.active{color:var(--t4);border-bottom-color:var(--t4);background:var(--t4b)}
+.tab.t5.active{color:var(--t5);border-bottom-color:var(--t5);background:var(--t5b)}
+.tab.t6.active{color:var(--t6);border-bottom-color:var(--t6);background:var(--t6b)}
+.tab.tp.active{color:var(--brand-dark);border-bottom-color:var(--brand);background:var(--brand-light)}
+.tab.tc1.active{color:var(--tc1);border-bottom-color:var(--tc1);background:var(--t5b)}
+.tab.tc2.active{color:var(--tc2);border-bottom-color:var(--tc2);background:var(--t1b)}
+main{max-width:980px;margin:auto;padding:28px 16px 80px}
+.sec{display:none}.sec.active{display:block}
+.si{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.si1{background:var(--t1b)}.si2{background:var(--t2b)}.si3{background:var(--t3b)}
+.si4{background:var(--t4b)}.si5{background:var(--t5b)}.si6{background:var(--t6b)}
+.sip{background:var(--brand-light);color:var(--brand-dark)}.sic1{background:var(--t5b);color:var(--tc1)}.sic2{background:var(--t1b);color:var(--tc2)}
+.st h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800}
+.st p{color:var(--ink2);font-size:.85rem;margin-top:2px;font-weight:500}
+.cours{background:var(--card);border-radius:18px;padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow-card);border-left:5px solid}
+.c1{border-left-color:var(--t1)}.c2{border-left-color:var(--t2)}.c3{border-left-color:var(--t3)}
+.c4{border-left-color:var(--t4)}.c5{border-left-color:var(--t5)}.c6{border-left-color:var(--t6)}
+.clbl{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.form{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;border-radius:12px;padding:10px 15px;font-size:.9rem;margin:6px 0;display:block;line-height:1.8}
+.f1{background:var(--t1b);color:var(--texte-f1)}
+.f2{background:var(--t2b);color:var(--texte-f2)}
+.f3{background:var(--t3b);color:var(--texte-f3)}
+.f4{background:var(--t4b);color:var(--texte-f4)}
+.f5{background:var(--t5b);color:var(--texte-f5)}
+.f6{background:var(--t6b);color:var(--texte-f6)}
+.mn{font-family:'Plus Jakarta Sans',monospace;font-size:.86rem;background:var(--surface2);padding:2px 7px;border-radius:6px;color:var(--ink);display:inline-block;font-weight:700}
+.tip{background:var(--accent-light);border-radius:12px;padding:11px 15px;font-size:.86rem;margin-top:9px;line-height:1.7}
+.tip b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:#8A6D00;margin-bottom:3px}
+.ex{background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:9px;font-size:.86rem;line-height:1.85}
+.ex b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:5px}
+.pt{background:var(--t2b);border-radius:12px;padding:11px 15px;margin-top:9px;font-size:.85rem;font-style:normal;color:var(--texte-f2);line-height:1.6}
+.pt::before{content:'✏️ Rédaction attendue : ';font-weight:700;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);display:block;margin-bottom:4px}
+.methode{background:var(--t3b);border-radius:14px;padding:14px 18px;margin:12px 0}
+.mlbl{font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--texte-f3);margin-bottom:9px}
+.steps{list-style:none;padding:0}
+.steps li{font-size:.88rem;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.08);line-height:1.75;font-weight:500}
+.steps li:last-child{border:none}
+.steps li::before{content:'▸ ';color:var(--texte-f3);font-weight:700}
+.lvl{font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:14px;margin-left:5px}
+.le{background:var(--t2b);color:var(--texte-f2)}
+.lm{background:var(--accent-light);color:#8A6D00}
+.lh{background:var(--t5b);color:var(--texte-f5)}
+.div{display:flex;align-items:center;gap:9px;margin:22px 0 13px;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.div::before,.div::after{content:'';flex:1;height:2px;background:var(--border);border-radius:2px}
+.pr{display:flex;align-items:center;gap:10px;margin:16px 0 6px}
+.pb{flex:1;height:8px;background:var(--surface2);border-radius:10px;overflow:hidden}
+.pf{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--t1)}.pf2{background:var(--t2)}.pf3{background:var(--t3)}
+.pf4{background:var(--t4)}.pf5{background:var(--t5)}.pf6{background:var(--t6)}
+.pt2{font-size:.76rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.ctbl{width:100%;border-collapse:separate;border-spacing:0;font-size:.85rem;margin:10px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card)}
+.ctbl th{padding:9px 12px;text-align:center;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;background:var(--brand);color:#fff}
+.ctbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:.84rem;background:var(--card)}
+.ctbl td.lab{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:700;text-align:left;background:var(--surface2)}
+.ctbl tr:last-child td{border-bottom:none}
+.schema-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;box-shadow:var(--shadow-card)}
+.schema-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
+.schema-corps{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.schema-svg{flex-shrink:0;max-width:100%;background:var(--surface2);border-radius:12px;padding:10px;display:inline-block}
+.schema-svg svg{display:block;width:260px;max-width:100%;height:auto}
+.schema-legendes{flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px}
+.schema-legende{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;line-height:1.5}
+.schema-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--tc1);color:#fff;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+@media(max-width:520px){.schema-corps{flex-direction:column}.schema-svg{align-self:center}}
+.frise-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;overflow-x:auto;box-shadow:var(--shadow-card)}
+.frise-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:22px}
+.frise-ligne{display:flex;align-items:flex-start;gap:0;min-width:min-content;position:relative;padding-top:8px}
+.frise-etape{flex:1;min-width:110px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding:0 8px}
+.frise-date{font-size:.7rem;font-weight:800;color:var(--brand-dark);margin-bottom:11px;white-space:nowrap;position:relative;z-index:1;background:var(--card);padding:0 4px}
+.frise-point-track{position:relative;width:100%;height:14px;display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+.frise-point-track::before{content:'';position:absolute;left:0;right:50%;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-point-track::after{content:'';position:absolute;left:50%;right:0;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-etape:first-child .frise-point-track::before{display:none}
+.frise-etape:last-child .frise-point-track::after{display:none}
+.frise-point{width:16px;height:16px;border-radius:50%;background:var(--brand);position:relative;z-index:2;flex-shrink:0;box-shadow:0 0 0 4px var(--brand-light)}
+.frise-label{font-size:.78rem;color:var(--ink2);line-height:1.4;font-weight:500}
+.exo{background:var(--card);border-radius:16px;padding:17px 21px;margin-bottom:11px;box-shadow:var(--shadow-card);transition:box-shadow .15s}
+.exo:hover{box-shadow:var(--shadow-pop-sm)}
+.exo-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.94rem;font-weight:700;line-height:1.6;margin-bottom:9px}
+.ctx{background:var(--surface2);border-radius:12px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;line-height:1.75;font-weight:500}
+.ctx b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);display:block;margin-bottom:3px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;align-items:flex-start;gap:9px;padding:11px 14px;background:var(--surface2);border:2px solid transparent;border-radius:14px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .14s;line-height:1.5}
+.opts label:hover{border-color:var(--brand);background:var(--brand-light)}
+.fi{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;background:var(--surface2);color:var(--ink);outline:none;transition:border .14s;margin-top:6px}
+.fi:focus{border-color:var(--brand);background:var(--card)}
+.btn{padding:11px 22px;border-radius:14px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:800;cursor:pointer;transition:all .14s;margin-top:9px;margin-right:6px;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.b1{background:var(--t1);color:#fff}.b2{background:var(--t2);color:#fff}.b3{background:var(--t3);color:#fff}
+.b4{background:var(--t4);color:#fff}.b5{background:var(--t5);color:#fff}.b6{background:var(--t6);color:#fff}
+.bc1{background:var(--tc1);color:#fff}.bc2{background:var(--tc2);color:#fff}
+.bg{background:var(--surface2);border:none;color:var(--ink2);box-shadow:none}
+.bg:hover{background:var(--border);color:var(--ink)}
+.res{display:none;margin-top:9px;padding:11px 15px;border-radius:14px;font-size:.86rem;line-height:1.6;font-weight:600}
+.res.ok{background:var(--t2b)}.res.bad{background:var(--t5b)}
+.ok-l{color:var(--ok);font-weight:800}.bad-l{color:var(--bad);font-weight:800}
+.expl{margin-top:5px;color:var(--ink2);font-size:.83rem;line-height:1.9;font-weight:500}
+.corr{display:none;margin-top:9px;background:var(--surface2);border-radius:14px;padding:13px 17px;font-size:.86rem;line-height:2}
+.corr .s{color:var(--ink2);border-bottom:1px dashed var(--border);padding:4px 0;font-weight:500}
+.corr .s:last-child{border:none;color:var(--ink);font-weight:700}
+.corr .s::before{content:'▸ ';color:var(--ok)}
+.chdr{border-radius:18px;padding:19px 23px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-card)}
+.chdr1{background:var(--t5b)}
+.chdr2{background:var(--t1b)}
+.cbdg{color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:14px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.cbdg1{background:var(--tc1)}.cbdg2{background:var(--tc2)}
+.cinfo h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.cinfo p,.cinfo ul{font-size:.85rem;line-height:1.7;font-weight:500}
+.cinfo ul{padding-left:16px;margin-top:6px}
+.cexo{background:var(--card);border-radius:18px;padding:21px 23px;margin-bottom:15px;box-shadow:var(--shadow-card)}
+.cehd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:2px solid var(--border);flex-wrap:wrap;gap:8px}
+.cen{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800}
+.cen1{color:var(--tc1)}.cen2{color:var(--tc2)}
+.cpts{border-radius:14px;padding:3px 11px;font-size:.76rem;font-weight:800}
+.cpts1{background:var(--t5b);color:var(--tc1)}
+.cpts2{background:var(--t1b);color:var(--tc2)}
+.csub{margin-top:11px;padding:11px 15px;background:var(--surface2);border-radius:12px;font-size:.9rem;line-height:1.9;font-weight:500}
+.csub b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:4px}
+.ans{margin-top:9px;min-height:65px;background:var(--surface2);border-radius:12px;padding:6px 11px;font-size:.87rem;color:var(--ink3);font-style:italic}
+.ans.tall{min-height:105px}
+.ans.xt{min-height:145px}
+.cco{display:none;margin-top:12px;background:var(--t2b);border-radius:14px;padding:14px 18px}
+.ccoh{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ok);margin-bottom:10px}
+.ccob .l{display:block;border-bottom:1px dashed rgba(61,148,1,.25);padding:4px 0;color:var(--ink2);font-size:.84rem;font-weight:500}
+.ccob .l:last-child{border:none;color:var(--ink);font-weight:700}
+.ccob .l::before{content:'▸ ';color:var(--ok)}
+.ccob .hi{color:var(--ok);font-weight:700}
+.cta{background:var(--brand);border-radius:22px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-title em{font-style:normal;color:var(--accent)}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:18px;line-height:1.5;max-width:460px;margin-left:auto;margin-right:auto;font-weight:500}
+.cta-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:.75rem;color:#fff;font-weight:700}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:var(--ink);text-decoration:none;padding:12px 28px;border-radius:16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:800;transition:transform .2s;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.cta-btn:hover{transform:translateY(-2px)}
+footer{text-align:center;padding:26px;font-size:.78rem;color:var(--ink2);margin-top:24px;line-height:1.9}
+.fc{font-size:.7rem;color:var(--ink3);margin-top:6px}
+.fc strong{color:var(--ink2)}
+footer a{color:var(--brand-dark);text-decoration:none;font-weight:700}
+@media(max-width:600px){header h1{font-size:1.35rem}.hi{flex-direction:column;align-items:flex-start}.rb{align-self:stretch}main{padding:16px 10px 60px}}
+
+
+</style>
+<script>
+
+let ta=0,tc2=0;
+const sc={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},tot={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},ans={};
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,cor,ex,s){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch)if(c.checked)sel=c.value;
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-l'>&#9888; Choisis une reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(sel===cor){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function checkF(id,cor,ex,s){
+  const inp=document.getElementById(id+'-i'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  const a=cor.split('|').map(v=>v.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'));
+  if(!val){r.innerHTML="<span class='bad-l'>&#9888; Ecris ta reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(a.includes(val)){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction ci-dessous.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function upP(s){
+  const p=tot[s]>0?Math.round(sc[s]/tot[s]*100):0;
+  const b=document.getElementById('pb-'+s),t=document.getElementById('pt-'+s);
+  if(b)b.style.width=p+'%';if(t)t.textContent=sc[s]+' / '+tot[s]+' . '+p+'%';
+}
+function upR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'-';document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='*'.repeat(s)+'.'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  b.style.background=p>=75?'linear-gradient(90deg,#22c55e,#16a34a)':p>=50?'linear-gradient(90deg,#f59e0b,#ca8a04)':'linear-gradient(90deg,#93c5fd,#2563eb)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+function showCorr(id){const e=document.getElementById(id);e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="ht">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbdg">Mathématiques · 2nde</div>
+      <h1>Le Cercle Trigonométrique</h1>
+      <p>Radians, cosinus et sinus d'un nombre réel</p>
+    </div>
+    <div class="rb">
+      <div class="rbl">Mon score</div>
+      <span class="rs" id="r-s">SS</span>
+      <div class="rsc"><span id="r-c">0</span><span class="rst"> / <span id="r-t">0</span></span></div>
+      <div class="rp" id="r-p">-</div>
+      <div class="rbar"><div class="rbar-f" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="cs">
+  <span class="cs-t">📲 Nouvelles fiches en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cs-b">◈ @toncoachscolaire</a>
+</div>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-t1" onclick="showTab('t1')">⭕ S1 — Le radian et le cercle trigonométrique</button>
+<button class="tab t2" id="tab-t2" onclick="showTab('t2')">📈 S2 — Cosinus et sinus d'un nombre réel</button>
+<button class="tab tp" id="tab-tp" onclick="showTab('tp')">🧩 Problèmes</button>
+<button class="tab tc2" id="tab-tc2" onclick="showTab('tc2')">📋 Contrôle</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="si"><div class="sico si1">⭕</div>
+  <div class="st"><h2>Série 1 — Une nouvelle unité d'angle</h2><p>Aller au-delà du triangle rectangle</p></div></div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Le cercle trigonométrique</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Le cercle trigonométrique est le cercle de centre O et de rayon 1, tracé dans un repère orthonormé, muni du sens direct (sens inverse des aiguilles d'une montre). Il permet de généraliser les notions de cosinus et sinus, déjà vues au collège pour un angle aigu dans un triangle rectangle, à N'IMPORTE QUEL nombre réel.</p>
+    <span class="form f1">Cercle trigonométrique : centre O, rayon 1, sens direct (inverse des aiguilles d'une montre)</span>
+    <div class="tip"><b>Ce qui change par rapport au collège</b>Au collège (3ème), le cosinus et le sinus étaient définis uniquement pour un angle aigu dans un triangle rectangle. En seconde, grâce au cercle trigonométrique, on peut définir le cosinus et le sinus de N'IMPORTE QUEL nombre réel, même au-delà de 90°.</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Le radian, une nouvelle unité d'angle</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Le radian est une unité de mesure d'angle, complémentaire au degré. Elle est directement liée à la longueur d'un arc sur le cercle trigonométrique (de rayon 1).</p>
+    <span class="form f1">180° = π radians</span>
+    <span class="form f1">Conversion degrés vers radians : angle_rad = angle_deg × π/180</span>
+    <table class="ctbl">
+      <tr><th>Angle en degrés</th><th>Angle en radians</th></tr>
+      <tr><td class="lab">30°</td><td>π/6</td></tr>
+      <tr><td class="lab">45°</td><td>π/4</td></tr>
+      <tr><td class="lab">60°</td><td>π/3</td></tr>
+      <tr><td class="lab">90°</td><td>π/2</td></tr>
+      <tr><td class="lab">180°</td><td>π</td></tr>
+    </table>
+    <div class="ex"><b>Exemple résolu : convertir un angle en radians</b>
+Convertir 60° en radians.
+60° = 60 × π/180 = π/3 radians</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf1" id="pb-t1"></div></div><div class="pt2" id="pt-t1">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>À combien de radians correspond un angle de 180° ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q11" value="A"> π radians</label>
+      <label><input type="radio" name="q11" value="B"> 2π radians</label>
+      <label><input type="radio" name="q11" value="C"> π/2 radians</label>
+    </div>
+    <button class="btn b1" onclick="check('q11','A','180° correspond exactement à π radians, une relation fondamentale à connaître par cœur.','t1')">Vérifier</button>
+    <div class="res" id="q11-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Convertis 90° en radians. Donne le résultat sous forme de fraction avec π (exemple de format: π/6).</p>
+    <input class="fi" id="q12-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q12','π/2|pi/2','90° = 90 × π/180 = π/2 radians.','t1')">Vérifier</button>
+    <div class="res" id="q12-r"></div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-t2">
+  <div class="si"><div class="sico si2">📈</div>
+  <div class="st"><h2>Série 2 — Définir cos(x) et sin(x)</h2><p>Des coordonnées sur le cercle</p></div></div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Définition du cosinus et du sinus</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Pour tout réel x, on associe un point M sur le cercle trigonométrique (par un mécanisme appelé enroulement de la droite numérique). Le cosinus de x est l'ABSCISSE de M, et le sinus de x est l'ORDONNÉE de M.</p>
+    <span class="form f2">cos(x) = abscisse du point M associé à x</span>
+    <span class="form f2">sin(x) = ordonnée du point M associé à x</span>
+    <div class="ex"><b>Exemple résolu : lire cos et sin sur le cercle</b>
+Si M est le point associé à x=π/2 (soit 90°), il se situe en haut du cercle, au point (0;1).
+cos(π/2) = 0 (abscisse de M)
+sin(π/2) = 1 (ordonnée de M)</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Les propriétés fondamentales</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Comme M se trouve toujours sur un cercle de rayon 1, plusieurs propriétés découlent directement de cette définition.</p>
+    <span class="form f2">-1 ≤ cos(x) ≤ 1 et -1 ≤ sin(x) ≤ 1</span>
+    <span class="form f2">cos²(x) + sin²(x) = 1</span>
+    <span class="form f2">cos(-x) = cos(x) et sin(-x) = -sin(x)</span>
+    <div class="methode">
+      <div class="mlbl">🔢 D'où vient la relation cos²+sin²=1</div>
+      <ul class="steps">
+        <li>Le point M(cos(x);sin(x)) est situé sur le cercle trigonométrique, de rayon 1 et de centre O.</li>
+        <li>La distance OM est donc toujours égale à 1.</li>
+        <li>D'après la formule de la distance : OM² = cos²(x)+sin²(x).</li>
+        <li>Comme OM=1, on obtient OM²=1, donc cos²(x)+sin²(x)=1.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Les valeurs remarquables</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Certaines valeurs de cosinus et de sinus, correspondant aux angles remarquables (30°, 45°, 60°, 90°), sont à connaître par cœur, car elles reviennent très fréquemment dans les exercices.</p>
+    <table class="ctbl">
+      <tr><th>x</th><th>cos(x)</th><th>sin(x)</th></tr>
+      <tr><td class="lab">0</td><td>1</td><td>0</td></tr>
+      <tr><td class="lab">π/6 (30°)</td><td>√3/2</td><td>1/2</td></tr>
+      <tr><td class="lab">π/4 (45°)</td><td>√2/2</td><td>√2/2</td></tr>
+      <tr><td class="lab">π/3 (60°)</td><td>1/2</td><td>√3/2</td></tr>
+      <tr><td class="lab">π/2 (90°)</td><td>0</td><td>1</td></tr>
+    </table>
+    <div class="tip"><b>Un même point pour plusieurs nombres</b>Comme le cercle a un périmètre de 2π, les nombres x, x+2π, x-2π, x+4π... correspondent tous au MÊME point M sur le cercle, et ont donc le même cosinus et le même sinus. On dit que ces fonctions sont périodiques, de période 2π.</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf2" id="pb-t2"></div></div><div class="pt2" id="pt-t2">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Que vaut cos²(x)+sin²(x) pour tout réel x ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q21" value="A"> 1</label>
+      <label><input type="radio" name="q21" value="B"> 0</label>
+      <label><input type="radio" name="q21" value="C"> 2</label>
+    </div>
+    <button class="btn b2" onclick="check('q21','A','Cette relation fondamentale découle du fait que le point M(cos(x);sin(x)) est toujours à une distance 1 du centre O (rayon du cercle trigonométrique).','t2')">Vérifier</button>
+    <div class="res" id="q21-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Sachant que cos(x)=3/5 et que x est dans le premier quadrant (sin(x) positif), calcule sin(x) en utilisant la relation cos²+sin²=1.</p>
+    <button class="bg btn" onclick="toggle('q22')">📋 Correction</button>
+    <div class="corr" id="q22">
+      <div class="s">On utilise la relation : cos²(x)+sin²(x)=1, donc sin²(x) = 1-cos²(x) = 1-(3/5)² = 1-9/25 = 16/25.</div>
+      <div class="s">On prend la racine carrée positive (car sin(x) est positif dans ce quadrant) : sin(x) = √(16/25) = 4/5.</div>
+      <div class="s"><span class="hi">sin(x) = 4/5.</span></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tp">
+  <div class="si"><div class="sico sip">🧩</div>
+  <div class="st"><h2>Problèmes — Contextes variés</h2><p>Le cercle trigonométrique en situation</p></div></div>
+
+  <div class="div">Problème 1 — Convertir plusieurs angles</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lm">Intermédiaire</span></div>
+    <p>Convertis les angles suivants en radians : 120°, puis 270°.</p>
+    <button class="bg btn" onclick="toggle('pb1')">📋 Correction</button>
+    <div class="corr" id="pb1">
+      <div class="s">120° = 120 × π/180 = 2π/3 radians (en simplifiant la fraction 120/180 = 2/3).</div>
+      <div class="s"><span class="hi">270° = 270 × π/180 = 3π/2 radians (en simplifiant la fraction 270/180 = 3/2).</span></div>
+    </div>
+  </div>
+<div class="div">Problème 2 — Utiliser la périodicité</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lm">Intermédiaire</span></div>
+    <p>Sachant que cos(π/6)=√3/2, donne la valeur de cos(π/6 + 2π), en justifiant.</p>
+    <button class="bg btn" onclick="toggle('pb2')">📋 Correction</button>
+    <div class="corr" id="pb2">
+      <div class="s">Les nombres x et x+2π correspondent toujours au même point sur le cercle trigonométrique (périodicité de 2π).</div>
+      <div class="s"><span class="hi">Donc cos(π/6+2π) = cos(π/6) = √3/2.</span></div>
+    </div>
+  </div>
+<div class="div">Problème 3 — Utiliser la parité de cos et sin</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lh">Avancé</span></div>
+    <p>Sachant que sin(π/3)=√3/2, calcule sin(-π/3), en utilisant la propriété de parité du sinus.</p>
+    <button class="bg btn" onclick="toggle('pb3')">📋 Correction</button>
+    <div class="corr" id="pb3">
+      <div class="s">La fonction sinus est impaire : sin(-x) = -sin(x) pour tout réel x.</div>
+      <div class="s"><span class="hi">Donc sin(-π/3) = -sin(π/3) = -√3/2.</span></div>
+    </div>
+  </div>
+<div class="div">Problème 4 — Problème combiné</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lh">Avancé</span></div>
+    <p>On sait que cos(x)=-4/5 et que sin(x) est négatif (x dans le troisième quadrant). Calcule sin(x).</p>
+    <button class="bg btn" onclick="toggle('pb4')">📋 Correction</button>
+    <div class="corr" id="pb4">
+      <div class="s">On utilise la relation : cos²(x)+sin²(x)=1, donc sin²(x) = 1-(-4/5)² = 1-16/25 = 9/25.</div>
+      <div class="s">Comme sin(x) est négatif dans ce quadrant, on prend la racine carrée négative : sin(x) = -√(9/25) = -3/5.</div>
+      <div class="s"><span class="hi">sin(x) = -3/5.</span></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tc2">
+  <div class="si"><div class="sico sic2">📋</div>
+  <div class="st"><h2>Contrôle — Le Cercle Trigonométrique</h2><p>Radians, cosinus et sinus d'un nombre réel</p></div></div>
+
+  <div class="chdr chdr2">
+    <div class="cbdg cbdg2">📋 Contrôle complet</div>
+    <div class="cinfo">
+      <h3>Contrôle sur le cercle trigonométrique</h3>
+      <p>Inspiré des ressources académiques de mathématiques 2nde (SchoolMouv, Excellence Maths).</p>
+      <ul>
+        <li>Durée : 45 min · Calculatrice autorisée</li>
+        <li>Montre tous tes calculs · Rédige des phrases pour les interprétations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 1 — Conversion d'angle</div><div class="cpts cpts2">4 pts</div></div>
+    
+    <div class="csub">
+      <b> — 4 pts</b>Convertis 45° en radians.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1')">📋 Correction </button>
+    <div class="cco" id="cc1"><div class="ccoh">✔ Correction — Barème : 2 pts formule, 2 pts calcul</div><div class="ccob">
+      <span class="l">On applique la formule : 45 × π/180.</span>
+      <span class="l"><span class="hi">45° = π/4 radians.</span></span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 2 — Valeurs remarquables</div><div class="cpts cpts2">4 pts</div></div>
+    
+    <div class="csub">
+      <b> — 4 pts</b>Donne les valeurs exactes de cos(π/3) et sin(π/3).
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2')">📋 Correction </button>
+    <div class="cco" id="cc2"><div class="ccoh">✔ Correction — Barème : 2 pts par valeur</div><div class="ccob">
+      <span class="l">cos(π/3) = 1/2.</span>
+      <span class="l"><span class="hi">sin(π/3) = √3/2.</span></span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 3 — Relation fondamentale</div><div class="cpts cpts2">6 pts</div></div>
+    
+    <div class="csub">
+      <b> — 6 pts</b>Sachant que sin(x)=1/3 et que x est dans le premier quadrant (cos(x) positif), calcule cos(x).
+      <div class="ans xt">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc3')">📋 Correction </button>
+    <div class="cco" id="cc3"><div class="ccoh">✔ Correction — Barème : 3 pts application de la relation, 3 pts calcul</div><div class="ccob">
+      <span class="l">On utilise cos²(x)+sin²(x)=1, donc cos²(x) = 1-(1/3)² = 1-1/9 = 8/9.</span>
+      <span class="l">On prend la racine positive : cos(x) = √(8/9) = 2√2/3.</span>
+      <span class="l"><span class="hi">cos(x) = 2√2/3.</span></span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 4 — Parité et périodicité</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b> — 5 pts</b>Sachant que cos(π/4)=√2/2, calcule cos(-π/4) puis cos(π/4+4π), en justifiant chaque réponse.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc4')">📋 Correction </button>
+    <div class="cco" id="cc4"><div class="ccoh">✔ Correction — Barème : 2 pts parité, 3 pts périodicité</div><div class="ccob">
+      <span class="l">La fonction cosinus est paire : cos(-π/4) = cos(π/4) = √2/2.</span>
+      <span class="l"><span class="hi">Par périodicité (période 2π) : cos(π/4+4π) = cos(π/4) = √2/2 (car 4π = 2×2π correspond à deux tours complets).</span></span>
+    </div></div>
+  </div>
+</div>
+
+</main>
+
+
+<div style="max-width:980px;margin:auto;padding:0 16px">
+  <div class="cta">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir les <em>prochaines fiches</em> ?</div>
+      <p class="cta-sub">Abonne-toi et active les notifications 🔔 — nouvelles fiches en story</p>
+      <div class="cta-steps"><span class="cta-step">1️⃣ Clique</span><span class="cta-step">2️⃣ Abonne-toi</span><span class="cta-step">3️⃣ Active la 🔔</span></div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ Suivre @toncoachscolaire</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ ·
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> ·
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="fc">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés · Reproduction interdite · L.111-1 CPI<br>Sources : <a href="https://www.schoolmouv.fr/cours/trigonometrie/fiche-de-cours" target="_blank">SchoolMouv</a> · <a href="https://www.excellence-maths.fr/ressource/cercle-trigonometrique/" target="_blank">Excellence Maths</a>
+  </div>
+</footer>
+</body>
+</html>
