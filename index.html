@@ -206,6 +206,15 @@
     .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
     .mat-block-fiches { display: none; padding: 0 14px 14px; }
     .mat-block.open .mat-block-fiches { display: block; }
+    .sub-section-label {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--ink3); margin: 10px 4px 6px; padding-top: 8px; border-top: 1px solid var(--border);
+    }
+    .sub-section-label:first-child { border-top: none; padding-top: 0; margin-top: 4px; }
+    .qcm-nb-badge {
+      font-size: .64rem; font-weight: 800; color: var(--brand-dark); background: var(--brand-light);
+      padding: 2px 8px; border-radius: 20px; margin-left: auto; flex-shrink: 0;
+    }
     .fiche-link {
       display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 12px;
       text-decoration: none; color: var(--ink2); font-size: .88rem; font-weight: 500;
@@ -244,6 +253,7 @@
       .fab-request-icon { font-size: 1.3rem; }
     }
   </style>
+</head>
 <body>
 
 <header>
@@ -420,8 +430,6 @@ const data = {
         { name: 'Les Figures de Style', href: 'fiche_figures_de_style_troisieme.html' },
         { name: 'L\'Argumentation et les Connecteurs Logiques', href: 'fiche_argumentation_connecteurs_logiques_troisieme.html' },
       ]},
-    
-
       { id: 'hist-geo-3e', label: 'Histoire-Géographie', ico: '🏛️', cls: 'ico-histoire', fiches: [
         { name: 'Civils et Militaires dans la Première Guerre Mondiale', href: 'fiche_civils_militaires_premiere_guerre_mondiale_troisieme.html' },
         { name: 'Démocraties Fragilisées et Expériences Totalitaires', href: 'fiche_democraties_fragilisees_experiences_totalitaires_troisieme.html' },
@@ -443,9 +451,6 @@ const data = {
       qcms: [
         { name: 'La Seconde Guerre mondiale, une guerre d\'anéantissement', href: 'qcm_seconde_guerre_mondiale_troisieme.html', nbQuestions: 15 },
       ]},
-
-    
-    
     ]
   },
   '2nd': {
@@ -532,11 +537,6 @@ const data = {
         { name: 'L\'Afrique du Sud, Puissance Régionale Marquée par son Histoire', href: 'fiche_afrique_du_sud_puissance_regionale_seconde.html' },
         { name: 'La SADC et les Mobilités en Afrique Australe', href: 'fiche_sadc_mobilites_afrique_australe_seconde.html' },
       ]},
-    
-    
-    
-    
-    
     ]
   },
   '1re': {
@@ -612,20 +612,45 @@ function openPanel(id) {
   const d = data[id];
 
   const matsHtml = d.matieres.map(mat => {
-    const fichesHtml = mat.fiches.length === 0
-      ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
-      : mat.fiches.map(f =>
-          `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
-        ).join('');
+    const fiches = mat.fiches || [];
+    const qcms = mat.qcms || [];
+    const totalItems = fiches.length + qcms.length;
+
+    const fichesHtml = fiches.map(f =>
+      `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
+    ).join('');
+    const qcmsHtml = qcms.map(q =>
+      `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div>${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</a>`
+    ).join('');
+
+    let contenuHtml;
+    if (totalItems === 0) {
+      contenuHtml = `<div class="empty-msg">Pas encore de fiches disponibles.</div>`;
+    } else {
+      contenuHtml = '';
+      if (fiches.length > 0) {
+        contenuHtml += qcms.length > 0 ? `<div class="sub-section-label">📚 Fiches de cours</div>` : '';
+        contenuHtml += fichesHtml;
+      }
+      if (qcms.length > 0) {
+        contenuHtml += `<div class="sub-section-label">📝 QCM d'évaluation</div>`;
+        contenuHtml += qcmsHtml;
+      }
+    }
+
+    const compteurLabel = qcms.length > 0
+      ? `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''} · ${qcms.length} QCM`
+      : `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''}`;
+
     return `
       <div class="mat-block" id="mb-${mat.id}">
         <div class="mat-block-header" onclick="toggleMat('mb-${mat.id}')">
           <div class="mat-ico ${mat.cls}">${mat.ico}</div>
           <span class="mat-block-title">${mat.label}</span>
-          <span class="mat-block-count">${mat.fiches.length} fiche${mat.fiches.length !== 1 ? 's' : ''}</span>
+          <span class="mat-block-count">${compteurLabel}</span>
           <span class="mat-block-arrow">▶</span>
         </div>
-        <div class="mat-block-fiches">${fichesHtml}</div>
+        <div class="mat-block-fiches">${contenuHtml}</div>
       </div>`;
   }).join('');
 
