@@ -192,7 +192,8 @@
       transition: transform .15s; flex-shrink: 0;
     }
     .panel-close:hover { transform: scale(1.08); }
-    .panel-matieres { padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+    .panel-matieres { padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+    @media (max-width: 900px) { .panel-matieres { grid-template-columns: 1fr; } }
     .mat-block { background: var(--surface2); border-radius: 16px; overflow: hidden; }
     .mat-block-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; transition: background .15s; user-select: none; }
     .mat-block-header:hover { background: var(--card); }
@@ -220,15 +221,17 @@
       padding: 2px 8px; border-radius: 20px; margin-left: auto; flex-shrink: 0;
     }
     .fiche-link {
-      display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 12px;
-      text-decoration: none; color: var(--ink2); font-size: .88rem; font-weight: 500;
-      margin-top: 5px; transition: all .15s;
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 10px; border-radius: 12px;
+      text-decoration: none; color: var(--ink2); font-size: .85rem; font-weight: 500;
+      margin-top: 5px; transition: all .15s; line-height: 1.35;
     }
     .fiche-link:hover { background: var(--card); color: var(--ink); }
     .fiche-ico {
       width: 26px; height: 26px; border-radius: 8px; background: var(--card);
       display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0;
+      margin-top: 1px;
     }
+    .fiche-text { flex: 1; min-width: 0; }
     .empty-msg { padding: 14px 10px; font-size: .85rem; color: var(--ink3); font-style: italic; }
     footer {
       text-align: center; padding: 36px 20px; color: var(--ink2); font-size: .85rem;
@@ -652,13 +655,13 @@ function openPanel(id) {
     const fichesHtml = fiches.length === 0
       ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
       : fiches.map(f =>
-          `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
+          `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div><div class="fiche-text">${f.name}</div></a>`
         ).join('');
 
     const qcmsHtml = qcms.length === 0
       ? `<div class="empty-msg">Pas encore de QCM disponible.</div>`
       : qcms.map(q =>
-          `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div>${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</a>`
+          `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</div></a>`
         ).join('');
 
     const contenuHtml = `
