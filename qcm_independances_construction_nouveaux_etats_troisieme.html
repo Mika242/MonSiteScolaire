@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ton Coach Scolaire">
+  <meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+  <meta name="robots" content="noindex, nofollow">
+  <title>QCM d'évaluation — Indépendances et Construction de Nouveaux États | Ton Coach Scolaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F9FC;
+      --card: #FFFFFF;
+      --surface2: #EEF3F9;
+      --border: #E2E8F0;
+      --ink: #1A2B3C;
+      --ink2: #5B6B7D;
+      --ink3: #94A3B3;
+      --brand: #58CC02;
+      --brand-dark: #3D9401;
+      --brand-light: #E8F9DA;
+      --accent: #FFC800;
+      --danger: #E5484D;
+      --danger-light: #FDECEC;
+      --warning: #F5A524;
+      --warning-light: #FEF3DD;
+      --shadow-card: 0 2px 8px rgba(26,43,60,.06);
+      --shadow-pop: 0 6px 18px rgba(26,43,60,.12);
+    }
+    [data-theme="dark"] {
+      --bg: #131B24;
+      --card: #1C2733;
+      --surface2: #22303E;
+      --border: #2E3D4C;
+      --ink: #F0F4F8;
+      --ink2: #B8C4D0;
+      --ink3: #7E8C9A;
+      --brand: #6FE01A;
+      --brand-dark: #58CC02;
+      --brand-light: #1E3210;
+      --accent: #FFD433;
+      --danger: #F26A6E;
+      --danger-light: #3A1A1A;
+      --warning: #F7B84B;
+      --warning-light: #3A2E12;
+      --shadow-card: 0 2px 8px rgba(0,0,0,.3);
+      --shadow-pop: 0 6px 18px rgba(0,0,0,.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 17px;
+      line-height: 1.6;
+      transition: background-color .25s ease, color .25s ease;
+      padding-bottom: 60px;
+    }
+    header {
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      box-shadow: var(--shadow-card);
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 40px; height: 40px; border-radius: 12px; object-fit: contain;
+      background: var(--surface2); padding: 4px;
+    }
+    .header-title { font-size: 1.05rem; font-weight: 800; }
+    .header-title span { color: var(--brand-dark); }
+    .theme-toggle {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: none; background: var(--surface2);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: transform .15s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--ink2); text-decoration: none; font-size: .85rem; font-weight: 700;
+      padding: 8px 14px; border-radius: 10px; background: var(--surface2);
+      transition: transform .15s;
+    }
+    .back-link:hover { transform: translateY(-2px); color: var(--ink); }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+    .qcm-hero {
+      text-align: center; padding: 40px 20px 24px;
+    }
+    .qcm-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+      background: var(--brand-light); color: var(--brand-dark);
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 14px;
+    }
+    .qcm-hero h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 800; line-height: 1.25; margin-bottom: 10px; }
+    .qcm-hero p { color: var(--ink2); font-size: .98rem; max-width: 520px; margin: 0 auto; }
+
+    .info-panel {
+      background: var(--card); border-radius: 18px; padding: 20px;
+      box-shadow: var(--shadow-card); margin: 20px 0 28px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px;
+    }
+    .info-item { text-align: center; }
+    .info-item .num { font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+    .info-item .lbl { font-size: .72rem; color: var(--ink2); font-weight: 600; margin-top: 2px; }
+
+    .rules-box {
+      background: var(--warning-light); border-radius: 16px; padding: 16px 18px;
+      margin-bottom: 28px; font-size: .87rem; color: var(--ink); line-height: 1.65;
+    }
+    .rules-box strong { display: block; margin-bottom: 6px; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; color: var(--warning); }
+    .rules-box ul { margin: 6px 0 0 18px; }
+
+    .start-btn-wrap { text-align: center; margin-bottom: 40px; }
+    .start-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--brand); color: #fff; border: none;
+      padding: 16px 32px; border-radius: 16px;
+      font-size: 1rem; font-weight: 800; cursor: pointer;
+      box-shadow: 0 4px 0 var(--brand-dark), var(--shadow-pop);
+      transition: transform .15s;
+      font-family: inherit;
+    }
+    .start-btn:hover { transform: translateY(-2px); }
+    .start-btn:active { transform: translateY(2px); box-shadow: var(--shadow-card); }
+
+    /* Barre de progression */
+    .progress-wrap {
+      position: sticky; top: 72px; z-index: 90;
+      background: var(--bg); padding: 10px 0 16px;
+    }
+    .progress-track {
+      height: 8px; border-radius: 20px; background: var(--surface2); overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--brand); border-radius: 20px;
+      transition: width .3s ease; width: 0%;
+    }
+    .progress-label { font-size: .78rem; color: var(--ink2); font-weight: 700; margin-top: 6px; text-align: right; }
+
+    /* Questions */
+    .question-card {
+      background: var(--card); border-radius: 18px; padding: 22px;
+      box-shadow: var(--shadow-card); margin-bottom: 18px;
+      animation: qIn .3s ease both;
+    }
+    @keyframes qIn { from { opacity: 0; transform: translateY(8px); } }
+    .q-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .q-num {
+      width: 32px; height: 32px; border-radius: 10px; background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; font-weight: 800; color: var(--ink2); flex-shrink: 0;
+    }
+    .q-notion-tag {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em;
+      color: var(--ink3); background: var(--surface2); padding: 3px 10px; border-radius: 20px;
+    }
+    .q-points { margin-left: auto; font-size: .74rem; font-weight: 700; color: var(--ink3); }
+    .q-enonce { font-size: 1rem; font-weight: 700; line-height: 1.5; margin-bottom: 16px; }
+    .q-hint { font-size: .78rem; color: var(--ink3); font-style: italic; margin-bottom: 12px; }
+
+    .option-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 14px; border-radius: 12px; margin-bottom: 8px;
+      background: var(--surface2); cursor: pointer;
+      transition: background .15s;
+      border: 2px solid transparent;
+    }
+    .option-row:hover { background: var(--border); }
+    .option-row.checked { border-color: var(--brand); background: var(--brand-light); }
+    .option-row input[type="checkbox"] {
+      width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; accent-color: var(--brand); cursor: pointer;
+    }
+    .option-row label { font-size: .92rem; line-height: 1.5; cursor: pointer; flex: 1; }
+
+    /* Bouton évaluer */
+    .evaluate-section { text-align: center; padding: 30px 0 10px; }
+    .evaluate-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--ink); color: var(--bg); border: none;
+      padding: 18px 36px; border-radius: 16px;
+      font-size: 1.05rem; font-weight: 800; cursor: pointer;
+      box-shadow: var(--shadow-pop);
+      transition: transform .15s;
+      font-family: inherit;
+    }
+    .evaluate-btn:hover { transform: translateY(-2px); }
+    .evaluate-note { font-size: .8rem; color: var(--ink3); margin-top: 12px; }
+
+    /* Résultats */
+    .results-panel {
+      background: var(--card); border-radius: 22px; padding: 30px;
+      box-shadow: var(--shadow-pop); margin-top: 20px;
+      animation: qIn .35s ease both;
+    }
+    .score-hero { text-align: center; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .score-circle {
+      width: 130px; height: 130px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      margin: 0 auto 16px; position: relative;
+      background: conic-gradient(var(--score-color, var(--brand)) calc(var(--score-pct, 0) * 1%), var(--surface2) 0);
+    }
+    .score-circle::before {
+      content: ''; position: absolute; inset: 10px; border-radius: 50%; background: var(--card);
+    }
+    .score-circle .pct { position: relative; font-size: 1.9rem; font-weight: 800; }
+    .score-circle .lbl { position: relative; font-size: .68rem; color: var(--ink2); font-weight: 700; }
+    .score-verdict {
+      font-size: 1.05rem; font-weight: 800; margin-bottom: 6px;
+    }
+    .score-verdict.ok { color: var(--brand-dark); }
+    .score-verdict.ko { color: var(--danger); }
+    .score-sub { font-size: .88rem; color: var(--ink2); }
+
+    .notion-bilan { margin-bottom: 24px; }
+    .notion-bilan h3 { font-size: .95rem; font-weight: 800; margin-bottom: 14px; }
+    .notion-row {
+      display: flex; align-items: center; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .notion-row:last-child { border-bottom: none; }
+    .notion-name { flex: 1; font-size: .88rem; font-weight: 600; }
+    .notion-bar-track {
+      width: 100px; height: 8px; border-radius: 20px; background: var(--surface2); overflow: hidden; flex-shrink: 0;
+    }
+    .notion-bar-fill { height: 100%; border-radius: 20px; }
+    .notion-pct { font-size: .82rem; font-weight: 800; width: 42px; text-align: right; flex-shrink: 0; }
+    .notion-status {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; flex-shrink: 0;
+    }
+    .notion-status.maitrise { background: var(--brand-light); color: var(--brand-dark); }
+    .notion-status.fragile { background: var(--warning-light); color: var(--warning); }
+    .notion-status.non-acquis { background: var(--danger-light); color: var(--danger); }
+
+    .advice-box {
+      background: var(--surface2); border-radius: 16px; padding: 18px; margin-bottom: 20px;
+      font-size: .88rem; line-height: 1.65;
+    }
+    .advice-box strong { display: block; margin-bottom: 8px; font-size: .85rem; }
+
+    .correction-btn-wrap { text-align: center; }
+    .correction-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface2); color: var(--ink); text-decoration: none;
+      padding: 13px 24px; border-radius: 14px;
+      font-size: .88rem; font-weight: 700;
+      transition: transform .15s;
+    }
+    .correction-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .correction-hint { font-size: .76rem; color: var(--ink3); margin-top: 10px; }
+
+    .retry-btn-wrap { text-align: center; margin-top: 18px; }
+    .retry-btn {
+      background: none; border: none; color: var(--ink2); font-size: .84rem; font-weight: 700;
+      cursor: pointer; text-decoration: underline; font-family: inherit;
+    }
+
+    #questions-zone, #results-zone { display: none; }
+    footer {
+      text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <div class="header-title">Ton <span>Coach</span> Scolaire</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <a href="index.html" class="back-link">← Retour aux fiches</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ÉCRAN D'ACCUEIL -->
+  <div id="intro-zone">
+    <div class="qcm-hero">
+      <div class="qcm-badge">📝 QCM d'évaluation · Histoire-Géographie · 3ème</div>
+      <h1>Indépendances et Construction de Nouveaux États</h1>
+      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+    </div>
+
+    <div class="info-panel">
+      <div class="info-item"><div class="num">13</div><div class="lbl">Questions</div></div>
+      <div class="info-item"><div class="num">4</div><div class="lbl">Notions couvertes</div></div>
+      <div class="info-item"><div class="num">30-35 min</div><div class="lbl">Minutes conseillées</div></div>
+      <div class="info-item"><div class="num">80%</div><div class="lbl">Seuil de réussite</div></div>
+    </div>
+
+    <div class="rules-box">
+      <strong>⚠️ Avant de commencer</strong>
+      Ce QCM comporte des questions à réponses multiples (une ou plusieurs cases correctes par question).
+      <ul>
+        <li>Une réponse complète et exacte rapporte les points pleins.</li>
+        <li>Une réponse partiellement correcte (sans erreur) rapporte la moitié des points.</li>
+        <li>Une réponse contenant au moins une case fausse fait perdre des points, même si d'autres cases étaient correctes.</li>
+        <li>Ne pas répondre à une question ne rapporte ni ne retire aucun point.</li>
+      </ul>
+      Il vaut donc mieux laisser une question vide que de cocher au hasard.
+    </div>
+
+    <div class="start-btn-wrap">
+      <button class="start-btn" onclick="demarrerQCM()">▶ Commencer le QCM</button>
+    </div>
+  </div>
+
+  <!-- ZONE QUESTIONS -->
+  <div id="questions-zone">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">0 / 15 questions répondues</div>
+    </div>
+    <div id="questions-container"></div>
+
+    <div class="evaluate-section">
+      <button class="evaluate-btn" onclick="evaluerQCM()">✓ Évaluer mes réponses</button>
+      <div class="evaluate-note">La note ne sera calculée qu'à ce moment — tu peux revenir sur tes réponses avant de valider.</div>
+    </div>
+  </div>
+
+  <!-- ZONE RÉSULTATS -->
+  <div id="results-zone"></div>
+
+</div>
+
+<footer>
+  © 2025 Ton Coach Scolaire — Reproduction interdite sans autorisation.
+</footer>
+
+<script>
+// ============================================================
+// DONNÉES PUBLIQUES DU QCM (questions + options, SANS les réponses)
+// ============================================================
+const QCM_REF = "QCM-HG3-IND-001";
+const QCM_TITRE = "Indépendances et Construction de Nouveaux États";
+
+const notions = {"A": "Le contexte de la décolonisation", "B": "Modalités de la décolonisation", "C": "La conférence de Bandung et le Tiers-Monde", "D": "Les nouveaux États face aux défis"};
+
+const questions = [{"numero":1,"notion":"A","enonce":"Concernant le contexte de la décolonisation après 1945, quelle(s) affirmation(s) sont exactes ?","options":["Les demandes d'indépendance sont soutenues par les États-Unis et l'URSS","Les deux superpuissances se présentent chacune comme défenseur des libertés des peuples","Elle se déroule dans le contexte de la guerre froide entre États-Unis et URSS","Les États-Unis et l'URSS s'opposent totalement à toute indépendance des colonies","La décolonisation n'a aucun lien avec le contexte international de l'époque"],"points":3},{"numero":2,"notion":"A","enonce":"Concernant le droit des peuples à disposer d'eux-mêmes, quelle(s) affirmation(s) sont exactes ?","options":["Ce principe est affirmé dans la charte de l'ONU","Ce principe devient un argument important des mouvements indépendantistes","Ce principe n'a jamais figuré dans un texte international","Cette charte est signée en 1945","Ce principe interdit explicitement toute indépendance des colonies"],"points":4},{"numero":3,"notion":"A","enonce":"Concernant la vague de décolonisation d'Asie, puis d'Afrique, quelle(s) affirmation(s) sont exactes ?","options":["Les colonies d'Afrique obtiennent systématiquement leur indépendance avant celles d'Asie","La décolonisation asiatique influence et encourage les mouvements indépendantistes africains","Cette chronologie s'observe globalement, même si des situations particulières existent","Les décolonisations d'Asie et d'Afrique se produisent exactement au même moment, sans ordre particulier","Les colonies d'Asie obtiennent généralement leur indépendance avant celles d'Afrique"],"points":3},{"numero":4,"notion":"B","enonce":"Concernant les différentes modalités de décolonisation, quelle(s) affirmation(s) sont exactes ?","options":["La décolonisation par la négociation se fait quand la métropole accepte l'indépendance","La décolonisation par la guerre survient quand la métropole refuse l'indépendance","Toutes les décolonisations se sont déroulées exactement de la même manière","L'Inde, la Tunisie et le Maroc illustrent des décolonisations par la négociation","La négociation et la guerre sont deux modalités identiques de décolonisation"],"points":4},{"numero":5,"notion":"B","enonce":"Concernant la guerre d'Algérie, quelle(s) affirmation(s) sont exactes ?","options":["Cette indépendance a été obtenue en quelques semaines, sans aucun conflit","Elle dure environ 8 ans","L'Algérie était une colonie de peuplement, avec environ un million de pieds-noirs","Cette guerre est particulièrement longue et violente (torture, attentats)","L'Algérie n'a jamais compté de population européenne installée sur son territoire"],"points":4},{"numero":6,"notion":"B","enonce":"Concernant les conséquences politiques de la guerre d'Algérie en France, quelle(s) affirmation(s) sont exactes ?","options":["Elle a renforcé la stabilité de la IVe République","Elle contribue au retour de De Gaulle au pouvoir","Elle laisse des traces encore présentes dans les mémoires aujourd'hui","Elle n'a eu aucune conséquence sur la vie politique française","Elle provoque la chute de la IVe République"],"points":4},{"numero":7,"notion":"C","enonce":"Concernant la conférence de Bandung, quelle(s) affirmation(s) sont exactes ?","options":["Les participants condamnent le colonialisme et affirment le droit des peuples à l'autodétermination","Elle réunit uniquement des pays occidentaux","Elle se tient en 1955 en Indonésie","Elle se tient en Europe","Elle réunit 29 États d'Asie et d'Afrique"],"points":4},{"numero":8,"notion":"C","enonce":"Concernant les figures marquantes de la conférence de Bandung, quelle(s) affirmation(s) sont exactes ?","options":["Sukarno représente l'Indonésie","Ces dirigeants représentent des pays du bloc occidental exclusivement","Aucun dirigeant africain ou asiatique n'a participé à cette conférence","Nasser représente l'Égypte","Nehru représente l'Inde"],"points":4},{"numero":9,"notion":"C","enonce":"Concernant le concept de Tiers-Monde, quelle(s) affirmation(s) sont exactes ?","options":["C'est une expression du sociologue français Alfred Sauvy, en 1952","Elle désigne les pays n'appartenant ni au bloc occidental ni au bloc soviétique","Ce terme a été inventé par un dirigeant soviétique","Ce sont souvent des pays pauvres et récemment décolonisés","Ce terme désigne exclusivement les pays membres de l'OTAN"],"points":4},{"numero":10,"notion":"C","enonce":"Concernant le mouvement des non-alignés, quelle(s) affirmation(s) sont exactes ?","options":["Ce mouvement soutient exclusivement le bloc soviétique","Il est fondé à Belgrade en 1961","Nehru, Nasser, Tito et Sukarno en sont des figures fondatrices","Il regroupe des pays refusant de s'aligner sur l'un des deux blocs de la guerre froide","Ce mouvement est fondé avant même la conférence de Bandung"],"points":4},{"numero":11,"notion":"D","enonce":"Concernant les défis rencontrés par les nouveaux États indépendants, quelle(s) affirmation(s) sont exactes ?","options":["Beaucoup restent pauvres et dépendants économiquement de leurs anciennes métropoles","Ces nouveaux États deviennent immédiatement riches et indépendants économiquement","Ils cherchent à moderniser l'agriculture et développer l'industrie","Ils ne rencontrent aucune difficulté après avoir obtenu leur indépendance","Ils doivent aussi organiser leur propre État sur les plans politique et culturel"],"points":4},{"numero":12,"notion":"D","enonce":"Concernant la croissance démographique dans les nouveaux États décolonisés, quelle(s) affirmation(s) sont exactes ?","options":["Cette pression démographique s'ajoute aux autres défis économiques de ces jeunes États","Elle est souvent très forte dans ces pays","Elle accentue les pressions sociales et politiques, en ville comme à la campagne","Cette croissance démographique facilite immédiatement le développement économique, sans aucune difficulté","La croissance démographique est nulle dans la plupart des pays décolonisés"],"points":4},{"numero":13,"notion":"D","enonce":"Explique pourquoi les nouveaux États indépendants ont cherché à se regrouper et à s'organiser collectivement après la décolonisation.","options":["Pour affirmer une voie politique indépendante face à la bipolarisation de la guerre froide","Ces États cherchaient au contraire à s'intégrer totalement à l'un des deux blocs","Cette volonté explique la naissance de mouvements comme le non-alignement","Pour éviter de retomber sous la dépendance des grandes puissances occidentales ou soviétiques","Aucun de ces États n'a cherché à coopérer avec d'autres pays nouvellement indépendants"],"points":4}];
+
+// ============================================================
+// RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
+// Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
+// mais un décodage reste possible pour qui écrit quelques lignes de JS.
+// ============================================================
+const REPONSES_ENCODEES = "Chh9AXlrAXBlFXQBARwCDG8WHGR1HxkUYh8dHAEdYh5hdnlrAQF6E2h2ARwDfXcQARN3Hx9lehkBawAdYm95cGQcAwF4YndwHGsAfXFhHhVraB1lfGgZbRxqYW98AXoaH3Z5YnYBA21s";
+
+function xorDecode(encoded, key) {
+  const raw = atob(encoded);
+  let result = '';
+  for (let i = 0; i < raw.length; i++) {
+    result += String.fromCharCode(raw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+  }
+  return JSON.parse(result);
+}
+
+// ============================================================
+// LOGIQUE DU QCM
+// ============================================================
+let reponsesUtilisateur = {}; // { numeroQuestion: [indices cochés] }
+
+function demarrerQCM() {
+  document.getElementById('intro-zone').style.display = 'none';
+  document.getElementById('questions-zone').style.display = 'block';
+  renderQuestions();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questions-container');
+  container.innerHTML = questions.map(q => `
+    <div class="question-card" id="qcard-${q.numero}">
+      <div class="q-header">
+        <div class="q-num">${q.numero}</div>
+        <div class="q-notion-tag">${notions[q.notion]}</div>
+        <div class="q-points">${q.points} pts</div>
+      </div>
+      <div class="q-enonce">${q.enonce}</div>
+      <div class="q-hint">Une ou plusieurs réponses possibles.</div>
+      ${q.options.map((opt, i) => `
+        <div class="option-row" id="row-${q.numero}-${i}" onclick="toggleOption(${q.numero}, ${i})">
+          <input type="checkbox" id="chk-${q.numero}-${i}" onclick="event.stopPropagation(); toggleOption(${q.numero}, ${i})">
+          <label>${opt}</label>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function toggleOption(numQ, idxOpt) {
+  if (!reponsesUtilisateur[numQ]) reponsesUtilisateur[numQ] = [];
+  const idx = reponsesUtilisateur[numQ].indexOf(idxOpt);
+  const checkbox = document.getElementById(`chk-${numQ}-${idxOpt}`);
+  const row = document.getElementById(`row-${numQ}-${idxOpt}`);
+
+  if (idx === -1) {
+    reponsesUtilisateur[numQ].push(idxOpt);
+    checkbox.checked = true;
+    row.classList.add('checked');
+  } else {
+    reponsesUtilisateur[numQ].splice(idx, 1);
+    checkbox.checked = false;
+    row.classList.remove('checked');
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const repondues = Object.values(reponsesUtilisateur).filter(a => a.length > 0).length;
+  const pct = Math.round((repondues / questions.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${repondues} / ${questions.length} questions répondues`;
+}
+
+function evaluerQCM() {
+  const reponsesCorrectes = xorDecode(REPONSES_ENCODEES, QCM_REF);
+
+  let scoreTotal = 0;
+  let scoreMax = 0;
+  const scoresParNotion = {};
+  Object.keys(notions).forEach(n => scoresParNotion[n] = { obtenu: 0, max: 0 });
+
+  const detailQuestions = [];
+
+  questions.forEach((q, idx) => {
+    const correctes = reponsesCorrectes[idx]; // indices corrects
+    const cochees = reponsesUtilisateur[q.numero] || [];
+    scoreMax += q.points;
+    scoresParNotion[q.notion].max += q.points;
+
+    let pointsObtenus = 0;
+    let statut = 'vide';
+
+    if (cochees.length > 0) {
+      const aUneErreur = cochees.some(c => !correctes.includes(c));
+      const toutesLesCorrectesCochees = correctes.every(c => cochees.includes(c));
+      const nbCorrectesCochees = cochees.filter(c => correctes.includes(c)).length;
+
+      if (aUneErreur) {
+        pointsObtenus = -Math.round(q.points * 0.5 * 10) / 10;
+        statut = 'fausse';
+      } else if (toutesLesCorrectesCochees) {
+        pointsObtenus = q.points;
+        statut = 'complete';
+      } else if (nbCorrectesCochees > 0) {
+        pointsObtenus = Math.round(q.points * 0.5 * 10) / 10;
+        statut = 'partielle';
+      }
+    }
+
+    scoreTotal += pointsObtenus;
+    scoresParNotion[q.notion].obtenu += pointsObtenus;
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+  });
+
+  // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
+  const scoreTotalAffiche = Math.max(0, scoreTotal);
+  const pourcentage = Math.max(0, Math.round((scoreTotal / scoreMax) * 100));
+
+  afficherResultats(scoreTotalAffiche, scoreMax, pourcentage, scoresParNotion, detailQuestions);
+}
+
+function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
+  document.getElementById('questions-zone').style.display = 'none';
+  const zone = document.getElementById('results-zone');
+  zone.style.display = 'block';
+
+  const reussite = pct >= 80;
+  const couleur = pct >= 80 ? 'var(--brand)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');
+
+  let notionsHtml = '';
+  Object.keys(notions).forEach(n => {
+    const s = scoresParNotion[n];
+    const p = s.max > 0 ? Math.max(0, Math.round((s.obtenu / s.max) * 100)) : 0;
+    let statusClass = 'non-acquis', statusLabel = 'À revoir en priorité';
+    if (p >= 80) { statusClass = 'maitrise'; statusLabel = 'Maîtrisé'; }
+    else if (p >= 50) { statusClass = 'fragile'; statusLabel = 'Fragile'; }
+    const barColor = p >= 80 ? 'var(--brand)' : (p >= 50 ? 'var(--warning)' : 'var(--danger)');
+    notionsHtml += `
+      <div class="notion-row">
+        <div class="notion-name">${notions[n]}</div>
+        <div class="notion-bar-track"><div class="notion-bar-fill" style="width:${p}%; background:${barColor}"></div></div>
+        <div class="notion-pct">${p}%</div>
+        <div class="notion-status ${statusClass}">${statusLabel}</div>
+      </div>`;
+  });
+
+  const notionsAFaibles = Object.keys(notions).filter(n => {
+    const s = scoresParNotion[n];
+    return s.max > 0 && (s.obtenu / s.max) * 100 < 80;
+  }).map(n => notions[n]);
+
+  let conseilTexte = '';
+  if (reussite) {
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+  } else if (notionsAFaibles.length > 0) {
+    conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
+  } else {
+    conseilTexte = "Ce chapitre nécessite encore du travail. Reprends la fiche de cours dans son intégralité avant de retenter ce QCM.";
+  }
+
+  const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
+
+  zone.innerHTML = `
+    <div class="results-panel">
+      <div class="score-hero">
+        <div class="score-circle" style="--score-pct:${pct}; --score-color:${couleur}">
+          <div class="pct">${pct}%</div>
+          <div class="lbl">${score} / ${scoreMax} pts</div>
+        </div>
+        <div class="score-verdict ${reussite ? 'ok' : 'ko'}">
+          ${reussite ? '✓ Tu es prêt·e pour ce chapitre' : '✗ Pas encore prêt·e pour l\u2019examen sur ce chapitre'}
+        </div>
+        <div class="score-sub">Seuil de réussite fixé à 80%</div>
+      </div>
+
+      <div class="notion-bilan">
+        <h3>Bilan par notion</h3>
+        ${notionsHtml}
+      </div>
+
+      <div class="advice-box">
+        <strong>📋 Conseil de révision</strong>
+        ${conseilTexte}
+      </div>
+
+      <div class="correction-btn-wrap">
+        <a href="${mailtoLink}" class="correction-btn">✉️ Demander la correction détaillée par e-mail</a>
+        <div class="correction-hint">Référence à conserver : <strong>${QCM_REF}</strong></div>
+      </div>
+
+      <div class="retry-btn-wrap">
+        <button class="retry-btn" onclick="location.reload()">↻ Refaire ce QCM</button>
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// THÈME
+// ============================================================
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+function appliquerTheme(theme) {
+  htmlEl.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('tcs-theme', theme); } catch (e) {}
+}
+let themeInitial = 'light';
+try {
+  const sauvegarde = localStorage.getItem('tcs-theme');
+  if (sauvegarde === 'dark' || sauvegarde === 'light') themeInitial = sauvegarde;
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) themeInitial = 'dark';
+} catch (e) {}
+appliquerTheme(themeInitial);
+themeToggle.addEventListener('click', () => {
+  appliquerTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
