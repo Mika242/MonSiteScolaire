@@ -204,13 +204,17 @@
     .mat-block-count { font-size: .72rem; font-weight: 700; color: var(--ink2); background: var(--card); padding: 3px 9px; border-radius: 20px; }
     .mat-block-arrow { font-size: .7rem; color: var(--ink3); transition: transform .2s; flex-shrink: 0; }
     .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
-    .mat-block-fiches { display: none; padding: 0 14px 14px; }
-    .mat-block.open .mat-block-fiches { display: block; }
-    .sub-section-label {
-      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
-      color: var(--ink3); margin: 10px 4px 6px; padding-top: 8px; border-top: 1px solid var(--border);
+    .mat-block-content { display: none; padding: 0 14px 14px; }
+    .mat-block.open .mat-block-content { display: block; }
+    .mat-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) {
+      .mat-columns { grid-template-columns: 1fr; }
+      .mat-col-qcms { order: -1; margin-bottom: 4px; }
     }
-    .sub-section-label:first-child { border-top: none; padding-top: 0; margin-top: 4px; }
+    .mat-col-label {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--ink3); margin-bottom: 8px; padding-top: 10px;
+    }
     .qcm-nb-badge {
       font-size: .64rem; font-weight: 800; color: var(--brand-dark); background: var(--brand-light);
       padding: 2px 8px; border-radius: 20px; margin-left: auto; flex-shrink: 0;
@@ -225,7 +229,7 @@
       width: 26px; height: 26px; border-radius: 8px; background: var(--card);
       display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0;
     }
-    .empty-msg { padding: 14px 10px; font-size: .88rem; color: var(--ink3); font-style: italic; }
+    .empty-msg { padding: 14px 10px; font-size: .85rem; color: var(--ink3); font-style: italic; }
     footer {
       text-align: center; padding: 36px 20px; color: var(--ink2); font-size: .85rem;
       margin-top: 20px; line-height: 1.9;
@@ -385,6 +389,11 @@ const data = {
         { name: 'Le Climat et les Risques Climatiques', href: 'fiche_climat_risques_climatiques_troisieme.html' },
         { name: 'L Exploitation des Ressources Naturelles', href: 'fiche_exploitation_ressources_naturelles_troisieme.html' },
         { name: 'Nutrition et Organisation des Plantes', href: 'fiche_nutrition_organisation_plantes_troisieme.html' },
+      ],
+      qcms: [
+        { name: 'Le Programme Génétique et sa Transmission', href: 'qcm_programme_genetique_transmission_troisieme.html', nbQuestions: 18 },
+        { name: 'Le Système Immunitaire et la Réaction Inflammatoire', href: 'qcm_systeme_immunitaire_reaction_inflammatoire_troisieme.html', nbQuestions: 15 },
+        { name: 'Écosystèmes et Biodiversité', href: 'qcm_ecosystemes_biodiversite_troisieme.html', nbQuestions: 13 },
       ] },
       { id: 'maths-3e', label: 'Maths', ico: '📐', cls: 'ico-maths', fiches: [
         { name: 'Théorème de Thalès', href: 'fiche_Theoreme_de_Thales_troisieme.html' },
@@ -405,15 +414,12 @@ const data = {
       ],
       qcms: [
         { name: 'Le Théorème de Thalès', href: 'qcm_theoreme_thales_troisieme.html', nbQuestions: 15 },
-        { name: 'Écosystèmes et Biodiversité', href: 'qcm_ecosystemes_biodiversite_troisieme.html', nbQuestions: 13 },
-        { name: 'Fonctions Linéaires et Affines', href: 'qcm_fonctions_lineaires_affines_troisieme.html', nbQuestions: 14 },
-        { name: 'Le Programme Génétique et sa Transmission', href: 'qcm_programme_genetique_transmission_troisieme.html', nbQuestions: 18 },
         { name: 'Puissances et Notation Scientifique', href: 'qcm_puissances_notation_scientifique_troisieme.html', nbQuestions: 15 },
         { name: 'Les Racines Carrées', href: 'qcm_racines_carrees_troisieme.html', nbQuestions: 14 },
-        { name: 'Statistiques : Moyenne, Médiane, Quartiles', href: 'qcm_statistiques_moyenne_mediane_quartiles_troisieme.html', nbQuestions: 14 },
-        { name: 'Le Système Immunitaire et la Réaction Inflammatoire', href: 'qcm_systeme_immunitaire_reaction_inflammatoire_troisieme.html', nbQuestions: 15 },
         { name: 'La Trigonométrie dans le Triangle Rectangle', href: 'qcm_trigonometrie_triangle_rectangle_troisieme.html', nbQuestions: 13 },
-      ]},
+        { name: 'Fonctions Linéaires et Affines', href: 'qcm_fonctions_lineaires_affines_troisieme.html', nbQuestions: 14 },
+        { name: 'Statistiques : Moyenne, Médiane, Quartiles', href: 'qcm_statistiques_moyenne_mediane_quartiles_troisieme.html', nbQuestions: 14 },
+      ] },
       { id: 'pc-3e', label: 'Physique-Chimie', ico: '⚗️', cls: 'ico-physique', fiches: [
         { name: 'Ions et Tests Caracteristiques', href: 'fiche_Ions_et_tests_caracteristiques_troisieme.html' },
         { name: 'Circuits Electriques en Serie et en Derivation', href: 'fiche_Circuits_serie_derivation_troisieme.html' },
@@ -426,12 +432,11 @@ const data = {
         { name: 'Les Signaux Lumineux et Sonores', href: 'fiche_signaux_lumineux_sonores_troisieme.html' },
       ],
       qcms: [
-        { name: 'Circuits Électriques en Série et en Dérivation', href: 'qcm_circuits_electriques_troisieme.html', nbQuestions: 19 },
-        { name: 'Énergie Cinétique et Énergie Potentielle', href: 'qcm_energie_cinetique_potentielle_troisieme.html', nbQuestions: 14 },
         { name: 'Ions et Tests Caractéristiques', href: 'qcm_ions_tests_caracteristiques_troisieme.html', nbQuestions: 13 },
+        { name: 'Énergie Cinétique et Énergie Potentielle', href: 'qcm_energie_cinetique_potentielle_troisieme.html', nbQuestions: 14 },
         { name: 'Mouvement et Vitesse', href: 'qcm_mouvement_vitesse_troisieme.html', nbQuestions: 14 },
         { name: 'Puissance et Résistance Électrique', href: 'qcm_puissance_resistance_electrique_troisieme.html', nbQuestions: 14 },
-      ]},
+      ] },
       { id: 'ang-3e', label: 'Anglais', ico: '🇬🇧', cls: 'ico-anglais', fiches: [
         { name: 'Present Perfect vs Preterit (Essentiel Brevet)', href: 'fiche_present_perfect_preterit_troisieme.html' },
         { name: 'Le Discours Indirect (Reported Speech)', href: 'fiche_discours_indirect_troisieme.html' },
@@ -443,7 +448,7 @@ const data = {
       qcms: [
         { name: 'Present Perfect vs Preterit', href: 'qcm_present_perfect_preterit_troisieme.html', nbQuestions: 12 },
         { name: 'Reported Speech (Le Discours Indirect)', href: 'qcm_reported_speech_troisieme.html', nbQuestions: 12 },
-      ]},
+      ] },
       { id: 'fr-3e', label: 'Français', ico: '📖', cls: 'ico-francais', fiches: [
         { name: 'L\'Accord du Participe Passé (Essentiel Brevet)', href: 'fiche_accord_participe_passe_troisieme.html' },
         { name: 'La Phrase complexe et les Subordonnées (Essentiel Brevet)', href: 'fiche_phrase_complexe_subordonnees_troisieme.html' },
@@ -453,11 +458,10 @@ const data = {
         { name: 'L\'Argumentation et les Connecteurs Logiques', href: 'fiche_argumentation_connecteurs_logiques_troisieme.html' },
       ],
       qcms: [
-        { name: 'L\'Accord du Participe Passé', href: 'qcm_accord_participe_passe_troisieme.html', nbQuestions: 15 },
-        { name: 'Les Classes Grammaticales (Nature des Mots)', href: 'qcm_classes_grammaticales_troisieme.html', nbQuestions: 12 },
         { name: 'Le Discours Rapporté (Direct et Indirect)', href: 'qcm_discours_rapporte_troisieme.html', nbQuestions: 12 },
         { name: 'Les Figures de Style', href: 'qcm_figures_de_style_troisieme.html', nbQuestions: 13 },
-      ]},
+        { name: 'Les Classes Grammaticales (Nature des Mots)', href: 'qcm_classes_grammaticales_troisieme.html', nbQuestions: 12 },
+      ] },
       { id: 'hist-geo-3e', label: 'Histoire-Géographie', ico: '🏛️', cls: 'ico-histoire', fiches: [
         { name: 'Civils et Militaires dans la Première Guerre Mondiale', href: 'fiche_civils_militaires_premiere_guerre_mondiale_troisieme.html' },
         { name: 'Démocraties Fragilisées et Expériences Totalitaires', href: 'fiche_democraties_fragilisees_experiences_totalitaires_troisieme.html' },
@@ -477,7 +481,6 @@ const data = {
         { name: 'La France et l\'Union Européenne dans le Monde', href: 'fiche_france_union_europeenne_monde_troisieme.html' },
       ],
       qcms: [
-        { name: 'La Seconde Guerre mondiale, une guerre d\'anéantissement', href: 'qcm_seconde_guerre_mondiale_troisieme.html', nbQuestions: 15 },
         { name: 'La Seconde Guerre mondiale, une guerre d\'anéantissement', href: 'qcm_seconde_guerre_mondiale_troisieme.html', nbQuestions: 17 },
         { name: 'Un Monde Bipolaire au Temps de la Guerre Froide', href: 'qcm_monde_bipolaire_guerre_froide_troisieme.html', nbQuestions: 13 },
       ]},
@@ -646,27 +649,29 @@ function openPanel(id) {
     const qcms = mat.qcms || [];
     const totalItems = fiches.length + qcms.length;
 
-    const fichesHtml = fiches.map(f =>
-      `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
-    ).join('');
-    const qcmsHtml = qcms.map(q =>
-      `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div>${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</a>`
-    ).join('');
+    const fichesHtml = fiches.length === 0
+      ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
+      : fiches.map(f =>
+          `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">📄</div>${f.name}</a>`
+        ).join('');
 
-    let contenuHtml;
-    if (totalItems === 0) {
-      contenuHtml = `<div class="empty-msg">Pas encore de fiches disponibles.</div>`;
-    } else {
-      contenuHtml = '';
-      if (fiches.length > 0) {
-        contenuHtml += qcms.length > 0 ? `<div class="sub-section-label">📚 Fiches de cours</div>` : '';
-        contenuHtml += fichesHtml;
-      }
-      if (qcms.length > 0) {
-        contenuHtml += `<div class="sub-section-label">📝 QCM d'évaluation</div>`;
-        contenuHtml += qcmsHtml;
-      }
-    }
+    const qcmsHtml = qcms.length === 0
+      ? `<div class="empty-msg">Pas encore de QCM disponible.</div>`
+      : qcms.map(q =>
+          `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div>${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</a>`
+        ).join('');
+
+    const contenuHtml = `
+      <div class="mat-columns">
+        <div class="mat-col-fiches">
+          <div class="mat-col-label">📚 Fiches de cours</div>
+          ${fichesHtml}
+        </div>
+        <div class="mat-col-qcms">
+          <div class="mat-col-label">📝 QCM d'évaluation</div>
+          ${qcmsHtml}
+        </div>
+      </div>`;
 
     const compteurLabel = qcms.length > 0
       ? `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''} · ${qcms.length} QCM`
@@ -680,7 +685,7 @@ function openPanel(id) {
           <span class="mat-block-count">${compteurLabel}</span>
           <span class="mat-block-arrow">▶</span>
         </div>
-        <div class="mat-block-fiches">${contenuHtml}</div>
+        <div class="mat-block-content">${contenuHtml}</div>
       </div>`;
   }).join('');
 
@@ -695,9 +700,6 @@ function openPanel(id) {
       </div>
       <div class="panel-matieres">${matsHtml}</div>
     </div>`;
-
-  const first = panel.querySelector('.mat-block');
-  if (first) first.classList.add('open');
 
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
 }
