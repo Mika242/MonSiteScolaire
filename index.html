@@ -203,8 +203,9 @@
       width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center;
       font-size: 1.05rem; flex-shrink: 0; background: var(--card);
     }
-    .mat-block-title { flex: 1; font-size: .94rem; font-weight: 800; }
-    .mat-block-count { font-size: .72rem; font-weight: 700; color: var(--ink2); background: var(--card); padding: 3px 9px; border-radius: 20px; }
+    .mat-block-title { flex: 1; font-size: .94rem; font-weight: 800; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mat-block-counts { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; margin-left: auto; }
+    .mat-block-count { font-size: .68rem; font-weight: 700; color: var(--ink2); background: var(--card); padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
     .mat-block-arrow { font-size: .7rem; color: var(--ink3); transition: transform .2s; flex-shrink: 0; }
     .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
     .mat-block-content { display: none; padding: 0 14px 14px; }
@@ -663,7 +664,12 @@ function renderTiles() {
     if (!niveau || !meta) return '';
 
     const totalFiches = niveau.matieres.reduce((somme, mat) => somme + mat.fiches.length, 0);
-    const badge = totalFiches === 0 ? 'À venir' : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
+    const totalQcms = niveau.matieres.reduce((somme, mat) => somme + (mat.qcms || []).length, 0);
+    const badge = (totalFiches === 0 && totalQcms === 0)
+      ? 'À venir'
+      : totalQcms > 0
+        ? `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''} · ${totalQcms} QCM`
+        : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
 
     const pillsHtml = niveau.matieres
       .map(mat => `<span class="tile-pill">${mat.label}</span>`)
@@ -729,16 +735,18 @@ function openPanel(id) {
         </div>
       </div>`;
 
-    const compteurLabel = qcms.length > 0
-      ? `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''} · ${qcms.length} QCM`
-      : `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''}`;
+    const badgeFiches = `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''}`;
+    const badgeQcms = `${qcms.length} QCM`;
 
     return `
       <div class="mat-block" id="mb-${mat.id}">
         <div class="mat-block-header" onclick="toggleMat('mb-${mat.id}')">
           <div class="mat-ico ${mat.cls}">${mat.ico}</div>
           <span class="mat-block-title">${mat.label}</span>
-          <span class="mat-block-count">${compteurLabel}</span>
+          <div class="mat-block-counts">
+            <span class="mat-block-count">${badgeFiches}</span>
+            <span class="mat-block-count">${badgeQcms}</span>
+          </div>
           <span class="mat-block-arrow">▶</span>
         </div>
         <div class="mat-block-content">${contenuHtml}</div>
