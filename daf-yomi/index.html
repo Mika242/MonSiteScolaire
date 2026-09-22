@@ -215,6 +215,14 @@
     .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
     .mat-block-content { display: none; padding: 0 14px 14px; }
     .mat-block.open .mat-block-content { display: block; }
+    .chap-block { background: var(--card); border-radius: 12px; overflow: hidden; margin-top: 8px; }
+    .chap-block:first-child { margin-top: 0; }
+    .chap-block-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; transition: background .15s; user-select: none; }
+    .chap-block-header:hover { background: var(--surface2); }
+    .chap-block-title { flex: 1; font-size: .85rem; font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chap-block-content { display: none; padding: 0 12px 12px; }
+    .chap-block.open .chap-block-content { display: block; }
+    .chap-block.open .mat-block-arrow { transform: rotate(90deg); }
     .mat-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 560px) {
       .mat-columns { grid-template-columns: 1fr; }
@@ -308,7 +316,7 @@
 <script>
 // ═══════════════════════════════════════════
 // DONNÉES — 6 sedarim, 63 traités
-// Chaque traité : { id, label, labelHeb, ico, cls, fiches: [], qcms: [] }
+// Chaque traité : { id, label, labelHeb, ico, cls, chapitres: [] }
 // fiches contient à la fois les Michnayot et les daf de Guemara,
 // distingués par leur icône (📜 Michna, 📖 Guemara)
 // ═══════════════════════════════════════════
@@ -316,96 +324,104 @@ const data = {
   'zeraim': {
     label: 'Zeraïm', labelHeb: 'זרעים', color: '#7FB89C',
     traites: [
-      { id: 'berakhot', label: 'Berakhot', labelHeb: 'ברכות', ico: '🙏', cls: 'ico-berakhot', fiches: [
-        { name: 'Michna 1:1 — Depuis quand récite-t-on le Chema le soir ?', href: 'michna_Mishnah_Berakhot.1.1.html', type: 'michna' },
-      ], qcms: [] },
-      { id: 'peah', label: 'Péah', labelHeb: 'פאה', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'demai', label: 'Demaï', labelHeb: 'דמאי', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'kilayim', label: 'Kilayim', labelHeb: 'כלאים', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'sheviit', label: 'Chevi\'it', labelHeb: 'שביעית', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'terumot', label: 'Teroumot', labelHeb: 'תרומות', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'maasrot', label: 'Ma\'assérot', labelHeb: 'מעשרות', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'maaser-sheni', label: 'Ma\'asser Chéni', labelHeb: 'מעשר שני', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'challah', label: 'Hala', labelHeb: 'חלה', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'orlah', label: 'Orla', labelHeb: 'ערלה', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
-      { id: 'bikkurim', label: 'Bikourim', labelHeb: 'ביכורים', ico: '🌾', cls: 'ico-zeraim', fiches: [], qcms: [] },
+      { id: 'berakhot', label: 'Berakhot', labelHeb: 'ברכות', ico: '🙏', cls: 'ico-berakhot', chapitres: [
+        { numero: 1, nom: 'De quand récite-t-on le Chema', fiches: [
+          { name: 'Michna 1:1 — Depuis quand récite-t-on le Chema le soir ?', href: 'michna_Mishnah_Berakhot.1.1.html', type: 'michna' },
+        ], qcms: [] },
+      ] },
+      { id: 'peah', label: 'Péah', labelHeb: 'פאה', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'demai', label: 'Demaï', labelHeb: 'דמאי', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'kilayim', label: 'Kilayim', labelHeb: 'כלאים', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'sheviit', label: 'Chevi\'it', labelHeb: 'שביעית', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'terumot', label: 'Teroumot', labelHeb: 'תרומות', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'maasrot', label: 'Ma\'assérot', labelHeb: 'מעשרות', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'maaser-sheni', label: 'Ma\'asser Chéni', labelHeb: 'מעשר שני', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'challah', label: 'Hala', labelHeb: 'חלה', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'orlah', label: 'Orla', labelHeb: 'ערלה', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
+      { id: 'bikkurim', label: 'Bikourim', labelHeb: 'ביכורים', ico: '🌾', cls: 'ico-zeraim', chapitres: [] },
     ]
   },
   'moed': {
     label: 'Moëd', labelHeb: 'מועד', color: '#7F9CD4',
     traites: [
-      { id: 'shabbat', label: 'Chabbat', labelHeb: 'שבת', ico: '🕯️', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'eruvin', label: 'Erouvin', labelHeb: 'עירובין', ico: '🏘️', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'pesachim', label: 'Pessahim', labelHeb: 'פסחים', ico: '🍞', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'shekalim', label: 'Chekalim', labelHeb: 'שקלים', ico: '🪙', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'yoma', label: 'Yoma', labelHeb: 'יומא', ico: '⚪', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'sukkah', label: 'Souka', labelHeb: 'סוכה', ico: '🌿', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'beitza', label: 'Beitsa', labelHeb: 'ביצה', ico: '🥚', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'rosh-hashanah', label: 'Roch Hachana', labelHeb: 'ראש השנה', ico: '🐏', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'taanit', label: 'Ta\'anit', labelHeb: 'תענית', ico: '🌧️', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'megillah', label: 'Meguila', labelHeb: 'מגילה', ico: '📜', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'moed-katan', label: 'Moëd Katan', labelHeb: 'מועד קטן', ico: '📅', cls: 'ico-moed', fiches: [], qcms: [] },
-      { id: 'chagigah', label: 'Haguiga', labelHeb: 'חגיגה', ico: '🎉', cls: 'ico-moed', fiches: [], qcms: [] },
+      { id: 'shabbat', label: 'Chabbat', labelHeb: 'שבת', ico: '🕯️', cls: 'ico-moed', chapitres: [] },
+      { id: 'eruvin', label: 'Erouvin', labelHeb: 'עירובין', ico: '🏘️', cls: 'ico-moed', chapitres: [] },
+      { id: 'pesachim', label: 'Pessahim', labelHeb: 'פסחים', ico: '🍞', cls: 'ico-moed', chapitres: [] },
+      { id: 'shekalim', label: 'Chekalim', labelHeb: 'שקלים', ico: '🪙', cls: 'ico-moed', chapitres: [] },
+      { id: 'yoma', label: 'Yoma', labelHeb: 'יומא', ico: '⚪', cls: 'ico-moed', chapitres: [] },
+      { id: 'sukkah', label: 'Souka', labelHeb: 'סוכה', ico: '🌿', cls: 'ico-moed', chapitres: [] },
+      { id: 'beitza', label: 'Beitsa', labelHeb: 'ביצה', ico: '🥚', cls: 'ico-moed', chapitres: [] },
+      { id: 'rosh-hashanah', label: 'Roch Hachana', labelHeb: 'ראש השנה', ico: '🐏', cls: 'ico-moed', chapitres: [] },
+      { id: 'taanit', label: 'Ta\'anit', labelHeb: 'תענית', ico: '🌧️', cls: 'ico-moed', chapitres: [] },
+      { id: 'megillah', label: 'Meguila', labelHeb: 'מגילה', ico: '📜', cls: 'ico-moed', chapitres: [] },
+      { id: 'moed-katan', label: 'Moëd Katan', labelHeb: 'מועד קטן', ico: '📅', cls: 'ico-moed', chapitres: [] },
+      { id: 'chagigah', label: 'Haguiga', labelHeb: 'חגיגה', ico: '🎉', cls: 'ico-moed', chapitres: [] },
     ]
   },
   'nashim': {
     label: 'Nachim', labelHeb: 'נשים', color: '#D97F8D',
     traites: [
-      { id: 'yevamot', label: 'Yevamot', labelHeb: 'יבמות', ico: '💍', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'ketubot', label: 'Ketoubot', labelHeb: 'כתובות', ico: '📜', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'nedarim', label: 'Nedarim', labelHeb: 'נדרים', ico: '🤝', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'nazir', label: 'Nazir', labelHeb: 'נזיר', ico: '🙏', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'sotah', label: 'Sota', labelHeb: 'סוטה', ico: '⚖️', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'gittin', label: 'Guitin', labelHeb: 'גיטין', ico: '📜', cls: 'ico-nashim', fiches: [], qcms: [] },
-      { id: 'kiddushin', label: 'Kidouchin', labelHeb: 'קידושין', ico: '💍', cls: 'ico-nashim', fiches: [], qcms: [] },
+      { id: 'yevamot', label: 'Yevamot', labelHeb: 'יבמות', ico: '💍', cls: 'ico-nashim', chapitres: [] },
+      { id: 'ketubot', label: 'Ketoubot', labelHeb: 'כתובות', ico: '📜', cls: 'ico-nashim', chapitres: [] },
+      { id: 'nedarim', label: 'Nedarim', labelHeb: 'נדרים', ico: '🤝', cls: 'ico-nashim', chapitres: [] },
+      { id: 'nazir', label: 'Nazir', labelHeb: 'נזיר', ico: '🙏', cls: 'ico-nashim', chapitres: [] },
+      { id: 'sotah', label: 'Sota', labelHeb: 'סוטה', ico: '⚖️', cls: 'ico-nashim', chapitres: [] },
+      { id: 'gittin', label: 'Guitin', labelHeb: 'גיטין', ico: '📜', cls: 'ico-nashim', chapitres: [] },
+      { id: 'kiddushin', label: 'Kidouchin', labelHeb: 'קידושין', ico: '💍', cls: 'ico-nashim', chapitres: [] },
     ]
   },
   'nezikin': {
     label: 'Nezikin', labelHeb: 'נזיקין', color: '#C295D6',
     traites: [
-      { id: 'bava-kamma', label: 'Bava Kama', labelHeb: 'בבא קמא', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'bava-metzia', label: 'Bava Metsia', labelHeb: 'בבא מציעא', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'bava-batra', label: 'Bava Batra', labelHeb: 'בבא בתרא', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'sanhedrin', label: 'Sanhédrin', labelHeb: 'סנהדרין', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'makkot', label: 'Makot', labelHeb: 'מכות', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'shevuot', label: 'Chevouot', labelHeb: 'שבועות', ico: '🤲', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'eduyot', label: 'Edouyot', labelHeb: 'עדויות', ico: '📜', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'avodah-zarah', label: 'Avoda Zara', labelHeb: 'עבודה זרה', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'avot', label: 'Avot', labelHeb: 'אבות', ico: '💭', cls: 'ico-nezikin', fiches: [], qcms: [] },
-      { id: 'horayot', label: 'Horayot', labelHeb: 'הוריות', ico: '⚖️', cls: 'ico-nezikin', fiches: [], qcms: [] },
+      { id: 'bava-kamma', label: 'Bava Kama', labelHeb: 'בבא קמא', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'bava-metzia', label: 'Bava Metsia', labelHeb: 'בבא מציעא', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'bava-batra', label: 'Bava Batra', labelHeb: 'בבא בתרא', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'sanhedrin', label: 'Sanhédrin', labelHeb: 'סנהדרין', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'makkot', label: 'Makot', labelHeb: 'מכות', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'shevuot', label: 'Chevouot', labelHeb: 'שבועות', ico: '🤲', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'eduyot', label: 'Edouyot', labelHeb: 'עדויות', ico: '📜', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'avodah-zarah', label: 'Avoda Zara', labelHeb: 'עבודה זרה', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'avot', label: 'Avot', labelHeb: 'אבות', ico: '💭', cls: 'ico-nezikin', chapitres: [] },
+      { id: 'horayot', label: 'Horayot', labelHeb: 'הוריות', ico: '⚖️', cls: 'ico-nezikin', chapitres: [] },
     ]
   },
   'kodashim': {
     label: 'Kodachim', labelHeb: 'קדשים', color: '#E8A87C',
     traites: [
-      { id: 'zevachim', label: 'Zevahim', labelHeb: 'זבחים', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'menachot', label: 'Menahot', labelHeb: 'מנחות', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'chullin', label: 'Houlin', labelHeb: 'חולין', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'bekhorot', label: 'Bekhorot', labelHeb: 'בכורות', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'arakhin', label: 'Arakhin', labelHeb: 'ערכין', ico: '📜', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'temurah', label: 'Temoura', labelHeb: 'תמורה', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'keritot', label: 'Keritot', labelHeb: 'כריתות', ico: '📜', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'meilah', label: 'Me\'ila', labelHeb: 'מעילה', ico: '📜', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'tamid', label: 'Tamid', labelHeb: 'תמיד', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'middot', label: 'Midot', labelHeb: 'מדות', ico: '🏛️', cls: 'ico-kodashim', fiches: [], qcms: [] },
-      { id: 'kinnim', label: 'Kinim', labelHeb: 'קנים', ico: '🕊️', cls: 'ico-kodashim', fiches: [], qcms: [] },
+      { id: 'zevachim', label: 'Zevahim', labelHeb: 'זבחים', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'menachot', label: 'Menahot', labelHeb: 'מנחות', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'chullin', label: 'Houlin', labelHeb: 'חולין', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'bekhorot', label: 'Bekhorot', labelHeb: 'בכורות', ico: '🕊️', cls: 'ico-kodashim', chapitres: [
+        { numero: 1, fiches: [
+          { name: 'Le rachat des premiers-nés au désert', href: 'guemara_Bekhorot.4.html', type: 'guemara' },
+        ], qcms: [
+          { name: 'QCM Guemara Bekhorot 4 (4a-4b)', href: 'qcm_guemara_Bekhorot.4.html', nbQuestions: 13 },
+        ] },
+      ] },
+      { id: 'arakhin', label: 'Arakhin', labelHeb: 'ערכין', ico: '📜', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'temurah', label: 'Temoura', labelHeb: 'תמורה', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'keritot', label: 'Keritot', labelHeb: 'כריתות', ico: '📜', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'meilah', label: 'Me\'ila', labelHeb: 'מעילה', ico: '📜', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'tamid', label: 'Tamid', labelHeb: 'תמיד', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'middot', label: 'Midot', labelHeb: 'מדות', ico: '🏛️', cls: 'ico-kodashim', chapitres: [] },
+      { id: 'kinnim', label: 'Kinim', labelHeb: 'קנים', ico: '🕊️', cls: 'ico-kodashim', chapitres: [] },
     ]
   },
   'tohorot': {
     label: 'Tohorot', labelHeb: 'טהרות', color: '#7FC4D4',
     traites: [
-      { id: 'keilim', label: 'Kélim', labelHeb: 'כלים', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'oholot', label: 'Oholot', labelHeb: 'אהלות', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'negaim', label: 'Négaïm', labelHeb: 'נגעים', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'parah', label: 'Para', labelHeb: 'פרה', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'tohorot-massekhet', label: 'Tohorot', labelHeb: 'טהרות', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'mikvaot', label: 'Mikvaot', labelHeb: 'מקואות', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'niddah', label: 'Nida', labelHeb: 'נדה', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'makhshirin', label: 'Makhchirin', labelHeb: 'מכשירין', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'zavim', label: 'Zavim', labelHeb: 'זבים', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'tevul-yom', label: 'Tevoul Yom', labelHeb: 'טבול יום', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'yadayim', label: 'Yadaïm', labelHeb: 'ידים', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
-      { id: 'uktzin', label: 'Oukatsin', labelHeb: 'עוקצין', ico: '💧', cls: 'ico-tohorot', fiches: [], qcms: [] },
+      { id: 'keilim', label: 'Kélim', labelHeb: 'כלים', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'oholot', label: 'Oholot', labelHeb: 'אהלות', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'negaim', label: 'Négaïm', labelHeb: 'נגעים', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'parah', label: 'Para', labelHeb: 'פרה', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'tohorot-massekhet', label: 'Tohorot', labelHeb: 'טהרות', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'mikvaot', label: 'Mikvaot', labelHeb: 'מקואות', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'niddah', label: 'Nida', labelHeb: 'נדה', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'makhshirin', label: 'Makhchirin', labelHeb: 'מכשירין', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'zavim', label: 'Zavim', labelHeb: 'זבים', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'tevul-yom', label: 'Tevoul Yom', labelHeb: 'טבול יום', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'yadayim', label: 'Yadaïm', labelHeb: 'ידים', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
+      { id: 'uktzin', label: 'Oukatsin', labelHeb: 'עוקצין', ico: '💧', cls: 'ico-tohorot', chapitres: [] },
     ]
   },
 };
@@ -421,6 +437,13 @@ const sedarimMeta = {
 
 const ordreSedarim = ['zeraim', 'moed', 'nashim', 'nezikin', 'kodashim', 'tohorot'];
 
+function compterFiches(traite) {
+  return (traite.chapitres || []).reduce((s, c) => s + (c.fiches || []).length, 0);
+}
+function compterQcms(traite) {
+  return (traite.chapitres || []).reduce((s, c) => s + (c.qcms || []).length, 0);
+}
+
 function renderTiles() {
   const grid = document.getElementById('tiles-grid');
   if (!grid) return;
@@ -430,15 +453,15 @@ function renderTiles() {
     const meta = sedarimMeta[id];
     if (!seder || !meta) return '';
 
-    const totalFiches = seder.traites.reduce((s, t) => s + t.fiches.length, 0);
-    const totalQcms = seder.traites.reduce((s, t) => s + (t.qcms || []).length, 0);
+    const totalFiches = seder.traites.reduce((s, t) => s + compterFiches(t), 0);
+    const totalQcms = seder.traites.reduce((s, t) => s + compterQcms(t), 0);
     const badge = (totalFiches === 0 && totalQcms === 0)
       ? 'À venir'
       : totalQcms > 0
         ? `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''} · ${totalQcms} QCM`
         : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
 
-    const traitesAvecContenu = seder.traites.filter(t => t.fiches.length > 0 || (t.qcms || []).length > 0);
+    const traitesAvecContenu = seder.traites.filter(t => compterFiches(t) > 0 || compterQcms(t) > 0);
     const pillsHtml = (traitesAvecContenu.length > 0 ? traitesAvecContenu : seder.traites.slice(0, 4))
       .map(t => `<span class="tile-pill">${t.label}</span>`)
       .join('');
@@ -476,36 +499,57 @@ function openPanel(id) {
   const d = data[id];
 
   const traitesHtml = d.traites.map(tr => {
-    const fiches = tr.fiches || [];
-    const qcms = tr.qcms || [];
+    const chapitres = tr.chapitres || [];
+    const totalFichesTraite = compterFiches(tr);
+    const totalQcmsTraite = compterQcms(tr);
 
-    const fichesHtml = fiches.length === 0
-      ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
-      : fiches.map(f => {
-          const ico = f.type === 'guemara' ? '📖' : '📜';
-          return `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">${ico}</div><div class="fiche-text">${f.name}</div></a>`;
+    const chapitresHtml = chapitres.length === 0
+      ? `<div class="empty-msg">Pas encore de chapitres disponibles.</div>`
+      : chapitres.map(ch => {
+          const fiches = ch.fiches || [];
+          const qcms = ch.qcms || [];
+
+          const fichesHtml = fiches.length === 0
+            ? `<div class="empty-msg">Pas encore de fiches disponibles.</div>`
+            : fiches.map(f => {
+                const ico = f.type === 'guemara' ? '📖' : '📜';
+                return `<a class="fiche-link" href="${f.href}"><div class="fiche-ico">${ico}</div><div class="fiche-text">${f.name}</div></a>`;
+              }).join('');
+
+          const qcmsHtml = qcms.length === 0
+            ? `<div class="empty-msg">Pas encore de QCM disponible.</div>`
+            : qcms.map(q =>
+                `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</div></a>`
+              ).join('');
+
+          const chapId = `ch-${tr.id}-${ch.numero}`;
+          return `
+            <div class="chap-block" id="${chapId}">
+              <div class="chap-block-header" onclick="toggleChap('${chapId}')">
+                <span class="chap-block-title">Chapitre ${ch.numero}${ch.nom ? ` — ${ch.nom}` : ''}</span>
+                <div class="mat-block-counts">
+                  <span class="mat-block-count">${fiches.length} fiche${fiches.length !== 1 ? 's' : ''}</span>
+                  <span class="mat-block-count">${qcms.length} QCM</span>
+                </div>
+                <span class="mat-block-arrow">▶</span>
+              </div>
+              <div class="chap-block-content">
+                <div class="mat-columns">
+                  <div class="mat-col-fiches">
+                    <div class="mat-col-label">📚 Fiches (Michna / Guemara)</div>
+                    ${fichesHtml}
+                  </div>
+                  <div class="mat-col-qcms">
+                    <div class="mat-col-label">📝 QCM d'évaluation</div>
+                    ${qcmsHtml}
+                  </div>
+                </div>
+              </div>
+            </div>`;
         }).join('');
 
-    const qcmsHtml = qcms.length === 0
-      ? `<div class="empty-msg">Pas encore de QCM disponible.</div>`
-      : qcms.map(q =>
-          `<a class="fiche-link" href="${q.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${q.name}${q.nbQuestions ? `<span class="qcm-nb-badge">${q.nbQuestions} questions</span>` : ''}</div></a>`
-        ).join('');
-
-    const contenuHtml = `
-      <div class="mat-columns">
-        <div class="mat-col-fiches">
-          <div class="mat-col-label">📚 Fiches (Michna / Guemara)</div>
-          ${fichesHtml}
-        </div>
-        <div class="mat-col-qcms">
-          <div class="mat-col-label">📝 QCM d'évaluation</div>
-          ${qcmsHtml}
-        </div>
-      </div>`;
-
-    const badgeFiches = `${fiches.length} fiche${fiches.length !== 1 ? 's' : ''}`;
-    const badgeQcms = `${qcms.length} QCM`;
+    const badgeFiches = `${totalFichesTraite} fiche${totalFichesTraite !== 1 ? 's' : ''}`;
+    const badgeQcms = `${totalQcmsTraite} QCM`;
 
     return `
       <div class="mat-block" id="mb-${tr.id}">
@@ -518,7 +562,7 @@ function openPanel(id) {
           </div>
           <span class="mat-block-arrow">▶</span>
         </div>
-        <div class="mat-block-content">${contenuHtml}</div>
+        <div class="mat-block-content">${chapitresHtml}</div>
       </div>`;
   }).join('');
 
@@ -544,6 +588,10 @@ function closePanel() {
 }
 
 function toggleMat(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleChap(id) {
   document.getElementById(id).classList.toggle('open');
 }
 
