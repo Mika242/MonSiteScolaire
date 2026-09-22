@@ -88,11 +88,11 @@ function showTab(id){
 function toggleLangue(blocId, langueAffichee){
   const heb = document.getElementById(blocId+'-heb');
   const fr = document.getElementById(blocId+'-fr');
-  if(langueAffichee==='heb'){
-    heb.classList.remove('masque'); fr.classList.add('masque');
-  } else {
-    heb.classList.add('masque'); fr.classList.remove('masque');
-  }
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
 window.onload=()=>showTab('t1');
 
