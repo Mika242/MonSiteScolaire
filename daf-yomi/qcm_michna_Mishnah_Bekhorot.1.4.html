@@ -271,13 +271,41 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <a href="../index.html" style="display:inline-flex;" title="Retour à l'accueil">
+      <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </a>
     <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
   <div style="display:flex; align-items:center; gap:8px;">
@@ -285,6 +313,13 @@
     <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
   </div>
 </header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
 
 <div class="wrap">
 
@@ -352,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 1:4";
 
 const notions = {"A": "Le principe applique aux poissons", "B": "La raison de la regle"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Concernant le cas des poissons enonce par cette Michna, quelle(s) affirmation(s) sont exactes ?","options":["Un poisson pur qui avale un poisson impur rend ce dernier interdit","Un poisson impur qui avale un poisson pur laisse ce dernier permis a la consommation","Le statut du poisson avale depend uniquement de son espece, jamais du fait d'avoir ete avale ou engendre"],"points":4},{"numero":2,"notion":"B","enonce":"Quelle raison la Michna donne-t-elle pour l'interdiction du poisson impur avale par un poisson pur ?","options":["Aucune raison n'est donnee par la Michna","Le poisson pur transmet automatiquement son impurete","Ce n'est pas sa propre croissance"],"points":4},{"numero":3,"notion":"A","enonce":"En quoi le principe de cette Michna differe-t-il de celui applique aux animaux terrestres (Michna 1:3) ?","options":["Le principe est exactement identique dans les deux cas","Ici, ce n'est pas le statut de la mere qui compte, mais le fait d'avoir ete avale ou engendre","Les poissons ne sont jamais concernes par les lois de cacherout"],"points":4},{"numero":4,"notion":"B","enonce":"Pourquoi la distinction entre poisson avale et poisson engendre est-elle importante selon la Guemara ?","options":["Parce que tous les poissons se reproduisent de la meme maniere","Cette distinction n'a aucune importance pratique","Parce que les poissons impurs engendrent directement, tandis que les poissons purs pondent des oeufs"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Concernant le cas des poissons enonce par cette Michna, quelle(s) affirmation(s) sont exactes ?","options":["Un poisson impur qui avale un poisson pur laisse ce dernier permis a la consommation","Le statut du poisson avale depend uniquement de son espece, jamais du fait d'avoir ete avale ou engendre","Un poisson pur qui avale un poisson impur rend ce dernier interdit"],"points":4},{"numero":2,"notion":"B","enonce":"Quelle raison la Michna donne-t-elle pour l'interdiction du poisson impur avale par un poisson pur ?","options":["Aucune raison n'est donnee par la Michna","Ce n'est pas sa propre croissance","Le poisson pur transmet automatiquement son impurete"],"points":4},{"numero":3,"notion":"A","enonce":"En quoi le principe de cette Michna differe-t-il de celui applique aux animaux terrestres (Michna 1:3) ?","options":["Ici, ce n'est pas le statut de la mere qui compte, mais le fait d'avoir ete avale ou engendre","Les poissons ne sont jamais concernes par les lois de cacherout","Le principe est exactement identique dans les deux cas"],"points":4},{"numero":4,"notion":"B","enonce":"Pourquoi la distinction entre poisson avale et poisson engendre est-elle importante selon la Guemara ?","options":["Parce que tous les poissons se reproduisent de la meme maniere","Cette distinction n'a aucune importance pratique","Parce que les poissons impurs engendrent directement, tandis que les poissons purs pondent des oeufs"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9AXwUbxN8HAEZdBZkFGASCQ==";
+const REPONSES_ENCODEES = "Chh9AX8UbxN/HAEZdRZkFGASCQ==";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);

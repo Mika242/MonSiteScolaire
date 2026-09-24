@@ -271,13 +271,41 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <a href="../index.html" style="display:inline-flex;" title="Retour à l'accueil">
+      <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </a>
     <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
   <div style="display:flex; align-items:center; gap:8px;">
@@ -285,6 +313,13 @@
     <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
   </div>
 </header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
 
 <div class="wrap">
 
@@ -352,14 +387,14 @@ const QCM_TITRE = "QCM Guemara Bekhorot 7 (7a-7b)";
 
 const notions = {"A": "La conclusion sur l'exigence de Rabbi Chimon", "B": "Le principe zé vézé gorem", "C": "L'urine, le miel et les secretions animales", "D": "La Michna sur les poissons"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Quelle conclusion la Guemara atteint-elle finalement sur l'exigence de Rabbi Chimon (tete et majorite du corps) ?","options":["Elle ne s'applique qu'a la consommation","Elle ne s'applique qu'au statut de premier-ne","Elle s'applique tant au statut de premier-ne qu'a la consommation"],"points":4},{"numero":2,"notion":"A","enonce":"Sur quelle baraita la Guemara s'appuie-t-elle pour trancher definitivement ce debat ?","options":["La baraita citant Rabbi Chimon sur la repetition du mot chameau, precisant la condition de ressemblance","La baraita sur l'urine de l'ane citee plus loin dans le daf","Une baraita totalement independante sur un autre sujet"],"points":3},{"numero":3,"notion":"B","enonce":"Concernant le desaccord Rabbi Eliezer/Rabbi Yehochoua sur le principe \"ze veze gorem\", quelle(s) affirmation(s) sont exactes ?","options":["La Guemara releve une apparente contradiction avec leur position inverse sur le cas du tereifa","Il porte sur le statut du petit d'un animal pur concu par un animal impur","Chaque sage applique ce principe de facon identique dans tous les cas"],"points":4},{"numero":4,"notion":"C","enonce":"Concernant l'urine de l'ane, quelle(s) affirmation(s) sont exactes ?","options":["Elle est finalement consideree interdite par analogie avec le lait","L'urine des chevaux et chameaux pose le meme probleme","Son statut fait debat car elle est trouble, comme le lait"],"points":4},{"numero":5,"notion":"C","enonce":"Pourquoi le miel d'abeilles est-il permis malgre son origine d'un insecte impur ?","options":["Parce que les abeilles sont en realite considerees pures","Parce que le miel ne provient pas veritablement du corps de l'abeille","En raison d'une exception scripturaire explicite deduite du mot \"ceci\""],"points":4},{"numero":6,"notion":"C","enonce":"Cette exception s'applique-t-elle aussi au miel de guepes et de frelons ?","options":["Oui, tous les types de miel sont concernes de la meme facon","Seul le miel de frelons beneficie de cette exception, pas celui des guepes","Non, seul le miel d'abeilles est concerne par l'exception"],"points":3},{"numero":7,"notion":"D","enonce":"Concernant la Michna sur les poissons introduite en fin de daf, quelle(s) affirmation(s) sont exactes ?","options":["Cette permission s'applique sans aucune condition prealable","Un poisson pur ayant avale un poisson impur rend ce dernier interdit","Cette permission suppose qu'on ait vu l'ingestion ou etabli des criteres objectifs","Un poisson impur ayant avale un poisson pur rend ce dernier permis a la consommation"],"points":4},{"numero":8,"notion":"D","enonce":"Pourquoi la Guemara craint-elle qu'un poisson trouve a l'interieur d'un poisson impur n'ait pas ete simplement avale ?","options":["Il pourrait donc s'agir de sa propre progeniture plutot que d'un poisson avale","Parce qu'un poisson impur engendre directement, sans pondre d'oeufs","Parce que tous les poissons impurs sont steriles"],"points":4},{"numero":9,"notion":"D","enonce":"Explique en quoi ce daf illustre la methode talmudique consistant a proposer plusieurs criteres alternatifs pour resoudre un meme doute.","options":["Rav Chechet, Rav Pappa et Rav Nahman proposent chacun un critere different pour etablir l'ingestion","Cette methode de criteres multiples est unique a ce daf et ne se retrouve jamais ailleurs","Ces criteres alternatifs enrichissent la comprehension pratique de la halakha","Un seul critere unique fait consensus immediat des le debut de la discussion","Rav Achi propose une approche statistique plutot qu'un critere d'observation directe"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Quelle conclusion la Guemara atteint-elle finalement sur l'exigence de Rabbi Chimon (tete et majorite du corps) ?","options":["Elle ne s'applique qu'au statut de premier-ne","Elle s'applique tant au statut de premier-ne qu'a la consommation","Elle ne s'applique qu'a la consommation"],"points":4},{"numero":2,"notion":"A","enonce":"Sur quelle baraita la Guemara s'appuie-t-elle pour trancher definitivement ce debat ?","options":["La baraita citant Rabbi Chimon sur la repetition du mot chameau, precisant la condition de ressemblance","La baraita sur l'urine de l'ane citee plus loin dans le daf","Une baraita totalement independante sur un autre sujet"],"points":3},{"numero":3,"notion":"B","enonce":"Concernant le desaccord Rabbi Eliezer/Rabbi Yehochoua sur le principe \"ze veze gorem\", quelle(s) affirmation(s) sont exactes ?","options":["Il porte sur le statut du petit d'un animal pur concu par un animal impur","Chaque sage applique ce principe de facon identique dans tous les cas","La Guemara releve une apparente contradiction avec leur position inverse sur le cas du tereifa"],"points":4},{"numero":4,"notion":"C","enonce":"Concernant l'urine de l'ane, quelle(s) affirmation(s) sont exactes ?","options":["L'urine des chevaux et chameaux pose le meme probleme","Son statut fait debat car elle est trouble, comme le lait","Elle est finalement consideree interdite par analogie avec le lait"],"points":4},{"numero":5,"notion":"C","enonce":"Pourquoi le miel d'abeilles est-il permis malgre son origine d'un insecte impur ?","options":["En raison d'une exception scripturaire explicite deduite du mot \"ceci\"","Parce que les abeilles sont en realite considerees pures","Parce que le miel ne provient pas veritablement du corps de l'abeille"],"points":4},{"numero":6,"notion":"C","enonce":"Cette exception s'applique-t-elle aussi au miel de guepes et de frelons ?","options":["Seul le miel de frelons beneficie de cette exception, pas celui des guepes","Oui, tous les types de miel sont concernes de la meme facon","Non, seul le miel d'abeilles est concerne par l'exception"],"points":3},{"numero":7,"notion":"D","enonce":"Concernant la Michna sur les poissons introduite en fin de daf, quelle(s) affirmation(s) sont exactes ?","options":["Cette permission s'applique sans aucune condition prealable","Cette permission suppose qu'on ait vu l'ingestion ou etabli des criteres objectifs","Un poisson pur ayant avale un poisson impur rend ce dernier interdit","Un poisson impur ayant avale un poisson pur rend ce dernier permis a la consommation"],"points":4},{"numero":8,"notion":"D","enonce":"Pourquoi la Guemara craint-elle qu'un poisson trouve a l'interieur d'un poisson impur n'ait pas ete simplement avale ?","options":["Il pourrait donc s'agir de sa propre progeniture plutot que d'un poisson avale","Parce qu'un poisson impur engendre directement, sans pondre d'oeufs","Parce que tous les poissons impurs sont steriles"],"points":4},{"numero":9,"notion":"D","enonce":"Explique en quoi ce daf illustre la methode talmudique consistant a proposer plusieurs criteres alternatifs pour resoudre un meme doute.","options":["Ces criteres alternatifs enrichissent la comprehension pratique de la halakha","Cette methode de criteres multiples est unique a ce daf et ne se retrouve jamais ailleurs","Rav Chechet, Rav Pappa et Rav Nahman proposent chacun un critere different pour etablir l'ingestion","Rav Achi propose une approche statistique plutot qu'un critere d'observation directe","Un seul critere unique fait consensus immediat des le debut de la discussion"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh/cGgadnBuHntkfg9jDx0cAmp9GH9waBp0cG4eemR9fnwJAWsAG2AeYXZ0bXQBdhgW";
+const REPONSES_ENCODEES = "Chh8cGgadnBuHntkfQ9jDxwcAmp9GH1waBp0cG4eemR9fnwJAWsAG2AeYXZ0bXQBcRgW";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
