@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>La Structure de l'Atome — 3ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#F7F9FC;--card:#FFFFFF;--surface2:#EEF3F9;--border:#E2E8F0;
+  --ink:#1A2B3C;--ink2:#5B6B7D;--ink3:#94A3B3;
+  --brand:#58CC02;--brand-dark:#3D9401;--brand-light:#E8F9DA;
+  --accent:#FFC800;--accent-light:#FFF6D9;
+  --t1:#1CB0F6;--t2:#58CC02;--t3:#CE82FF;--t4:#FF9600;--t5:#FF4B4B;--t6:#1CB0F6;
+  --t1b:#E3F5FE;--t2b:#E8F9DA;--t3b:#F5E9FE;--t4b:#FFF1DE;--t5b:#FFE8E8;--t6b:#E3F5FE;
+  --texte-f1:#0B6BA8;--texte-f2:#3D9401;--texte-f3:#7B3FA0;--texte-f4:#B35F00;--texte-f5:#C82929;--texte-f6:#0B6BA8;
+  --tc1:#FF4B4B;--tc2:#1CB0F6;--ok:#3D9401;--bad:#EA2B2B;
+  --shadow-card:0 2px 8px rgba(26,43,60,.06);
+  --shadow-pop:0 4px 14px rgba(26,43,60,.1);
+  --shadow-pop-sm:0 2px 8px rgba(26,43,60,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:17px;line-height:1.65}
+header{background:var(--brand);padding:32px 24px 26px;position:relative;overflow:hidden}
+.hi{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.ht img{height:46px;border-radius:14px;margin-bottom:10px;display:block;background:rgba(255,255,255,.15);padding:4px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:8px}
+header h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:5px}
+header h1 em{font-style:normal;color:#fff}
+header p{font-size:.86rem;color:rgba(255,255,255,.85);font-weight:500}
+.rb{background:rgba(255,255,255,.16);border-radius:16px;padding:14px 18px;text-align:center;min-width:148px;flex-shrink:0}
+.rbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
+.rs{font-size:1.25rem;letter-spacing:2px;margin-bottom:4px;display:block;color:var(--accent)}
+.rsc{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;line-height:1}
+.rst{font-size:.78rem;color:rgba(255,255,255,.65)}
+.rp{font-size:.72rem;color:rgba(255,255,255,.75);margin-top:2px;font-weight:600}
+.rbar{width:100%;height:6px;background:rgba(255,255,255,.2);border-radius:10px;margin-top:7px;overflow:hidden}
+.rbar-f{height:100%;border-radius:10px;background:var(--accent);width:0%;transition:width .5s}
+.cs{background:var(--ink);padding:9px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cs-t{font-size:.77rem;color:rgba(255,255,255,.85);font-weight:600}
+.cs-b{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:var(--ink);text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:800;transition:transform .15s}
+.cs-b:hover{transform:scale(1.04)}
+.tw{background:var(--card);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-card)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 12px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:12px 14px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink3);transition:all .2s;white-space:nowrap;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink2);background:var(--surface2)}
+.tab.t1.active{color:var(--t1);border-bottom-color:var(--t1);background:var(--t1b)}
+.tab.t2.active{color:var(--t2);border-bottom-color:var(--t2);background:var(--t2b)}
+.tab.t3.active{color:var(--t3);border-bottom-color:var(--t3);background:var(--t3b)}
+.tab.t4.active{color:var(--t4);border-bottom-color:var(--t4);background:var(--t4b)}
+.tab.t5.active{color:var(--t5);border-bottom-color:var(--t5);background:var(--t5b)}
+.tab.t6.active{color:var(--t6);border-bottom-color:var(--t6);background:var(--t6b)}
+.tab.tp.active{color:var(--brand-dark);border-bottom-color:var(--brand);background:var(--brand-light)}
+.tab.tc1.active{color:var(--tc1);border-bottom-color:var(--tc1);background:var(--t5b)}
+.tab.tc2.active{color:var(--tc2);border-bottom-color:var(--tc2);background:var(--t1b)}
+main{max-width:980px;margin:auto;padding:28px 16px 80px}
+.sec{display:none}.sec.active{display:block}
+.si{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.si1{background:var(--t1b)}.si2{background:var(--t2b)}.si3{background:var(--t3b)}
+.si4{background:var(--t4b)}.si5{background:var(--t5b)}.si6{background:var(--t6b)}
+.sip{background:var(--brand-light);color:var(--brand-dark)}.sic1{background:var(--t5b);color:var(--tc1)}.sic2{background:var(--t1b);color:var(--tc2)}
+.st h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800}
+.st p{color:var(--ink2);font-size:.85rem;margin-top:2px;font-weight:500}
+.cours{background:var(--card);border-radius:18px;padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow-card);border-left:5px solid}
+.c1{border-left-color:var(--t1)}.c2{border-left-color:var(--t2)}.c3{border-left-color:var(--t3)}
+.c4{border-left-color:var(--t4)}.c5{border-left-color:var(--t5)}.c6{border-left-color:var(--t6)}
+.clbl{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.form{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;border-radius:12px;padding:10px 15px;font-size:.9rem;margin:6px 0;display:block;line-height:1.8}
+.f1{background:var(--t1b);color:var(--texte-f1)}
+.f2{background:var(--t2b);color:var(--texte-f2)}
+.f3{background:var(--t3b);color:var(--texte-f3)}
+.f4{background:var(--t4b);color:var(--texte-f4)}
+.f5{background:var(--t5b);color:var(--texte-f5)}
+.f6{background:var(--t6b);color:var(--texte-f6)}
+.mn{font-family:'Plus Jakarta Sans',monospace;font-size:.86rem;background:var(--surface2);padding:2px 7px;border-radius:6px;color:var(--ink);display:inline-block;font-weight:700}
+.tip{background:var(--accent-light);border-radius:12px;padding:11px 15px;font-size:.86rem;margin-top:9px;line-height:1.7}
+.tip b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:#8A6D00;margin-bottom:3px}
+.ex{background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:9px;font-size:.86rem;line-height:1.85;white-space:pre-line}
+.ex b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:0}
+.pt{background:var(--t2b);border-radius:12px;padding:11px 15px;margin-top:9px;font-size:.85rem;font-style:normal;color:var(--texte-f2);line-height:1.6}
+.pt::before{content:'✏️ Rédaction attendue : ';font-weight:700;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);display:block;margin-bottom:4px}
+.methode{background:var(--t3b);border-radius:14px;padding:14px 18px;margin:12px 0}
+.mlbl{font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--texte-f3);margin-bottom:9px}
+.steps{list-style:none;padding:0}
+.steps li{font-size:.88rem;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.08);line-height:1.75;font-weight:500}
+.steps li:last-child{border:none}
+.steps li::before{content:'▸ ';color:var(--texte-f3);font-weight:700}
+.lvl{font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:14px;margin-left:5px}
+.le{background:var(--t2b);color:var(--texte-f2)}
+.lm{background:var(--accent-light);color:#8A6D00}
+.lh{background:var(--t5b);color:var(--texte-f5)}
+.div{display:flex;align-items:center;gap:9px;margin:22px 0 13px;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.div::before,.div::after{content:'';flex:1;height:2px;background:var(--border);border-radius:2px}
+.pr{display:flex;align-items:center;gap:10px;margin:16px 0 6px}
+.pb{flex:1;height:8px;background:var(--surface2);border-radius:10px;overflow:hidden}
+.pf{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--t1)}.pf2{background:var(--t2)}.pf3{background:var(--t3)}
+.pf4{background:var(--t4)}.pf5{background:var(--t5)}.pf6{background:var(--t6)}
+.pt2{font-size:.76rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.ctbl{width:100%;border-collapse:separate;border-spacing:0;font-size:.85rem;margin:10px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card)}
+.ctbl th{padding:9px 12px;text-align:center;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;background:var(--brand);color:#fff}
+.ctbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:.84rem;background:var(--card)}
+.ctbl td.lab{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:700;text-align:left;background:var(--surface2)}
+.ctbl tr:last-child td{border-bottom:none}
+.schema-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;box-shadow:var(--shadow-card)}
+.schema-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
+.schema-corps{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.schema-svg{flex-shrink:0;max-width:100%;background:var(--surface2);border-radius:12px;padding:10px;display:inline-block}
+.schema-svg svg{display:block;width:260px;max-width:100%;height:auto}
+.schema-legendes{flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px}
+.schema-legende{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;line-height:1.5}
+.schema-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--tc1);color:#fff;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+@media(max-width:520px){.schema-corps{flex-direction:column}.schema-svg{align-self:center}}
+.frise-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;overflow-x:auto;box-shadow:var(--shadow-card)}
+.frise-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:22px}
+.frise-ligne{display:flex;align-items:flex-start;gap:0;min-width:min-content;position:relative;padding-top:8px}
+.frise-etape{flex:1;min-width:110px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding:0 8px}
+.frise-date{font-size:.7rem;font-weight:800;color:var(--brand-dark);margin-bottom:11px;white-space:nowrap;position:relative;z-index:1;background:var(--card);padding:0 4px}
+.frise-point-track{position:relative;width:100%;height:14px;display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+.frise-point-track::before{content:'';position:absolute;left:0;right:50%;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-point-track::after{content:'';position:absolute;left:50%;right:0;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-etape:first-child .frise-point-track::before{display:none}
+.frise-etape:last-child .frise-point-track::after{display:none}
+.frise-point{width:16px;height:16px;border-radius:50%;background:var(--brand);position:relative;z-index:2;flex-shrink:0;box-shadow:0 0 0 4px var(--brand-light)}
+.frise-label{font-size:.78rem;color:var(--ink2);line-height:1.4;font-weight:500}
+.exo{background:var(--card);border-radius:16px;padding:17px 21px;margin-bottom:11px;box-shadow:var(--shadow-card);transition:box-shadow .15s}
+.exo:hover{box-shadow:var(--shadow-pop-sm)}
+.exo-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.94rem;font-weight:700;line-height:1.6;margin-bottom:9px}
+.ctx{background:var(--surface2);border-radius:12px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;line-height:1.75;font-weight:500}
+.ctx b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);display:block;margin-bottom:3px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;align-items:flex-start;gap:9px;padding:11px 14px;background:var(--surface2);border:2px solid transparent;border-radius:14px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .14s;line-height:1.5}
+.opts label:hover{border-color:var(--brand);background:var(--brand-light)}
+.fi{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;background:var(--surface2);color:var(--ink);outline:none;transition:border .14s;margin-top:6px}
+.fi:focus{border-color:var(--brand);background:var(--card)}
+.btn{padding:11px 22px;border-radius:14px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:800;cursor:pointer;transition:all .14s;margin-top:9px;margin-right:6px;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.b1{background:var(--t1);color:#fff}.b2{background:var(--t2);color:#fff}.b3{background:var(--t3);color:#fff}
+.b4{background:var(--t4);color:#fff}.b5{background:var(--t5);color:#fff}.b6{background:var(--t6);color:#fff}
+.bc1{background:var(--tc1);color:#fff}.bc2{background:var(--tc2);color:#fff}
+.bg{background:var(--surface2);border:none;color:var(--ink2);box-shadow:none}
+.bg:hover{background:var(--border);color:var(--ink)}
+.res{display:none;margin-top:9px;padding:11px 15px;border-radius:14px;font-size:.86rem;line-height:1.6;font-weight:600}
+.res.ok{background:var(--t2b)}.res.bad{background:var(--t5b)}
+.ok-l{color:var(--ok);font-weight:800}.bad-l{color:var(--bad);font-weight:800}
+.expl{margin-top:5px;color:var(--ink2);font-size:.83rem;line-height:1.9;font-weight:500}
+.corr{display:none;margin-top:9px;background:var(--surface2);border-radius:14px;padding:13px 17px;font-size:.86rem;line-height:2}
+.corr .s{color:var(--ink2);border-bottom:1px dashed var(--border);padding:4px 0;font-weight:500}
+.corr .s:last-child{border:none;color:var(--ink);font-weight:700}
+.corr .s::before{content:'▸ ';color:var(--ok)}
+.chdr{border-radius:18px;padding:19px 23px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-card)}
+.chdr1{background:var(--t5b)}
+.chdr2{background:var(--t1b)}
+.cbdg{color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:14px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.cbdg1{background:var(--tc1)}.cbdg2{background:var(--tc2)}
+.cinfo h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.cinfo p,.cinfo ul{font-size:.85rem;line-height:1.7;font-weight:500}
+.cinfo ul{padding-left:16px;margin-top:6px}
+.cexo{background:var(--card);border-radius:18px;padding:21px 23px;margin-bottom:15px;box-shadow:var(--shadow-card)}
+.cehd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:2px solid var(--border);flex-wrap:wrap;gap:8px}
+.cen{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800}
+.cen1{color:var(--tc1)}.cen2{color:var(--tc2)}
+.cpts{border-radius:14px;padding:3px 11px;font-size:.76rem;font-weight:800}
+.cpts1{background:var(--t5b);color:var(--tc1)}
+.cpts2{background:var(--t1b);color:var(--tc2)}
+.csub{margin-top:11px;padding:11px 15px;background:var(--surface2);border-radius:12px;font-size:.9rem;line-height:1.9;font-weight:500}
+.csub b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:4px}
+.ans{margin-top:9px;min-height:65px;background:var(--surface2);border-radius:12px;padding:6px 11px;font-size:.87rem;color:var(--ink3);font-style:italic}
+.ans.tall{min-height:105px}
+.ans.xt{min-height:145px}
+.cco{display:none;margin-top:12px;background:var(--t2b);border-radius:14px;padding:14px 18px}
+.ccoh{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ok);margin-bottom:10px}
+.ccob .l{display:block;border-bottom:1px dashed rgba(61,148,1,.25);padding:4px 0;color:var(--ink2);font-size:.84rem;font-weight:500}
+.ccob .l:last-child{border:none;color:var(--ink);font-weight:700}
+.ccob .l::before{content:'▸ ';color:var(--ok)}
+.ccob .hi{color:var(--ok);font-weight:700}
+.cta{background:var(--brand);border-radius:22px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-title em{font-style:normal;color:var(--accent)}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:18px;line-height:1.5;max-width:460px;margin-left:auto;margin-right:auto;font-weight:500}
+.cta-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:.75rem;color:#fff;font-weight:700}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:var(--ink);text-decoration:none;padding:12px 28px;border-radius:16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:800;transition:transform .2s;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.cta-btn:hover{transform:translateY(-2px)}
+footer{text-align:center;padding:26px;font-size:.78rem;color:var(--ink2);margin-top:24px;line-height:1.9}
+.fc{font-size:.7rem;color:var(--ink3);margin-top:6px}
+.fc strong{color:var(--ink2)}
+footer a{color:var(--brand-dark);text-decoration:none;font-weight:700}
+@media(max-width:600px){header h1{font-size:1.35rem}.hi{flex-direction:column;align-items:flex-start}.rb{align-self:stretch}main{padding:16px 10px 60px}}
+
+
+.cr{background:#fee2e2;color:#991b1b;font-weight:700}
+.cv{background:#dcfce7;color:#166534;font-weight:700}
+.cb{background:#dbeafe;color:#1e3a8a;font-weight:700}
+.cj{background:#fef9c3;color:#854d0e;font-weight:700}
+.cm{background:#fae8ff;color:#86198f;font-weight:700}
+.cc{background:#cffafe;color:#155e75;font-weight:700}
+.cw{background:#f8fafc;color:#1e293b;font-weight:700}
+.cnoir{background:#1e293b;color:#fff;font-weight:700}
+
+</style>
+<script>
+
+let ta=0,tc2=0;
+const sc={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},tot={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},ans={};
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,cor,ex,s){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch)if(c.checked)sel=c.value;
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-l'>&#9888; Choisis une reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(sel===cor){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function checkF(id,cor,ex,s){
+  const inp=document.getElementById(id+'-i'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  const a=cor.split('|').map(v=>v.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'));
+  if(!val){r.innerHTML="<span class='bad-l'>&#9888; Ecris ta reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(a.includes(val)){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction ci-dessous.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function upP(s){
+  const p=tot[s]>0?Math.round(sc[s]/tot[s]*100):0;
+  const b=document.getElementById('pb-'+s),t=document.getElementById('pt-'+s);
+  if(b)b.style.width=p+'%';if(t)t.textContent=sc[s]+' / '+tot[s]+' . '+p+'%';
+}
+function upR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'-';document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='*'.repeat(s)+'.'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  b.style.background=p>=75?'linear-gradient(90deg,#22c55e,#16a34a)':p>=50?'linear-gradient(90deg,#f59e0b,#ca8a04)':'linear-gradient(90deg,#93c5fd,#2563eb)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+function showCorr(id){const e=document.getElementById(id);e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="ht">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbdg">Physique-Chimie · 3ème · Chimie</div>
+      <h1>La Structure de l'Atome</h1>
+      <p>Noyau, électrons, nucléons : décrire la composition d'un atome</p>
+    </div>
+    <div class="rb">
+      <div class="rbl">Mon score</div>
+      <span class="rs" id="r-s">SS</span>
+      <div class="rsc"><span id="r-c">0</span><span class="rst"> / <span id="r-t">0</span></span></div>
+      <div class="rp" id="r-p">-</div>
+      <div class="rbar"><div class="rbar-f" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="cs">
+  <span class="cs-t">📲 Nouvelles fiches en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cs-b">◈ @toncoachscolaire</a>
+</div>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-t1" onclick="showTab('t1')">⚛️ S1 — Constituants</button>
+<button class="tab t2" id="tab-t2" onclick="showTab('t2')">🔢 S2 — Notation et composition</button>
+<button class="tab t3" id="tab-t3" onclick="showTab('t3')">🔭 S3 — Échelles et tableau périodique</button>
+<button class="tab tp" id="tab-tp" onclick="showTab('tp')">🧩 Problèmes</button>
+<button class="tab tc2" id="tab-tc2" onclick="showTab('tc2')">📋 Contrôle</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="si"><div class="sico si1">⚛️</div>
+  <div class="st"><h2>Série 1 — Les constituants de l'atome</h2><p>Un noyau au centre, des électrons autour</p></div></div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Un atome est constitué d'un noyau et d'électrons</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Toute la matière est faite d'atomes. Un atome est formé d'un noyau central, autour duquel se déplacent un ou plusieurs électrons. Le noyau est lui-même constitué de particules appelées nucléons, qui sont de deux types : les protons et les neutrons.</p>
+    <div class="schema-bloc">
+    <div class="schema-titre">🔍 L'atome de carbone (dessin hors échelle : le noyau est agrandi)</div>
+    <div class="schema-corps">
+      <div class="schema-svg"><svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg"><circle cx="150" cy="130" r="105" fill="#dbeafe" fill-opacity="0.45" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="5,4"/><circle cx="150" cy="130" r="72" fill="none" stroke="#bfdbfe" stroke-width="1" stroke-dasharray="2,4"/><circle cx="150.0" cy="130.0" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="150.0" cy="117.0" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="162.4" cy="126.0" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="157.6" cy="140.5" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="142.4" cy="140.5" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="137.6" cy="126.0" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="162.5" cy="108.3" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="175.0" cy="130.0" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="162.5" cy="151.7" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="137.5" cy="151.7" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="125.0" cy="130.0" r="6" fill="#ef4444" stroke="#fff" stroke-width="1"/><circle cx="137.5" cy="108.3" r="6" fill="#9ca3af" stroke="#fff" stroke-width="1"/><circle cx="248.7" cy="165.9" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><circle cx="162.5" cy="200.9" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><circle cx="69.6" cy="197.5" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><circle cx="82.3" cy="105.4" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><circle cx="131.8" cy="26.6" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><circle cx="205.2" cy="83.7" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><g><circle cx="150" cy="130" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="150" y="130" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">1</text></g><g><line x1="255" y1="130" x2="282" y2="82" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/><circle cx="255" cy="130" r="3" fill="#dc2626"/><circle cx="282" cy="82" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="282" y="82" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">2</text></g><g><line x1="150" y1="28" x2="200" y2="22" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/><circle cx="150" cy="28" r="3" fill="#dc2626"/><circle cx="200" cy="22" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="200" y="22" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">3</text></g></svg></div>
+      <div class="schema-legendes">
+      <div class="schema-legende"><span class="schema-num">1</span>Le noyau : il contient les 12 nucléons (6 protons en rouge, 6 neutrons en gris)</div>
+<div class="schema-legende"><span class="schema-num">2</span>Un électron (en bleu) : il se déplace autour du noyau</div>
+<div class="schema-legende"><span class="schema-num">3</span>Le nuage électronique : la zone où se déplacent les électrons</div>
+      </div>
+    </div>
+  </div>
+    <div class="pt">"Un atome est constitué d'un noyau, situé au centre, et d'électrons qui se déplacent autour du noyau. Le noyau contient des nucléons : des protons et des neutrons."</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Les trois particules : charge et localisation</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Chaque particule est caractérisée par sa charge électrique et par l'endroit où elle se trouve dans l'atome. La charge élémentaire est notée e.</p>
+    <table class="ctbl">
+      <tr><th>Particule</th><th>Où se trouve-t-elle ?</th><th>Charge électrique</th><th>Masse (ordre de grandeur)</th></tr>
+      <tr><td class="lab">Proton</td><td>Dans le noyau</td><td>Positive (+e)</td><td>1,7 × 10⁻²⁷ kg</td></tr>
+      <tr><td class="lab">Neutron</td><td>Dans le noyau</td><td>Nulle (neutre)</td><td>1,7 × 10⁻²⁷ kg</td></tr>
+      <tr><td class="lab">Électron</td><td>Autour du noyau</td><td>Négative (−e)</td><td>9,1 × 10⁻³¹ kg</td></tr>
+    </table>
+    <div class="tip"><b>Nucléon, proton, neutron : ne pas confondre</b>Le mot nucléon désigne, de façon générale, les particules du noyau. Les protons et les neutrons sont donc deux sortes de nucléons. Les électrons ne sont PAS des nucléons : ils sont à l'extérieur du noyau.</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Un atome est électriquement neutre</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Le proton porte une charge positive et l'électron une charge négative de même valeur. Le neutron n'a pas de charge. Un atome contient toujours autant de protons que d'électrons : les charges se compensent exactement et l'atome est électriquement neutre.</p>
+    <span class="form f1">nombre d'électrons = nombre de protons</span>
+    <div class="ex"><b>Exemple : l'atome d'oxygène</b>
+Le noyau de l'atome d'oxygène contient 8 protons.
+Comme l'atome est neutre, il contient aussi 8 électrons.
+Charge totale : 8 × (+e) + 8 × (−e) = 0</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf1" id="pb-t1"></div></div><div class="pt2" id="pt-t1">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>De quoi un atome est-il constitué ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q11" value="A"> D'un noyau central et d'électrons qui se déplacent autour</label>
+      <label><input type="radio" name="q11" value="B"> D'électrons au centre et d'un noyau qui tourne autour</label>
+      <label><input type="radio" name="q11" value="C"> D'un seul bloc de matière sans partie distincte</label>
+    </div>
+    <button class="btn b1" onclick="check('q11','A','Un atome est formé d un noyau situé au centre, qui contient les nucléons, et d électrons qui se déplacent autour de ce noyau.','t1')">Vérifier</button>
+    <div class="res" id="q11-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Quelles particules trouve-t-on dans le noyau d'un atome ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q12" value="A"> Les protons et les neutrons</label>
+      <label><input type="radio" name="q12" value="B"> Les protons et les électrons</label>
+      <label><input type="radio" name="q12" value="C"> Les neutrons et les électrons</label>
+    </div>
+    <button class="btn b1" onclick="check('q12','A','Le noyau est constitué de nucléons, c est-à-dire de protons et de neutrons. Les électrons sont à l extérieur du noyau.','t1')">Vérifier</button>
+    <div class="res" id="q12-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la charge électrique d'un neutron ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q13" value="A"> Positive</label>
+      <label><input type="radio" name="q13" value="B"> Négative</label>
+      <label><input type="radio" name="q13" value="C"> Nulle : le neutron est électriquement neutre</label>
+    </div>
+    <button class="btn b1" onclick="check('q13','C','Le proton est positif, l électron est négatif, et le neutron n a pas de charge électrique : c est pour cela qu on l appelle neutron.','t1')">Vérifier</button>
+    <div class="res" id="q13-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Le noyau d'un atome de sodium contient 11 protons.</div>
+    <p>Combien cet atome contient-il d'électrons ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q14" value="A"> 0 électron</label>
+      <label><input type="radio" name="q14" value="B"> 11 électrons</label>
+      <label><input type="radio" name="q14" value="C"> 22 électrons</label>
+    </div>
+    <button class="btn b1" onclick="check('q14','B','Un atome est électriquement neutre : il contient autant d électrons que de protons. Avec 11 protons, l atome de sodium a donc 11 électrons.','t1')">Vérifier</button>
+    <div class="res" id="q14-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Pourquoi un atome est-il électriquement neutre ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q15" value="A"> Parce que les charges positives des protons compensent les charges négatives des électrons</label>
+      <label><input type="radio" name="q15" value="B"> Parce qu'il ne contient aucune particule chargée</label>
+      <label><input type="radio" name="q15" value="C"> Parce que les neutrons annulent la charge des protons</label>
+    </div>
+    <button class="btn b1" onclick="check('q15','A','L atome contient autant de protons (charge +e) que d électrons (charge −e). Les charges se compensent. Les neutrons, eux, n ont pas de charge et ne jouent aucun rôle dans cette compensation.','t1')">Vérifier</button>
+    <div class="res" id="q15-r"></div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q6 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Un élève affirme : Le noyau d'un atome contient des protons, des neutrons et des électrons.</div>
+    <p>Cette affirmation est-elle exacte ? Corrige-la si besoin.</p>
+    <button class="bg btn" onclick="toggle('q16')">📋 Correction</button>
+    <div class="corr" id="q16">
+      <div class="s">L'affirmation est <span class="hi">inexacte</span> : les électrons ne se trouvent pas dans le noyau.</div>
+      <div class="s">Le noyau contient uniquement des nucléons : des <span class="hi">protons</span> et des <span class="hi">neutrons</span>.</div>
+      <div class="s">Les électrons se déplacent <span class="hi">autour</span> du noyau, dans le nuage électronique.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-t2">
+  <div class="si"><div class="sico si2">🔢</div>
+  <div class="st"><h2>Série 2 — Déterminer la composition d'un atome</h2><p>Lire le symbole du noyau : A, Z et X</p></div></div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 La notation symbolique du noyau</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Le noyau d'un atome se note avec le symbole de l'atome, X, accompagné de deux nombres : A, en haut, et Z, en bas. Par exemple, le noyau de l'atome d'aluminium se lit : A = 27, Z = 13 et X = Al.</p>
+    <div class="schema-bloc">
+    <div class="schema-titre">🔍 Lire la notation du noyau de l'aluminium</div>
+    <div class="schema-corps">
+      <div class="schema-svg"><svg viewBox="0 0 300 210" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="284" height="194" rx="16" fill="#f8fafc" stroke="#e2e8f0"/><text x="70" y="82"  font-family="Outfit,Arial,sans-serif" font-size="46" font-weight="800" fill="#dc2626" text-anchor="middle">27</text><text x="70" y="162" font-family="Outfit,Arial,sans-serif" font-size="46" font-weight="800" fill="#2563eb" text-anchor="middle">13</text><text x="190" y="128" font-family="Outfit,Arial,sans-serif" font-size="92" font-weight="800" fill="#0f172a" text-anchor="middle">Al</text><line x1="36" y1="102" x2="104" y2="102" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,3"/><g><line x1="70" y1="62" x2="24" y2="40" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/><circle cx="70" cy="62" r="3" fill="#dc2626"/><circle cx="24" cy="40" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="24" y="40" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">1</text></g><g><line x1="70" y1="142" x2="24" y2="176" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/><circle cx="70" cy="142" r="3" fill="#dc2626"/><circle cx="24" cy="176" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="24" y="176" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">2</text></g><g><line x1="190" y1="100" x2="268" y2="44" stroke="#dc2626" stroke-width="1.2" stroke-dasharray="3,2"/><circle cx="190" cy="100" r="3" fill="#dc2626"/><circle cx="268" cy="44" r="10" fill="#dc2626" stroke="#fff" stroke-width="2"/><text x="268" y="44" font-size="11" font-weight="800" fill="#fff" text-anchor="middle" dominant-baseline="central" font-family="Outfit,sans-serif">3</text></g></svg></div>
+      <div class="schema-legendes">
+      <div class="schema-legende"><span class="schema-num">1</span>A = 27 : le nombre de nucléons (protons + neutrons) du noyau</div>
+<div class="schema-legende"><span class="schema-num">2</span>Z = 13 : le nombre de protons du noyau (numéro atomique)</div>
+<div class="schema-legende"><span class="schema-num">3</span>X = Al : le symbole de l'atome (ici l'aluminium)</div>
+      </div>
+    </div>
+  </div>
+    <div class="tip"><b>Le repère à retenir</b>A est toujours plus grand ou égal à Z, car les protons sont eux-mêmes des nucléons. Z, le nombre de protons, identifie l'atome : deux atomes qui ont le même Z sont le même atome.</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Trouver protons, neutrons et électrons</div>
+    <p style="font-size:.89rem;margin-bottom:8px">À partir de A et de Z, on retrouve toute la composition de l'atome. Il suffit d'appliquer trois relations, en se souvenant que l'atome est électriquement neutre.</p>
+    <span class="form f2">nombre de protons = Z</span>
+    <span class="form f2">nombre de neutrons = A − Z</span>
+    <span class="form f2">nombre d'électrons = Z</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Méthode pour déterminer la composition d'un atome</div>
+      <ul class="steps">
+        <li>Repérer les deux nombres du noyau : A (en haut) et Z (en bas)</li>
+        <li>Nombre de protons : c'est Z</li>
+        <li>Nombre de neutrons : calculer A − Z</li>
+        <li>Nombre d'électrons : c'est Z aussi, car l'atome est neutre</li>
+      </ul>
+    </div>
+    <div class="ex"><b>Exemple : l'atome d'aluminium (A = 27 ; Z = 13)</b>
+Protons : Z = 13
+Neutrons : A − Z = 27 − 13 = 14
+Électrons : 13 (l'atome est neutre)
+Composition : 13 protons, 14 neutrons, 13 électrons</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Quelques atomes à connaître</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Voici la composition de plusieurs atomes courants. Tu peux vérifier chaque ligne avec les trois relations.</p>
+    <table class="ctbl">
+      <tr><th>Atome</th><th>Symbole</th><th>A</th><th>Z</th><th>Protons</th><th>Neutrons (A − Z)</th><th>Électrons</th></tr>
+      <tr><td class="lab">Hydrogène</td><td>H</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+      <tr><td class="lab">Carbone</td><td>C</td><td>12</td><td>6</td><td>6</td><td>6</td><td>6</td></tr>
+      <tr><td class="lab">Oxygène</td><td>O</td><td>16</td><td>8</td><td>8</td><td>8</td><td>8</td></tr>
+      <tr><td class="lab">Sodium</td><td>Na</td><td>23</td><td>11</td><td>11</td><td>12</td><td>11</td></tr>
+      <tr><td class="lab">Chlore</td><td>Cl</td><td>35</td><td>17</td><td>17</td><td>18</td><td>17</td></tr>
+      <tr><td class="lab">Cuivre</td><td>Cu</td><td>63</td><td>29</td><td>29</td><td>34</td><td>29</td></tr>
+    </table>
+    <div class="tip"><b>Un cas particulier</b>L'atome d'hydrogène (A = 1, Z = 1) n'a aucun neutron : son noyau est réduit à un seul proton. C'est le seul atome dans ce cas.</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf2" id="pb-t2"></div></div><div class="pt2" id="pt-t2">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Dans la notation du noyau, que représente le nombre Z ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q21" value="A"> Le nombre de protons</label>
+      <label><input type="radio" name="q21" value="B"> Le nombre de neutrons</label>
+      <label><input type="radio" name="q21" value="C"> Le nombre de nucléons</label>
+    </div>
+    <button class="btn b2" onclick="check('q21','A','Z est le nombre de protons du noyau. On l appelle aussi le numéro atomique. Le nombre de nucléons, lui, se note A.','t2')">Vérifier</button>
+    <div class="res" id="q21-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Comment calcule-t-on le nombre de neutrons d'un noyau ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q22" value="A"> A + Z</label>
+      <label><input type="radio" name="q22" value="B"> A − Z</label>
+      <label><input type="radio" name="q22" value="C"> A × Z</label>
+    </div>
+    <button class="btn b2" onclick="check('q22','B','Les nucléons sont des protons ou des neutrons. Donc le nombre de neutrons est le nombre de nucléons moins le nombre de protons : A − Z.','t2')">Vérifier</button>
+    <div class="res" id="q22-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <div class="ctx">Le noyau de l'atome de carbone a pour nombres A = 12 et Z = 6.</div>
+    <p>Combien cet atome contient-il de neutrons ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q23" value="A"> 6 neutrons</label>
+      <label><input type="radio" name="q23" value="B"> 12 neutrons</label>
+      <label><input type="radio" name="q23" value="C"> 18 neutrons</label>
+    </div>
+    <button class="btn b2" onclick="check('q23','A','Nombre de neutrons = A − Z = 12 − 6 = 6 neutrons.','t2')">Vérifier</button>
+    <div class="res" id="q23-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Le noyau de l'atome de chlore a pour nombres A = 35 et Z = 17.</div>
+    <p>Quelle est la composition complète de cet atome ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q24" value="A"> 17 protons, 18 neutrons, 17 électrons</label>
+      <label><input type="radio" name="q24" value="B"> 35 protons, 17 neutrons, 35 électrons</label>
+      <label><input type="radio" name="q24" value="C"> 17 protons, 35 neutrons, 17 électrons</label>
+    </div>
+    <button class="btn b2" onclick="check('q24','A','Protons : Z = 17. Neutrons : A − Z = 35 − 17 = 18. Électrons : 17, car l atome est neutre. Composition : 17 protons, 18 neutrons, 17 électrons.','t2')">Vérifier</button>
+    <div class="res" id="q24-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lm">Intermédiaire</span></div>
+    <div class="ctx">Le noyau de l'atome de cuivre a pour nombres A = 63 et Z = 29.</div>
+    <p>Détermine le nombre de protons, de neutrons et d'électrons de cet atome. Détaille ton calcul.</p>
+    <button class="bg btn" onclick="toggle('q25')">📋 Correction</button>
+    <div class="corr" id="q25">
+      <div class="s">Protons : le nombre de protons est égal à Z, soit <span class="hi">29 protons</span>.</div>
+      <div class="s">Neutrons : A − Z = 63 − 29 = <span class="hi">34 neutrons</span>.</div>
+      <div class="s">Électrons : l'atome est électriquement neutre, donc il a autant d'électrons que de protons, soit <span class="hi">29 électrons</span>.</div>
+    </div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q6 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Un atome contient 11 électrons et son noyau contient 12 neutrons.</div>
+    <p>Détermine son nombre de protons (Z) et son nombre de nucléons (A). De quel atome s'agit-il, sachant que c'est celui du tableau de la leçon dont Z = 11 ?</p>
+    <button class="bg btn" onclick="toggle('q26')">📋 Correction</button>
+    <div class="corr" id="q26">
+      <div class="s">L'atome est neutre : il a autant de protons que d'électrons, donc <span class="hi">Z = 11</span>.</div>
+      <div class="s">Le nombre de nucléons est la somme des protons et des neutrons : A = 11 + 12 = <span class="hi">23</span>.</div>
+      <div class="s">Avec Z = 11 et A = 23, il s'agit de l'atome de <span class="hi">sodium (Na)</span>.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-t3">
+  <div class="si"><div class="sico si3">🔭</div>
+  <div class="st"><h2>Série 3 — Ordres de grandeur et tableau périodique</h2><p>L'atome est essentiellement du vide ; classer les atomes</p></div></div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Des dimensions extrêmement petites</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Un atome mesure de l'ordre de 10⁻¹⁰ m (un dixième de nanomètre). Son noyau est beaucoup plus petit : environ 10⁻¹⁵ m. Le noyau est donc environ 100 000 fois plus petit que l'atome.</p>
+    <span class="form f3">dimension de l'atome ≈ 10⁻¹⁰ m</span>
+    <span class="form f3">dimension du noyau ≈ 10⁻¹⁵ m</span>
+    <div class="ex"><b>Exemple : passer à notre échelle</b>
+Rapport des dimensions : 10⁻¹⁰ ÷ 10⁻¹⁵ = 10⁵ = 100 000
+Si le noyau avait la taille d'un petit pois (1 cm),
+l'atome mesurerait environ 1 000 m, soit 1 km de diamètre.</div>
+    <div class="tip"><b>Entre le noyau et les électrons, il n'y a rien</b>L'atome est donc essentiellement constitué de vide. C'est pour cela que, sur les schémas, on doit agrandir énormément le noyau pour le voir : un dessin fidèle à l'échelle rendrait le noyau invisible.</div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Où se trouve la masse de l'atome ?</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Un proton et un neutron ont une masse presque identique, environ 1 800 fois plus grande que celle d'un électron. La masse d'un atome est donc quasiment celle de son noyau.</p>
+    <table class="ctbl">
+      <tr><th>Partie de l'atome</th><th>Part de la masse</th><th>Part du volume occupé</th></tr>
+      <tr><td class="lab">Le noyau</td><td>Presque toute (plus de 99,9 %)</td><td>Extrêmement faible</td></tr>
+      <tr><td class="lab">Les électrons</td><td>Presque négligeable</td><td>Tout le reste (le nuage électronique)</td></tr>
+    </table>
+    <div class="pt">"La masse d'un atome est quasiment égale à celle de son noyau, car la masse des électrons est négligeable."</div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Le tableau périodique des éléments</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Le tableau périodique est un outil de classement et de repérage des atomes. Il est organisé en colonnes : les atomes d'une même colonne ont des propriétés chimiques analogues. Chaque case indique le symbole de l'atome, son nom et son nombre de protons Z.</p>
+    <table class="ctbl">
+      <tr><th>Atome</th><th>Symbole</th><th>Nombre de protons Z</th></tr>
+      <tr><td class="lab">Hydrogène</td><td>H</td><td>1</td></tr>
+      <tr><td class="lab">Carbone</td><td>C</td><td>6</td></tr>
+      <tr><td class="lab">Azote</td><td>N</td><td>7</td></tr>
+      <tr><td class="lab">Oxygène</td><td>O</td><td>8</td></tr>
+      <tr><td class="lab">Sodium</td><td>Na</td><td>11</td></tr>
+      <tr><td class="lab">Chlore</td><td>Cl</td><td>17</td></tr>
+    </table>
+    <div class="tip"><b>Lire une case du tableau</b>Dans le tableau périodique, le nombre de protons Z augmente de case en case : c'est lui qui repère chaque atome. Connaître le symbole d'un atome permet donc de retrouver son nombre de protons, et donc son nombre d'électrons.</div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Dmitri Mendeleïev et la construction du tableau</div>
+    <p style="font-size:.89rem;margin-bottom:8px">En 1869, le chimiste russe Dmitri Mendeleïev classe les atomes connus par masse croissante et remarque que leurs propriétés chimiques se répètent régulièrement (périodicité). À cette époque, on ignorait tout de la structure de l'atome : l'électron n'était pas encore découvert.</p>
+    <div class="ex"><b>Une prédiction confirmée : le germanium</b>
+Pour respecter la périodicité, Mendeleïev laisse des cases vides.
+Il prédit l'existence d'un atome inconnu, qu'il appelle éka-silicium,
+et annonce ses propriétés avant toute découverte.
+En 1886, le chimiste Clemens Winkler découvre le germanium :
+ses propriétés correspondent à la prédiction.</div>
+    <div class="pt">"La prédiction du germanium montre qu'une bonne théorie scientifique permet d'annoncer des découvertes : le savoir scientifique est prédictif et se confronte à l'expérience."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf3" id="pb-t3"></div></div><div class="pt2" id="pt-t3">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Quel est l'ordre de grandeur de la dimension d'un atome ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q31" value="A"> 10⁻¹⁵ m</label>
+      <label><input type="radio" name="q31" value="B"> 10⁻¹⁰ m</label>
+      <label><input type="radio" name="q31" value="C"> 10⁻³ m</label>
+    </div>
+    <button class="btn b3" onclick="check('q31','B','Un atome mesure environ 10⁻¹⁰ m, soit un dixième de nanomètre. 10⁻¹⁵ m est l ordre de grandeur du noyau.','t3')">Vérifier</button>
+    <div class="res" id="q31-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Quel est le rapport entre la dimension de l'atome et celle de son noyau ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q32" value="A"> L'atome est environ 100 000 fois plus grand que son noyau</label>
+      <label><input type="radio" name="q32" value="B"> L'atome et son noyau ont à peu près la même taille</label>
+      <label><input type="radio" name="q32" value="C"> Le noyau est environ 100 000 fois plus grand que l'atome</label>
+    </div>
+    <button class="btn b3" onclick="check('q32','A','Rapport : 10⁻¹⁰ ÷ 10⁻¹⁵ = 10⁵ = 100 000. L atome est environ 100 000 fois plus grand que son noyau.','t3')">Vérifier</button>
+    <div class="res" id="q32-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <p>Pourquoi dit-on qu'un atome est essentiellement constitué de vide ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q33" value="A"> Parce qu'entre le noyau minuscule et les électrons il n'y a rien</label>
+      <label><input type="radio" name="q33" value="B"> Parce que le noyau est creux</label>
+      <label><input type="radio" name="q33" value="C"> Parce que les électrons n'ont aucune masse</label>
+    </div>
+    <button class="btn b3" onclick="check('q33','A','Le noyau est environ 100 000 fois plus petit que l atome et les électrons sont extrêmement petits. L espace entre le noyau et les électrons est vide.','t3')">Vérifier</button>
+    <div class="res" id="q33-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Où se trouve pratiquement toute la masse d'un atome ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q34" value="A"> Dans le noyau</label>
+      <label><input type="radio" name="q34" value="B"> Dans les électrons</label>
+      <label><input type="radio" name="q34" value="C"> Répartie également entre noyau et électrons</label>
+    </div>
+    <button class="btn b3" onclick="check('q34','A','Les protons et les neutrons, situés dans le noyau, sont environ 1 800 fois plus lourds qu un électron. La masse de l atome est donc quasiment celle de son noyau.','t3')">Vérifier</button>
+    <div class="res" id="q34-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Que permet de repérer le nombre de protons Z dans le tableau périodique ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q35" value="A"> Chaque atome : Z augmente de case en case</label>
+      <label><input type="radio" name="q35" value="B"> Uniquement la couleur de l'atome</label>
+      <label><input type="radio" name="q35" value="C"> Le nombre de neutrons de tous les atomes</label>
+    </div>
+    <button class="btn b3" onclick="check('q35','A','Chaque case du tableau périodique correspond à un atome repéré par son nombre de protons Z, qui augmente de case en case.','t3')">Vérifier</button>
+    <div class="res" id="q35-r"></div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q6 <span class="lvl lh">Avancé</span></div>
+    <div class="ctx">Sur une maquette, un noyau est représenté par une bille de 1 cm de diamètre.</div>
+    <p>Quel diamètre devrait avoir l'atome sur cette maquette, sachant que l'atome est 100 000 fois plus grand que son noyau ? Exprime ton résultat en mètres puis en kilomètres.</p>
+    <button class="bg btn" onclick="toggle('q36')">📋 Correction</button>
+    <div class="corr" id="q36">
+      <div class="s">L'atome est 100 000 fois plus grand que le noyau, donc son diamètre est : 1 cm × 100 000 = 100 000 cm.</div>
+      <div class="s">Conversion : 100 000 cm = 1 000 m, soit <span class="hi">1 000 m = 1 km</span>.</div>
+      <div class="s">La maquette devrait donc faire environ 1 km de diamètre : l'atome est essentiellement du vide.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tp">
+  <div class="si"><div class="sico sip">🧩</div>
+  <div class="st"><h2>Problèmes — Décrire un atome</h2><p>Mobiliser tout le chapitre pour identifier un atome</p></div></div>
+
+  <div class="div">Problème 1 — Quel est cet atome ?</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lh">Avancé</span></div>
+    <p>Un atome a un noyau de 27 nucléons dont 14 neutrons. Détermine son nombre de protons, son nombre d'électrons, puis écris la composition complète de l'atome. À l'aide du tableau de la leçon, identifie-le.</p>
+    <button class="bg btn" onclick="toggle('pb1')">📋 Correction</button>
+    <div class="corr" id="pb1">
+      <div class="s">Nombre de nucléons : A = 27. Nombre de neutrons : 14.</div>
+      <div class="s">Nombre de protons : Z = A − (neutrons) = 27 − 14 = <span class="hi">13 protons</span>.</div>
+      <div class="s">L'atome est neutre : il a <span class="hi">13 électrons</span>.</div>
+      <div class="s">Composition : 13 protons, 14 neutrons, 13 électrons. Un atome de 13 protons est l'atome d'<span class="hi">aluminium (Al)</span>, dont le noyau se note avec A = 27 et Z = 13.</div>
+    </div>
+  </div>
+<div class="div">Problème 2 — Vrai ou faux ? Justifie</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lh">Avancé</span></div>
+    <p>Pour chaque affirmation, dis si elle est vraie ou fausse et justifie. Affirmation 1 : Un atome de charge totale nulle n'a aucune particule chargée. Affirmation 2 : Deux atomes qui ont le même nombre de protons sont le même atome. Affirmation 3 : Presque toute la masse d'un atome est portée par ses électrons.</p>
+    <button class="bg btn" onclick="toggle('pb2')">📋 Correction</button>
+    <div class="corr" id="pb2">
+      <div class="s">(1) <span class="hi">Faux</span> : un atome contient des protons (positifs) et des électrons (négatifs). Sa charge totale est nulle parce que ces charges se compensent, pas parce qu'il n'y a pas de particule chargée.</div>
+      <div class="s">(2) <span class="hi">Vrai</span> : c'est le nombre de protons Z qui identifie un atome.</div>
+      <div class="s">(3) <span class="hi">Faux</span> : la masse d'un atome est quasiment celle de son noyau. Les électrons sont environ 1 800 fois plus légers qu'un proton ou un neutron.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tc2">
+  <div class="si"><div class="sico sic2">📋</div>
+  <div class="st"><h2>Contrôle type</h2><p>Structure de l'atome</p></div></div>
+
+  <div class="chdr chdr2">
+    <div class="cbdg cbdg2">📋 Contrôle</div>
+    <div class="cinfo">
+      <h3>Contrôle — La structure de l'atome</h3>
+      <p>Inspiré du programme de physique-chimie de troisième (cycle 4).</p>
+      <ul>
+        <li>Durée : 25 min · Calculatrice autorisée</li>
+        <li>Montre tous tes calculs · Rédige des phrases pour les interprétations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 1 — Constituants et neutralité</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b>a) — 3 pts</b>Nomme les trois particules qui constituent un atome et indique, pour chacune, où elle se trouve et quelle est sa charge électrique.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1a')">📋 Correction a)</button>
+    <div class="cco" id="cc1a"><div class="ccoh">✔ Correction — Barème : 1 pt par particule (localisation + charge)</div><div class="ccob">
+      <span class="l">Le <span class="hi">proton</span> : dans le noyau, charge positive. (1 pt)</span>
+      <span class="l">Le <span class="hi">neutron</span> : dans le noyau, charge nulle. (1 pt)</span>
+      <span class="l">L'<span class="hi">électron</span> : autour du noyau, charge négative. (1 pt)</span>
+    </div></div>
+
+    <div class="csub">
+      <b>b) — 2 pts</b>Un atome possède 9 protons. Combien a-t-il d'électrons ? Justifie en une phrase.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1b')">📋 Correction b)</button>
+    <div class="cco" id="cc1b"><div class="ccoh">✔ Correction — Barème : 1 pt justification + 1 pt résultat</div><div class="ccob">
+      <span class="l">Un atome est électriquement neutre : il contient autant d'électrons que de protons. (1 pt)</span>
+      <span class="l">Il possède donc <span class="hi">9 électrons</span>. (1 pt)</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 2 — Composition d'un atome</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b>a) — 5 pts</b>Le noyau de l'atome d'oxygène a pour nombres A = 16 et Z = 8. Détermine le nombre de protons, de neutrons et d'électrons de cet atome. Présente ton calcul.
+      <div class="ans xt">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2a')">📋 Correction a)</button>
+    <div class="cco" id="cc2a"><div class="ccoh">✔ Correction — Barème : 1 pt protons + 2 pts neutrons (formule et calcul) + 2 pts électrons (justification et résultat)</div><div class="ccob">
+      <span class="l">Protons : le nombre de protons est Z, soit <span class="hi">8 protons</span>. (1 pt)</span>
+      <span class="l">Neutrons : A − Z = 16 − 8 = <span class="hi">8 neutrons</span>. (2 pts)</span>
+      <span class="l">Électrons : l'atome est neutre, donc autant d'électrons que de protons, soit <span class="hi">8 électrons</span>. (2 pts)</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 3 — Ordres de grandeur</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b>a) — 5 pts</b>Un atome mesure environ 10⁻¹⁰ m et son noyau environ 10⁻¹⁵ m. Calcule le rapport entre ces deux dimensions et explique ce qu'il signifie sur la structure de l'atome.
+      <div class="ans xt">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc3a')">📋 Correction a)</button>
+    <div class="cco" id="cc3a"><div class="ccoh">✔ Correction — Barème : 3 pts calcul du rapport + 2 pts interprétation</div><div class="ccob">
+      <span class="l">Rapport : 10⁻¹⁰ ÷ 10⁻¹⁵ = 10⁵ = <span class="hi">100 000</span>. (3 pts)</span>
+      <span class="l">L'atome est environ 100 000 fois plus grand que son noyau : entre le noyau et les électrons il n'y a rien, l'atome est donc <span class="hi">essentiellement constitué de vide</span>. (2 pts)</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 4 — Le tableau périodique</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b>a) — 5 pts</b>Dans le tableau périodique, l'atome de chlore (symbole Cl) a pour nombre de protons Z = 17. Donne son nombre d'électrons et explique comment le tableau périodique aide à retrouver cette information. Précise aussi pourquoi Mendeleïev a laissé des cases vides dans son tableau.
+      <div class="ans xt">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc4a')">📋 Correction a)</button>
+    <div class="cco" id="cc4a"><div class="ccoh">✔ Correction — Barème : 1 pt électrons + 2 pts rôle du tableau + 2 pts cases vides</div><div class="ccob">
+      <span class="l">Le chlore a 17 protons. L'atome est neutre, donc il a <span class="hi">17 électrons</span>. (1 pt)</span>
+      <span class="l">Chaque case du tableau donne le symbole de l'atome et son nombre de protons Z : en lisant Z, on retrouve le nombre de protons puis le nombre d'électrons. (2 pts)</span>
+      <span class="l">Mendeleïev a laissé des cases vides pour respecter la périodicité des propriétés chimiques : il a <span class="hi">prédit des atomes encore inconnus</span> (comme le germanium, découvert en 1886), ce qui montre le caractère prédictif de la science. (2 pts)</span>
+    </div></div>
+  </div>
+</div>
+
+</main>
+
+
+<div style="max-width:980px;margin:auto;padding:0 16px">
+  <div class="cta">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir les <em>prochaines fiches</em> ?</div>
+      <p class="cta-sub">Abonne-toi et active les notifications 🔔 — nouvelles fiches en story</p>
+      <div class="cta-steps"><span class="cta-step">1️⃣ Clique</span><span class="cta-step">2️⃣ Abonne-toi</span><span class="cta-step">3️⃣ Active la 🔔</span></div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ Suivre @toncoachscolaire</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ ·
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> ·
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="fc">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés · Reproduction interdite · L.111-1 CPI<br>Sources : <a href="https://www.education.gouv.fr/media/228616/download" target="_blank">Éduscol — Projet de programme de physique-chimie, cycle 4 (juillet 2025)</a> · <a href="https://eduscol.education.fr/296/physique-chimie-cycle-4" target="_blank">Éduscol — Ressources d'accompagnement du programme de physique-chimie, cycle 4</a> · <a href="https://www.kartable.fr/ressources/physique-chimie/cours/le-modele-de-latome/43004" target="_blank">Kartable — Le modèle de l'atome (3e)</a>
+  </div>
+</footer>
+</body>
+</html>
