@@ -271,6 +271,32 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
@@ -360,14 +386,14 @@ const QCM_TITRE = "QCM — Paracha Bereshit";
 
 const notions = {"A": "Les sept jours de la Creation", "B": "Le jardin d'Eden et la faute", "C": "Cain et Abel", "D": "La genealogie et l'annonce du deluge"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Dans quel ordre les elements suivants sont-ils crees selon le recit des sept jours ?","options":["L'etre humain avant les animaux terrestres","Les luminaires avant la lumiere","La lumiere avant les luminaires (soleil, lune, etoiles)"],"points":4},{"numero":2,"notion":"A","enonce":"Qu'est-ce qui caracterise specifiquement le septieme jour dans le recit de la Creation ?","options":["Aucune creation nouvelle n'y est mentionnee","Il voit la creation de l'etre humain","Il voit la creation des luminaires"],"points":3},{"numero":3,"notion":"A","enonce":"Quelle particularite grammaticale du premier jour Rachi releve-t-il, et quelle lecture en tire-t-il ?","options":["Le texte repete deux fois le mot jour sans raison apparente","Le texte omet la formule il y eut un soir, il y eut un matin","Le texte dit jour un plutot que premier jour, signe que D.ieu etait seul dans Son monde"],"points":4},{"numero":4,"notion":"B","enonce":"Quel est l'unique interdit donne a l'homme dans le jardin d'Eden ?","options":["Ne pas quitter le jardin","Ne pas nommer les animaux","Ne pas manger de l'arbre de la connaissance du bien et du mal"],"points":3},{"numero":5,"notion":"B","enonce":"Concernant les trois sanctions qui suivent la faute, quelle(s) affirmation(s) sont exactes ?","options":["L'homme est immediatement rendu mortel sans aucune autre consequence","Le serpent est condamne a ramper et a se nourrir de poussiere","La femme voit la douleur de l'enfantement s'accroitre"],"points":4},{"numero":6,"notion":"B","enonce":"Pourquoi le couple est-il expulse du jardin d'Eden selon le texte ?","options":["De peur qu'il ne mange aussi de l'arbre de vie et ne devienne immortel","Parce que D.ieu ne veut plus jamais revoir l'homme","Parce que le jardin est detruit par le deluge"],"points":4},{"numero":7,"notion":"C","enonce":"Que repond Cain lorsque D.ieu lui demande ou est Abel ?","options":["Suis-je le gardien de mon frere ?","Il est parti dans les champs","Je ne sais pas, je dormais"],"points":3},{"numero":8,"notion":"C","enonce":"Quel indice textuel Rachi releve-t-il pour expliquer pourquoi l'offrande d'Abel est agreee et pas celle de Cain ?","options":["Cain n'offre rien du tout a D.ieu","Abel offre les premiers-nes de son troupeau et leurs parties grasses, une double mention de qualite absente chez Cain","Abel offre son sacrifice avant Cain"],"points":4},{"numero":9,"notion":"D","enonce":"Combien de generations separent Adam de Noe selon la genealogie du chapitre 5 ?","options":["Sept generations","Douze generations","Dix generations"],"points":3},{"numero":10,"notion":"D","enonce":"Qu'a de particulier le destin d'Henoc (fils de Yered) par rapport aux autres membres de cette genealogie ?","options":["Il n'est pas dit mort : le texte dit qu'il marcha avec D.ieu puis disparut","Il est le seul a ne pas avoir d'enfant","Il vecut plus longtemps que tous les autres patriarches"],"points":4},{"numero":11,"notion":"D","enonce":"Sur quoi se termine la paracha Bereshit, juste avant le recit du deluge lui-meme ?","options":["Le constat que le mal de l'homme etait grand sur la terre, et que seul Noe trouva grace aux yeux de l'Eternel","La construction achevee de l'arche par Noe","Le debut effectif de la pluie du deluge"],"points":4},{"numero":12,"notion":"A","enonce":"Quelle mitsva pratique decoule directement du verset soyez feconds et multipliez (Genesis 1:28) selon la halakha codifiee ?","options":["La mitsva du Chabbat","La mitsva de peryah ou-rvyah, incombant a l'homme selon l'opinion retenue par le Rambam","Aucune mitsva pratique n'en decoule selon la halakha"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Dans quel ordre les elements suivants sont-ils crees selon le recit des sept jours ?","options":["La lumiere avant les luminaires (soleil, lune, etoiles)","Les luminaires avant la lumiere","L'etre humain avant les animaux terrestres"],"points":4},{"numero":2,"notion":"A","enonce":"Qu'est-ce qui caracterise specifiquement le septieme jour dans le recit de la Creation ?","options":["Il voit la creation de l'etre humain","Aucune creation nouvelle n'y est mentionnee","Il voit la creation des luminaires"],"points":3},{"numero":3,"notion":"A","enonce":"Quelle particularite grammaticale du premier jour Rachi releve-t-il, et quelle lecture en tire-t-il ?","options":["Le texte omet la formule il y eut un soir, il y eut un matin","Le texte dit jour un plutot que premier jour, signe que D.ieu etait seul dans Son monde","Le texte repete deux fois le mot jour sans raison apparente"],"points":4},{"numero":4,"notion":"B","enonce":"Quel est l'unique interdit donne a l'homme dans le jardin d'Eden ?","options":["Ne pas nommer les animaux","Ne pas quitter le jardin","Ne pas manger de l'arbre de la connaissance du bien et du mal"],"points":3},{"numero":5,"notion":"B","enonce":"Concernant les trois sanctions qui suivent la faute, quelle(s) affirmation(s) sont exactes ?","options":["Le serpent est condamne a ramper et a se nourrir de poussiere","L'homme est immediatement rendu mortel sans aucune autre consequence","La femme voit la douleur de l'enfantement s'accroitre"],"points":4},{"numero":6,"notion":"B","enonce":"Pourquoi le couple est-il expulse du jardin d'Eden selon le texte ?","options":["Parce que D.ieu ne veut plus jamais revoir l'homme","Parce que le jardin est detruit par le deluge","De peur qu'il ne mange aussi de l'arbre de vie et ne devienne immortel"],"points":4},{"numero":7,"notion":"C","enonce":"Que repond Cain lorsque D.ieu lui demande ou est Abel ?","options":["Suis-je le gardien de mon frere ?","Je ne sais pas, je dormais","Il est parti dans les champs"],"points":3},{"numero":8,"notion":"C","enonce":"Quel indice textuel Rachi releve-t-il pour expliquer pourquoi l'offrande d'Abel est agreee et pas celle de Cain ?","options":["Abel offre les premiers-nes de son troupeau et leurs parties grasses, une double mention de qualite absente chez Cain","Cain n'offre rien du tout a D.ieu","Abel offre son sacrifice avant Cain"],"points":4},{"numero":9,"notion":"D","enonce":"Combien de generations separent Adam de Noe selon la genealogie du chapitre 5 ?","options":["Dix generations","Douze generations","Sept generations"],"points":3},{"numero":10,"notion":"D","enonce":"Qu'a de particulier le destin d'Henoc (fils de Yered) par rapport aux autres membres de cette genealogie ?","options":["Il vecut plus longtemps que tous les autres patriarches","Il n'est pas dit mort : le texte dit qu'il marcha avec D.ieu puis disparut","Il est le seul a ne pas avoir d'enfant"],"points":4},{"numero":11,"notion":"D","enonce":"Sur quoi se termine la paracha Bereshit, juste avant le recit du deluge lui-meme ?","options":["Le constat que le mal de l'homme etait grand sur la terre, et que seul Noe trouva grace aux yeux de l'Eternel","La construction achevee de l'arche par Noe","Le debut effectif de la pluie du deluge"],"points":4},{"numero":12,"notion":"A","enonce":"Quelle mitsva pratique decoule directement du verset soyez feconds et multipliez (Genesis 1:28) selon la halakha codifiee ?","options":["La mitsva de peryah ou-rvyah, incombant a l'homme selon l'opinion retenue par le Rambam","La mitsva du Chabbat","Aucune mitsva pratique n'en decoule selon la halakha"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh/cHgafhxnEx8faQl3DmQSZQECbR0KcxABD3ETbRB5cG4eYBh/E3kJAWsAbH0YfHAJ";
+const REPONSES_ENCODEES = "Chh9cHgafxxnExwfaQl3DmQSZAECbR0KcRABD3ETbRB4cG4eYhh/E3gJAWsAbH0YfXAJ";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
