@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lekh-Lekha — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#7c3aed; --primaire-clair:#f5f3ff; --texte-primaire:#4c1d95;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#1e1b3a 0%,#312e81 50%,#7c3aed 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+.verset-num{display:inline-block;min-width:1.6em;font-size:.7em;font-weight:800;color:var(--primaire);vertical-align:super;margin-right:2px}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.synthese-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.synthese-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.synthese-bloc p:last-child{margin-bottom:0}
+.synthese-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.synthese-bloc b{color:var(--texte-primaire)}
+.synthese-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.synthese-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.synthese-bloc table{font-family:'Plus Jakarta Sans',sans-serif;width:100%;border-collapse:collapse;margin:12px 0}
+.synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
+.synthese-bloc table th{background:var(--surface2)}
+.synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+.ad-banner-inner {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border-radius: 18px;
+  padding: 14px 18px; transition: transform .15s;
+  box-shadow: var(--shadow-card);
+}
+.ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ad-banner-tag {
+  flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+  border-radius: 20px; padding: 3px 10px;
+}
+.ad-banner-icon {
+  flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+  background: var(--surface2); border-radius: 12px; padding: 4px;
+}
+.ad-banner-text { flex: 1; min-width: 0; }
+.ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+.ad-banner-cta {
+  flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+  background: var(--secondaire); padding: 8px 16px; border-radius: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour a l'accueil Tanakh">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bereshit · Paracha</div>
+    <h1>Lekh-Lekha</h1>
+    <p>Torah, Bereshit (Genesis 12:1-17:27)</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button><button class="tab" id="tab-t2" onclick="showTab('t2')">🧭 Synthese</button><button class="tab" id="tab-t4" onclick="showTab('t4')">✡️ Midrash</button><button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button><button class="tab" id="tab-t5" onclick="showTab('t5')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־אַבְרָ֔ם לֶךְ־לְךָ֛ מֵאַרְצְךָ֥ וּמִמּֽוֹלַדְתְּךָ֖ וּמִבֵּ֣ית אָבִ֑יךָ אֶל־הָאָ֖רֶץ אֲשֶׁ֥ר אַרְאֶֽךָּ׃</p>
+      <p>וְאֶֽעֶשְׂךָ֙ לְג֣וֹי גָּד֔וֹל וַאֲבָ֣רֶכְךָ֔ וַאֲגַדְּלָ֖ה שְׁמֶ֑ךָ וֶהְיֵ֖ה בְּרָכָֽה׃</p>
+      <p>וַאֲבָֽרְכָה֙ מְבָ֣רְכֶ֔יךָ וּמְקַלֶּלְךָ֖ אָאֹ֑ר וְנִבְרְכ֣וּ בְךָ֔ כֹּ֖ל מִשְׁפְּחֹ֥ת הָאֲדָמָֽה׃</p>
+      <p>וַיֵּ֣לֶךְ אַבְרָ֗ם כַּאֲשֶׁ֨ר דִּבֶּ֤ר אֵלָיו֙ יְהֹוָ֔ה וַיֵּ֥לֶךְ אִתּ֖וֹ ל֑וֹט וְאַבְרָ֗ם בֶּן־חָמֵ֤שׁ שָׁנִים֙ וְשִׁבְעִ֣ים שָׁנָ֔ה בְּצֵאת֖וֹ מֵחָרָֽן׃</p>
+      <p>וַיִּקַּ֣ח אַבְרָם֩ אֶת־שָׂרַ֨י אִשְׁתּ֜וֹ וְאֶת־ל֣וֹט בֶּן־אָחִ֗יו וְאֶת־כׇּל־רְכוּשָׁם֙ אֲשֶׁ֣ר רָכָ֔שׁוּ וְאֶת־הַנֶּ֖פֶשׁ אֲשֶׁר־עָשׂ֣וּ בְחָרָ֑ן וַיֵּצְא֗וּ לָלֶ֙כֶת֙ אַ֣רְצָה כְּנַ֔עַן וַיָּבֹ֖אוּ אַ֥רְצָה כְּנָֽעַן׃</p>
+      <p>וַיַּעֲבֹ֤ר אַבְרָם֙ בָּאָ֔רֶץ עַ֚ד מְק֣וֹם שְׁכֶ֔ם עַ֖ד אֵל֣וֹן מוֹרֶ֑ה וְהַֽכְּנַעֲנִ֖י אָ֥ז בָּאָֽרֶץ׃</p>
+      <p>וַיֵּרָ֤א יְהֹוָה֙ אֶל־אַבְרָ֔ם וַיֹּ֕אמֶר לְזַ֨רְעֲךָ֔ אֶתֵּ֖ן אֶת־הָאָ֣רֶץ הַזֹּ֑את וַיִּ֤בֶן שָׁם֙ מִזְבֵּ֔חַ לַיהֹוָ֖ה הַנִּרְאֶ֥ה אֵלָֽיו׃</p>
+      <p>וַיַּעְתֵּ֨ק מִשָּׁ֜ם הָהָ֗רָה מִקֶּ֛דֶם לְבֵֽית־אֵ֖ל וַיֵּ֣ט אׇהֳלֹ֑ה בֵּֽית־אֵ֤ל מִיָּם֙ וְהָעַ֣י מִקֶּ֔דֶם וַיִּֽבֶן־שָׁ֤ם מִזְבֵּ֙חַ֙ לַֽיהֹוָ֔ה וַיִּקְרָ֖א בְּשֵׁ֥ם יְהֹוָֽה׃</p>
+      <p>וַיִּסַּ֣ע אַבְרָ֔ם הָל֥וֹךְ וְנָס֖וֹעַ הַנֶּֽגְבָּה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיְהִ֥י רָעָ֖ב בָּאָ֑רֶץ וַיֵּ֨רֶד אַבְרָ֤ם מִצְרַ֙יְמָה֙ לָג֣וּר שָׁ֔ם כִּֽי־כָבֵ֥ד הָרָעָ֖ב בָּאָֽרֶץ׃</p>
+      <p>וַיְהִ֕י כַּאֲשֶׁ֥ר הִקְרִ֖יב לָב֣וֹא מִצְרָ֑יְמָה וַיֹּ֙אמֶר֙ אֶל־שָׂרַ֣י אִשְׁתּ֔וֹ הִנֵּה־נָ֣א יָדַ֔עְתִּי כִּ֛י אִשָּׁ֥ה יְפַת־מַרְאֶ֖ה אָֽתְּ׃</p>
+      <p>וְהָיָ֗ה כִּֽי־יִרְא֤וּ אֹתָךְ֙ הַמִּצְרִ֔ים וְאָמְר֖וּ אִשְׁתּ֣וֹ זֹ֑את וְהָרְג֥וּ אֹתִ֖י וְאֹתָ֥ךְ יְחַיּֽוּ׃</p>
+      <p>אִמְרִי־נָ֖א אֲחֹ֣תִי אָ֑תְּ לְמַ֙עַן֙ יִֽיטַב־לִ֣י בַעֲבוּרֵ֔ךְ וְחָיְתָ֥ה נַפְשִׁ֖י בִּגְלָלֵֽךְ׃</p>
+      <p>וַיְהִ֕י כְּב֥וֹא אַבְרָ֖ם מִצְרָ֑יְמָה וַיִּרְא֤וּ הַמִּצְרִים֙ אֶת־הָ֣אִשָּׁ֔ה כִּֽי־יָפָ֥ה הִ֖וא מְאֹֽד׃</p>
+      <p>וַיִּרְא֤וּ אֹתָהּ֙ שָׂרֵ֣י פַרְעֹ֔ה וַיְהַֽלְל֥וּ אֹתָ֖הּ אֶל־פַּרְעֹ֑ה וַתֻּקַּ֥ח הָאִשָּׁ֖ה בֵּ֥ית פַּרְעֹֽה׃</p>
+      <p>וּלְאַבְרָ֥ם הֵיטִ֖יב בַּעֲבוּרָ֑הּ וַֽיְהִי־ל֤וֹ צֹאן־וּבָקָר֙ וַחֲמֹרִ֔ים וַעֲבָדִים֙ וּשְׁפָחֹ֔ת וַאֲתֹנֹ֖ת וּגְמַלִּֽים׃</p>
+      <p>וַיְנַגַּ֨ע יְהֹוָ֧ה&thinsp;<small>׀</small>&thinsp;אֶת־פַּרְעֹ֛ה נְגָעִ֥ים גְּדֹלִ֖ים וְאֶת־בֵּית֑וֹ עַל־דְּבַ֥ר שָׂרַ֖י אֵ֥שֶׁת אַבְרָֽם׃</p>
+      <p>וַיִּקְרָ֤א פַרְעֹה֙ לְאַבְרָ֔ם וַיֹּ֕אמֶר מַה־זֹּ֖את עָשִׂ֣יתָ לִּ֑י לָ֚מָּה לֹא־הִגַּ֣דְתָּ לִּ֔י כִּ֥י אִשְׁתְּךָ֖ הִֽוא׃</p>
+      <p>לָמָ֤ה אָמַ֙רְתָּ֙ אֲחֹ֣תִי הִ֔וא וָאֶקַּ֥ח אֹתָ֛הּ לִ֖י לְאִשָּׁ֑ה וְעַתָּ֕ה הִנֵּ֥ה אִשְׁתְּךָ֖ קַ֥ח וָלֵֽךְ׃</p>
+      <p>וַיְצַ֥ו עָלָ֛יו פַּרְעֹ֖ה אֲנָשִׁ֑ים וַֽיְשַׁלְּח֥וּ אֹת֛וֹ וְאֶת־אִשְׁתּ֖וֹ וְאֶת־כׇּל־אֲשֶׁר־לֽוֹ׃</p>
+      <p>וַיַּ֩עַל֩ אַבְרָ֨ם מִמִּצְרַ֜יִם ה֠וּא וְאִשְׁתּ֧וֹ וְכׇל־אֲשֶׁר־ל֛וֹ וְל֥וֹט עִמּ֖וֹ הַנֶּֽגְבָּה׃</p>
+      <p>וְאַבְרָ֖ם כָּבֵ֣ד מְאֹ֑ד בַּמִּקְנֶ֕ה בַּכֶּ֖סֶף וּבַזָּהָֽב׃</p>
+      <p>וַיֵּ֙לֶךְ֙ לְמַסָּעָ֔יו מִנֶּ֖גֶב וְעַד־בֵּֽית־אֵ֑ל עַד־הַמָּק֗וֹם אֲשֶׁר־הָ֨יָה שָׁ֤ם <span class="mam-kq-trivial">אׇֽהֳלֹה֙</span> בַּתְּחִלָּ֔ה בֵּ֥ין בֵּֽית־אֵ֖ל וּבֵ֥ין הָעָֽי׃</p>
+      <p>אֶל־מְקוֹם֙ הַמִּזְבֵּ֔חַ אֲשֶׁר־עָ֥שָׂה שָׁ֖ם בָּרִאשֹׁנָ֑ה וַיִּקְרָ֥א שָׁ֛ם אַבְרָ֖ם בְּשֵׁ֥ם יְהֹוָֽה׃</p>
+      <p>וְגַ֨ם־לְל֔וֹט הַהֹלֵ֖ךְ אֶת־אַבְרָ֑ם הָיָ֥ה צֹאן־וּבָקָ֖ר וְאֹהָלִֽים׃</p>
+      <p>וְלֹא־נָשָׂ֥א אֹתָ֛ם הָאָ֖רֶץ לָשֶׁ֣בֶת יַחְדָּ֑ו כִּֽי־הָיָ֤ה רְכוּשָׁם֙ רָ֔ב וְלֹ֥א יָֽכְל֖וּ לָשֶׁ֥בֶת יַחְדָּֽו׃</p>
+      <p>וַֽיְהִי־רִ֗יב בֵּ֚ין רֹעֵ֣י מִקְנֵֽה־אַבְרָ֔ם וּבֵ֖ין רֹעֵ֣י מִקְנֵה־ל֑וֹט וְהַֽכְּנַעֲנִי֙ וְהַפְּרִזִּ֔י אָ֖ז יֹשֵׁ֥ב בָּאָֽרֶץ׃</p>
+      <p>וַיֹּ֨אמֶר אַבְרָ֜ם אֶל־ל֗וֹט אַל־נָ֨א תְהִ֤י מְרִיבָה֙ בֵּינִ֣י וּבֵינֶ֔ךָ וּבֵ֥ין רֹעַ֖י וּבֵ֣ין רֹעֶ֑יךָ כִּֽי־אֲנָשִׁ֥ים אַחִ֖ים אֲנָֽחְנוּ׃</p>
+      <p>הֲלֹ֤א כׇל־הָאָ֙רֶץ֙ לְפָנֶ֔יךָ הִפָּ֥רֶד נָ֖א מֵעָלָ֑י אִם־הַשְּׂמֹ֣אל וְאֵימִ֔נָה וְאִם־הַיָּמִ֖ין וְאַשְׂמְאִֽילָה׃</p>
+      <p>וַיִּשָּׂא־ל֣וֹט אֶת־עֵינָ֗יו וַיַּרְא֙ אֶת־כׇּל־כִּכַּ֣ר הַיַּרְדֵּ֔ן כִּ֥י כֻלָּ֖הּ מַשְׁקֶ֑ה לִפְנֵ֣י&thinsp;<b>׀</b> שַׁחֵ֣ת יְהֹוָ֗ה אֶת־סְדֹם֙ וְאֶת־עֲמֹרָ֔ה כְּגַן־יְהֹוָה֙ כְּאֶ֣רֶץ מִצְרַ֔יִם בֹּאֲכָ֖ה צֹֽעַר׃</p>
+      <p>וַיִּבְחַר־ל֣וֹ ל֗וֹט אֵ֚ת כׇּל־כִּכַּ֣ר הַיַּרְדֵּ֔ן וַיִּסַּ֥ע ל֖וֹט מִקֶּ֑דֶם וַיִּפָּ֣רְד֔וּ אִ֖ישׁ מֵעַ֥ל אָחִֽיו׃</p>
+      <p>אַבְרָ֖ם יָשַׁ֣ב בְּאֶֽרֶץ־כְּנָ֑עַן וְל֗וֹט יָשַׁב֙ בְּעָרֵ֣י הַכִּכָּ֔ר וַיֶּאֱהַ֖ל עַד־סְדֹֽם׃</p>
+      <p>וְאַנְשֵׁ֣י סְדֹ֔ם רָעִ֖ים וְחַטָּאִ֑ים לַיהֹוָ֖ה מְאֹֽד׃</p>
+      <p>וַֽיהֹוָ֞ה אָמַ֣ר אֶל־אַבְרָ֗ם אַחֲרֵי֙ הִפָּֽרֶד־ל֣וֹט מֵֽעִמּ֔וֹ שָׂ֣א נָ֤א עֵינֶ֙יךָ֙ וּרְאֵ֔ה מִן־הַמָּק֖וֹם אֲשֶׁר־אַתָּ֣ה שָׁ֑ם צָפֹ֥נָה וָנֶ֖גְבָּה וָקֵ֥דְמָה וָיָֽמָּה׃</p>
+      <p>כִּ֧י אֶת־כׇּל־הָאָ֛רֶץ אֲשֶׁר־אַתָּ֥ה רֹאֶ֖ה לְךָ֣ אֶתְּנֶ֑נָּה וּֽלְזַרְעֲךָ֖ עַד־עוֹלָֽם׃</p>
+      <p>וְשַׂמְתִּ֥י אֶֽת־זַרְעֲךָ֖ כַּעֲפַ֣ר הָאָ֑רֶץ אֲשֶׁ֣ר&thinsp;<b>׀</b> אִם־יוּכַ֣ל אִ֗ישׁ לִמְנוֹת֙ אֶת־עֲפַ֣ר הָאָ֔רֶץ גַּֽם־זַרְעֲךָ֖ יִמָּנֶֽה׃</p>
+      <p>ק֚וּם הִתְהַלֵּ֣ךְ בָּאָ֔רֶץ לְאׇרְכָּ֖הּ וּלְרׇחְבָּ֑הּ כִּ֥י לְךָ֖ אֶתְּנֶֽנָּה׃</p>
+      <p>וַיֶּאֱהַ֣ל אַבְרָ֗ם וַיָּבֹ֛א וַיֵּ֛שֶׁב בְּאֵלֹנֵ֥י מַמְרֵ֖א אֲשֶׁ֣ר בְּחֶבְר֑וֹן וַיִּֽבֶן־שָׁ֥ם מִזְבֵּ֖חַ לַֽיהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיְהִ֗י בִּימֵי֙ אַמְרָפֶ֣ל מֶֽלֶךְ־שִׁנְעָ֔ר אַרְי֖וֹךְ מֶ֣לֶךְ אֶלָּסָ֑ר כְּדׇרְלָעֹ֙מֶר֙ מֶ֣לֶךְ עֵילָ֔ם וְתִדְעָ֖ל מֶ֥לֶךְ גּוֹיִֽם׃</p>
+      <p>עָשׂ֣וּ מִלְחָמָ֗ה אֶת־בֶּ֙רַע֙ מֶ֣לֶךְ סְדֹ֔ם וְאֶת־בִּרְשַׁ֖ע מֶ֣לֶךְ עֲמֹרָ֑ה שִׁנְאָ֣ב&thinsp;<b>׀</b> מֶ֣לֶךְ אַדְמָ֗ה וְשֶׁמְאֵ֙בֶר֙ מֶ֣לֶךְ <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צְבוֹיִ֔ם]</span></span> וּמֶ֥לֶךְ בֶּ֖לַע הִיא־צֹֽעַר׃</p>
+      <p>כׇּל־אֵ֙לֶּה֙ חָֽבְר֔וּ אֶל־עֵ֖מֶק הַשִּׂדִּ֑ים ה֖וּא יָ֥ם הַמֶּֽלַח׃</p>
+      <p>שְׁתֵּ֤ים עֶשְׂרֵה֙ שָׁנָ֔ה עָבְד֖וּ אֶת־כְּדׇרְלָעֹ֑מֶר וּשְׁלֹשׁ־עֶשְׂרֵ֥ה שָׁנָ֖ה מָרָֽדוּ׃</p>
+      <p>וּבְאַרְבַּע֩ עֶשְׂרֵ֨ה שָׁנָ֜ה בָּ֣א כְדׇרְלָעֹ֗מֶר וְהַמְּלָכִים֙ אֲשֶׁ֣ר אִתּ֔וֹ וַיַּכּ֤וּ אֶת־רְפָאִים֙ בְּעַשְׁתְּרֹ֣ת קַרְנַ֔יִם וְאֶת־הַזּוּזִ֖ים בְּהָ֑ם וְאֵת֙ הָֽאֵימִ֔ים בְּשָׁוֵ֖ה קִרְיָתָֽיִם׃</p>
+      <p>וְאֶת־הַחֹרִ֖י בְּהַרְרָ֣ם שֵׂעִ֑יר עַ֚ד אֵ֣יל פָּארָ֔ן אֲשֶׁ֖ר עַל־הַמִּדְבָּֽר׃</p>
+      <p>וַ֠יָּשֻׁ֠בוּ וַיָּבֹ֜אוּ אֶל־עֵ֤ין מִשְׁפָּט֙ הִ֣וא קָדֵ֔שׁ וַיַּכּ֕וּ אֶֽת־כׇּל־שְׂדֵ֖ה הָעֲמָלֵקִ֑י וְגַם֙ אֶת־הָ֣אֱמֹרִ֔י הַיֹּשֵׁ֖ב בְּחַֽצְצֹ֥ן תָּמָֽר׃</p>
+      <p>וַיֵּצֵ֨א מֶֽלֶךְ־סְדֹ֜ם וּמֶ֣לֶךְ עֲמֹרָ֗ה וּמֶ֤לֶךְ אַדְמָה֙ וּמֶ֣לֶךְ <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צְבוֹיִ֔ם]</span></span> וּמֶ֥לֶךְ בֶּ֖לַע הִוא־צֹ֑עַר וַיַּֽעַרְכ֤וּ אִתָּם֙ מִלְחָמָ֔ה בְּעֵ֖מֶק הַשִּׂדִּֽים׃</p>
+      <p>אֵ֣ת כְּדׇרְלָעֹ֜מֶר מֶ֣לֶךְ עֵילָ֗ם וְתִדְעָל֙ מֶ֣לֶךְ גּוֹיִ֔ם וְאַמְרָפֶל֙ מֶ֣לֶךְ שִׁנְעָ֔ר וְאַרְי֖וֹךְ מֶ֣לֶךְ אֶלָּסָ֑ר אַרְבָּעָ֥ה מְלָכִ֖ים אֶת־הַחֲמִשָּֽׁה׃</p>
+      <p>וְעֵ֣מֶק הַשִּׂדִּ֗ים בֶּֽאֱרֹ֤ת בֶּאֱרֹת֙ חֵמָ֔ר וַיָּנֻ֛סוּ מֶֽלֶךְ־סְדֹ֥ם וַעֲמֹרָ֖ה וַיִּפְּלוּ־שָׁ֑מָּה וְהַנִּשְׁאָרִ֖ים הֶ֥רָה נָּֽסוּ׃</p>
+      <p>וַ֠יִּקְח֠וּ אֶת־כׇּל־רְכֻ֨שׁ סְדֹ֧ם וַעֲמֹרָ֛ה וְאֶת־כׇּל־אׇכְלָ֖ם וַיֵּלֵֽכוּ׃</p>
+      <p>וַיִּקְח֨וּ אֶת־ל֧וֹט וְאֶת־רְכֻשׁ֛וֹ בֶּן־אֲחִ֥י אַבְרָ֖ם וַיֵּלֵ֑כוּ וְה֥וּא יֹשֵׁ֖ב בִּסְדֹֽם׃</p>
+      <p>וַיָּבֹא֙ הַפָּלִ֔יט וַיַּגֵּ֖ד לְאַבְרָ֣ם הָעִבְרִ֑י וְהוּא֩ שֹׁכֵ֨ן בְּאֵֽלֹנֵ֜י מַמְרֵ֣א הָאֱמֹרִ֗י אֲחִ֤י אֶשְׁכֹּל֙ וַאֲחִ֣י עָנֵ֔ר וְהֵ֖ם בַּעֲלֵ֥י בְרִית־אַבְרָֽם׃</p>
+      <p>וַיִּשְׁמַ֣ע אַבְרָ֔ם כִּ֥י נִשְׁבָּ֖ה אָחִ֑יו וַיָּ֨רֶק אֶת־חֲנִיכָ֜יו יְלִידֵ֣י בֵית֗וֹ שְׁמֹנָ֤ה עָשָׂר֙ וּשְׁלֹ֣שׁ מֵא֔וֹת וַיִּרְדֹּ֖ף עַד־דָּֽן׃</p>
+      <p>וַיֵּחָלֵ֨ק עֲלֵיהֶ֧ם&thinsp;<small>׀</small>&thinsp;לַ֛יְלָה ה֥וּא וַעֲבָדָ֖יו וַיַּכֵּ֑ם וַֽיִּרְדְּפֵם֙ עַד־חוֹבָ֔ה אֲשֶׁ֥ר מִשְּׂמֹ֖אל לְדַמָּֽשֶׂק׃</p>
+      <p>וַיָּ֕שֶׁב אֵ֖ת כׇּל־הָרְכֻ֑שׁ וְגַם֩ אֶת־ל֨וֹט אָחִ֤יו וּרְכֻשׁוֹ֙ הֵשִׁ֔יב וְגַ֥ם אֶת־הַנָּשִׁ֖ים וְאֶת־הָעָֽם׃</p>
+      <p>וַיֵּצֵ֣א מֶֽלֶךְ־סְדֹם֮ לִקְרָאתוֹ֒ אַחֲרֵ֣י שׁוּב֗וֹ מֵֽהַכּוֹת֙ אֶת־כְּדׇרְלָעֹ֔מֶר וְאֶת־הַמְּלָכִ֖ים אֲשֶׁ֣ר אִתּ֑וֹ אֶל־עֵ֣מֶק שָׁוֵ֔ה ה֖וּא עֵ֥מֶק הַמֶּֽלֶךְ׃</p>
+      <p>וּמַלְכִּי־צֶ֙דֶק֙ מֶ֣לֶךְ שָׁלֵ֔ם הוֹצִ֖יא לֶ֣חֶם וָיָ֑יִן וְה֥וּא כֹהֵ֖ן לְאֵ֥ל עֶלְיֽוֹן׃</p>
+      <p>וַֽיְבָרְכֵ֖הוּ וַיֹּאמַ֑ר בָּר֤וּךְ אַבְרָם֙ לְאֵ֣ל עֶלְי֔וֹן קֹנֵ֖ה שָׁמַ֥יִם וָאָֽרֶץ׃</p>
+      <p>וּבָרוּךְ֙ אֵ֣ל עֶלְי֔וֹן אֲשֶׁר־מִגֵּ֥ן צָרֶ֖יךָ בְּיָדֶ֑ךָ וַיִּתֶּן־ל֥וֹ מַעֲשֵׂ֖ר מִכֹּֽל׃</p>
+      <p>וַיֹּ֥אמֶר מֶֽלֶךְ־סְדֹ֖ם אֶל־אַבְרָ֑ם תֶּן־לִ֣י הַנֶּ֔פֶשׁ וְהָרְכֻ֖שׁ קַֽח־לָֽךְ׃</p>
+      <p>וַיֹּ֥אמֶר אַבְרָ֖ם אֶל־מֶ֣לֶךְ סְדֹ֑ם הֲרִמֹ֨תִי יָדִ֤י אֶל־יְהֹוָה֙ אֵ֣ל עֶלְי֔וֹן קֹנֵ֖ה שָׁמַ֥יִם וָאָֽרֶץ׃</p>
+      <p>אִם־מִחוּט֙ וְעַ֣ד שְׂרֽוֹךְ־נַ֔עַל וְאִם־אֶקַּ֖ח מִכׇּל־אֲשֶׁר־לָ֑ךְ וְלֹ֣א תֹאמַ֔ר אֲנִ֖י הֶעֱשַׁ֥רְתִּי אֶת־אַבְרָֽם׃</p>
+      <p>בִּלְעָדַ֗י רַ֚ק אֲשֶׁ֣ר אָֽכְל֣וּ הַנְּעָרִ֔ים וְחֵ֙לֶק֙ הָֽאֲנָשִׁ֔ים אֲשֶׁ֥ר הָלְכ֖וּ אִתִּ֑י עָנֵר֙ אֶשְׁכֹּ֣ל וּמַמְרֵ֔א הֵ֖ם יִקְח֥וּ חֶלְקָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>אַחַ֣ר&thinsp;<b>׀</b> הַדְּבָרִ֣ים הָאֵ֗לֶּה הָיָ֤ה דְבַר־יְהֹוָה֙ אֶל־אַבְרָ֔ם בַּֽמַּחֲזֶ֖ה לֵאמֹ֑ר אַל־תִּירָ֣א אַבְרָ֗ם אָנֹכִי֙ מָגֵ֣ן לָ֔ךְ שְׂכָרְךָ֖ הַרְבֵּ֥ה מְאֹֽד׃</p>
+      <p>וַיֹּ֣אמֶר אַבְרָ֗ם אֲדֹנָ֤י יֱהֹוִה֙ מַה־תִּתֶּן־לִ֔י וְאָנֹכִ֖י הוֹלֵ֣ךְ עֲרִירִ֑י וּבֶן־מֶ֣שֶׁק בֵּיתִ֔י ה֖וּא דַּמֶּ֥שֶׂק אֱלִיעֶֽזֶר׃</p>
+      <p>וַיֹּ֣אמֶר אַבְרָ֔ם הֵ֣ן לִ֔י לֹ֥א נָתַ֖תָּה זָ֑רַע וְהִנֵּ֥ה בֶן־בֵּיתִ֖י יוֹרֵ֥שׁ אֹתִֽי׃</p>
+      <p>וְהִנֵּ֨ה דְבַר־יְהֹוָ֤ה אֵלָיו֙ לֵאמֹ֔ר לֹ֥א יִֽירָשְׁךָ֖ זֶ֑ה כִּי־אִם֙ אֲשֶׁ֣ר יֵצֵ֣א מִמֵּעֶ֔יךָ ה֖וּא יִֽירָשֶֽׁךָ׃</p>
+      <p>וַיּוֹצֵ֨א אֹת֜וֹ הַח֗וּצָה וַיֹּ֙אמֶר֙ הַבֶּט־נָ֣א הַשָּׁמַ֗יְמָה וּסְפֹר֙ הַכּ֣וֹכָבִ֔ים אִם־תּוּכַ֖ל לִסְפֹּ֣ר אֹתָ֑ם וַיֹּ֣אמֶר ל֔וֹ כֹּ֥ה יִהְיֶ֖ה זַרְעֶֽךָ׃</p>
+      <p>וְהֶאֱמִ֖ן בַּֽיהֹוָ֑ה וַיַּחְשְׁבֶ֥הָ לּ֖וֹ צְדָקָֽה׃</p>
+      <p>וַיֹּ֖אמֶר אֵלָ֑יו אֲנִ֣י יְהֹוָ֗ה אֲשֶׁ֤ר הוֹצֵאתִ֙יךָ֙ מֵא֣וּר כַּשְׂדִּ֔ים לָ֧תֶת לְךָ֛ אֶת־הָאָ֥רֶץ הַזֹּ֖את לְרִשְׁתָּֽהּ׃</p>
+      <p>וַיֹּאמַ֑ר אֲדֹנָ֣י יֱהֹוִ֔ה בַּמָּ֥ה אֵדַ֖ע כִּ֥י אִֽירָשֶֽׁנָּה׃</p>
+      <p>וַיֹּ֣אמֶר אֵלָ֗יו קְחָ֥ה לִי֙ עֶגְלָ֣ה מְשֻׁלֶּ֔שֶׁת וְעֵ֥ז מְשֻׁלֶּ֖שֶׁת וְאַ֣יִל מְשֻׁלָּ֑שׁ וְתֹ֖ר וְגוֹזָֽל׃</p>
+      <p>וַיִּֽקַּֽח־ל֣וֹ אֶת־כׇּל־אֵ֗לֶּה וַיְבַתֵּ֤ר אֹתָם֙ בַּתָּ֔וֶךְ וַיִּתֵּ֥ן אִישׁ־בִּתְר֖וֹ לִקְרַ֣את רֵעֵ֑הוּ וְאֶת־הַצִּפֹּ֖ר לֹ֥א בָתָֽר׃</p>
+      <p>וַיֵּ֥רֶד הָעַ֖יִט עַל־הַפְּגָרִ֑ים וַיַּשֵּׁ֥ב אֹתָ֖ם אַבְרָֽם׃</p>
+      <p>וַיְהִ֤י הַשֶּׁ֙מֶשׁ֙ לָב֔וֹא וְתַרְדֵּמָ֖ה נָפְלָ֣ה עַל־אַבְרָ֑ם וְהִנֵּ֥ה אֵימָ֛ה חֲשֵׁכָ֥ה גְדֹלָ֖ה נֹפֶ֥לֶת עָלָֽיו׃</p>
+      <p>וַיֹּ֣אמֶר לְאַבְרָ֗ם יָדֹ֨עַ תֵּדַ֜ע כִּי־גֵ֣ר&thinsp;<b>׀</b> יִהְיֶ֣ה זַרְעֲךָ֗ בְּאֶ֙רֶץ֙ לֹ֣א לָהֶ֔ם וַעֲבָד֖וּם וְעִנּ֣וּ אֹתָ֑ם אַרְבַּ֥ע מֵא֖וֹת שָׁנָֽה׃</p>
+      <p>וְגַ֧ם אֶת־הַגּ֛וֹי אֲשֶׁ֥ר יַעֲבֹ֖דוּ דָּ֣ן אָנֹ֑כִי וְאַחֲרֵי־כֵ֥ן יֵצְא֖וּ בִּרְכֻ֥שׁ גָּדֽוֹל׃</p>
+      <p>וְאַתָּ֛ה תָּב֥וֹא אֶל־אֲבֹתֶ֖יךָ בְּשָׁל֑וֹם תִּקָּבֵ֖ר בְּשֵׂיבָ֥ה טוֹבָֽה׃</p>
+      <p>וְד֥וֹר רְבִיעִ֖י יָשׁ֣וּבוּ הֵ֑נָּה כִּ֧י לֹא־שָׁלֵ֛ם עֲוֺ֥ן הָאֱמֹרִ֖י עַד־הֵֽנָּה׃</p>
+      <p>וַיְהִ֤י הַשֶּׁ֙מֶשׁ֙ בָּ֔אָה וַעֲלָטָ֖ה הָיָ֑ה וְהִנֵּ֨ה תַנּ֤וּר עָשָׁן֙ וְלַפִּ֣יד אֵ֔שׁ אֲשֶׁ֣ר עָבַ֔ר בֵּ֖ין הַגְּזָרִ֥ים הָאֵֽלֶּה׃</p>
+      <p>בַּיּ֣וֹם הַה֗וּא כָּרַ֧ת יְהֹוָ֛ה אֶת־אַבְרָ֖ם בְּרִ֣ית לֵאמֹ֑ר לְזַרְעֲךָ֗ נָתַ֙תִּי֙ אֶת־הָאָ֣רֶץ הַזֹּ֔את מִנְּהַ֣ר מִצְרַ֔יִם עַד־הַנָּהָ֥ר הַגָּדֹ֖ל נְהַר־פְּרָֽת׃</p>
+      <p>אֶת־הַקֵּינִי֙ וְאֶת־הַקְּנִזִּ֔י וְאֵ֖ת הַקַּדְמֹנִֽי׃</p>
+      <p>וְאֶת־הַחִתִּ֥י וְאֶת־הַפְּרִזִּ֖י וְאֶת־הָרְפָאִֽים׃</p>
+      <p>וְאֶת־הָֽאֱמֹרִי֙ וְאֶת־הַֽכְּנַעֲנִ֔י וְאֶת־הַגִּרְגָּשִׁ֖י וְאֶת־הַיְבוּסִֽי׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וְשָׂרַי֙ אֵ֣שֶׁת אַבְרָ֔ם לֹ֥א יָלְדָ֖ה ל֑וֹ וְלָ֛הּ שִׁפְחָ֥ה מִצְרִ֖ית וּשְׁמָ֥הּ הָגָֽר׃</p>
+      <p>וַתֹּ֨אמֶר שָׂרַ֜י אֶל־אַבְרָ֗ם הִנֵּה־נָ֞א עֲצָרַ֤נִי יְהֹוָה֙ מִלֶּ֔דֶת בֹּא־נָא֙ אֶל־שִׁפְחָתִ֔י אוּלַ֥י אִבָּנֶ֖ה מִמֶּ֑נָּה וַיִּשְׁמַ֥ע אַבְרָ֖ם לְק֥וֹל שָׂרָֽי׃</p>
+      <p>וַתִּקַּ֞ח שָׂרַ֣י אֵֽשֶׁת־אַבְרָ֗ם אֶת־הָגָ֤ר הַמִּצְרִית֙ שִׁפְחָתָ֔הּ מִקֵּץ֙ עֶ֣שֶׂר שָׁנִ֔ים לְשֶׁ֥בֶת אַבְרָ֖ם בְּאֶ֣רֶץ כְּנָ֑עַן וַתִּתֵּ֥ן אֹתָ֛הּ לְאַבְרָ֥ם אִישָׁ֖הּ ל֥וֹ לְאִשָּֽׁה׃</p>
+      <p>וַיָּבֹ֥א אֶל־הָגָ֖ר וַתַּ֑הַר וַתֵּ֙רֶא֙ כִּ֣י הָרָ֔תָה וַתֵּקַ֥ל גְּבִרְתָּ֖הּ בְּעֵינֶֽיהָ׃</p>
+      <p>וַתֹּ֨אמֶר שָׂרַ֣י אֶל־אַבְרָם֮ חֲמָסִ֣י עָלֶ֒יךָ֒ אָנֹכִ֗י נָתַ֤תִּי שִׁפְחָתִי֙ בְּחֵיקֶ֔ךָ וַתֵּ֙רֶא֙ כִּ֣י הָרָ֔תָה וָאֵקַ֖ל בְּעֵינֶ֑יהָ יִשְׁפֹּ֥ט יְהֹוָ֖ה בֵּינִ֥י וּבֵינֶֽיׄךָ׃</p>
+      <p>וַיֹּ֨אמֶר אַבְרָ֜ם אֶל־שָׂרַ֗י הִנֵּ֤ה שִׁפְחָתֵךְ֙ בְּיָדֵ֔ךְ עֲשִׂי־לָ֖הּ הַטּ֣וֹב בְּעֵינָ֑יִךְ וַתְּעַנֶּ֣הָ שָׂרַ֔י וַתִּבְרַ֖ח מִפָּנֶֽיהָ׃</p>
+      <p>וַֽיִּמְצָאָ֞הּ מַלְאַ֧ךְ יְהֹוָ֛ה עַל־עֵ֥ין הַמַּ֖יִם בַּמִּדְבָּ֑ר עַל־הָעַ֖יִן בְּדֶ֥רֶךְ שֽׁוּר׃</p>
+      <p>וַיֹּאמַ֗ר הָגָ֞ר שִׁפְחַ֥ת שָׂרַ֛י אֵֽי־מִזֶּ֥ה בָ֖את וְאָ֣נָה תֵלֵ֑כִי וַתֹּ֕אמֶר מִפְּנֵי֙ שָׂרַ֣י גְּבִרְתִּ֔י אָנֹכִ֖י בֹּרַֽחַת׃</p>
+      <p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה שׁ֖וּבִי אֶל־גְּבִרְתֵּ֑ךְ וְהִתְעַנִּ֖י תַּ֥חַת יָדֶֽיהָ׃</p>
+      <p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה הַרְבָּ֥ה אַרְבֶּ֖ה אֶת־זַרְעֵ֑ךְ וְלֹ֥א יִסָּפֵ֖ר מֵרֹֽב׃</p>
+      <p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה הִנָּ֥ךְ הָרָ֖ה וְיֹלַ֣דְתְּ בֵּ֑ן וְקָרָ֤את שְׁמוֹ֙ יִשְׁמָעֵ֔אל כִּֽי־שָׁמַ֥ע יְהֹוָ֖ה אֶל־עׇנְיֵֽךְ׃</p>
+      <p>וְה֤וּא יִהְיֶה֙ פֶּ֣רֶא אָדָ֔ם יָד֣וֹ בַכֹּ֔ל וְיַ֥ד כֹּ֖ל בּ֑וֹ וְעַל־פְּנֵ֥י כׇל־אֶחָ֖יו יִשְׁכֹּֽן׃</p>
+      <p>וַתִּקְרָ֤א שֵׁם־יְהֹוָה֙ הַדֹּבֵ֣ר אֵלֶ֔יהָ אַתָּ֖ה אֵ֣ל רֳאִ֑י כִּ֣י אָֽמְרָ֗ה הֲגַ֥ם הֲלֹ֛ם רָאִ֖יתִי אַחֲרֵ֥י רֹאִֽי׃</p>
+      <p>עַל־כֵּן֙ קָרָ֣א לַבְּאֵ֔ר בְּאֵ֥ר לַחַ֖י רֹאִ֑י הִנֵּ֥ה בֵין־קָדֵ֖שׁ וּבֵ֥ין בָּֽרֶד׃</p>
+      <p>וַתֵּ֧לֶד הָגָ֛ר לְאַבְרָ֖ם בֵּ֑ן וַיִּקְרָ֨א אַבְרָ֧ם שֶׁם־בְּנ֛וֹ אֲשֶׁר־יָלְדָ֥ה הָגָ֖ר יִשְׁמָעֵֽאל׃</p>
+      <p>וְאַבְרָ֕ם בֶּן־שְׁמֹנִ֥ים שָׁנָ֖ה וְשֵׁ֣שׁ שָׁנִ֑ים בְּלֶֽדֶת־הָגָ֥ר אֶת־יִשְׁמָעֵ֖אל לְאַבְרָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְהִ֣י אַבְרָ֔ם בֶּן־תִּשְׁעִ֥ים שָׁנָ֖ה וְתֵ֣שַׁע שָׁנִ֑ים וַיֵּרָ֨א יְהֹוָ֜ה אֶל־אַבְרָ֗ם וַיֹּ֤אמֶר אֵלָיו֙ אֲנִי־אֵ֣ל שַׁדַּ֔י הִתְהַלֵּ֥ךְ לְפָנַ֖י וֶהְיֵ֥ה תָמִֽים׃</p>
+      <p>וְאֶתְּנָ֥ה בְרִיתִ֖י בֵּינִ֣י וּבֵינֶ֑ךָ וְאַרְבֶּ֥ה אוֹתְךָ֖ בִּמְאֹ֥ד מְאֹֽד׃</p>
+      <p>וַיִּפֹּ֥ל אַבְרָ֖ם עַל־פָּנָ֑יו וַיְדַבֵּ֥ר אִתּ֛וֹ אֱלֹהִ֖ים לֵאמֹֽר׃</p>
+      <p>אֲנִ֕י הִנֵּ֥ה בְרִיתִ֖י אִתָּ֑ךְ וְהָיִ֕יתָ לְאַ֖ב הֲמ֥וֹן גּוֹיִֽם׃</p>
+      <p>וְלֹא־יִקָּרֵ֥א ע֛וֹד אֶת־שִׁמְךָ֖ אַבְרָ֑ם וְהָיָ֤ה שִׁמְךָ֙ אַבְרָהָ֔ם כִּ֛י אַב־הֲמ֥וֹן גּוֹיִ֖ם נְתַתִּֽיךָ׃</p>
+      <p>וְהִפְרֵתִ֤י אֹֽתְךָ֙ בִּמְאֹ֣ד מְאֹ֔ד וּנְתַתִּ֖יךָ לְגוֹיִ֑ם וּמְלָכִ֖ים מִמְּךָ֥ יֵצֵֽאוּ׃</p>
+      <p>וַהֲקִמֹתִ֨י אֶת־בְּרִיתִ֜י בֵּינִ֣י וּבֵינֶ֗ךָ וּבֵ֨ין זַרְעֲךָ֧ אַחֲרֶ֛יךָ לְדֹרֹתָ֖ם לִבְרִ֣ית עוֹלָ֑ם לִהְי֤וֹת לְךָ֙ לֵֽאלֹהִ֔ים וּֽלְזַרְעֲךָ֖ אַחֲרֶֽיךָ׃</p>
+      <p>וְנָתַתִּ֣י לְ֠ךָ֠ וּלְזַרְעֲךָ֨ אַחֲרֶ֜יךָ אֵ֣ת&thinsp;<b>׀</b> אֶ֣רֶץ מְגֻרֶ֗יךָ אֵ֚ת כׇּל־אֶ֣רֶץ כְּנַ֔עַן לַאֲחֻזַּ֖ת עוֹלָ֑ם וְהָיִ֥יתִי לָהֶ֖ם לֵאלֹהִֽים׃</p>
+      <p>וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־אַבְרָהָ֔ם וְאַתָּ֖ה אֶת־בְּרִיתִ֣י תִשְׁמֹ֑ר אַתָּ֛ה וְזַרְעֲךָ֥ אַֽחֲרֶ֖יךָ לְדֹרֹתָֽם׃</p>
+      <p>זֹ֣את בְּרִיתִ֞י אֲשֶׁ֣ר תִּשְׁמְר֗וּ בֵּינִי֙ וּבֵ֣ינֵיכֶ֔ם וּבֵ֥ין זַרְעֲךָ֖ אַחֲרֶ֑יךָ הִמּ֥וֹל לָכֶ֖ם כׇּל־זָכָֽר׃</p>
+      <p>וּנְמַלְתֶּ֕ם אֵ֖ת בְּשַׂ֣ר עׇרְלַתְכֶ֑ם וְהָיָה֙ לְא֣וֹת בְּרִ֔ית בֵּינִ֖י וּבֵינֵיכֶֽם׃</p>
+      <p>וּבֶן־שְׁמֹנַ֣ת יָמִ֗ים יִמּ֥וֹל לָכֶ֛ם כׇּל־זָכָ֖ר לְדֹרֹתֵיכֶ֑ם יְלִ֣יד בָּ֔יִת וּמִקְנַת־כֶּ֙סֶף֙ מִכֹּ֣ל בֶּן־נֵכָ֔ר אֲשֶׁ֛ר לֹ֥א מִֽזַּרְעֲךָ֖ הֽוּא׃</p>
+      <p>הִמּ֧וֹל&thinsp;<small>׀</small>&thinsp;יִמּ֛וֹל יְלִ֥יד בֵּֽיתְךָ֖ וּמִקְנַ֣ת כַּסְפֶּ֑ךָ וְהָיְתָ֧ה בְרִיתִ֛י בִּבְשַׂרְכֶ֖ם לִבְרִ֥ית עוֹלָֽם׃</p>
+      <p>וְעָרֵ֣ל&thinsp;<b>׀</b> זָכָ֗ר אֲשֶׁ֤ר לֹֽא־יִמּוֹל֙ אֶת־בְּשַׂ֣ר עׇרְלָת֔וֹ וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מֵעַמֶּ֑יהָ אֶת־בְּרִיתִ֖י הֵפַֽר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־אַבְרָהָ֔ם שָׂרַ֣י אִשְׁתְּךָ֔ לֹא־תִקְרָ֥א אֶת־שְׁמָ֖הּ שָׂרָ֑י כִּ֥י שָׂרָ֖ה שְׁמָֽהּ׃</p>
+      <p>וּבֵרַכְתִּ֣י אֹתָ֔הּ וְגַ֨ם נָתַ֧תִּי מִמֶּ֛נָּה לְךָ֖ בֵּ֑ן וּבֵֽרַכְתִּ֙יהָ֙ וְהָֽיְתָ֣ה לְגוֹיִ֔ם מַלְכֵ֥י עַמִּ֖ים מִמֶּ֥נָּה יִהְיֽוּ׃</p>
+      <p>וַיִּפֹּ֧ל אַבְרָהָ֛ם עַל־פָּנָ֖יו וַיִּצְחָ֑ק וַיֹּ֣אמֶר בְּלִבּ֗וֹ הַלְּבֶ֤ן מֵאָֽה־שָׁנָה֙ יִוָּלֵ֔ד וְאִ֨ם־שָׂרָ֔ה הֲבַת־תִּשְׁעִ֥ים שָׁנָ֖ה תֵּלֵֽד׃</p>
+      <p>וַיֹּ֥אמֶר אַבְרָהָ֖ם אֶל־הָֽאֱלֹהִ֑ים ל֥וּ יִשְׁמָעֵ֖אל יִחְיֶ֥ה לְפָנֶֽיךָ׃</p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים אֲבָל֙ שָׂרָ֣ה אִשְׁתְּךָ֗ יֹלֶ֤דֶת לְךָ֙ בֵּ֔ן וְקָרָ֥אתָ אֶת־שְׁמ֖וֹ יִצְחָ֑ק וַהֲקִמֹתִ֨י אֶת־בְּרִיתִ֥י אִתּ֛וֹ לִבְרִ֥ית עוֹלָ֖ם לְזַרְע֥וֹ אַחֲרָֽיו׃</p>
+      <p>וּֽלְיִשְׁמָעֵאל֮ שְׁמַעְתִּ֒יךָ֒ הִנֵּ֣ה&thinsp;<b>׀</b> בֵּרַ֣כְתִּי אֹת֗וֹ וְהִפְרֵיתִ֥י אֹת֛וֹ וְהִרְבֵּיתִ֥י אֹת֖וֹ בִּמְאֹ֣ד מְאֹ֑ד שְׁנֵים־עָשָׂ֤ר נְשִׂיאִם֙ יוֹלִ֔יד וּנְתַתִּ֖יו לְג֥וֹי גָּדֽוֹל׃</p>
+      <p>וְאֶת־בְּרִיתִ֖י אָקִ֣ים אֶת־יִצְחָ֑ק אֲשֶׁר֩ תֵּלֵ֨ד לְךָ֤ שָׂרָה֙ לַמּוֹעֵ֣ד הַזֶּ֔ה בַּשָּׁנָ֖ה הָאַחֶֽרֶת׃</p>
+      <p>וַיְכַ֖ל לְדַבֵּ֣ר אִתּ֑וֹ וַיַּ֣עַל אֱלֹהִ֔ים מֵעַ֖ל אַבְרָהָֽם׃</p>
+      <p>וַיִּקַּ֨ח אַבְרָהָ֜ם אֶת־יִשְׁמָעֵ֣אל בְּנ֗וֹ וְאֵ֨ת כׇּל־יְלִידֵ֤י בֵיתוֹ֙ וְאֵת֙ כׇּל־מִקְנַ֣ת כַּסְפּ֔וֹ כׇּל־זָכָ֕ר בְּאַנְשֵׁ֖י בֵּ֣ית אַבְרָהָ֑ם וַיָּ֜מׇל אֶת־בְּשַׂ֣ר עׇרְלָתָ֗ם בְּעֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה כַּאֲשֶׁ֛ר דִּבֶּ֥ר אִתּ֖וֹ אֱלֹהִֽים׃</p>
+      <p>וְאַ֨בְרָהָ֔ם בֶּן־תִּשְׁעִ֥ים וָתֵ֖שַׁע שָׁנָ֑ה בְּהִמֹּל֖וֹ בְּשַׂ֥ר עׇרְלָתֽוֹ׃</p>
+      <p>וְיִשְׁמָעֵ֣אל בְּנ֔וֹ בֶּן־שְׁלֹ֥שׁ עֶשְׂרֵ֖ה שָׁנָ֑ה בְּהִ֨מֹּל֔וֹ אֵ֖ת בְּשַׂ֥ר עׇרְלָתֽוֹ׃</p>
+      <p>בְּעֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה נִמּ֖וֹל אַבְרָהָ֑ם וְיִשְׁמָעֵ֖אל בְּנֽוֹ׃</p>
+      <p>וְכׇל־אַנְשֵׁ֤י בֵיתוֹ֙ יְלִ֣יד בָּ֔יִת וּמִקְנַת־כֶּ֖סֶף מֵאֵ֣ת בֶּן־נֵכָ֑ר נִמֹּ֖לוּ אִתּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>L'Éternel avait dit à Abram : "Éloigne-toi de ton pays, de ton lieu natal et de la maison paternelle, et va au pays que je t'indiquerai.</p>
+      <p>Je te ferai devenir une grande nation ; je te bénirai, je rendrai ton nom glorieux, et tu seras un type de bénédiction.</p>
+      <p>Je bénirai ceux qui te béniront, et qui t'outragera je le maudirai ; et par toi seront heureuses toutes les races de la terre."</p>
+      <p>Abram partit comme le lui avait dit l'Éternel, et Loth alla avec lui. Abram était âgé de soixante-quinze ans lorsqu'il sortit de Harân.</p>
+      <p>Abram prit Saraï son épouse, Loth fils de son frère, et tous les biens et les gens qu'ils avaient acquis à Harân. Ils partirent pour se rendre dans le pays de Canaan, et ils arrivèrent dans ce pays.</p>
+      <p>Abram s'avança dans le pays jusqu'au territoire de Sichem, jusqu'à la plaine de Môré ; le Cananéen habitait dès lors ce pays.</p>
+      <p>L'Éternel apparut à Abram et dit : "C'est à ta postérité que je destine ce pays." Il bâtit en ce lieu un autel au D.ieu qui lui était apparu.</p>
+      <p>Il se transporta de là vers la montagne à l'est de Béthel et y dressa sa tente, ayant Béthel à l'occident et Aï à l'orient ; il y érigea un autel au Seigneur, et il proclama le nom de l'Éternel.</p>
+      <p>Abram partit ensuite, se dirigeant constamment vers le midi.</p>
+      <p>Or, il y eut une famine dans le pays. Abram descendit en Égypte pour y séjourner, la famine étant excessive dans le pays.</p>
+      <p>Quand il fut sur le point d'arriver en Égypte, il dit à Saraï son épouse : "Certes, je sais que tu es une femme au gracieux visage.</p>
+      <p>Il arrivera que, lorsque les Égyptiens te verront, ils diront : 'C'est sa femme' ; et ils me tueront, et ils te conserveront la vie.</p>
+      <p>Dis, je te prie, que tu es ma sœur ; et je serai heureux par toi, car j'aurai, grâce à toi, la vie sauve."</p>
+      <p>En effet, lorsqu'Abram fut arrivé en Égypte, les Égyptiens remarquèrent que cette femme était extrêmement belle ;</p>
+      <p>puis les officiers de Pharaon la virent et la vantèrent à Pharaon et cette femme fut enlevée pour le palais de Pharaon.</p>
+      <p>Quant à Abram, il fut bien traité pour l'amour d'elle ; il eut du menu et du gros bétail, des ânes, des esclaves mâles et femelles, des ânesses et des chameaux.</p>
+      <p>Mais l'Éternel affligea de plaies terribles Pharaon et sa maison, à cause de Saraï, l'épouse d'Abram.</p>
+      <p>Pharaon manda Abram, et dit : "Qu'as-tu fait là à mon égard ? Pourquoi ne m'as-tu pas déclaré qu'elle est ta femme ?</p>
+      <p>"Pourquoi as-tu dit : 'Elle est ma sœur', de sorte que je l'ai prise pour moi comme épouse ? Or maintenant, voici ta femme, reprends-la et retire-toi !"</p>
+      <p>Pharaon lui donna une escorte, qui le reconduisit avec sa femme et toute sa suite.</p>
+      <p>Abram remonta d'Égypte lui, sa femme et toute sa suite, et Loth avec lui, s'acheminant vers le midi.</p>
+      <p>Or, Abram était puissamment riche en bétail, en argent et en or.</p>
+      <p>Il repassa par ses pérégrinations, depuis le midi, jusqu'à Béthel, jusqu'à l'endroit où avait été sa tente la première fois, entre Béthel et Aï,</p>
+      <p>à l'endroit où se trouvait l'autel qu'il y avait précédemment érigé. Abram y proclama le nom de l'Éternel.</p>
+      <p>Loth aussi, qui accompagnait Abram, avait du menu bétail, du gros bétail et ses tentes.</p>
+      <p>Le terrain ne put se prêter à ce qu'ils demeurassent ensemble ; car leurs possessions étaient considérables, et ils ne pouvaient habiter ensemble.</p>
+      <p>Il s'éleva des différends entre les pasteurs des troupeaux d'Abram et les pasteurs des troupeaux de Loth ; le Cananéen et le Phérezéen occupaient alors le pays.</p>
+      <p>Abram dit à Loth : "Qu'il n'y ait donc point de querelles entre moi et toi, entre mes pasteurs et les tiens ; car nous sommes frères.</p>
+      <p>Toute la contrée n'est-elle pas devant toi ? De grâce, sépare-toi de moi : si tu vas à gauche, j'irai à droite ; si tu vas à droite, je prendrai la gauche."</p>
+      <p>Loth leva les yeux et considéra toute la plaine du Jourdain, tout entière arrosée, avant que l'Éternel eût détruit Sodome et Gomorrhe ; semblable à un jardin céleste, à la contrée d'Égypte, et s'étendant jusqu'à Çoar.</p>
+      <p>Loth choisit toute la plaine du Jourdain, et se dirigea du côté oriental ; et ils se séparèrent l'un de l'autre.</p>
+      <p>Abram demeura dans le pays de Canaan ; Loth s'établit dans les villes de la plaine et dressa ses tentes jusqu'à Sodome.</p>
+      <p>Or, les habitants de Sodome étaient pervers et pécheurs devant l'Éternel, à un haut degré.</p>
+      <p>L'Éternel dit à Abram, après que Loth se fut séparé de lui : "Lève les yeux et du point où tu es placé, promène tes regards au nord, au midi, à l'orient et à l'occident :</p>
+      <p>Eh bien ! tout le pays que tu aperçois, je le donne à toi et à ta postérité.</p>
+      <p>Je rendrai ta race semblable à la poussière de la terre ; tellement que, si l'on peut nombrer la poussière de la terre, ta race aussi pourra être nombrée.</p>
+      <p>Lève-toi ! parcours cette contrée en long et en large ! car c'est à toi que je la destine."</p>
+      <p>Abram alla dresser sa tente et établir sa demeure dans les plaines de Mamré, qui sont en Hébron ; et il y éleva un autel au Seigneur.</p>
+      <p>Ceci arriva du temps d'Amrafel, roi de Sennaar ; d'Aryoc, roi d'Ellasar ; de Kedorlaomer, roi d'Elam, et de Tidal, roi de Goyim :</p>
+      <p>ils firent la guerre à Béra, roi de Sodome ; à Bircha, roi de Gomorrhe ; à Chinab, roi d'Adma ; à Chémêber, roi de Ceboïm, et au roi de Béla, la même que Çoar.</p>
+      <p>Tous ceux-là se réunirent dans la vallée des Siddim, qui est devenue la mer du Sel.</p>
+      <p>Douze années, ils avaient été asservis à Kedorlaomer, et la treizième année ils s'étaient révoltés.</p>
+      <p>La quatorzième année, Kedorlaomer s'avança avec les rois ses alliés, et ils défirent les Refaïm à Achteroth-Karnayim, les Zouzim à Ham, les Emim à Chavé-Kiryathayim ;</p>
+      <p>et les Horéens dans leur montagne de Séir, jusqu'à la plaine de Pharan qui borde le désert.</p>
+      <p>Ils revinrent, marchèrent sur Enmichpat, la même que Cadès, et dévastèrent tout le territoire de l'Amalécite et aussi de l'Amoréen établi à Haçaçon-Tamar.</p>
+      <p>Alors s'avancèrent le roi de Sodome, le roi de Gomorrhe, celui d'Adma, celui de Ceboïm et celui de Béla ou Çoar, ils se rangèrent contre eux en bataille dans la vallée des Siddim :</p>
+      <p>contre Kedorlaomer, roi d'Elam ; Tidal, roi de Goyim ; Amrafel, roi de Sennaar, et Aryoc, roi d'Ellasar : quatre rois contre cinq.</p>
+      <p>La vallée des Siddim était remplie de puits de bitume : le roi de Sodome et celui de Gomorrhe s'enfuirent et y tombèrent ; les autres se réfugièrent vers les montagnes.</p>
+      <p>Les vainqueurs s'emparèrent de toutes les richesses de Sodome et de Gomorrhe et de tous leurs vivres, puis se retirèrent.</p>
+      <p>Ils prirent aussi, avec ses biens, Loth, neveu d'Abram, qui était alors à Sodome, et se retirèrent.</p>
+      <p>Les fuyards vinrent en apporter la nouvelle à Abram l'Hébreu. Celui-ci demeurait dans les plaines de Mamré l'Amorréen, frère d'Echkol et d'Aner, lesquels étaient les alliés d'Abram.</p>
+      <p>Abram, ayant appris que son parent était prisonnier, arma ses fidèles, enfants de sa maison, trois cent dix-huit, et suivit la trace des ennemis jusqu'à Dan.</p>
+      <p>Il se glissa sur eux la nuit avec ses serviteurs, les battit et les poursuivit jusqu'à Hoba, qui est à gauche de Damas.</p>
+      <p>Il reprit tout le butin, ramena aussi Loth son parent, avec ses biens, et les femmes et la multitude.</p>
+      <p>Le roi de Sodome sortit à sa rencontre, comme il revenait de défaire Kedorlaomer et les rois ses auxiliaires, vers la vallée de Chavé, qui est la vallée Royale.</p>
+      <p>Malki-Tsédek, roi de Salem, apporta du pain et du vin : il était prêtre du D.ieu suprême.</p>
+      <p>Il le bénit, en disant : "Béni soit Abram de par le D.ieu suprême, auteur des cieux et de la terre !</p>
+      <p>Et béni le D.ieu suprême d'avoir livré tes ennemis en ta main !" Et Abram lui donna la dîme de tout le butin.</p>
+      <p>Le roi de Sodome dit à Abram : "Donne-moi les personnes, et les biens garde-les pour toi.</p>
+      <p>Abram répondit au roi de Sodome : "Je lève la main devant l'Éternel, qui est le D.ieu suprême, auteur des cieux et de la terre ;</p>
+      <p>et je jure que fût-ce un fil, fût-ce la courroie d'une sandale, je ne prendrai rien de ce qui est à toi ; que tu ne dises pas : 'C'est moi qui ai enrichi Abram !'</p>
+      <p>Loin de moi ! Si ce n'est ce qu'ont déjà mangé ces jeunes gens, et la part des hommes qui m'ont accompagné ; Aner, Echkol et Mamré, que ceux-là prennent leurs parts."</p>
+      <p>Après ces faits, la parole du Seigneur se fit entendre à Abram, dans une vision, en ces termes : "Ne crains point, Abram : je suis un bouclier pour toi ; ta récompense sera très grande."</p>
+      <p>Abram répondit : "D.ieu-Éternel, que me donnerais-tu, alors que je m'en vais sans postérité et que le fils adoptif de ma maison est un Damascénien, Éliézer ?"</p>
+      <p>"Certes, disait Abram, tu ne m'as pas donné de postérité, et l'enfant de ma maison sera mon héritier."</p>
+      <p>Mais voici que la parole de l'Éternel vint à lui, disant : "Celui-ci n'héritera pas de toi ; c'est bien un homme issu de tes entrailles qui sera ton héritier."</p>
+      <p>Il le fit sortir en plein air, et dit : "Regarde le ciel et compte les étoiles : peux-tu en supputer le nombre ? Ainsi, reprit-il, sera ta descendance."</p>
+      <p>Et il eut foi en l'Éternel, et l'Éternel lui en fit un mérite.</p>
+      <p>Et il lui dit : "Je suis l'Éternel, qui t'ai tiré d'Our-Kasdim, pour te donner ce pays en possession."</p>
+      <p>Il répondit : "D.ieu-Éternel, comment saurai-je que j'en suis possesseur ?"</p>
+      <p>Il lui dit : "Prépare-moi une génisse âgée de trois ans, une chèvre de trois ans, un bélier de trois ans, une tourterelle et une jeune colombe."</p>
+      <p>Abram prit tous ces animaux, divisa chacun par le milieu, et disposa chaque moitié en regard de l'autre ; mais il ne divisa point les oiseaux.</p>
+      <p>Les oiseaux de proie s'abattirent sur les corps ; Abram les mit en fuite.</p>
+      <p>Le soleil étant sur son déclin, une torpeur s'empara d'Abram : tandis qu'une angoisse sombre et profonde pesait sur lui.</p>
+      <p>D.ieu dit à Abram : "Sache-le bien, ta postérité séjournera sur une terre étrangère, où elle sera asservie et opprimée, durant quatre cents ans.</p>
+      <p>Mais, à son tour, la nation qu'ils serviront sera jugée par moi ; et alors ils la quitteront avec de grandes richesses.</p>
+      <p>Pour toi, tu rejoindras paisiblement tes pères ; tu seras enterré après une vieillesse heureuse.</p>
+      <p>Mais la quatrième génération reviendra ici, parce qu'alors seulement la perversité de l'Amorréen sera complète."</p>
+      <p>Cependant le soleil s'était couché, et l'obscurité régnait : voici qu'un tourbillon de fumée et un sillon de feu passèrent entre ces chairs dépecées.</p>
+      <p>Ce jour-là, l'Éternel conclut avec Abram un pacte, en disant : "J'ai octroyé à ta race ce territoire, depuis le torrent d'Égypte jusqu'au grand fleuve, le fleuve d'Euphrate :</p>
+      <p>le Kénéen, le Kenizzéen, le Kadmonéen ;</p>
+      <p>le Héthéen, le Phérézéen, les Rephaïm ;</p>
+      <p>l'Amorréen, le Cananéen, le Ghirgachéen et le Jébuséen."</p>
+      <p>Saraï, épouse d'Abram, ne lui avait pas donné d'enfant. Elle avait une esclave égyptienne nommée Agar.</p>
+      <p>Saraï dit à Abram : "Hélas ! l'Éternel m'a refusé l'enfantement ; approche-toi donc de mon esclave : peut-être, par elle, aurai-je un enfant." Abram obéit à la voix de Saraï.</p>
+      <p>Saraï, épouse d'Abram, prit Agar l'Égyptienne, son esclave, il y avait dix ans qu'Abram demeurait au pays de Canaan ; et elle la donna à son époux Abram pour qu'elle lui servît de femme.</p>
+      <p>Il s'approcha d'Agar, et elle conçut. Quand elle vit qu'elle avait conçu, sa maîtresse devint l'objet de son dédain.</p>
+      <p>Saraï dit à Abram : "Mon injure est la tienne. Moi-même, j'ai placé mon esclave dans tes bras ; or, elle a vu qu'elle avait conçu, et je suis devenue méprisable à ses yeux. L'Éternel prononcera entre moi et toi."</p>
+      <p>Abram dit à Saraï : "Voici, ton esclave est dans ta main, fais-lui ce que bon te semble." Saraï l'humilia, et elle s'enfuit de devant elle.</p>
+      <p>Un envoyé du Seigneur la trouva près d'une source d'eau, dans le désert, près de la source sur le chemin de Chour.</p>
+      <p>Il dit : "Agar, esclave de Saraï, d'où viens-tu, et où veux-tu aller ?" Elle répondit : "Je fuis de devant Saraï, ma maîtresse."</p>
+      <p>L'envoyé du Seigneur lui dit : "Retourne chez ta maîtresse, et humilie-toi sous sa main."</p>
+      <p>L'envoyé du Seigneur ajouta : "Je rendrai ta race très nombreuse, tellement qu'elle ne pourra être comptée."</p>
+      <p>L'envoyé du Seigneur lui dit encore : "Te voici enceinte, et près d'enfanter un fils ; tu énonceras son nom Ismaël, parce que D.ieu a entendu ton affliction.</p>
+      <p>Celui-ci sera un onagre parmi les hommes : sa main sera contre tous, et la main de tous contre lui ; mais il se maintiendra à la face de tous ses frères."</p>
+      <p>Et elle proclama ainsi le nom de l'Éternel qui lui avait parlé : "Tu es un D.ieu visible !"</p>
+      <p>C'est pourquoi on appela cette source "la source du Vivant-qui-me-voit" ; elle se trouve entre Cadès et Béred.</p>
+      <p>Agar enfanta un fils à Abram ; et Abram nomma son fils, qu'avait enfanté Agar, Ismaël.</p>
+      <p>Abram était âgé de quatre-vingt-six ans, lorsque Agar lui enfanta Ismaël.</p>
+      <p>Abram étant âgé de quatre-vingt-dix-neuf ans, le Seigneur lui apparut et lui dit : "Je suis le D.ieu tout-puissant ; conduis-toi à mon gré, sois irréprochable,</p>
+      <p>et je maintiendrai mon alliance avec toi, et je te multiplierai à l'infini."</p>
+      <p>Abram tomba sur sa face, et D.ieu lui parla de la sorte :</p>
+      <p>"Moi-même, oui, je traite avec toi : tu seras le père d'une multitude de nations.</p>
+      <p>Ton nom ne s'énoncera plus, désormais, Abram : ton nom sera Abraham, car je te fais le père d'une multitude de nations.</p>
+      <p>Je te ferai fructifier prodigieusement ; je ferai de toi des peuples, et des rois seront tes descendants.</p>
+      <p>Cette alliance, établie entre moi et entre toi et ta postérité dernière, je l'érigerai en alliance perpétuelle, étant pour toi un D.ieu comme pour ta postérité après toi.</p>
+      <p>Et je donnerai à toi et à ta postérité la terre de tes pérégrinations, toute la terre de Canaan, comme possession indéfinie ; et je serai pour eux un D.ieu tutélaire."</p>
+      <p>D.ieu dit à Abraham : "Pour toi, sois fidèle à mon alliance, toi et ta postérité après toi dans tous les âges.</p>
+      <p>Voici le pacte que vous observerez, qui est entre moi et vous, jusqu'à ta dernière postérité : circoncire tout mâle d'entre vous.</p>
+      <p>Vous retrancherez la chair de votre excroissance, et ce sera un symbole d'alliance entre moi et vous.</p>
+      <p>À l'âge de huit jours, que tout mâle, dans vos générations, soit circoncis par vous ; même l'enfant né dans ta maison, ou acheté à prix d'argent parmi les fils de l'étranger, qui ne sont pas de ta race.</p>
+      <p>Oui, il sera circoncis, l'enfant de ta maison ou celui que tu auras acheté ; et mon alliance, à perpétuité, sera gravée dans votre chair.</p>
+      <p>Et le mâle incirconcis, qui n'aura pas retranché la chair de son excroissance, sera supprimé lui-même du sein de son peuple pour avoir enfreint mon alliance."</p>
+      <p>D.ieu dit à Abraham : "Saraï, ton épouse, tu ne l'appelleras plus Saraï, mais bien Sara.</p>
+      <p>Je la bénirai, en te donnant, par elle aussi, un fils ; je la bénirai, en ce qu'elle produira des nations et que des chefs de peuples naîtront d'elle."</p>
+      <p>Abraham tomba sur sa face et sourit ; et il dit en son cœur : "Quoi ! un centenaire engendrerait encore ! et à quatre-vingt-dix ans, Sara deviendrait mère !"</p>
+      <p>Abraham dit au Seigneur : "Puisse Ismaël, à tes yeux, mériter de vivre !"</p>
+      <p>Le Seigneur répondit : "Certes, Sara, ton épouse, te donnera un fils, et tu le nommeras Isaac. Je maintiendrai mon pacte avec lui, comme pacte perpétuel à l'égard de sa descendance.</p>
+      <p>Quant à Ismaël, je t'ai exaucé : oui, je l'ai béni ; je le ferai fructifier et multiplier à l'infini ; il engendrera douze princes, et je le ferai devenir une grande nation.</p>
+      <p>Pour mon alliance, je la confirmerai sur Isaac, que Sara t'enfantera à pareille époque, l'année prochaine."</p>
+      <p>Ayant achevé de lui parler, D.ieu disparut de devant Abraham.</p>
+      <p>Abraham prit Ismaël son fils, tous les enfants de ses esclaves et ceux qu'il avait achetés à prix d'argent, tous les mâles de la maison d'Abraham ; il retrancha la chair de leur excroissance, ce jour-là même, ainsi que D.ieu le lui avait dit.</p>
+      <p>Or, Abraham était âgé de quatre-vingt-dix-neuf ans, lorsque fut retranchée la chair de son excroissance.</p>
+      <p>Ismaël, son fils, était âgé de treize ans, lorsque la chair de son excroissance fut retranchée.</p>
+      <p>C'est en ce même jour que fut circoncis Abraham, ainsi qu'Ismaël son fils.</p>
+      <p>Et tous les gens de sa maison, nés chez lui ou achetés à prix d'argent à l'étranger, furent circoncis en même temps.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>L’Éternel avait dit à Abram: "Éloigne-toi de ton pays, de ton lieu natal et de la maison paternelle, et va au pays que je t’indiquerai.</p>
+      <p>Je te ferai devenir une grande nation; je te bénirai, je rendrai ton nom glorieux, et tu seras un type de bénédiction.</p>
+      <p>Je bénirai ceux qui te béniront, et qui t’outragera je le maudirai; et par toi seront heureuses toutes les races de la terre."</p>
+      <p>Abram partit comme le lui avait dit l’Éternel, et Loth alla avec lui. Abram était âgé de soixante-quinze ans lorsqu’il sortit de Harân.</p>
+      <p>"Abram prit Saraï son épouse, Loth fils de son frère, et tous les biens et les gens qu’ils avaient acquis à Harân. Ils partirent pour se rendre dans le pays de Canaan, et ils arrivèrent dans ce pays.</p>
+      <p>Abram s’avança dans le pays jusqu’au territoire de Sichem, jusqu’à la plaine de Môré; le Cananéen habitait dès lors ce pays.</p>
+      <p>L’Éternel apparut à Abram et dit:"C’est à ta postérité que je destine ce pays." Il bâtit en ce lieu un autel au Dieu qui lui était apparu.</p>
+      <p>Il se transporta de là vers la montagne à l’est de Béthel et y dressa sa tente, ayant Béthel à l’occident et Aï à l’orient; il y érigea un autel au Seigneur, et il proclama le nom de l’Éternel.</p>
+      <p>Abram partit ensuite, se dirigeant constamment vers le midi.</p>
+      <p>Or, il y eut une famine dans le pays. Abram descendit en Égypte pour y séjourner, la famine étant excessive dans le pays.</p>
+      <p>Quand il fut sur le point d’arriver en Égypte, il dit à Saraï son épouse: "Certes, je sais que tu es une femme au gracieux visage.</p>
+      <p>Il arrivera que, lorsque les Égyptiens te verront, ils diront: ‘C’est sa femme’; et ils me tueront, et ils te conserveront la vie.</p>
+      <p>Dis, je te prie, que tu es ma soeur; et je serai heureux par toi, car j’aurai, grâce à toi, la vie sauve."</p>
+      <p>En effet, lorsqu’Abram fut arrivé en Égypte, les Égyptiens remarquèrent que cette femme était extrêmement belle;</p>
+      <p>puis les officiers de Pharaon la virent et la vantèrent à Pharaon et cette femme fut enlevée pour le palais de Pharaon.</p>
+      <p>Quant à Abram, il fut bien traité pour l’amour d’elle; il eut du menu et du gros bétail, des ânes, des esclaves mâles et femelles, des ânesses et des chameaux.</p>
+      <p>Mais l’Éternel affligea de plaies terribles Pharaon et sa maison, à cause de Saraï, l’épouse d’Abram.</p>
+      <p>Pharaon manda Abram, et dit: "Qu’as-tu fait là à mon égard? Pourquoi ne m’as-tu pas déclaré qu’elle est ta femme?</p>
+      <p>"Pourquoi as-tu dit: ‘Elle est ma sœur’, de sorte que je l’ai prise pour moi comme épouse? Or maintenant, voici ta femme, reprends-la et retire-toi!"</p>
+      <p>Pharaon lui donna une escorte, qui le reconduisit avec sa femme et toute sa suite.</p>
+      <p>Abraham remonta d’Egypte lui, sa femme et toute sa suite, et Loth avec lui, s’acheminant vers le midi.</p>
+      <p>Or, Abraham était puissamment riche en bétail, en argent et en or.</p>
+      <p>Il repassa par ses pérégrinations, depuis le midi, jusqu’à Béthel, jusqu’à l’endroit où avait été sa tente la première fois, entre Béthel et Aï,</p>
+      <p>à l’endroit où se trouvait l’autel qu’il y avait précédemment érigé. Abram y proclama le nom de l’Éternel.</p>
+      <p>Loth aussi, qui accompagnait Abram, avait du menu bétail, du gros bétail et ses tentes.</p>
+      <p>Le terrain ne put se prêter à ce qu’ils demeurassent ensemble; car leurs possessions étaient considérables, et ils ne pouvaient habiter ensemble.</p>
+      <p>Il s’éleva des différends entre les pasteurs des troupeaux d’Abram et les pasteurs des troupeaux de Loth; le Cananéen et le Phérezéen occupaient alors le pays.</p>
+      <p>Abram dit à Loth: "Qu’il n’y ait donc point de querelles entre moi et toi, entre mes pasteurs et les tiens; car nous sommes frères.</p>
+      <p>Toute la contrée n’est elle pas devant toi? De grâce, sépare-toi de moi: si tu vas à gauche, j’irai à droite; si tu vas à droite, je prendrai la gauche."</p>
+      <p>Loth leva les yeux et considéra toute la plaine du Jourdain, tout entière arrosée, avant que l’Éternel eût détruit Sodome et Gommorhe; semblable à un jardin céleste, à la contrée d’Egypte, et s’étendant jusqu’à Ã‡oar.</p>
+      <p>Loth choisit toute la plaine du Jourdain, et se dirigea du côté oriental; et ils se séparèrent l’un de l’autre.</p>
+      <p>Abram demeura dans le pays de Canaan; Loth s’établit dans les villes de la plaine et dressa ses tentes jusqu’à Sodome.</p>
+      <p>Or, les habitants de Sodome étaient pervers et pécheurs devant l’Éternel, à un haut degré.</p>
+      <p>L’Éternel dit à Abram, après que Loth se fut séparé de lui: "Lève les yeux et du point où tu es placé, promène tes regards au nord, au midi, à l’orient et à l’occident:</p>
+      <p>Eh bien! tout le pays que tu aperçois, je le donne à toi et à ta perpétuité.</p>
+      <p>Je rendrai ta race semblable à la poussière de la terre; tellement que, si l’on peut nombrer la poussière de la terre, ta race aussi pourra être nombrée.</p>
+      <p>Lève-toi! parcours cette contrée en long et en large! car c’est à toi que je la destine."</p>
+      <p>Abram alla dresser sa tente et établir sa demeure dans les plaines de Mamré, qui sont en Hébron; et il y éleva un autel au Seigneur.</p>
+      <p>Ceci arriva du temps d’Amrafel, roi de Sennaar; d’Aryoc, roi d’Ellasar; de Kedorlaomer, roi d’Elam, et de Tidal, roi de Goyim:</p>
+      <p>ils firent la guerre à Béra, roi de Sodome; à Bircha, roi de Gommorrhe; à Chinab, roi d’Adma; à Chémêber, roi de Ceboïm, et au roi de Béla, la même que Ã‡oar.</p>
+      <p>Tous ceux-là se réunirent dans la vallée des Siddim, qui est devenue la mer du Sel.</p>
+      <p>Douze années, ils avaient été asservis à Kedorlaomer, et la treizième année ils s’étaient révoltés.</p>
+      <p>La quatorzième année, Kedorlaomer s’avança avec les rois ses alliés, et ils défirent les Refaïm à Achteroth-Karnayim, les Zouzim à Ham, les Emim à Chavé-Kiryathayim;</p>
+      <p>et les Horéens dans leur montagne de Séir, jusqu’à la plaine de Pharan qui borde le désert.</p>
+      <p>Ils revinrent marchèrent sur Enmichpat, la même que Cadès, et dévastèrent tout le territoire de l’Amalécite et aussi de l’Amoréen établi à Haçaçon-Tamar.</p>
+      <p>Alors s’avancèrent le roi de Sodome, le roi de Gommorrhe, celui d’Adma, celui de Ceboim et celui de Béla ou Coar, ils se rangèrent contre eux en bataille dans la vallée des Siddim:</p>
+      <p>contre Kedorlaomer, roi d’Elam; Tidal, roi de Goyim; Amrafel, roi de Sennaar, et Aryoc, roi d’Ellasar: quatre rois contre cinq.</p>
+      <p>La vallée des Siddim était remplie de puits de bitume: le roi de Sodome et celui de Gomorrhe s’enfuirent et y tombèrent; les autres se réfugièrent vers les montagnes.</p>
+      <p>Les vainqueurs s’emparèrent de toutes les richesses de Sodome et de Gommorrhe et de tous leurs vivres, puis se retirèrent.</p>
+      <p>Ils prirent aussi, avec ses biens, Loth, neveu d’Abram, qui était alors à Sodome, et se retirèrent.</p>
+      <p>Les fuyards vinrent en apporter la nouvelle à Abram l’Hébreu. Celui-ci demeurait dans les plaines de Mamré l’Amorréen, frère d’Echkol et d’Aner, lesquels étaient les alliés d’Abram.</p>
+      <p>Abram, ayant appris que son parent était prisonnier, arma ses fidèles, enfants de sa maison, trois cent dix huit, et suivit la trace des ennemis jusqu’à Dan.</p>
+      <p>Il se glissa sur eux la nuit avec ses serviteurs, les battit et les poursuivit jusqu’à Hoba, qui est à gauche de Damas.</p>
+      <p>Il reprit tout le butin, ramena aussi Loth son parent, avec ses biens, et les femmes et la multitude.</p>
+      <p>Le roi de Sodome sortit à sa rencontre, comme il revenait de défaire Kedorlaomer et les rois ses auxiliaires, vers la vallée de Chavé, qui est la vallée Royale.</p>
+      <p>Melchisédec, roi de Salem, apporta du pain et du vin: il était prêtre du Dieu suprême.</p>
+      <p>Il le bénit, en disant: "Béni soit Abram de par le Dieu suprême, auteur des cieux et de la terre!</p>
+      <p>Et béni le Dieu suprême d’avoir livré tes ennemis en ta main!" Et Abram lui donna la dîme de tout le butin.</p>
+      <p>Le roi de Sodome dit à Abram: "Donne-moi les personnes, et les biens garde-les pour toi.</p>
+      <p>Abram répondit au roi de Sodome: "Je lève la main devant l’Éternel, qui est le Dieu suprême, auteur des cieux et de la terre;</p>
+      <p>et je jure que fût-ce un fil, fût-ce la courroie d’une sandale, je ne prendrai rien de ce qui est à toi; que tu ne dises pas: "C’est moi qui ai enrichi Abram!</p>
+      <p>Loin de moi! Si ce n’est ce qu’ont déjà mangé ces jeunes gens, et la part des hommes qui m’ont accompagné; Aner, Echkol et Mamré, que ceux-là prennent leurs parts."</p>
+      <p>Après ces faits, la parole du Seigneur se fit entendre à Abram, dans une vision, en ces termes: "Ne crains point, Abram: je suis un bouclier pour toi; ta récompense sera très grande"</p>
+      <p>Abram répondit: "Dieu-Éternel, que me donnerais-tu, alors que je m’en vais sans postérité et que le fils adoptif de ma maison est un Damascénien, Eliézer?"</p>
+      <p>"Certes, disait Abram, tu ne m’as pas donné de postérité, et l’enfant de ma maison sera mon héritier."</p>
+      <p>Mais voici que la parole de l’Éternel vint à lui, disant:"Celui-ci n’héritera pas de toi; c’est bien un homme issu de tes entrailles qui sera ton héritier."</p>
+      <p>Il le fit sortir en plein air, et dit: "Regarde le ciel et compte les étoiles: peux-tu en supputer le nombre? Ainsi reprit-il, sera ta descendance."</p>
+      <p>Et il eut foi en l’Éternel, et l’Éternel lui en fit un mérite.</p>
+      <p>Et il lui dit: "Je suis l’Éternel, qui t’ai tiré d’Our-Kasdim, pour te donner ce pays en possession."</p>
+      <p>Il répondit: "Dieu-Éternel, comment saurai-je que j’en suis possesseur?"</p>
+      <p>Il lui dit: "Prépare-moi une génisse âgée de trois ans, une chèvre de trois ans, un bélier de trois ans, une tourterelle et une jeune colombe."</p>
+      <p>Abram prit tous ces animaux, divisa chacun par le milieu, et disposa chaque moitié en regard de l’autre; mais il ne divisa point les oiseaux.</p>
+      <p>Les oiseaux de proie s’abattirent sur les corps; Abram les mit en fuite.</p>
+      <p>Le soleil étant sur son déclin, une torpeur s’empara d’Abram: tandis qu’une angoisse sombre profonde pesait sur lui.</p>
+      <p>Dieu dit à Abram: "Sache-le bien, ta postérité séjournera sur une terre étrangère, où elle sera asservie et opprimée, durant quatre cents ans.</p>
+      <p>Mais, à son tour, la nation qu’ils serviront sera jugée par moi; et alors ils la quitteront avec de grandes richesses.</p>
+      <p>Pour toi, tu rejoindras paisiblement tes pères; tu seras enterré après une vieillesse heureuse.</p>
+      <p>Mais la quatrième génération reviendra ici, parce qu’alors seulement la perversité de l’Amorréen sera complète."</p>
+      <p>Cependant le soleil s’était couché, et l’obscurité régnait: voici qu’un tourbillon de fumée et un sillon de feu passèrent entre ces chairs dépecées.</p>
+      <p>Ce jour-là, l’Éternel conclut avec Abram un pacte, en disant: "J’ai octroyé à ta race ce territoire, depuis le torrent d’Egypte jusqu’au grand fleuve, le fleuve d’Euphrate:</p>
+      <p>le Kénéen, le Kenizzéen, le Kadmonéen;</p>
+      <p>le Héthéen, le Phérézéen, les Rephaim;</p>
+      <p>l’Amorréen, le Cananéen, le Ghirgachéen et le Jébuséeen."</p>
+      <p>Saraï, épouse d’Abram, ne lui avait pas donné d’enfant. Elle avait une esclave égyptienne nommée Agar.</p>
+      <p>Saraï dit à Abram: "Hélas! l’Éternel m’a refusé l’enfantement; approche-toi donc de mon esclave: peut-être, par elle, aurai-je un enfant." Abram obéit à la voix de Saraï.</p>
+      <p>Saraï, épouse d’Abram, prit Agar l’Egyptienne, son esclave, il y avait dix ans qu’Abram demeurait au pays de Canaan; et elle la donna à son époux Abram pour qu’elle lui servît de femme.</p>
+      <p>Il s’approcha d’Agar, et elle conçut. Quand elle vit qu’elle avait conçu, sa maîtresse devint l’objet de son dédain.</p>
+      <p>Saraï dit à Abram: "Mon injure est la tienne. Moi-même, j’ai placé mon esclave dans tes bras; or, elle a vu qu’elle avait conçu, et je suis devenue méprisable à ses yeux. L’Éternel prononcera entre moi et toi."</p>
+      <p>Abram dit à Sarai: "Voici, ton esclave est dans ta main, fais-lui ce que bon te semble." Sarai l’humilia, et elle s’enfuit de devant elle.</p>
+      <p>Un envoyé du Seigneur la trouva près d’une source d’eau, dans le désert, près de la source sur le chemin de Chour.</p>
+      <p>Il dit: "Agar, esclave de Saraï, d’où viens tu, et où veux-tu aller?" Elle répondit: "Je fuis de devant Saraï, ma maîtresse."</p>
+      <p>L’envoyé du Seigneur lui dit: "Retourne chez ta maîtresse, et humilie-toi sous sa main."</p>
+      <p>L’envoyé du Seigneur ajouta: "Je rendrai ta race très nombreuse, tellement qu’elle ne pourra être comptée."</p>
+      <p>L’envoyé du Seigneur lui dit encore: "Te voici enceinte, et près d’enfanter un fils; tu énonceras son nom Ismaël, parce que Dieu a entendu ton affliction.</p>
+      <p>Celui-ci sera un onagre parmi les hommes: sa main sera contre tous, et la main de tous contre lui; mais il se maintiendra à la face de tous ses frères."</p>
+      <p>Et elle proclama ainsi le nom de l’Éternel qui lui avait parlé: "Tu es un Dieu visible!</p>
+      <p>C’est pourquoi on appela cette source "la source du Vivant-qui-me-voit"; elle se trouve entre Cadès et Béred.</p>
+      <p>Agar enfanta un fils à Abram; et Abram nomma son fils, qu’avait enfanté Agar, Ismaël.</p>
+      <p>Abram était âgé de quatre-vingt-six-ans, lorsque Agar lui enfanta Ismaël.</p>
+      <p>Abraham étant âgé de quatre-vingt-dix-neuf ans, le Seigneur lui apparut et lui dit: "Je suis le Dieu tout-puissant; conduis-toi à mon gré, sois irréprochable,</p>
+      <p>et je maintiendrai mon alliance avec toi, et je te multiplierai à l’infini."</p>
+      <p>Abram tomba sur sa face, et Dieu lui parla de la sorte:</p>
+      <p>"Moi-même, oui, je traite avec toi: tu seras le père d’une multitude de nations.</p>
+      <p>Ton nom ne s’énoncera plus, désormais, Abram: ton nom sera Abraham, car je te fais le père d’une multitude de nations.</p>
+      <p>Je te ferai fructifier prodigieusement; je ferai de toi des peuples, et des rois seront tes descendants.</p>
+      <p>Cette alliance, établie entre moi et entre toi et ta postérité dernière, je l’érigerai en alliance perpétuelle, étant pour toi un Dieu comme pour ta postérité après toi.</p>
+      <p>Et je donnerai à toi et à ta postérité la terre de tes pérégrinations, toute la terre de Canaan, comme possession indéfinie; et je serai pour eux un Dieu tutélaire."</p>
+      <p>Dieu dit à Abraham: "Pour toi, sois fidèle à mon alliance, toi et ta postérité après toi dans tous les âges.</p>
+      <p>Voici le pacte que vous observerez, qui est entre moi et vous, jusqu’à ta dernière postérité: circoncire tout mâle d’entre vous.</p>
+      <p>Vous retrancherez la chair de votre excroissance, et ce sera un symbole d’alliance entre moi et vous.</p>
+      <p>A l’âge de huit jours, que tout mâle, dans vos générations, soit circoncis par vous; même l’enfant né dans ta maison, ou acheté à prix d’argent parmi les fils de l’étranger, qui ne sont pas de ta race.</p>
+      <p>Oui, il sera circoncis, l’enfant de ta maison ou celui que tu auras acheté; et mon alliance, à perpétuité, sera gravée dans votre chair.</p>
+      <p>Et le mâle incirconcis, qui n’aura pas retranché la chair de son excroissance, sera supprimé lui-même du sein de son peuple pour avoir enfreint mon alliance."</p>
+      <p>Dieu dit à Abraham: "Saraï, ton épouse, tu ne l’appelleras plus Saraï, mais bien Sara.</p>
+      <p>Je la bénirai, en te donnant, par elle aussi, un fils; je la bénirai, en ce qu’elle produira des nations et que des chefs de peuples naîtront d’elle."</p>
+      <p>Abraham tomba sur sa face et sourit; et il dit en son coeur"Quoi! un centenaire engendrerait encore! et à quatre-vingt-dix ans, Sara deviendrait mère!"</p>
+      <p>Abraham dit au Seigneur: "Puisse Ismaël, à tes yeux, mériter de vivre!"</p>
+      <p>Le Seigneur répondit: "Certes, Sara, ton épouse, te donnera un fils, et tu le nommeras Isaac. Je maintiendrai mon pacte avec lui, comme pacte perpétuel à l’égard de sa descendance.</p>
+      <p>Quant à Ismaël, je t’ai exaucé: oui, je l’ai béni; je le ferai fructifier et multiplier à l’infini; il engendra douze princes, et je le ferai devenir une grande nation.</p>
+      <p>Pour mon alliance, je la confirmerai sur Isaac, que Sara t’enfantera à pareille époque, l’année prochaine."</p>
+      <p>Ayant achevé de lui parler, Dieu disparut de devant Abraham.</p>
+      <p>Abraham prit Ismaël son fils, tous les enfants de ses esclaves et ceux qu’il avait achetés à prix d’argent, tous les mâles de la maison d’Abraham; il retrancha la chair de leur excroissance, ce jour-là même, ainsi que Dieu le lui avait dit.</p>
+      <p>Or, Abraham était âgé de quatre-vingt-dix-neuf ans, lorsque fut retranchée la chair de son excroissance.</p>
+      <p>Ismaël, son fils, était âgé de treize ans, lorsque la chair de son excroissance fut retranchée.</p>
+      <p>C’est en ce même jour que fut circoncis Abraham, ainsi qu’Ismaël son fils.</p>
+      <p>Et tous les gens de sa maison, nés chez lui ou achetés à prix d’argent à l’étranger, furent circoncis en même temps.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="synthese-bloc"><p>La paracha Lekh-Lekha, troisième de la Torah, couvre les chapitres 12 à 17 du livre de la Genèse et marque un tournant majeur : le récit quitte l'histoire de l'humanité entière pour se concentrer sur un seul homme, Abram, et sa descendance. Elle se déroule en cinq mouvements : l'appel initial et le départ vers Canaan, la séparation d'avec Loth, la guerre des quatre rois contre cinq et la rencontre avec Malki-Tsédek, l'alliance entre les morceaux annonçant l'exil en Égypte, et enfin l'alliance de la circoncision accompagnée du changement de nom d'Abram en Abraham.</p>
+
+<h4>L'appel et le départ (12:1 – 12:20)</h4>
+<p>Le récit s'ouvre sur un ordre divin sans précédent dans la Torah : "Éloigne-toi de ton pays, de ton lieu natal et de la maison paternelle" (12:1), assorti d'une triple promesse — une grande nation, une bénédiction, un nom glorieux. Abram, âgé de 75 ans, obéit sans discuter et part avec Saraï et Loth. Une famine le pousse en Égypte, où il demande à Saraï de se présenter comme sa sœur par crainte pour sa vie ; Pharaon, après avoir pris Saraï dans son palais, est frappé de plaies et renvoie le couple avec tous ses biens.</p>
+
+<h4>La séparation d'avec Loth (13:1 – 13:18)</h4>
+<p>De retour en Canaan, les troupeaux d'Abram et de Loth sont devenus trop nombreux pour cohabiter, et des querelles éclatent entre leurs bergers respectifs. Abram propose une séparation à l'amiable, laissant le choix du territoire à Loth, qui choisit la plaine du Jourdain, fertile mais proche de Sodome — ville déjà qualifiée de "pervers et pécheurs devant l'Éternel, à un haut degré" (13:13). Après cette séparation, D.ieu renouvelle à Abram la promesse de la terre et d'une descendance innombrable.</p>
+
+<h4>La guerre des quatre rois et Malki-Tsédek (14:1 – 14:24)</h4>
+<p>Quatre rois mésopotamiens, menés par Kedorlaomer, affrontent et défont cinq rois cananéens, emmenant parmi leurs captifs Loth, installé à Sodome. Abram, à la tête de 318 hommes de sa maison, poursuit les vainqueurs, les bat de nuit et libère Loth. À son retour, deux figures l'accueillent : le roi de Sodome, auquel Abram refuse tout butin par principe, et Malki-Tsédek, roi de Salem et "prêtre du D.ieu suprême", qui le bénit et reçoit de lui la dîme.</p>
+
+<h4>L'alliance entre les morceaux (15:1 – 15:21)</h4>
+<p>Dans une vision nocturne, D.ieu renouvelle sa promesse de descendance à Abram, qui s'inquiète de rester sans enfant. L'image des étoiles innombrables scelle la promesse, et le texte note qu'Abram "eut foi en l'Éternel, et l'Éternel lui en fit un mérite" (15:6) — verset fondateur de la notion de mérite par la foi dans la tradition. Une cérémonie d'alliance suit, où des animaux partagés en deux sont traversés par "un tourbillon de fumée et un sillon de feu" (15:17), tandis que D.ieu annonce à Abram un exil de 400 ans pour sa descendance avant le retour en terre promise.</p>
+
+<h4>Hagar et la naissance d'Ismaël (16:1 – 16:16)</h4>
+<p>Après dix ans d'attente infructueuse, Saraï propose à Abram sa servante égyptienne Hagar pour avoir un enfant par son intermédiaire. Devenue enceinte, Hagar méprise sa maîtresse, qui l'humilie à son tour ; Hagar s'enfuit au désert, où un envoyé divin la rencontre, lui annonce la naissance d'un fils, Ismaël, et lui promet une descendance nombreuse. Abram a 86 ans à la naissance d'Ismaël.</p>
+
+<h4>L'alliance de la circoncision (17:1 – 17:27)</h4>
+<p>Treize ans plus tard, à 99 ans, Abram reçoit une nouvelle révélation : son nom change en Abraham ("père d'une multitude de nations"), celui de Saraï en Sara, et une alliance perpétuelle de circoncision est instituée pour tout mâle de sa descendance, dès le huitième jour. D.ieu annonce également la naissance prochaine d'Isaac, fils de Sara, malgré le rire incrédule d'Abraham à cette nouvelle. La paracha se clôt sur l'accomplissement immédiat du commandement : Abraham, à 99 ans, et Ismaël, à 13 ans, sont circoncis le jour même, avec tous les hommes de leur maison.</p>
+
+<p>Le tableau suivant récapitule les âges clés d'Abraham tout au long de cette paracha :</p>
+
+<table>
+<tr><th>Événement</th><th>Âge d'Abram/Abraham</th></tr>
+<tr><td>Départ de Harân</td><td>75 ans</td></tr>
+<tr><td>Naissance d'Ismaël</td><td>86 ans</td></tr>
+<tr><td>Changement de nom, alliance de la circoncision</td><td>99 ans</td></tr>
+<tr><td>Circoncision d'Ismaël (son fils)</td><td>13 ans (Ismaël)</td></tr>
+</table></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="synthese-bloc"><p>Le Midrash (Bereshit Rabba) relie directement cette paracha à la fin de la précédente : Rachi, reprenant cette tradition, identifie Amrafel — l'un des quatre rois en guerre au chapitre 14 — à Nimrod lui-même, celui qui aurait jeté Abram dans la fournaise ardente (épisode déjà rencontré dans le Midrash sur Noach). Le nom "Amrafel" serait ainsi compris comme une allusion à cet épisode : "celui qui a dit (amar) à Abraham : tombe (pol) dans la fournaise ardente."</p>
+
+<h4>Qui est Malki-Tsédek ?</h4>
+<p>Une tradition rapportée par Rachi, citant le traité Nedarim, identifie Malki-Tsédek, "roi de Salem" et "prêtre du D.ieu suprême", avec Sem, fils de Noé — encore vivant à cette époque selon la chronologie biblique. Cette identification inscrit la rencontre entre Abram et Malki-Tsédek dans la continuité directe de la lignée bénie de Noé, et donne une explication à la légitimité sacerdotale de ce personnage par ailleurs mystérieux.</p>
+
+<h4>Le mérite de la foi</h4>
+<p>Sur le verset central "il eut foi en l'Éternel, et l'Éternel lui en fit un mérite" (15:6), le Midrash souligne un contraste frappant avec la suite immédiate du texte : alors qu'Abram ne demande aucun signe pour la promesse d'une descendance, il en demande un pour la promesse de la terre ("comment saurai-je que j'en suis possesseur ?", 15:8) — ce contraste, loin d'être une incohérence, illustrerait selon la tradition une nuance entre la foi en une promesse personnelle et le besoin, légitime, d'un gage concret pour une promesse engageant des générations futures sur un territoire.</p>
+
+<h4>Le mérite de Thérah</h4>
+<p>Sur l'annonce faite à Abram qu'il "rejoindra paisiblement ses pères" (15:15) — alors que son propre père Thérah pratiquait l'idolâtrie —, le Midrash en déduit, selon Rachi, que Thérah aurait fini par faire techouva (un retour vers D.ieu) avant sa mort, ce qui justifierait cette formule de réconciliation posthume entre Abraham et son père.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="synthese-bloc"><p>Sur l'ordre initial "Lekh lekha" (12:1), Rachi relève la redondance apparente de l'expression — littéralement "va pour toi" — et y voit une double insistance : ce départ se fait "pour ton bien et ton bonheur", Abram ne pouvant accomplir pleinement sa destinée (descendance, richesse, renommée) tant qu'il reste à Harân.</p>
+
+<h4>Les trois bénédictions</h4>
+<p>Rachi explique la triple formule de bénédiction (12:2) par un principe général : le voyage comporte trois risques — il diminue la fécondité, diminue les biens, et diminue la renommée. D.ieu rassure donc Abram sur ces trois points précisément, promettant une grande postérité, la richesse, et un grand nom, en compensation anticipée des pertes que le voyage pourrait occasionner.</p>
+
+<h4>Pourquoi Abram ne "connaît" sa femme qu'en Égypte ?</h4>
+<p>Sur le verset "voici que je sais que tu es une femme belle" (12:11), dont la formulation surprend — Abram semble découvrir la beauté de son épouse après des années de mariage —, Rachi rapporte deux lectures : par pudeur mutuelle, les deux époux n'avaient jusque-là jamais vraiment pris conscience de cette beauté ; ou bien, selon une seconde lecture, c'est la fatigue du voyage qui enlaidit généralement les gens, alors que Saraï, elle, avait conservé toute sa beauté malgré l'épreuve.</p>
+
+<h4>Le mérite propre d'Abram dans la guerre des rois</h4>
+<p>Rachi souligne (14:9) un paradoxe voulu par le texte : quatre rois, pourtant vainqueurs de cinq, sont ensuite défaits par Abram et sa troupe réduite — preuve, selon lui, que ces quatre rois étaient véritablement puissants, ce qui rend d'autant plus remarquable qu'Abram n'ait pas hésité à les poursuivre malgré ce rapport de force déjà démontré en leur faveur.</p>
+
+<h4>Le calcul des 400 ans</h4>
+<p>Rachi détaille, sur l'annonce des "quatre cents ans" d'exil (15:13), un calcul précis resté célèbre dans la tradition : ce compte débute non pas à la descente en Égypte, mais dès la naissance d'Isaac. En additionnant les 60 ans d'Isaac à la naissance de Jacob, puis les 130 ans de Jacob lors de sa descente en Égypte, on obtient 190 ans écoulés avant même l'arrivée en Égypte — ce qui laisse 210 années de séjour effectif en terre égyptienne pour compléter les 400 ans annoncés, chiffre resté une référence classique dans la tradition rabbinique.</p><div class="commentaires-sources">D'apres Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t5">
+  <div class="synthese-bloc"><p>Cette paracha est la source scripturaire directe de la mitsva de la brit mila (circoncision), l'une des pratiques les plus universellement observées de la tradition juive, instituée ici comme "alliance perpétuelle" (17:13) entre D.ieu et la descendance d'Abraham.</p>
+
+<h4>La source talmudique</h4>
+<p>Le traité Chabbat (130a-137b) développe en détail les lois pratiques de la circoncision : elle doit avoir lieu le huitième jour après la naissance, y compris si ce jour tombe un Chabbat (l'accomplissement de la mitsva à son moment précis l'emportant exceptionnellement sur l'interdit de travail du Chabbat) ou un jour de fête. La Guemara y discute aussi des conditions de report en cas de santé fragile de l'enfant, et des détails techniques de l'acte lui-même (milah, retrait du prépuce, et peria, dégagement de la membrane sous-jacente).</p>
+
+<h4>La codification</h4>
+<p>Le Rambam (Michné Torah, Hilkhot Mila) codifie l'ensemble de ces règles, précisant notamment que la mitsva incombe en premier lieu au père de l'enfant, et, à défaut, à la communauté. Le Choulhan Aroukh (Yoré Déa, siman 260-266) en détaille la pratique contemporaine, incluant les qualifications requises du mohel (officiant) et les circonstances justifiant un report médical. Cette mitsva reste, aujourd'hui encore, l'une des pratiques les plus largement observées au sein du peuple juif, pratiquants comme non-pratiquants.</p></div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien etudier 📖
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits reserves<br>Sources : <a href="https://www.sefaria.org/Genesis_12:1-17:27" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
