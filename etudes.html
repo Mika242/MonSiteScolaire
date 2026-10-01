@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ton Coach Scolaire">
+  <meta name="copyright" content="© 2026 Ton Coach Scolaire — Tous droits réservés">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Études — Ton Coach Scolaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F9FC;
+      --card: #FFFFFF;
+      --surface2: #EEF3F9;
+      --border: #E2E8F0;
+      --ink: #1A2B3C;
+      --ink2: #5B6B7D;
+      --ink3: #94A3B3;
+      --brand: #0f766e;
+      --brand-dark: #0c5a54;
+      --brand-light: #d9f5f2;
+      --accent: #b45309;
+      --shadow-card: 0 2px 8px rgba(26,43,60,.06);
+      --shadow-pop: 0 6px 18px rgba(26,43,60,.12);
+    }
+    [data-theme="dark"] {
+      --bg: #131B24;
+      --card: #1C2733;
+      --surface2: #22303E;
+      --border: #2E3D4C;
+      --ink: #F0F4F8;
+      --ink2: #B8C4D0;
+      --ink3: #7E8C9A;
+      --brand: #2dd4bf;
+      --brand-dark: #0f766e;
+      --brand-light: #0e2b28;
+      --accent: #f59e0b;
+      --shadow-card: 0 2px 8px rgba(0,0,0,.3);
+      --shadow-pop: 0 6px 18px rgba(0,0,0,.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 17px;
+      line-height: 1.6;
+      transition: background-color .25s ease, color .25s ease;
+    }
+    header {
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      box-shadow: var(--shadow-card);
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 44px; height: 44px; border-radius: 14px; object-fit: contain;
+      background: var(--surface2); padding: 4px;
+    }
+    .header-title { font-size: 1.2rem; font-weight: 800; }
+    .header-title span { color: var(--brand-dark); }
+    .header-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px; text-decoration: none;
+      font-size: .82rem; font-weight: 700; color: var(--ink2); background: var(--surface2);
+      transition: transform .15s;
+    }
+    .back-link:hover { transform: translateY(-2px); color: var(--ink); }
+    .theme-toggle {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: none; background: var(--surface2);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: transform .15s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .hero { text-align: center; padding: 56px 20px 40px; }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 14px;
+    }
+    .hero h1 .accent { color: var(--brand-dark); }
+    .hero-sub { color: var(--ink2); font-size: 1.08rem; max-width: 480px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+
+    .projets-section { padding: 36px 16px 60px; max-width: 920px; margin: 0 auto; }
+    .projets-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    @media (max-width: 760px) { .projets-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .projets-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+    .projet-card {
+      position: relative; border-radius: 22px; padding: 26px 20px 22px;
+      text-decoration: none; color: var(--ink);
+      min-height: 190px; display: flex; flex-direction: column;
+      box-shadow: var(--shadow-card);
+      transition: transform .18s ease, box-shadow .18s ease;
+      animation: cardIn .35s ease both;
+    }
+    .projet-card:nth-child(1) { animation-delay: .04s; }
+    .projet-card:nth-child(2) { animation-delay: .1s; }
+    .projet-card:nth-child(3) { animation-delay: .16s; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(14px); } }
+    .projet-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
+    .projet-card.a-venir { cursor: default; opacity: .6; }
+    .projet-card.a-venir:hover { transform: none; box-shadow: var(--shadow-card); }
+
+    .projet-daf-yomi { background: linear-gradient(135deg, #f0fdfa 0%, #d9f5f2 100%); }
+    .projet-tanakh   { background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); }
+    .projet-avenir   { background: var(--surface2); }
+    [data-theme="dark"] .projet-daf-yomi { background: linear-gradient(135deg, #0e2b28 0%, #16303e 100%); }
+    [data-theme="dark"] .projet-tanakh   { background: linear-gradient(135deg, #2e1065 0%, #2c1e3a 100%); }
+
+    .projet-emoji {
+      font-size: 1.8rem; line-height: 1; margin-bottom: 14px;
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.6);
+    }
+    [data-theme="dark"] .projet-emoji { background: rgba(0,0,0,.2); }
+    .projet-badge {
+      position: absolute; top: 16px; right: 16px; font-size: .62rem; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; background: rgba(255,255,255,.7);
+      border-radius: 20px; padding: 4px 10px; color: var(--ink);
+    }
+    [data-theme="dark"] .projet-badge { background: rgba(0,0,0,.3); }
+    .projet-nom { font-size: 1.3rem; font-weight: 800; margin-bottom: 3px; }
+    .projet-nom-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: 1rem; color: var(--ink2); margin-bottom: 10px; }
+    .projet-desc { font-size: .84rem; font-weight: 500; color: var(--ink2); line-height: 1.5; margin-top: auto; }
+
+    footer {
+      text-align: center; padding: 36px 20px; color: var(--ink2); font-size: .85rem;
+      margin-top: 20px; line-height: 1.9;
+    }
+    footer a { color: var(--brand-dark); text-decoration: none; font-weight: 700; }
+    footer a:hover { text-decoration: underline; }
+    .footer-copy { font-size: .77rem; color: var(--ink3); margin-top: 8px; }
+    .footer-copy strong { color: var(--ink2); }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    <div class="header-title">Ét<span>udes</span></div>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="back-link">← Ton Coach Scolaire</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
+  </div>
+</header>
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="hero">
+  <h1>Espace <span class="accent">Études</span></h1>
+  <p class="hero-sub">Daf Yomi, Tanakh — apprends les textes source, à ton rythme</p>
+</div>
+
+<div class="projets-section">
+  <div class="projets-grid">
+    <a href="daf-yomi/index.html" class="projet-card projet-daf-yomi">
+      <div class="projet-badge">En cours</div>
+      <div class="projet-emoji">📖</div>
+      <div class="projet-nom">Daf Yomi</div>
+      <div class="projet-nom-heb">דף יומי</div>
+      <div class="projet-desc">Étudie le Talmud, un daf à la fois — Michna, Guemara, commentaires et halakha.</div>
+    </a>
+
+    <a href="tanakh/index.html" class="projet-card projet-tanakh">
+      <div class="projet-badge">En cours</div>
+      <div class="projet-emoji">📜</div>
+      <div class="projet-nom">Tanakh</div>
+      <div class="projet-nom-heb">תנ״ך</div>
+      <div class="projet-desc">Torah, Nevi'im, Ketouvim — texte original, synthèse et commentaires classiques.</div>
+    </a>
+
+    <div class="projet-card projet-avenir a-venir">
+      <div class="projet-badge">À venir</div>
+      <div class="projet-emoji">✨</div>
+      <div class="projet-nom">Prochainement</div>
+      <div class="projet-desc">De nouveaux projets d'étude arriveront ici.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien étudier 📖
+  <div class="footer-copy">
+    <strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Textes sources : <a href="https://www.sefaria.org/" target="_blank">Sefaria.org</a><br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.
+  </div>
+</footer>
+
+<script>
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+
+function appliquerTheme(theme) {
+  htmlEl.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('tcs-theme', theme); } catch (e) {}
+}
+
+let themeInitial = 'light';
+try {
+  const sauvegarde = localStorage.getItem('tcs-theme');
+  if (sauvegarde === 'dark' || sauvegarde === 'light') {
+    themeInitial = sauvegarde;
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    themeInitial = 'dark';
+  }
+} catch (e) {}
+appliquerTheme(themeInitial);
+
+themeToggle.addEventListener('click', () => {
+  const actuel = htmlEl.getAttribute('data-theme');
+  appliquerTheme(actuel === 'dark' ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
