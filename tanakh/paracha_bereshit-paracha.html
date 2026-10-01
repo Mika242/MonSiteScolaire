@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bereshit — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#7c3aed; --primaire-clair:#f5f3ff; --texte-primaire:#4c1d95;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#1e1b3a 0%,#312e81 50%,#7c3aed 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+.verset-num{display:inline-block;min-width:1.6em;font-size:.7em;font-weight:800;color:var(--primaire);vertical-align:super;margin-right:2px}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.synthese-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.synthese-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.synthese-bloc p:last-child{margin-bottom:0}
+.synthese-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.synthese-bloc b{color:var(--texte-primaire)}
+.synthese-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.synthese-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.synthese-bloc table{font-family:'Plus Jakarta Sans',sans-serif;width:100%;border-collapse:collapse;margin:12px 0}
+.synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
+.synthese-bloc table th{background:var(--surface2)}
+.synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="../index.html" style="display:inline-flex;" title="Retour a l'accueil Tanakh">
+      <img src="../../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bereshit · Paracha</div>
+    <h1>Bereshit</h1>
+    <p>Torah, Bereshit (Genesis 1:1-6:8)</p>
+  </div>
+</header>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button><button class="tab" id="tab-t2" onclick="showTab('t2')">🧭 Synthese</button><button class="tab" id="tab-t4" onclick="showTab('t4')">✡️ Midrash</button><button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button><button class="tab" id="tab-t5" onclick="showTab('t5')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p><big>בְּ</big>רֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃</p>
+      <p>וְהָאָ֗רֶץ הָיְתָ֥ה תֹ֙הוּ֙ וָבֹ֔הוּ וְחֹ֖שֶׁךְ עַל־פְּנֵ֣י תְה֑וֹם וְר֣וּחַ אֱלֹהִ֔ים מְרַחֶ֖פֶת עַל־פְּנֵ֥י הַמָּֽיִם׃</p>
+      <p>וַיֹּ֥אמֶר אֱלֹהִ֖ים יְהִ֣י א֑וֹר וַֽיְהִי־אֽוֹר׃</p>
+      <p>וַיַּ֧רְא אֱלֹהִ֛ים אֶת־הָא֖וֹר כִּי־ט֑וֹב וַיַּבְדֵּ֣ל אֱלֹהִ֔ים בֵּ֥ין הָא֖וֹר וּבֵ֥ין הַחֹֽשֶׁךְ׃</p>
+      <p>וַיִּקְרָ֨א אֱלֹהִ֤ים&thinsp;<small>׀</small>&thinsp;לָאוֹר֙ י֔וֹם וְלַחֹ֖שֶׁךְ קָ֣רָא לָ֑יְלָה וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם אֶחָֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֔ים יְהִ֥י רָקִ֖יעַ בְּת֣וֹךְ הַמָּ֑יִם וִיהִ֣י מַבְדִּ֔יל בֵּ֥ין מַ֖יִם לָמָֽיִם׃</p>
+      <p>וַיַּ֣עַשׂ אֱלֹהִים֮ אֶת־הָרָקִ֒יעַ֒ וַיַּבְדֵּ֗ל בֵּ֤ין הַמַּ֙יִם֙ אֲשֶׁר֙ מִתַּ֣חַת לָרָקִ֔יעַ וּבֵ֣ין הַמַּ֔יִם אֲשֶׁ֖ר מֵעַ֣ל לָרָקִ֑יעַ וַֽיְהִי־כֵֽן׃</p>
+      <p>וַיִּקְרָ֧א אֱלֹהִ֛ים לָֽרָקִ֖יעַ שָׁמָ֑יִם וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם שֵׁנִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים יִקָּו֨וּ הַמַּ֜יִם מִתַּ֤חַת הַשָּׁמַ֙יִם֙ אֶל־מָק֣וֹם אֶחָ֔ד וְתֵרָאֶ֖ה הַיַּבָּשָׁ֑ה וַֽיְהִי־כֵֽן׃</p>
+      <p>וַיִּקְרָ֨א אֱלֹהִ֤ים&thinsp;<small>׀</small>&thinsp;לַיַּבָּשָׁה֙ אֶ֔רֶץ וּלְמִקְוֵ֥ה הַמַּ֖יִם קָרָ֣א יַמִּ֑ים וַיַּ֥רְא אֱלֹהִ֖ים כִּי־טֽוֹב׃</p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים תַּֽדְשֵׁ֤א הָאָ֙רֶץ֙ דֶּ֗שֶׁא עֵ֚שֶׂב מַזְרִ֣יעַ זֶ֔רַע עֵ֣ץ פְּרִ֞י עֹ֤שֶׂה פְּרִי֙ לְמִינ֔וֹ אֲשֶׁ֥ר זַרְעוֹ־ב֖וֹ עַל־הָאָ֑רֶץ וַֽיְהִי־כֵֽן׃</p>
+      <p>וַתּוֹצֵ֨א הָאָ֜רֶץ דֶּ֠שֶׁא עֵ֣שֶׂב מַזְרִ֤יעַ זֶ֙רַע֙ לְמִינֵ֔הוּ וְעֵ֧ץ עֹֽשֶׂה־פְּרִ֛י אֲשֶׁ֥ר זַרְעוֹ־ב֖וֹ לְמִינֵ֑הוּ וַיַּ֥רְא אֱלֹהִ֖ים כִּי־טֽוֹב׃</p>
+      <p>וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם שְׁלִישִֽׁי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים יְהִ֤י מְאֹרֹת֙ בִּרְקִ֣יעַ הַשָּׁמַ֔יִם לְהַבְדִּ֕יל בֵּ֥ין הַיּ֖וֹם וּבֵ֣ין הַלָּ֑יְלָה וְהָי֤וּ לְאֹתֹת֙ וּלְמ֣וֹעֲדִ֔ים וּלְיָמִ֖ים וְשָׁנִֽים׃</p>
+      <p>וְהָי֤וּ לִמְאוֹרֹת֙ בִּרְקִ֣יעַ הַשָּׁמַ֔יִם לְהָאִ֖יר עַל־הָאָ֑רֶץ וַֽיְהִי־כֵֽן׃</p>
+      <p>וַיַּ֣עַשׂ אֱלֹהִ֔ים אֶת־שְׁנֵ֥י הַמְּאֹרֹ֖ת הַגְּדֹלִ֑ים אֶת־הַמָּא֤וֹר הַגָּדֹל֙ לְמֶמְשֶׁ֣לֶת הַיּ֔וֹם וְאֶת־הַמָּא֤וֹר הַקָּטֹן֙ לְמֶמְשֶׁ֣לֶת הַלַּ֔יְלָה וְאֵ֖ת הַכּוֹכָבִֽים׃</p>
+      <p>וַיִּתֵּ֥ן אֹתָ֛ם אֱלֹהִ֖ים בִּרְקִ֣יעַ הַשָּׁמָ֑יִם לְהָאִ֖יר עַל־הָאָֽרֶץ׃</p>
+      <p>וְלִמְשֹׁל֙ בַּיּ֣וֹם וּבַלַּ֔יְלָה וּֽלְהַבְדִּ֔יל בֵּ֥ין הָא֖וֹר וּבֵ֣ין הַחֹ֑שֶׁךְ וַיַּ֥רְא אֱלֹהִ֖ים כִּי־טֽוֹב׃</p>
+      <p>וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם רְבִיעִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֔ים יִשְׁרְצ֣וּ הַמַּ֔יִם שֶׁ֖רֶץ נֶ֣פֶשׁ חַיָּ֑ה וְעוֹף֙ יְעוֹפֵ֣ף עַל־הָאָ֔רֶץ עַל־פְּנֵ֖י רְקִ֥יעַ הַשָּׁמָֽיִם׃</p>
+      <p>וַיִּבְרָ֣א אֱלֹהִ֔ים אֶת־הַתַּנִּינִ֖ם הַגְּדֹלִ֑ים וְאֵ֣ת כׇּל־נֶ֣פֶשׁ הַֽחַיָּ֣ה&thinsp;<small>׀</small>&thinsp;הָֽרֹמֶ֡שֶׂת אֲשֶׁר֩ שָׁרְצ֨וּ הַמַּ֜יִם לְמִֽינֵהֶ֗ם וְאֵ֨ת כׇּל־ע֤וֹף כָּנָף֙ לְמִינֵ֔הוּ וַיַּ֥רְא אֱלֹהִ֖ים כִּי־טֽוֹב׃</p>
+      <p>וַיְבָ֧רֶךְ אֹתָ֛ם אֱלֹהִ֖ים לֵאמֹ֑ר פְּר֣וּ וּרְב֗וּ וּמִלְא֤וּ אֶת־הַמַּ֙יִם֙ בַּיַּמִּ֔ים וְהָע֖וֹף יִ֥רֶב בָּאָֽרֶץ׃</p>
+      <p>וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם חֲמִישִֽׁי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים תּוֹצֵ֨א הָאָ֜רֶץ נֶ֤פֶשׁ חַיָּה֙ לְמִינָ֔הּ בְּהֵמָ֥ה וָרֶ֛מֶשׂ וְחַֽיְתוֹ־אֶ֖רֶץ לְמִינָ֑הּ וַֽיְהִי־כֵֽן׃</p>
+      <p>וַיַּ֣עַשׂ אֱלֹהִים֩ אֶת־חַיַּ֨ת הָאָ֜רֶץ לְמִינָ֗הּ וְאֶת־הַבְּהֵמָה֙ לְמִינָ֔הּ וְאֵ֛ת כׇּל־רֶ֥מֶשׂ הָֽאֲדָמָ֖ה לְמִינֵ֑הוּ וַיַּ֥רְא אֱלֹהִ֖ים כִּי־טֽוֹב׃</p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֔ים נַֽעֲשֶׂ֥ה אָדָ֛ם בְּצַלְמֵ֖נוּ כִּדְמוּתֵ֑נוּ וְיִרְדּוּ֩ בִדְגַ֨ת הַיָּ֜ם וּבְע֣וֹף הַשָּׁמַ֗יִם וּבַבְּהֵמָה֙ וּבְכׇל־הָאָ֔רֶץ וּבְכׇל־הָרֶ֖מֶשׂ הָֽרֹמֵ֥שׂ עַל־הָאָֽרֶץ׃</p>
+      <p>וַיִּבְרָ֨א אֱלֹהִ֤ים&thinsp;<small>׀</small>&thinsp;אֶת־הָֽאָדָם֙ בְּצַלְמ֔וֹ בְּצֶ֥לֶם אֱלֹהִ֖ים בָּרָ֣א אֹת֑וֹ זָכָ֥ר וּנְקֵבָ֖ה בָּרָ֥א אֹתָֽם׃</p>
+      <p>וַיְבָ֣רֶךְ אֹתָם֮ אֱלֹהִים֒ וַיֹּ֨אמֶר לָהֶ֜ם אֱלֹהִ֗ים פְּר֥וּ וּרְב֛וּ וּמִלְא֥וּ אֶת־הָאָ֖רֶץ וְכִבְשֻׁ֑הָ וּרְד֞וּ בִּדְגַ֤ת הַיָּם֙ וּבְע֣וֹף הַשָּׁמַ֔יִם וּבְכׇל־חַיָּ֖ה הָֽרֹמֶ֥שֶׂת עַל־הָאָֽרֶץ׃</p>
+      <p>וַיֹּ֣אמֶר אֱלֹהִ֗ים הִנֵּה֩ נָתַ֨תִּי לָכֶ֜ם אֶת־כׇּל־עֵ֣שֶׂב&thinsp;<b>׀</b> זֹרֵ֣עַ זֶ֗רַע אֲשֶׁר֙ עַל־פְּנֵ֣י כׇל־הָאָ֔רֶץ וְאֶת־כׇּל־הָעֵ֛ץ אֲשֶׁר־בּ֥וֹ פְרִי־עֵ֖ץ זֹרֵ֣עַ זָ֑רַע לָכֶ֥ם יִֽהְיֶ֖ה לְאׇכְלָֽה׃</p>
+      <p>וּֽלְכׇל־חַיַּ֣ת הָ֠אָ֠רֶץ וּלְכׇל־ע֨וֹף הַשָּׁמַ֜יִם וּלְכֹ֣ל&thinsp;<b>׀</b> רוֹמֵ֣שׂ עַל־הָאָ֗רֶץ אֲשֶׁר־בּוֹ֙ נֶ֣פֶשׁ חַיָּ֔ה אֶת־כׇּל־יֶ֥רֶק עֵ֖שֶׂב לְאׇכְלָ֑ה וַֽיְהִי־כֵֽן׃</p>
+      <p>וַיַּ֤רְא אֱלֹהִים֙ אֶת־כׇּל־אֲשֶׁ֣ר עָשָׂ֔ה וְהִנֵּה־ט֖וֹב מְאֹ֑ד וַֽיְהִי־עֶ֥רֶב וַֽיְהִי־בֹ֖קֶר י֥וֹם הַשִּׁשִּֽׁי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיְכֻלּ֛וּ הַשָּׁמַ֥יִם וְהָאָ֖רֶץ וְכׇל־צְבָאָֽם׃</p>
+      <p>וַיְכַ֤ל אֱלֹהִים֙ בַּיּ֣וֹם הַשְּׁבִיעִ֔י מְלַאכְתּ֖וֹ אֲשֶׁ֣ר עָשָׂ֑ה וַיִּשְׁבֹּת֙ בַּיּ֣וֹם הַשְּׁבִיעִ֔י מִכׇּל־מְלַאכְתּ֖וֹ אֲשֶׁ֥ר עָשָֽׂה׃</p>
+      <p>וַיְבָ֤רֶךְ אֱלֹהִים֙ אֶת־י֣וֹם הַשְּׁבִיעִ֔י וַיְקַדֵּ֖שׁ אֹת֑וֹ כִּ֣י ב֤וֹ שָׁבַת֙ מִכׇּל־מְלַאכְתּ֔וֹ אֲשֶׁר־בָּרָ֥א אֱלֹהִ֖ים לַעֲשֽׂוֹת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>אֵ֣לֶּה תוֹלְד֧וֹת הַשָּׁמַ֛יִם וְהָאָ֖רֶץ בְּ<small>הִ</small>בָּֽרְאָ֑ם בְּי֗וֹם עֲשׂ֛וֹת יְהֹוָ֥ה אֱלֹהִ֖ים אֶ֥רֶץ וְשָׁמָֽיִם׃</p>
+      <p>וְכֹ֣ל&thinsp;<b>׀</b> שִׂ֣יחַ הַשָּׂדֶ֗ה טֶ֚רֶם יִֽהְיֶ֣ה בָאָ֔רֶץ וְכׇל־עֵ֥שֶׂב הַשָּׂדֶ֖ה טֶ֣רֶם יִצְמָ֑ח כִּי֩ לֹ֨א הִמְטִ֜יר יְהֹוָ֤ה אֱלֹהִים֙ עַל־הָאָ֔רֶץ וְאָדָ֣ם אַ֔יִן לַֽעֲבֹ֖ד אֶת־הָֽאֲדָמָֽה׃</p>
+      <p>וְאֵ֖ד יַֽעֲלֶ֣ה מִן־הָאָ֑רֶץ וְהִשְׁקָ֖ה אֶֽת־כׇּל־פְּנֵ֥י הָֽאֲדָמָֽה׃</p>
+      <p>וַיִּ֩יצֶר֩ יְהֹוָ֨ה אֱלֹהִ֜ים אֶת־הָֽאָדָ֗ם עָפָר֙ מִן־הָ֣אֲדָמָ֔ה וַיִּפַּ֥ח בְּאַפָּ֖יו נִשְׁמַ֣ת חַיִּ֑ים וַיְהִ֥י הָֽאָדָ֖ם לְנֶ֥פֶשׁ חַיָּֽה׃</p>
+      <p>וַיִּטַּ֞ע יְהֹוָ֧ה אֱלֹהִ֛ים גַּן־בְּעֵ֖דֶן מִקֶּ֑דֶם וַיָּ֣שֶׂם שָׁ֔ם אֶת־הָֽאָדָ֖ם אֲשֶׁ֥ר יָצָֽר׃</p>
+      <p>וַיַּצְמַ֞ח יְהֹוָ֤ה אֱלֹהִים֙ מִן־הָ֣אֲדָמָ֔ה כׇּל־עֵ֛ץ נֶחְמָ֥ד לְמַרְאֶ֖ה וְט֣וֹב לְמַאֲכָ֑ל וְעֵ֤ץ הַֽחַיִּים֙ בְּת֣וֹךְ הַגָּ֔ן וְעֵ֕ץ הַדַּ֖עַת ט֥וֹב וָרָֽע׃</p>
+      <p>וְנָהָר֙ יֹצֵ֣א מֵעֵ֔דֶן לְהַשְׁק֖וֹת אֶת־הַגָּ֑ן וּמִשָּׁם֙ יִפָּרֵ֔ד וְהָיָ֖ה לְאַרְבָּעָ֥ה רָאשִֽׁים׃</p>
+      <p>שֵׁ֥ם הָֽאֶחָ֖ד פִּישׁ֑וֹן ה֣וּא הַסֹּבֵ֗ב אֵ֚ת כׇּל־אֶ֣רֶץ הַֽחֲוִילָ֔ה אֲשֶׁר־שָׁ֖ם הַזָּהָֽב׃</p>
+      <p>וּֽזְהַ֛ב הָאָ֥רֶץ הַהִ֖וא ט֑וֹב שָׁ֥ם הַבְּדֹ֖לַח וְאֶ֥בֶן הַשֹּֽׁהַם׃</p>
+      <p>וְשֵֽׁם־הַנָּהָ֥ר הַשֵּׁנִ֖י גִּיח֑וֹן ה֣וּא הַסּוֹבֵ֔ב אֵ֖ת כׇּל־אֶ֥רֶץ כּֽוּשׁ׃</p>
+      <p>וְשֵׁ֨ם הַנָּהָ֤ר הַשְּׁלִישִׁי֙ חִדֶּ֔קֶל ה֥וּא הַֽהֹלֵ֖ךְ קִדְמַ֣ת אַשּׁ֑וּר וְהַנָּהָ֥ר הָֽרְבִיעִ֖י ה֥וּא פְרָֽת׃</p>
+      <p>וַיִּקַּ֛ח יְהֹוָ֥ה אֱלֹהִ֖ים אֶת־הָֽאָדָ֑ם וַיַּנִּחֵ֣הוּ בְגַן־עֵ֔דֶן לְעׇבְדָ֖הּ וּלְשׇׁמְרָֽהּ׃</p>
+      <p>וַיְצַו֙ יְהֹוָ֣ה אֱלֹהִ֔ים עַל־הָֽאָדָ֖ם לֵאמֹ֑ר מִכֹּ֥ל עֵֽץ־הַגָּ֖ן אָכֹ֥ל תֹּאכֵֽל׃</p>
+      <p>וּמֵעֵ֗ץ הַדַּ֙עַת֙ ט֣וֹב וָרָ֔ע לֹ֥א תֹאכַ֖ל מִמֶּ֑נּוּ כִּ֗י בְּי֛וֹם אֲכׇלְךָ֥ מִמֶּ֖נּוּ מ֥וֹת תָּמֽוּת׃</p>
+      <p>וַיֹּ֙אמֶר֙ יְהֹוָ֣ה אֱלֹהִ֔ים לֹא־ט֛וֹב הֱי֥וֹת הָֽאָדָ֖ם לְבַדּ֑וֹ אֶֽעֱשֶׂה־לּ֥וֹ עֵ֖זֶר כְּנֶגְדּֽוֹ׃</p>
+      <p>וַיִּ֩צֶר֩ יְהֹוָ֨ה אֱלֹהִ֜ים מִן־הָֽאֲדָמָ֗ה כׇּל־חַיַּ֤ת הַשָּׂדֶה֙ וְאֵת֙ כׇּל־ע֣וֹף הַשָּׁמַ֔יִם וַיָּבֵא֙ אֶל־הָ֣אָדָ֔ם לִרְא֖וֹת מַה־יִּקְרָא־ל֑וֹ וְכֹל֩ אֲשֶׁ֨ר יִקְרָא־ל֧וֹ הָֽאָדָ֛ם נֶ֥פֶשׁ חַיָּ֖ה ה֥וּא שְׁמֽוֹ׃</p>
+      <p>וַיִּקְרָ֨א הָֽאָדָ֜ם שֵׁמ֗וֹת לְכׇל־הַבְּהֵמָה֙ וּלְע֣וֹף הַשָּׁמַ֔יִם וּלְכֹ֖ל חַיַּ֣ת הַשָּׂדֶ֑ה וּלְאָדָ֕ם לֹֽא־מָצָ֥א עֵ֖זֶר כְּנֶגְדּֽוֹ׃</p>
+      <p>וַיַּפֵּל֩ יְהֹוָ֨ה אֱלֹהִ֧ים&thinsp;<small>׀</small>&thinsp;תַּרְדֵּמָ֛ה עַל־הָאָדָ֖ם וַיִּישָׁ֑ן וַיִּקַּ֗ח אַחַת֙ מִצַּלְעֹתָ֔יו וַיִּסְגֹּ֥ר בָּשָׂ֖ר תַּחְתֶּֽנָּה׃</p>
+      <p>וַיִּ֩בֶן֩ יְהֹוָ֨ה אֱלֹהִ֧ים&thinsp;<small>׀</small>&thinsp;אֶֽת־הַצֵּלָ֛ע אֲשֶׁר־לָקַ֥ח מִן־הָֽאָדָ֖ם לְאִשָּׁ֑ה וַיְבִאֶ֖הָ אֶל־הָֽאָדָֽם׃</p>
+      <p>וַיֹּ֘אמֶר֮ הָֽאָדָם֒ זֹ֣את הַפַּ֗עַם עֶ֚צֶם מֵֽעֲצָמַ֔י וּבָשָׂ֖ר מִבְּשָׂרִ֑י לְזֹאת֙ יִקָּרֵ֣א אִשָּׁ֔ה כִּ֥י מֵאִ֖ישׁ לֻֽקְחָה־זֹּֽאת׃</p>
+      <p>עַל־כֵּן֙ יַֽעֲזׇב־אִ֔ישׁ אֶת־אָבִ֖יו וְאֶת־אִמּ֑וֹ וְדָבַ֣ק בְּאִשְׁתּ֔וֹ וְהָי֖וּ לְבָשָׂ֥ר אֶחָֽד׃</p>
+      <p>וַיִּֽהְי֤וּ שְׁנֵיהֶם֙ עֲרוּמִּ֔ים הָֽאָדָ֖ם וְאִשְׁתּ֑וֹ וְלֹ֖א יִתְבֹּשָֽׁשׁוּ׃</p>
+      <p>וְהַנָּחָשׁ֙ הָיָ֣ה עָר֔וּם מִכֹּל֙ חַיַּ֣ת הַשָּׂדֶ֔ה אֲשֶׁ֥ר עָשָׂ֖ה יְהֹוָ֣ה אֱלֹהִ֑ים וַיֹּ֙אמֶר֙ אֶל־הָ֣אִשָּׁ֔ה אַ֚ף כִּֽי־אָמַ֣ר אֱלֹהִ֔ים לֹ֣א תֹֽאכְל֔וּ מִכֹּ֖ל עֵ֥ץ הַגָּֽן׃</p>
+      <p>וַתֹּ֥אמֶר הָֽאִשָּׁ֖ה אֶל־הַנָּחָ֑שׁ מִפְּרִ֥י עֵֽץ־הַגָּ֖ן נֹאכֵֽל׃</p>
+      <p>וּמִפְּרִ֣י הָעֵץ֮ אֲשֶׁ֣ר בְּתוֹךְ־הַגָּן֒ אָמַ֣ר אֱלֹהִ֗ים לֹ֤א תֹֽאכְלוּ֙ מִמֶּ֔נּוּ וְלֹ֥א תִגְּע֖וּ בּ֑וֹ פֶּן־תְּמֻתֽוּן׃</p>
+      <p>וַיֹּ֥אמֶר הַנָּחָ֖שׁ אֶל־הָֽאִשָּׁ֑ה לֹֽא־מ֖וֹת תְּמֻתֽוּן׃</p>
+      <p>כִּ֚י יֹדֵ֣עַ אֱלֹהִ֔ים כִּ֗י בְּיוֹם֙ אֲכׇלְכֶ֣ם מִמֶּ֔נּוּ וְנִפְקְח֖וּ עֵֽינֵיכֶ֑ם וִהְיִיתֶם֙ כֵּֽאלֹהִ֔ים יֹדְעֵ֖י ט֥וֹב וָרָֽע׃</p>
+      <p>וַתֵּ֣רֶא הָֽאִשָּׁ֡ה כִּ֣י טוֹב֩ הָעֵ֨ץ לְמַאֲכָ֜ל וְכִ֧י תַֽאֲוָה־ה֣וּא לָעֵינַ֗יִם וְנֶחְמָ֤ד הָעֵץ֙ לְהַשְׂכִּ֔יל וַתִּקַּ֥ח מִפִּרְי֖וֹ וַתֹּאכַ֑ל וַתִּתֵּ֧ן גַּם־לְאִישָׁ֛הּ עִמָּ֖הּ וַיֹּאכַֽל׃</p>
+      <p>וַתִּפָּקַ֙חְנָה֙ עֵינֵ֣י שְׁנֵיהֶ֔ם וַיֵּ֣דְע֔וּ כִּ֥י עֵֽירֻמִּ֖ם הֵ֑ם וַֽיִּתְפְּרוּ֙ עֲלֵ֣ה תְאֵנָ֔ה וַיַּעֲשׂ֥וּ לָהֶ֖ם חֲגֹרֹֽת׃</p>
+      <p>וַֽיִּשְׁמְע֞וּ אֶת־ק֨וֹל יְהֹוָ֧ה אֱלֹהִ֛ים מִתְהַלֵּ֥ךְ בַּגָּ֖ן לְר֣וּחַ הַיּ֑וֹם וַיִּתְחַבֵּ֨א הָֽאָדָ֜ם וְאִשְׁתּ֗וֹ מִפְּנֵי֙ יְהֹוָ֣ה אֱלֹהִ֔ים בְּת֖וֹךְ עֵ֥ץ הַגָּֽן׃</p>
+      <p>וַיִּקְרָ֛א יְהֹוָ֥ה אֱלֹהִ֖ים אֶל־הָֽאָדָ֑ם וַיֹּ֥אמֶר ל֖וֹ אַיֶּֽכָּה׃</p>
+      <p>וַיֹּ֕אמֶר אֶת־קֹלְךָ֥ שָׁמַ֖עְתִּי בַּגָּ֑ן וָאִירָ֛א כִּֽי־עֵירֹ֥ם אָנֹ֖כִי וָאֵחָבֵֽא׃</p>
+      <p>וַיֹּ֕אמֶר מִ֚י הִגִּ֣יד לְךָ֔ כִּ֥י עֵירֹ֖ם אָ֑תָּה הֲמִן־הָעֵ֗ץ אֲשֶׁ֧ר צִוִּיתִ֛יךָ לְבִלְתִּ֥י אֲכׇל־מִמֶּ֖נּוּ אָכָֽלְתָּ׃</p>
+      <p>וַיֹּ֖אמֶר הָֽאָדָ֑ם הָֽאִשָּׁה֙ אֲשֶׁ֣ר נָתַ֣תָּה עִמָּדִ֔י הִ֛וא נָֽתְנָה־לִּ֥י מִן־הָעֵ֖ץ וָאֹכֵֽל׃</p>
+      <p>וַיֹּ֨אמֶר יְהֹוָ֧ה אֱלֹהִ֛ים לָאִשָּׁ֖ה מַה־זֹּ֣את עָשִׂ֑ית וַתֹּ֙אמֶר֙ הָֽאִשָּׁ֔ה הַנָּחָ֥שׁ הִשִּׁיאַ֖נִי וָאֹכֵֽל׃</p>
+      <p>וַיֹּ֩אמֶר֩ יְהֹוָ֨ה אֱלֹהִ֥ים&thinsp;<small>׀</small>&thinsp;אֶֽל־הַנָּחָשׁ֮ כִּ֣י עָשִׂ֣יתָ זֹּאת֒ אָר֤וּר אַתָּה֙ מִכׇּל־הַבְּהֵמָ֔ה וּמִכֹּ֖ל חַיַּ֣ת הַשָּׂדֶ֑ה עַל־גְּחֹנְךָ֣ תֵלֵ֔ךְ וְעָפָ֥ר תֹּאכַ֖ל כׇּל־יְמֵ֥י חַיֶּֽיךָ׃</p>
+      <p>וְאֵיבָ֣ה&thinsp;<b>׀</b> אָשִׁ֗ית בֵּֽינְךָ֙ וּבֵ֣ין הָֽאִשָּׁ֔ה וּבֵ֥ין זַרְעֲךָ֖ וּבֵ֣ין זַרְעָ֑הּ ה֚וּא יְשׁוּפְךָ֣ רֹ֔אשׁ וְאַתָּ֖ה תְּשׁוּפֶ֥נּוּ עָקֵֽב׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>אֶֽל־הָאִשָּׁ֣ה אָמַ֗ר הַרְבָּ֤ה אַרְבֶּה֙ עִצְּבוֹנֵ֣ךְ וְהֵֽרֹנֵ֔ךְ בְּעֶ֖צֶב תֵּֽלְדִ֣י בָנִ֑ים וְאֶל־אִישֵׁךְ֙ תְּשׁ֣וּקָתֵ֔ךְ וְה֖וּא יִמְשׇׁל־בָּֽךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וּלְאָדָ֣ם אָמַ֗ר כִּֽי־שָׁמַ֘עְתָּ֮ לְק֣וֹל אִשְׁתֶּ֒ךָ֒ וַתֹּ֙אכַל֙ מִן־הָעֵ֔ץ אֲשֶׁ֤ר צִוִּיתִ֙יךָ֙ לֵאמֹ֔ר לֹ֥א תֹאכַ֖ל מִמֶּ֑נּוּ אֲרוּרָ֤ה הָֽאֲדָמָה֙ בַּֽעֲבוּרֶ֔ךָ בְּעִצָּבוֹן֙ תֹּֽאכְלֶ֔נָּה כֹּ֖ל יְמֵ֥י חַיֶּֽיךָ׃</p>
+      <p>וְק֥וֹץ וְדַרְדַּ֖ר תַּצְמִ֣יחַֽ לָ֑ךְ וְאָכַלְתָּ֖ אֶת־עֵ֥שֶׂב הַשָּׂדֶֽה׃</p>
+      <p>בְּזֵעַ֤ת אַפֶּ֙יךָ֙ תֹּ֣אכַל לֶ֔חֶם עַ֤ד שֽׁוּבְךָ֙ אֶל־הָ֣אֲדָמָ֔ה כִּ֥י מִמֶּ֖נָּה לֻקָּ֑חְתָּ כִּֽי־עָפָ֣ר אַ֔תָּה וְאֶל־עָפָ֖ר תָּשֽׁוּב׃</p>
+      <p>וַיִּקְרָ֧א הָֽאָדָ֛ם שֵׁ֥ם אִשְׁתּ֖וֹ חַוָּ֑ה כִּ֛י הִ֥וא הָֽיְתָ֖ה אֵ֥ם כׇּל־חָֽי׃</p>
+      <p>וַיַּ֩עַשׂ֩ יְהֹוָ֨ה אֱלֹהִ֜ים לְאָדָ֧ם וּלְאִשְׁתּ֛וֹ כׇּתְנ֥וֹת ע֖וֹר וַיַּלְבִּשֵֽׁם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיֹּ֣אמֶר&thinsp;<b>׀</b> יְהֹוָ֣ה אֱלֹהִ֗ים הֵ֤ן הָֽאָדָם֙ הָיָה֙ כְּאַחַ֣ד מִמֶּ֔נּוּ לָדַ֖עַת ט֣וֹב וָרָ֑ע וְעַתָּ֣ה&thinsp;<b>׀</b> פֶּן־יִשְׁלַ֣ח יָד֗וֹ וְלָקַח֙ גַּ֚ם מֵעֵ֣ץ הַֽחַיִּ֔ים וְאָכַ֖ל וָחַ֥י לְעֹלָֽם׃</p>
+      <p>וַֽיְשַׁלְּחֵ֛הוּ יְהֹוָ֥ה אֱלֹהִ֖ים מִגַּן־עֵ֑דֶן לַֽעֲבֹד֙ אֶת־הָ֣אֲדָמָ֔ה אֲשֶׁ֥ר לֻקַּ֖ח מִשָּֽׁם׃</p>
+      <p>וַיְגָ֖רֶשׁ אֶת־הָֽאָדָ֑ם וַיַּשְׁכֵּן֩ מִקֶּ֨דֶם לְגַן־עֵ֜דֶן אֶת־הַכְּרֻבִ֗ים וְאֵ֨ת לַ֤הַט הַחֶ֙רֶב֙ הַמִּתְהַפֶּ֔כֶת לִשְׁמֹ֕ר אֶת־דֶּ֖רֶךְ עֵ֥ץ הַֽחַיִּֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וְהָ֣אָדָ֔ם יָדַ֖ע אֶת־חַוָּ֣ה אִשְׁתּ֑וֹ וַתַּ֙הַר֙ וַתֵּ֣לֶד אֶת־קַ֔יִן וַתֹּ֕אמֶר קָנִ֥יתִי אִ֖ישׁ אֶת־יְהֹוָֽה׃</p>
+      <p>וַתֹּ֣סֶף לָלֶ֔דֶת אֶת־אָחִ֖יו אֶת־הָ֑בֶל וַֽיְהִי־הֶ֙בֶל֙ רֹ֣עֵה צֹ֔אן וְקַ֕יִן הָיָ֖ה עֹבֵ֥ד אֲדָמָֽה׃</p>
+      <p>וַֽיְהִ֖י מִקֵּ֣ץ יָמִ֑ים וַיָּבֵ֨א קַ֜יִן מִפְּרִ֧י הָֽאֲדָמָ֛ה מִנְחָ֖ה לַֽיהֹוָֽה׃</p>
+      <p>וְהֶ֨בֶל הֵבִ֥יא גַם־ה֛וּא מִבְּכֹר֥וֹת צֹאנ֖וֹ וּמֵֽחֶלְבֵהֶ֑ן וַיִּ֣שַׁע יְהֹוָ֔ה אֶל־הֶ֖בֶל וְאֶל־מִנְחָתֽוֹ׃</p>
+      <p>וְאֶל־קַ֥יִן וְאֶל־מִנְחָת֖וֹ לֹ֣א שָׁעָ֑ה וַיִּ֤חַר לְקַ֙יִן֙ מְאֹ֔ד וַֽיִּפְּל֖וּ פָּנָֽיו׃</p>
+      <p>וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־קָ֑יִן לָ֚מָּה חָ֣רָה לָ֔ךְ וְלָ֖מָּה נָפְל֥וּ פָנֶֽיךָ׃</p>
+      <p>הֲל֤וֹא אִם־תֵּיטִיב֙ שְׂאֵ֔ת וְאִם֙ לֹ֣א תֵיטִ֔יב לַפֶּ֖תַח חַטָּ֣את רֹבֵ֑ץ וְאֵלֶ֙יךָ֙ תְּשׁ֣וּקָת֔וֹ וְאַתָּ֖ה תִּמְשׇׁל־בּֽוֹ׃</p>
+      <p>וַיֹּ֥אמֶר קַ֖יִן אֶל־הֶ֣בֶל אָחִ֑יו וַֽיְהִי֙ בִּהְיוֹתָ֣ם בַּשָּׂדֶ֔ה וַיָּ֥קׇם קַ֛יִן אֶל־הֶ֥בֶל אָחִ֖יו וַיַּהַרְגֵֽהוּ׃</p>
+      <p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־קַ֔יִן אֵ֖י הֶ֣בֶל אָחִ֑יךָ וַיֹּ֙אמֶר֙ לֹ֣א יָדַ֔עְתִּי הֲשֹׁמֵ֥ר אָחִ֖י אָנֹֽכִי׃</p>
+      <p>וַיֹּ֖אמֶר מֶ֣ה עָשִׂ֑יתָ ק֚וֹל דְּמֵ֣י אָחִ֔יךָ צֹעֲקִ֥ים אֵלַ֖י מִן־הָֽאֲדָמָֽה׃</p>
+      <p>וְעַתָּ֖ה אָר֣וּר אָ֑תָּה מִן־הָֽאֲדָמָה֙ אֲשֶׁ֣ר פָּצְתָ֣ה אֶת־פִּ֔יהָ לָקַ֛חַת אֶת־דְּמֵ֥י אָחִ֖יךָ מִיָּדֶֽךָ׃</p>
+      <p>כִּ֤י תַֽעֲבֹד֙ אֶת־הָ֣אֲדָמָ֔ה לֹֽא־תֹסֵ֥ף תֵּת־כֹּחָ֖הּ לָ֑ךְ נָ֥ע וָנָ֖ד תִּֽהְיֶ֥ה בָאָֽרֶץ׃</p>
+      <p>וַיֹּ֥אמֶר קַ֖יִן אֶל־יְהֹוָ֑ה גָּד֥וֹל עֲוֺנִ֖י מִנְּשֹֽׂא<sup class="footnote-marker">*</sup><i class="footnote">(בספרי ספרד ואשכנז מִנְּשֽׂוֹא)</i>׃</p>
+      <p>הֵן֩ גֵּרַ֨שְׁתָּ אֹתִ֜י הַיּ֗וֹם מֵעַל֙ פְּנֵ֣י הָֽאֲדָמָ֔ה וּמִפָּנֶ֖יךָ אֶסָּתֵ֑ר וְהָיִ֜יתִי נָ֤ע וָנָד֙ בָּאָ֔רֶץ וְהָיָ֥ה כׇל־מֹצְאִ֖י יַֽהַרְגֵֽנִי׃</p>
+      <p>וַיֹּ֧אמֶר ל֣וֹ יְהֹוָ֗ה לָכֵן֙ כׇּל־הֹרֵ֣ג קַ֔יִן שִׁבְעָתַ֖יִם יֻקָּ֑ם וַיָּ֨שֶׂם יְהֹוָ֤ה לְקַ֙יִן֙ א֔וֹת לְבִלְתִּ֥י הַכּוֹת־אֹת֖וֹ כׇּל־מֹצְאֽוֹ׃</p>
+      <p>וַיֵּ֥צֵא קַ֖יִן מִלִּפְנֵ֣י יְהֹוָ֑ה וַיֵּ֥שֶׁב בְּאֶֽרֶץ־נ֖וֹד קִדְמַת־עֵֽדֶן׃</p>
+      <p>וַיֵּ֤דַע קַ֙יִן֙ אֶת־אִשְׁתּ֔וֹ וַתַּ֖הַר וַתֵּ֣לֶד אֶת־חֲנ֑וֹךְ וַֽיְהִי֙ בֹּ֣נֶה עִ֔יר וַיִּקְרָא֙ שֵׁ֣ם הָעִ֔יר כְּשֵׁ֖ם בְּנ֥וֹ חֲנֽוֹךְ׃</p>
+      <p>וַיִּוָּלֵ֤ד לַֽחֲנוֹךְ֙ אֶת־עִירָ֔ד וְעִירָ֕ד יָלַ֖ד אֶת־מְחֽוּיָאֵ֑ל וּמְחִיָּיאֵ֗ל יָלַד֙ אֶת־מְת֣וּשָׁאֵ֔ל וּמְתוּשָׁאֵ֖ל יָלַ֥ד אֶת־לָֽמֶךְ׃</p>
+      <p>וַיִּֽקַּֽח־ל֥וֹ לֶ֖מֶךְ שְׁתֵּ֣י נָשִׁ֑ים שֵׁ֤ם הָֽאַחַת֙ עָדָ֔ה וְשֵׁ֥ם הַשֵּׁנִ֖ית צִלָּֽה׃</p>
+      <p>וַתֵּ֥לֶד עָדָ֖ה אֶת־יָבָ֑ל ה֣וּא הָיָ֔ה אֲבִ֕י יֹשֵׁ֥ב אֹ֖הֶל וּמִקְנֶֽה׃</p>
+      <p>וְשֵׁ֥ם אָחִ֖יו יוּבָ֑ל ה֣וּא הָיָ֔ה אֲבִ֕י כׇּל־תֹּפֵ֥שׂ כִּנּ֖וֹר וְעוּגָֽב׃</p>
+      <p>וְצִלָּ֣ה גַם־הִ֗וא יָֽלְדָה֙ אֶת־תּ֣וּבַל קַ֔יִן לֹטֵ֕שׁ כׇּל־חֹרֵ֥שׁ נְחֹ֖שֶׁת וּבַרְזֶ֑ל וַֽאֲח֥וֹת תּֽוּבַל־קַ֖יִן נַֽעֲמָֽה׃</p>
+      <p>וַיֹּ֨אמֶר לֶ֜מֶךְ לְנָשָׁ֗יו עָדָ֤ה וְצִלָּה֙ שְׁמַ֣עַן קוֹלִ֔י נְשֵׁ֣י לֶ֔מֶךְ הַאְזֵ֖נָּה אִמְרָתִ֑י כִּ֣י אִ֤ישׁ הָרַ֙גְתִּי֙ לְפִצְעִ֔י וְיֶ֖לֶד לְחַבֻּרָתִֽי׃</p>
+      <p>כִּ֥י שִׁבְעָתַ֖יִם יֻקַּם־קָ֑יִן וְלֶ֖מֶךְ שִׁבְעִ֥ים וְשִׁבְעָֽה׃</p>
+      <p>וַיֵּ֨דַע אָדָ֥ם עוֹד֙ אֶת־אִשְׁתּ֔וֹ וַתֵּ֣לֶד בֵּ֔ן וַתִּקְרָ֥א אֶת־שְׁמ֖וֹ שֵׁ֑ת כִּ֣י שָֽׁת־לִ֤י אֱלֹהִים֙ זֶ֣רַע אַחֵ֔ר תַּ֣חַת הֶ֔בֶל כִּ֥י הֲרָג֖וֹ קָֽיִן׃</p>
+      <p>וּלְשֵׁ֤ת גַּם־הוּא֙ יֻלַּד־בֵּ֔ן וַיִּקְרָ֥א אֶת־שְׁמ֖וֹ אֱנ֑וֹשׁ אָ֣ז הוּחַ֔ל לִקְרֹ֖א בְּשֵׁ֥ם יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>זֶ֣ה סֵ֔פֶר<sup class="footnote-marker">*</sup><i class="footnote">(בספרי תימן <big>סֵ֔</big>פֶר בסמ״ך גדולה)</i> תּוֹלְדֹ֖ת אָדָ֑ם בְּי֗וֹם בְּרֹ֤א אֱלֹהִים֙ אָדָ֔ם בִּדְמ֥וּת אֱלֹהִ֖ים עָשָׂ֥ה אֹתֽוֹ׃</p>
+      <p>זָכָ֥ר וּנְקֵבָ֖ה בְּרָאָ֑ם וַיְבָ֣רֶךְ אֹתָ֗ם וַיִּקְרָ֤א אֶת־שְׁמָם֙ אָדָ֔ם בְּי֖וֹם הִבָּֽרְאָֽם׃</p>
+      <p>וַיְחִ֣י אָדָ֗ם שְׁלֹשִׁ֤ים וּמְאַת֙ שָׁנָ֔ה וַיּ֥וֹלֶד בִּדְמוּת֖וֹ כְּצַלְמ֑וֹ וַיִּקְרָ֥א אֶת־שְׁמ֖וֹ שֵֽׁת׃</p>
+      <p>וַיִּֽהְי֣וּ יְמֵי־אָדָ֗ם אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־שֵׁ֔ת שְׁמֹנֶ֥ה מֵאֹ֖ת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּֽהְי֞וּ כׇּל־יְמֵ֤י אָדָם֙ אֲשֶׁר־חַ֔י תְּשַׁ֤ע מֵאוֹת֙ שָׁנָ֔ה וּשְׁלֹשִׁ֖ים שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַֽיְחִי־שֵׁ֕ת חָמֵ֥שׁ שָׁנִ֖ים וּמְאַ֣ת שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־אֱנֽוֹשׁ׃</p>
+      <p>וַֽיְחִי־שֵׁ֗ת אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־אֱנ֔וֹשׁ שֶׁ֣בַע שָׁנִ֔ים וּשְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּֽהְיוּ֙ כׇּל־יְמֵי־שֵׁ֔ת שְׁתֵּ֤ים עֶשְׂרֵה֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְחִ֥י אֱנ֖וֹשׁ תִּשְׁעִ֣ים שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־קֵינָֽן׃</p>
+      <p>וַיְחִ֣י אֱנ֗וֹשׁ אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־קֵינָ֔ן חֲמֵ֤שׁ עֶשְׂרֵה֙ שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּֽהְיוּ֙ כׇּל־יְמֵ֣י אֱנ֔וֹשׁ חָמֵ֣שׁ שָׁנִ֔ים וּתְשַׁ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְחִ֥י קֵינָ֖ן שִׁבְעִ֣ים שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־מַֽהֲלַלְאֵֽל׃</p>
+      <p>וַיְחִ֣י קֵינָ֗ן אַחֲרֵי֙ הוֹלִיד֣וֹ אֶת־מַֽהֲלַלְאֵ֔ל אַרְבָּעִ֣ים שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּֽהְיוּ֙ כׇּל־יְמֵ֣י קֵינָ֔ן עֶ֣שֶׂר שָׁנִ֔ים וּתְשַׁ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְחִ֣י מַֽהֲלַלְאֵ֔ל חָמֵ֥שׁ שָׁנִ֖ים וְשִׁשִּׁ֣ים שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־יָֽרֶד׃</p>
+      <p>וַיְחִ֣י מַֽהֲלַלְאֵ֗ל אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־יֶ֔רֶד שְׁלֹשִׁ֣ים שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּהְיוּ֙ כׇּל־יְמֵ֣י מַהֲלַלְאֵ֔ל חָמֵ֤שׁ וְתִשְׁעִים֙ שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַֽיְחִי־יֶ֕רֶד שְׁתַּ֧יִם וְשִׁשִּׁ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־חֲנֽוֹךְ׃</p>
+      <p>וַֽיְחִי־יֶ֗רֶד אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־חֲנ֔וֹךְ שְׁמֹנֶ֥ה מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּֽהְיוּ֙ כׇּל־יְמֵי־יֶ֔רֶד שְׁתַּ֤יִם וְשִׁשִּׁים֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְחִ֣י חֲנ֔וֹךְ חָמֵ֥שׁ וְשִׁשִּׁ֖ים שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־מְתוּשָֽׁלַח׃</p>
+      <p>וַיִּתְהַלֵּ֨ךְ חֲנ֜וֹךְ אֶת־הָֽאֱלֹהִ֗ים אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־מְתוּשֶׁ֔לַח שְׁלֹ֥שׁ מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיְהִ֖י כׇּל־יְמֵ֣י חֲנ֑וֹךְ חָמֵ֤שׁ וְשִׁשִּׁים֙ שָׁנָ֔ה וּשְׁלֹ֥שׁ מֵא֖וֹת שָׁנָֽה׃</p>
+      <p>וַיִּתְהַלֵּ֥ךְ חֲנ֖וֹךְ אֶת־הָֽאֱלֹהִ֑ים וְאֵינֶ֕נּוּ כִּֽי־לָקַ֥ח אֹת֖וֹ אֱלֹהִֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיְחִ֣י מְתוּשֶׁ֔לַח שֶׁ֧בַע וּשְׁמֹנִ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיּ֖וֹלֶד אֶת־לָֽמֶךְ׃</p>
+      <p>וַיְחִ֣י מְתוּשֶׁ֗לַח אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־לֶ֔מֶךְ שְׁתַּ֤יִם וּשְׁמוֹנִים֙ שָׁנָ֔ה וּשְׁבַ֥ע מֵא֖וֹת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַיִּהְיוּ֙ כׇּל־יְמֵ֣י מְתוּשֶׁ֔לַח תֵּ֤שַׁע וְשִׁשִּׁים֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַֽיְחִי־לֶ֕מֶךְ שְׁתַּ֧יִם וּשְׁמֹנִ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיּ֖וֹלֶד בֵּֽן׃</p>
+      <p>וַיִּקְרָ֧א אֶת־שְׁמ֛וֹ נֹ֖חַ לֵאמֹ֑ר זֶ֞֠ה יְנַחֲמֵ֤נוּ מִֽמַּעֲשֵׂ֙נוּ֙ וּמֵעִצְּב֣וֹן יָדֵ֔ינוּ מִן־הָ֣אֲדָמָ֔ה אֲשֶׁ֥ר אֵֽרְרָ֖הּ יְהֹוָֽה׃</p>
+      <p>וַֽיְחִי־לֶ֗מֶךְ אַֽחֲרֵי֙ הוֹלִיד֣וֹ אֶת־נֹ֔חַ חָמֵ֤שׁ וְתִשְׁעִים֙ שָׁנָ֔ה וַחֲמֵ֥שׁ מֵאֹ֖ת שָׁנָ֑ה וַיּ֥וֹלֶד בָּנִ֖ים וּבָנֽוֹת׃</p>
+      <p>וַֽיְהִי֙ כׇּל־יְמֵי־לֶ֔מֶךְ שֶׁ֤בַע וְשִׁבְעִים֙ שָׁנָ֔ה וּשְׁבַ֥ע מֵא֖וֹת שָׁנָ֑ה וַיָּמֹֽת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַֽיְהִי־נֹ֕חַ בֶּן־חֲמֵ֥שׁ מֵא֖וֹת שָׁנָ֑ה וַיּ֣וֹלֶד נֹ֔חַ אֶת־שֵׁ֖ם אֶת־חָ֥ם וְאֶת־יָֽפֶת׃</p>
+      <p>וַֽיְהִי֙ כִּֽי־הֵחֵ֣ל הָֽאָדָ֔ם לָרֹ֖ב עַל־פְּנֵ֣י הָֽאֲדָמָ֑ה וּבָנ֖וֹת יֻלְּד֥וּ לָהֶֽם׃</p>
+      <p>וַיִּרְא֤וּ בְנֵי־הָֽאֱלֹהִים֙ אֶת־בְּנ֣וֹת הָֽאָדָ֔ם כִּ֥י טֹבֹ֖ת הֵ֑נָּה וַיִּקְח֤וּ לָהֶם֙ נָשִׁ֔ים מִכֹּ֖ל אֲשֶׁ֥ר בָּחָֽרוּ׃</p>
+      <p>וַיֹּ֣אמֶר יְהֹוָ֗ה לֹֽא־יָד֨וֹן רוּחִ֤י בָֽאָדָם֙ לְעֹלָ֔ם בְּשַׁגַּ֖ם ה֣וּא בָשָׂ֑ר וְהָי֣וּ יָמָ֔יו מֵאָ֥ה וְעֶשְׂרִ֖ים שָׁנָֽה׃</p>
+      <p>הַנְּפִלִ֞ים הָי֣וּ בָאָ֘רֶץ֮ בַּיָּמִ֣ים הָהֵם֒ וְגַ֣ם אַֽחֲרֵי־כֵ֗ן אֲשֶׁ֨ר יָבֹ֜אוּ בְּנֵ֤י הָֽאֱלֹהִים֙ אֶל־בְּנ֣וֹת הָֽאָדָ֔ם וְיָלְד֖וּ לָהֶ֑ם הֵ֧מָּה הַגִּבֹּרִ֛ים אֲשֶׁ֥ר מֵעוֹלָ֖ם אַנְשֵׁ֥י הַשֵּֽׁם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיַּ֣רְא יְהֹוָ֔ה כִּ֥י רַבָּ֛ה רָעַ֥ת הָאָדָ֖ם בָּאָ֑רֶץ וְכׇל־יֵ֙צֶר֙ מַחְשְׁבֹ֣ת לִבּ֔וֹ רַ֥ק רַ֖ע כׇּל־הַיּֽוֹם׃</p>
+      <p>וַיִּנָּ֣חֶם יְהֹוָ֔ה כִּֽי־עָשָׂ֥ה אֶת־הָֽאָדָ֖ם בָּאָ֑רֶץ וַיִּתְעַצֵּ֖ב אֶל־לִבּֽוֹ׃</p>
+      <p>וַיֹּ֣אמֶר יְהֹוָ֗ה אֶמְחֶ֨ה אֶת־הָאָדָ֤ם אֲשֶׁר־בָּרָ֙אתִי֙ מֵעַל֙ פְּנֵ֣י הָֽאֲדָמָ֔ה מֵֽאָדָם֙ עַד־בְּהֵמָ֔ה עַד־רֶ֖מֶשׂ וְעַד־ע֣וֹף הַשָּׁמָ֑יִם כִּ֥י נִחַ֖מְתִּי כִּ֥י עֲשִׂיתִֽם׃</p>
+      <p>וְנֹ֕חַ מָ֥צָא חֵ֖ן בְּעֵינֵ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>Au commencement, Dieu créa le ciel et la terre.</p>
+      <p>Or la terre n’était que solitude et chaos; des ténèbres couvraient la face de l’abîme, et le souffle de Dieu planait à la surface des eaux.</p>
+      <p>Dieu dit: "Que la lumière soit!" Et la lumière fut.</p>
+      <p>Dieu considéra que la lumière était bonne, et il établit une distinction entre la lumière et les ténèbres.</p>
+      <p>Dieu appela la lumière jour, et les ténèbres, il les appela Nuit. Il fut soir, il fut matin, un jour.</p>
+      <p>Dieu dit: "Qu’un espace s’étende au milieu des eaux, et forme une barrière entre les unes et les autres."</p>
+      <p>Dieu fit l’espace, opéra une séparation entre les eaux qui sont au-dessous et les eaux qui sont au-dessus, et cela demeura ainsi.</p>
+      <p>Dieu nomma cet espace le Ciel. Le soir se fit, le matin se fit, — second jour.</p>
+      <p>Dieu dit: "Que les eaux répandues sous le ciel se réunissent sur un même point, et que le sol apparaisse." Cela s’accomplit.</p>
+      <p>Dieu nomma le sol la Terre, et l’agglomération des eaux, il la nomma les Mers. Et Dieu considéra que c’était bien.</p>
+      <p>Dieu dit: "Que la terre produise des végétaux, savoir: des herbes renfermant une semence; des arbres fruitiers portant, selon leur espèce, un fruit qui perpétue sa semence sur la terre." Et cela s’accomplit.</p>
+      <p>La terre donna naissance aux végétaux: aux herbes qui développent leur semence selon leur espèce, et aux arbres portant, selon leur espèce, un fruit qui renferme sa semence. Et Dieu considéra que c’était bien.</p>
+      <p>Le soir se fit, le matin se fit, — troisième jour.</p>
+      <p>Dieu dit: "Que des corps lumineux apparaissent dans l’espace des cieux, pour distinguer entre le jour et la nuit; ils serviront de signes pour les saisons, pour les jours, pour les années;</p>
+      <p>et ils serviront de luminaires, dans l’espace céleste, pour éclairer la terre." Et cela s’accomplit.</p>
+      <p>Dieu fit les deux grands luminaires: le plus grand luminaire pour la royauté du jour, le plus petit luminaire pour la royauté de la nuit, et aussi les étoiles.</p>
+      <p>Et Dieu les plaça dans l’espace céleste pour rayonner sur la terre;</p>
+      <p>pour régner le jour et la nuit, et pour séparer la lumière des ténèbres. Dieu considéra que c’était bien.</p>
+      <p>Le soir se fit, le matin se fit, — quatrième jour.</p>
+      <p>Dieu dit: "Que les eaux fourmillent d’une multitude animée, vivante; et que des oiseaux volent au dessus de ta terre, à travers l’espace des cieux."</p>
+      <p>Dieu créa les cétacés énormes, et tous les êtres animés qui se meuvent dans les eaux, où ils pullulèrent selon leurs espèces, puis tout ce qui vole au moyen d’ailes, selon son espèce; et Dieu considéra que c’était bien.</p>
+      <p>Dieu les bénit en disant: Croissez et multipliez remplissez les eaux, habitants des mers oiseaux, multipliez sur la terre!"</p>
+      <p>Le soir se fit, le matin se fit, — cinquième jour.</p>
+      <p>Dieu dit: "Que la terre produise des êtres animés selon leurs espèces: bétail, reptiles, bêtes sauvages de chaque sorte." Et cela s’accomplit.</p>
+      <p>Dieu forma les bêtes sauvages selon leurs espèces, de même les animaux qui paissent, de même ceux qui rampent sur le sol. Et Dieu considéra que c’était bien.</p>
+      <p>Dieu dit: "Faisons l’homme à notre image, à notre ressemblance, et qu’il domine sur les poissons de la mer, sur les oiseaux du ciel, sur le bétail; enfin sur toute la terre, et sur tous les êtres qui s’y meuvent.</p>
+      <p>Dieu créa l’homme à son image; c’est à l’image de Dieu qu’il le créa. Mâle et femelle furent créés à la fois.</p>
+      <p>Dieu les bénit en leur disant "Croissez et multipliez! Remplissez la terre et soumettez-la! Commandez aux poissons de la mer, aux oiseaux du ciel, à tous les animaux qui se meuvent sur la terre!</p>
+      <p>Dieu ajouta: "Or, je vous accorde tout herbage portant graine, sur toute la face de la terre, et tout arbre portant des fruits qui deviendront arbres par le développement du germe. Ils serviront à votre nourriture.</p>
+      <p>Et aux animaux sauvages, à tous les oiseaux du ciel, à tout ce qui se meut sur la terre et possède un principe de vie, j’assigne toute verdure végétale pour nourriture." Et il en fut ainsi.</p>
+      <p>Dieu examina tout ce qu’il avait fait c’était éminemment bien. Le soir se fit, puis le matin; ce fut le sixième jour.</p>
+      <p>Ainsi furent terminés les cieux et la terre, avec tout ce qu’ils renferment.</p>
+      <p>Dieu mit fin, le septième jour, à l’œuvre faite par lui; et il se reposa, le septième jour, de toute l’œuvre qu’il avait faite.</p>
+      <p>Dieu bénit le septième jour et le proclama saint, parce qu’en ce jour il se reposa de l’œuvre entière qu’il avait produite et organisée.</p>
+      <p>Telles sont les origines du ciel et de la terre, lorsqu’ils furent créés; à l’époque où l’Éternel-Dieu fit une terre et un ciel.</p>
+      <p>Or, aucun produit des champs ne paraissait encore sur la terre, et aucune herbe des champs ne poussait encore; car l’Éternel-Dieu n’avait pas fait pleuvoir sur la terre, et d’homme, il n’y en avait point pour cultiver la terre.</p>
+      <p>Mais une exhalaison s’élevait de la terre et humectait toute la surface du sol.</p>
+      <p>L’Éternel-Dieu façonna l’homme, — poussière détachée du sol, — fit pénétrer dans ses narines un souffle de vie, et l’homme devint un être vivant.</p>
+      <p>L’Éternel-Dieu planta un jardin en Éden, vers l’orient, et y plaça l’homme qu’il avait façonné.</p>
+      <p>L’Éternel-Dieu fit surgir du sol toute espèce d’arbres, beaux à voir et propres à la nourriture; et l’arbre de vie au milieu du jardin, avec l’arbre de la science du bien et du mal.</p>
+      <p>Un fleuve sortait d’Éden pour arroser le jardin; de là il se divisait et formait quatre bras.</p>
+      <p>Le nom du premier: Pichon; c’est celui qui coule tout autour du pays de Havila, où se trouve l’or.</p>
+      <p>L’or de ce pays-là est bon; là aussi le bdellium et la pierre de chôham.</p>
+      <p>Le nom du deuxième fleuve: Ghihôn; c’est lui qui coule tout autour du pays de Kouch.</p>
+      <p>Le nom du troisième fleuve: Hiddékel; c’est celui qui coule à l’orient d’Assur; et le quatrième fleuve était l’Euphrate.</p>
+      <p>L’Éternel-Dieu prit donc l’homme et l’établit dans le jardin d’Eden pour le cultiver et le soigner.</p>
+      <p>L’Éternel-Dieu donna un ordre à l’homme, en disant: "Tous les arbres du jardin, tu peux t’en nourrir;</p>
+      <p>mais l’arbre de la science du bien et du mal, tu n’en mangeras point: car du jour où tu en mangeras, tu dois mourir!"</p>
+      <p>L’Éternel-Dieu dit: "Il n’est pas bon que l’homme soit isolé; je lui ferai une aide digne de lui."</p>
+      <p>L’Éternel-Dieu avait formé de matière terrestre tous les animaux des champs et tous les oiseaux du ciel. Il les amena devant l’homme pour qu’il avisât à les nommer; et telle chaque espèce animée serait nommée par l’homme, tel serait son nom.</p>
+      <p>L’homme imposa des noms à tous les animaux qui paissent, aux oiseaux du ciel, à toutes les bêtes sauvages; mais pour lui-même, il ne trouva pas de compagne qui lui fût assortie.</p>
+      <p>L’Éternel-Dieu fit peser une torpeur sur l’Homme, qui s’endormi; il prit une de ses côtes, et forma un tissu de chair à la place.</p>
+      <p>L’Éternel-Dieu organisa en une femme la côte qu’il avait prise à l’homme, et il la présenta à l’homme.</p>
+      <p>Et l’homme dit: "Celle-ci, pour le coup, est un membre extrait de mes membres et une chair de ma chair; celle-ci sera nommée Icha, parce qu’elle a été prise de Ich."</p>
+      <p>C’est pourquoi l’homme abandonne son père et sa mère; il s’unit à sa femme, et ils deviennent une seule chair.</p>
+      <p>Or ils étaient tous deux nus, l’homme et sa femme, et ils n’en éprouvaient point de honte.</p>
+      <p>Mais le serpent était rusé, plus qu’aucun des animaux terrestres qu’avait faits l’Éternel-Dieu. Il dit à la femme: "Est-il vrai que Dieu a dit: vous ne mangerez rien de tous les arbres du jardin?"</p>
+      <p>La femme répondit au serpent: "Les fruits des arbres du jardin, nous pouvons en manger;</p>
+      <p>mais quant au fruit de l’arbre qui est au milieu du jardin, Dieu a dit: Vous n’en mangerez pas, vous n’y toucherez point, sous peine de mourir."</p>
+      <p>Le serpent dit à la femme: "Non, vous ne mourrez point;</p>
+      <p>mais Dieu sait que, du jour où vous en mangerez, vos yeux seront dessillés, et vous serez comme Dieu, connaissant le bien et le mal."</p>
+      <p>La femme jugea que l’arbre était bon comme nourriture, qu’il était attrayant à la vue et précieux pour l’intelligence; elle cueillit de son fruit et en mangea; puis en donna à son époux, et il mangea.</p>
+      <p>Leurs yeux à tous deux se dessillèrent, et ils connurent qu’ils étaient nus; ils cousirent ensemble des feuilles de figuier, et s’en firent des pagnes.</p>
+      <p>Ils entendirent la voix de l’Éternel-Dieu, parcourant le jardin du côté d’où vient le jour. L’homme et sa compagne se cachèrent de la face de l’Éternel-Dieu, parmi les arbres du jardin.</p>
+      <p>L’Éternel-Dieu appela l’homme, et lui dit: "Où es-tu?"</p>
+      <p>Il répondit: "J’ai entendu ta voix dans le jardin; j’ai eu peur, parce que je suis nu, et je me suis caché."</p>
+      <p>Alors il dit: "Qui t’a appris que tu étais nu? Cet arbre dont je t’avais défendu de manger, tu en as donc mangé?"</p>
+      <p>L’homme répondit; "La femme — que tu m’as associée — c’est elle qui m’a donné du fruit de l’arbre, et j’ai mangé,"</p>
+      <p>L’Éternel-Dieu dit à la femme: "Pourquoi as-tu fait cela?" La femme répondit: "Le serpent m’a entraînée, et j’ai mangé."</p>
+      <p>L’Éternel-Dieu dit au serpent "Parce que tu as fait cela, tu es maudit entre tous les animaux et entre toutes les créatures terrestres: tu te traîneras sur le ventre, et tu te nourriras de poussière tous les jours de ta vie.</p>
+      <p>Je ferai régner la haine entre toi et la femme, entre ta postérité et la sienne: celle-ci te visera à la tête, et toi, tu l’attaqueras au talon."</p>
+      <p>A la femme il dit: "J’aggraverai tes labeurs et ta grossesse; tu enfanteras avec douleur; la passion t’attirera, vers ton époux, et lui te dominera."</p>
+      <p>Et à l’homme il dit: "Parce que tu as cédé à la voix de ton épouse, et que tu as mangé de l’arbre dont je t’avais enjoint de ne pas manger, maudite est la terre à cause de toi: c’est avec effort que tu en tireras ta nourriture, tant que tu vivras.</p>
+      <p>Elle produira pour toi des buissons et de l’ivraie, et tu mangeras de l’herbe des champs.</p>
+      <p>C’est à la sueur de ton visage que tu mangeras du pain, — jusqu’à ce que tu retournes à la terre d’où tu as été tiré: car poussière tu fus, et poussière tu redeviendras!"</p>
+      <p>L’homme donna pour nom à sa compagne "Ève" parce qu’elle fut la mère de tous les vivants.</p>
+      <p>L’Éternel-Dieu fit pour l’homme et pour sa femme des tuniques de peau, et les en vêtit.</p>
+      <p>L’Éternel-Dieu dit: "Voici l’homme devenu comme l’un de nous, en ce qu’il connait le bien et le mal. Et maintenant, il pourrait étendre sa main et cueillir aussi du fruit de l’arbre de vie; il en mangerait, et vivrait à jamais."</p>
+      <p>Et l’Éternel-Dieu le renvoya du jardin d’Éden, pour cultiver la terre d’où il avait été tiré.</p>
+      <p>Ayant chassé l’homme, il posta en avant du jardin d’Éden les chérubins, avec la lame de l’épée flamboyante, pour garder les abords de l’arbre de vie.</p>
+      <p>or, l’homme s’était uni à Ève, sa femme. Elle conçut et enfanta Caïn, en disant: "J’ai fait naître un homme, conjointement avec l’Éternel!"</p>
+      <p>Elle enfanta ensuite son frère, Abel. Abel devint pasteur de menu bétail, et Caïn cultiva la terre.</p>
+      <p>Au bout d’un certain temps, Caïn présenta, du produit de la terre, une offrande au Seigneur;</p>
+      <p>et Abel offrit, de son côté, des premiers-nés de son bétail, de leurs parties grasses. Le Seigneur se montra favorable à Abel et à son offrande,</p>
+      <p>mais à Caïn et à son offrande il ne fut pas favorable; Caïn en conçut un grand chagrin, et son visage fut abattu.</p>
+      <p>Le Seigneur dit à Caïn; "Pourquoi es-tu chagrin, et pourquoi ton visage est-il abattu?</p>
+      <p>Si tu t’améliores, tu pourras te relever, sinon le Péché est tapi à ta porte: il aspire à t’atteindre, mais toi, sache le dominer!"</p>
+      <p>Caïn parla à son frère Abel; mais il advint, comme ils étaient aux champs, que Caïn se jeta sur Abel, son frère, et le tua.</p>
+      <p>L’Éternel dit à Caïn: "Où est Abel ton frère?" Il répondit: "Je ne sais; suis-je le gardien de mon frère?"</p>
+      <p>Dieu dit: "Qu’as-tu fait! Le cri du sang de ton frère s’élève, jusqu’à moi, de la terre.</p>
+      <p>Eh bien! tu es maudit à cause de cette terre, qui a ouvert sa bouche pour recevoir de ta main le sang de ton frère!"</p>
+      <p>Lorsque tu cultiveras la terre, elle cessera de te faire part de sa fécondité; tu seras errant et fugitif par le monde."</p>
+      <p>Caïn dit à l’Éternel: "Mon crime est trop grand pour qu’on me supporte.</p>
+      <p>Vois, tu me proscris aujourd’hui de dessus la face de la terre; mais puis-je me dérober à ta face? Je vais errer et fuir par le monde, mais le premier qui me trouvera me tuera."</p>
+      <p>L’Éternel lui dit: "Aussi, quiconque tuera Caïn sera puni au septuple." Et l’Éternel le marqua d’un signe, pour que personne, le rencontrant, ne le frappât.</p>
+      <p>Caïn se retira de devant l’Éternel, et séjourna dans le pays de Nôd, à l’orient d’Éden.</p>
+      <p>Caïn connut sa femme; elle conçut et enfanta Hénoc. Caïn bâtissait alors une ville, qu’il désigna du nom de son fils Hénoc.</p>
+      <p>Hénoc devint père d’Iràd; celui-ci engendra Mehouyaél, qui engendra Lamec.</p>
+      <p>Lamec prit deux femmes, la première nommée Ada, et la seconde Cilla.</p>
+      <p>Ada enfanta Jabal, souche de ceux qui habitent sous des tentes et conduisent des troupeaux.</p>
+      <p>Le nom de son frère était Jabal: celui ci fut la souche de ceux qui manient la harpe et la lyre.</p>
+      <p>Cilla, de son côté, enfanta Tubalcaïn, qui façonna toute sorte d’instruments de cuivre et de fer, et qui eut pour sœur Naama.</p>
+      <p>Lamec dit à ses femmes"Ada et Cilla, écoutez ma voix! Femmes de Lamec, prêtez l’oreille à ma parole! J’ai tué un homme parce qu’il m’avait frappé, et un jeune homme à cause de ma blessure:</p>
+      <p>Si Caïn doit être vengé sept fois, Lamec le sera soixante-dix-sept fois."</p>
+      <p>Adam connut de nouveau sa femme; elle enfanta un fils, et lui donna pour nom Seth: "Parce que Dieu m’a accordé une nouvelle postérité au lieu d’Abel, Caïn l’ayant tué."</p>
+      <p>A Seth, lui aussi, il naquit un fils; il lui donna pour nom Énos. Alors on commença d’invoquer le nom de l’Éternel.</p>
+      <p>Ceci est l’histoire des générations de l’humanité. Lorsque Dieu créa l’être humain, il le fit à sa propre ressemblance.</p>
+      <p>Il les créa mâle et femelle, les bénit et les appela l’homme, le jour de leur création.</p>
+      <p>Adam, ayant vécu cent trente ans, produisit un être à son image et selon sa forme, et lui donna pour nom Seth.</p>
+      <p>Après avoir engendré Seth, Adam vécut huit cents ans, engendrant des fils et des filles.</p>
+      <p>Tout le temps qu’Adam vécut fut donc de neuf cent trente ans; et il mourut.</p>
+      <p>Seth, ayant vécu cent cinq ans, engendra Énos.</p>
+      <p>Après avoir engendré Énos, Seth vécut huit cent sept ans, engendrant des fils et des filles.</p>
+      <p>Tous les jours de Seth furent de neuf cent douze ans, après quoi il mourut.</p>
+      <p>Énos vécut quatre-vingt-dix ans, et engendra Kênân.</p>
+      <p>Enos vécut, après avoir engendré Kênân, huit cent quinze ans; et il eut des fils et des filles.</p>
+      <p>Tous les jours d’Énos furent de neuf cent cinq ans, après quoi il mourut.</p>
+      <p>Kênân, ayant vécu soixante-dix ans, engendra Mahalalêl.</p>
+      <p>Kènan vécut, après la naissance, de Mahalalêl, huit cent quarante ans, et eut des fils et des filles.</p>
+      <p>Toute la vie de Kênân fut de neuf cent dix ans, après quoi il mourut.</p>
+      <p>Mahalalêl, ayant vécu soixante-cinq ans, engendra Yéred.</p>
+      <p>Mahalalél, après avoir engendré Yéred, vécut huit cent trente ans, et engendra des fils et des filles.</p>
+      <p>Tous les jours de Mahalalèl furent de huit cent quatre-vingt-quinze ans, puis il mourut.</p>
+      <p>Véred, ayant vécu cent soixante-deux ans, engendra Hénoc.</p>
+      <p>Yéred vécut, après la naissance d’Hénoc, huit cents ans; il eut des fils et des filles.</p>
+      <p>La vie entière de Yéred fut de neuf cent soixante-deux ans, après quoi il mourut.</p>
+      <p>Hénoc vécut soixante-cinq ans, et engendra Mathusalem.</p>
+      <p>Hénoc se conduisit selon Dieu, après avoir engendré Mathusalem, durant trois cents ans, et engendra des fils et des filles.</p>
+      <p>Tous les jours d’Hénoc furent de trois cent soixante-cinq ans;</p>
+      <p>Hénoc se conduisait selon Dieu, lorsqu’il disparut, Dieu l’ayant retiré du monde.</p>
+      <p>Mathusalem, ayant vécu cent quatre-vingt-sept ans, engendra Lamec.</p>
+      <p>Mathusalem vécut, après avoir engendré Lamec, sept cent quatre-vingt-deux ans; il eut encore des fils et des filles.</p>
+      <p>Tous les jours de Mathusalem furent de neuf cent soixante-neuf ans, après quoi il mourut.</p>
+      <p>Lamec, ayant vécu cent quatre-vingt-deux ans, engendra un fils.</p>
+      <p>Il énonça son nom Noé, en disant: "Puisse-t-il nous soulager de notre tâche et du labeur de nos mains, causé par cette terre qu’a maudite l’Éternel!"</p>
+      <p>Lamec vécut, après avoir engendré Noé, cinq cent quatre-vingt-quinze ans; il engendra des fils et des filles.</p>
+      <p>Toute la vie de Lamec fut de sept cent soixante-dix-sept ans; et il mourut.</p>
+      <p>Noé, étant âgé de cinq cents ans, engendra Sem, puis Cham et Japhet.</p>
+      <p>Or, quand les hommes eurent commencé à se multiplier sur la terre, et que des filles leur naquirent,</p>
+      <p>les fils de la race divine trouvèrent que les filles de l’homme étaient belles, et ils choisirent pour femmes toutes celles qui leur convinrent.</p>
+      <p>L’Éternel dit: "Mon esprit n’animera plus les hommes pendant une longue durée, car lui aussi devient chair. Leurs jours seront réduits à cent vingt ans."</p>
+      <p>Les Nefilim parurent sur la terre à cette époque et aussi depuis, lorsque les hommes de Dieu se mêlaient aux filles de l’homme et qu’elles leur donnaient des enfants. Ce furent ces forts d’autrefois, ces hommes si renommés.</p>
+      <p>L’Éternel vit que les méfaits de l’homme se multipliaient sur la terre, et que le produit des pensées de son cœur était uniquement, constamment mauvais;</p>
+      <p>et l’Éternel regretta d’avoir créé l’homme sur la terre, et il s’affligea en lui-même.</p>
+      <p>Et l’Éternel dit: "J’effacerai l’homme que j’ai créé de dessus la face de la terre; depuis l’homme jusqu’à la brute, jusqu’à l’insecte, jusqu’à l’oiseau du ciel, car je regrette de les avoir faits.</p>
+      <p>Mais Noé trouva grâce aux yeux de l’Éternel.</p>
+      
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="synthese-bloc"><p>La paracha Bereshit, première de la Torah, couvre les six premiers chapitres du livre de la Genèse (1:1 à 6:8). Elle se déroule en trois grands mouvements : la Création du monde en sept jours, l'histoire du premier couple dans le jardin d'Éden jusqu'à la faute et l'expulsion, puis les dix premières générations de l'humanité, de Caïn et Abel jusqu'à Noé, se terminant sur l'annonce de la corruption générale qui mènera au déluge.</p>
+
+<h4>Les sept jours de la Création (1:1 – 2:3)</h4>
+<p>Le texte suit une structure très régulière : chaque jour s'ouvre sur une parole divine ("Dieu dit"), suivie de sa réalisation ("il en fut ainsi"), d'une évaluation positive ("Dieu vit que c'était bien"), puis de la formule de clôture ("il y eut un soir, il y eut un matin"). Le tableau suivant résume l'œuvre de chaque jour :</p>
+
+<table>
+<tr><th>Jour</th><th>Création</th></tr>
+<tr><td>1</td><td>La lumière, séparée des ténèbres</td></tr>
+<tr><td>2</td><td>Le firmament, séparant les eaux d'en haut et d'en bas</td></tr>
+<tr><td>3</td><td>Les mers et la terre ferme ; la végétation</td></tr>
+<tr><td>4</td><td>Les luminaires (soleil, lune, étoiles)</td></tr>
+<tr><td>5</td><td>Les poissons et les oiseaux</td></tr>
+<tr><td>6</td><td>Les animaux terrestres ; l'être humain, homme et femme, à l'image de Dieu</td></tr>
+<tr><td>7</td><td>Le repos divin — le Chabbat est sanctifié</td></tr>
+</table>
+
+<p>Deux traits structurants méritent d'être relevés. D'abord, l'être humain est créé en dernier, au sommet de l'œuvre des six jours, et reçoit seul la mission de "dominer" le reste de la création (1:26, 28). Ensuite, le septième jour n'est marqué par aucune création nouvelle : il est défini uniquement par la cessation et la sanctification — structure qui fondera plus tard l'institution du Chabbat.</p>
+
+<h4>Le jardin d'Éden et la formation de l'humain (2:4 – 2:25)</h4>
+<p>Le récit reprend alors, avec un luminaire différent : au lieu de la vue d'ensemble du chapitre 1, le chapitre 2 resserre l'objectif sur la formation de l'humain lui-même, façonné de la poussière du sol et animé par le souffle divin. Placé dans le jardin d'Éden, il reçoit un seul interdit — ne pas manger de l'arbre de la connaissance du bien et du mal — avant que Dieu ne constate sa solitude et ne forme la femme à partir d'une de ses côtes. Le chapitre se clôt sur la formule qui deviendra le fondement du mariage : "l'homme quitte son père et sa mère, s'attache à sa femme, et ils deviennent une seule chair" (2:24).</p>
+
+<h4>La faute et ses conséquences (3:1 – 3:24)</h4>
+<p>Le serpent, décrit comme "rusé", pousse la femme à transgresser l'unique interdit, par un mélange de déformation du commandement et de promesse de ressemblance divine. Une fois la faute commise, le texte décrit une scène de dissimulation puis d'interrogatoire, où Dieu interroge successivement l'homme, la femme et le serpent — chacun rejetant la faute sur le précédent. Trois sanctions tombent alors, une par protagoniste :</p>
+<ul>
+<li><b>Le serpent</b> : il rampera désormais sur le ventre et se nourrira de poussière ; une inimitié perpétuelle est instaurée entre lui et la descendance de la femme.</li>
+<li><b>La femme</b> : la douleur de l'enfantement est accrue, et une relation de domination s'instaure avec l'homme.</li>
+<li><b>L'homme</b> : le sol est maudit à cause de lui, et il devra travailler à la sueur de son front pour en tirer sa nourriture, jusqu'à son retour à la poussière.</li>
+</ul>
+<p>Le couple est alors vêtu par Dieu lui-même ("des tuniques de peau") puis expulsé du jardin, de peur qu'il ne mange aussi de l'arbre de vie et ne devienne immortel.</p>
+
+<h4>Caïn et Abel (4:1 – 4:26)</h4>
+<p>Les deux premiers fils du couple, Caïn (cultivateur) et Abel (pasteur), offrent chacun un sacrifice. Celui d'Abel est agréé, celui de Caïn ne l'est pas — sans que le texte précise la raison exacte, laissant ce point à l'interprétation (voir l'onglet Commentaires). Caïn, jaloux, tue son frère dans les champs, devenant ainsi le premier meurtrier de l'humanité. Interrogé par Dieu ("Où est Abel, ton frère ?"), il répond par la formule devenue proverbiale : "Suis-je le gardien de mon frère ?" Sa peine est la malédiction du sol et l'errance perpétuelle, mais Dieu le protège d'une vengeance expéditive par un signe distinctif. Le chapitre se clôt sur la lignée de Caïn (jusqu'à Lemekh et ses trois fils, pionniers de l'élevage nomade, de la musique et de la métallurgie) et la naissance de Seth, troisième fils d'Adam et Ève, par qui la lignée humaine continuera.</p>
+
+<h4>Les dix générations jusqu'à Noé (5:1 – 6:8)</h4>
+<p>Le chapitre 5 égrène la généalogie d'Adam à Noé sur dix générations, selon une formule répétée : âge au moment d'engendrer le fils suivant, années vécues ensuite, âge total au décès. Le tableau suivant résume cette lignée :</p>
+
+<table>
+<tr><th>Génération</th><th>Âge à la naissance du fils</th><th>Années vécues ensuite</th><th>Âge total</th></tr>
+<tr><td>Adam</td><td>130</td><td>800</td><td>930</td></tr>
+<tr><td>Seth</td><td>105</td><td>807</td><td>912</td></tr>
+<tr><td>Énoch (fils de Seth)</td><td>90</td><td>815</td><td>905</td></tr>
+<tr><td>Kénan</td><td>70</td><td>840</td><td>910</td></tr>
+<tr><td>Mahalalel</td><td>65</td><td>830</td><td>895</td></tr>
+<tr><td>Yéred</td><td>162</td><td>800</td><td>962</td></tr>
+<tr><td>Hénoc</td><td>65</td><td>300*</td><td>365*</td></tr>
+<tr><td>Mathusalem</td><td>187</td><td>782</td><td>969</td></tr>
+<tr><td>Lamec</td><td>182</td><td>595</td><td>777</td></tr>
+</table>
+<p style="font-size:.85em; color:var(--ink2);">* Hénoc (fils de Yéred, à ne pas confondre avec le fils de Caïn) n'est pas dit "mort" : le texte dit qu'il "marcha avec Dieu" puis "disparut, car Dieu le retira" (5:24) — un cas unique dans cette liste.</p>
+
+<p>Le chapitre 6 s'ouvre sur un passage énigmatique — les "fils de Dieu" prenant pour épouses les "filles des hommes", et l'apparition des Nephilim — avant que le récit ne bascule brutalement : Dieu constate que "le mal de l'homme était grand sur la terre" et que "toute velléité des pensées de son cœur n'était que mal, tous les jours." Dieu "se repent" d'avoir créé l'humanité et décide de l'effacer — seul Noé, qui "trouva grâce aux yeux de l'Éternel", est épargné. La paracha s'arrête sur cette notation, juste avant le récit du déluge lui-même, qui sera développé dans la paracha suivante (Noach).</p></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="synthese-bloc"><p>Le Midrash Bereshit Rabba, compilé vers 400 de l'ère commune, ouvre sur une question qui occupera plusieurs générations de sages : pourquoi la Torah commence-t-elle par le récit de la Création, plutôt que par la première mitsva donnée au peuple d'Israël (le calendrier, Chemot 12) ? Rabbi Its'hak répond que c'est pour établir, dès l'ouverture du texte, le droit de D.ieu sur la terre qu'Il a créée et qu'Il donne ensuite à qui Il veut — argument destiné à répondre par avance à ceux qui contesteraient la légitimité d'Israël sur la terre promise.</p>
+
+<h4>Le monde créé par la Torah</h4>
+<p>Une image centrale du Midrash (Bereshit Rabba 1:1) compare D.ieu à un roi qui bâtit un palais en suivant les plans d'un architecte : de même, D.ieu aurait "regardé dans la Torah" pour créer le monde, la Torah précédant ainsi la création elle-même. Le Midrash y voit une lecture du mot "reshit" (commencement) : il ne désignerait pas seulement le début chronologique, mais la Torah elle-même, décrite ailleurs (Michlei 8:22) comme "le commencement de Sa voie".</p>
+
+<h4>Pourquoi le monde fut-il créé avec la lettre beit ?</h4>
+<p>Le Midrash (1:10) remarque que le premier mot de la Torah, "Bereshit", commence par la deuxième lettre de l'alphabet hébraïque (ב, beit) et non par la première (א, alef). Plusieurs explications sont proposées : la lettre beit, fermée sur trois côtés et ouverte seulement vers l'avant, enseignerait qu'il n'est pas donné à l'homme de chercher à connaître ce qui précède la création — seulement ce qui vient après. Une autre lecture, plus poétique, veut que le alef, premier-né des lettres, se soit plaint pendant vingt-six générations de ne pas avoir servi à l'ouverture du monde ; D.ieu le console en lui promettant d'ouvrir par lui, bien plus tard, les Dix Commandements ("Anokhi", "Je suis l'Éternel ton D.ieu").</p>
+
+<h4>Le repentir divin au chapitre 6</h4>
+<p>Sur le verset "l'Éternel se repentit d'avoir fait l'homme" (6:6), qui semble attribuer à D.ieu un changement d'avis difficile à concilier avec Sa perfection, le Midrash propose une lecture qui déplace le sens : loin d'exprimer un vrai regret, le verset signifierait que D.ieu trouve une forme de consolation dans le fait d'avoir créé l'homme "parmi les êtres inférieurs" plutôt que parmi les êtres célestes — car un être céleste rebelle aurait pu entraîner une révolte parmi les anges eux-mêmes, danger qu'évite la création d'un être simplement terrestre.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="synthese-bloc"><p>Rachi aborde, dès le premier mot de la Torah, la question posée par le Midrash sur l'ordre du texte biblique, mais choisit de répondre d'abord sur le plan grammatical : "Bereshit bara" ne doit pas se lire comme "au commencement, Il créa" (ce qui exigerait une forme différente en hébreu), mais plutôt comme "au commencement de la création de..." — une construction qui annonce immédiatement la suite plutôt que de clore une pensée. Cette lecture, très influente, est reprise par la plupart des traductions modernes (dont celles qui rendent le verset par "Lorsque D.ieu commença à créer...").</p>
+
+<h4>Le jour un, et non le premier jour</h4>
+<p>Rachi s'arrête sur une anomalie du texte hébreu : alors que les jours 2 à 6 sont numérotés par des ordinaux (deuxième, troisième...), le premier jour est désigné par le cardinal "un" (echad), non par l'ordinal "premier". Il y voit, en citant le Midrash, une indication que D.ieu était alors "seul dans Son monde" — les anges n'ayant été créés, selon cette lecture, que le second jour. Le mot "un" soulignerait ainsi une solitude divine propre à ce tout premier jour, avant l'apparition de toute autre existence.</p>
+
+<h4>Le pluriel "faisons l'homme" (1:26)</h4>
+<p>Sur le verset où D.ieu dit "faisons l'homme à notre image", qui emploie un pluriel surprenant pour un texte par ailleurs strictement monothéiste, Rachi propose une lecture restée célèbre : il y voit une leçon d'humilité divine. Bien que D.ieu n'ait besoin de l'avis de personne, Il choisit de consulter symboliquement les anges avant de créer un être qui leur ressemblera — modèle, selon Rachi, pour tout dirigeant qui doit consulter son conseil avant de trancher une décision importante, même lorsqu'il en a seul le pouvoir.</p>
+
+<h4>La formation de la femme (2:21-23)</h4>
+<p>Sur la "côte" (tsela) prise à l'homme pour former la femme, Rachi rapporte, en s'appuyant sur le Talmud (Erouvin 18a), une tradition selon laquelle l'être humain originel aurait été créé avec deux visages ou deux faces (androgyne), que D.ieu aurait ensuite séparés en deux êtres distincts — lecture qui nuance l'image d'une femme simplement "tirée" d'un os surnuméraire de l'homme.</p>
+
+<h4>L'offrande de Caïn et d'Abel (4:3-5)</h4>
+<p>Sur la raison du refus de l'offrande de Caïn, que le texte biblique ne précise pas explicitement, Rachi relève un indice textuel : Abel offrit "des premiers-nés de son troupeau, et de leurs parties grasses" — une double mention de qualité (les meilleurs animaux, et leurs meilleures parties) — tandis que Caïn offrit seulement "du fruit de la terre", sans précision de qualité. Une tradition midrachique rapportée par Rachi va plus loin : Caïn aurait offert les produits les plus médiocres de sa récolte, suggérant que le problème n'était pas la nature de l'offrande (végétale plutôt qu'animale) mais l'intention et le soin qui y étaient mis.</p>
+
+<p>Pour chacun de ces points, l'étude peut se poursuivre en consultant Rachi directement sur Sefaria, verset par verset : il est particulièrement développé sur cette paracha, qui pose les fondements de toute la lecture rabbinique classique de la Genèse.</p><div class="commentaires-sources">D'apres Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t5">
+  <div class="synthese-bloc"><p>Un seul passage de cette paracha donne directement naissance à une mitsva pratique codifiée : le verset "D.ieu les bénit et leur dit : soyez féconds et multipliez, remplissez la terre" (Genesis 1:28), répété à l'identique pour Noé après le déluge (9:7).</p>
+
+<h4>La source talmudique</h4>
+<p>La Michna d'ouverture du traité Yevamot (6:6) établit que l'homme est commandé sur la mitsva de péryah ou-rvyah ("être fécond et multiplier"), tandis que Rabbi Yo'hanan ben Beroka soutient une position minoritaire selon laquelle la femme y serait également tenue, puisque le verset s'adresse aux deux ("D.ieu les bénit... et leur dit"). La Guemara (Yevamot 65b) explique que l'opinion majoritaire déduit l'exclusion de la femme d'un détail du même verset : "remplissez la terre et soumettez-la" (ve-khivshouha) emploie une forme grammaticale associée à l'action de "soumettre" ou "conquérir" — jugée, selon cette lecture, typiquement masculine plutôt que féminine.</p>
+
+<h4>La codification</h4>
+<p>Le Rambam (Michné Torah, Hilkhot Ichout 15:2) tranche en faveur de l'opinion majoritaire : la mitsva de procréation incombe à l'homme, non à la femme. Il précise que cette obligation est en principe considérée remplie dès la naissance d'un fils et d'une fille (suivant l'école de Beit Hillel dans la Michna de Yevamot 6:6), bien que les Sages aient par ailleurs encouragé d'avoir davantage d'enfants au-delà de ce minimum. Le Choulhan Aroukh (Even HaEzer, siman 1) codifie cette même position comme halakha pratique.</p>
+
+<p>Cette mitsva est généralement présentée, dans la tradition rabbinique, comme la toute première commandement de la Torah dans son ordre d'apparition — raison pour laquelle elle est parfois désignée comme un principe fondateur dont dépend, selon certaines lectures (Sefer HaHinoukh, mitsva 1), l'accomplissement de toutes les autres : sans la poursuite de l'humanité, aucune des mitsvot suivantes ne pourrait continuer à être observée.</p></div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien etudier 📖
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits reserves<br>Sources : <a href="https://www.sefaria.org/Genesis_1:1-6:8" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>

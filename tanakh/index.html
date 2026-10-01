@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ton Coach Scolaire">
+  <meta name="copyright" content="© 2026 Ton Coach Scolaire — Tous droits réservés">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tanakh — Ton Coach Scolaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F9FC;
+      --card: #FFFFFF;
+      --surface2: #EEF3F9;
+      --border: #E2E8F0;
+      --ink: #1A2B3C;
+      --ink2: #5B6B7D;
+      --ink3: #94A3B3;
+      --brand: #7c3aed;
+      --brand-dark: #5b21b6;
+      --brand-light: #ede9fe;
+      --accent: #b45309;
+      --shadow-card: 0 2px 8px rgba(26,43,60,.06);
+      --shadow-pop: 0 6px 18px rgba(26,43,60,.12);
+    }
+    [data-theme="dark"] {
+      --bg: #131B24;
+      --card: #1C2733;
+      --surface2: #22303E;
+      --border: #2E3D4C;
+      --ink: #F0F4F8;
+      --ink2: #B8C4D0;
+      --ink3: #7E8C9A;
+      --brand: #a78bfa;
+      --brand-dark: #7c3aed;
+      --brand-light: #2e1065;
+      --accent: #f59e0b;
+      --shadow-card: 0 2px 8px rgba(0,0,0,.3);
+      --shadow-pop: 0 6px 18px rgba(0,0,0,.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 17px;
+      line-height: 1.6;
+      transition: background-color .25s ease, color .25s ease;
+    }
+    header {
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      box-shadow: var(--shadow-card);
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 44px; height: 44px; border-radius: 14px; object-fit: contain;
+      background: var(--surface2); padding: 4px;
+    }
+    .header-title { font-size: 1.2rem; font-weight: 800; }
+    .header-title span { color: var(--brand-dark); }
+    .header-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px; text-decoration: none;
+      font-size: .82rem; font-weight: 700; color: var(--ink2); background: var(--surface2);
+      transition: transform .15s;
+    }
+    .back-link:hover { transform: translateY(-2px); color: var(--ink); }
+    .theme-toggle {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: none; background: var(--surface2);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: transform .15s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .hero { text-align: center; padding: 56px 20px 40px; }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 14px;
+    }
+    .hero h1 .accent { color: var(--brand-dark); }
+    .hero-sub { color: var(--ink2); font-size: 1.08rem; max-width: 480px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+    .hero-sub-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: 1rem; color: var(--ink3); margin-top: 6px; }
+
+    .tiles-section { padding: 36px 16px 12px; max-width: 920px; margin: 0 auto; }
+    .tiles-label {
+      font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--ink2); margin-bottom: 18px; padding-left: 2px;
+    }
+    .tiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 760px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .tiles-grid { grid-template-columns: 1fr; gap: 12px; } }
+    .tile {
+      position: relative; border-radius: 20px; padding: 22px 17px 18px;
+      cursor: pointer; background: var(--card);
+      min-height: 150px; display: flex; flex-direction: column;
+      user-select: none; box-shadow: var(--shadow-card);
+      transition: transform .18s ease, box-shadow .18s ease;
+      animation: tileIn .35s ease both;
+    }
+    .tile:nth-child(1) { animation-delay: .04s; }
+    .tile:nth-child(2) { animation-delay: .08s; }
+    .tile:nth-child(3) { animation-delay: .12s; }
+    @keyframes tileIn { from { opacity: 0; transform: translateY(14px); } }
+    .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
+    .tile.active { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
+    .tile-torah    { background: #EDE9FE; }
+    .tile-neviim   { background: #FFE8E8; }
+    .tile-ketouvim { background: #FFF1DE; }
+    [data-theme="dark"] .tile-torah    { background: #2C1E3A; }
+    [data-theme="dark"] .tile-neviim   { background: #3A1A1A; }
+    [data-theme="dark"] .tile-ketouvim { background: #3A2A12; }
+    .tile-emoji {
+      font-size: 1.6rem; line-height: 1; margin-bottom: 10px;
+      width: 46px; height: 46px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.55);
+    }
+    [data-theme="dark"] .tile-emoji { background: rgba(0,0,0,.2); }
+    .tile-badge {
+      position: absolute; top: 14px; right: 14px; font-size: .62rem; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; background: rgba(255,255,255,.7);
+      border-radius: 20px; padding: 4px 10px; color: var(--ink);
+    }
+    [data-theme="dark"] .tile-badge { background: rgba(0,0,0,.3); }
+    .tile-level { font-size: 1.35rem; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 3px; }
+    .tile-level-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: .95rem; color: var(--ink2); margin-bottom: 3px; }
+    .tile-name { font-size: .78rem; font-weight: 500; color: var(--ink2); margin-bottom: 12px; line-height: 1.3; }
+    .tile-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+    .tile-pill {
+      font-size: .66rem; font-weight: 700; padding: 4px 9px; border-radius: 10px;
+      background: rgba(255,255,255,.6); color: var(--ink2); white-space: nowrap;
+    }
+    [data-theme="dark"] .tile-pill { background: rgba(0,0,0,.25); }
+    #reveal-panel { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-inner {
+      background: var(--card); border-radius: 22px;
+      margin-top: 18px; margin-bottom: 28px; overflow: hidden;
+      animation: panelIn .25s ease both; box-shadow: var(--shadow-pop);
+    }
+    .panel-header {
+      padding: 20px 24px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--surface2);
+    }
+    .panel-header-left { display: flex; align-items: center; gap: 10px; }
+    .panel-dot { width: 14px; height: 14px; border-radius: 5px; flex-shrink: 0; }
+    .panel-header h3 { font-size: 1.15rem; font-weight: 800; }
+    .panel-close {
+      width: 34px; height: 34px; border-radius: 10px; background: var(--card);
+      border: none; color: var(--ink); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: .9rem;
+      transition: transform .15s; flex-shrink: 0;
+    }
+    .panel-close:hover { transform: scale(1.08); }
+    .panel-matieres { padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+    @media (max-width: 900px) { .panel-matieres { grid-template-columns: 1fr; } }
+    .mat-block { background: var(--surface2); border-radius: 16px; overflow: hidden; }
+    .mat-block-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; transition: background .15s; user-select: none; }
+    .mat-block-header:hover { background: var(--card); }
+    .mat-ico {
+      width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem; flex-shrink: 0; background: var(--card);
+    }
+    .mat-block-title { flex: 1; font-size: .94rem; font-weight: 800; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mat-block-title-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: .8rem; font-weight: 500; color: var(--ink3); margin-left: 6px; }
+    .mat-block-counts { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; margin-left: auto; }
+    .mat-block-count { font-size: .68rem; font-weight: 700; color: var(--ink2); background: var(--card); padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .mat-block-arrow { font-size: .7rem; color: var(--ink3); transition: transform .2s; flex-shrink: 0; }
+    .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
+    .mat-block-content { display: none; padding: 0 14px 14px; }
+    .mat-block.open .mat-block-content { display: block; }
+    .chap-block { background: var(--card); border-radius: 12px; overflow: hidden; margin-top: 8px; }
+    .chap-block:first-child { margin-top: 0; }
+    .chap-block-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; transition: background .15s; user-select: none; }
+    .chap-block-header:hover { background: var(--surface2); }
+    .chap-block-title { flex: 1; font-size: .85rem; font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chap-block-content { display: none; padding: 0 12px 12px; }
+    .chap-block.open .chap-block-content { display: block; }
+    .chap-block.open .mat-block-arrow { transform: rotate(90deg); }
+    .mat-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) {
+      .mat-columns { grid-template-columns: 1fr; }
+      .mat-col-qcms { order: -1; margin-bottom: 4px; }
+    }
+    .mat-col-label {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--ink3); margin-bottom: 8px; padding-top: 10px;
+    }
+    .qcm-nb-badge {
+      font-size: .64rem; font-weight: 800; color: var(--brand-dark); background: var(--brand-light);
+      padding: 2px 8px; border-radius: 20px; margin-left: auto; flex-shrink: 0;
+    }
+    .fiche-link {
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 10px; border-radius: 12px;
+      text-decoration: none; color: var(--ink2); font-size: .85rem; font-weight: 500;
+      margin-top: 5px; transition: all .15s; line-height: 1.35;
+    }
+    .fiche-link:hover { background: var(--card); color: var(--ink); }
+    .fiche-ico {
+      width: 26px; height: 26px; border-radius: 8px; background: var(--card);
+      display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fiche-text { flex: 1; min-width: 0; }
+    .empty-msg { padding: 14px 10px; font-size: .85rem; color: var(--ink3); font-style: italic; }
+    footer {
+      text-align: center; padding: 36px 20px; color: var(--ink2); font-size: .85rem;
+      margin-top: 20px; line-height: 1.9;
+    }
+    footer a { color: var(--brand-dark); text-decoration: none; font-weight: 700; }
+    footer a:hover { text-decoration: underline; }
+    .footer-copy { font-size: .77rem; color: var(--ink3); margin-top: 8px; }
+    .footer-copy strong { color: var(--ink2); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    <div class="header-title">Ta<span>nakh</span></div>
+  </div>
+  <div class="header-right">
+    <a href="../index.html" class="back-link">← Ton Coach Scolaire</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Étudie le <span class="accent">Tanakh</span><br>Torah, Nevi'im, Ketouvim</h1>
+  <p class="hero-sub">Texte original · Synthèse · Commentaires classiques</p>
+  <p class="hero-sub-heb">תנ״ך — תורה, נביאים, כתובים</p>
+</div>
+
+<div class="tiles-section">
+  <div class="tiles-label">Choisis une partie</div>
+  <div class="tiles-grid" id="tiles-grid"></div>
+</div>
+
+<div id="reveal-panel"></div>
+
+<footer>
+  Fait avec soin pour bien étudier 📖
+  <div class="footer-copy">
+    <strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Textes sources : <a href="https://www.sefaria.org/" target="_blank">Sefaria.org</a><br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// DONNÉES — Torah (5 livres, decoupes par paracha),
+// Nevi'im et Ketouvim (livres, decoupes par chapitre)
+// Chaque livre : { id, label, labelHeb, ico, cls, unites: [] }
+// Chaque unite (paracha ou chapitre) :
+//   { id, nom, nomHeb, type: 'paracha'|'chapitre', fiche: {...}|null, qcm: {...}|null }
+// ═══════════════════════════════════════════
+const data = {
+  'torah': {
+    label: 'Torah', labelHeb: 'תורה', color: '#7c3aed',
+    livres: [
+      { id: 'bereshit', label: 'Bereshit', labelHeb: 'בראשית', ico: '🌍', cls: 'ico-torah', unites: [
+        { id: 'bereshit-paracha', nom: 'Bereshit', nomHeb: 'בראשית', type: 'paracha', fiche: { name: 'Bereshit', href: 'paracha_bereshit-paracha.html' }, qcm: { name: 'QCM — Paracha Bereshit', href: 'qcm_paracha_bereshit-paracha.html', nbQuestions: 12 } },
+        { id: 'noach', nom: 'Noach', nomHeb: 'נח', type: 'paracha', fiche: null, qcm: null },
+        { id: 'lech-lecha', nom: 'Lech-Lecha', nomHeb: 'לך לך', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayera', nom: 'Vayera', nomHeb: 'וירא', type: 'paracha', fiche: null, qcm: null },
+        { id: 'chayei-sara', nom: 'Chayei Sarah', nomHeb: 'חיי שרה', type: 'paracha', fiche: null, qcm: null },
+        { id: 'toldot', nom: 'Toldot', nomHeb: 'תולדות', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayetzei', nom: 'Vayetzei', nomHeb: 'ויצא', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayishlach', nom: 'Vayishlach', nomHeb: 'וישלח', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayeshev', nom: 'Vayeshev', nomHeb: 'וישב', type: 'paracha', fiche: null, qcm: null },
+        { id: 'miketz', nom: 'Miketz', nomHeb: 'מקץ', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayigash', nom: 'Vayigash', nomHeb: 'ויגש', type: 'paracha', fiche: null, qcm: null },
+        { id: 'vayechi', nom: 'Vayechi', nomHeb: 'ויחי', type: 'paracha', fiche: null, qcm: null },
+      ] },
+      { id: 'shemot', label: 'Chemot', labelHeb: 'שמות', ico: '🔥', cls: 'ico-torah', unites: [] },
+      { id: 'vayikra', label: 'Vayikra', labelHeb: 'ויקרא', ico: '🕯️', cls: 'ico-torah', unites: [] },
+      { id: 'bamidbar', label: 'Bamidbar', labelHeb: 'במדבר', ico: '🏜️', cls: 'ico-torah', unites: [] },
+      { id: 'devarim', label: 'Devarim', labelHeb: 'דברים', ico: '📜', cls: 'ico-torah', unites: [] },
+    ]
+  },
+  'neviim': {
+    label: 'Nevi\'im', labelHeb: 'נביאים', color: '#dc2626',
+    livres: [
+      { id: 'yehoshua', label: 'Yehochoua', labelHeb: 'יהושע', ico: '⚔️', cls: 'ico-neviim', unites: [] },
+      { id: 'shoftim', label: 'Choftim', labelHeb: 'שופטים', ico: '⚖️', cls: 'ico-neviim', unites: [] },
+      { id: 'shmuel', label: 'Chmouel', labelHeb: 'שמואל', ico: '👑', cls: 'ico-neviim', unites: [] },
+      { id: 'melachim', label: 'Melakhim', labelHeb: 'מלכים', ico: '👑', cls: 'ico-neviim', unites: [] },
+      { id: 'yeshayahu', label: 'Yechayahou', labelHeb: 'ישעיהו', ico: '🔥', cls: 'ico-neviim', unites: [] },
+      { id: 'yirmeyahu', label: 'Yirmiyahou', labelHeb: 'ירמיהו', ico: '😢', cls: 'ico-neviim', unites: [] },
+      { id: 'yechezkel', label: 'Yehezkel', labelHeb: 'יחזקאל', ico: '👁️', cls: 'ico-neviim', unites: [] },
+      { id: 'trei-asar', label: 'Trei Assar', labelHeb: 'תרי עשר', ico: '📜', cls: 'ico-neviim', unites: [] },
+    ]
+  },
+  'ketouvim': {
+    label: 'Ketouvim', labelHeb: 'כתובים', color: '#b45309',
+    livres: [
+      { id: 'tehilim', label: 'Tehilim', labelHeb: 'תהלים', ico: '🎵', cls: 'ico-ketouvim', unites: [] },
+      { id: 'mishlei', label: 'Michlei', labelHeb: 'משלי', ico: '💡', cls: 'ico-ketouvim', unites: [] },
+      { id: 'iyov', label: 'Iyov', labelHeb: 'איוב', ico: '🌪️', cls: 'ico-ketouvim', unites: [] },
+      { id: 'shir-hashirim', label: 'Chir haChirim', labelHeb: 'שיר השירים', ico: '🌹', cls: 'ico-ketouvim', unites: [] },
+      { id: 'rut', label: 'Rout', labelHeb: 'רות', ico: '🌾', cls: 'ico-ketouvim', unites: [] },
+      { id: 'eichah', label: 'Eikha', labelHeb: 'איכה', ico: '😢', cls: 'ico-ketouvim', unites: [] },
+      { id: 'kohelet', label: 'Kohelet', labelHeb: 'קהלת', ico: '💭', cls: 'ico-ketouvim', unites: [] },
+      { id: 'ester', label: 'Esther', labelHeb: 'אסתר', ico: '👑', cls: 'ico-ketouvim', unites: [] },
+      { id: 'daniel', label: 'Daniel', labelHeb: 'דניאל', ico: '🦁', cls: 'ico-ketouvim', unites: [] },
+      { id: 'ezra-nehemia', label: 'Ezra-Nehemia', labelHeb: 'עזרא נחמיה', ico: '🏛️', cls: 'ico-ketouvim', unites: [] },
+      { id: 'divrei-hayamim', label: 'Divrei haYamim', labelHeb: 'דברי הימים', ico: '📜', cls: 'ico-ketouvim', unites: [] },
+    ]
+  },
+};
+
+const sedarimMeta = {
+  'torah':    { emoji: '📖', tileClass: 'tile-torah',    court: 'Torah',    nom: 'Les cinq livres' },
+  'neviim':   { emoji: '📯', tileClass: 'tile-neviim',   court: 'Nevi\'im', nom: 'Les prophètes' },
+  'ketouvim': { emoji: '✒️', tileClass: 'tile-ketouvim', court: 'Ketouvim', nom: 'Les écrits' },
+};
+
+const ordreSedarim = ['torah', 'neviim', 'ketouvim'];
+
+function compterFiches(livre) {
+  return (livre.unites || []).filter(u => u.fiche).length;
+}
+function compterQcms(livre) {
+  return (livre.unites || []).filter(u => u.qcm).length;
+}
+
+function renderTiles() {
+  const grid = document.getElementById('tiles-grid');
+  if (!grid) return;
+
+  const html = ordreSedarim.map(id => {
+    const seder = data[id];
+    const meta = sedarimMeta[id];
+    if (!seder || !meta) return '';
+
+    const totalFiches = seder.livres.reduce((s, t) => s + compterFiches(t), 0);
+    const totalQcms = seder.livres.reduce((s, t) => s + compterQcms(t), 0);
+    const badge = (totalFiches === 0 && totalQcms === 0)
+      ? 'À venir'
+      : totalQcms > 0
+        ? `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''} · ${totalQcms} QCM`
+        : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
+
+    const livresAvecContenu = seder.livres.filter(t => compterFiches(t) > 0 || compterQcms(t) > 0);
+    const pillsHtml = (livresAvecContenu.length > 0 ? livresAvecContenu : seder.livres.slice(0, 4))
+      .map(t => `<span class="tile-pill">${t.label}</span>`)
+      .join('');
+
+    return `
+    <div class="tile ${meta.tileClass}" onclick="openPanel('${id}')" id="tile-${id}">
+      <div class="tile-badge">${badge}</div>
+      <div class="tile-emoji">${meta.emoji}</div>
+      <div class="tile-level">${meta.court}</div>
+      <div class="tile-level-heb">${seder.labelHeb}</div>
+      <div class="tile-name">${meta.nom} — ${seder.livres.length} livres</div>
+      <div class="tile-pills">${pillsHtml}</div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = html;
+}
+
+renderTiles();
+
+let current = null;
+
+function openPanel(id) {
+  const panel = document.getElementById('reveal-panel');
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+
+  if (current === id) {
+    current = null;
+    panel.innerHTML = '';
+    return;
+  }
+
+  current = id;
+  document.getElementById('tile-' + id).classList.add('active');
+  const d = data[id];
+
+  const livresHtml = d.livres.map(lv => {
+    const unites = lv.unites || [];
+    const totalFichesLivre = compterFiches(lv);
+    const totalQcmsLivre = compterQcms(lv);
+
+    const unitesHtml = unites.length === 0
+      ? `<div class="empty-msg">Pas encore de contenu disponible.</div>`
+      : unites.map(u => {
+          const chapId = `ch-${lv.id}-${u.id}`;
+          const ico = u.type === 'paracha' ? '📜' : '📖';
+          const ficheHtml = u.fiche
+            ? `<a class="fiche-link" href="${u.fiche.href}"><div class="fiche-ico">${ico}</div><div class="fiche-text">${u.fiche.name}</div></a>`
+            : `<div class="empty-msg">Pas encore de fiche disponible.</div>`;
+          const qcmHtml = u.qcm
+            ? `<a class="fiche-link" href="${u.qcm.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${u.qcm.name}${u.qcm.nbQuestions ? `<span class="qcm-nb-badge">${u.qcm.nbQuestions} questions</span>` : ''}</div></a>`
+            : `<div class="empty-msg">Pas encore de QCM disponible.</div>`;
+          const label = u.type === 'paracha' ? 'Paracha' : 'Chapitre';
+          return `
+            <div class="chap-block" id="${chapId}">
+              <div class="chap-block-header" onclick="toggleChap('${chapId}')">
+                <span class="chap-block-title">${label} — ${u.nom}${u.nomHeb ? ` (${u.nomHeb})` : ''}</span>
+                <div class="mat-block-counts">
+                  <span class="mat-block-count">${u.fiche ? '1 fiche' : '0 fiche'}</span>
+                  <span class="mat-block-count">${u.qcm ? '1 QCM' : '0 QCM'}</span>
+                </div>
+                <span class="mat-block-arrow">▶</span>
+              </div>
+              <div class="chap-block-content">
+                <div class="mat-columns">
+                  <div class="mat-col-fiches">
+                    <div class="mat-col-label">📚 Fiche</div>
+                    ${ficheHtml}
+                  </div>
+                  <div class="mat-col-qcms">
+                    <div class="mat-col-label">📝 QCM d'évaluation</div>
+                    ${qcmHtml}
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+
+    const badgeFiches = `${totalFichesLivre} fiche${totalFichesLivre !== 1 ? 's' : ''}`;
+    const badgeQcms = `${totalQcmsLivre} QCM`;
+
+    return `
+      <div class="mat-block" id="mb-${lv.id}">
+        <div class="mat-block-header" onclick="toggleMat('mb-${lv.id}')">
+          <div class="mat-ico ${lv.cls}">${lv.ico}</div>
+          <span class="mat-block-title">${lv.label}<span class="mat-block-title-heb">${lv.labelHeb}</span></span>
+          <div class="mat-block-counts">
+            <span class="mat-block-count">${badgeFiches}</span>
+            <span class="mat-block-count">${badgeQcms}</span>
+          </div>
+          <span class="mat-block-arrow">▶</span>
+        </div>
+        <div class="mat-block-content">${unitesHtml}</div>
+      </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="panel-inner">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <div class="panel-dot" style="background:${d.color}"></div>
+          <h3>${d.label} <span style="font-family:'Frank Ruhl Libre',serif;font-weight:500;color:var(--ink3);font-size:.85rem">${d.labelHeb}</span></h3>
+        </div>
+        <button class="panel-close" onclick="closePanel()">✕</button>
+      </div>
+      <div class="panel-matieres">${livresHtml}</div>
+    </div>`;
+
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
+function closePanel() {
+  document.getElementById('reveal-panel').innerHTML = '';
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+  current = null;
+}
+
+function toggleMat(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleChap(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+
+function appliquerTheme(theme) {
+  htmlEl.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('tcs-theme', theme); } catch (e) {}
+}
+
+let themeInitial = 'light';
+try {
+  const sauvegarde = localStorage.getItem('tcs-theme');
+  if (sauvegarde === 'dark' || sauvegarde === 'light') {
+    themeInitial = sauvegarde;
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    themeInitial = 'dark';
+  }
+} catch (e) {}
+appliquerTheme(themeInitial);
+
+themeToggle.addEventListener('click', () => {
+  const actuel = htmlEl.getAttribute('data-theme');
+  appliquerTheme(actuel === 'dark' ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
