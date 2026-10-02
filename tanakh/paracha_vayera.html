@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Vayera — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#7c3aed; --primaire-clair:#f5f3ff; --texte-primaire:#4c1d95;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#1e1b3a 0%,#312e81 50%,#7c3aed 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+.verset-num{display:inline-block;min-width:1.6em;font-size:.7em;font-weight:800;color:var(--primaire);vertical-align:super;margin-right:2px}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.synthese-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.synthese-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.synthese-bloc p:last-child{margin-bottom:0}
+.synthese-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.synthese-bloc b{color:var(--texte-primaire)}
+.synthese-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.synthese-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.synthese-bloc table{font-family:'Plus Jakarta Sans',sans-serif;width:100%;border-collapse:collapse;margin:12px 0}
+.synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
+.synthese-bloc table th{background:var(--surface2)}
+.synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+.ad-banner-inner {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border-radius: 18px;
+  padding: 14px 18px; transition: transform .15s;
+  box-shadow: var(--shadow-card);
+}
+.ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ad-banner-tag {
+  flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+  border-radius: 20px; padding: 3px 10px;
+}
+.ad-banner-icon {
+  flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+  background: var(--surface2); border-radius: 12px; padding: 4px;
+}
+.ad-banner-text { flex: 1; min-width: 0; }
+.ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+.ad-banner-cta {
+  flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+  background: var(--secondaire); padding: 8px 16px; border-radius: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour a l'accueil Tanakh">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bereshit · Paracha</div>
+    <h1>Vayera</h1>
+    <p>Torah, Bereshit (Genesis 18:1-22:24)</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button><button class="tab" id="tab-t2" onclick="showTab('t2')">🧭 Synthese</button><button class="tab" id="tab-t4" onclick="showTab('t4')">✡️ Midrash</button><button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button><button class="tab" id="tab-t5" onclick="showTab('t5')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וַיֵּרָ֤א אֵלָיו֙ יְהֹוָ֔ה בְּאֵלֹנֵ֖י מַמְרֵ֑א וְה֛וּא יֹשֵׁ֥ב פֶּֽתַח־הָאֹ֖הֶל כְּחֹ֥ם הַיּֽוֹם׃</p>
+      <p>וַיִּשָּׂ֤א עֵינָיו֙ וַיַּ֔רְא וְהִנֵּה֙ שְׁלֹשָׁ֣ה אֲנָשִׁ֔ים נִצָּבִ֖ים עָלָ֑יו וַיַּ֗רְא וַיָּ֤רׇץ לִקְרָאתָם֙ מִפֶּ֣תַח הָאֹ֔הֶל וַיִּשְׁתַּ֖חוּ אָֽרְצָה׃</p>
+      <p>וַיֹּאמַ֑ר אֲדֹנָ֗י אִם־נָ֨א מָצָ֤אתִי חֵן֙ בְּעֵינֶ֔יךָ אַל־נָ֥א תַעֲבֹ֖ר מֵעַ֥ל עַבְדֶּֽךָ׃</p>
+      <p>יֻקַּֽח־נָ֣א מְעַט־מַ֔יִם וְרַחֲצ֖וּ רַגְלֵיכֶ֑ם וְהִֽשָּׁעֲנ֖וּ תַּ֥חַת הָעֵֽץ׃</p>
+      <p>וְאֶקְחָ֨ה פַת־לֶ֜חֶם וְסַעֲד֤וּ לִבְּכֶם֙ אַחַ֣ר תַּעֲבֹ֔רוּ כִּֽי־עַל־כֵּ֥ן עֲבַרְתֶּ֖ם עַֽל־עַבְדְּכֶ֑ם וַיֹּ֣אמְר֔וּ כֵּ֥ן תַּעֲשֶׂ֖ה כַּאֲשֶׁ֥ר דִּבַּֽרְתָּ׃</p>
+      <p>וַיְמַהֵ֧ר אַבְרָהָ֛ם הָאֹ֖הֱלָה אֶל־שָׂרָ֑ה וַיֹּ֗אמֶר מַהֲרִ֞י שְׁלֹ֤שׁ סְאִים֙ קֶ֣מַח סֹ֔לֶת ל֖וּשִׁי וַעֲשִׂ֥י עֻגֽוֹת׃</p>
+      <p>וְאֶל־הַבָּקָ֖ר רָ֣ץ אַבְרָהָ֑ם וַיִּקַּ֨ח בֶּן־בָּקָ֜ר רַ֤ךְ וָטוֹב֙ וַיִּתֵּ֣ן אֶל־הַנַּ֔עַר וַיְמַהֵ֖ר לַעֲשׂ֥וֹת אֹתֽוֹ׃</p>
+      <p>וַיִּקַּ֨ח חֶמְאָ֜ה וְחָלָ֗ב וּבֶן־הַבָּקָר֙ אֲשֶׁ֣ר עָשָׂ֔ה וַיִּתֵּ֖ן לִפְנֵיהֶ֑ם וְהֽוּא־עֹמֵ֧ד עֲלֵיהֶ֛ם תַּ֥חַת הָעֵ֖ץ וַיֹּאכֵֽלוּ׃</p>
+      <p>וַיֹּאמְר֣וּ אֵׄלָ֔יׄוׄ אַיֵּ֖ה שָׂרָ֣ה אִשְׁתֶּ֑ךָ וַיֹּ֖אמֶר הִנֵּ֥ה בָאֹֽהֶל׃</p>
+      <p>וַיֹּ֗אמֶר שׁ֣וֹב אָשׁ֤וּב אֵלֶ֙יךָ֙ כָּעֵ֣ת חַיָּ֔ה וְהִנֵּה־בֵ֖ן לְשָׂרָ֣ה אִשְׁתֶּ֑ךָ וְשָׂרָ֥ה שֹׁמַ֛עַת פֶּ֥תַח הָאֹ֖הֶל וְה֥וּא אַחֲרָֽיו׃</p>
+      <p>וְאַבְרָהָ֤ם וְשָׂרָה֙ זְקֵנִ֔ים בָּאִ֖ים בַּיָּמִ֑ים חָדַל֙ לִהְי֣וֹת לְשָׂרָ֔ה אֹ֖רַח כַּנָּשִֽׁים׃</p>
+      <p>וַתִּצְחַ֥ק שָׂרָ֖ה בְּקִרְבָּ֣הּ לֵאמֹ֑ר אַחֲרֵ֤י בְלֹתִי֙ הָֽיְתָה־לִּ֣י עֶדְנָ֔ה וַֽאדֹנִ֖י זָקֵֽן׃</p>
+      <p>וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־אַבְרָהָ֑ם לָ֣מָּה זֶּה֩ צָחֲקָ֨ה שָׂרָ֜ה לֵאמֹ֗ר הַאַ֥ף אֻמְנָ֛ם אֵלֵ֖ד וַאֲנִ֥י זָקַֽנְתִּי׃</p>
+      <p>הֲיִפָּלֵ֥א מֵיְהֹוָ֖ה דָּבָ֑ר לַמּוֹעֵ֞ד אָשׁ֥וּב אֵלֶ֛יךָ כָּעֵ֥ת חַיָּ֖ה וּלְשָׂרָ֥ה בֵֽן׃</p>
+      <p>וַתְּכַחֵ֨שׁ שָׂרָ֧ה&thinsp;<small>׀</small>&thinsp;לֵאמֹ֛ר לֹ֥א צָחַ֖קְתִּי כִּ֣י&thinsp;<small>׀</small>&thinsp;יָרֵ֑אָה וַיֹּ֥אמֶֽר&thinsp;<small>׀</small>&thinsp;לֹ֖א כִּ֥י צָחָֽקְתְּ׃</p>
+      <p>וַיָּקֻ֤מוּ מִשָּׁם֙ הָֽאֲנָשִׁ֔ים וַיַּשְׁקִ֖פוּ עַל־פְּנֵ֣י סְדֹ֑ם וְאַ֨בְרָהָ֔ם הֹלֵ֥ךְ עִמָּ֖ם לְשַׁלְּחָֽם׃</p>
+      <p>וַֽיהֹוָ֖ה אָמָ֑ר הַֽמְכַסֶּ֤ה אֲנִי֙ מֵֽאַבְרָהָ֔ם אֲשֶׁ֖ר אֲנִ֥י עֹשֶֽׂה׃</p>
+      <p>וְאַ֨בְרָהָ֔ם הָי֧וֹ יִֽהְיֶ֛ה לְג֥וֹי גָּד֖וֹל וְעָצ֑וּם וְנִ֨בְרְכוּ־ב֔וֹ כֹּ֖ל גּוֹיֵ֥י הָאָֽרֶץ׃</p>
+      <p>כִּ֣י יְדַעְתִּ֗יו לְמַ֩עַן֩ אֲשֶׁ֨ר יְצַוֶּ֜ה אֶת־בָּנָ֤יו וְאֶת־בֵּיתוֹ֙ אַחֲרָ֔יו וְשָֽׁמְרוּ֙ דֶּ֣רֶךְ יְהֹוָ֔ה לַעֲשׂ֥וֹת צְדָקָ֖ה וּמִשְׁפָּ֑ט לְמַ֗עַן הָבִ֤יא יְהֹוָה֙ עַל־אַבְרָהָ֔ם אֵ֥ת אֲשֶׁר־דִּבֶּ֖ר עָלָֽיו׃</p>
+      <p>וַיֹּ֣אמֶר יְהֹוָ֔ה זַעֲקַ֛ת סְדֹ֥ם וַעֲמֹרָ֖ה כִּי־רָ֑בָּה וְחַ֨טָּאתָ֔ם כִּ֥י כָבְדָ֖ה מְאֹֽד׃</p>
+      <p>אֵֽרְדָה־נָּ֣א וְאֶרְאֶ֔ה הַכְּצַעֲקָתָ֛הּ הַבָּ֥אָה אֵלַ֖י עָשׂ֣וּ&thinsp;<small>׀</small>&thinsp;כָּלָ֑ה וְאִם־לֹ֖א אֵדָֽעָה׃</p>
+      <p>וַיִּפְנ֤וּ מִשָּׁם֙ הָֽאֲנָשִׁ֔ים וַיֵּלְכ֖וּ סְדֹ֑מָה וְאַ֨בְרָהָ֔ם עוֹדֶ֥נּוּ עֹמֵ֖ד לִפְנֵ֥י יְהֹוָֽה׃</p>
+      <p>וַיִּגַּ֥שׁ אַבְרָהָ֖ם וַיֹּאמַ֑ר הַאַ֣ף תִּסְפֶּ֔ה צַדִּ֖יק עִם־רָשָֽׁע׃</p>
+      <p>אוּלַ֥י יֵ֛שׁ חֲמִשִּׁ֥ים צַדִּיקִ֖ם בְּת֣וֹךְ הָעִ֑יר הַאַ֤ף תִּסְפֶּה֙ וְלֹא־תִשָּׂ֣א לַמָּק֔וֹם לְמַ֛עַן חֲמִשִּׁ֥ים הַצַּדִּיקִ֖ם אֲשֶׁ֥ר בְּקִרְבָּֽהּ׃</p>
+      <p>חָלִ֨לָה לְּךָ֜ מֵעֲשֹׂ֣ת&thinsp;<b>׀</b> כַּדָּבָ֣ר הַזֶּ֗ה לְהָמִ֤ית צַדִּיק֙ עִם־רָשָׁ֔ע וְהָיָ֥ה כַצַּדִּ֖יק כָּרָשָׁ֑ע חָלִ֣לָה לָּ֔ךְ הֲשֹׁפֵט֙ כׇּל־הָאָ֔רֶץ לֹ֥א יַעֲשֶׂ֖ה מִשְׁפָּֽט׃</p>
+      <p>וַיֹּ֣אמֶר יְהֹוָ֔ה אִם־אֶמְצָ֥א בִסְדֹ֛ם חֲמִשִּׁ֥ים צַדִּיקִ֖ם בְּת֣וֹךְ הָעִ֑יר וְנָשָׂ֥אתִי לְכׇל־הַמָּק֖וֹם בַּעֲבוּרָֽם׃</p>
+      <p>וַיַּ֥עַן אַבְרָהָ֖ם וַיֹּאמַ֑ר הִנֵּה־נָ֤א הוֹאַ֙לְתִּי֙ לְדַבֵּ֣ר אֶל־אֲדֹנָ֔י וְאָנֹכִ֖י עָפָ֥ר וָאֵֽפֶר׃</p>
+      <p>א֠וּלַ֠י יַחְסְר֞וּן חֲמִשִּׁ֤ים הַצַּדִּיקִם֙ חֲמִשָּׁ֔ה הֲתַשְׁחִ֥ית בַּחֲמִשָּׁ֖ה אֶת־כׇּל־הָעִ֑יר וַיֹּ֙אמֶר֙ לֹ֣א אַשְׁחִ֔ית אִם־אֶמְצָ֣א שָׁ֔ם אַרְבָּעִ֖ים וַחֲמִשָּֽׁה׃</p>
+      <p>וַיֹּ֨סֶף ע֜וֹד לְדַבֵּ֤ר אֵלָיו֙ וַיֹּאמַ֔ר אוּלַ֛י יִמָּצְא֥וּן שָׁ֖ם אַרְבָּעִ֑ים וַיֹּ֙אמֶר֙ לֹ֣א אֶֽעֱשֶׂ֔ה בַּעֲב֖וּר הָאַרְבָּעִֽים׃</p>
+      <p>וַ֠יֹּ֠אמֶר אַל־נָ֞א יִ֤חַר לַֽאדֹנָי֙ וַאֲדַבֵּ֔רָה אוּלַ֛י יִמָּצְא֥וּן שָׁ֖ם שְׁלֹשִׁ֑ים וַיֹּ֙אמֶר֙ לֹ֣א אֶֽעֱשֶׂ֔ה אִם־אֶמְצָ֥א שָׁ֖ם שְׁלֹשִֽׁים׃</p>
+      <p>וַיֹּ֗אמֶר הִנֵּֽה־נָ֤א הוֹאַ֙לְתִּי֙ לְדַבֵּ֣ר אֶל־אֲדֹנָ֔י אוּלַ֛י יִמָּצְא֥וּן שָׁ֖ם עֶשְׂרִ֑ים וַיֹּ֙אמֶר֙ לֹ֣א אַשְׁחִ֔ית בַּעֲב֖וּר הָֽעֶשְׂרִֽים׃</p>
+      <p>וַ֠יֹּ֠אמֶר אַל־נָ֞א יִ֤חַר לַֽאדֹנָי֙ וַאֲדַבְּרָ֣ה אַךְ־הַפַּ֔עַם אוּלַ֛י יִמָּצְא֥וּן שָׁ֖ם עֲשָׂרָ֑ה וַיֹּ֙אמֶר֙ לֹ֣א אַשְׁחִ֔ית בַּעֲב֖וּר הָעֲשָׂרָֽה׃</p>
+      <p>וַיֵּ֣לֶךְ יְהֹוָ֔ה כַּאֲשֶׁ֣ר כִּלָּ֔ה לְדַבֵּ֖ר אֶל־אַבְרָהָ֑ם וְאַבְרָהָ֖ם שָׁ֥ב לִמְקֹמֽוֹ׃</p>
+      <p>וַ֠יָּבֹ֠אוּ שְׁנֵ֨י הַמַּלְאָכִ֤ים סְדֹ֙מָה֙ בָּעֶ֔רֶב וְל֖וֹט יֹשֵׁ֣ב בְּשַֽׁעַר־סְדֹ֑ם וַיַּרְא־לוֹט֙ וַיָּ֣קׇם לִקְרָאתָ֔ם וַיִּשְׁתַּ֥חוּ אַפַּ֖יִם אָֽרְצָה׃</p>
+      <p>וַיֹּ֜אמֶר הִנֶּ֣ה נָּא־אֲדֹנַ֗י ס֣וּרוּ נָ֠א אֶל־בֵּ֨ית עַבְדְּכֶ֤ם וְלִ֙ינוּ֙ וְרַחֲצ֣וּ רַגְלֵיכֶ֔ם וְהִשְׁכַּמְתֶּ֖ם וַהֲלַכְתֶּ֣ם לְדַרְכְּכֶ֑ם וַיֹּאמְר֣וּ לֹּ֔א כִּ֥י בָרְח֖וֹב נָלִֽין׃</p>
+      <p>וַיִּפְצַר־בָּ֣ם מְאֹ֔ד וַיָּסֻ֣רוּ אֵלָ֔יו וַיָּבֹ֖אוּ אֶל־בֵּית֑וֹ וַיַּ֤עַשׂ לָהֶם֙ מִשְׁתֶּ֔ה וּמַצּ֥וֹת אָפָ֖ה וַיֹּאכֵֽלוּ׃</p>
+      <p>טֶ֘רֶם֮ יִשְׁכָּ֒בוּ֒ וְאַנְשֵׁ֨י הָעִ֜יר אַנְשֵׁ֤י סְדֹם֙ נָסַ֣בּוּ עַל־הַבַּ֔יִת מִנַּ֖עַר וְעַד־זָקֵ֑ן כׇּל־הָעָ֖ם מִקָּצֶֽה׃</p>
+      <p>וַיִּקְרְא֤וּ אֶל־לוֹט֙ וַיֹּ֣אמְרוּ ל֔וֹ אַיֵּ֧ה הָאֲנָשִׁ֛ים אֲשֶׁר־בָּ֥אוּ אֵלֶ֖יךָ הַלָּ֑יְלָה הוֹצִיאֵ֣ם אֵלֵ֔ינוּ וְנֵדְעָ֖ה אֹתָֽם׃</p>
+      <p>וַיֵּצֵ֧א אֲלֵהֶ֛ם ל֖וֹט הַפֶּ֑תְחָה וְהַדֶּ֖לֶת סָגַ֥ר אַחֲרָֽיו׃</p>
+      <p>וַיֹּאמַ֑ר אַל־נָ֥א אַחַ֖י תָּרֵֽעוּ׃</p>
+      <p>הִנֵּה־נָ֨א לִ֜י שְׁתֵּ֣י בָנ֗וֹת אֲשֶׁ֤ר לֹֽא־יָדְעוּ֙ אִ֔ישׁ אוֹצִֽיאָה־נָּ֤א אֶתְהֶן֙ אֲלֵיכֶ֔ם וַעֲשׂ֣וּ לָהֶ֔ן כַּטּ֖וֹב בְּעֵינֵיכֶ֑ם רַ֠ק לָֽאֲנָשִׁ֤ים הָאֵל֙ אַל־תַּעֲשׂ֣וּ דָבָ֔ר כִּֽי־עַל־כֵּ֥ן בָּ֖אוּ בְּצֵ֥ל קֹרָתִֽי׃</p>
+      <p>וַיֹּאמְר֣וּ&thinsp;<b>׀</b> גֶּשׁ־הָ֗לְאָה וַיֹּֽאמְרוּ֙ הָאֶחָ֤ד בָּֽא־לָגוּר֙ וַיִּשְׁפֹּ֣ט שָׁפ֔וֹט עַתָּ֕ה נָרַ֥ע לְךָ֖ מֵהֶ֑ם וַיִּפְצְר֨וּ בָאִ֤ישׁ בְּלוֹט֙ מְאֹ֔ד וַֽיִּגְּשׁ֖וּ לִשְׁבֹּ֥ר הַדָּֽלֶת׃</p>
+      <p>וַיִּשְׁלְח֤וּ הָֽאֲנָשִׁים֙ אֶת־יָדָ֔ם וַיָּבִ֧יאוּ אֶת־ל֛וֹט אֲלֵיהֶ֖ם הַבָּ֑יְתָה וְאֶת־הַדֶּ֖לֶת סָגָֽרוּ׃</p>
+      <p>וְֽאֶת־הָאֲנָשִׁ֞ים אֲשֶׁר־פֶּ֣תַח הַבַּ֗יִת הִכּוּ֙ בַּסַּנְוֵרִ֔ים מִקָּטֹ֖ן וְעַד־גָּד֑וֹל וַיִּלְא֖וּ לִמְצֹ֥א הַפָּֽתַח׃</p>
+      <p>וַיֹּאמְר֨וּ הָאֲנָשִׁ֜ים אֶל־ל֗וֹט עֹ֚ד מִֽי־לְךָ֣ פֹ֔ה חָתָן֙ וּבָנֶ֣יךָ וּבְנֹתֶ֔יךָ וְכֹ֥ל אֲשֶׁר־לְךָ֖ בָּעִ֑יר הוֹצֵ֖א מִן־הַמָּקֽוֹם׃</p>
+      <p>כִּֽי־מַשְׁחִתִ֣ים אֲנַ֔חְנוּ אֶת־הַמָּק֖וֹם הַזֶּ֑ה כִּֽי־גָדְלָ֤ה צַעֲקָתָם֙ אֶת־פְּנֵ֣י יְהֹוָ֔ה וַיְשַׁלְּחֵ֥נוּ יְהֹוָ֖ה לְשַׁחֲתָֽהּ׃</p>
+      <p>וַיֵּצֵ֨א ל֜וֹט וַיְדַבֵּ֣ר&thinsp;<b>׀</b> אֶל־חֲתָנָ֣יו&thinsp;<b>׀</b> לֹקְחֵ֣י בְנֹתָ֗יו וַיֹּ֙אמֶר֙ ק֤וּמוּ צְּאוּ֙ מִן־הַמָּק֣וֹם הַזֶּ֔ה כִּֽי־מַשְׁחִ֥ית יְהֹוָ֖ה אֶת־הָעִ֑יר וַיְהִ֥י כִמְצַחֵ֖ק בְּעֵינֵ֥י חֲתָנָֽיו׃</p>
+      <p>וּכְמוֹ֙ הַשַּׁ֣חַר עָלָ֔ה וַיָּאִ֥יצוּ הַמַּלְאָכִ֖ים בְּל֣וֹט לֵאמֹ֑ר קוּם֩ קַ֨ח אֶֽת־אִשְׁתְּךָ֜ וְאֶת־שְׁתֵּ֤י בְנֹתֶ֙יךָ֙ הַנִּמְצָאֹ֔ת פֶּן־תִּסָּפֶ֖ה בַּעֲוֺ֥ן הָעִֽיר׃</p>
+      <p>וַֽיִּתְמַהְמָ֓הּ&thinsp;<b>׀</b> וַיַּחֲזִ֨יקוּ הָאֲנָשִׁ֜ים בְּיָד֣וֹ וּבְיַד־אִשְׁתּ֗וֹ וּבְיַד֙ שְׁתֵּ֣י בְנֹתָ֔יו בְּחֶמְלַ֥ת יְהֹוָ֖ה עָלָ֑יו וַיֹּצִאֻ֥הוּ וַיַּנִּחֻ֖הוּ מִח֥וּץ לָעִֽיר׃</p>
+      <p>וַיְהִי֩ כְהוֹצִיאָ֨ם אֹתָ֜ם הַח֗וּצָה וַיֹּ֙אמֶר֙ הִמָּלֵ֣ט עַל־נַפְשֶׁ֔ךָ אַל־תַּבִּ֣יט אַחֲרֶ֔יךָ וְאַֽל־תַּעֲמֹ֖ד בְּכׇל־הַכִּכָּ֑ר הָהָ֥רָה הִמָּלֵ֖ט פֶּן־תִּסָּפֶֽה׃</p>
+      <p>וַיֹּ֥אמֶר ל֖וֹט אֲלֵהֶ֑ם אַל־נָ֖א אֲדֹנָֽי׃</p>
+      <p>הִנֵּה־נָ֠א מָצָ֨א עַבְדְּךָ֣ חֵן֮ בְּעֵינֶ֒יךָ֒ וַתַּגְדֵּ֣ל חַסְדְּךָ֗ אֲשֶׁ֤ר עָשִׂ֙יתָ֙ עִמָּדִ֔י לְהַחֲי֖וֹת אֶת־נַפְשִׁ֑י וְאָנֹכִ֗י לֹ֤א אוּכַל֙ לְהִמָּלֵ֣ט הָהָ֔רָה פֶּן־תִּדְבָּקַ֥נִי הָרָעָ֖ה וָמַֽתִּי׃</p>
+      <p>הִנֵּה־נָ֠א הָעִ֨יר הַזֹּ֧את קְרֹבָ֛ה לָנ֥וּס שָׁ֖מָּה וְהִ֣וא מִצְעָ֑ר אִמָּלְטָ֨ה נָּ֜א שָׁ֗מָּה הֲלֹ֥א מִצְעָ֛ר הִ֖וא וּתְחִ֥י נַפְשִֽׁי׃</p>
+      <p>וַיֹּ֣אמֶר אֵלָ֔יו הִנֵּה֙ נָשָׂ֣אתִי פָנֶ֔יךָ גַּ֖ם לַדָּבָ֣ר הַזֶּ֑ה לְבִלְתִּ֛י הׇפְכִּ֥י אֶת־הָעִ֖יר אֲשֶׁ֥ר דִּבַּֽרְתָּ׃</p>
+      <p>מַהֵר֙ הִמָּלֵ֣ט שָׁ֔מָּה כִּ֣י לֹ֤א אוּכַל֙ לַעֲשׂ֣וֹת דָּבָ֔ר עַד־בֹּאֲךָ֖ שָׁ֑מָּה עַל־כֵּ֛ן קָרָ֥א שֵׁם־הָעִ֖יר צֽוֹעַר׃</p>
+      <p>הַשֶּׁ֖מֶשׁ יָצָ֣א עַל־הָאָ֑רֶץ וְל֖וֹט בָּ֥א צֹֽעֲרָה׃</p>
+      <p>וַֽיהֹוָ֗ה הִמְטִ֧יר עַל־סְדֹ֛ם וְעַל־עֲמֹרָ֖ה גׇּפְרִ֣ית וָאֵ֑שׁ מֵאֵ֥ת יְהֹוָ֖ה מִן־הַשָּׁמָֽיִם׃</p>
+      <p>וַֽיַּהֲפֹךְ֙ אֶת־הֶעָרִ֣ים הָאֵ֔ל וְאֵ֖ת כׇּל־הַכִּכָּ֑ר וְאֵת֙ כׇּל־יֹשְׁבֵ֣י הֶעָרִ֔ים וְצֶ֖מַח הָאֲדָמָֽה׃</p>
+      <p>וַתַּבֵּ֥ט אִשְׁתּ֖וֹ מֵאַחֲרָ֑יו וַתְּהִ֖י נְצִ֥יב מֶֽלַח׃</p>
+      <p>וַיַּשְׁכֵּ֥ם אַבְרָהָ֖ם בַּבֹּ֑קֶר אֶ֨ל־הַמָּק֔וֹם אֲשֶׁר־עָ֥מַד שָׁ֖ם אֶת־פְּנֵ֥י יְהֹוָֽה׃</p>
+      <p>וַיַּשְׁקֵ֗ף עַל־פְּנֵ֤י סְדֹם֙ וַעֲמֹרָ֔ה וְעַֽל־כׇּל־פְּנֵ֖י אֶ֣רֶץ הַכִּכָּ֑ר וַיַּ֗רְא וְהִנֵּ֤ה עָלָה֙ קִיטֹ֣ר הָאָ֔רֶץ כְּקִיטֹ֖ר הַכִּבְשָֽׁן׃</p>
+      <p>וַיְהִ֗י בְּשַׁחֵ֤ת אֱלֹהִים֙ אֶת־עָרֵ֣י הַכִּכָּ֔ר וַיִּזְכֹּ֥ר אֱלֹהִ֖ים אֶת־אַבְרָהָ֑ם וַיְשַׁלַּ֤ח אֶת־לוֹט֙ מִתּ֣וֹךְ הַהֲפֵכָ֔ה בַּהֲפֹךְ֙ אֶת־הֶ֣עָרִ֔ים אֲשֶׁר־יָשַׁ֥ב בָּהֵ֖ן לֽוֹט׃</p>
+      <p>וַיַּ֩עַל֩ ל֨וֹט מִצּ֜וֹעַר וַיֵּ֣שֶׁב בָּהָ֗ר וּשְׁתֵּ֤י בְנֹתָיו֙ עִמּ֔וֹ כִּ֥י יָרֵ֖א לָשֶׁ֣בֶת בְּצ֑וֹעַר וַיֵּ֙שֶׁב֙ בַּמְּעָרָ֔ה ה֖וּא וּשְׁתֵּ֥י בְנֹתָֽיו׃</p>
+      <p>וַתֹּ֧אמֶר הַבְּכִירָ֛ה אֶל־הַצְּעִירָ֖ה אָבִ֣ינוּ זָקֵ֑ן וְאִ֨ישׁ אֵ֤ין בָּאָ֙רֶץ֙ לָב֣וֹא עָלֵ֔ינוּ כְּדֶ֖רֶךְ כׇּל־הָאָֽרֶץ׃</p>
+      <p>לְכָ֨ה נַשְׁקֶ֧ה אֶת־אָבִ֛ינוּ יַ֖יִן וְנִשְׁכְּבָ֣ה עִמּ֑וֹ וּנְחַיֶּ֥ה מֵאָבִ֖ינוּ זָֽרַע׃</p>
+      <p>וַתַּשְׁקֶ֧יןָ אֶת־אֲבִיהֶ֛ן יַ֖יִן בַּלַּ֣יְלָה ה֑וּא וַתָּבֹ֤א הַבְּכִירָה֙ וַתִּשְׁכַּ֣ב אֶת־אָבִ֔יהָ וְלֹֽא־יָדַ֥ע בְּשִׁכְבָ֖הּ וּבְקוּׄמָֽהּ׃</p>
+      <p>וַֽיְהִי֙ מִֽמׇּחֳרָ֔ת וַתֹּ֤אמֶר הַבְּכִירָה֙ אֶל־הַצְּעִירָ֔ה הֵן־שָׁכַ֥בְתִּי אֶ֖מֶשׁ אֶת־אָבִ֑י נַשְׁקֶ֨נּוּ יַ֜יִן גַּם־הַלַּ֗יְלָה וּבֹ֙אִי֙ שִׁכְבִ֣י עִמּ֔וֹ וּנְחַיֶּ֥ה מֵאָבִ֖ינוּ זָֽרַע׃</p>
+      <p>וַתַּשְׁקֶ֜יןָ גַּ֣ם בַּלַּ֧יְלָה הַה֛וּא אֶת־אֲבִיהֶ֖ן יָ֑יִן וַתָּ֤קׇם הַצְּעִירָה֙ וַתִּשְׁכַּ֣ב עִמּ֔וֹ וְלֹֽא־יָדַ֥ע בְּשִׁכְבָ֖הּ וּבְקֻמָֽהּ׃</p>
+      <p>וַֽתַּהֲרֶ֛יןָ שְׁתֵּ֥י בְנֽוֹת־ל֖וֹט מֵאֲבִיהֶֽן׃</p>
+      <p>וַתֵּ֤לֶד הַבְּכִירָה֙ בֵּ֔ן וַתִּקְרָ֥א שְׁמ֖וֹ מוֹאָ֑ב ה֥וּא אֲבִֽי־מוֹאָ֖ב עַד־הַיּֽוֹם׃</p>
+      <p>וְהַצְּעִירָ֤ה גַם־הִוא֙ יָ֣לְדָה בֵּ֔ן וַתִּקְרָ֥א שְׁמ֖וֹ בֶּן־עַמִּ֑י ה֛וּא אֲבִ֥י בְנֵֽי־עַמּ֖וֹן עַד־הַיּֽוֹם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַיִּסַּ֨ע מִשָּׁ֤ם אַבְרָהָם֙ אַ֣רְצָה הַנֶּ֔גֶב וַיֵּ֥שֶׁב בֵּין־קָדֵ֖שׁ וּבֵ֣ין שׁ֑וּר וַיָּ֖גׇר בִּגְרָֽר׃</p>
+      <p>וַיֹּ֧אמֶר אַבְרָהָ֛ם אֶל־שָׂרָ֥ה אִשְׁתּ֖וֹ אֲחֹ֣תִי הִ֑וא וַיִּשְׁלַ֗ח אֲבִימֶ֙לֶךְ֙ מֶ֣לֶךְ גְּרָ֔ר וַיִּקַּ֖ח אֶת־שָׂרָֽה׃</p>
+      <p>וַיָּבֹ֧א אֱלֹהִ֛ים אֶל־אֲבִימֶ֖לֶךְ בַּחֲל֣וֹם הַלָּ֑יְלָה וַיֹּ֣אמֶר ל֗וֹ הִנְּךָ֥ מֵת֙ עַל־הָאִשָּׁ֣ה אֲשֶׁר־לָקַ֔חְתָּ וְהִ֖וא בְּעֻ֥לַת בָּֽעַל׃</p>
+      <p>וַאֲבִימֶ֕לֶךְ לֹ֥א קָרַ֖ב אֵלֶ֑יהָ וַיֹּאמַ֕ר אֲדֹנָ֕י הֲג֥וֹי גַּם־צַדִּ֖יק תַּהֲרֹֽג׃</p>
+      <p>הֲלֹ֨א ה֤וּא אָֽמַר־לִי֙ אֲחֹ֣תִי הִ֔וא וְהִֽיא־גַם־הִ֥וא אָֽמְרָ֖ה אָחִ֣י ה֑וּא בְּתׇם־לְבָבִ֛י וּבְנִקְיֹ֥ן כַּפַּ֖י עָשִׂ֥יתִי זֹֽאת׃</p>
+      <p>וַיֹּ֩אמֶר֩ אֵלָ֨יו הָֽאֱלֹהִ֜ים בַּחֲלֹ֗ם גַּ֣ם אָנֹכִ֤י יָדַ֙עְתִּי֙ כִּ֤י בְתׇם־לְבָבְךָ֙ עָשִׂ֣יתָ זֹּ֔את וָאֶחְשֹׂ֧ךְ גַּם־אָנֹכִ֛י אֽוֹתְךָ֖ מֵחֲטוֹ־לִ֑י עַל־כֵּ֥ן לֹא־נְתַתִּ֖יךָ לִנְגֹּ֥עַ אֵלֶֽיהָ׃</p>
+      <p>וְעַתָּ֗ה הָשֵׁ֤ב אֵֽשֶׁת־הָאִישׁ֙ כִּֽי־נָבִ֣יא ה֔וּא וְיִתְפַּלֵּ֥ל בַּֽעַדְךָ֖ וֶֽחְיֵ֑ה וְאִם־אֵֽינְךָ֣ מֵשִׁ֔יב דַּ֚ע כִּי־מ֣וֹת תָּמ֔וּת אַתָּ֖ה וְכׇל־אֲשֶׁר־לָֽךְ׃</p>
+      <p>וַיַּשְׁכֵּ֨ם אֲבִימֶ֜לֶךְ בַּבֹּ֗קֶר וַיִּקְרָא֙ לְכׇל־עֲבָדָ֔יו וַיְדַבֵּ֛ר אֶת־כׇּל־הַדְּבָרִ֥ים הָאֵ֖לֶּה בְּאׇזְנֵיהֶ֑ם וַיִּֽירְא֥וּ הָאֲנָשִׁ֖ים מְאֹֽד׃</p>
+      <p>וַיִּקְרָ֨א אֲבִימֶ֜לֶךְ לְאַבְרָהָ֗ם וַיֹּ֨אמֶר ל֜וֹ מֶֽה־עָשִׂ֤יתָ לָּ֙נוּ֙ וּמֶֽה־חָטָ֣אתִי לָ֔ךְ כִּֽי־הֵבֵ֧אתָ עָלַ֛י וְעַל־מַמְלַכְתִּ֖י חֲטָאָ֣ה גְדֹלָ֑ה מַעֲשִׂים֙ אֲשֶׁ֣ר לֹא־יֵֽעָשׂ֔וּ עָשִׂ֖יתָ עִמָּדִֽי׃</p>
+      <p>וַיֹּ֥אמֶר אֲבִימֶ֖לֶךְ אֶל־אַבְרָהָ֑ם מָ֣ה רָאִ֔יתָ כִּ֥י עָשִׂ֖יתָ אֶת־הַדָּבָ֥ר הַזֶּֽה׃</p>
+      <p>וַיֹּ֙אמֶר֙ אַבְרָהָ֔ם כִּ֣י אָמַ֗רְתִּי רַ֚ק אֵין־יִרְאַ֣ת אֱלֹהִ֔ים בַּמָּק֖וֹם הַזֶּ֑ה וַהֲרָג֖וּנִי עַל־דְּבַ֥ר אִשְׁתִּֽי׃</p>
+      <p>וְגַם־אׇמְנָ֗ה אֲחֹתִ֤י בַת־אָבִי֙ הִ֔וא אַ֖ךְ לֹ֣א בַת־אִמִּ֑י וַתְּהִי־לִ֖י לְאִשָּֽׁה׃</p>
+      <p>וַיְהִ֞י כַּאֲשֶׁ֧ר הִתְע֣וּ אֹתִ֗י אֱלֹהִים֮ מִבֵּ֣ית אָבִי֒ וָאֹמַ֣ר לָ֔הּ זֶ֣ה חַסְדֵּ֔ךְ אֲשֶׁ֥ר תַּעֲשִׂ֖י עִמָּדִ֑י אֶ֤ל כׇּל־הַמָּקוֹם֙ אֲשֶׁ֣ר נָב֣וֹא שָׁ֔מָּה אִמְרִי־לִ֖י אָחִ֥י הֽוּא׃</p>
+      <p>וַיִּקַּ֨ח אֲבִימֶ֜לֶךְ צֹ֣אן וּבָקָ֗ר וַעֲבָדִים֙ וּשְׁפָחֹ֔ת וַיִּתֵּ֖ן לְאַבְרָהָ֑ם וַיָּ֣שֶׁב ל֔וֹ אֵ֖ת שָׂרָ֥ה אִשְׁתּֽוֹ׃</p>
+      <p>וַיֹּ֣אמֶר אֲבִימֶ֔לֶךְ הִנֵּ֥ה אַרְצִ֖י לְפָנֶ֑יךָ בַּטּ֥וֹב בְּעֵינֶ֖יךָ שֵֽׁב׃</p>
+      <p>וּלְשָׂרָ֣ה אָמַ֗ר הִנֵּ֨ה נָתַ֜תִּי אֶ֤לֶף כֶּ֙סֶף֙ לְאָחִ֔יךְ הִנֵּ֤ה הוּא־לָךְ֙ כְּס֣וּת עֵינַ֔יִם לְכֹ֖ל אֲשֶׁ֣ר אִתָּ֑ךְ וְאֵ֥ת כֹּ֖ל וְנֹכָֽחַת׃</p>
+      <p>וַיִּתְפַּלֵּ֥ל אַבְרָהָ֖ם אֶל־הָאֱלֹהִ֑ים וַיִּרְפָּ֨א אֱלֹהִ֜ים אֶת־אֲבִימֶ֧לֶךְ וְאֶת־אִשְׁתּ֛וֹ וְאַמְהֹתָ֖יו וַיֵּלֵֽדוּ׃</p>
+      <p>כִּֽי־עָצֹ֤ר עָצַר֙ יְהֹוָ֔ה בְּעַ֥ד כׇּל־רֶ֖חֶם לְבֵ֣ית אֲבִימֶ֑לֶךְ עַל־דְּבַ֥ר שָׂרָ֖ה אֵ֥שֶׁת אַבְרָהָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+      <p>וַֽיהֹוָ֛ה פָּקַ֥ד אֶת־שָׂרָ֖ה כַּאֲשֶׁ֣ר אָמָ֑ר וַיַּ֧עַשׂ יְהֹוָ֛ה לְשָׂרָ֖ה כַּאֲשֶׁ֥ר דִּבֵּֽר׃</p>
+      <p>וַתַּ֩הַר֩ וַתֵּ֨לֶד שָׂרָ֧ה לְאַבְרָהָ֛ם בֵּ֖ן לִזְקֻנָ֑יו לַמּוֹעֵ֕ד אֲשֶׁר־דִּבֶּ֥ר אֹת֖וֹ אֱלֹהִֽים׃</p>
+      <p>וַיִּקְרָ֨א אַבְרָהָ֜ם אֶֽת־שֶׁם־בְּנ֧וֹ הַנּֽוֹלַד־ל֛וֹ אֲשֶׁר־יָלְדָה־לּ֥וֹ שָׂרָ֖ה יִצְחָֽק׃</p>
+      <p>וַיָּ֤מׇל אַבְרָהָם֙ אֶת־יִצְחָ֣ק בְּנ֔וֹ בֶּן־שְׁמֹנַ֖ת יָמִ֑ים כַּאֲשֶׁ֛ר צִוָּ֥ה אֹת֖וֹ אֱלֹהִֽים׃</p>
+      <p>וְאַבְרָהָ֖ם בֶּן־מְאַ֣ת שָׁנָ֑ה בְּהִוָּ֣לֶד ל֔וֹ אֵ֖ת יִצְחָ֥ק בְּנֽוֹ׃</p>
+      <p>וַתֹּ֣אמֶר שָׂרָ֔ה צְחֹ֕ק עָ֥שָׂה לִ֖י אֱלֹהִ֑ים כׇּל־הַשֹּׁמֵ֖עַ יִֽצְחַק־לִֽי׃</p>
+      <p>וַתֹּ֗אמֶר מִ֤י מִלֵּל֙ לְאַבְרָהָ֔ם הֵינִ֥יקָה בָנִ֖ים שָׂרָ֑ה כִּֽי־יָלַ֥דְתִּי בֵ֖ן לִזְקֻנָֽיו׃</p>
+      <p>וַיִּגְדַּ֥ל הַיֶּ֖לֶד וַיִּגָּמַ֑ל וַיַּ֤עַשׂ אַבְרָהָם֙ מִשְׁתֶּ֣ה גָד֔וֹל בְּי֖וֹם הִגָּמֵ֥ל אֶת־יִצְחָֽק׃</p>
+      <p>וַתֵּ֨רֶא שָׂרָ֜ה אֶֽת־בֶּן־הָגָ֧ר הַמִּצְרִ֛ית אֲשֶׁר־יָלְדָ֥ה לְאַבְרָהָ֖ם מְצַחֵֽק׃</p>
+      <p>וַתֹּ֙אמֶר֙ לְאַבְרָהָ֔ם גָּרֵ֛שׁ הָאָמָ֥ה הַזֹּ֖את וְאֶת־בְּנָ֑הּ כִּ֣י לֹ֤א יִירַשׁ֙ בֶּן־הָאָמָ֣ה הַזֹּ֔את עִם־בְּנִ֖י עִם־יִצְחָֽק׃</p>
+      <p>וַיֵּ֧רַע הַדָּבָ֛ר מְאֹ֖ד בְּעֵינֵ֣י אַבְרָהָ֑ם עַ֖ל אוֹדֹ֥ת בְּנֽוֹ׃</p>
+      <p>וַיֹּ֨אמֶר אֱלֹהִ֜ים אֶל־אַבְרָהָ֗ם אַל־יֵרַ֤ע בְּעֵינֶ֙יךָ֙ עַל־הַנַּ֣עַר וְעַל־אֲמָתֶ֔ךָ כֹּל֩ אֲשֶׁ֨ר תֹּאמַ֥ר אֵלֶ֛יךָ שָׂרָ֖ה שְׁמַ֣ע בְּקֹלָ֑הּ כִּ֣י בְיִצְחָ֔ק יִקָּרֵ֥א לְךָ֖ זָֽרַע׃</p>
+      <p>וְגַ֥ם אֶת־בֶּן־הָאָמָ֖ה לְג֣וֹי אֲשִׂימֶ֑נּוּ כִּ֥י זַרְעֲךָ֖ הֽוּא׃</p>
+      <p>וַיַּשְׁכֵּ֣ם אַבְרָהָ֣ם&thinsp;<small>׀</small>&thinsp;בַּבֹּ֡קֶר וַיִּֽקַּֽח־לֶ֩חֶם֩ וְחֵ֨מַת מַ֜יִם וַיִּתֵּ֣ן אֶל־הָ֠גָ֠ר שָׂ֧ם עַל־שִׁכְמָ֛הּ וְאֶת־הַיֶּ֖לֶד וַֽיְשַׁלְּחֶ֑הָ וַתֵּ֣לֶךְ וַתֵּ֔תַע בְּמִדְבַּ֖ר בְּאֵ֥ר שָֽׁבַע׃</p>
+      <p>וַיִּכְל֥וּ הַמַּ֖יִם מִן־הַחֵ֑מֶת וַתַּשְׁלֵ֣ךְ אֶת־הַיֶּ֔לֶד תַּ֖חַת אַחַ֥ד הַשִּׂיחִֽם׃</p>
+      <p>וַתֵּ֩לֶךְ֩ וַתֵּ֨שֶׁב לָ֜הּ מִנֶּ֗גֶד הַרְחֵק֙ כִּמְטַחֲוֵ֣י קֶ֔שֶׁת כִּ֣י אָֽמְרָ֔ה אַל־אֶרְאֶ֖ה בְּמ֣וֹת הַיָּ֑לֶד וַתֵּ֣שֶׁב מִנֶּ֔גֶד וַתִּשָּׂ֥א אֶת־קֹלָ֖הּ וַתֵּֽבְךְּ׃</p>
+      <p>וַיִּשְׁמַ֣ע אֱלֹהִים֮ אֶת־ק֣וֹל הַנַּ֒עַר֒ וַיִּקְרָא֩ מַלְאַ֨ךְ אֱלֹהִ֤ים&thinsp;<small>׀</small>&thinsp;אֶל־הָגָר֙ מִן־הַשָּׁמַ֔יִם וַיֹּ֥אמֶר לָ֖הּ מַה־לָּ֣ךְ הָגָ֑ר אַל־תִּ֣ירְאִ֔י כִּֽי־שָׁמַ֧ע אֱלֹהִ֛ים אֶל־ק֥וֹל הַנַּ֖עַר בַּאֲשֶׁ֥ר הוּא־שָֽׁם׃</p>
+      <p>ק֚וּמִי שְׂאִ֣י אֶת־הַנַּ֔עַר וְהַחֲזִ֥יקִי אֶת־יָדֵ֖ךְ בּ֑וֹ כִּֽי־לְג֥וֹי גָּד֖וֹל אֲשִׂימֶֽנּוּ׃</p>
+      <p>וַיִּפְקַ֤ח אֱלֹהִים֙ אֶת־עֵינֶ֔יהָ וַתֵּ֖רֶא בְּאֵ֣ר מָ֑יִם וַתֵּ֜לֶךְ וַתְּמַלֵּ֤א אֶת־הַחֵ֙מֶת֙ מַ֔יִם וַתַּ֖שְׁקְ אֶת־הַנָּֽעַר׃</p>
+      <p>וַיְהִ֧י אֱלֹהִ֛ים אֶת־הַנַּ֖עַר וַיִּגְדָּ֑ל וַיֵּ֙שֶׁב֙ בַּמִּדְבָּ֔ר וַיְהִ֖י רֹבֶ֥ה קַשָּֽׁת׃</p>
+      <p>וַיֵּ֖שֶׁב בְּמִדְבַּ֣ר פָּארָ֑ן וַתִּֽקַּֽח־ל֥וֹ אִמּ֛וֹ אִשָּׁ֖ה מֵאֶ֥רֶץ מִצְרָֽיִם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַֽיְהִי֙ בָּעֵ֣ת הַהִ֔וא וַיֹּ֣אמֶר אֲבִימֶ֗לֶךְ וּפִיכֹל֙ שַׂר־צְבָא֔וֹ אֶל־אַבְרָהָ֖ם לֵאמֹ֑ר אֱלֹהִ֣ים עִמְּךָ֔ בְּכֹ֥ל אֲשֶׁר־אַתָּ֖ה עֹשֶֽׂה׃</p>
+      <p>וְעַתָּ֗ה הִשָּׁ֨בְעָה לִּ֤י בֵֽאלֹהִים֙ הֵ֔נָּה אִם־תִּשְׁקֹ֣ר לִ֔י וּלְנִינִ֖י וּלְנֶכְדִּ֑י כַּחֶ֜סֶד אֲשֶׁר־עָשִׂ֤יתִי עִמְּךָ֙ תַּעֲשֶׂ֣ה עִמָּדִ֔י וְעִם־הָאָ֖רֶץ אֲשֶׁר־גַּ֥רְתָּה בָּֽהּ׃</p>
+      <p>וַיֹּ֙אמֶר֙ אַבְרָהָ֔ם אָנֹכִ֖י אִשָּׁבֵֽעַ׃</p>
+      <p>וְהוֹכִ֥חַ אַבְרָהָ֖ם אֶת־אֲבִימֶ֑לֶךְ עַל־אֹדוֹת֙ בְּאֵ֣ר הַמַּ֔יִם אֲשֶׁ֥ר גָּזְל֖וּ עַבְדֵ֥י אֲבִימֶֽלֶךְ׃</p>
+      <p>וַיֹּ֣אמֶר אֲבִימֶ֔לֶךְ לֹ֣א יָדַ֔עְתִּי מִ֥י עָשָׂ֖ה אֶת־הַדָּבָ֣ר הַזֶּ֑ה וְגַם־אַתָּ֞ה לֹא־הִגַּ֣דְתָּ לִּ֗י וְגַ֧ם אָנֹכִ֛י לֹ֥א שָׁמַ֖עְתִּי בִּלְתִּ֥י הַיּֽוֹם׃</p>
+      <p>וַיִּקַּ֤ח אַבְרָהָם֙ צֹ֣אן וּבָקָ֔ר וַיִּתֵּ֖ן לַאֲבִימֶ֑לֶךְ וַיִּכְרְת֥וּ שְׁנֵיהֶ֖ם בְּרִֽית׃</p>
+      <p>וַיַּצֵּ֣ב אַבְרָהָ֗ם אֶת־שֶׁ֛בַע כִּבְשֹׂ֥ת הַצֹּ֖אן לְבַדְּהֶֽן׃</p>
+      <p>וַיֹּ֥אמֶר אֲבִימֶ֖לֶךְ אֶל־אַבְרָהָ֑ם מָ֣ה הֵ֗נָּה שֶׁ֤בַע כְּבָשֹׂת֙ הָאֵ֔לֶּה אֲשֶׁ֥ר הִצַּ֖בְתָּ לְבַדָּֽנָה׃</p>
+      <p>וַיֹּ֕אמֶר כִּ֚י אֶת־שֶׁ֣בַע כְּבָשֹׂ֔ת תִּקַּ֖ח מִיָּדִ֑י בַּעֲבוּר֙ תִּֽהְיֶה־לִּ֣י לְעֵדָ֔ה כִּ֥י חָפַ֖רְתִּי אֶת־הַבְּאֵ֥ר הַזֹּֽאת׃</p>
+      <p>עַל־כֵּ֗ן קָרָ֛א לַמָּק֥וֹם הַה֖וּא בְּאֵ֣ר שָׁ֑בַע כִּ֛י שָׁ֥ם נִשְׁבְּע֖וּ שְׁנֵיהֶֽם׃</p>
+      <p>וַיִּכְרְת֥וּ בְרִ֖ית בִּבְאֵ֣ר שָׁ֑בַע וַיָּ֣קׇם אֲבִימֶ֗לֶךְ וּפִיכֹל֙ שַׂר־צְבָא֔וֹ וַיָּשֻׁ֖בוּ אֶל־אֶ֥רֶץ פְּלִשְׁתִּֽים׃</p>
+      <p>וַיִּטַּ֥ע אֶ֖שֶׁל בִּבְאֵ֣ר שָׁ֑בַע וַיִּ֨קְרָא־שָׁ֔ם בְּשֵׁ֥ם יְהֹוָ֖ה אֵ֥ל עוֹלָֽם׃</p>
+      <p>וַיָּ֧גׇר אַבְרָהָ֛ם בְּאֶ֥רֶץ פְּלִשְׁתִּ֖ים יָמִ֥ים רַבִּֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיְהִ֗י אַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וְהָ֣אֱלֹהִ֔ים נִסָּ֖ה אֶת־אַבְרָהָ֑ם וַיֹּ֣אמֶר אֵלָ֔יו אַבְרָהָ֖ם וַיֹּ֥אמֶר הִנֵּֽנִי׃</p>
+      <p>וַיֹּ֡אמֶר קַח־נָ֠א אֶת־בִּנְךָ֨ אֶת־יְחִֽידְךָ֤ אֲשֶׁר־אָהַ֙בְתָּ֙ אֶת־יִצְחָ֔ק וְלֶ֨ךְ־לְךָ֔ אֶל־אֶ֖רֶץ הַמֹּרִיָּ֑ה וְהַעֲלֵ֤הוּ שָׁם֙ לְעֹלָ֔ה עַ֚ל אַחַ֣ד הֶֽהָרִ֔ים אֲשֶׁ֖ר אֹמַ֥ר אֵלֶֽיךָ׃</p>
+      <p>וַיַּשְׁכֵּ֨ם אַבְרָהָ֜ם בַּבֹּ֗קֶר וַֽיַּחֲבֹשׁ֙ אֶת־חֲמֹר֔וֹ וַיִּקַּ֞ח אֶת־שְׁנֵ֤י נְעָרָיו֙ אִתּ֔וֹ וְאֵ֖ת יִצְחָ֣ק בְּנ֑וֹ וַיְבַקַּע֙ עֲצֵ֣י עֹלָ֔ה וַיָּ֣קׇם וַיֵּ֔לֶךְ אֶל־הַמָּק֖וֹם אֲשֶׁר־אָֽמַר־ל֥וֹ הָאֱלֹהִֽים׃</p>
+      <p>בַּיּ֣וֹם הַשְּׁלִישִׁ֗י וַיִּשָּׂ֨א אַבְרָהָ֧ם אֶת־עֵינָ֛יו וַיַּ֥רְא אֶת־הַמָּק֖וֹם מֵרָחֹֽק׃</p>
+      <p>וַיֹּ֨אמֶר אַבְרָהָ֜ם אֶל־נְעָרָ֗יו שְׁבוּ־לָכֶ֥ם פֹּה֙ עִֽם־הַחֲמ֔וֹר וַאֲנִ֣י וְהַנַּ֔עַר נֵלְכָ֖ה עַד־כֹּ֑ה וְנִֽשְׁתַּחֲוֶ֖ה וְנָשׁ֥וּבָה אֲלֵיכֶֽם׃</p>
+      <p>וַיִּקַּ֨ח אַבְרָהָ֜ם אֶת־עֲצֵ֣י הָעֹלָ֗ה וַיָּ֙שֶׂם֙ עַל־יִצְחָ֣ק בְּנ֔וֹ וַיִּקַּ֣ח בְּיָד֔וֹ אֶת־הָאֵ֖שׁ וְאֶת־הַֽמַּאֲכֶ֑לֶת וַיֵּלְכ֥וּ שְׁנֵיהֶ֖ם יַחְדָּֽו׃</p>
+      <p>וַיֹּ֨אמֶר יִצְחָ֜ק אֶל־אַבְרָהָ֤ם אָבִיו֙ וַיֹּ֣אמֶר אָבִ֔י וַיֹּ֖אמֶר הִנֶּ֣נִּֽי בְנִ֑י וַיֹּ֗אמֶר הִנֵּ֤ה הָאֵשׁ֙ וְהָ֣עֵצִ֔ים וְאַיֵּ֥ה הַשֶּׂ֖ה לְעֹלָֽה׃</p>
+      <p>וַיֹּ֙אמֶר֙ אַבְרָהָ֔ם אֱלֹהִ֞ים יִרְאֶה־לּ֥וֹ הַשֶּׂ֛ה לְעֹלָ֖ה בְּנִ֑י וַיֵּלְכ֥וּ שְׁנֵיהֶ֖ם יַחְדָּֽו׃</p>
+      <p>וַיָּבֹ֗אוּ אֶֽל־הַמָּקוֹם֮ אֲשֶׁ֣ר אָֽמַר־ל֣וֹ הָאֱלֹהִים֒ וַיִּ֨בֶן שָׁ֤ם אַבְרָהָם֙ אֶת־הַמִּזְבֵּ֔חַ וַֽיַּעֲרֹ֖ךְ אֶת־הָעֵצִ֑ים וַֽיַּעֲקֹד֙ אֶת־יִצְחָ֣ק בְּנ֔וֹ וַיָּ֤שֶׂם אֹתוֹ֙ עַל־הַמִּזְבֵּ֔חַ מִמַּ֖עַל לָעֵצִֽים׃</p>
+      <p>וַיִּשְׁלַ֤ח אַבְרָהָם֙ אֶת־יָד֔וֹ וַיִּקַּ֖ח אֶת־הַֽמַּאֲכֶ֑לֶת לִשְׁחֹ֖ט אֶת־בְּנֽוֹ׃</p>
+      <p>וַיִּקְרָ֨א אֵלָ֜יו מַלְאַ֤ךְ יְהֹוָה֙ מִן־הַשָּׁמַ֔יִם וַיֹּ֖אמֶר אַבְרָהָ֣ם&thinsp;<small>׀</small>&thinsp;אַבְרָהָ֑ם וַיֹּ֖אמֶר הִנֵּֽנִי׃</p>
+      <p>וַיֹּ֗אמֶר אַל־תִּשְׁלַ֤ח יָֽדְךָ֙ אֶל־הַנַּ֔עַר וְאַל־תַּ֥עַשׂ ל֖וֹ מְא֑וּמָה כִּ֣י&thinsp;<b>׀</b> עַתָּ֣ה יָדַ֗עְתִּי כִּֽי־יְרֵ֤א אֱלֹהִים֙ אַ֔תָּה וְלֹ֥א חָשַׂ֛כְתָּ אֶת־בִּנְךָ֥ אֶת־יְחִידְךָ֖ מִמֶּֽנִּי׃</p>
+      <p>וַיִּשָּׂ֨א אַבְרָהָ֜ם אֶת־עֵינָ֗יו וַיַּרְא֙ וְהִנֵּה־אַ֔יִל אַחַ֕ר נֶאֱחַ֥ז בַּסְּבַ֖ךְ בְּקַרְנָ֑יו וַיֵּ֤לֶךְ אַבְרָהָם֙ וַיִּקַּ֣ח אֶת־הָאַ֔יִל וַיַּעֲלֵ֥הוּ לְעֹלָ֖ה תַּ֥חַת בְּנֽוֹ׃</p>
+      <p>וַיִּקְרָ֧א אַבְרָהָ֛ם שֵֽׁם־הַמָּק֥וֹם הַה֖וּא יְהֹוָ֣ה&thinsp;<small>׀</small>&thinsp;יִרְאֶ֑ה אֲשֶׁר֙ יֵאָמֵ֣ר הַיּ֔וֹם בְּהַ֥ר יְהֹוָ֖ה יֵרָאֶֽה׃</p>
+      <p>וַיִּקְרָ֛א מַלְאַ֥ךְ יְהֹוָ֖ה אֶל־אַבְרָהָ֑ם שֵׁנִ֖ית מִן־הַשָּׁמָֽיִם׃</p>
+      <p>וַיֹּ֕אמֶר בִּ֥י נִשְׁבַּ֖עְתִּי נְאֻם־יְהֹוָ֑ה כִּ֗י יַ֚עַן אֲשֶׁ֤ר עָשִׂ֙יתָ֙ אֶת־הַדָּבָ֣ר הַזֶּ֔ה וְלֹ֥א חָשַׂ֖כְתָּ אֶת־בִּנְךָ֥ אֶת־יְחִידֶֽךָ׃</p>
+      <p>כִּֽי־בָרֵ֣ךְ אֲבָרֶכְךָ֗ וְהַרְבָּ֨ה אַרְבֶּ֤ה אֶֽת־זַרְעֲךָ֙ כְּכוֹכְבֵ֣י הַשָּׁמַ֔יִם וְכַח֕וֹל אֲשֶׁ֖ר עַל־שְׂפַ֣ת הַיָּ֑ם וְיִרַ֣שׁ זַרְעֲךָ֔ אֵ֖ת שַׁ֥עַר אֹיְבָֽיו׃</p>
+      <p>וְהִתְבָּרְכ֣וּ בְזַרְעֲךָ֔ כֹּ֖ל גּוֹיֵ֣י הָאָ֑רֶץ עֵ֕קֶב אֲשֶׁ֥ר שָׁמַ֖עְתָּ בְּקֹלִֽי׃</p>
+      <p>וַיָּ֤שׇׁב אַבְרָהָם֙ אֶל־נְעָרָ֔יו וַיָּקֻ֛מוּ וַיֵּלְכ֥וּ יַחְדָּ֖ו אֶל־בְּאֵ֣ר שָׁ֑בַע וַיֵּ֥שֶׁב אַבְרָהָ֖ם בִּבְאֵ֥ר שָֽׁבַע׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וַיְהִ֗י אַחֲרֵי֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וַיֻּגַּ֥ד לְאַבְרָהָ֖ם לֵאמֹ֑ר הִ֠נֵּ֠ה יָלְדָ֨ה מִלְכָּ֥ה גַם־הִ֛וא בָּנִ֖ים לְנָח֥וֹר אָחִֽיךָ׃</p>
+      <p>אֶת־ע֥וּץ בְּכֹר֖וֹ וְאֶת־בּ֣וּז אָחִ֑יו וְאֶת־קְמוּאֵ֖ל אֲבִ֥י אֲרָֽם׃</p>
+      <p>וְאֶת־כֶּ֣שֶׂד וְאֶת־חֲז֔וֹ וְאֶת־פִּלְדָּ֖שׁ וְאֶת־יִדְלָ֑ף וְאֵ֖ת בְּתוּאֵֽל׃</p>
+      <p>וּבְתוּאֵ֖ל יָלַ֣ד אֶת־רִבְקָ֑ה שְׁמֹנָ֥ה אֵ֙לֶּה֙ יָלְדָ֣ה מִלְכָּ֔ה לְנָח֖וֹר אֲחִ֥י אַבְרָהָֽם׃</p>
+      <p>וּפִֽילַגְשׁ֖וֹ וּשְׁמָ֣הּ רְאוּמָ֑ה וַתֵּ֤לֶד גַּם־הִוא֙ אֶת־טֶ֣בַח וְאֶת־גַּ֔חַם וְאֶת־תַּ֖חַשׁ וְאֶֽת־מַעֲכָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>L'Éternel se révéla à lui dans les plaines de Mamré, tandis qu'il était assis à l'entrée de sa tente, pendant la chaleur du jour.</p>
+      <p>Comme il levait les yeux et regardait, il vit trois personnages debout près de lui. En les voyant, il courut à eux du seuil de la tente et se prosterna contre terre.</p>
+      <p>Et il dit : "Seigneur, si j'ai trouvé grâce à tes yeux, ne passe pas ainsi devant ton serviteur !</p>
+      <p>Qu'on aille quérir un peu d'eau ; lavez vos pieds et reposez-vous sous cet arbre.</p>
+      <p>Je vais apporter une tranche de pain, vous réparerez vos forces, puis vous poursuivrez votre chemin, puisque aussi bien vous avez passé près de votre serviteur." Ils répondirent : "Fais ainsi que tu as dit."</p>
+      <p>Abraham rentra en hâte dans sa tente, vers Sara et dit : "Vite, prends trois mesures de farine de pur froment, pétris-la et fais-en des gâteaux."</p>
+      <p>Puis, Abraham courut au troupeau, choisit un veau tendre et gras et le donna au serviteur, qui se hâta de l'accommoder.</p>
+      <p>Il prit de la crème et du lait, puis le veau qu'on avait préparé et le leur servit : il se tenait devant eux, sous l'arbre, tandis qu'ils mangeaient.</p>
+      <p>Ils lui dirent : "Où est Sara, ta femme ?" Il répondit : "Elle est dans la tente."</p>
+      <p>L'un d'eux reprit : "Certes, je reviendrai à toi à pareille époque et voici, un fils sera né à Sara, ton épouse." Or, Sara l'entendait à l'entrée de la tente qui se trouvait derrière lui.</p>
+      <p>Abraham et Sara étaient vieux, avancés dans la vie ; le tribut périodique des femmes avait cessé pour Sara.</p>
+      <p>Sara rit en elle-même disant : "Flétrie par l'âge, ce bonheur me serait réservé ! Et mon époux est un vieillard !"</p>
+      <p>Le Seigneur dit à Abraham : "Pourquoi Sara a-t-elle ri, disant : 'Eh quoi ! en vérité, j'enfanterais, âgée que je suis !'</p>
+      <p>Est-il rien d'impossible au Seigneur ? Au temps fixé, à pareille époque, je te visiterai et Sara sera mère."</p>
+      <p>Sara protesta, en disant : "Je n'ai point ri" ; car elle avait peur. Il répondit : "Non pas, tu as ri."</p>
+      <p>Les hommes se levèrent et fixèrent leurs regards dans la direction de Sodome ; Abraham les accompagna pour les reconduire.</p>
+      <p>Or, l'Éternel avait dit : "Tairai-je à Abraham ce que je veux faire ?</p>
+      <p>Abraham ne doit-il pas devenir une nation grande et puissante et une cause de bonheur pour toutes les nations de la terre ?</p>
+      <p>Si je l'ai distingué, c'est pour qu'il prescrive à ses fils et à sa maison après lui d'observer la voie de l'Éternel, en pratiquant la vertu et la justice ; afin que l'Éternel accomplisse sur Abraham ce qu'il a déclaré à son égard."</p>
+      <p>L'Éternel dit : "Comme le décri de Sodome et de Gomorrhe est grand ; comme leur perversité est excessive,</p>
+      <p>je veux y descendre ; je veux voir si, comme la plainte en est venue jusqu'à moi, ils se sont livrés aux derniers excès ; si cela n'est pas, j'aviserai."</p>
+      <p>Les hommes quittèrent ce lieu et s'acheminèrent vers Sodome ; Abraham était encore en présence du Seigneur.</p>
+      <p>Abraham s'avança et dit : "Anéantirais-tu, d'un même coup, l'innocent avec le coupable ?</p>
+      <p>Peut-être y a-t-il cinquante justes dans cette ville : les feras-tu périr aussi et ne pardonneras-tu pas à la contrée en faveur des cinquante justes qui s'y trouvent ?</p>
+      <p>Loin de toi d'agir ainsi, de frapper l'innocent avec le coupable, les traitant tous deux de même façon ! Loin de toi ! Celui qui juge toute la terre serait-il un juge inique ?"</p>
+      <p>Le Seigneur répondit : "Si je trouve à Sodome au sein de la ville, cinquante justes, je pardonnerai à toute la contrée à cause d'eux."</p>
+      <p>Abraham reprit en disant : "De grâce ! j'ai entrepris de parler à mon souverain, moi poussière et cendre !</p>
+      <p>Peut-être à ces cinquante justes, en manquera-t-il cinq : détruirais-tu, pour cinq, une ville entière ?" Il répondit : "Je ne sévirai point, si j'en trouve quarante-cinq."</p>
+      <p>Il insista encore, en lui disant : "Peut-être s'y en trouvera-t-il quarante ?" Il répondit : "Je m'abstiendrai à cause de ces quarante."</p>
+      <p>Il dit : "De grâce, que mon Souverain ne s'irrite point de mes paroles ! Peut-être s'en trouvera-t-il trente ?" Il répondit : "Je m'abstiendrai, si j'en trouve trente."</p>
+      <p>Il reprit : "De grâce, puisque j'ai osé parler à mon Souverain, peut-être s'en trouvera-t-il vingt ?" Il répondit : "Je renoncerai à détruire, en faveur de ces vingt." Il dit :</p>
+      <p>"De grâce, que mon Souverain ne s'irrite pas, je ne parlerai plus que cette fois. Peut-être s'en trouvera-t-il dix ?" Il répondit : "Je renoncerai à détruire, en faveur de ces dix."</p>
+      <p>Le Seigneur disparut, lorsqu'il eut achevé de parler à Abraham ; et Abraham retourna à sa demeure.</p>
+      <p>Les deux envoyés arrivèrent à Sodome le soir. Loth était assis à la porte de Sodome ; à leur vue, il se leva au-devant d'eux et se prosterna la face contre terre.</p>
+      <p>Il dit : "Ah ! de grâce, mes seigneurs, venez dans la maison de votre serviteur, passez-y la nuit, lavez vos pieds ; puis, demain matin, vous pourrez continuer votre route." Ils répondirent : "Non, nous coucherons sur la voie publique."</p>
+      <p>Sur ses vives instances, ils tournèrent de son côté et entrèrent dans sa maison. Il leur prépara un repas, fit cuire des galettes et ils mangèrent.</p>
+      <p>Ils n'étaient pas encore couchés, lorsque les gens de la ville, les gens de Sodome, s'attroupèrent autour de la maison, jeunes et vieux ; le peuple entier, de tous les coins de la ville.</p>
+      <p>Ils appelèrent Loth et lui dirent : "Où sont les hommes qui sont venus chez toi cette nuit ? Fais-les sortir vers nous, que nous les connaissions !"</p>
+      <p>Loth alla à leur rencontre, à l'entrée de sa maison, dont il ferma la porte sur lui ;</p>
+      <p>et il dit : "De grâce, mes frères, ne leur faites point de mal !</p>
+      <p>Écoutez ! j'ai deux filles qui n'ont pas encore connu d'homme, je vais vous les amener, faites-leur ce que bon vous semblera ; mais ces hommes, ne leur faites rien, car enfin ils sont venus s'abriter sous mon toit."</p>
+      <p>Ils répondirent : "Va-t'en loin d'ici ! Cet homme, ajoutèrent-ils, est venu séjourner ici et maintenant il se fait juge ! Eh bien, nous te ferons plus de mal qu'à eux !" Ils assaillirent Loth avec violence et s'avancèrent pour briser la porte.</p>
+      <p>Les voyageurs étendirent la main, firent rentrer Loth dans la maison et fermèrent la porte.</p>
+      <p>Et les hommes qui assiégeaient l'entrée de la maison, ils les frappèrent d'éblouissements, petits et grands, qui se fatiguèrent à chercher l'entrée.</p>
+      <p>Les voyageurs dirent à Loth : "Quiconque des tiens est encore ici, un gendre, tes fils, tes filles, tout ce que tu as dans cette ville, fais-les sortir d'ici.</p>
+      <p>Car nous allons détruire cette contrée, la clameur contre elle a été grande devant le Seigneur et le Seigneur nous a donné mission de la détruire."</p>
+      <p>Loth sortit, alla parler à ses gendres, époux de ses filles et dit : "Venez, abandonnez ce lieu, car l'Éternel va détruire la cité !" Mais il fut, aux yeux de ses gendres, comme un homme qui plaisante.</p>
+      <p>Comme l'aube paraissait, les envoyés pressèrent Loth, en disant : "Debout ! emmène ta femme et tes deux filles ici présentes, si tu ne veux point périr pour les crimes de cette ville."</p>
+      <p>Comme il tardait, ces hommes le prirent par la main, ainsi que sa femme et ses deux filles, l'Éternel voulant l'épargner ; ils l'emmenèrent et le laissèrent hors de la ville.</p>
+      <p>Lorsqu'ils les eurent conduits dehors, l'un d'eux lui dit : "Songe à sauver ta vie ; ne regarde pas en arrière et ne t'arrête pas dans toute cette région ; fuis vers la montagne, de crainte de périr."</p>
+      <p>Loth leur répondit : "Oh ! non, mes seigneurs !</p>
+      <p>Certes, déjà ton serviteur a trouvé grâce à tes yeux et tu m'as accordé une grande faveur en me conservant la vie ; mais moi, je ne saurais fuir jusque sur la montagne, le fléau m'atteindrait auparavant et je mourrais.</p>
+      <p>Vois plutôt, cette ville-ci est assez proche pour que je m'y réfugie et elle est peu importante ; puissé-je donc y fuir, vu son peu d'importance et y avoir la vie sauve !"</p>
+      <p>Il lui répondit : "Eh bien ! je te favoriserai encore en ceci, en ne bouleversant point la ville dont tu parles.</p>
+      <p>Hâte-toi, cours-y ! car je ne puis agir que tu n'y sois arrivé." Voilà pourquoi l'on a appelé cette ville Çoar.</p>
+      <p>Le soleil avait paru sur la terre, lorsque Loth arriva à Çoar.</p>
+      <p>L'Éternel fit pleuvoir sur Sodome et sur Gomorrhe du soufre et du feu ; l'Éternel lui-même, du haut des cieux.</p>
+      <p>Il détruisit ces villes, toute la plaine, tous les habitants de ces villes et la végétation du sol.</p>
+      <p>La femme de Loth, ayant regardé en arrière, devint une statue de sel.</p>
+      <p>Abraham se dirigea de bon matin vers l'endroit où il s'était tenu devant le Seigneur.</p>
+      <p>Il considéra l'aspect de Sodome et de Gomorrhe et l'aspect de toute la plaine ; et il remarqua qu'une exhalaison s'élevait de la terre, semblable à la fumée d'une fournaise.</p>
+      <p>Mais, lorsque D.ieu détruisit les villes de la plaine, il s'était souvenu d'Abraham ; il avait fait échapper Loth du milieu de la subversion, tandis qu'il bouleversait la contrée où avait demeuré Loth.</p>
+      <p>Loth monta de Çoar et s'établit dans la montagne avec ses deux filles, car il n'osait rester à Çoar ; il demeura dans une caverne, lui et ses deux filles.</p>
+      <p>L'aînée dit à la plus jeune : "Notre père est âgé et il n'y a plus d'homme dans le monde, pour s'unir à nous selon l'usage de toute la terre.</p>
+      <p>Eh bien ! enivrons de vin notre père, partageons sa couche et par notre père nous obtiendrons une postérité."</p>
+      <p>Elles firent boire du vin à leur père cette même nuit ; la fille aînée vint partager sa couche et il ne la reconnut point lorsqu'elle se coucha ni lorsqu'elle se leva.</p>
+      <p>Puis, le lendemain, l'aînée dit à la plus jeune : "Voici, j'ai partagé hier la couche de mon père ; enivrons-le encore cette nuit, tu iras partager son lit et nous recevrons de notre père une postérité."</p>
+      <p>Elles firent boire, cette nuit encore, du vin à leur père ; la cadette se leva, vint à ses côtés et il ne la reconnut point lors de son coucher et de son lever.</p>
+      <p>Les deux filles de Loth conçurent du fait de leur père.</p>
+      <p>La première eut un fils, qu'elle appela Moab ; ce fut le père des Moabites qui subsistent aujourd'hui.</p>
+      <p>La seconde, elle aussi, enfanta un fils et le nomma Ben-Ammi ; ce fut le père des Ammonites qui subsistent aujourd'hui.</p>
+      <p>Abraham quitta ce lieu pour la contrée du Midi ; il s'établit entre Cadès et Chour et séjourna à Gherar.</p>
+      <p>Abraham disait de Sara, sa femme : "Elle est ma sœur" ; Abimélec, roi de Gherar, envoya prendre Sara.</p>
+      <p>Le Seigneur visita Abimélec dans un songe nocturne et lui dit : "Tu vas mourir, à cause de cette femme que tu as prise et qui est en puissance de mari."</p>
+      <p>Or, Abimélec n'avait pas approché d'elle. Il dit : "Seigneur ! frapperais-tu donc aussi un peuple innocent ?</p>
+      <p>Quoi ! ne m'a-t-il pas dit : 'Elle est ma sœur ?' et elle, elle aussi, a dit : 'Il est mon frère.' C'est avec un cœur innocent et des mains pures que j'ai agi ainsi."</p>
+      <p>D.ieu lui répondit dans le songe : "Moi aussi je savais que tu avais agi ainsi dans la simplicité de ton cœur et j'ai voulu, de mon côté, te préserver de m'offenser ; aussi ne t'ai-je pas permis d'approcher d'elle.</p>
+      <p>Et maintenant, restitue l'épouse de cet homme, car il est prophète ; il priera pour toi et tu vivras. Que si tu ne la rends pas, sache que tu mourras, toi et tous les tiens !"</p>
+      <p>Abimélec se leva de bonne heure, appela tous ses serviteurs et leur fit entendre toutes ces choses ; ces hommes furent fort effrayés.</p>
+      <p>Abimélec manda Abraham et lui dit : "Que nous as-tu fait ! et qu'avais-je commis envers toi, pour que tu exposasses moi et mon royaume à un péché grave ? Tu as fait à mon égard des choses qui ne doivent point se faire !"</p>
+      <p>Abimélec dit encore à Abraham : "Qu'avais-tu en vue, en agissant de la sorte ?"</p>
+      <p>Abraham répondit : "C'est que je pensais : 'Pour peu que la crainte de D.ieu ne règne pas dans ce pays, ils me tueront à cause de ma femme.'</p>
+      <p>Et d'ailleurs, de fait, elle est ma sœur, la fille de mon père, mais non la fille de ma mère et elle m'appartient comme épouse.</p>
+      <p>Or, lorsque D.ieu me fit errer loin de la maison de mon père, je lui dis : 'Voici la grâce que tu me feras. Dans tous les lieux où nous irons, dis que je suis ton frère.'"</p>
+      <p>Abimélec choisit des pièces de menu et de gros bétail, des esclaves mâles et femelles, en fit présent à Abraham et lui restitua Sara son épouse.</p>
+      <p>Et il lui dit : "Voici mon territoire devant toi, établis-toi où bon te semblera."</p>
+      <p>Et à Sara il dit : "Voici, j'ai donné mille pièces d'argent à ton parent : certes ! il est pour toi comme un voile contre quiconque t'approcherait ; tous, tu peux les regarder en face."</p>
+      <p>Abraham intercéda auprès de D.ieu, qui guérit Abimélec, sa femme et ses servantes, de sorte qu'elles purent enfanter.</p>
+      <p>Car D.ieu avait fermé toute matrice dans la maison d'Abimélec, à cause de Sara, épouse d'Abraham.</p>
+      <p>Or, l'Éternel s'était souvenu de Sara, comme il l'avait dit et il fit à Sara ainsi qu'il l'avait annoncé.</p>
+      <p>Sara conçut et enfanta un fils à Abraham quoiqu'âgé, à l'époque précise où D.ieu l'avait promis.</p>
+      <p>Abraham nomma le fils qui venait de lui naître, que Sara lui avait donné, Isaac.</p>
+      <p>Abraham circoncit Isaac, son fils, à l'âge de huit jours, comme D.ieu le lui avait ordonné.</p>
+      <p>Or, Abraham était âgé de cent ans, lorsqu'Isaac son fils vint au monde.</p>
+      <p>Sara dit : "D.ieu m'a donné une félicité et quiconque l'apprendra me félicitera."</p>
+      <p>Elle dit encore : "Qui eût dit à Abraham que Sara allaiterait des enfants ? Eh bien, j'ai donné un fils à sa vieillesse !"</p>
+      <p>L'enfant grandit, il fut sevré. Abraham fit un grand festin le jour où l'on sevra Isaac.</p>
+      <p>Sara vit le fils d'Agar l'Égyptienne, que celle-ci avait enfanté à Abraham, se livrer à des railleries ;</p>
+      <p>et elle dit à Abraham : "Renvoie cette esclave et son fils ; car le fils de cette esclave n'héritera point avec mon fils, avec Isaac."</p>
+      <p>La chose déplut fort à Abraham, à cause de son fils.</p>
+      <p>Mais D.ieu dit à Abraham : "Ne sois pas mécontent au sujet de cet enfant et de ton esclave ; pour tout ce que Sara te dit, obéis à sa voix : car c'est la postérité d'Isaac qui portera ton nom.</p>
+      <p>Mais le fils de cette esclave aussi, je le ferai devenir une nation, parce qu'il est ta progéniture."</p>
+      <p>Abraham se leva de bon matin, prit du pain et une outre pleine d'eau, les remit à Agar en les lui posant sur l'épaule, ainsi que l'enfant et la renvoya. Elle s'en alla et s'égara dans le désert de Beer Shava.</p>
+      <p>Quand l'eau de l'outre fut épuisée, elle abandonna l'enfant au pied d'un arbre.</p>
+      <p>Elle alla s'asseoir du côté opposé, à la distance d'un trait d'arc, en se disant : "Je ne veux pas voir mourir cet enfant" ; et ainsi assise du côté opposé, elle éleva la voix et pleura.</p>
+      <p>D.ieu entendit le gémissement de l'enfant. Un messager du Seigneur appela Agar du haut des cieux et lui dit : "Qu'as-tu, Agar ? Sois sans crainte, car D.ieu a entendu la voix de l'enfant s'élever de l'endroit où il gît.</p>
+      <p>Relève-toi ! reprends cet enfant et soutiens-le de la main, car je ferai de lui une grande nation."</p>
+      <p>Le Seigneur lui dessilla les yeux et elle aperçut une source ; elle y alla, emplit l'outre d'eau et donna à boire à l'enfant.</p>
+      <p>D.ieu fut avec cet enfant et il grandit ; il demeura dans le désert, et devint tireur à l'arc.</p>
+      <p>Il habita le désert de Pharan et sa mère lui choisit une femme du pays d'Égypte.</p>
+      <p>Il arriva, dans le même temps, qu'Abimélec, accompagné de Pikol, chef de son armée, dit à Abraham : "D.ieu est avec toi dans tout ce que tu entreprends.</p>
+      <p>Et maintenant, jure-moi par ce D.ieu que tu ne seras infidèle ni à moi, ni à mes enfants, ni à ma postérité ; que, comme j'ai bien agi à ton égard, ainsi tu agiras envers moi et envers le pays où tu es venu séjourner."</p>
+      <p>Abraham répondit : "Je veux le jurer."</p>
+      <p>Or, Abraham avait fait des reproches à Abimélec, au sujet d'un puits dont les gens d'Abimélec s'étaient emparés.</p>
+      <p>Et Abimélec avait répondu : "Je ne sais qui a commis cette action : toi-même tu ne m'en avais pas instruit et moi, je l'ignorais avant ce jour."</p>
+      <p>Abraham prit du menu et du gros bétail qu'il remit à Abimélec et ils conclurent mutuellement une alliance.</p>
+      <p>Abraham ayant rangé à part sept brebis de ce bétail,</p>
+      <p>Abimélec dit à Abraham : "Que signifient ces sept brebis que tu as mises à part ?"</p>
+      <p>Il répondit : "C'est que tu dois recevoir de ma main sept brebis, comme témoignage que j'ai creusé ce puits."</p>
+      <p>Aussi appela-t-on cet endroit Beer Shava, car là ils jurèrent l'un et l'autre.</p>
+      <p>Lorsqu'ils eurent contracté alliance à Beer Shava, Abimélec se leva, ainsi que Pikol son général d'armée et ils s'en retournèrent au pays des Philistins.</p>
+      <p>Abraham planta un bouquet d'arbres à Beer Shava et y proclama le Seigneur, D.ieu éternel.</p>
+      <p>Abraham habita longtemps encore dans le pays des Philistins.</p>
+      <p>Il arriva, après ces faits, que D.ieu éprouva Abraham. Il lui dit : "Abraham !" Il répondit : "Me voici."</p>
+      <p>Il reprit : "Prends ton fils, ton fils unique, celui que tu aimes, Isaac ; achemine-toi vers la terre de Moria et là offre-le en holocauste sur une montagne que je te désignerai."</p>
+      <p>Abraham se leva de bonne heure, sangla son âne, emmena ses deux serviteurs et Isaac, son fils et ayant fendu le bois du sacrifice, il se mit en chemin pour le lieu que lui avait indiqué le Seigneur.</p>
+      <p>Le troisième jour, Abraham, levant les yeux, aperçut l'endroit dans le lointain.</p>
+      <p>Abraham dit à ses serviteurs : "Tenez-vous ici avec l'âne ; moi et le jeune homme nous irons jusque là-bas, nous nous prosternerons et nous reviendrons vers vous."</p>
+      <p>Abraham prit le bois du sacrifice, le chargea sur Isaac son fils, prit en main le feu et le couteau et ils allèrent tous deux ensemble.</p>
+      <p>Isaac, s'adressant à Abraham son père, dit : "Mon père !" Il répondit : "Me voici mon fils." Il reprit : "Voici le feu et le bois, mais où est l'agneau de l'holocauste ?"</p>
+      <p>Abraham répondit : "D.ieu choisira lui-même l'agneau de l'holocauste mon fils !" Et ils allèrent tous deux ensemble.</p>
+      <p>Ils arrivèrent à l'endroit que D.ieu lui avait indiqué. Abraham y construisit un autel, disposa le bois, lia Isaac son fils et le plaça sur l'autel, par-dessus le bois.</p>
+      <p>Abraham étendit la main et saisit le couteau pour immoler son fils.</p>
+      <p>Mais un envoyé du Seigneur l'appela du haut du ciel, en disant : "Abraham ! Abraham !"</p>
+      <p>Il répondit : "Me voici." Il reprit : "Ne porte pas la main sur ce jeune homme, ne lui fais aucun mal ! car, désormais, j'ai constaté que tu honores D.ieu, toi qui ne m'as pas refusé ton fils, ton fils unique !"</p>
+      <p>Abraham, levant les yeux, remarqua qu'un bélier, derrière lui, s'était embarrassé les cornes dans un buisson. Abraham alla prendre ce bélier et l'offrit en holocauste à la place de son fils.</p>
+      <p>Abraham dénomma cet endroit : Adonaï-Yiré ; d'où l'on dit aujourd'hui : "Sur le mont d'Adonaï, Il se révèle."</p>
+      <p>L'envoyé de l'Éternel appela une seconde fois Abraham du haut du ciel,</p>
+      <p>et dit : "Je jure par moi-même, a dit l'Éternel, que parce que tu as agi ainsi, parce que tu n'as point épargné ton enfant, ton fils unique,</p>
+      <p>je te comblerai de mes faveurs ; je multiplierai ta race comme les étoiles du ciel et comme le sable du rivage de la mer et ta postérité conquerra les portes de ses ennemis.</p>
+      <p>Et toutes les nations de la terre s'estimeront heureuses par ta postérité, en récompense de ce que tu as obéi à ma voix."</p>
+      <p>Abraham retourna vers ses serviteurs ; ils se remirent en route ensemble pour Beer Shava, où Abraham continua d'habiter.</p>
+      <p>Après cet événement, Abraham reçut les nouvelles suivantes : "Milka, elle aussi, a donné des enfants à Nahor ton frère :</p>
+      <p>Ouç, son premier-né ; Bouz, son frère ; Kemouel, père d'Aram ;</p>
+      <p>Késed, Hazo, Pildach, Yidlaf et Bathuel,</p>
+      <p>lequel Bathuel a engendré Rébecca." Milka avait donné ces huit fils à Nahor, frère d'Abraham.</p>
+      <p>Sa concubine, nommée Reouma, avait eu aussi des enfants : Tébah, Gaham, Tahach et Maaka.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>L'Éternel se révéla à lui dans les plaines de Mamré, tandis qu’il était assis à l’entrée de sa tente, pendant la chaleur du jour.</p>
+      <p>Comme il levait les yeux et regardait, il vit trois personnages debout prés de lui. En les voyant, il courut à eux du seuil de la tente et se prosterna contre terre.</p>
+      <p>Et il dit: "Seigneur, si j’ai trouvé grâce à tes yeux, ne passe pas ainsi devant ton serviteur! “</p>
+      <p>Qu’on aille quérir un peu d’eau; lavez vos pieds et reposez-vous sous cet arbre.</p>
+      <p>Je vais apporter une tranche de pain, vous réparerez vos forces, puis vous poursuivrez votre chemin, puisque aussi bien vous avez passé près de votre serviteur." Ils répondirent: "Fais ainsi que tu as dit".</p>
+      <p>Abraham rentra en hâte dans sa tente, vers Sara et dit: "Vite, prends trois mesures de farine de pur froment, pétris-la et fais-en des gâteaux."</p>
+      <p>Puis, Abraham courut au troupeau, choisit un veau tendre et gras et le donna au serviteur, qui se hâta de l’accommoder.</p>
+      <p>Il prit de la crème et du lait, puis le veau qu’on avait préparé et le leur servit: il se tenait devant eux, sous l’arbre, tandis qu’ils mangeaient.</p>
+      <p>Ils lui dirent: "Où est Sara, ta femme?" Il répondit: "Elle est dans la tente."</p>
+      <p>L’un d’eux reprit: "Certes, je reviendrai à toi à pareille époque et voici, un fils sera né à Sara, ton épouse." Or, Sara l’entendait à l’entrée de la tente qui se trouvait derrière lui.</p>
+      <p>Abraham et Sara étaient vieux, avancés dans la vie; le tribut périodique des femmes avait cessé pour Sara.</p>
+      <p>Sara rit en elle-même disant: "Flétrie par l’âge, ce bonheur me serait réservé! Et mon époux est un vieillard!"</p>
+      <p>Le Seigneur dit à Abraham: "Pourquoi Sara a-t-elle ri, disant: ’Eh quoi! en vérité, j’enfanterais, âgée que je suis!’</p>
+      <p>Est-il rien d’impossible au Seigneur? Au temps fixé, à pareille époque, je te visiterai et Sara sera mère".</p>
+      <p>Sara protesta, en disant: "Je n’ai point ri"; car elle avait peur. Il répondit "Non pas, tu as ri."</p>
+      <p>Les hommes se levèrent et fixèrent leurs regards dans la direction de Sodome; Abraham les accompagna pour les reconduire.</p>
+      <p>Or, l’Éternel avait dit:"Tairai-je à Abraham ce que je veux faire?"</p>
+      <p>Abraham ne doit-il pas devenir une nation grande et puissante et une cause de bonheur pour toutes les nations de la terre?</p>
+      <p>Si je l’ai distingué, c’est pour qu’il prescrive à ses fils et à sa maison après lui d’observer la voie de l’Éternel, en pratiquant la vertu et la justice; afin que l’Éternel accomplisse sur Abraham ce qu’il a déclaré à son égard."</p>
+      <p>L’Éternel dit: "Comme le décri de Sodome et de Gommorrhe est grand; comme leur perversité est excessive,</p>
+      <p>je veux y descendre; je veux voir si, comme la plainte en est venue jusqu’à moi, ils se sont livrés aux derniers excès; si cela n’est pas, j’aviserai."</p>
+      <p>Les hommes quittèrent ce lieu et s’acheminèrent vers Sodome; Abraham était encore en présence du Seigneur.</p>
+      <p>Abraham s’avança et dit: "Anéantirais-tu, d’un même coup, l’innocent avec le coupable?</p>
+      <p>Peut-être y a-t-il cinquante justes dans cette ville: les feras-tu périr aussi et ne pardonneras-tu pas à la contrée en faveur des cinquante justes qui s’y trouvent?</p>
+      <p>Loin de toi d’agir ainsi, de frapper l’innocent avec le coupable, les traitant tous deux de même façon! Loin de toi! Celui qui juge toute la terre serait-il un juge inique?"</p>
+      <p>Le Seigneur répondit: "Si je trouve à Sodome au sein de la ville, cinquante justes, je pardonnerai à toute la contrée à cause d’eux"</p>
+      <p>Abraham reprit en disant: "De grâce! j’ai entrepris de parler à mon souverain, moi poussière et cendre!</p>
+      <p>Peut-être à ces cinquante justes, en manquera-t-il cinq: détruirais-tu, pour cinq, une ville entière?" Il répondit: "Je ne sévirai point, si j’en trouve quarante-cinq"</p>
+      <p>Il insista encore, en lui disant: "Peut-être s’y en trouvera-t-il quarante?" Il répondit: "Je m’abstiendrai à cause de ces quarante."</p>
+      <p>Il dit: "De grâce, que mon Souverain ne s’irrite point de mes paroles! Peut-être s’en trouvera-t-il trente?" Il répondit: "Je m’abstiendrai, si j’en trouve trente"</p>
+      <p>Il reprit: "De grâce, puisque j’ai osé parler à mon Souverain, peut-être s’en trouvera-t-il vingt?" Il répondit: "Je renoncerai à détruire, en faveur de ces vingt." Il dit:</p>
+      <p>"De grâce, que mon Souverain ne s’irrite pas, je ne parlerai plus que cette fois. Peut-être s’en trouvera-t-il dix?" Il répondit: "Je renoncerai à détruire, en faveur de ces dix."</p>
+      <p>Le Seigneur disparut, lorsqu’il eut achevé de parler à Abraham; et Abraham retourna à sa demeure.</p>
+      <p>Les deux envoyés arrivèrent à Sodome le soir. Loth était assis à la porte de Sodome; à leur vue, il se leva au devant d’eux et se prosterna la face contre terre.</p>
+      <p>Il dit "Ah! de grâce, mes seigneurs, venez dans la maison de votre serviteur, passez-y la nuit, lavez vos pieds; puis, demain matin, vous pourrez continuer votre route." Ils répondirent: "Non, nous coucherons sur la voie publique."</p>
+      <p>Sur ses vives instances, ils tournèrent de son côté et entrèrent dans sa maison. Il leur prépara un repas, fit cuire des galettes et ils mangèrent.</p>
+      <p>Ils n’étaient pas encore couchés, lorsque les gens de la ville, les gens de Sodome, s’attroupèrent autour de la maison, jeunes et vieux; le peuple entier, de tous les coins de la ville.</p>
+      <p>Ils appelèrent Loth et lui dirent: "Où sont les hommes qui sont venus chez toi cette nuit? Fais-les sortir vers nous, que nous les connaissions!"</p>
+      <p>Loth alla à leur rencontre, à l’entrée de sa maison, dont il ferma la porte sur lui;</p>
+      <p>et il dit: "De grâce, mes frères, ne leur faites point de mal!</p>
+      <p>Ecoutez! j’ai deux filles qui n’ont pas encore connu d’homme, je vais vous les amener, faites-leur ce que bon vous semblera; mais ces hommes, ne leur faites rien, car enfin ils sont venus s’abriter sous mon toit."</p>
+      <p>Ils répondirent: "Va-t’en loin d’ici! Cet homme, ajoutèrent-ils, est venu séjourner ici et maintenant il se fait juge! Eh bien, nous te ferons plus de mal qu’à eux!" Ils assaillirent Loth avec violence et s’avancèrent pour briser la porte.</p>
+      <p>Les voyageurs étendirent la main, firent rentrer Loth dans la maison et fermèrent la porte.</p>
+      <p>Et les hommes qui assiégeaient l’entrée de la maison, ils les frappèrent d’éblouissements, petits et grands, qui se fatiguèrent à chercher l’entrée.</p>
+      <p>Les voyageurs dirent à Loth: "Quiconque des tiens est encore ici, un gendre, tes fils, tes filles, tout ce que tu as dans cette ville, fais les sortir d’ici.</p>
+      <p>Car nous allons détruire cette contrée, la clameur contre elle a été grande devant le Seigneur et le Seigneur nous a donné mission de la détruire."</p>
+      <p>Loth sortit, alla parler à ses gendres, époux de ses filles et dit: "Venez, abandonnez ce lieu, car l’Éternel va détruire la cité!" Mais il fut, aux yeux de ses gendres, comme un homme qui plaisante.</p>
+      <p>Comme l’aube paraissait, les envoyés pressèrent Loth, en disant: "Debout! emmène ta femme et tes deux filles ici présentes, si tu ne veux point périr pour les crimes de cette ville."</p>
+      <p>Comme il tardait, ces hommes le prirent par la main, ainsi que sa femme et ses deux filles, l’Éternel voulant l’épargner; ils l’emmenèrent et le laissèrent hors de la ville.</p>
+      <p>Lorsqu’ils les eurent conduits dehors, l’un d’eux lui dit:"Songe à sauver ta vie; ne regarde pas en arrière et ne t’arrête pas dans toute cette région; fuis vers la montagne, de crainte de périr."</p>
+      <p>Loth leur répondit: "Oh! non, mes seigneurs!</p>
+      <p>Certes, déjà ton serviteur a trouvé grâce à tes yeux et tu m’as accordé une grande faveur en me conservant la vie; mais moi, je ne saurais fuir jusque sur la montagne, le fléau m’atteindrait auparavant et je mourrais.</p>
+      <p>Vois plutôt, cette ville-ci est assez proche pour que je m’y réfugie et elle est peu importante; puissé-je donc y fuir, vu son peu d’importance et y avoir la vie sauve!"</p>
+      <p>Il lui répondit: "Eh bien! je te favoriserai encore en ceci, en ne bouleversant point la ville dont tu parles.</p>
+      <p>Hâte-toi, cours-y! car je ne puis agir que tu n’y sois arrivé." Voilà pourquoi l’on a appelé cette ville Ã‡oar.</p>
+      <p>Le soleil avait paru sur la terre, lorsque Loth arriva à Ã‡oar.</p>
+      <p>L’Éternel fit pleuvoir sur Sodome et sur Gommorrhe du soufre et du feu; l’Éternel lui-même, du haut des cieux.</p>
+      <p>Il détruisit ces villes, toute la plaine, tous les habitants de ces villes et la végétation du sol.</p>
+      <p>La femme de Loth, ayant regardé en arrière, devint une statue de sel.</p>
+      <p>Abraham se dirigea de bon matin vers l’endroit où il s’était tenu devant le Seigneur.</p>
+      <p>Il considéra l’aspect de Sodome et de Gommorrhe et l’aspect de toute la plaine; et il remarqua qu’une exhalaison s’élevait de la terre, semblable à la fumée d’une fournaise.</p>
+      <p>Mais, lorsque Dieu détruisit les villes de la plaine, il s’était souvenu d’Abraham; il avait fait échapper Loth du milieu de la subversion, tandis qu’il bouleversait la contrée où avait demeuré Loth.</p>
+      <p>Loth monta de Ã‡oar et s’établit dans la montagne avec ses deux filles, car il n’osait rester à Ã‡oar; Il demeura dans une caverne, lui et ses deux filles.</p>
+      <p>L’aînée dit à la plus jeune: "Notre père est âgé et il n’y a plus d’homme dans le monde, pour s’unir à nous selon l’usage de toute la terre.</p>
+      <p>Eh bien! enivrons de vin notre père, partageons sa couche et par notre père nous obtiendrons une postérité."</p>
+      <p>Elles firent boire du vin à leur père cette même nuit; la fille aînée vint partager sa couche et il ne la reconnut point lorsqu’elle se coucha ni lorsqu’elle se leva.</p>
+      <p>Puis, le lendemain, l’aînée dit à la plus jeune: "Voici, j’ai partagé hier la couche de mon père; enivrons-le encore cette nuit, tu iras partager son lit et nous recevrons de notre père une postérité."</p>
+      <p>Elles firent boire, cette nuit encore du vin à leur père; la cadette se leva, vint à ses côtés et il ne la reconnut point lors de son coucher et de son lever.</p>
+      <p>Les deux filles de Loth conçurent du fait de leur père.</p>
+      <p>La première eut un fils, qu’elle appela Moab; ce fut le père des Moabites qui subsistent aujourd’hui.</p>
+      <p>La seconde, elle aussi, enfanta un fils et le nomma Ben-Ammi; ce fut le père des Ammonites qui subsistent aujourd’hui.</p>
+      <p>Abraham quitta ce lieu pour la contrée du Midi; il s’établit entre Cadès et Chour et séjourna à Gherar.</p>
+      <p>Abraham disait de Sara, sa femme: "Elle est ma sœur": Abimélec, roi de Gherar, envoya prendre Sara.</p>
+      <p>Le Seigneur visita Abimélec dans un songe nocturne et lui dit: "Tu vas mourir, à cause de cette femme que tu as prise et qui est en puissance de mari."</p>
+      <p>Or, Abimélec n’avait pas approché d’elle. Il dit: "Seigneur! frapperais-tu donc aussi un peuple innocent?</p>
+      <p>Quoi! ne m’a-t-il pas dit: ’Elle est ma sœur?’ et elle, elle aussi, a dit: ‘Il est mon frère.’ C’est avec un cœur innocent et des mains pures que j’ai agi ainsi."</p>
+      <p>Dieu lui répondit dans le songe: "Moi aussi je savais que tu avais agi ainsi dans la simplicité de ton cœur et j’ai voulu, de mon côté, te préserver de m’offenser; aussi ne t’ai-je pas permis d’approcher d’elle.</p>
+      <p>Et maintenant, restitue l’épouse de cet homme, car il est prophète; il priera pour toi et tu vivras. Que si tu ne la rends pas, sache que tu mourras, toi et tous les tiens!"</p>
+      <p>Abimélec se leva de bonne heure, appela tous ses serviteurs et leur fit entendre toutes ces choses; ces hommes furent fort effrayés.</p>
+      <p>Abimélec manda Abraham et lui dit "Que nous as-tu fait! et qu’avais-je commis envers toi, pour que tu exposasses moi et mon royaume à un péché grave? Tu as fait à mon égard des choses qui ne doivent point se faire!"</p>
+      <p>Abimélec dit encore à Abraham: "Qu’avais-tu en vue, en agissant de la sorte?"</p>
+      <p>Abraham répondit: "C’est que je pensais:‘Pour peu que la crainte de Dieu ne règne pas dans ce pays, ils me tueront à cause de ma femme.</p>
+      <p>Et d’ailleurs, de fait, elle est ma sœur, la fille de mon père, mais non la fille de ma mère et elle m’appartient comme épouse.</p>
+      <p>Or, lorsque Dieu me fit errer loin de la maison de mon père, je lui dis: ‘Voici la grâce que tu me feras. Dans tous les lieux où nous irons, dis que je suis ton frère."</p>
+      <p>Abimélec choisit des pièces de menu et de gros bétail, des esclaves mâles et femelles, en fit présent à Abraham et lui restitua Sara son épouse.</p>
+      <p>Et il lui dit: "Voici mon territoire devant toi, établis-toi où bon te semblera."</p>
+      <p>Et à Sara il dit: "Voici, j’ai donné mille pièces d’argent à ton parent: certes! il est pour toi comme un voile contre quiconque t’approcherait; tous, tu peux les regarder en face."</p>
+      <p>Abraham intercéda auprès de Dieu, qui guérit Abimélec, sa femme et ses servantes, de sorte qu’elles purent enfanter.</p>
+      <p>Car Dieu avait fermé toute matrice dans la maison d’Abimélec, à cause de Sara, épouse d’Abraham.</p>
+      <p>Or, l’Éternel s’était souvenu de Sara, comme il l’avait dit et il fit à Sara ainsi qu’il l’avait annoncé.</p>
+      <p>Sara conçut et enfanta un fils à Abraham quoiqu’âgé, à l’époque précise où Dieu l’avait promis.</p>
+      <p>Abraham nomma le fils qui venait de lui naître, que Sara lui avait donné, Isaac.</p>
+      <p>Abraham circoncit Isaac, son fils, à l’âge de huit jours, comme Dieu le lui avait ordonné.</p>
+      <p>Or, Abraham était âgé de cent ans, lorsqu’Isaac son fils vint au monde.</p>
+      <p>Sara dit: "Dieu m’a donné une félicité et quiconque l’apprendra me félicitera."</p>
+      <p>Elle dit encore "Qui eût dit à Abraham que Sara allaiterait des enfants? Eh bien, j’ai donné un fils à sa vieillesse!"</p>
+      <p>L’enfant grandit, il fut sevré. Abraham fit un grand festin le jour où l’on sevra Isaac.</p>
+      <p>Sara vit le fils d’Agar l’Egyptienne, que celle-ci avait enfanté à Abraham, se livrer à des railleries;</p>
+      <p>et elle dit à Abraham: "Renvoie cette esclave et son fils; car le fils de cette esclave n’héritera point avec mon fils, avec Isaac."</p>
+      <p>La chose déplut fort à Abraham, à cause de son fils.</p>
+      <p>Mais Dieu dit à Abraham: "Ne sois pas mécontent au sujet de cet enfant et de ton esclave; pour tout ce que Sara te dit, obéis à sa voix: car c’est la postérité d’Isaac qui portera ton nom.</p>
+      <p>Mais le fils de cette esclave aussi, je le ferai devenir une nation, parce qu’il est ta progéniture."</p>
+      <p>Abraham se leva de bon matin, prit du pain et une outre pleine d’eau, les remit à Agar en les lui posant sur l’épaule, ainsi que l’enfant et la renvoya. Elle s’en alla et s’égara dans le désert de Beer Shava.</p>
+      <p>Quand l’eau de l’outre fut épuisée, elle abandonna l’enfant au pied d’un arbre.</p>
+      <p>EIle alla s’asseoir du côté opposé, à la distance d’un trait d’arc, en se disant: "Je ne veux pas voir mourir cet enfant"; et ainsi assise du côté opposé, elle éleva la voix et pleura.</p>
+      <p>Dieu entendit le gémissement de l’enfant. Un messager du Seigneur appela Agar du haut des cieux et lui dit "Qu’as-tu, Agar? Sois sans crainte, car Dieu a entendu la voix de l’enfant s’élever de l’endroit où il gît.</p>
+      <p>Relève-toi! reprends cet enfant et soutiens-le de la main, car je ferai de lui une grande nation."</p>
+      <p>Le Seigneur lui dessilla les yeux et elle aperçu une source; elle y alla, emplit l’outre d’eau et donna à boire à l’enfant.</p>
+      <p>Dieu fut avec cet enfant et il grandit; il demeura dans le désert, et devint tireur à l’arc.</p>
+      <p>Il habita le désert de Pharan et sa mère lui choisit une femme du pays d’Egypte.</p>
+      <p>Il arriva, dans le même temps, qu’Abimélec, accompagné de Pikol, chef de son armée, dit à Abraham: "Dieu est avec toi dans tout ce que tu entreprends.</p>
+      <p>Et maintenant, jure-moi par ce Dieu que tu ne seras infidèle ni à moi, ni à mes enfants, ni à ma postérité; que, comme j’ai bien agi à ton égard, ainsi tu agiras envers moi et envers le pays où tu es venu séjourner."</p>
+      <p>Abraham répondit: "Je veux le jurer."</p>
+      <p>Or, Abraham avait fait des reproches à Abimélec, au sujet d’un puits dont les gens d’Abimélec s’étaient emparés.</p>
+      <p>Et Abimélec avait répondu: "Je ne sais qui a commis cette action: toi-même tu ne m’en avais pas instruit et moi, je l’ignorais avant ce jour."</p>
+      <p>Abraham prit du menu et du gros bétail qu’il remit à Abimélec et ils conclurent mutuellement une alliance.</p>
+      <p>Abraham ayant rangé à part sept brebis de ce bétail,</p>
+      <p>Abimélec dit à Abraham: "Que signifient ces sept brebis que tu as mises à part?"</p>
+      <p>Il répondit: "C’est que tu dois recevoir de ma main sept brebis, comme témoignage que j’ai creusé ce puit."</p>
+      <p>Aussi appela-t-on cet endroit Beer Shava, car là ils jurèrent l’un et l’autre.</p>
+      <p>Lorsqu’ils eurent contracté alliance à Beer Shava, Abimélec se leva, ainsi que Pikol son général d’armée et ils s’en retournèrent au pays des Philistins.</p>
+      <p>Abraham planta un bouquet d’arbres à Beer Shava et y proclama le Seigneur, Dieu éternel.</p>
+      <p>Abraham habita longtemps encore dans le pays des Philistins.</p>
+      <p>Il arriva, après ces faits, que Dieu éprouva Abraham. Il lui dit: "Abraham!" Il répondit: "Me voici."</p>
+      <p>Il reprit "Prends ton fils, ton fils unique, celui que tu aimes, Isaac; achemine-toi vers la terre de Moria et là offre-le en holocauste sur une montagne que je te désignerai."</p>
+      <p>Abraham se leva de bonne heure, sangla son âne, emmena ses deux serviteurs et Isaac, son fils et ayant fendu le bois du sacrifice, il se mit en chemin pour le lieu que lui avait indiqué le Seigneur.</p>
+      <p>Le troisième jour, Abraham, levant les yeux, aperçut l’endroit dans le lointain.</p>
+      <p>Abraham dit à ses serviteurs: "Tenez-vous ici avec l’âne; moi et le jeune homme nous irons jusque là-bas, nous nous prosternerons et nous reviendrons vers vous."</p>
+      <p>Abraham prit le bois du sacrifice, le chargea sur Isaac son fils, prit en main le feu et le couteau et ils allèrent tous deux ensemble.</p>
+      <p>Isaac, s’adressant à Abraham son père, dit "Mon père!" Il répondit: "Me voici mon fils." Il reprit: "Voici le feu et le bois, mais où est l’agneau de l’holocauste?"</p>
+      <p>Abraham répondit: "Dieu choisira lui-même l’agneau de l’holocauste mon fils!" Et ils allèrent tous deux ensemble.</p>
+      <p>Ils arrivèrent à l’endroit que Dieu lui avait indiqué. Abraham y construisit un autel, disposa le bois, lia Isaac son fils et le plaça sur l’autel, par-dessus le bois.</p>
+      <p>Abraham étendit la main et saisit le couteau pour immoler son fils.</p>
+      <p>Mais un envoyé du Seigneur l’appela du haut du ciel, en disant: "Abraham!. Abraham!"</p>
+      <p>Il répondit: "Me voici." Il reprit: "Ne porte pas la main sur ce jeune homme, ne lui fais aucun mal! car, désormais, j’ai constaté que tu honores Dieu, toi qui ne m’as pas refusé ton fils, ton fils unique!"</p>
+      <p>Abraham, levant les yeux, remarqua qu’un bélier, derrière lui, s’était embarrassé les cornes dans un buisson. Abraham alla prendre ce bélier et l’offrit en holocauste à la place de son fils.</p>
+      <p>Abraham dénomma cet endroit: Adonaï-Yiré; d’où l’on dit aujourd’hui:"Sur le mont d’Adônaï-Yéraé."</p>
+      <p>L’envoyé de l’Éternel appela une seconde fois Abraham du haut du ciel,</p>
+      <p>et dit: "Je jure par moi-même, a dit l’Éternel, que parce que tu as agi ainsi, parce que tu n’as point épargné ton enfant, ton fils unique,</p>
+      <p>je te comblerai de mes faveurs; je multiplierai ta race comme les étoiles du ciel et comme le sable du rivage de la mer et ta postérité conquerra les portes de ses ennemis.</p>
+      <p>Et toutes les nations de la terre s’estimeront heureuses par ta postérité, en récompense de ce que tu as obéi à ma voix."</p>
+      <p>Abraham retourna vers ses serviteurs; ils se remirent en route ensemble pour Beer Shava, où Abraham continua d’habiter.</p>
+      <p>Après cet événement, Abraham reçut les nouvelles suivantes: "Milka, elle aussi, a donné des enfants à Nahor ton frère:</p>
+      <p>Ouç, son premier-né; Bouz, son frère; Kemouel, père d’Aram;</p>
+      <p>Késed, Hazo, Pildach, Yidlaf et Bathuel,</p>
+      <p>lequel Bathuel a engendré Rébecca." Milka avait donné ces huit fils à Nahor, frère d’Abraham.</p>
+      <p>Sa concubine, nommée Reouma, avait eu aussi des enfants: Tébah, Gaham, Tahach et Maaka.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="synthese-bloc"><p>La paracha Vayera, quatrième de la Torah, couvre les chapitres 18 à 22 du livre de la Genèse et concentre certains des récits les plus connus de toute la Torah. Elle se déroule en six mouvements : la visite des trois anges et l'annonce de la naissance d'Isaac, le marchandage d'Abraham pour Sodome, la destruction de Sodome et Gomorrhe, l'épisode avec Abimélec, la naissance d'Isaac et le renvoi d'Ismaël, et enfin la Akeda — la ligature d'Isaac.</p>
+
+<h4>Les trois visiteurs et l'annonce (18:1 – 18:15)</h4>
+<p>Trois jours après sa circoncision, Abraham reçoit la visite de trois hommes, qu'il accueille avec un empressement devenu modèle d'hospitalité dans la tradition. L'un d'eux annonce qu'à pareille époque l'année suivante, Sara aura un fils ; celle-ci, qui écoute depuis l'entrée de la tente, rit intérieurement en raison de son grand âge — ce qui lui vaut une réprimande divine directe : "Est-il rien d'impossible au Seigneur ?"</p>
+
+<h4>Le marchandage pour Sodome (18:16 – 18:33)</h4>
+<p>Avant de détruire Sodome et Gomorrhe, D.ieu "révèle" son projet à Abraham, qui engage alors un dialogue resté célèbre, plaidant pour la ville en cas de présence de justes. Le marchandage descend progressivement de 50 à 10 justes, D.ieu acceptant à chaque étape d'épargner la ville si ce nombre s'y trouve :</p>
+
+<table>
+<tr><th>Nombre de justes proposé</th><th>Réponse de D.ieu</th></tr>
+<tr><td>50</td><td>Il pardonnera à toute la ville</td></tr>
+<tr><td>45</td><td>Il ne sévira pas</td></tr>
+<tr><td>40</td><td>Il s'abstiendra</td></tr>
+<tr><td>30</td><td>Il s'abstiendra</td></tr>
+<tr><td>20</td><td>Il renoncera à détruire</td></tr>
+<tr><td>10</td><td>Il renoncera à détruire</td></tr>
+</table>
+
+<p>Le marchandage s'arrête à dix, nombre en dessous duquel Abraham ne descend pas.</p>
+
+<h4>La destruction de Sodome (19:1 – 19:38)</h4>
+<p>Les deux anges restants arrivent à Sodome, où Loth les accueille avec la même hospitalité que son oncle. La violence des habitants de la ville envers les visiteurs scelle le sort de Sodome : les anges frappent la foule de cécité, pressent Loth de fuir avec sa famille, et détruisent les villes de la plaine par le soufre et le feu. La femme de Loth, ayant regardé en arrière malgré l'interdiction, devient une statue de sel. Réfugié dans une grotte avec ses deux filles, Loth est à l'origine, par un épisode d'inceste provoqué par ses filles, des peuples de Moab et d'Ammon.</p>
+
+<h4>Abimélec, roi de Gherar (20:1 – 20:18)</h4>
+<p>Un épisode rappelant celui d'Égypte (paracha précédente) se reproduit : Abraham présente de nouveau Sara comme sa sœur, et Abimélec, roi de Gherar, la prend pour épouse avant d'être averti en songe du danger. Contrairement à Pharaon, Abimélec n'a pas touché Sara, et D.ieu reconnaît sa bonne foi ; Abraham intercède pour sa guérison et celle de sa maison.</p>
+
+<h4>Naissance d'Isaac et renvoi d'Ismaël (21:1 – 21:34)</h4>
+<p>Sara enfante Isaac, "à l'époque précise où D.ieu l'avait promis" ; Abraham a alors cent ans. Après le sevrage d'Isaac, Sara, voyant Ismaël "se livrer à des railleries", demande le renvoi d'Agar et de son fils — demande approuvée par D.ieu malgré la réticence initiale d'Abraham. Agar et Ismaël, sauvés de la soif au désert par l'intervention divine, voient leur destin confirmé : Ismaël deviendra lui aussi "une grande nation". La paracha rapporte ensuite un pacte entre Abraham et Abimélec autour d'un puits à Beer Shava.</p>
+
+<h4>La Akeda — la ligature d'Isaac (22:1 – 22:24)</h4>
+<p>Le récit culminant de la paracha : D.ieu "éprouve" Abraham en lui demandant d'offrir Isaac, "son fils unique", en holocauste sur le mont Moria. Abraham obéit sans protester, et au moment où il s'apprête à immoler son fils, un ange l'arrête : "Ne porte pas la main sur ce jeune homme." Un bélier, pris dans un buisson, est offert à la place d'Isaac. D.ieu renouvelle alors sa promesse de bénédiction et de descendance nombreuse. La paracha se clôt sur une généalogie de la famille de Nahor, frère d'Abraham — dont descend Rébecca, future épouse d'Isaac, point que Rachi relève comme la véritable raison de cette liste.</p></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="synthese-bloc"><p>Le Midrash (Bereshit Rabba), repris par Rachi, précise que les trois visiteurs de 18:2 sont en réalité trois anges, chacun porteur d'une mission distincte — un principe général voulant qu'un même ange n'accomplisse jamais deux missions à la fois : l'un vient annoncer la naissance d'Isaac à Sara, le second détruire Sodome, le troisième guérir Abraham de sa circoncision récente.</p>
+
+<h4>Pourquoi D.ieu "révèle" son projet à Abraham</h4>
+<p>Sur le verset "Tairai-je à Abraham ce que je veux faire ?" (18:17), le Midrash développe l'idée qu'Abraham, ayant reçu la promesse de devenir "une nation grande et puissante" et "une cause de bonheur pour toutes les nations", mérite d'être informé par avance des desseins divins concernant des villes voisines de son propre territoire promis.</p>
+
+<h4>Les dix justes et le déluge</h4>
+<p>Sur l'arrêt du marchandage à dix justes, une tradition rapportée par Rachi établit un lien direct avec le déluge : Abraham n'aurait pas demandé en dessous de ce nombre car, lors du déluge, huit personnes seulement (Noé, sa femme, ses trois fils et leurs épouses) n'avaient pas suffi à sauver leur génération — preuve qu'un nombre si réduit de justes ne change pas le décret. Dix représente ainsi, dans cette lecture, le seuil minimal en dessous duquel la demande semblait d'emblée vouée à l'échec.</p>
+
+<h4>Le véritable sens de la généalogie finale</h4>
+<p>Rachi conclut son commentaire sur ce chapitre par une remarque éclairante : toute la liste généalogique de la famille de Nahor (22:20-24), qui semble à première vue une digression, "n'a été écrite que pour ce seul verset" — celui qui mentionne la naissance de Rébecca. Le texte prépare ainsi, dès la fin de cette paracha, le mariage d'Isaac qui sera raconté dans la paracha suivante (Chayei Sarah).</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="synthese-bloc"><p>Sur l'empressement d'Abraham à accueillir ses visiteurs — il "courut" à leur rencontre, "se hâta" de préparer le repas — Rachi souligne, en citant la tradition, que cette visite divine survient précisément "le troisième jour" après la circoncision d'Abraham, moment où la douleur est habituellement la plus vive : D.ieu vient en personne visiter le malade, modèle que la tradition retiendra comme fondement de la mitsva de bikour holim (visite aux malades).</p>
+
+<h4>Pourquoi Abraham prépare-t-il trois veaux ?</h4>
+<p>Rachi précise, sur la préparation du repas (18:7), que trois veaux distincts furent préparés — un pour chaque visiteur — afin de pouvoir leur servir trois langues différentes accompagnées de moutarde, signe d'une hospitalité particulièrement soignée, chaque invité recevant une portion entièrement préparée pour lui seul.</p>
+
+<h4>Le marchandage et la justice divine</h4>
+<p>Sur l'argument d'Abraham "Celui qui juge toute la terre serait-il un juge inique ?" (18:25), Rachi relève un procédé rhétorique : Abraham ne remet pas en cause la justice divine en elle-même, mais fait valoir qu'appliquer un même sort à l'innocent et au coupable, sans distinction, contredirait le principe même de jugement équitable que D.ieu incarne.</p>
+
+<h4>Pourquoi Abraham se tait-il face à l'épreuve de la Akeda ?</h4>
+<p>Sur "D.ieu éprouva Abraham" (22:1), une tradition rapportée par Rachi (citant le traité Sanhédrin) situe cette épreuve après une accusation : le Satan aurait reproché à Abraham de n'avoir, dans tous ses nombreux festins, jamais offert le moindre sacrifice à D.ieu — occasion pour ce dernier de répondre que tout ce qu'Abraham fait, il ne le fait que pour son fils, et que si D.ieu le lui demandait, il sacrifierait Isaac lui-même sans hésiter.</p>
+
+<h4>Le double appel "Abraham, Abraham"</h4>
+<p>Rachi relève que l'ange, au moment crucial, interpelle Abraham en répétant son nom (22:11) — répétition qu'il interprète, selon la tradition, comme une marque d'affection particulière, ce redoublement du nom signalant un attachement tout spécial au personnage interpellé.</p><div class="commentaires-sources">D'apres Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t5">
+  <div class="synthese-bloc"><p>Cette paracha, en particulier l'épisode de l'accueil des trois visiteurs par Abraham, est la source scripturaire classique de deux valeurs fondamentales de la tradition rabbinique : l'hospitalité (hakhnassat orhim) et la visite aux malades (bikour holim) — toutes deux déduites du comportement d'Abraham alors même qu'il se trouve, selon la tradition, en pleine convalescence après sa propre circoncision.</p>
+
+<h4>La source talmudique</h4>
+<p>Le traité Chabbat (127a) place la mitsva d'accueillir les invités parmi celles dont "l'homme jouit du fruit dans ce monde, tandis que le capital lui reste pour le monde futur" — formule qui souligne l'importance exceptionnelle accordée à cette pratique. Le même passage talmudique en déduit, à partir du comportement d'Abraham courant lui-même vers ses visiteurs malgré son rang, que l'hospitalité envers des invités surpasse même, dans certains cas, l'accueil de la présence divine elle-même — puisque le texte semble indiquer qu'Abraham interrompt sa vision prophétique pour courir vers eux.</p>
+
+<h4>La codification</h4>
+<p>Le Rambam (Michné Torah, Hilkhot Ével 14:1) range la visite aux malades, le réconfort des endeuillés, l'accompagnement des morts et l'accueil des invités parmi les mitsvot "d'ordre rabbinique qui dérivent du commandement d'aimer son prochain comme soi-même" — les plaçant ainsi au cœur de l'éthique pratique quotidienne. Ces pratiques restent, aujourd'hui encore, parmi les valeurs les plus universellement associées à la vie communautaire juive.</p></div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien etudier 📖
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits reserves<br>Sources : <a href="https://www.sefaria.org/Genesis_18:1-22:24" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
