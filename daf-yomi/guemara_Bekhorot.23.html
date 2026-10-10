@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 23 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 23</h1>
+    <p>Daf 23</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>לְרַבִּי אֱלִיעֶזֶר מָה תְּהֵא עֲלֵיהֶן? יֹאכְלוּ נִקּוּדִין, אוֹ קְלָיוֹת, אוֹ יִלּוֹשׁוּ בְּמֵי פֵירוֹת, אוֹ תִּתְחַלֵּק לְעִיסּוֹת, וּבִלְבַד שֶׁלֹּא יְהֵא כְּבֵיצָה בְּמָקוֹם אֶחָד. וְאָמַר עוּלָּא: מָה טַעַם? גְּזֵירָה שֶׁמָּא יָבִיא קַב חוּלִּין טְמֵאִים מִמָּקוֹם אַחֵר וְקַב וְעוֹד מִמִּין זֶה, סָבַר אֱיבַטְּלִינְהוּ בְּרוּבָּא, וְכֵיוָן דְּאִיכָּא הַאי מַשֶּׁהוּ — מָצָא מִין אֶת מִינוֹ וְנֵיעוֹר.</p>
+      <p>אֲמַר לֵיהּ: אִם טוּמְאָה עוֹרֶרֶת טוּמְאָה, טׇהֳרָה עוֹרֶרֶת טוּמְאָה?</p>
+      <p>אֵיתִיבֵיהּ: אֵפֶר כָּשֵׁר שֶׁנִּתְעָרֵב בְּאֵפֶר מִקְלֶה, הוֹלְכִין אַחַר הָרוֹב לְטַמֵּא, וְאִי רוּבָּא אֵפֶר מִקְלֶה הוּא — לָא מְטַמֵּא. וְאִי אָמְרַתְּ: טוּמְאָה כְּמַאן דְּאִיתֵיהּ דָּמֵי, נְהִי דִּבְמַגָּע לָא מְטַמֵּא — לְטַמֵּא בְּמַשָּׂא!</p>
+      <p>הָא אִיתְּמַר עֲלַהּ, אָמַר רַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא: טָהוֹר מִלְּטַמֵּא בְּמַגָּע, אֲבָל מְטַמֵּא בְּמַשָּׂא.</p>
+      <p>וְהָאָמַר רַב חִסְדָּא: נְבֵילָה בְּטֵילָה בִּשְׁחוּטָה, שֶׁאִי אֶפְשָׁר לִנְבֵילָה שֶׁתֵּיעָשֶׂה שְׁחוּטָה. נְהִי דִּבְמַגָּע לָא מְטַמֵּא, לְטַמֵּא בְּמַשָּׂא!</p>
+      <p>אֲמַר לֵיהּ: אַתּוּן בִּדְרַב חִסְדָּא מַתְנִיתוּ לַהּ, אֲנַן בִּדְרַבִּי חִיָּיא מַתְנֵינַן לַהּ. תָּנֵי רַבִּי חִיָּיא: נְבֵילָה וּשְׁחוּטָה בְּטֵילוֹת זוֹ בָּזוֹ, וְאִיתְּמַר עֲלַהּ, אָמַר רַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא: טָהוֹר מִלְּטַמֵּא בְּמַגָּע, אֲבָל מְטַמֵּא בְּמַשָּׂא.</p>
+      <p>וְהָא דִּתְנַן: רַבִּי אֱלִיעֶזֶר בֶּן יַעֲקֹב אוֹמֵר: בְּהֵמָה גַּסָּה שֶׁשָּׁפְעָה חֲרָרַת דָּם — הֲרֵי זוֹ תִּקָּבֵר, וְנִפְטְרָה מִן הַבְּכוֹרָה. וְתָנֵי רַבִּי חִיָּיא: אֵינָהּ מְטַמְּאָה לֹא בְּמַגָּע וְלֹא בְּמַשָּׂא. אַמַּאי? דִּנְהִי בְּמַגָּע לָא מְטַמֵּא, תְּטַמֵּא בְּמַשָּׂא! אִישְׁתִּיק.</p>
+      <p>דִּלְמָא, וַדַּאי שָׁאנֵי הָכָא, דְּהָוְיָא לַהּ טוּמְאָה סְרוּחָה. הָנִיחָא לְבַר פְּדָא, דְּאָמַר: טוּמְאָה חֲמוּרָה עַד לְגֵר, וְטוּמְאָה קַלָּה עַד לְכֶלֶב, הָא לָא חַזְיָא לְגֵר. אֶלָּא לְרַבִּי יוֹחָנָן דְּאָמַר:</p>
+      <p>אַחַת זוֹ וְאַחַת זוֹ עַד לְכֶלֶב, הָא חַזְיָא לְכֶלֶב! קַשְׁיָא.</p>
+      <p>גּוּפָא, בַּר פְּדָא אָמַר: טוּמְאָה חֲמוּרָה עַד לְגֵר, וְטוּמְאָה קַלָּה עַד לְכֶלֶב. וְרַבִּי יוֹחָנָן אָמַר: אַחַת זוֹ וְאַחַת זוֹ עַד לְכֶלֶב. מַאי טַעְמָא דְּבַר פְּדָא? דִּכְתִיב: ״לֹא תֹאכְלוּ כׇל נְבֵלָה לְגֵר וְגוֹ׳״, הָרְאוּיָה לַגֵּר קְרוּיָה ״נְבֵילָה״, וְשֶׁאֵינָהּ רְאוּיָה לַגֵּר אֵינָהּ קְרוּיָה ״נְבֵילָה״.</p>
+      <p>וְאִידַּךְ? לְמַעוֹטֵי הֵיכָא דְּהִסְרִיחָה מֵעִיקָּרָא. וְאִידַּךְ? הִסְרִיחָה מֵעִיקָּרָא לָא צְרִיכָא קְרָא לְמַעוֹטֵי, עַפְרָא בְּעָלְמָא הוּא.</p>
+      <p>תְּנַן: רַבִּי אֱלִיעֶזֶר בֶּן יַעֲקֹב אוֹמֵר: בְּהֵמָה גַּסָּה שֶׁשָּׁפְעָה חֲרָרַת דָּם, הֲרֵי זוֹ תִּקָּבֵר, וְנִפְטֶרֶת מִן הַבְּכוֹרָה. וְתָנֵי רַבִּי חִיָּיא: אֵינָהּ מְטַמְּאָה לֹא בְּמַגָּע וְלֹא בְּמַשָּׂא. וְאָמַר רַבִּי יוֹחָנָן: מִשּׁוּם בִּיטּוּל בְּרוֹב נָגְעוּ בָּהּ.</p>
+      <p>מַאי אִירְיָא מִשּׁוּם בִּיטּוּל בְּרוֹב? תִּיפּוֹק לִי דְּלָא אִיתְחֲזִי כְּלָל! הָא נָמֵי אִיתְחֲזִי מֵעִיקָּרָא אַגַּב אִימֵּיהּ.</p>
+      <p>תְּנַן הָתָם: רַבִּי אֱלִיעֶזֶר בֶּן יַעֲקֹב אוֹמֵר: צִיר טָהוֹר שֶׁנָּפַל לְתוֹכוֹ מַיִם כׇּל שֶׁהוּא — טָמֵא. אָמַר רַב נַחְמָן אָמַר רַבָּה בַּר אֲבוּהּ: זֹאת אוֹמֶרֶת נֶחְשְׁדוּ עַמֵּי הָאָרֶץ לְעָרֵב מֶחֱצָה בַּצִּיר. וּלְמָה לִי מֶחֱצָה? אֲפִילּוּ בְּצִיר מִמֶּחֱצָה נָמֵי! וְהָנֵי מַשֶּׁהוּ — הָוֵה לֵיהּ פַּלְגָא, וּפַלְגָא לָא בְּטִיל.</p>
+      <p>אֵימָא: עַד מֶחֱצָה. אִיבָּעֵית אֵימָא: טוּמְאַת עַם הָאָרֶץ דְּרַבָּנַן, טוּמְאַת מַשְׁקִין דְּרַבָּנַן. בְּרוּבָּא גְּזַרוּ רַבָּנַן, בְּפַלְגָא וּפַלְגָא לָא גְּזַרוּ בַּהּ רַבָּנַן.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: הַלּוֹקֵחַ בְּהֵמָה מְנִיקָה מִן הַגּוֹי — אֵין חוֹשְׁשִׁין שֶׁמָּא בְּנָהּ שֶׁל אַחֶרֶת הָיָה. נִכְנָס לְתוֹךְ עֶדְרוֹ וְרָאָה אֶת הַמַּבְכִּירוֹת מְנִיקוֹת, וְשֶׁאֵינָן מַבְכִּירוֹת מְנִיקוֹת — אֵין חוֹשְׁשִׁין שֶׁמָּא בְּנָהּ שֶׁל זוֹ בָּא לוֹ אֵצֶל זוֹ, אוֹ שֶׁמָּא בְּנָהּ שֶׁל זוֹ בָּא לוֹ אֵצֶל זוֹ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר רַב נַחְמָן מִשְּׁמֵיהּ דְּרַב: הִלְכְתָא בְּכוּלֵּיהּ פִּירְקִין, בַּר מִפְּלוּגְתָּא. אָמַר רַב שֵׁשֶׁת: אָמֵינָא כִּי נָיֵים וְשָׁכֵיב רַב אָמַר לְהָא שְׁמַעְתָּא! אַהֵיָיא? אִילֵּימָא אַרֵישָׁא — (מפליגי) [מִיפְלָג פְּלִיגִי] רַבִּי יִשְׁמָעֵאל וְרַבִּי עֲקִיבָא!</p>
+      <p>אֶלָּא אַדְּרַבִּי אֱלִיעֶזֶר בֶּן יַעֲקֹב — מִשְׁנַת רַבִּי אֱלִיעֶזֶר בֶּן יַעֲקֹב ״קַב וְנָקִי״.</p>
+      <p>אֶלָּא אַדְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל מִפְלָג פְּלִיג בְּבָרַיְיתָא! אֶלָּא אַדְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם — הָא אָמַר רַב חֲדָא זִימְנָא, דְּאָמַר רַב: הִלְכְתָא כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם! אֶלָּא אַשְּׂעַר בַּעַל מוּם מִיפְלָג פְּלִיגִי עֲקַבְיָא בֶּן מַהֲלַלְאֵל וְרַבָּנַן!</p>
+      <p>לְעוֹלָם אַדְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, וְהָא קָא מַשְׁמַע לַן: דְּבָרַיְיתָא לָא פְּלוּגְתָּא הִיא.</p>
+      <p>וְכֵיוָן דְּאָמַר רַב: הִלְכְתָא בְּכוּלֵּיהּ פִּירְקִין בַּר מִפְּלוּגְתָּא,</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Selon Rabbi Eliézer, qu'adviendra-t-il des cent se'a profanes ? Qu'elles soient mangées sèches ou grillées, ou pétries avec du jus de fruits, ou divisées en petites fournées, à condition qu'il n'y ait pas un volume d'œuf dans une même fournée. Et Oulla dit : quelle est la raison pour laquelle le mélange ne doit pas entrer en contact avec l'eau, alors qu'il est entièrement profane ? C'est un décret rabbinique, de peur qu'on apporte un kav de produits profanes impurs d'un autre endroit, qu'on prenne un kav et un peu plus de ce mélange, et qu'on pense : j'annulerai le kav impur dans la majorité de produits purs du mélange. Mais comme il y a dans le mélange une certaine quantité de produits impurs, l'espèce annulée a retrouvé son espèce et se réveille</b> dans son état impur.</p>
+      <p>Abaye <b>dit à Rav Dimi : cette preuve n'est pas concluante. Même si l'impureté réveille l'impureté</b>, comme dans le cas de la terouma où le kav de produits est impur, pourquoi supposer que <b>la pureté réveille l'impureté</b>, comme on le suggère à propos de la saumure, où l'eau de la marmite est pure ?</p>
+      <p>Abaye <b>objecta à l'avis de Rabbi Yirmeya depuis une Michna (Para 9:7) : les cendres</b> de la vache rousse, qui rendent impurs les prêtres qui participent à son rite et sont <b>aptes</b> à l'aspersion sur celui qui est impur d'une impureté de cadavre, <b>qui se sont mélangées à des cendres</b> ordinaires <b>de combustion : on suit la majorité pour déterminer</b> si le mélange rend impur ou non. <b>Et</b> donc, <b>si la majorité est faite de cendres ordinaires, le mélange ne rend pas impur.</b> Abaye explique l'objection : <b>et si tu dis que l'impureté</b> annulée <b>est considérée comme présente</b> dans le mélange et peut se réveiller, alors, <b>même si</b> le mélange <b>ne rend pas impur par</b> contact, car on considère qu'on touche la majorité, <b>qu'il rende impur par port</b>, à cause des cendres de la vache rousse.</p>
+      <p>Rav Dimi répondit : en fait, <b>on a dit à propos de cette Michna que Rabbi Yossi, fils de Rabbi 'Hanina, dit : le mélange est pur</b> en ce sens qu'il ne rend pas impur par contact, <b>mais il rend impur par port.</b></p>
+      <p>Abaye répondit : <b>mais Rav 'Hisda ne dit-il pas :</b> si de la viande de bête morte [<i>nevela</i>], qui rend impur, s'est mélangée à de la viande de bête abattue, la viande de <b>nevela est annulée par la</b> viande de <b>bête abattue</b> si la viande pure est majoritaire. La raison est <b>qu'il est impossible qu'une nevela devienne une bête abattue</b>, c'est-à-dire qu'une bête abattue ne peut jamais avoir le statut d'une nevela en matière d'impureté. Abaye explique la difficulté : <b>admettons qu'elle ne rend pas impur par contact</b>, mais si l'impureté est considérée comme présente en partie, <b>qu'elle rende impur par port</b>.</p>
+      <p>Rav Dimi dit à Abaye : <b>tu as appris</b> la Michna <b>selon</b> l'interprétation de <b>Rav 'Hisda, mais nous l'avons apprise selon</b> celle de <b>Rabbi 'Hiyya, car Rabbi 'Hiyya enseigne : la viande d'une bête morte et celle d'une bête abattue, l'une annule l'autre</b>, selon la majorité. <b>Et à ce sujet, Rabbi Yossi, fils de Rabbi 'Hanina, dit :</b> si la majorité vient d'une bête abattue, le mélange est <b>pur</b> en ce sens qu'il ne rend pas impur par contact, <b>mais il rend impur par port.</b></p>
+      <p>Abaye souleva une autre difficulté : <b>et ce que nous avons appris</b> dans notre Michna contredit ton avis, car <b>Rabbi Eliézer ben Yaakov dit : une grosse bête qui a expulsé une masse de</b> sang coagulé : <b>elle doit être enterrée, et la bête est exemptée</b> de voir ses futurs petits comptés <b>comme premiers-nés. Et Rabbi 'Hiyya enseigne à ce sujet : cette masse ne rend pas impur, ni par</b> contact <b>ni par port.</b> Mais <b>pourquoi ?</b> Si Rav Dimi a raison, alors <b>admettons qu'elle ne rend pas impur par contact</b>, mais <b>qu'elle rende impur par port</b>. Rav Dimi <b>resta silencieux.</b></p>
+      <p>La Guemara demande : pourquoi Rav Dimi s'est-il tu ? <b>Peut-être la halakha est-elle différente ici, car c'est une impureté pourrie</b> : une nevela pourrie ne rend plus du tout impur. La Guemara commente : <b>cela s'explique bien selon bar Pada, qui dit :</b> un objet à l'impureté <b>grave</b>, comme celle d'un nouveau-né non viable, rend impur <b>jusqu'à ce qu'il soit pourri au point de ne plus être apte à être mangé par un ger toshav</b> (un non-Juif qui observe certaines mitsvot et qui a le droit de la manger) ; <b>mais</b> un objet à l'impureté <b>légère</b>, qui ne rend impur que par contact, rend impur <b>jusqu'à ce qu'il ne soit plus apte à être mangé par un chien.</b> Et comme cette masse <b>n'est pas apte</b> à être mangée par un ger toshav, elle ne rend pas impur. <b>Mais selon Rabbi Yo'hanan, qui dit :</b></p>
+      <p><b>aussi bien celle-ci que celle-là</b>, c'est-à-dire les deux formes d'impureté, rendent impur <b>jusqu'à ce qu'ils ne soient plus aptes à être mangés par un chien</b>, cela pose une difficulté à l'avis de Rabbi Yirmeya, car <b>cette</b> masse <b>est apte pour un chien.</b> La Guemara conclut : en effet, c'est <b>difficile</b>.</p>
+      <p>La Guemara examine <b>la question elle-même. Bar Pada dit :</b> un objet à l'impureté <b>grave</b> rend impur <b>jusqu'à ce qu'il ne soit plus apte à un ger toshav</b>, <b>mais</b> un objet à l'impureté <b>légère</b> rend impur <b>jusqu'à ce qu'il ne soit plus apte à un chien. Et Rabbi Yo'hanan dit :</b> les deux <b>jusqu'à ce qu'ils ne soient plus aptes à un chien.</b> La Guemara demande : <b>quelle est la raison de bar Pada ? Car il est écrit : « Vous ne mangerez aucune bête morte ; tu la donneras au ger qui est dans tes portes »</b> (Devarim 14:21). Bar Pada comprend de ce verset que ce qui est <b>apte à un ger toshav est appelé nevela, et ce qui n'est pas apte à un ger toshav n'est pas appelé nevela.</b></p>
+      <p>La Guemara demande : <b>et l'autre</b> Sage, Rabbi Yo'hanan, comment interprète-t-il ce verset ? Il estime qu'il sert <b>à exclure</b> une nevela <b>pourrie dès l'origine</b>, par exemple si la chair a commencé à se décomposer du vivant de l'animal à cause d'une grave blessure. Mais si la nevela était d'abord comestible et s'est décomposée ensuite, elle continue de rendre impur tant qu'elle est apte à un chien. La Guemara demande : <b>et l'autre</b> Sage, bar Pada, que répond-il ? <b>Il n'est pas nécessaire d'un verset pour exclure</b> une nevela <b>pourrie dès l'origine, car ce n'est que de la poussière</b> et il est évident qu'elle ne rend pas impur.</p>
+      <p><b>Nous avons appris</b> dans notre Michna que <b>Rabbi Eliézer ben Yaakov dit : une grosse bête qui a expulsé une masse de</b> sang coagulé : <b>elle doit être enterrée, et la bête est exemptée du premier-né. Et Rabbi 'Hiyya enseigne : cette masse ne rend pas impur, ni par contact ni par port. Et Rabbi Yo'hanan dit : c'est à cause de l'annulation</b> halakhique d'une substance interdite <b>dans une majorité</b> de substances permises <b>que les Sages l'ont traitée ainsi</b>, pour l'exclure de l'impureté par contact ou par port.</p>
+      <p>La Guemara demande : <b>pourquoi Rabbi Yo'hanan dit-il que cette halakha est due précisément à l'annulation par la majorité ? Qu'on la déduise du fait qu'elle n'est pas du tout apte</b> à la consommation, et ne l'a jamais été. La Guemara explique : <b>celle-ci aussi était d'abord apte grâce à sa mère</b> : si on avait abattu la mère avant l'expulsion de l'embryon, il aurait été comestible comme partie de la mère.</p>
+      <p><b>Nous avons appris dans une Michna ailleurs</b> (Makhchirin 6:3) : <b>Rabbi Eliézer ben Yaakov dit : une saumure pure</b>, achetée à un <i>am haarets</i>, <b>dans laquelle est tombée une quantité quelconque d'eau, devient impure. Rav Na'hman dit que Rabba bar Avouh dit : cela signifie que les <i>amei haarets</i> sont soupçonnés de mêler la moitié</b> d'eau <b>à leur saumure</b> : quand l'eau supplémentaire y tombe, l'impureté annulée de la saumure se réveille et rend impur tout le mélange. La Guemara demande : <b>mais pourquoi dire précisément la moitié ? Même</b> s'ils en mêlent <b>moins de la moitié</b>, la saumure sera <b>aussi</b> rendue impure au contact de l'eau ajoutée, car <b>cette quantité</b>, jointe à un peu moins de la moitié d'eau, <b>constitue la moitié</b> du mélange, <b>et la moitié n'est pas annulée</b> par l'autre moitié.</p>
+      <p>La Guemara répond : <b>dis plutôt qu'ils sont soupçonnés d'en mêler jusqu'à presque la moitié. Et si tu veux, dis :</b> l'impureté des aliments d'un <b><i>am haarets</i></b> est <b>rabbinique</b> et <b>l'impureté des liquides est</b> elle aussi <b>rabbinique</b>. L'impureté de la saumure vient donc de deux décrets rabbiniques distincts. <b>Là où la majorité</b> est de l'eau, <b>les Sages ont décrété</b> la saumure impure ; mais quand <b>la moitié</b> du mélange est de la saumure pure <b>et la moitié de l'eau, les Sages n'ont pas décrété.</b></p>
+      <p><i>(Michna 3:2 : voir la fiche séparée.)</i></p>
+      <p><b>GUEMARA :</b> <b>Rav Na'hman dit au nom de Rav : la halakha est comme la Michna anonyme dans tout le chapitre, sauf s'il y a une controverse. Rav Chéchet dit : je dis que Rav somnolait ou dormait quand il a dit cette halakha.</b> Car <b>à quelle Michna</b> se réfère-t-il ? <b>Si l'on dit la première Michna du chapitre</b> (19b), sa règle ne s'applique pas, car <b>Rabbi Yichmaël et Rabbi Akiva sont en désaccord</b> dans cette Michna.</p>
+      <p><b>Mais</b> on dira qu'il se réfère à l'avis <b>de Rabbi Eliézer ben Yaakov</b> (21b). C'est aussi problématique, car on sait déjà que la halakha est comme lui : c'est un principe établi que <b>l'enseignement de Rabbi Eliézer ben Yaakov</b> est <b>« un kav et propre »</b>, c'est-à-dire mesuré et exact, et la halakha suit donc ses avis.</p>
+      <p><b>Mais</b> on dira qu'il se réfère à l'avis <b>de Rabban Chimon ben Gamliel</b> dans la Michna d'ici. C'est aussi difficile, car un <i>tanna</i> <b>le contredit dans une baraïta</b> citée en 24a. <b>Mais</b> on dira qu'il se réfère à l'avis <b>de Rabbi Yossi ben HaMechoulam</b> dans la Michna suivante (24b). Or <b>Rav n'a-t-il pas déjà dit</b> cela <b>une fois ? Car Rav a dit : la halakha est comme Rabbi Yossi ben HaMechoulam. Mais</b> on dira qu'il se réfère à <b>la question du poil du premier-né ayant un défaut</b>, dans la Michna de 25b. Mais ce cas aussi fait l'objet d'une controverse, car <b>Akavya ben Mahalalel et les Sages</b> sont en désaccord dans cette Michna.</p>
+      <p>La Guemara répond : <b>en réalité</b>, la déclaration de Rav se réfère à l'avis <b>de Rabban Chimon ben Gamliel</b> d'ici, <b>et</b> Rav nous enseigne ceci : <b>si</b> une Michna est contredite par une opinion divergente rapportée <b>dans une baraïta, ce n'est pas</b> considéré comme <b>une controverse</b>, et la halakha suit donc Rabban Chimon ben Gamliel.</p>
+      <p>La Guemara demande : <b>mais puisque Rav a dit que la halakha est comme la Michna anonyme dans tout le chapitre, sauf s'il y a une controverse,</b> … <i>(la phrase se poursuit au daf suivant)</i></p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>according to Rabbi Eliezer, what will be with them? Let them be eaten dry or roasted, or kneaded with fruit juice, or divided</b> into <b>small batches, provided that</b> there is <b>not an egg-bulk</b> of volume <b>in a single</b> batch. <b>And Ulla says: What is the reason</b> that the mixture may not be allowed to come in contact with water, despite the fact that it is entirely non-sacred? It is a rabbinic <b>decree, lest one bring a <i>kav</i> of non-sacred, impure</b> produce <b>from</b> some <b>other place and</b> take <b>a <i>kav</i> and</b> a little <b>more from this</b> mixture. Then he will <b>think</b> to himself: <b>I will nullify</b> the <i>kav</i> of impure produce <b>with the majority</b> of pure produce from the mixture. <b>But since there is some amount</b> of impure produce in the mixture, the <b>type</b> that was nullified <b>found its</b> own <b>type and is revived</b> in its impure state.</p>
+      <p>Abaye <b>said to</b> Rav Dimi: That proof is not conclusive. Even <b>if impurity revives impurity,</b> as in the case of <i>teruma</i> where the <i>kav</i> of produce is impure, why should it be assumed that <b>purity revives impurity,</b> as is suggested with regard to the fish brine, where the water in the pot is pure?</p>
+      <p>Abaye <b>raised an objection to</b> the opinion of Rabbi Yirmeya from a mishna (<i>Para</i> 9:7): If the <b>ashes</b> of a red heifer, which impart ritual impurity to the priests involved in its ritual and are <b>fit</b> for sprinkling on someone impure with impurity imparted by a corpse, <b>became intermingled with</b> regular <b>burned ashes, we follow the majority</b> in order <b>to</b> determine whether or not the mixture is <b>impure. And</b> therefore, <b>if</b> the <b>majority is</b> composed of the regular <b>burned ashes,</b> the mixture does <b>not impart impurity.</b> Abaye explains the objection: <b>And if you say</b> nullified <b>impurity is considered like an item that is</b> nevertheless present in the mixture and can be revived, then <b>although</b> the mixture <b>does not impart impurity through</b> physical <b>contact</b> as it is assumed that one touches the majority, <b>let it impart impurity through carrying</b> due to the ashes of the red heifer.</p>
+      <p>Rav Dimi responded: In fact, <b>it was stated with regard to that</b> mishna that <b>Rabbi Yosei, son of Rabbi Ḥanina, says:</b> The mixture is <b>pure</b> in the sense that it does not <b>impart impurity through contact, but it</b> does <b>impart impurity through carrying.</b></p>
+      <p>Abaye responded: <b>But doesn’t Rav Ḥisda say:</b> If meat from an animal carcass, which imparts ritual impurity, was mixed with the meat of a slaughtered animal, the meat from the <b>carcass is nullified by</b> the meat of the <b>slaughtered animal</b> in the event that the ritually pure meat constitutes a majority. The reason is <b>that it is impossible for a carcass to become a slaughtered</b> animal, i.e., a ritually slaughtered animal can never have the status of a carcass with regard to impurity. Abaye explains the difficulty: <b>Granted that it does not impart impurity through contact,</b> but if the impurity is considered present to some extent <b>let</b> the mixture <b>impart impurity through carrying.</b></p>
+      <p>Rav Dimi <b>said to</b> Abaye: <b>You learned</b> the mishna <b>according to</b> the interpretation of <b>Rav Ḥisda,</b> but <b>we learned it according to</b> the interpretation of <b>Rabbi Ḥiyya,</b> as <b>Rabbi Ḥiyya teaches:</b> With regard to meat from <b>an animal carcass and</b> meat from <b>a slaughtered</b> animal, <b>one nullifies the other,</b> depending on the majority. <b>And it was stated with regard to this</b> ruling that <b>Rabbi Yosei, son of Rabbi Ḥanina, says:</b> If the majority is from a slaughtered animal the mixture is <b>pure</b> in the sense that it does not <b>impart impurity through contact, but it</b> does <b>impart impurity through carrying.</b></p>
+      <p>Abaye raised another difficulty: <b>And that which we learned</b> in our mishna contradicts your opinion, as <b>Rabbi Eliezer ben Yaakov says:</b> In the case of <b>a large animal that expelled a mass of</b> congealed <b>blood, that</b> mass <b>must be buried, and</b> the animal <b>is exempt from</b> having any future offspring counted <b>a firstborn. And Rabbi Ḥiyya teaches</b> with regard to this ruling: That mass <b>does not impart</b> ritual <b>impurity,</b> neither <b>through</b> physical <b>contact nor through carrying.</b> But <b>why?</b> If Rav Dimi is correct, then <b>granted it does not impart impurity through contact,</b> but <b>let it</b> nevertheless <b>impart impurity through carrying.</b> Rav Dimi <b>was silent</b> in response.</p>
+      <p>The Gemara asks: Why was Rav Dimi silent? <b>Perhaps</b> the <i>halakha</i> <b>is different here, as it is decayed impurity,</b> since an animal carcass that has rotted does not impart impurity at all. The Gemara comments: <b>This works out well according to</b> the opinion of <b>bar Padda, who says:</b> An item with <b>severe</b> ritual <b>impurity,</b> such as that of a nonviable newborn, imparts impurity to substances <b>until</b> it is rotted to the degree that it is no longer fit to be consumed <b>by a gentile</b> who observes certain mitzvot [<i>ger toshav</i>], who is permitted to consume it; <b>but</b> an item with <b>light impurity,</b> which transmits impurity only by contact, imparts impurity to substances <b>until</b> it is no longer fit to be eaten <b>by a dog.</b> And as <b>this</b> congealed mass is <b>not fit</b> to be eaten <b>by a <i>ger</i></b> <i>toshav</i> it does not impart impurity. <b>But according to Rabbi Yoḥanan, who says:</b></p>
+      <p>Both <b>this one and that one,</b> i.e., items of both forms of impurity, impart impurity <b>until</b> they are no longer fit to be eaten <b>by a dog,</b> it poses a difficulty to the opinion of Rabbi Yirmeya, as <b>this</b> mass <b>is fit for a dog.</b> The Gemara concludes: Indeed, it is <b>difficult.</b></p>
+      <p>The Gemara discusses <b>the</b> matter <b>itself. Bar Padda says:</b> An item with <b>severe</b> ritual <b>impurity</b> imparts impurity to substances <b>until</b> it is no longer fit to be eaten <b>by a <i>ger</i></b> <i>toshav</i>, <b>but</b> an item with <b>light impurity</b> imparts impurity to substances <b>until</b> it is no longer fit to be eaten <b>by a dog. And Rabbi Yoḥanan says:</b> Both <b>this one and that one</b> impart impurity <b>until</b> they are no longer fit to be eaten <b>by a dog.</b> The Gemara asks: <b>What is the reason for</b> the ruling of <b>bar Padda? As it is written: “You shall not eat of any animal carcass;</b> you may give it <b>to the <i>ger</i></b> who is within your gates” (Deuteronomy 14:21). Bar Padda understands from this verse that an item which is <b>fit for a <i>ger</i></b> <i>toshav</i> <b>is called an animal carcass, and that which is not fit for a <i>ger</i></b> <i>toshav</i> <b>is not called an animal carcass.</b></p>
+      <p>The Gemara asks: <b>And</b> with regard to <b>the other</b> Sage, Rabbi Yoḥanan, how does he interpret that verse? He maintains that it serves <b>to exclude</b> a carcass <b>that was decayed from the outset,</b> e.g., if the flesh started to decompose while the animal was still alive, due to severe injury. But if the carcass was initially edible and later decayed, it continues to impart ritual impurity provided it is fit for a dog. The Gemara asks: <b>And</b> with regard to <b>the other</b> Sage, bar Padda, how does he respond to this claim? <b>A verse is not necessary to exclude</b> such a case where the carcass <b>was decayed from the outset,</b> as <b>it is merely</b> like <b>dust</b> and obviously does not impart impurity.</p>
+      <p><b>We learned</b> in our mishna that <b>Rabbi Eliezer ben Ya’akov says:</b> In the case of <b>a large animal that expelled a mass of</b> congealed <b>blood, that</b> mass <b>must be buried, and</b> the animal <b>is exempt from</b> having any future offspring counted a <b>firstborn. And Rabbi Ḥiyya teaches:</b> That mass of congealed blood <b>does not impart</b> ritual <b>impurity, neither through</b> physical <b>contact nor through carrying. And Rabbi Yoḥanan says:</b> It is <b>due to</b> the halakhic <b>nullification</b> of a forbidden substance <b>in a majority</b> of permitted substances that the Sages <b>touched upon it,</b> in order to exclude it from impurity through contact or carrying.</p>
+      <p>The Gemara asks: <b>Why</b> did Rabbi Yoḥanan say this <i>halakha</i> is <b>due specifically</b> to the <b>nullification</b> of a substance in a mixture <b>by</b> the <b>majority</b> of the mixture? Let one <b>derive</b> the <i>halakha</i> from the fact <b>that</b> the mass <b>is not fit</b> for consumption <b>at all,</b> and it never was. The Gemara explains: <b>This too</b> was <b>initially fit by virtue of its mother,</b> i.e., if one had slaughtered the mother before the embryo was discharged it would have been edible as part of the mother.</p>
+      <p><b>We learned</b> in a mishna <b>elsewhere</b> (<i>Makhshirin</i> 6:3) that <b>Rabbi Eliezer ben Yaakov says: Ritually pure brine,</b> taken from an <i>am ha’aretz</i>, <b>into which any amount</b> of <b>water fell</b> is rendered <b>impure. Rav Naḥman says</b> that <b>Rabba bar Avuh says: That is to say</b> that <b><i>amei ha’aretz</i> are suspected of mixing half</b> a portion of water <b>in the brine,</b> which means that when the additional water falls in, the nullified impurity in the brine is revived by it and renders the entire mixture impure. The Gemara asks: <b>But why do I</b> need to say they are suspected of mixing precisely <b>half</b> a portion of water? <b>Even</b> if they mix in <b>less than half,</b> the brine will <b>also</b> be rendered impure upon contact with the added water, as <b>that</b> small <b>amount</b> combined with slightly less than half a portion of water <b>constitutes half</b> the mixture, <b>and half</b> a mixture <b>is not nullified</b> by the other half.</p>
+      <p>The Gemara answers: <b>Say</b> instead that an <i>am ha’aretz</i> is suspected of mixing in water <b>until</b> it constitutes slightly less than <b>half</b> the mixture. <b>And if you wish, say</b> instead: <b>The impurity</b> of foods belonging to an <b><i>am ha’aretz</i></b> applies <b>by rabbinic law</b> and <b>the impurity of liquids</b> also applies <b>by rabbinic law.</b> Accordingly, the impurity of the brine in this case is due to two separate rabbinic decrees. <b>Where the majority</b> is water <b>the Sages decreed</b> the brine is impure, but in a case <b>where half</b> the mixture is pure fish brine <b>and half</b> is water <b>the Sages did not decree</b> that the brine is impure.</p>
+      <p><strong>MISHNA:</strong> <b>Rabban Shimon ben Gamliel says:</b> In the case of <b>one who purchases a nursing</b> female <b>animal from a gentile, he</b> does <b>not</b> need <b>to be concerned,</b> i.e., take into account the possibility, that <b>perhaps it was</b> nursing <b>the offspring of another</b> animal. Rather, the buyer may assume it had previously given birth. In the case of one who <b>enters amid his flock and sees</b> mother animals <b>that gave birth for the first time</b> that were <b>nursing, and</b> also sees mother animals <b>that gave birth not for the first time</b> that were also <b>nursing, he</b> does <b>not</b> need <b>to be concerned</b> that <b>perhaps the offspring of this</b> animal <b>came to that</b> animal to be nursed, or that <b>perhaps the offspring of that</b> animal <b>came to this</b> animal to be nursed.</p>
+      <p><strong>GEMARA:</strong> <b>Rav Naḥman said in the name of Rav: The <i>halakha</i></b> is in accordance with the opinion of the anonymous <i>tanna</i> in the <i>mishnayot</i> <b>throughout the whole chapter, except</b> where there is <b>a difference</b> of opinion recorded in that mishna. <b>Rav Sheshet says: I say Rav was dozing or sleeping when he said this <i>halakha</i>.</b> After all, <b>to which</b> mishna is this referring? <b>If we say</b> it is referring <b>to the first</b> mishna in the chapter (19b) then his ruling does not apply, as <b>Rabbi Yishmael and Rabbi Akiva disagree</b> in that mishna.</p>
+      <p><b>Rather,</b> you will say it is referring <b>to</b> the ruling <b>of Rabbi Eliezer ben Yaakov</b> (21b). This is also problematic, since it is already known that the <i>halakha</i> is in accordance with his opinion, as there is an established principle that <b>the teaching of Rabbi Eliezer ben Ya’akov</b> measures only <b>a <i>kav</i> but is clean</b> and accurate, and therefore the <i>halakha</i> is in accordance with his opinions.</p>
+      <p><b>Rather,</b> you will say it is referring <b>to</b> the statement of <b>Rabban Shimon ben Gamliel</b> in the mishna here. That is also difficult, as there is a <i>tanna</i> who <b>disagrees, in the <i>baraita</i></b> cited on 24a. <b>Rather,</b> you will say that it is referring <b>to</b> the statement <b>of Rabbi Yosei ben HaMeshullam</b> in the next mishna (24b). But <b>didn’t Rav</b> already <b>say</b> this <b>one time? As Rav said: The <i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam. Rather,</b> you will say that it is referring to the matter <b>of the hair of a blemished</b> firstborn discussed in the mishna on 25b. But that case too is subject to a dispute, as <b>Akavya ben Mahalalel and the Rabbis disagree</b> in that mishna.</p>
+      <p>The Gemara answers: <b>Actually,</b> Rav’s statement is referring <b>to</b> the statement <b>of Rabban Shimon ben Gamliel</b> here, <b>and</b> Rav <b>teaches us this: That</b> if a mishna is contradicted by a dissenting opinion cited in <b>a <i>baraita</i></b> it <b>is not</b> considered <b>a dispute,</b> and the <i>halakha</i> therefore follows the opinion of Rabban Shimon ben Gamliel.</p>
+      <p>The Gemara asks: <b>But once Rav said the <i>halakha</i></b> is in accordance with the opinion of the anonymous <i>tanna</i> in the <i>mishnayot</i> <b>throughout the whole chapter except</b> where there is <b>a difference</b> of opinion,</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> ce daf contient une seule Michna, la Michna 3:2 (fiche séparée), placée au milieu. Avant elle, la Guemara termine la longue discussion lancée au daf 22 sur la <b>purification de la saumure et sur l'impureté « annulée »</b>. Après elle, elle traite la <b>règle de Rav</b> sur la halakha dans les Michnayot du chapitre. Le fil conducteur de la première partie est une question : quand une impureté a été <b>annulée par la majorité</b>, a-t-elle vraiment disparu, ou reste-t-elle « en sommeil », prête à se réveiller ?</p>
+
+<p><b>1. Suite de la Michna de Teroumot : le décret d'Oulla.</b> La baraïta rapportée par Rav Dimi dit que, même selon Rabbi Eliézer, les cent se'a profanes restantes ne doivent pas toucher l'eau (on les mange sèches, grillées, pétries au jus de fruits, ou en petites fournées). Oulla en donne la raison. Le contact avec l'eau rend les aliments <b>susceptibles de contracter l'impureté</b>. Or un homme pourrait alors faire ceci :</p>
+
+<p>1. Il a un kav de produits profanes impurs, qui ne sont pas dans le mélange.<br>
+2. Il prend un kav (et un peu plus) du mélange, qui contient une infime quantité de terouma impure, annulée.<br>
+3. Il pense annuler son kav impur dans la majorité pure du mélange.<br>
+4. Mais l'impureté qui était annulée dans le mélange « trouve son espèce » dans son kav impur et se réveille. Les deux impuretés s'additionnent et forment une moitié, qui n'est pas annulée.</p>
+
+<p>Pour Rav Dimi, la preuve est claire : si les Sages ont dû décréter cela, c'est qu'une impureté annulée <b>peut se réveiller</b>. Cela soutient la position de Rabbi Yirmeya sur la saumure (daf 22).</p>
+
+<p><b>2. La première réponse d'Abaye.</b> Abaye ne conteste pas la règle, mais l'<b>analogie</b>. Dans la terouma, une impureté (celle du kav apporté) réveille une autre impureté. Dans la saumure de Rabbi Yirmeya, c'est l'eau <b>pure</b> de la marmite qui est censée réveiller l'impureté de l'eau de la saumure. Une eau pure peut-elle réveiller une impureté ? La Guemara laisse cette distinction de côté et passe à une objection plus directe.</p>
+
+<p><b>3. Les objections d'Abaye à Rabbi Yirmeya.</b> Abaye cherche à montrer que, si l'impureté annulée est « comme présente », il devrait y avoir au moins une conséquence <b>par port</b> (<i>massa</i>), même si le contact n'est pas impur. Il le fait trois fois, et Rav Dimi s'appuie sur Rabbi Yossi, fils de Rabbi 'Hanina :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Objection d'Abaye</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Réponse de Rav Dimi</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cendres de la vache rousse mêlées à des cendres ordinaires (Para 9:7) : la Michna dit qu'on suit la majorité. Pourquoi pas impur par port ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yossi, fils de Rabbi 'Hanina : pur pour le contact, mais <b>impur par port</b></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav 'Hisda : la nevela est annulée par la viande abattue, car l'abattue ne peut pas devenir nevela. Pourquoi pas impur par port ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Dimi suit Rabbi 'Hiyya (l'une annule l'autre) et applique encore Rabbi Yossi : <b>impur par port</b></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La masse de sang de Rabbi Eliézer ben Yaakov : Rabbi 'Hiyya dit qu'elle ne rend pas impur, ni par contact ni par port. Pourquoi pas par port ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Dimi <b>se tait</b></td></tr>
+</table>
+
+<p>Le silence de Rav Dimi ouvre la question : y a-t-il une explication, ou la difficulté reste-t-elle entière ?</p>
+
+<p><b>4. Pourquoi la masse de sang ne rend-elle pas impur par port ?</b> La Guemara propose une réponse : c'est une <b>impureté pourrie</b>. Une nevela qui a pourri ne rend plus impur du tout. Mais jusqu'à quand une nevela rend-elle impur ? C'est ce que se disputent bar Pada et Rabbi Yo'hanan :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Type d'impureté</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Bar Pada : rend impur jusqu'à…</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Yo'hanan : rend impur jusqu'à…</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Impureté grave (par port)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">l'inaptitude au <i>ger toshav</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">l'inaptitude au chien</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Impureté légère (par contact seul)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">l'inaptitude au chien</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">l'inaptitude au chien</td></tr>
+</table>
+
+<p>Selon bar Pada, la masse de sang n'est pas apte à un <i>ger toshav</i>, donc elle ne rend pas impur par port : la réponse est bonne. Selon Rabbi Yo'hanan, elle est apte à un chien et devrait rendre impur : c'est la difficulté qui reste <b>(teyouvta)</b> pour Rabbi Yirmeya.</p>
+
+<p><b>5. Les sources de la dispute.</b> Bar Pada s'appuie sur Devarim 14:21 (« tu la donneras au <i>ger</i> »). Ce qui est apte à un <i>ger toshav</i> est appelé « nevela », le reste ne l'est pas. Rabbi Yo'hanan lit le même verset autrement : il sert à exclure la nevela <b>pourrie dès l'origine</b> (par exemple une chair qui s'est décomposée du vivant de l'animal). Bar Pada répond qu'il n'y a pas besoin d'un verset pour cela, car c'est évident : ce n'est que de la poussière.</p>
+
+<p><b>6. Retour à Rabbi Yo'hanan : pourquoi l'annulation ?</b> On rappelle que Rabbi Yo'hanan explique l'absence d'impureté de la masse par l'<b>annulation dans la majorité</b>. La Guemara demande pourquoi il ne dit pas simplement qu'elle n'est pas comestible. Réponse : elle était <b>apte à la consommation grâce à sa mère</b> (si on avait abattu la mère, l'embryon aurait été permis avec elle). Elle n'a donc pas « pourri dès l'origine » : il faut l'annulation pour expliquer qu'elle ne rende pas impur.</p>
+
+<p><b>7. La saumure de l'<i>am haarets</i> (Makhchirin 6:3).</b> Pour Rabbi Eliézer ben Yaakov, une saumure pure dans laquelle tombe un peu d'eau est impure. Rav Na'hman, au nom de Rabba bar Avouh, en déduit que les <i>amei haarets</i> sont soupçonnés de mêler la moitié d'eau à leur saumure. La Guemara demande : pourquoi la moitié précisément, alors que moins de la moitié suffirait ? Elle donne deux réponses :</p>
+
+<p>1. Ils sont soupçonnés d'en mêler jusqu'à <b>presque la moitié</b>, de sorte qu'une goutte d'eau ajoutée suffit à faire basculer le mélange.<br>
+2. L'impureté des aliments de l'<i>am haarets</i> et celle des liquides sont toutes deux <b>rabbiniques</b> : l'impureté de la saumure repose sur deux décrets. Les Sages ont décrété l'impureté quand l'eau est majoritaire, mais pas quand c'est moitié-moitié.</p>
+
+<p><b>8. La Michna 3:2.</b> Rabban Shimon ben Gamliel : on ne craint pas qu'une bête allaitante achetée ait allaité le petit d'une autre, ni que les petits aient tété auprès d'une autre mère dans le troupeau (voir la fiche de la Michna).</p>
+
+<p><b>9. La règle de Rav et le doute de Rav Chéchet.</b> Rav dit que la halakha suit la Michna anonyme dans tout le chapitre, sauf si une controverse y est rapportée. Rav Chéchet lui répond en éliminant tour à tour tous les passages possibles :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Michna possible</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi la règle ne s'y applique pas</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Première Michna du chapitre (19b)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yichmaël et Rabbi Akiva s'y opposent : il y a controverse</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Eliézer ben Yaakov (21b)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On sait déjà que la halakha est comme lui (« un kav et propre »)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabban Shimon ben Gamliel (ici)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un <i>tanna</i> le contredit dans une baraïta (24a)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yossi ben HaMechoulam (24b)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav l'a déjà dit une fois</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le poil du premier-né ayant un défaut (25b)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Akavya ben Mahalalel et les Sages s'y opposent : il y a controverse</td></tr>
+</table>
+
+<p>La Guemara répond qu'il reste Rabban Shimon ben Gamliel : Rav enseigne ici qu'une opinion divergente rapportée dans une <b>baraïta</b> ne compte pas comme une controverse, car la Michna elle-même n'en rapporte pas. La halakha suit donc la Michna. Le daf s'arrête sur une nouvelle question à Rav, qui se poursuit au daf 24.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> explique le décret d'Oulla : si le kav de produits profanes impurs est mêlé à un kav et un peu plus du mélange, et qu'on pense l'annuler dans la majorité, il se trouve qu'il y a dans ce mélange une quantité infime de terouma impure : l'impureté « trouve son espèce », se réveille et se joint à l'autre, ce qui donne moitié-moitié, sans annulation. Rachi en conclut qu'une impureté annulée peut revenir et se réveiller. <b>Tossefot</b> s'étonnent que cette annulation puisse être efficace, puisqu'on n'annule pas un interdit à l'avance, même par erreur (Guitin 54b), et répondent que certains admettent l'annulation quand on se trompe, ce qui est le cas ici puisque l'homme pense que c'est permis.</p>
+
+<p>Pour la première réponse d'Abaye, Rachi explique la question rhétorique : si l'impureté peut réveiller l'impureté, l'eau <b>pure</b> de la marmite pourrait-elle réveiller l'eau impure de la saumure ? Il explique ensuite l'objection tirée de Para : les cendres « aptes » sont celles de la vache rousse ; les cendres ordinaires sont des cendres de feu quelconque. Le contact avec les eaux de la vache rousse rend impur (Bamidbar 19:21), et ces eaux et leurs cendres rendent impurs <b>par port</b> (Yoma 14a), d'où l'objection d'Abaye.</p>
+
+<p>À propos de la nevela et de la viande abattue, Rachi précise qu'une pièce de nevela mêlée à deux pièces abattues est annulée par la majorité, car c'est un mélange d'espèces différentes. Il refuse la version « il est impossible qu'une nevela devienne abattue » : une nevela peut en effet perdre son statut en pourrissant (comme le dira la Guemara, ce qui est apte au <i>ger</i> est appelé nevela). <b>Tossefot</b> notent que la Guemara conclut ici pour le contact, mais que, pour le port, il faut un volume d'olive de nevela au même endroit (Houlin 124b), faute de quoi il n'y a pas d'impureté de port.</p>
+
+<p>Pour l'impureté grave et légère de bar Pada, Rachi comprend que l'impureté « grave » est celle du port, et que l'impureté « légère » est celle du contact. Dans cette logique, la masse de sang n'est pas apte à un <i>ger</i>, et elle ne rend donc pas impur par port ; pour le contact, on invoque l'annulation. <b>Tossefot</b> rejettent cette lecture : toute impureté de nevela, par contact comme par port, est une impureté « grave », jusqu'à l'aptitude au <i>ger</i> ; l'impureté « légère » est celle des aliments (premier et deuxième degré), comme dans Kritot 21a et Nidda 50b. Ils se demandent aussi pourquoi la Guemara ne soulève pas la difficulté à partir de l'avis de Rabbi Chimon (le fœtus s'est désagrégé avant de sortir, Nidda 27a), et proposent deux réponses : soit la Guemara avait de quoi répondre à cette difficulté, soit elle suit l'avis selon lequel l'enfant mort dans le placenta est traité autrement (confusion de la forme).</p>
+
+<p>À propos de « jusqu'au chien », <b>Tossefot</b> précisent que cette règle ne vient pas du verset « vous le jetterez aux chiens » (Chemot 22:30), mais de la manière dont les chiens sont dits « manger » dans l'histoire de Jézabel (II Rois 9:36) : le fait que les chiens mangent est bien une consommation, comme l'illustre Zevahim 31a (une intention de laisser manger par les chiens le lendemain rend la chose <i>piggoul</i>).</p>
+
+<p>Pour la nevela « pourrie dès l'origine », Rachi donne l'exemple d'une bête dont les membres se sont brisés de son vivant et qui s'est vermoulue : même apte au chien, elle n'est jamais « descendue » à l'impureté de port, alors qu'une nevela d'abord apte au <i>ger</i> reste impure de port jusqu'à ce qu'elle soit inapte au chien. Quant à l'objection « pourquoi ne pas dire que la masse de sang est pourrie dès l'origine ? », il répond qu'elle ne l'est pas : elle était apte au <i>ger</i> grâce à sa mère tant qu'elle était dans le ventre. <b>Tossefot</b> s'étonnent par rapport à Avoda Zara 67b, où Rabbi Yo'hanan semble dire qu'une nevela pourrie dès l'origine n'a pas besoin de verset ; ils répondent que, pour l'interdiction de manger, c'est évident (poussière), mais que, pour l'impureté, on aurait pu croire qu'elle rend impur comme un reptile ou une émission de semence, qui rendent impurs sans être comestibles.</p>
+
+<p>Pour la saumure de Makhchirin, Rachi explique « saumure pure » comme une saumure qui a été mise en contact (<i>hachaka</i>) avec de l'eau : si une quantité d'eau y tombe, l'eau trouve son espèce, devient majoritaire et le mélange devient impur. Pour qui n'admet pas qu'une impureté annulée se réveille, il faut dire que l'eau est tombée <i>après</i> la mise en contact. <b>Tossefot</b> discutent longuement cette explication et précisent que la parole de Rav Na'hman signifie que les <i>amei haarets</i> ont l'habitude de mêler jusqu'à la moitié d'eau, de sorte qu'un peu d'eau ajoutée suffit à tout faire basculer. Rachi explique « jusqu'à presque la moitié » (<i>kerov la-ma'hatsa</i>) et renvoie à Pessa'him 16a pour l'origine rabbinique de l'impureté des liquides.</p>
+
+<p>Pour la règle de Rav, Rachi commente « un kav et propre » : Rav n'avait pas besoin de nous apprendre la halakha de Rabbi Eliézer ben Yaakov, car son enseignement n'est cité qu'à peu d'endroits, et le terme « propre » indique que la halakha est comme lui. Il note aussi que les halakhot de Rabbi Yossi ben HaMechoulam et du poil du premier-né sont dans la Michna, et que « ce n'est pas une controverse » signifie qu'une opinion contraire, venue d'ailleurs, ne compte pas comme controverse : puisque la Michna ne la rapporte pas, la halakha suit l'anonyme. <b>Tossefot</b> demandent s'il n'y a pas déjà controverse avec les Sages de Rabbi Chimon (le placenta, plus haut) et répondent soit que Rabbi Chimon suit l'opinion selon laquelle l'impureté grave dure jusqu'au <i>ger</i>, soit que cela ne compte pas comme controverse puisqu'ils ne se sont pas opposés explicitement sur ce point précis.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Les lois de pureté rituelle (nevela, impureté par port, saumure de l'<i>am haarets</i>) concernent surtout l'époque du Temple et n'ont pas d'application pratique directe aujourd'hui. Deux idées de ce daf restent en revanche importantes. La première est le principe d'<b>annulation par la majorité</b> (<i>bitoul be-rov</i>) et sa limite : une substance annulée peut, dans certains cas, « se réveiller » quand elle retrouve son espèce. La seconde est une règle de méthode : <b>la halakha suit la Michna anonyme</b> (<i>stam Michna</i>), sauf controverse rapportée dans la Michna elle-même ; une opinion divergente qui n'apparaît que dans une baraïta ne compte pas comme une controverse.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.23" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
