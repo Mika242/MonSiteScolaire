@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 24 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 24</h1>
+    <p>Daf 24</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>הֲלָכָה כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם לְמָה לִי?</p>
+      <p>אִי אָמַר הִלְכְתָא דְּכוּלֵּיהּ פִּירְקִין, וְלָא אָמַר הִלְכְתָא כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם, הֲוָה אָמֵינָא: אַדְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם קָאֵי, וּמַאי ״בְּכוּלֵּיהּ פִּירְקִין״? דְּרַבִּי יוֹסֵי תַּרְתֵּי אָמַר, וּפְלוּגְתָּא דְּבָרַיְיתָא פְּלוּגְתָּא הִיא.</p>
+      <p>אַשְׁמְעִינַן הֲלָכָה כְּרַבִּי יוֹסֵי — לְאַשְׁמוֹעִינַן דְּאַדְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל קָאֵי, וּפְלוּגְתָּא דְּבָרַיְיתָא לָאו פְּלוּגְתָּא הִיא.</p>
+      <p>מַאי בָּרַיְיתָא? דְּתַנְיָא: הַלּוֹקֵחַ בְּהֵמָה מְנִיקָה מִן הַגּוֹי, הַבָּא אַחֲרָיו בְּכוֹר מִסָּפֵק, מִפְּנֵי שֶׁמְּרַחֶמֶת אַף עַל פִּי שֶׁאֵינָהּ יוֹלֶדֶת. רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: דָּבָר בְּחֶזְקָתוֹ.</p>
+      <p>וְכֵן הָיָה רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: הַנִּכְנָס לְתוֹךְ עֶדְרוֹ בַּלַּיְלָה וְרָאָה כְּעֶשֶׂר כַּחֲמֵשׁ עֶשְׂרֵה, מַבְכִּירוֹת וְשֶׁאֵינָן מַבְכִּירוֹת, יוֹלְדוֹת, לְמָחָר הִשְׁכִּים וּמָצָא זְכָרִים (תְּלוּיוֹת) [תְּלוּיִין] בְּשֶׁאֵין מַבְכִּירוֹת, וּנְקֵבוֹת תְּלוּיוֹת בְּמַבְכִּירוֹת — אֵינוֹ חוֹשֵׁשׁ שֶׁמָּא בְּנָהּ שֶׁל זוֹ בָּא לוֹ אֵצֶל זוֹ.</p>
+      <p>אִיבַּעְיָא לְהוּ: דָּבָר בְּחֶזְקָתוֹ דְּקָאָמַר רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, דְּאֵינָהּ מְרַחֶמֶת אֶלָּא אִם כֵּן יוֹלֶדֶת — הָא הֵיכָא דְּאוֹלִיד חָיְישִׁינַן לְרַחוֹמֵי, אוֹ דִלְמָא: דִּידַהּ מְרַחֲמָא, דְּלָא דִּידַהּ לָא מְרַחֲמָא לֵיהּ?</p>
+      <p>לְמַאי נָפְקָא מִינַּהּ? לְמִלְקֵא עֲלַהּ מִשּׁוּם ״אוֹתוֹ וְאֶת בְּנוֹ״. אִי אָמְרַתְּ דִּידַהּ מְרַחֲמָא, דְּלָא דִּידַהּ לָא מְרַחֲמָא — לָקֵי, וְאִי אָמְרַתְּ דְּלָא דִּידַהּ נָמֵי מְרַחֲמָא — לָא לָקֵי.</p>
+      <p>מַאי? תָּא שְׁמַע, רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: הַלּוֹקֵחַ בְּהֵמָה מִן הַגּוֹי — אֵינוֹ חוֹשֵׁשׁ שֶׁמָּא בְּנָהּ שֶׁל אַחֶרֶת הָיָה. מִי קָתָנֵי ״הוּא״? ״הָיָה״ קָתָנֵי! הָכִי קָאָמַר: אֵינוֹ חוֹשֵׁשׁ שֶׁמָּא בְּנָהּ שֶׁל אַחֶרֶת, אֶלָּא אִם כֵּן הָיָה לָהּ וָלָד מֵעִיקָּרָא.</p>
+      <p>תָּא שְׁמַע: נִכְנַס בְּתוֹךְ עֶדְרוֹ וְרָאָה אֶת הַמַּבְכִּירוֹת מְנִיקוֹת, וְאֶת שֶׁאֵינָן מַבְכִּירוֹת מְנִיקוֹת — אֵינוֹ חוֹשֵׁשׁ שֶׁמָּא בְּנָהּ שֶׁל זוֹ בָּא לוֹ אֵצֶל זוֹ, אוֹ שֶׁמָּא בְּנָהּ שֶׁל זוֹ בָּא לוֹ אֵצֶל זוֹ.</p>
+      <p>אַמַּאי? לֵיחוּשׁ דִּלְמָא רַחוֹמֵי רַחֵים! בִּמְקוֹם דִּידַהּ, לָא שָׁבְקָא דִּידַהּ וּמְרַחֲמָא דְּלָא דִּידַהּ.</p>
+      <p>תָּא שְׁמַע: דָּבָר בְּחֶזְקָתוֹ כּוּ׳. מַאי לָאו רֵישָׁא דּוּמְיָא דְּסֵיפָא? מָה סֵיפָא וַדַּאי דִּידַהּ, אַף רֵישָׁא וַדַּאי דִּידַהּ.</p>
+      <p>מִידֵּי אִירְיָא? הַאי כִּדְאִיתֵאּ, וְהַאי כִּדְאִיתֵאּ. וּמַאי ״וְכֵן״? אַפְּטוּרָה דִּבְכוֹרָה.</p>
+      <p>אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: רָאָה חֲזִיר שֶׁכָּרוּךְ אַחַר רָחֵל, פְּטוּרָה מִן הַבְּכוֹרָה, וְאָסוּר בַּאֲכִילָה ״עַד יָבֹא וְיוֹרֶה צֶדֶק לָכֶם״.</p>
+      <p>פָּטוּר מִן הַבְּכוֹרָה — כְּמַאן? כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, וְאָסוּר בַּאֲכִילָה — כְּרַבָּנַן.</p>
+      <p>וְתוּ, אִי כְּרַבָּנַן, מַאי ״עַד יָבֹא וְיוֹרֶה צֶדֶק לָכֶם״? ״עַד שֶׁיִּוָּדַע לְךָ דָּבָר״ מִיבְּעֵי לֵיהּ!</p>
+      <p>וְכִי תֵּימָא: מְסַפְּקָא לֵיהּ אִי הֲלָכָה כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אִי כְּרַבָּנַן, אִי מְסַפְּקָא לֵיהּ — אַמַּאי פְּטוּרָה מִן הַבְּכוֹרָה? וְתוּ: מִי מְסַפְּקָא לֵיהּ? וְהָאָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: כׇּל מָקוֹם שֶׁשָּׁנָה רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל בְּמִשְׁנָתֵינוּ — הֲלָכָה כְּמוֹתוֹ, חוּץ מֵעָרֵב, וְצַיְדָן, וּרְאָיָה אַחֲרוֹנָה!</p>
+      <p>לְעוֹלָם פְּשִׁיטָא לֵיהּ הֲלָכָה כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, מִיהוּ מְסַפְּקָא לֵיהּ אִי סָבַר רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל יוֹלֶדֶת מְרַחֶמֶת, אוֹ אֵינָהּ מְרַחֶמֶת. אִי הָכִי, עַד דְּאַשְׁמְעִינַן חֲזִיר, לַישְׁמְעִינַן טָלֶה, וּלְמִילְקֵי עֲלֵיהּ מִשּׁוּם ״אוֹתוֹ וְאֶת בְּנוֹ״!</p>
+      <p>חֲזִיר אִיצְטְרִיכָא לֵיהּ, דְּאִי אַשְׁמְעִינַן טָלֶה, הֲוָה אָמֵינָא: אִם תִּמְצָא לוֹמַר דְּסָבַר יוֹלֶדֶת מְרַחֲמָא — דְּמִינַהּ, דְּלָא מִינַהּ — לָא. אַשְׁמְעִינַן חֲזִיר, דִּמְרַחֶמֶת, וַאֲפִילּוּ דְּלָאו מִינַהּ נָמֵי, דְּאִיכָּא לְמֵימַר דִּלְמָא מְרַחֲמָא.</p>
+      <p>וְהַיְינוּ דְּאָמַר רַבִּי יוֹחָנָן: בָּעֵי</p>
+      <p>אַחַאי בְּרִיבִּי: רָאָה חֲזִיר שֶׁכָּרוּךְ אַחַר רָחֵל, מַהוּ? מַאי קָמִיבַּעְיָא לֵיהּ? אִילֵּימָא לִבְכוֹרָה, וְקָמִיבַּעְיָא לֵיהּ אִי הִלְכְתָא כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אִי הִלְכְתָא כְּרַבָּנַן, תִּיבְּעֵי לֵיהּ טָלֶה!</p>
+      <p>כִּי קָמִיבַּעְיָא לֵיהּ, לִבְכוֹרָה וְאַלִּיבָּא דְּרַבָּנַן, לַאֲכִילָה וְאַלִּיבָּא דְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל.</p>
+      <p>לִבְכוֹרָה, וַאֲפִילּוּ לְרַבָּנַן דְאָמְרִי מְרַחֲמָא, כִּי מְרַחֲמָא דְּמִינַהּ, דְּלָא מִינַהּ — לָא, אוֹ דִלְמָא דְּלָא מִינַהּ נָמֵי מְרַחֲמָא?</p>
+      <p>לַאֲכִילָה, וַאֲפִילּוּ לְרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל — אִם תִּמְצָא לוֹמַר סָבַר: יוֹלֶדֶת מְרַחֲמָא דְּמִינַהּ, דְּלָאו מִינַהּ — לָא; אוֹ דִלְמָא: דְּלָאו מִינַהּ נָמֵי מְרַחֲמָא? תֵּיקוּ.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> רַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם אוֹמֵר: הַשּׁוֹחֵט אֶת הַבְּכוֹר, עוֹשֶׂה מָקוֹם בְּקוֹפִיץ מִיכָּן וּמִיכָּן, וְתוֹלֵשׁ אֶת הַשֵּׂעָר, וּבִלְבַד שֶׁלֹּא יְזִיזֶנּוּ מִמְּקוֹמוֹ, וְכֵן תּוֹלֵשׁ אֶת הַשֵּׂעָר לִרְאוֹת מְקוֹם מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר רַב: הֲלָכָה כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם. בְּעוֹ מִינֵּיהּ מֵרַב הוּנָא: כְּנֶגְדּוֹ בְּיוֹם טוֹב מַהוּ? טַעְמָא דְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם מִשּׁוּם דְּקָסָבַר תּוֹלֵשׁ לָאו הַיְינוּ גּוֹזֵז, וּבְיוֹם טוֹב אָסוּר, דְּהָוֵה לֵיהּ עוֹקֵר דָּבָר מִגִּידּוּלוֹ.</p>
+      <p>אוֹ דִלְמָא בְּעָלְמָא סָבַר רַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם תּוֹלֵשׁ הַיְינוּ גּוֹזֵז, וְהַיְינוּ טַעְמָא דִּשְׁרֵי, דְּהָוֵה לֵיהּ דָּבָר שֶׁאֵין מִתְכַּוֵּין, וּבְיוֹם טוֹב דָּבָר שֶׁאֵין מִתְכַּוֵּין מוּתָּר?</p>
+      <p>אֲמַר לְהוּ: זִילוּ שַׁיְילוּהּ לְרַב חֲנַנְאֵל, אִי אָמַר הֲלָכָה כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם, אֶיפְשׁוֹט לְכוּ. אֲתוֹ שַׁיְילוּהּ, אֲמַר לְהוּ: הָכִי אָמַר רַב: הֲלָכָה כְּרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם. אֲתוֹ לְקַמֵּיהּ דְּרַב הוּנָא, אֲמַר לְהוּ: כְּנֶגְדּוֹ בְּיוֹם טוֹב מוּתָּר. אִיתְּמַר נָמֵי, אָמַר רַב חֲנַנְיָה בַּר שֶׁלֶמְיָא מִשְּׁמֵיהּ דְּרַב: כְּנֶגְדּוֹ בְּיוֹם טוֹב</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>… <b>pourquoi ai-je besoin qu'il dise que la <i>halakha</i> est comme Rabbi Yossi ben HaMechoulam ?</b></p>
+      <p>La Guemara explique : <b>si</b> Rav <b>avait dit</b> seulement que <b>la halakha</b> est comme la Michna anonyme <b>dans tout le chapitre, sans dire</b> explicitement que la halakha est comme <b>Rabbi Yossi ben HaMechoulam, j'aurais dit :</b> Rav <b>se réfère</b> précisément à l'avis <b>de Rabbi Yossi ben HaMechoulam. Et que signifie</b> l'expression : <b>dans tout le chapitre,</b> qui indique plus d'un cas ? Cela vient de ce que <b>Rabbi Yossi a dit deux</b> choses distinctes dans le chapitre. <b>Et</b> cela voudrait dire, à propos de la règle de Rav, que si une Michna est contredite par <b>une opinion divergente</b> citée dans <b>une baraïta, c'est</b> considéré comme <b>une controverse.</b></p>
+      <p>Rav <b>a donc enseigné</b> que <b>la halakha</b> est <b>comme Rabbi Yossi</b> pour nous apprendre que sa déclaration sur tout le chapitre <b>se réfère</b> à l'avis <b>de Rabban Chimon ben Gamliel, et</b> qu'une opinion divergente citée <b>dans une baraïta n'est pas</b> considérée comme <b>une controverse.</b></p>
+      <p><b>Quelle est la baraïta</b> dont on a parlé ? <b>Comme on l'enseigne</b> dans une baraïta : celui qui <b>achète à un non-Juif une bête allaitante</b> : le petit qui naît <b>après</b> celui qu'elle allaite est traité <b>comme un premier-né par doute, car</b> une bête peut <b>avoir pitié</b> et allaiter un petit <b>même si elle n'a pas mis bas</b> du tout. <b>Rabban Chimon ben Gamliel dit :</b> la <b>chose</b> reste <b>dans sa présomption</b>, c'est-à-dire que la bête allaitante est présumée être la mère du petit qu'elle allaite.</p>
+      <p>La baraïta poursuit : <b>et de même, Rabban Chimon ben Gamliel disait : celui qui entre au milieu de son troupeau la nuit et voit une dizaine ou une quinzaine de bêtes, dont certaines ont un petit qui est un premier-né et d'autres un petit qui n'est pas un premier-né, toutes ayant mis bas, et qui se lève le lendemain et trouve les petits mâles en train de téter auprès des mères dont le petit n'est pas un premier-né, et les petites femelles auprès des mères dont le petit est un premier-né, n'a pas à craindre que le petit de celle-ci soit venu auprès de celle-là.</b> Il peut supposer que chaque bête allaite son propre petit.</p>
+      <p><b>On a posé une question aux Sages :</b> quel est le sens exact de l'expression « la chose reste <b>dans sa présomption », qu'a dite Rabban Chimon ben Gamliel ? Cela veut-il dire qu'une bête n'a pitié</b> que si <b>elle a mis bas, et alors, là où elle a mis bas, nous craignons qu'elle ait pitié</b> d'un petit qui n'est pas le sien ? <b>Ou bien</b> qu'une bête a pitié <b>de son propre</b> petit, mais <b>n'a pas pitié de celui qui n'est pas le sien ?</b></p>
+      <p>La Guemara demande : <b>quelle différence cela fait-il</b> en pratique ? Dans les deux cas, la bête allaitante est présumée avoir mis bas, et son futur petit ne sera pas un premier-né. La Guemara répond : la différence porte sur le fait d'<b>être flagellé pour avoir abattu</b> la bête <b>à cause de</b> l'interdit d'abattre <b>une bête et son petit</b> le même jour. <b>Si tu dis</b> qu'une bête a pitié seulement de <b>son propre</b> petit et <b>n'a pas pitié</b> d'un petit <b>qui n'est pas le sien, on est flagellé</b> si l'on abat volontairement la bête et le petit qu'elle allaite. <b>Mais si tu dis</b> qu'elle a aussi pitié du petit d'une autre, <b>on n'est pas flagellé</b> dans ce cas.</p>
+      <p>La Guemara revient à sa question de départ. <b>Quel est le sens des paroles de Rabban Chimon ben Gamliel ? Viens et écoute</b> une preuve de la Michna : <b>Rabban Chimon ben Gamliel dit : celui qui achète une bête à un non-Juif n'a pas à craindre que</b> le petit allaité <b>ait été le petit d'une autre.</b> Apparemment, Rabban Chimon ben Gamliel pense qu'une bête n'allaite que son propre petit. La Guemara rejette cette preuve : <b>la Michna enseigne-t-elle</b> qu'on ne craint pas que ce <b>soit</b> le petit d'une autre ? Non, elle enseigne qu'on ne craint pas que ce <b>fût</b> le petit d'une autre, et voici ce que la Michna <b>dit</b> : de toute façon, le prochain petit n'est pas un premier-né, car on n'a pas à craindre que la bête allaite un petit d'une autre, <b>sauf si elle avait d'abord un petit à elle.</b></p>
+      <p>La Guemara propose une autre preuve de la suite de la Michna : <b>celui qui entre au milieu de son troupeau et voit des bêtes qui ont mis bas pour la première fois qui allaitent, et des bêtes qui n'ont pas mis bas pour la première fois qui allaitent aussi, n'a pas à craindre que le petit de celle-ci soit venu auprès de celle-là, ou que le petit de celle-là soit venu auprès de celle-ci.</b></p>
+      <p>La Guemara explique la preuve : mais <b>pourquoi pas ? Craignons-nous que</b> la bête <b>ait peut-être pitié</b> d'un petit qui n'est pas le sien. Apparemment, Rabban Chimon ben Gamliel pense qu'une bête n'allaite que son propre petit, même si elle a déjà mis bas. La Guemara rejette cette preuve : même si une bête a pitié d'un petit qui n'est pas le sien, <b>là où</b> elle a <b>son propre</b> petit, <b>elle ne laisse pas de côté le sien pour avoir pitié de celui qui n'est pas le sien.</b></p>
+      <p>La Guemara suggère encore : <b>viens et écoute</b> une preuve de la baraïta : la <b>chose</b> reste <b>dans sa présomption.</b> D'après les mots <b>« et de même »</b>, la Guemara déduit : <b>n'est-ce pas</b> que <b>la première partie est semblable à la dernière ? De même que dans la dernière partie</b> le petit qui tète est <b>certainement</b> celui de la bête qui l'allaite, <b>de même dans la première partie</b> il est <b>certainement</b> le sien, bien que la mère ait pu mettre bas auparavant ?</p>
+      <p>La Guemara rejette cette suggestion : <b>les cas sont-ils comparables ? Celui-ci est tel qu'il est, et celui-là tel qu'il est</b>, c'est-à-dire qu'ils concernent des cas différents. Dans la deuxième partie, où tous les petits se tiennent devant leurs mères, il est certain que chaque mère n'allaite que son petit. À l'inverse, dans la première partie, on ne sait pas si ce petit est le sien. <b>Mais alors, que signifie « et de même » ?</b> Cela veut dire que dans les deux parties la bête allaitante est <b>exemptée du premier-né</b>, car même si ce petit n'est pas à elle, elle ne l'allaiterait pas si elle n'avait pas déjà mis bas.</p>
+      <p>La Guemara analyse un cas semblable. <b>Rabba bar bar 'Hana dit que Rabbi Yo'hanan dit : si quelqu'un a vu un petit ressemblant à un porc qui suivait une brebis, la brebis est exemptée du premier-né. Et le « porc » est interdit à la consommation « jusqu'à ce qu'il vienne et vous enseigne la justice »</b> (Hochéa 10:12), c'est-à-dire jusqu'à la venue d'Éliyahou le prophète qui tranchera la halakha.</p>
+      <p>La Guemara soulève une difficulté : d'un côté, la brebis est <b>exemptée du premier-né, ce qui correspond à l'avis de Rabban Chimon ben Gamliel</b>, pour qui une bête qui allaite un petit est présumée en être la mère. <b>Mais</b> d'un autre côté, le « porc » <b>est interdit à la consommation</b>, ce qui correspond à <b>l'avis des Sages</b>, selon lesquels une bête peut allaiter le petit d'une autre.</p>
+      <p><b>Et de plus, si</b> la halakha est <b>comme les Sages</b> et qu'on a un doute sur l'identité de la mère, <b>pourquoi citer le verset : « jusqu'à ce qu'il vienne et vous enseigne la justice » ?</b> Ce verset indique que le statut du « porc » est un doute halakhique que seul Éliyahou le prophète peut résoudre. Il aurait fallu dire : <b>jusqu'à ce que la chose soit connue de vous</b>, pour un doute de fait sur la question de savoir si le « porc » est bien le petit de la brebis.</p>
+      <p><b>Et si tu dis</b> qu'on ne sait pas si la <b>halakha est comme Rabban Chimon ben Gamliel ou comme les Sages</b>, ce n'est pas possible : <b>si</b> c'est douteux, <b>pourquoi la brebis est-elle exemptée du premier-né ? Et de plus, est-ce un doute ? Rabba bar bar 'Hana ne dit-il pas que Rabbi Yo'hanan dit : partout où Rabban Chimon ben Gamliel a enseigné dans notre Michna, la halakha est comme lui, sauf pour</b> trois cas : <b>la garantie</b> (Bava Batra 174a), <b>l'incident de Tsaïdan</b> (Guitin 74a) <b>et la preuve dans la dernière</b> controverse (Sanhédrin 31a) ?</p>
+      <p>La Guemara répond : <b>en réalité</b>, il est <b>évident pour Rabba bar bar 'Hana que la halakha est comme Rabban Chimon ben Gamliel. Mais il est douteux que Rabban Chimon ben Gamliel pense qu'une bête qui a mis bas</b> peut <b>avoir pitié</b> d'un petit qui n'est pas le sien, <b>ou qu'elle n'a pas pitié</b> du petit d'une autre. La Guemara rejette cette explication : <b>s'il en est ainsi, au lieu d'enseigner</b> le cas d'un animal ayant l'apparence d'un <b>porc, il aurait dû enseigner</b> le cas, plus courant, d'une brebis allaitant un <b>agneau. Et</b> au lieu de s'interroger sur l'interdit de consommer un animal impur, il aurait dû se demander si on est <b>flagellé</b> à cause de l'interdit d'abattre <b>une bête et son petit</b> le même jour.</p>
+      <p>La Guemara explique : <b>il était nécessaire</b> que Rabba bar bar 'Hana enseigne le cas du <b>porc</b>, car, <b>s'il avait enseigné</b> le cas d'un <b>agneau, j'aurais dit :</b> même <b>si tu dis</b> que, selon Rabban Chimon ben Gamliel, <b>une bête qui a mis bas</b> peut <b>avoir pitié</b> d'un petit d'une autre, cela ne vaut que <b>pour son espèce</b> ; mais pour un petit <b>qui n'est pas de son espèce</b>, elle <b>n'a pas</b> pitié. Rabba bar bar 'Hana nous enseigne donc le cas du <b>porc</b> pour montrer qu'une bête peut avoir pitié, <b>et même</b> d'un petit <b>qui n'est pas de son espèce, car on peut dire que peut-être</b> elle a eu pitié.</p>
+      <p><b>Et c'est ce que</b> Rabba bar bar 'Hana dit au nom de Rabbi Yo'hanan : <b>une question a été posée</b> par <b>A'haï le Distingué</b> [<i>beribbi</i>] : si <b>quelqu'un voit</b> un animal ressemblant à <b>un porc qui suit une brebis, quelle est</b> la halakha ? La Guemara demande : <b>quelle question pose-t-il ? Si nous disons</b> qu'il s'interroge <b>sur le premier-né</b> du futur petit, <b>et qu'il demande donc si la halakha est comme Rabban Chimon ben Gamliel ou comme les Sages</b>, alors <b>qu'on pose la question</b> sur le cas courant d'un <b>agneau</b>, plutôt que sur le cas inhabituel d'un animal ressemblant à un porc.</p>
+      <p>La Guemara répond : en réalité, quand A'haï le Distingué a posé sa question, c'était à propos des conséquences de chaque avis : il s'interrogeait <b>sur le premier-né</b>, <b>en supposant que la halakha est comme les Sages</b>. Il s'interrogeait aussi sur la <b>consommation</b>, <b>en supposant que la halakha est comme Rabban Chimon ben Gamliel.</b></p>
+      <p>La Guemara développe : il s'interrogeait <b>sur le premier-né, même selon les Sages qui disent</b> qu'une bête peut <b>avoir pitié</b> d'un autre petit. Peut-être que la pitié ne vaut que pour <b>un petit de son espèce</b>, mais que pour un petit <b>qui n'est pas de son espèce</b>, elle n'a certainement pas pitié, et le fait qu'elle l'allaite prouve que c'est le sien. <b>Ou peut-être</b> qu'elle a aussi pitié d'un petit <b>qui n'est pas de son espèce</b>. Si elle n'a pitié que de son espèce, la brebis est exemptée du premier-né ; si sa pitié s'étend à d'autres espèces, elle n'est pas exemptée.</p>
+      <p>A'haï le Distingué s'interrogeait aussi <b>sur la consommation, même selon Rabban Chimon ben Gamliel : si tu dis qu'il pense qu'une bête qui a mis bas</b> peut <b>avoir pitié</b> du petit d'une autre, peut-être que cela ne vaut que pour <b>un petit de son espèce</b>, mais pas pour un petit <b>qui n'est pas de son espèce</b>, ce qui signifie que le « porc » est licite. <b>Ou peut-être</b> qu'elle a aussi pitié d'un petit qui n'est pas de son espèce, auquel cas le « porc » peut être interdit et ne doit pas être mangé. Après avoir expliqué la question d'A'haï le Distingué, la Guemara conclut : <b>qu'elle reste</b> sans réponse.</p>
+      <p><i>(Michna 3:3 : voir la fiche séparée.)</i></p>
+      <p><b>GUEMARA :</b> <b>Rav dit : la halakha est comme Rabbi Yossi ben HaMechoulam.</b> Les Sages <b>posèrent une question à Rav Houna : quelle est</b> la halakha dans <b>le cas parallèle</b> de celui qui veut abattre un animal profane <b>un jour de fête ?</b> La réponse dépend de <b>la raison</b> de l'avis <b>de Rabbi Yossi ben HaMechoulam</b> : permet-il de dégager le poil au couperet <b>parce qu'il pense qu'arracher n'est pas tondre, et</b> que, contrairement au poil du premier-né, <b>il est interdit</b> d'arracher du poil <b>un jour de fête, car c'est déraciner quelque chose de sa croissance ?</b></p>
+      <p><b>Ou peut-être</b> que, <b>en général, Rabbi Yossi ben HaMechoulam pense qu'arracher, c'est tondre. Et la raison pour laquelle c'est permis</b> de dégager avec un couperet dans le cas du premier-né est <b>qu'il s'agit d'un acte non intentionnel</b>, c'est-à-dire d'un acte fait dans un but permis et dont une conséquence interdite peut résulter par inadvertance, puisqu'il n'a pas l'intention d'arracher le poil ; <b>et un jour de fête, un acte non intentionnel est permis ?</b></p>
+      <p>Rav Houna <b>leur dit : allez demander à</b> un disciple de Rav, <b>Rav 'Hananel, et si</b> Rav a bien <b>dit que la halakha est comme Rabbi Yossi ben HaMechoulam, je vous expliquerai</b> la solution. <b>Ils allèrent</b> et <b>demandèrent à Rav 'Hananel, qui leur dit : voici ce que dit Rav : la halakha est comme Rabbi Yossi ben HaMechoulam. Ils vinrent chez Rav Houna, qui leur dit :</b> dans <b>le cas parallèle</b> d'un animal profane que l'on veut abattre <b>un jour de fête</b>, il est <b>permis</b> d'arracher le poil pour permettre l'abattage correct. <b>On a aussi dit que Rav 'Hanania bar Chelamia dit au nom de Rav :</b> dans <b>le cas parallèle</b> d'un animal profane que l'on veut abattre <b>un jour de fête,</b> … <i>(la phrase se poursuit au daf suivant)</i></p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>why do I</b> need him to state that the <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam?</b></p>
+      <p>The Gemara explains: <b>Had</b> Rav <b>said</b> only that <b>the <i>halakha</i></b> is in accordance with the opinion of the anonymous <i>tanna</i> in the <i>mishnayot</i> <b>throughout the whole chapter, but did not say</b> explicitly that <b>the <i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam, I would say:</b> Rav <b>is referring</b> specifically <b>to</b> the opinion of <b>Rabbi Yosei ben HaMeshullam. And what</b> is the meaning of the phrase: <b>Throughout the whole chapter,</b> which indicates he is speaking of more than one case? This is referring to the fact that <b>Rabbi Yosei said two</b> separate statements in the chapter. <b>And</b> this would indicate with regard to Rav’s statement that if a mishna is contradicted by <b>a dissenting</b> opinion cited in <b>a <i>baraita</i>,</b> that <b>is</b> considered <b>a dispute.</b></p>
+      <p>Rav <b>taught</b> that the <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei</b> in order <b>to teach us that</b> his statement with regard to the whole chapter <b>is referring</b> to the opinion <b>of Rabban Shimon ben Gamliel, and</b> with regard to Rav’s statement, if a mishna is contradicted by <b>a dissenting</b> opinion cited in <b>a <i>baraita</i>,</b> that <b>is not</b> considered <b>a dispute.</b></p>
+      <p><b>What</b> is the <b><i>baraita</i></b> mentioned previously? <b>As it is taught</b> in a <i>baraita</i>: In the case of <b>one who purchases a nursing</b> female <b>animal from a gentile,</b> the young <b>that</b> is born <b>after</b> the offspring currently being nursed is treated as <b>a firstborn due to</b> the <b>uncertainty</b> whether it is the animal’s offspring, <b>because</b> an animal might <b>be merciful</b> and nurse another animal <b>even though it has not given birth</b> at all. <b>Rabban Shimon ben Gamliel says:</b> The <b>matter</b> stands <b>in its presumptive status,</b> i.e., the nursing animal is assumed to be the mother of the nursing offspring.</p>
+      <p>The <i>baraita</i> continues: <b>And similarly, Rabban Shimon ben Gamliel would say: One who enters amid his flock at night and sees about ten</b> or <b>about fifteen</b> animals, some of <b>whose offspring is a firstborn and</b> others <b>whose offspring is not a firstborn,</b> and all were <b>giving birth,</b> and <b>on the next day he arose and found</b> that the <b>male</b> young <b>were nursing from</b> the mothers <b>whose offspring is not a firstborn, and</b> the <b>female</b> young <b>were nursing from</b> the mothers <b>whose offspring is a firstborn, he does not need to be concerned</b> that <b>perhaps the young of this</b> mother <b>came to</b> nurse from <b>that</b> mother. Rather, he may assume that each animal is nursing its own offspring.</p>
+      <p><b>A dilemma was raised before</b> the Sages: What is the precise meaning of the phrase: The <b>matter</b> stands <b>in its presumptive status, which Rabban Shimon ben Gamliel stated?</b> Does this mean <b>that</b> an animal <b>does not show mercy unless it has given birth,</b> and <b>consequently,</b> in a case <b>where</b> the animal has <b>given birth we are concerned for</b> the possibility that it might <b>be merciful</b> and nurse an offspring that is not its own? <b>Or perhaps</b> it means that an animal might <b>be merciful</b> only toward <b>its own</b> offspring, but <b>it does not</b> show <b>mercy</b> to an animal <b>that is not its own?</b></p>
+      <p>The Gemara asks: <b>What difference is</b> there in practice based on this distinction? Either way the nursing animal is assumed to have given birth and its future offspring will not be considered a firstborn. The Gemara answers that there is a difference <b>with regard to</b> whether or not one <b>is flogged for</b> slaughtering <b>it due to</b> violating the prohibition against slaughtering <b>a mother and its offspring</b> on the same day. <b>If you say</b> an animal <b>is merciful</b> only toward <b>its own</b> offspring but <b>is not merciful</b> toward an animal <b>that is not its own,</b> then <b>one is flogged</b> if he deliberately slaughters an animal and the offspring that it is nursing. <b>But if you say</b> it <b>is also merciful</b> toward an animal <b>that is not its own,</b> then one <b>is not flogged</b> in such a case.</p>
+      <p>The Gemara returns to its initial inquiry. <b>What</b> is the precise meaning of Rabban Shimon ben Gamliel’s statement? <b>Come</b> and <b>hear</b> a proof from the mishna, as <b>Rabban Shimon ben Gamliel says:</b> In the case of <b>one who purchases</b> a nursing female <b>animal from a gentile, he</b> does <b>not</b> need <b>to be concerned lest</b> the offspring currently being nursed <b>was the offspring of another</b> animal. Evidently, Rabban Shimon ben Gamliel holds that an animal nurses only its own offspring. The Gemara rejects this proof: <b>Does</b> the mishna <b>teach</b> that one does not need to be concerned that perhaps <b>it is</b> the offspring of another animal? No, it <b>teaches</b> that one does not need to be concerned that perhaps <b>it was</b> the offspring of another animal, and <b>this</b> is what it <b>is saying:</b> Whichever way you look at it, the next offspring is not a firstborn, as <b>one</b> does <b>not</b> need <b>to be concerned</b> that <b>perhaps it</b> was <b>the offspring of another</b> animal that it is nursing, as it would not nurse <b>unless it</b> already <b>had an offspring initially.</b></p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear</b> a proof from the continuation of the mishna: In the case of one who <b>enters amid his flock and sees</b> mother animals <b>that gave birth for the first time</b> that were <b>nursing, and</b> also sees mother animals <b>that gave birth not for the first time</b> that were also <b>nursing, he</b> does <b>not</b> need <b>to be concerned</b> that <b>perhaps the offspring of this</b> animal <b>came to that</b> animal to be nursed, or that <b>perhaps the offspring of that</b> animal <b>came to this</b> animal to be nursed.</p>
+      <p>The Gemara explains the proof: But <b>why</b> not? <b>Let us be concerned</b> that <b>perhaps</b> the nursing animal <b>is merciful</b> toward an offspring that is not its own. Evidently, Rabban Shimon ben Gamliel holds that an animal nurses only its own offspring, even if it had previously given birth. The Gemara rejects this proof: Even if an animal does show mercy toward offspring that is not its own, in <b>a place where</b> it has <b>its own</b> offspring, <b>it does not set aside its own</b> offspring <b>and</b> show <b>mercy</b> toward offspring <b>that is not its own.</b></p>
+      <p>The Gemara further suggests: <b>Come</b> and <b>hear</b> a proof from Rabban Shimon ben Gamliel’s statement in the <i>baraita</i>: If one purchases a nursing animal from a gentile, the <b>matter</b> stands <b>in its presumptive status.</b> From the phrase: And similarly, in the continuation of the <i>baraita</i>, the Gemara infers: <b>What, is it not</b> so that <b>the first clause is similar to the latter clause? Just as</b> in <b>the latter clause</b> the nursing young is <b>certainly</b> considered to be the nursing animal’s <b>own</b> offspring, <b>so too,</b> in <b>the first clause</b> it is <b>certainly</b> considered to be the nursing animal’s <b>own</b> offspring, despite the fact that the animal mother might have given birth previously.</p>
+      <p>The Gemara rejects this suggestion: <b>Are the cases comparable? This</b> first clause of the <i>baraita</i> stands <b>as it is and that</b> second clause of the <i>baraita</i> stands <b>as it is,</b> i.e., they are referring to different cases. In the second clause, where all the offspring are standing before their mothers, it is certain that each mother will nurse only its own child. Conversely, in the first clause it is uncertain whether that child is its own. <b>But</b> if so, what is the meaning of the phrase: <b>And similarly?</b> It means both clauses state that the nursing animal <b>is exempt from</b> having its future offspring counted <b>a firstborn,</b> since even if that offspring is not the mother’s, the mother would not nurse it unless it had previously given birth.</p>
+      <p>The Gemara analyzes a similar case. <b>Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says:</b> If one <b>saw</b> a young animal resembling <b>a pig that</b> was <b>trailing after a ewe,</b> the ewe is <b>exempt from</b> having its future offspring counted <b>a firstborn. And</b> the pig-like animal <b>is forbidden for consumption “until he comes and instructs righteousness to you”</b> (Hosea 10:12), i.e., until Elijah the prophet arrives and determines the <i>halakha</i>.</p>
+      <p>The Gemara raises a difficulty with regard to Rabba bar bar Ḥana’s statement: On the one hand, the ewe is <b>exempt from</b> having its future offspring counted <b>a firstborn,</b> which is <b>in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel</b> that an animal that nurses from another is presumed to be its offspring. <b>But</b> on the other hand, the pig-like animal <b>is forbidden for consumption,</b> which is <b>in accordance with</b> the opinion of <b>the Rabbis</b> that an animal might nurse the young of another.</p>
+      <p><b>And furthermore, if</b> the <i>halakha</i> is <b>in accordance with</b> the opinion of <b>the Rabbis,</b> and there is a concern with regard to the identity of the mother of the offspring, <b>what</b> is the reason for citing the verse: <b>“Until he comes and instructs righteousness to you”?</b> By citing it, the <i>baraita</i> is indicating that the status of the pig-like animal is a halakhic uncertainty that can be resolved only by Elijah the prophet. Instead, <b>it should have</b> stated: <b>Until the matter becomes known to you,</b> in reference to the empirical uncertainty as to whether the pig-like animal is the offspring of the ewe.</p>
+      <p><b>And if you would say</b> that <b>it is uncertain whether the <i>halakha</i> is in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel or in accordance with</b> the opinion of <b>the Rabbis,</b> that cannot be correct: <b>If</b> that matter <b>is uncertain,</b> then <b>why is</b> the <b>ewe exempt from</b> having its future offspring counted <b>a firstborn? And furthermore, is</b> this question of whose opinion is accepted as the <i>halakha</i> <b>an uncertainty</b> at all? <b>But doesn’t Rabba bar bar Ḥana say</b> that <b>Rabbi Yoḥanan says: Wherever Rabban Shimon ben Gamliel taught</b> a <i>halakha</i> <b>in</b> the corpus of <b>our Mishna</b> the <b><i>halakha</i></b> is <b>in accordance with his</b> opinion, <b>except for</b> the following three cases: The responsibility of the <b>guarantor</b> (see <i>Bava Batra</i> 174a), <b>and</b> the incident that occurred in the city of <b>Tzaidan</b> (see <i>Gittin</i> 74a), <b>and</b> the dispute with regard to <b>evidence</b> in the <b>final</b> disagreement (see <i>Sanhedrin</i> 31a)?</p>
+      <p>The Gemara answers: <b>Actually,</b> it is <b>obvious to</b> Rabba bar bar Ḥana that the <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel. But it is uncertain if Rabban Shimon ben Gamliel holds</b> that <b>an animal that has given birth</b> might <b>be merciful</b> toward offspring that is not its own, <b>or</b> if he holds that it <b>is not merciful</b> toward the offspring of another. The Gemara rejects this claim: <b>If that is so, instead of teaching</b> a case involving an animal with the appearance of <b>a pig,</b> he <b>should have taught</b> the more common case of a mother ewe nursing a baby <b>lamb. And</b> accordingly, rather than inquiring with regard to the prohibition against eating a non-kosher animal, he should have inquired as <b>to</b> whether or not one is <b>flogged for it due to</b> violating the prohibition against slaughtering <b>a mother and its offspring</b> on the same day.</p>
+      <p>The Gemara explains: It <b>was necessary for</b> Rabba bar bar Ḥana to teach the case of <b>a pig, as, had he taught</b> a case involving <b>a lamb, I would say:</b> Even <b>if you say that</b> Rabban Shimon ben Gamliel <b>holds</b> that <b>an animal that has given birth</b> might <b>be merciful</b> toward the offspring of another, this is so only <b>with regard to its</b> own <b>species,</b> but with regard to an animal <b>that is not</b> of <b>its</b> own <b>species,</b> it would <b>not</b> show mercy and would not nurse the offspring. Therefore, Rabba bar bar Ḥana <b>teaches us</b> the case of <b>a pig,</b> to convey <b>that</b> an animal might <b>be merciful, and</b> this is <b>also</b> true <b>even where</b> the offspring <b>is not</b> of <b>its</b> own <b>species, as it could be said</b> that <b>perhaps</b> the animal was <b>merciful</b> in such a case as well.</p>
+      <p><b>And this is</b> the meaning of <b>that</b> which Rabba bar bar Ḥana said that <b>Rabbi Yoḥanan said: A dilemma was raised</b></p>
+      <p>by <b>Aḥai the Distinguished [<i>beribbi</i>]:</b> If <b>one saw</b> an animal with the appearance of <b>a pig that</b> was <b>trailing after a ewe, what is</b> the <i>halakha</i>? The Gemara asks: <b>What is the dilemma he is raising? If we say</b> he is inquiring <b>with regard to</b> the <b>firstborn</b> status of the future offspring, <b>and he is</b> therefore essentially <b>asking if the <i>halakha</i> is in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel or if the <i>halakha</i> is in accordance with</b> the opinion of <b>the Rabbis,</b> then <b>let the dilemma be raised</b> with respect to the more common case of <b>a lamb,</b> rather than the irregular case of a pig-like animal.</p>
+      <p>The Gemara answers: Actually, <b>when</b> Aḥai the Distinguished <b>raised the dilemma</b> it was with respect to the ramifications of each opinion: He inquired <b>with regard to</b> the future offspring’s <b>firstborn</b> status, <b>and</b> this aspect of the dilemma was raised under the assumption that the <i>halakha</i> is <b>in accordance with</b> the opinion <b>of the Rabbis.</b> He also inquired <b>with regard to</b> whether or not the pig-like animal is permitted for <b>consumption, and</b> this aspect of the dilemma was raised under the assumption that the <i>halakha</i> is <b>in accordance with</b> the opinion <b>of Rabban Shimon ben Gamliel.</b></p>
+      <p>The Gemara elaborates: He inquired <b>with regard to</b> the offspring’s <b>firstborn</b> status, <b>and</b> this question applies <b>even according to</b> the opinion of <b>the Rabbis, who say</b> that an animal might <b>be merciful</b> toward other young animals. The Gemara explains the dilemma: One can say that <b>when</b> an animal <b>is merciful</b> this applies only toward an animal <b>that</b> is of <b>its</b> own <b>species,</b> but to a young animal <b>that is not</b> of <b>its</b> own <b>species</b> a mother animal certainly does <b>not</b> show mercy. Therefore, the fact that it nursed proves that it is its offspring. <b>Or perhaps</b> an animal might <b>also be merciful</b> toward an offspring <b>that is not</b> of <b>its</b> own <b>species.</b> If it is merciful only to its own species, the ewe is exempt from having its future offspring counted a firstborn; if its mercy extends to other species then it is not exempt.</p>
+      <p>And Aḥai the Distinguished also inquired <b>with regard to</b> whether the pig-like animal is permitted for <b>consumption, and</b> this question applies <b>even according to</b> the opinion of <b>Rabban Shimon ben Gamliel: If you say</b> he <b>holds</b> that <b>an animal that has given birth</b> might <b>be merciful</b> and nurse another mother’s offspring, perhaps that is so only with regard to an animal <b>that</b> is of <b>its</b> own <b>species,</b> but to an animal <b>that is not</b> of <b>its</b> own <b>species</b> it is <b>not</b> merciful, which means the pig-like animal is kosher. <b>Or perhaps</b> a mother might <b>also be merciful</b> toward an offspring <b>that is not</b> of <b>its</b> own <b>species,</b> in which case the pig-like animal might not be kosher and therefore may not be eaten. After explaining the dilemma of Aḥai the Distinguished, the Gemara concludes: The dilemma <b>shall stand</b> unresolved.</p>
+      <p><strong>MISHNA:</strong> <b>Rabbi Yosei ben HaMeshullam says:</b> Since it is prohibited by Torah law to shear a firstborn, as it states: “And you shall not shear the firstborn of your flock” (Deuteronomy 15:19), <b>one who is slaughtering a firstborn,</b> and must clear hair or wool from the area of the neck in order to facilitate proper slaughter, <b>clears space</b> by uprooting the hair <b>with a cleaver [<i>bekofitz</i>] from here and from there,</b> on either side of the neck, although he thereby <b>plucks</b> out <b>the hair.</b> He may clear space in this manner <b>provided that he does not move</b> the plucked hair <b>from its place;</b> it must remain intermingled with the rest of the hair so it will appear that he did not shear the animal. <b>And likewise, one plucks the hair</b> to enable one of the Sages <b>to examine the place of a blemish</b> and thereby determine whether it is permitted to slaughter the firstborn outside the Temple.</p>
+      <p><strong>GEMARA:</strong> <b>Rav says:</b> The <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam.</b> The Sages <b>raised a dilemma before Rav Huna: What is</b> the <i>halakha</i> in <b>the parallel</b> case of one who wishes to slaughter a non-sacred animal <b>on a Festival?</b> The resolution depends on <b>the reason</b> for the ruling <b>of Rabbi Yosei ben HaMeshullam:</b> Does he permit clearing hair with a cleaver <b>because he holds</b> that <b>plucking is not</b> the same as <b>shearing, and</b> as opposed to plucking the hair of a firstborn, <b>it is prohibited</b> to pluck hair <b>on the Festival, as this is</b> considered <b>uprooting an item from its</b> place of <b>growth?</b></p>
+      <p><b>Or perhaps in general Rabbi Yosei ben HaMeshullam holds</b> that <b>plucking is</b> considered a form of <b>shearing. And this is the reason that it is permitted</b> to clear space with a cleaver in the case of the firstborn, <b>as it is an unintentional act,</b> i.e., an action performed for a permitted purpose from which a prohibited labor may inadvertently ensue, since he does not intend to pluck out the hair; <b>and on a Festival an unintentional act is permitted.</b></p>
+      <p>Rav Huna <b>said to them: Go</b> and <b>ask</b> Rav’s disciple, <b>Rav Ḥananel,</b> and <b>if</b> Rav in fact <b>said the <i>halakha</i> is in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam, I will explain to you</b> the resolution of your dilemma. <b>They went</b> and <b>asked</b> Rav Ḥananel, and <b>he said to them</b> that <b>this is what Rav says:</b> The <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei ben HaMeshullam. They came before Rav Huna,</b> and <b>he said to them:</b> In <b>the parallel</b> case of one who wishes to slaughter a non-sacred animal <b>on a Festival,</b> it is <b>permitted</b> to pluck the hair in order to facilitate proper slaughter. <b>It was also stated</b> that <b>Rav Ḥananya bar Shelamya says in the name of Rav:</b> In <b>the parallel</b> case of one who wishes to slaughter a non-sacred animal <b>on a Festival,</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> ce daf a trois parties. Il achève d'abord la discussion sur la <b>règle de Rav</b> (daf 23) : pourquoi Rav a-t-il énoncé aussi, explicitement, qu'il suit Rabbi Yossi ben HaMechoulam ? Il traite ensuite la <b>bête allaitante</b> de la Michna 3:2, avec de longues discussions sur la « pitié » des animaux. Enfin, la Michna 3:3 (fiche séparée) ouvre la question de l'arrachage du poil d'un premier-né, que la Guemara étend à l'abattage d'un animal profane un jour de fête.</p>
+
+<p><b>1. Pourquoi Rav précise-t-il Rabbi Yossi ben HaMechoulam ?</b> La difficulté laissée ouverte au daf 23 : si Rav a dit que la halakha suit la Michna anonyme dans tout le chapitre, pourquoi aurait-il besoin de dire aussi qu'elle suit Rabbi Yossi ben HaMechoulam ? La Guemara raisonne par l'absurde :</p>
+
+<p>1. Imaginons que Rav ait dit seulement « la halakha est comme la Michna anonyme dans tout le chapitre ».<br>
+2. L'expression « dans tout le chapitre » suggère plusieurs cas. Or Rabbi Yossi ben HaMechoulam a dit <b>deux</b> choses dans le chapitre (dégager au couperet, et arracher pour voir le défaut). On aurait donc cru que Rav parle de lui.<br>
+3. Dans ce cas, la règle exclurait Rabban Chimon ben Gamliel, et une opinion contraire dans une baraïta compterait comme une controverse.<br>
+4. En disant explicitement « comme Rabbi Yossi », Rav oriente sa règle générale vers Rabban Chimon ben Gamliel, et nous apprend qu'une opinion divergente rapportée dans une baraïta n'est pas une controverse.</p>
+
+<p><b>2. La baraïta sur la bête allaitante.</b> La baraïta que la Guemara cite pour parler de « controverse en baraïta » traite de celui qui achète à un non-Juif une bête allaitante. Selon l'avis anonyme, le petit suivant est un premier-né douteux, car une bête peut avoir « pitié » (<i>merah'amet</i>) et allaiter le petit d'une autre même sans avoir mis bas. Rabban Chimon ben Gamliel répond que la chose reste dans sa présomption : on suppose que la bête allaitante est la mère du petit. Il ajoute un cas de troupeau, la nuit, où les petits ont changé de place, et dit que même alors on ne craint pas d'échange. Les Tossefot soulignent que le cas est pris la <b>nuit</b> pour montrer que même quand les mères ne reconnaissent pas leurs petits et peuvent se tromper, on ne craint pas.</p>
+
+<p><b>3. Que veut dire « sa présomption » ?</b> La Guemara pose deux lectures possibles de l'avis de Rabban Chimon ben Gamliel :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Lecture</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce que cela implique</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pour « une bête et son petit »</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">A. Une bête n'a pitié que si elle a mis bas ; quand elle a mis bas, on craint qu'elle ait pitié d'un autre petit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un petit qui tète auprès d'une bête qui a déjà mis bas peut ne pas être le sien</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas de flagellation (doute)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">B. Une bête n'a pitié que de son propre petit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un petit qui tète auprès d'elle est certainement le sien</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Flagellation si on les abat le même jour</td></tr>
+</table>
+
+<p>Pour le premier-né, la différence est nulle : dans les deux lectures la bête est exemptée, puisqu'elle a au moins un autre petit (Rachi). La différence porte donc sur l'interdit d'abattre une bête et son petit le même jour (Vayikra 22:28), puni de flagellation si c'est volontaire.</p>
+
+<p><b>4. Trois preuves, trois rejets.</b> La Guemara tente de trancher entre les deux lectures en s'appuyant sur des textes. Chaque fois, elle rejette la preuve :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Preuve proposée</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi elle semble trancher</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi elle est rejetée</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La Michna : on ne craint pas que ce <i>fût</i> le petit d'une autre</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Une bête n'allaite que son propre petit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La Michna dit « fût » : elle parle seulement du fait qu'elle a mis bas avant, pas de l'identité du petit qui tète</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La fin de la Michna : on ne craint pas que le petit de celle-ci soit venu auprès de celle-là</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Même une bête qui a déjà mis bas n'allaite pas un autre petit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Là où elle a son propre petit, elle ne le laisse pas pour un autre</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le « et de même » de la baraïta : la première partie ressemble à la dernière</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Dans les deux cas, le petit est certainement le sien</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les deux cas sont différents ; « et de même » signifie seulement que dans les deux la bête est exemptée du premier-né</td></tr>
+</table>
+
+<p><b>5. Le « porc » derrière la brebis.</b> Rabba bar bar 'Hana rapporte, au nom de Rabbi Yo'hanan : si un petit ressemblant à un porc suit une brebis, la brebis est exemptée du premier-né et le « porc » est interdit à la consommation jusqu'à la venue d'Éliyahou. La Guemara relève trois difficultés :</p>
+
+<p>1. L'exemption ressemble à l'avis de Rabban Chimon ben Gamliel, et l'interdit à l'avis des Sages : l'enseignement mélange deux avis opposés.<br>
+2. Si c'est comme les Sages, le doute est de fait (est-ce son petit ?), et il aurait fallu dire « jusqu'à ce que la chose soit connue », et non « jusqu'à ce qu'il enseigne la justice ».<br>
+3. On ne peut pas dire que la halakha entre Rabban Chimon ben Gamliel et les Sages est douteuse : Rabbi Yo'hanan établit que la halakha est comme Rabban Chimon ben Gamliel dans notre Michna, sauf trois cas (la garantie, l'incident de Tsaïdan, la preuve dans la dernière controverse).</p>
+
+<p>La Guemara conclut que la halakha comme Rabban Chimon ben Gamliel est certaine pour Rabba bar bar 'Hana ; ce qui est douteux, c'est <b>ce qu'il pense</b> de la pitié d'une bête qui a mis bas. Le cas du porc est choisi pour une raison précise : avec un agneau, on aurait pu croire que la pitié d'une bête ne vaut que pour son espèce. Le porc montre qu'elle peut s'étendre à d'autres espèces.</p>
+
+<p><b>6. La question d'A'haï le Distingué.</b> Elle porte sur le même cas et comporte deux volets, sur le plan du premier-né et sur celui de la consommation :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Volet</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Selon qui</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le doute</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Premier-né</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Sages (qui craignent la pitié)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La pitié s'étend-elle à une autre espèce ? Si non, le « porc » est le sien et la brebis est exemptée ; si oui, le petit suivant est un premier-né douteux</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Consommation</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabban Chimon ben Gamliel (une bête qui a mis bas a pitié)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La pitié s'étend-elle à une autre espèce ? Si non, le « porc » est licite ; si oui, il peut être interdit</td></tr>
+</table>
+
+<p>La Guemara ne tranche pas : la question « reste » (<i>teiku</i>).</p>
+
+<p><b>7. La Michna 3:3 et la question de Rav Houna.</b> Rav dit que la halakha est comme Rabbi Yossi ben HaMechoulam. On pose alors une question à Rav Houna sur le cas parallèle d'un animal <b>profane</b> abattu un jour de fête (<i>Yom Tov</i>). La réponse dépend de la raison de Rabbi Yossi :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison possible de Rabbi Yossi</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Conséquence un jour de fête</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Arracher n'est pas tondre (donc permis pour le premier-né)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Interdit un jour de fête, car on déracine quelque chose de sa croissance</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Arracher est tondre, mais c'est un acte non intentionnel (<i>davar chéèn mitkavène</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Permis un jour de fête, car un acte non intentionnel y est permis</td></tr>
+</table>
+
+<p>Rav Houna ne répond pas tout de suite : il veut d'abord s'assurer que Rav a bien dit « la halakha est comme Rabbi Yossi ». Rav 'Hananel, disciple de Rav, le confirme. Rav Houna répond alors que c'est <b>permis</b>. Les Tossefot expliquent cette exigence : si Rav n'avait pas tranché comme Rabbi Yossi, on aurait interdit de dégager le poil pour abattre le premier-né, et de même on n'aurait pas permis de le faire un jour de fête pour abattre un animal profane. Le daf s'arrête sur un enseignement de Rav 'Hanania bar Chelamia au nom de Rav sur le même cas, qui se poursuit au daf 25.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> explique d'abord que la phrase « pourquoi ai-je besoin que la halakha soit comme Rabbi Yossi ben HaMechoulam ? » vient de ce qu'on sait déjà, par la Michna anonyme, que la halakha est comme lui, puisque les Sages ne le contredisent pas. Pour la suite, il précise que « dans tout le chapitre » indique plus d'un cas parce que Rabbi Yossi a dit deux choses dans la Michna (faire de la place au couperet, et arracher pour voir le défaut), alors que Rav ne dit pas « sauf controverse » pour Rabban Chimon ben Gamliel, car sur lui il y a une controverse dans la baraïta. <b>Tossefot</b> objectent que Rabbi Yossi ben HaMechoulam lui-même est contredit d'une façon ou d'une autre, puisque Rav a eu besoin de trancher comme lui, et répondent qu'il n'y a peut-être de controverse ni dans la Michna ni dans la baraïta, mais que Rav savait que les Sages le contredisaient.</p>
+
+<p>Sur la baraïta de la bête allaitante, Rachi définit <i>merah'emet</i> comme « aimer le petit de sa compagne ». Pour le troupeau, il explique que les petits mâles qui viennent de naître sont accrochés aux bêtes âgées, déjà exemptées du premier-né, et que les petites femelles sont accrochées aux bêtes qui ont mis bas pour la première fois. Il n'y a donc rien pour le cohen : aucun mâle n'est premier-né, et les femelles ne sont pas soumises à la loi du premier-né. <b>Tossefot</b> s'étonnent que la baraïta parle d'un troupeau « la nuit » et répondent que c'est pour montrer qu'on ne craint pas de mélange, même quand les mères se trompent plus facilement.</p>
+
+<p>Pour le doute sur « sa présomption », Rachi explique pourquoi la différence porte sur la flagellation : pour le premier-né, la bête est dans tous les cas exemptée, puisque si ce petit n'est pas le sien, elle en avait un autre. Pour « une bête et son petit », le petit accroché à elle est le sien, d'où la flagellation, ou bien c'est un doute et on ne flagelle pas. Pour la preuve de la Michna, il précise que « fût » signifie que la Michna ne dit pas que la bête n'a pas pitié, mais qu'elle n'allaite un autre petit que si elle en a eu un autre. Pour « et de même », il explique que dans les deux parties la bête est exemptée du premier-né, mais que, pour « une bête et son petit », la première partie reste un doute.</p>
+
+<p>Sur le « porc » derrière la brebis, Rachi explique que « jusqu'à ce qu'il vienne et enseigne la justice » signifie jusqu'à ce qu'Éliyahou vienne dire s'il est permis ou interdit. L'exemption correspond à Rabban Chimon : la bête n'allaite pas un petit qui n'est pas le sien, et ce « porc » lui-même n'est pas consacré, car c'est un petit déformé. L'interdit correspond aux Sages, qui craignent la pitié ; si c'était comme Rabban Chimon, ce serait un impur né d'une bête pure, et il serait permis (cf. daf 5b). <b>Tossefot</b> se demandent pourquoi l'exemple est un porc et non un chameau, et répondent que, comme l'exemple de la brebis est un petit bétail, le porc est cité, ou que l'exemple est choisi pour valoir selon tous les avis.</p>
+
+<p>Sur la réponse que la halakha est comme Rabban Chimon, Rachi explique que Rabba bar bar 'Hana est certain de l'exemption, car si ce petit n'est pas à elle, la bête en avait un autre qu'elle a perdu, et c'est pour cela qu'elle allaite celui-ci. Il précise que, pour la consommation, il peut y avoir interdit, car il est possible qu'elle ait eu un autre petit, mort, et qu'elle ait pitié de celui-ci. Pour le « porc » dans la Guemara, il explique que l'on aurait cru la pitié limitée à l'espèce, d'où l'importance de cet exemple.</p>
+
+<p>Sur la Michna 3:3 dans la Guemara, Rachi explique « pour le couperet » comme « pour une bête profane, faut-il faire de la place pour l'abattage ou non ? », et « n'est-ce pas tondre ? » comme le fait que c'est la tonte du premier-né qui est interdite (Devarim 15:19). Pour l'acte non intentionnel, il explique que l'homme n'a pas l'intention d'arracher : il dégage seulement le poil, et si une partie s'arrache, elle s'arrache. <b>Tossefot</b> discutent longuement la structure du doute. Ils expliquent que « arracher » dans la Michna s'entend sans intention, et que la question du jour de fête porte sur le point de savoir si, quand l'arrachage est un interdit de la Torah (déraciner de sa croissance), un acte non intentionnel est permis. Ils notent aussi une difficulté avec l'avis habituel de Rav, qui suit Rabbi Yehouda pour qui un acte non intentionnel est interdit, et proposent que, dans le cas du premier-né, Rav suive Rabbi Yossi parce qu'« arracher n'est pas tondre », et qu'un jour de fête l'arrachage est un déracinement fait « de façon inhabituelle » (<i>kilachar yad</i>), donc permis.</p>
+
+<p>Enfin, Rachi précise que Rav 'Hananel est le disciple de Rav, et que « je vous expliquerai » signifie « je vous expliquerai la raison ». <b>Tossefot</b> demandent pourquoi Rav Houna insiste tant, alors qu'un jour de fête le dégagement est permis dans tous les cas (acte non intentionnel ou déracinement inhabituel), et répondent que, si la halakha n'était pas comme Rabbi Yossi, on aurait interdit pour le premier-né par prudence, de même que pour la préparation de l'abattage un jour de fête.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Les lois du premier-né animal concernent surtout l'époque du Temple, mais deux points de ce daf ont une portée pratique. D'abord, l'interdit d'abattre une bête et son petit le même jour (Vayikra 22:28) reste en vigueur, et la discussion sur la « pitié » des animaux montre comment on traite le doute sur l'identité de la mère. Ensuite, la règle de méthode de Rabbi Yo'hanan, selon laquelle la halakha suit Rabban Chimon ben Gamliel dans notre Michna sauf trois cas (la garantie, l'incident de Tsaïdan, la preuve dans la dernière controverse), est un outil classique pour la décision. Pour les lois de Yom Tov et de l'abattage d'un animal profane, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.24" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
