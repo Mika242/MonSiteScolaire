@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Ton Coach Scolaire">
+  <meta name="copyright" content="© 2026 Ton Coach Scolaire — Tous droits réservés">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Choulhan Aroukh — Ton Coach Scolaire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F9FC;
+      --card: #FFFFFF;
+      --surface2: #EEF3F9;
+      --border: #E2E8F0;
+      --ink: #1A2B3C;
+      --ink2: #5B6B7D;
+      --ink3: #94A3B3;
+      --brand: #b45309;
+      --brand-dark: #7c2d12;
+      --brand-light: #ffedd5;
+      --accent: #b45309;
+      --shadow-card: 0 2px 8px rgba(26,43,60,.06);
+      --shadow-pop: 0 6px 18px rgba(26,43,60,.12);
+    }
+    [data-theme="dark"] {
+      --bg: #131B24;
+      --card: #1C2733;
+      --surface2: #22303E;
+      --border: #2E3D4C;
+      --ink: #F0F4F8;
+      --ink2: #B8C4D0;
+      --ink3: #7E8C9A;
+      --brand: #fbbf24;
+      --brand-dark: #d97706;
+      --brand-light: #3a2a12;
+      --accent: #f59e0b;
+      --shadow-card: 0 2px 8px rgba(0,0,0,.3);
+      --shadow-pop: 0 6px 18px rgba(0,0,0,.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 17px;
+      line-height: 1.6;
+      transition: background-color .25s ease, color .25s ease;
+    }
+    header {
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      box-shadow: var(--shadow-card);
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 44px; height: 44px; border-radius: 14px; object-fit: contain;
+      background: var(--surface2); padding: 4px;
+    }
+    .header-title { font-size: 1.2rem; font-weight: 800; }
+    .header-title span { color: var(--brand-dark); }
+    .header-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px; text-decoration: none;
+      font-size: .82rem; font-weight: 700; color: var(--ink2); background: var(--surface2);
+      transition: transform .15s;
+    }
+    .back-link:hover { transform: translateY(-2px); color: var(--ink); }
+    .theme-toggle {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: none; background: var(--surface2);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: transform .15s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+    .hero { text-align: center; padding: 56px 20px 40px; }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 14px;
+    }
+    .hero h1 .accent { color: var(--brand-dark); }
+    .hero-sub { color: var(--ink2); font-size: 1.08rem; max-width: 480px; margin: 0 auto; line-height: 1.6; font-weight: 500; }
+    .hero-sub-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: 1rem; color: var(--ink3); margin-top: 6px; }
+
+    .tiles-section { padding: 36px 16px 12px; max-width: 920px; margin: 0 auto; }
+    .tiles-label {
+      font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--ink2); margin-bottom: 18px; padding-left: 2px;
+    }
+    .tiles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 760px) { .tiles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .tiles-grid { grid-template-columns: 1fr; gap: 12px; } }
+    .tile {
+      position: relative; border-radius: 20px; padding: 22px 17px 18px;
+      cursor: pointer; background: var(--card);
+      min-height: 150px; display: flex; flex-direction: column;
+      user-select: none; box-shadow: var(--shadow-card);
+      transition: transform .18s ease, box-shadow .18s ease;
+      animation: tileIn .35s ease both;
+    }
+    .tile:nth-child(1) { animation-delay: .04s; }
+    .tile:nth-child(2) { animation-delay: .08s; }
+    .tile:nth-child(3) { animation-delay: .12s; }
+    .tile:nth-child(4) { animation-delay: .16s; }
+    .tile:nth-child(5) { animation-delay: .2s; }
+    .tile:nth-child(6) { animation-delay: .24s; }
+    @keyframes tileIn { from { opacity: 0; transform: translateY(14px); } }
+    .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
+    .tile.active { transform: translateY(-4px); box-shadow: var(--shadow-pop); }
+    .tile-p1 { background: #FFF1DE; }
+    [data-theme="dark"] .tile-p1 { background: #3A2A12; }
+    .tile-p2 { background: #FFE8E8; }
+    [data-theme="dark"] .tile-p2 { background: #3A1A1A; }
+    .tile-p3 { background: #EDE9FE; }
+    [data-theme="dark"] .tile-p3 { background: #2C1E3A; }
+    .tile-p4 { background: #E0F2FE; }
+    [data-theme="dark"] .tile-p4 { background: #12303F; }
+    .tile-emoji {
+      font-size: 1.6rem; line-height: 1; margin-bottom: 10px;
+      width: 46px; height: 46px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,.55);
+    }
+    [data-theme="dark"] .tile-emoji { background: rgba(0,0,0,.2); }
+    .tile-badge {
+      position: absolute; top: 14px; right: 14px; font-size: .62rem; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; background: rgba(255,255,255,.7);
+      border-radius: 20px; padding: 4px 10px; color: var(--ink);
+    }
+    [data-theme="dark"] .tile-badge { background: rgba(0,0,0,.3); }
+    .tile-level { font-size: 1.35rem; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 3px; }
+    .tile-level-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: .95rem; color: var(--ink2); margin-bottom: 3px; }
+    .tile-name { font-size: .78rem; font-weight: 500; color: var(--ink2); margin-bottom: 12px; line-height: 1.3; }
+    .tile-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+    .tile-pill {
+      font-size: .66rem; font-weight: 700; padding: 4px 9px; border-radius: 10px;
+      background: rgba(255,255,255,.6); color: var(--ink2); white-space: nowrap;
+    }
+    [data-theme="dark"] .tile-pill { background: rgba(0,0,0,.25); }
+    #reveal-panel { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-inner {
+      background: var(--card); border-radius: 22px;
+      margin-top: 18px; margin-bottom: 28px; overflow: hidden;
+      animation: panelIn .25s ease both; box-shadow: var(--shadow-pop);
+    }
+    .panel-header {
+      padding: 20px 24px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--surface2);
+    }
+    .panel-header-left { display: flex; align-items: center; gap: 10px; }
+    .panel-dot { width: 14px; height: 14px; border-radius: 5px; flex-shrink: 0; }
+    .panel-header h3 { font-size: 1.15rem; font-weight: 800; }
+    .panel-close {
+      width: 34px; height: 34px; border-radius: 10px; background: var(--card);
+      border: none; color: var(--ink); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: .9rem;
+      transition: transform .15s; flex-shrink: 0;
+    }
+    .panel-close:hover { transform: scale(1.08); }
+    .panel-matieres { padding: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+    @media (max-width: 900px) { .panel-matieres { grid-template-columns: 1fr; } }
+    .mat-block { background: var(--surface2); border-radius: 16px; overflow: hidden; }
+    .mat-block-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; transition: background .15s; user-select: none; }
+    .mat-block-header:hover { background: var(--card); }
+    .mat-ico {
+      width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem; flex-shrink: 0; background: var(--card);
+    }
+    .mat-block-title { flex: 1; font-size: .94rem; font-weight: 800; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mat-block-title-heb { font-family: 'Frank Ruhl Libre', serif; direction: rtl; font-size: .8rem; font-weight: 500; color: var(--ink3); margin-left: 6px; }
+    .mat-block-counts { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; margin-left: auto; }
+    .mat-block-count { font-size: .68rem; font-weight: 700; color: var(--ink2); background: var(--card); padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+    .mat-block-arrow { font-size: .7rem; color: var(--ink3); transition: transform .2s; flex-shrink: 0; }
+    .mat-block.open .mat-block-arrow { transform: rotate(90deg); }
+    .mat-block-content { display: none; padding: 0 14px 14px; }
+    .mat-block.open .mat-block-content { display: block; }
+    .chap-block { background: var(--card); border-radius: 12px; overflow: hidden; margin-top: 8px; }
+    .chap-block:first-child { margin-top: 0; }
+    .chap-block-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; cursor: pointer; transition: background .15s; user-select: none; }
+    .chap-block-header:hover { background: var(--surface2); }
+    .chap-block-title { flex: 1; font-size: .85rem; font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chap-block-content { display: none; padding: 0 12px 12px; }
+    .chap-block.open .chap-block-content { display: block; }
+    .chap-block.open .mat-block-arrow { transform: rotate(90deg); }
+    .mat-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) {
+      .mat-columns { grid-template-columns: 1fr; }
+      .mat-col-qcms { order: -1; margin-bottom: 4px; }
+    }
+    .mat-col-label {
+      font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+      color: var(--ink3); margin-bottom: 8px; padding-top: 10px;
+    }
+    .qcm-nb-badge {
+      font-size: .64rem; font-weight: 800; color: var(--brand-dark); background: var(--brand-light);
+      padding: 2px 8px; border-radius: 20px; margin-left: auto; flex-shrink: 0;
+    }
+    .fiche-link {
+      display: flex; align-items: flex-start; gap: 10px; padding: 10px 10px; border-radius: 12px;
+      text-decoration: none; color: var(--ink2); font-size: .85rem; font-weight: 500;
+      margin-top: 5px; transition: all .15s; line-height: 1.35;
+    }
+    .fiche-link:hover { background: var(--card); color: var(--ink); }
+    .fiche-ico {
+      width: 26px; height: 26px; border-radius: 8px; background: var(--card);
+      display: flex; align-items: center; justify-content: center; font-size: .7rem; flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fiche-text { flex: 1; min-width: 0; }
+    .empty-msg { padding: 14px 10px; font-size: .85rem; color: var(--ink3); font-style: italic; }
+    footer {
+      text-align: center; padding: 36px 20px; color: var(--ink2); font-size: .85rem;
+      margin-top: 20px; line-height: 1.9;
+    }
+    footer a { color: var(--brand-dark); text-decoration: none; font-weight: 700; }
+    footer a:hover { text-decoration: underline; }
+    .footer-copy { font-size: .77rem; color: var(--ink3); margin-top: 8px; }
+    .footer-copy strong { color: var(--ink2); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    <div class="header-title">Choulhan <span>Aroukh</span></div>
+  </div>
+  <div class="header-right">
+    <a href="../etudes.html" class="back-link">Etudes</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Changer de thème" title="Mode clair / sombre">🌙</button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Étudie le <span class="accent">Choulhan Aroukh</span><br>un siman à la fois</h1>
+  <p class="hero-sub">Texte avec voyelles · Traduction française · Commentaires (Michna Beroura, Chakh, Taz…) · Halakha pratique</p>
+  <p class="hero-sub-heb">שולחן ערוך — אורח חיים, יורה דעה, אבן העזר, חושן משפט</p>
+</div>
+
+<div class="tiles-section">
+  <div class="tiles-label">Choisis une partie</div>
+  <div class="tiles-grid" id="tiles-grid"></div>
+</div>
+
+<div id="reveal-panel"></div>
+
+<footer>
+  Fait avec soin pour bien étudier 📖
+  <div class="footer-copy">
+    <strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés.<br>
+    Textes sources : <a href="https://www.sefaria.org/" target="_blank">Sefaria.org</a><br>
+    Reproduction, copie ou diffusion interdites sans autorisation écrite de l'auteur.
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// DONNÉES — les 4 parties du Choulhan Aroukh (Orah 'Haim, Yore De'a, Even Ha'ezer,
+// 'Hochen Michpat), decoupees en Hilkhot puis en simanim.
+// Chaque Hilkhot (cle 'livres') : { id, label, labelHeb, ico, cls, unites: [] }
+// Chaque unite (siman) : { id: 'siman-N', nom: 'Siman N', type: 'siman', fiche: {...}|null, qcm: {...}|null }
+// ═══════════════════════════════════════════
+const data = {
+  'oh': {
+    label: 'Orah \'Haïm', labelHeb: 'אורח חיים', color: '#b45309',
+    livres: [
+      { id: 'lever-du-matin', label: 'Lever du matin', labelHeb: 'הלכות הנהגת האדם בבוקר', ico: '🌅', cls: 'ico-mb', unites: [
+        { id: 'oh-siman-1', nom: 'Siman 1', type: 'siman', fiche: { name: 'Siman 1 – Les lois du lever du matin', href: 'oh_1.html' }, qcm: { name: 'QCM — Siman 1', href: 'qcm_oh_1.html', nbQuestions: 26 } },
+      ] },
+      { id: 'tsitsit', label: 'Tsitsit', labelHeb: 'הלכות ציצית', ico: '🧵', cls: 'ico-mb', unites: [] },
+      { id: 'tefillin', label: 'Tefillin', labelHeb: 'הלכות תפילין', ico: '📿', cls: 'ico-mb', unites: [] },
+      { id: 'berakhot-hashachar', label: 'Bénédictions du matin', labelHeb: 'הלכות ברכות השחר', ico: '☀️', cls: 'ico-mb', unites: [] },
+      { id: 'kriat-chema', label: 'Lecture du Chéma', labelHeb: 'הלכות קריאת שמע', ico: '📖', cls: 'ico-mb', unites: [] },
+      { id: 'tefila', label: 'La prière (Amida)', labelHeb: 'הלכות תפילה', ico: '🙏', cls: 'ico-mb', unites: [] },
+      { id: 'birkat-cohanim', label: 'Birkat Cohanim', labelHeb: 'הלכות נשיאת כפים', ico: '🖐️', cls: 'ico-mb', unites: [] },
+      { id: 'kriat-hatorah', label: 'Lecture de la Torah', labelHeb: 'הלכות קריאת התורה', ico: '📜', cls: 'ico-mb', unites: [] },
+      { id: 'beit-haknesset', label: 'La synagogue', labelHeb: 'הלכות בית הכנסת', ico: '🏛️', cls: 'ico-mb', unites: [] },
+      { id: 'netilat-yadayim', label: 'Nétilat Yadayim', labelHeb: 'הלכות נטילת ידים', ico: '💧', cls: 'ico-mb', unites: [] },
+      { id: 'seouda', label: 'Le repas', labelHeb: 'הלכות סעודה', ico: '🍞', cls: 'ico-mb', unites: [] },
+      { id: 'berakhot-peirot', label: 'Bénédictions sur les fruits', labelHeb: 'הלכות ברכת הפירות', ico: '🍎', cls: 'ico-mb', unites: [] },
+      { id: 'autres-berakhot', label: 'Autres bénédictions', labelHeb: 'הלכות שאר ברכות', ico: '✨', cls: 'ico-mb', unites: [] },
+      { id: 'chabbat', label: 'Les lois du Chabbat', labelHeb: 'הלכות שבת', ico: '🕯️', cls: 'ico-mb', unites: [] },
+      { id: 'erouvin', label: 'Erouvin', labelHeb: 'הלכות ערובין', ico: '🏘️', cls: 'ico-mb', unites: [] },
+      { id: 'tehoumin', label: 'Téhoumin', labelHeb: 'הלכות תחומין', ico: '📏', cls: 'ico-mb', unites: [] },
+      { id: 'erouv-tehoumin', label: 'Erouv Téhoumin', labelHeb: 'הלכות עירובי תחומין', ico: '🚶', cls: 'ico-mb', unites: [] },
+      { id: 'roch-hodech', label: 'Roch \'Hodech', labelHeb: 'הלכות ראש חודש', ico: '🌙', cls: 'ico-mb', unites: [] },
+      { id: 'pessah', label: 'Pessa\'h', labelHeb: 'הלכות פסח', ico: '🍷', cls: 'ico-mb', unites: [] },
+      { id: 'yom-tov', label: 'Yom Tov', labelHeb: 'הלכות יום טוב', ico: '🎉', cls: 'ico-mb', unites: [] },
+      { id: 'hol-hamoed', label: '\'Hol HaMoed', labelHeb: 'הלכות חול המועד', ico: '🌿', cls: 'ico-mb', unites: [] },
+      { id: 'tichea-beav', label: 'Tisha BeAv', labelHeb: 'הלכות תשעה באב', ico: '🕊️', cls: 'ico-mb', unites: [] },
+      { id: 'taanit', label: 'Jours de jeûne', labelHeb: 'הלכות תענית', ico: '⏳', cls: 'ico-mb', unites: [] },
+      { id: 'roch-hachana', label: 'Roch HaChana', labelHeb: 'הלכות ראש השנה', ico: '🍯', cls: 'ico-mb', unites: [] },
+      { id: 'yom-kippour', label: 'Yom Kippour', labelHeb: 'הלכות יום הכיפורים', ico: '⚖️', cls: 'ico-mb', unites: [] },
+      { id: 'soukkot', label: 'Soukkot', labelHeb: 'הלכות סוכה', ico: '⛺', cls: 'ico-mb', unites: [] },
+      { id: 'arbaa-minim', label: 'Les quatre espèces', labelHeb: 'הלכות לולב', ico: '🌴', cls: 'ico-mb', unites: [] },
+      { id: 'hanouka', label: '\'Hanouka', labelHeb: 'הלכות חנוכה', ico: '🕎', cls: 'ico-mb', unites: [] },
+      { id: 'pourim', label: 'Pourim', labelHeb: 'הלכות מגילה', ico: '🎭', cls: 'ico-mb', unites: [] },
+    ]
+  },
+  'yd': {
+    label: 'Yoré Dé\'a', labelHeb: 'יורה דעה', color: '#b45309',
+    livres: [
+      { id: 'yd-chehita', label: 'Abattage rituel (Chehita)', labelHeb: 'הלכות שחיטה', ico: '🔪', cls: 'ico-mb', unites: [] },
+      { id: 'yd-terefot', label: 'Animaux impropres (Terefot)', labelHeb: 'הלכות טריפות', ico: '🐄', cls: 'ico-mb', unites: [] },
+      { id: 'yd-matnot-kehouna', label: 'Dons des cohanim', labelHeb: 'הלכות מתנות כהונה', ico: '🎁', cls: 'ico-mb', unites: [] },
+      { id: 'yd-ever-min-hahai', label: 'Membre d\'un animal vivant', labelHeb: 'הלכות אבר מן החי', ico: '🐂', cls: 'ico-mb', unites: [] },
+      { id: 'yd-basar-shenitalem', label: 'Viande disparue de la vue', labelHeb: 'הלכות בשר שנתעלם מן העין', ico: '👁️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-helev', label: 'Graisses interdites (\'Helev)', labelHeb: 'הלכות חלב', ico: '🥩', cls: 'ico-mb', unites: [] },
+      { id: 'yd-dam', label: 'Le sang', labelHeb: 'הלכות דם', ico: '🩸', cls: 'ico-mb', unites: [] },
+      { id: 'yd-melicha', label: 'Salage de la viande (Melicha)', labelHeb: 'הלכות מליחה', ico: '🧂', cls: 'ico-mb', unites: [] },
+      { id: 'yd-simanei-behema', label: 'Signes des animaux purs', labelHeb: 'סימני בהמה וחיה טהורה', ico: '🦌', cls: 'ico-mb', unites: [] },
+      { id: 'yd-yotsim-min-hahai', label: 'Produits issus d\'un animal vivant', labelHeb: 'דיני דברים היוצאים מן החי', ico: '🥛', cls: 'ico-mb', unites: [] },
+      { id: 'yd-of', label: 'Les oiseaux', labelHeb: 'דיני עוף טהור', ico: '🐓', cls: 'ico-mb', unites: [] },
+      { id: 'yd-dagim', label: 'Les poissons', labelHeb: 'דיני דגים', ico: '🐟', cls: 'ico-mb', unites: [] },
+      { id: 'yd-tolaim', label: 'Insectes et vermine', labelHeb: 'דיני תולעים', ico: '🐛', cls: 'ico-mb', unites: [] },
+      { id: 'yd-beitsim', label: 'Les œufs', labelHeb: 'הלכות ביצים', ico: '🥚', cls: 'ico-mb', unites: [] },
+      { id: 'yd-basar-behalav', label: 'Viande et lait', labelHeb: 'הלכות בשר בחלב', ico: '🧀', cls: 'ico-mb', unites: [] },
+      { id: 'yd-taarovot', label: 'Mélanges (Taarovot)', labelHeb: 'הלכות תערובות', ico: '🥣', cls: 'ico-mb', unites: [] },
+      { id: 'yd-pat-akoum', label: 'Nourriture des non-Juifs (Pat, Bichoul, \'Halav Akoum)', labelHeb: 'דיני פת ושלקות וחלב וגבינה של עובדי כוכבים', ico: '🍞', cls: 'ico-mb', unites: [] },
+      { id: 'yd-hekhsher-kelim', label: 'Cacherisation des ustensiles', labelHeb: 'הלכות הכשר כלים', ico: '🍳', cls: 'ico-mb', unites: [] },
+      { id: 'yd-noten-taam-lifgam', label: 'Goût détérioré (Noten taam lifgam)', labelHeb: 'הלכות נותן טעם לפגם', ico: '🍽️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-yayin-nesekh', label: 'Vin de libation (Yayin nésekh)', labelHeb: 'הלכות יין נסך', ico: '🍷', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kelei-hayayin', label: 'Récipients de vin', labelHeb: 'הלכות כלי היין', ico: '🏺', cls: 'ico-mb', unites: [] },
+      { id: 'yd-avoda-zara', label: 'Idolâtrie', labelHeb: 'הלכות עבודת כוכבים', ico: '🗿', cls: 'ico-mb', unites: [] },
+      { id: 'yd-ribit', label: 'Intérêt (Ribit)', labelHeb: 'הלכות ריבית', ico: '💰', cls: 'ico-mb', unites: [] },
+      { id: 'yd-houkot-hagoyim', label: 'Coutumes des idolâtres', labelHeb: 'הלכות חקות העובדי כוכבים', ico: '🚫', cls: 'ico-mb', unites: [] },
+      { id: 'yd-onen', label: 'Divination et magie', labelHeb: 'הלכות מעונן ומכשף', ico: '🔮', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kaaka', label: 'Tatouage et incisions', labelHeb: 'הלכות כתובת קעקע וקריחה', ico: '✒️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-guilouach', label: 'Rasage', labelHeb: 'הלכות גילוח', ico: '💈', cls: 'ico-mb', unites: [] },
+      { id: 'yd-lo-yilbash', label: 'Habits d\'homme et de femme', labelHeb: 'הלכות לא ילבש גבר', ico: '👔', cls: 'ico-mb', unites: [] },
+      { id: 'yd-nida', label: 'Lois de la Nida', labelHeb: 'הלכות נדה', ico: '🌊', cls: 'ico-mb', unites: [] },
+      { id: 'yd-mikvaot', label: 'Bains rituels (Mikvaot)', labelHeb: 'הלכות מקואות', ico: '💦', cls: 'ico-mb', unites: [] },
+      { id: 'yd-nedarim', label: 'Vœux (Nedarim)', labelHeb: 'הלכות נדרים', ico: '🗣️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-shevuot', label: 'Serments (Chevouot)', labelHeb: 'הלכות שבועות', ico: '✋', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kibud-av-vaem', label: 'Honorer père et mère', labelHeb: 'הלכות כבוד אב ואם', ico: '👨‍👩‍👧', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kibud-rabo', label: 'Honorer son maître et le sage', labelHeb: 'הלכות כבוד רבו ות"ח', ico: '🎓', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kibud-talmid-hakham', label: 'Honorer le sage de la Torah', labelHeb: 'הלכות כבוד תלמיד חכם', ico: '📚', cls: 'ico-mb', unites: [] },
+      { id: 'yd-melamdim', label: 'Les enseignants (éducation des enfants)', labelHeb: 'הלכות מלמדים', ico: '🧒', cls: 'ico-mb', unites: [] },
+      { id: 'yd-talmud-torah', label: 'Étude de la Torah', labelHeb: 'הלכות תלמוד תורה', ico: '📖', cls: 'ico-mb', unites: [] },
+      { id: 'yd-tsedaka', label: 'Charité (Tsédaka)', labelHeb: 'הלכות צדקה', ico: '🤝', cls: 'ico-mb', unites: [] },
+      { id: 'yd-mila', label: 'Circoncision (Mila)', labelHeb: 'הלכות מילה', ico: '👶', cls: 'ico-mb', unites: [] },
+      { id: 'yd-avadim', label: 'Esclaves', labelHeb: 'הלכות עבדים', ico: '⛓️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-guerim', label: 'Convertis (Guérim)', labelHeb: 'הלכות גרים', ico: '🕎', cls: 'ico-mb', unites: [] },
+      { id: 'yd-sefer-tora', label: 'Rouleau de la Torah', labelHeb: 'הלכות ספר תורה', ico: '📜', cls: 'ico-mb', unites: [] },
+      { id: 'yd-mezouza', label: 'Mézouza', labelHeb: 'הלכות מזוזה', ico: '🚪', cls: 'ico-mb', unites: [] },
+      { id: 'yd-chiloua-hakan', label: 'Renvoi de la mère (Chiloua\'h hakèn)', labelHeb: 'הלכות שלוח הקן', ico: '🐦', cls: 'ico-mb', unites: [] },
+      { id: 'yd-hadash', label: 'Céréale nouvelle (\'Hadach)', labelHeb: 'הלכות חדש', ico: '🌾', cls: 'ico-mb', unites: [] },
+      { id: 'yd-orla', label: 'Orla', labelHeb: 'הלכות ערלה', ico: '🌳', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kilei-ilan', label: 'Kilayim : arbres', labelHeb: 'הלכות כלאי אילן', ico: '🌲', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kilei-hakerem', label: 'Kilayim : vigne', labelHeb: 'הלכות כלאי הכרם', ico: '🍇', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kilei-zeraim-behema', label: 'Kilayim : plantes et animaux', labelHeb: 'הלכות כלאי זרעים ובהמה', ico: '🌱', cls: 'ico-mb', unites: [] },
+      { id: 'yd-kilei-begadim', label: 'Kilayim : vêtements (Chaatnez)', labelHeb: 'הלכות כלאי בגדים', ico: '🧶', cls: 'ico-mb', unites: [] },
+      { id: 'yd-pidyon-haben', label: 'Rachat du premier-né (Pidyon haben)', labelHeb: 'הלכות פדיון בכור', ico: '👑', cls: 'ico-mb', unites: [] },
+      { id: 'yd-bekhor-behema', label: 'Premier-né des animaux purs', labelHeb: 'הלכות בכור בהמה טהורה', ico: '🐑', cls: 'ico-mb', unites: [] },
+      { id: 'yd-peter-hamor', label: 'Premier-né de l\'ânesse', labelHeb: 'הלכות פטר חמור', ico: '🫏', cls: 'ico-mb', unites: [] },
+      { id: 'yd-hala', label: '\'Halla', labelHeb: 'הלכות חלה', ico: '🍞', cls: 'ico-mb', unites: [] },
+      { id: 'yd-terumot-maasrot', label: 'Termouot et Maasrot', labelHeb: 'הלכות תרומות ומעשרות ומתנות עניים וראשית הגז', ico: '🌽', cls: 'ico-mb', unites: [] },
+      { id: 'yd-niduy-herem', label: 'Excommunication (Nidouï, \'Hérem)', labelHeb: 'הלכות נידוי וחרם', ico: '⛔', cls: 'ico-mb', unites: [] },
+      { id: 'yd-bikur-holim', label: 'Visite aux malades et médecine', labelHeb: 'הלכות ביקור חולים ורפואה ונוטה למות וגוסס', ico: '🏥', cls: 'ico-mb', unites: [] },
+      { id: 'yd-keria', label: 'Déchirure des vêtements (Keria)', labelHeb: 'הלכות קריעה', ico: '👕', cls: 'ico-mb', unites: [] },
+      { id: 'yd-aninout', label: 'Aninout', labelHeb: 'הלכות אנינות', ico: '🕯️', cls: 'ico-mb', unites: [] },
+      { id: 'yd-avelout', label: 'Deuil (Avélout)', labelHeb: 'הלכות אבילות', ico: '🖤', cls: 'ico-mb', unites: [] },
+    ]
+  },
+  'eh': {
+    label: 'Even Ha\'ezer', labelHeb: 'אבן העזר', color: '#b45309',
+    livres: [
+      { id: 'eh-peria-revia', label: 'Procréation (Péria our\'via)', labelHeb: 'הלכות פריה ורביה', ico: '👶', cls: 'ico-mb', unites: [] },
+      { id: 'eh-ishout', label: 'Vie conjugale (Ichout)', labelHeb: 'הלכות אישות', ico: '💍', cls: 'ico-mb', unites: [] },
+      { id: 'eh-kiddouchin', label: 'Fiançailles-mariage (Kiddouchin)', labelHeb: 'הלכות קידושין', ico: '💒', cls: 'ico-mb', unites: [] },
+      { id: 'eh-ketoubot', label: 'Contrat de mariage (Ketoubot)', labelHeb: 'הלכות כתובות', ico: '📃', cls: 'ico-mb', unites: [] },
+      { id: 'eh-guitin', label: 'Divorce (Guitin)', labelHeb: 'הלכות גיטין', ico: '✂️', cls: 'ico-mb', unites: [] },
+      { id: 'eh-miun', label: 'Miyoun', labelHeb: 'הלכות מיאון', ico: '📄', cls: 'ico-mb', unites: [] },
+      { id: 'eh-yibboum', label: 'Lévirat (Yiboum)', labelHeb: 'הלכות יבום', ico: '🔗', cls: 'ico-mb', unites: [] },
+      { id: 'eh-halitsa', label: '\'Halitsa', labelHeb: 'הלכות חליצה', ico: '👞', cls: 'ico-mb', unites: [] },
+    ]
+  },
+  'hm': {
+    label: '\'Hochen Michpat', labelHeb: 'חושן משפט', color: '#b45309',
+    livres: [
+      { id: 'hm-dayanim', label: 'Juges et tribunaux', labelHeb: 'הלכות דיינים', ico: '⚖️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-edout', label: 'Témoignage (Édout)', labelHeb: 'הלכות עדות', ico: '🗣️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-halvaa', label: 'Prêts (Halvaa)', labelHeb: 'הלכות הלואה', ico: '💳', cls: 'ico-mb', unites: [] },
+      { id: 'hm-toen-nitan', label: 'Plaignant et défendeur', labelHeb: 'הלכות טוען ונטען', ico: '📑', cls: 'ico-mb', unites: [] },
+      { id: 'hm-yetomim', label: 'Recouvrement sur la succession des orphelins', labelHeb: 'הלכות גביית חוב מהיתומים', ico: '👧', cls: 'ico-mb', unites: [] },
+      { id: 'hm-meshoubadim', label: 'Recouvrement sur biens hypothéqués', labelHeb: 'הלכות גביית חוב מנכסים משועבדים', ico: '🏠', cls: 'ico-mb', unites: [] },
+      { id: 'hm-apoteki', label: 'Hypothèque (Apotiki)', labelHeb: 'הלכות אפותיקי', ico: '🔐', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shaliah-livgot', label: 'Mandataire pour recouvrer une dette', labelHeb: 'הלכות העושה שליח לגבות חובו', ico: '📨', cls: 'ico-mb', unites: [] },
+      { id: 'hm-harshaa', label: 'Procuration (Harchaa)', labelHeb: 'הלכות הרשאה', ico: '✍️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-arev', label: 'Garants (Arev)', labelHeb: 'הלכות ערב', ico: '🤲', cls: 'ico-mb', unites: [] },
+      { id: 'hm-nizkei-shekhenim', label: 'Litiges de voisinage', labelHeb: 'הלכות נזקי שכנים', ico: '🏘️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shutafim-karka', label: 'Associés dans un terrain', labelHeb: 'הלכות שותפים בקרקע', ico: '🌍', cls: 'ico-mb', unites: [] },
+      { id: 'hm-halukat-shutafut', label: 'Partage d\'une association', labelHeb: 'הלכות חלוקת שותפות', ico: '➗', cls: 'ico-mb', unites: [] },
+      { id: 'hm-matsranout', label: 'Droit de préemption (Mitsranout)', labelHeb: 'הלכות מצרנות', ico: '🧱', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shutafim', label: 'Sociétés (Chotafim)', labelHeb: 'הלכות שותפים', ico: '🤝', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shelouhin', label: 'Mandataires (Chélou\'him)', labelHeb: 'הלכות שלוחין', ico: '🧑‍💼', cls: 'ico-mb', unites: [] },
+      { id: 'hm-ona', label: 'Tromperie sur le prix (Onaa)', labelHeb: 'הלכות אונאה ומקח טעות', ico: '🏷️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-matana', label: 'Donations (Matana)', labelHeb: 'הלכות מתנה', ico: '🎁', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shekhiv-mera', label: 'Donation d\'un mourant', labelHeb: 'הלכות מתנת שכיב מרע', ico: '🛏️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-aveda', label: 'Objets perdus (Avéda)', labelHeb: 'הלכות אבידה ומציאה', ico: '🔍', cls: 'ico-mb', unites: [] },
+      { id: 'hm-perika', label: 'Décharger et recharger', labelHeb: 'הלכות פריקה וטעינה ודין הולכי דרכים', ico: '🐪', cls: 'ico-mb', unites: [] },
+      { id: 'hm-hefker', label: 'Biens sans maître (Hefker)', labelHeb: 'הלכות הפקר ונכסי הגר', ico: '📦', cls: 'ico-mb', unites: [] },
+      { id: 'hm-nahalot', label: 'Héritages (Na\'halot)', labelHeb: 'הלכות נחלות', ico: '📜', cls: 'ico-mb', unites: [] },
+      { id: 'hm-apotropos', label: 'Tuteur et exécuteur (Apotropos)', labelHeb: 'הלכות אפוטרופוס', ico: '🛡️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-pikadon', label: 'Dépôt (Pikadon)', labelHeb: 'הלכות פקדון', ico: '🗄️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-shomer-sakhar', label: 'Gardien payé (Chomer sakhar)', labelHeb: 'הלכות שומר שכר', ico: '🔒', cls: 'ico-mb', unites: [] },
+      { id: 'hm-omanim', label: 'Artisans (Omanim)', labelHeb: 'הלכות אומנים', ico: '🔨', cls: 'ico-mb', unites: [] },
+      { id: 'hm-sokher', label: 'Location (Skhirout)', labelHeb: 'הלכות שוכר', ico: '🔑', cls: 'ico-mb', unites: [] },
+      { id: 'hm-hakhirot', label: 'Baux et entreprises', labelHeb: 'הלכות חכירות וקבלנות', ico: '🏗️', cls: 'ico-mb', unites: [] },
+      { id: 'hm-sekhirut-poalim', label: 'Employés (Skhirout poalim)', labelHeb: 'הלכות שכירות פועלים', ico: '👷', cls: 'ico-mb', unites: [] },
+      { id: 'hm-geneva', label: 'Vol (Guenéva)', labelHeb: 'הלכות גניבה', ico: '🚔', cls: 'ico-mb', unites: [] },
+      { id: 'hm-gezela', label: 'Spoliation (Guézéla)', labelHeb: 'הלכות גזילה', ico: '⛔', cls: 'ico-mb', unites: [] },
+      { id: 'hm-nezikin', label: 'Dommages (Nézikin)', labelHeb: 'הלכות נזיקין', ico: '💥', cls: 'ico-mb', unites: [] },
+      { id: 'hm-mesira', label: 'Dénonciation (Messira)', labelHeb: 'הלכות מאבד ממון חבירו בידים ומוסר ומלשין', ico: '📢', cls: 'ico-mb', unites: [] },
+      { id: 'hm-nizkei-mamon', label: 'Dommages matériels', labelHeb: 'הלכות נזקי ממון', ico: '🧾', cls: 'ico-mb', unites: [] },
+      { id: 'hm-hovel', label: 'Dommages corporels (Hovel)', labelHeb: 'הלכות חובל בחבירו', ico: '🩹', cls: 'ico-mb', unites: [] },
+    ]
+  },
+};
+
+const sedarimMeta = {
+  'oh': { emoji: '🌅', tileClass: 'tile-p1', court: 'Orah \'Haïm', nom: 'Prière, Chabbat, fêtes : la vie juive au quotidien', plage: '1–697' },
+  'yd': { emoji: '🥩', tileClass: 'tile-p2', court: 'Yoré Dé\'a', nom: 'Cacherout, deuil, étude de la Torah, éducation des enfants, charité', plage: '1–403' },
+  'eh': { emoji: '💍', tileClass: 'tile-p3', court: 'Even Ha\'ezer', nom: 'Mariage, divorce, lévirat', plage: '1–178' },
+  'hm': { emoji: '⚖️', tileClass: 'tile-p4', court: '\'Hochen Michpat', nom: 'Commerce, prêts, salaires, dommages, tribunaux', plage: '1–427' },
+};
+
+const ordreSedarim = ['oh', 'yd', 'eh', 'hm'];
+
+function compterFiches(livre) {
+  return (livre.unites || []).filter(u => u.fiche).length;
+}
+function compterQcms(livre) {
+  return (livre.unites || []).filter(u => u.qcm).length;
+}
+
+function renderTiles() {
+  const grid = document.getElementById('tiles-grid');
+  if (!grid) return;
+
+  const html = ordreSedarim.map(id => {
+    const seder = data[id];
+    const meta = sedarimMeta[id];
+    if (!seder || !meta) return '';
+
+    const totalFiches = seder.livres.reduce((s, t) => s + compterFiches(t), 0);
+    const totalQcms = seder.livres.reduce((s, t) => s + compterQcms(t), 0);
+    const badge = (totalFiches === 0 && totalQcms === 0)
+      ? 'À venir'
+      : totalQcms > 0
+        ? `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''} · ${totalQcms} QCM`
+        : `${totalFiches} fiche${totalFiches !== 1 ? 's' : ''}`;
+
+    const livresAvecContenu = seder.livres.filter(t => compterFiches(t) > 0 || compterQcms(t) > 0);
+    const pillsHtml = (livresAvecContenu.length > 0 ? livresAvecContenu : seder.livres.slice(0, 4))
+      .map(t => `<span class="tile-pill">${t.label}</span>`)
+      .join('');
+
+    return `
+    <div class="tile ${meta.tileClass}" onclick="openPanel('${id}')" id="tile-${id}">
+      <div class="tile-badge">${badge}</div>
+      <div class="tile-emoji">${meta.emoji}</div>
+      <div class="tile-level">${meta.court}</div>
+      <div class="tile-level-heb">${seder.labelHeb}</div>
+      <div class="tile-name">${meta.nom} — simanim ${meta.plage}</div>
+      <div class="tile-pills">${pillsHtml}</div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = html;
+}
+
+renderTiles();
+
+let current = null;
+
+function openPanel(id) {
+  const panel = document.getElementById('reveal-panel');
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+
+  if (current === id) {
+    current = null;
+    panel.innerHTML = '';
+    return;
+  }
+
+  current = id;
+  document.getElementById('tile-' + id).classList.add('active');
+  const d = data[id];
+
+  const livresHtml = d.livres.map(lv => {
+    const unites = (lv.unites || []).slice().sort((a, b) => parseInt(String(a.id).replace(/\D+/g, ''), 10) - parseInt(String(b.id).replace(/\D+/g, ''), 10));
+    const totalFichesLivre = compterFiches(lv);
+    const totalQcmsLivre = compterQcms(lv);
+
+    const unitesHtml = unites.length === 0
+      ? `<div class="empty-msg">Pas encore de siman publié dans cette section.</div>`
+      : unites.map(u => {
+          const chapId = `ch-${lv.id}-${u.id}`;
+          const ico = '📖';
+          const ficheHtml = u.fiche
+            ? `<a class="fiche-link" href="${u.fiche.href}"><div class="fiche-ico">${ico}</div><div class="fiche-text">${u.fiche.name}</div></a>`
+            : `<div class="empty-msg">Pas encore de fiche disponible.</div>`;
+          const qcmHtml = u.qcm
+            ? `<a class="fiche-link" href="${u.qcm.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${u.qcm.name}${u.qcm.nbQuestions ? `<span class="qcm-nb-badge">${u.qcm.nbQuestions} questions</span>` : ''}</div></a>`
+            : `<div class="empty-msg">Pas encore de QCM disponible.</div>`;
+          const label = 'Siman';
+          return `
+            <div class="chap-block" id="${chapId}">
+              <div class="chap-block-header" onclick="toggleChap('${chapId}')">
+                <span class="chap-block-title">${u.nom}${u.nomHeb ? ` (${u.nomHeb})` : ''}</span>
+                <div class="mat-block-counts">
+                  <span class="mat-block-count">${u.fiche ? '1 fiche' : '0 fiche'}</span>
+                  <span class="mat-block-count">${u.qcm ? '1 QCM' : '0 QCM'}</span>
+                </div>
+                <span class="mat-block-arrow">▶</span>
+              </div>
+              <div class="chap-block-content">
+                <div class="mat-columns">
+                  <div class="mat-col-fiches">
+                    <div class="mat-col-label">📚 Fiche</div>
+                    ${ficheHtml}
+                  </div>
+                  <div class="mat-col-qcms">
+                    <div class="mat-col-label">📝 QCM d'évaluation</div>
+                    ${qcmHtml}
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+
+    const badgeFiches = `${totalFichesLivre} fiche${totalFichesLivre !== 1 ? 's' : ''}`;
+    const badgeQcms = `${totalQcmsLivre} QCM`;
+
+    return `
+      <div class="mat-block" id="mb-${lv.id}">
+        <div class="mat-block-header" onclick="toggleMat('mb-${lv.id}')">
+          <div class="mat-ico ${lv.cls}">${lv.ico}</div>
+          <span class="mat-block-title">${lv.label}<span class="mat-block-title-heb">${lv.labelHeb}</span></span>
+          <div class="mat-block-counts">
+            <span class="mat-block-count">${badgeFiches}</span>
+            <span class="mat-block-count">${badgeQcms}</span>
+          </div>
+          <span class="mat-block-arrow">▶</span>
+        </div>
+        <div class="mat-block-content">${unitesHtml}</div>
+      </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="panel-inner">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <div class="panel-dot" style="background:${d.color}"></div>
+          <h3>${d.label} <span style="font-family:'Frank Ruhl Libre',serif;font-weight:500;color:var(--ink3);font-size:.85rem">${d.labelHeb}</span></h3>
+        </div>
+        <button class="panel-close" onclick="closePanel()">✕</button>
+      </div>
+      <div class="panel-matieres">${livresHtml}</div>
+    </div>`;
+
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
+function closePanel() {
+  document.getElementById('reveal-panel').innerHTML = '';
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+  current = null;
+}
+
+function toggleMat(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleChap(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+
+function appliquerTheme(theme) {
+  htmlEl.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('tcs-theme', theme); } catch (e) {}
+}
+
+let themeInitial = 'light';
+try {
+  const sauvegarde = localStorage.getItem('tcs-theme');
+  if (sauvegarde === 'dark' || sauvegarde === 'light') {
+    themeInitial = sauvegarde;
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    themeInitial = 'dark';
+  }
+} catch (e) {}
+appliquerTheme(themeInitial);
+
+themeToggle.addEventListener('click', () => {
+  const actuel = htmlEl.getAttribute('data-theme');
+  appliquerTheme(actuel === 'dark' ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
