@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bekhorot 27 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Bekhorot 27</h1>
+    <p>Daf 27</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>טוֹבַת הֲנָאָה לַבְּעָלִים.</p>
+      <p>כֵּיצַד? יִשְׂרָאֵל שֶׁהִפְרִישׁ תְּרוּמָה מִכִּרְיוֹ, וּמְצָאוֹ יִשְׂרָאֵל אַחֵר, וְאָמַר לוֹ: ״הֵא לְךָ סֶלַע זֶה, וּתְנֵהוּ לְבֶן בִּתִּי כֹּהֵן״ — מוּתָּר. אִם הָיָה כֹּהֵן לְכֹהֵן — אָסוּר.</p>
+      <p>וְתַנָּא מַאי טַעְמָא לָא קָאָמַר מַתְּנוֹת כְּהוּנָּה? אָמַר לָךְ: תְּרוּמָה, דִּקְדוּשַּׁת הַגּוּף הִיא, דְּכֵיוָן דְּלָא מִתַּחֲלָא — לָא אָתֵי לְמִיטְעֵי בַּהּ.</p>
+      <p>הָנֵי, כֵּיוָן דִּקְדוּשַּׁת דָּמִים נִינְהוּ, אָתֵי לְמִיטְעֵי בְּהוֹן, דְּבַר מִיתַּחַל קְדוּשְׁתַּיְיהוּ אַאַרְבְּעָה זוּזֵי, וְאָתֵא לְמִינְהַג בְּהֹן מִנְהָג דְּחוּלִּין.</p>
+      <p>אָמַר רָבָא: תְּרוּמַת חוּצָה לָאָרֶץ — אֵין בָּהּ מִשּׁוּם כֹּהֵן הַמְסַיֵּיעַ בְּבֵית הַגְּרָנוֹת. רַב חָמָא יָהֵיב לֵיהּ לְשַׁמָּעֵיהּ.</p>
+      <p>אָמַר שְׁמוּאֵל: תְּרוּמַת חוּצָה לָאָרֶץ — בְּטֵילָה בְּרוֹב. רַבָּה מְבַטְּלָהּ בְּרוֹב, וְאוֹכֵל לָהּ בִּימֵי טוּמְאָתוֹ.</p>
+      <p>רַב הוּנָא בְּרֵיהּ דְּרַב יְהוֹשֻׁעַ, כִּי מִתְרְמֵי לֵיהּ חַמְרָא דִּתְרוּמָה, הֲוָה רָמֵי תְּרֵי נַטְלֵי דְּחוּלִּין וַחֲדָא נַטְלָא דִּתְרוּמָה, וְשָׁקֵיל חַד. מִיכָּן וְאֵילָךְ, רָמֵי חֲדָא וְשָׁקֵיל חֲדָא.</p>
+      <p>וְאָמַר שְׁמוּאֵל: תְּרוּמַת חוּצָה לָאָרֶץ, אוֹכֵל וְהוֹלֵךְ, וְאַחַר כָּךְ מַפְרִישׁ.</p>
+      <p>וְאָמַר שְׁמוּאֵל: אֵין תְּרוּמַת חוּצָה לָאָרֶץ אֲסוּרָה אֶלָּא בְּמִי שֶׁהַטּוּמְאָה יוֹצְאָה עָלָיו מִגּוּפוֹ, וְהָנֵי מִילֵּי בַּאֲכִילָה, אֲבָל בִּנְגִיעָה — לֵית לַן בַּהּ.</p>
+      <p>אָמַר רָבִינָא: הִילְכָּךְ, נִדָּה קוֹצָה חַלָּה, וְאוֹכֵל לָהּ כֹּהֵן קָטָן, וְאִי לֵיכָּא כֹּהֵן קָטָן — שָׁקְלָה לַהּ בְּרֵישׁ מַסָּא, וְשָׁדְיָא בְּתַנּוּרָא, וַהֲדַר מַפְרְשָׁא חַלָּה אַחֲרִיתִי, כִּי הֵיכִי דְּלֹא תִּשְׁתַּכַּח תּוֹרַת חַלָּה, וְאוֹכֵל לָהּ כֹּהֵן גָּדוֹל.</p>
+      <p>רַב נַחְמָן וְרַב עַמְרָם וְרָמֵי בַּר חָמָא הֲווֹ קָאָזְלִי בְּאַרְבָּא, סְלֵיק רַב עַמְרָם לְאִפְּנוֹיֵי, אֲתַאי הָהִיא אִיתְּתָא עַלַּת קַמַּיְיהוּ, אֲמַרָה לְהוּ: טְמֵא מֵת מַהוּ שֶׁיִּטְבּוֹל וְאוֹכֵל תְּרוּמַת חוּצָה לָאָרֶץ? אֲמַר לֵיהּ רַב נַחְמָן לְרָמֵי בַּר חָמָא:</p>
+      <p>וְכִי הַזָּאָה יֵשׁ לָנוּ? אֲמַר לֵיהּ רָמֵי בַּר חָמָא: לָא לֵיחוּשׁ לֵיהּ לְסָבָא. אַדְּהָכִי אֲתָא רַב עַמְרָם, אֲמַר לְהוּ: הָכִי אָמַר רַב: טְמֵא מֵת טוֹבֵל וְאוֹכֵל בִּתְרוּמַת חוּצָה לָאָרֶץ.</p>
+      <p>וְלֵית הִלְכְתָא כְּוָותֵיהּ, דְּאָמַר מָר זוּטְרָא מִשְּׁמֵיהּ דְּרַב שֵׁשֶׁת: טְמֵא שֶׁרֶץ טוֹבֵל וְאוֹכֵל בִּתְרוּמַת חוּצָה לָאָרֶץ, וְלֵית הִלְכְתָא כְּוָותֵיהּ.</p>
+      <p>בְּכוֹר נֶאֱכָל שָׁנָה בְּשָׁנָה כּוּ׳. מִדְּקָאָמַר ״נוֹלַד בּוֹ מוּם בְּתוֹךְ שְׁנָתוֹ״, לְמֵימְרָא דִּלְשָׁנָה דִּידֵיהּ מָנֵינַן. מְנָא הָנֵי מִילֵּי?</p>
+      <p>דְּאָמַר רַב יְהוּדָה אָמַר רַב, דְּאָמַר קְרָא: ״לִפְנֵי ה׳ אֱלֹהֶיךָ תֹאכְלֶנּוּ שָׁנָה בְשָׁנָה״, אֵיזוֹהִי שָׁנָה שֶׁנִּכְנֶסֶת בַּחֲבֶרְתָּהּ? הֱוֵי אוֹמֵר: שָׁנָה שֶׁל בְּכוֹר.</p>
+      <p>דְּבֵי רַב תָּנָא: ״שָׁנָה בְּשָׁנָה״ — יוֹם אֶחָד בְּשָׁנָה זוֹ, וְיוֹם אֶחָד בְּשָׁנָה זוֹ, לִימֵּד עַל הַבְּכוֹר שֶׁנֶּאֱכָל לִשְׁנֵי יָמִים וְלַיְלָה אֶחָד.</p>
+      <p>דְּבֵי רַב, מְנָא לְהוּ? יָלְפִי מִקֳּדָשִׁים, וְקָדָשִׁים גּוּפַיְיהוּ מְנָלַן? אָמַר רַב אַחָא בַּר יַעֲקֹב: אָמַר קְרָא ״כֶּבֶשׂ בֶּן שְׁנָתוֹ״ — שְׁנָתוֹ שֶׁלּוֹ, וְלֹא שָׁנָה שֶׁל מִנְיַן עוֹלָם.</p>
+      <p>וְרַב, נֶאֱכָל לִשְׁנֵי יָמִים וְלַיְלָה אֶחָד, מְנָא לֵיהּ? נָפְקָא לֵיהּ מֵ״וּבְשָׂרָם יִהְיֶה לָּךְ כַּחֲזֵה הַתְּנוּפָה וּכְשׁוֹק הַיָּמִין״ — הִקִּישׁוֹ הַכָּתוּב לְחָזֶה וָשׁוֹק שֶׁל שְׁלָמִים: מָה לְהַלָּן שְׁנֵי יָמִים וְלַיְלָה אֶחָד, אַף כָּאן שְׁנֵי יָמִים וְלַיְלָה אֶחָד.</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>… <b>La faveur du choix revient aux propriétaires</b> : c'est la possibilité de donner la téroumah et les dîmes au cohen ou au Lévi de leur choix.</p>
+      <p>La baraïta continue : <b>comment cela ?</b> Un Israélite a séparé la téroumah de son tas de grain ; un autre Israélite le trouve et lui dit : « <b>Tiens, voici une pièce d'argent (séla), et donne-la</b> (la téroumah) <b>au fils de ma fille, qui est cohen</b> » — <b>c'est permis.</b> Mais <b>si c'était un cohen</b> qui donnait la pièce pour que la téroumah aille <b>à un autre cohen</b>, <b>c'est interdit.</b></p>
+      <p>La Guemara demande : <b>et ce tanna, pour quelle raison ne dit-il pas « les dons de la prêtrise »</b> (l'épaule, les mâchoires et la caillette de chaque animal profane abattu) ? Pourquoi ne parle-t-il que de la téroumah ? La Guemara répond : il peut te dire : <b>la téroumah a une sainteté du corps</b> (elle ne se rachète pas), <b>donc le cohen ne risquera pas de se tromper à son sujet</b>, même si le propriétaire est payé.</p>
+      <p><b>Mais ces autres dons</b> ont <b>une sainteté de valeur</b> : le cohen peut les vendre. Il risquerait de se tromper et de dire que <b>leur sainteté se rachète avec quatre zouz</b> (la séla), et de <b>les traiter comme de la nourriture profane</b>, au lieu de les manger avec la dignité due.</p>
+      <p>§ <b>Rava dit : la téroumah de l'extérieur de la Terre d'Israël</b> n'entre pas dans l'interdit du <b>cohen qui aide sur les aires de battage</b> (on peut le payer avec). <b>Rav 'Hama</b> la donnait <b>à son serviteur</b> (cohen).</p>
+      <p><b>Shmouel dit : la téroumah de l'extérieur du pays est annulée dans une majorité</b> (sans exiger cent parts de profane, comme pour la téroumah d'Israël). <b>Rabba</b> l'annulait ainsi dès le départ, <b>et la mangeait pendant ses jours d'impureté.</b></p>
+      <p><b>Rav Houna, fils de Rav Yehochoua</b>, lorsqu'il avait du <b>vin de téroumah</b>, versait <b>deux cruches de vin profane et une cruche de téroumah</b> dans une cuve, et en retirait une. Ensuite, il versait une cruche et en retirait une.</p>
+      <p><b>Shmouel dit aussi : la téroumah de l'extérieur du pays, on mange et on s'en va, et ensuite on sépare.</b></p>
+      <p><b>Shmouel dit encore : la téroumah de l'extérieur du pays n'est interdite qu'à celui dont l'impureté sort de son corps.</b> Cela concerne <b>la consommation</b> ; <b>quant au contact</b>, <b>cela ne nous gêne pas.</b></p>
+      <p><b>Ravina dit : c'est pourquoi une femme nidda peut prélever la 'halla</b> (de la pâte), <b>et un jeune cohen la mange.</b> S'il n'y a <b>pas de jeune cohen</b>, elle la <b>prend avec le bout d'une broche</b>, la jette dans le four, <b>puis sépare une autre 'halla</b>, afin que <b>la loi de la 'halla ne soit pas oubliée</b>, et <b>un cohen adulte la mange.</b></p>
+      <p><b>Rav Na'hman, Rav Amram et Rami bar 'Hama</b> voyageaient sur un bateau. <b>Rav Amram monta</b> faire ses besoins. <b>Une femme vint</b> et leur demanda : « <b>Celui qui est impur par un mort</b> : <b>peut-il s'immerger et manger de la téroumah de l'extérieur du pays ?</b> » <b>Rav Na'hman dit à Rami bar 'Hama :</b> « <b>Avons-nous donc l'aspersion</b> (des cendres de la vache rousse) ? » <b>Rami bar 'Hama répondit : ne devrions-nous pas tenir compte du vieux</b> (Rav Amram) ? Sur ces entrefaites <b>Rav Amram arriva</b> et dit : « <b>Voici ce que Rav a dit : celui qui est impur par un mort s'immerge et mange de la téroumah de l'extérieur du pays.</b> »</p>
+      <p><b>Mais la halakha n'est pas comme lui</b>, car <b>Mar Zoutra a dit au nom de Rav Chéchet : celui qui est impur par un rampant s'immerge et mange de la téroumah de l'extérieur du pays</b> — <b>et la halakha n'est pas comme lui non plus.</b></p>
+      <p>§ <b>Mishna : le premier-né est mangé année par année, etc.</b> Puisque la Mishna dit « <b>s'il lui est venu un défaut dans son année</b> », cela signifie que <b>nous comptons selon son année à lui.</b> <b>D'où le sait-on ?</b></p>
+      <p><b>Rav Yehouda dit au nom de Rav : le verset dit</b> : « <b>Devant l'Éternel ton D.ieu tu le mangeras année par année</b> » (Devarim 15:20). <b>Quelle année entre dans une autre année ? Dis : l'année du premier-né.</b></p>
+      <p><b>L'école de Rav a enseigné</b> : « année par année » — <b>un jour de cette année et un jour de l'autre</b> ; le verset enseigne que <b>le premier-né se mange deux jours et une nuit.</b></p>
+      <p>La Guemara demande : <b>d'où l'école de Rav le sait-elle ?</b> <b>Elle l'apprend des offrandes saintes</b> ; et pour les offrandes saintes, <b>d'où le sait-on ?</b> <b>Rav A'ha bar Yaakov dit : le verset dit « un agneau de son année »</b> (Vayikra 12:6) — <b>son année à lui, et non une année du compte du monde.</b></p>
+      <p><b>Et Rav, d'où apprend-il que le premier-né se mange deux jours et une nuit ?</b> Il l'apprend de : « <b>Et leur chair sera à toi, comme la poitrine de l'élévation et comme la cuisse droite</b> » (Bemidbar 18:18) : le verset l'a assimilé <b>à la poitrine et à la cuisse du sacrifice de paix</b> : de même que là, deux jours et une nuit, <b>de même ici : deux jours et une nuit.</b></p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>the <b>benefit of discretion for the owners</b> of the produce, i.e., benefit accrued from the option of giving <i>teruma</i> and tithes to any priest or Levite of their choosing.</p>
+      <p>The <i>baraita</i> continues: <b>How so?</b> With regard to <b>an Israelite who separated <i>teruma</i> from his pile</b> of grain, <b>and another Israelite found him and said to him: Take this <i>sela</i></b> coin <b>for yourself and give</b> the <i>teruma</i> and tithes <b>to my daughter’s son</b> who is <b>a priest,</b> it is <b>permitted.</b> But <b>if it was a priest</b> who gave the <i>sela</i> coin for the right to give the <i>teruma</i> and tithes <b>to</b> another <b>priest,</b> it is <b>prohibited.</b> Priests may not pay for the gifts that they receive.</p>
+      <p>The Gemara asks: <b>And</b> according to the <b><i>tanna</i></b> of this <i>baraita</i>, <b>what is the reason</b> that <b>he does not state</b> that the owners also have the benefit of discretion with regard to the <b>gifts of the priesthood,</b> i.e., the foreleg, jaw, and maw, which must be given to the priest from every non-sacred animal that one slaughters? Why does he mention <i>teruma</i> alone? The Gemara answers that <b>he</b> could have <b>said to you:</b> In the case of <b><i>teruma</i>, which has inherent sanctity,</b> and <b>which</b> therefore <b>cannot be redeemed,</b> the priest <b>will not come to err with it</b> and treat it as though it has no sanctity, even if the owner receives payment for it.</p>
+      <p>By contrast, with regard to <b>these</b> gifts of the priesthood, <b>since they have sanctity</b> that inheres in their <b>value,</b> which means that once the priest has received them he may sell them, the priest might <b>come to err with them</b> by saying <b>that</b> the <b>sanctity</b> that they have <b>can be redeemed with four <i>zuz</i>,</b> i.e., the one <i>sela</i>, <b>and</b> he might <b>come to treat them in the manner that</b> one treats <b>non-sacred</b> food. This would be a mistake, as a priest must eat his priestly gifts in a dignified manner, i.e., roasted and with seasoning (see <i>Ḥullin</i> 132b).</p>
+      <p>§ On a related topic, <b>Rava says: <i>Teruma</i> from outside of Eretz</b> Yisrael <b>does not have</b> any prohibition <b>due to a priest assisting at the threshing floor.</b> The Sages decreed that one must separate <i>teruma</i> from produce grown in certain places outside of Eretz Yisrael. Yet, the <i>halakhot</i> governing this <i>teruma</i> are not as stringent as those that apply to <i>teruma</i> from produce grown within Eretz Yisrael. Consequently, one may give such <i>teruma</i> to a priest for helping at the threshing floor. In support of this claim, the Gemara relates that <b>Rav Ḥama gave</b> <i>teruma</i> from outside of Eretz Yisrael <b>to his servant,</b> who was a priest, as his wages.</p>
+      <p>With regard to <i>teruma</i> from outside of Eretz Yisrael, <b>Shmuel says: <i>Teruma</i> from outside of Eretz</b> Yisrael that became mixed with non-sacred produce <b>is nullified in a majority,</b> unlike ordinary <i>teruma</i>, which requires one hundred parts of non-sacred produce to nullify it. The Gemara relates that <b>Rabba,</b> who was a priest, would <b>nullify</b> his <i>teruma</i> from outside of Eretz Yisrael <b>in a majority</b> <i>ab initio</i> <b>and eat it during his days of impurity.</b> Both of these acts are prohibited in the case of <i>teruma</i> from produce grown in Eretz Yisrael.</p>
+      <p>The Gemara relates: <b>Rav Huna, son of Rav Yehoshua, when he would happen</b> to have <b>wine of <i>teruma</i></b> from produce grown outside of Eretz Yisrael, <b>would pour two jugs of non-sacred</b> wine <b>and one jug of <i>teruma</i></b> wine into a vat in order to nullify the <i>teruma</i> wine, <b>and</b> then <b>take out one</b> jug’s worth of wine to drink. Having done so, <b>from here onward</b> every time he received more <i>teruma</i> wine grown outside of Eretz Yisrael, he would <b>pour one</b> jug of <i>teruma</i> wine into the same vat, which still contained two jugs’ worth of wine, <b>and take out one</b> jug’s worth of wine.</p>
+      <p><b>And Shmuel</b> further <b>says: <i>Teruma</i> from</b> produce grown <b>outside of Eretz</b> Yisrael does not need to be separated before one eats the produce. Rather, one may <b>proceed to eat and afterward separate</b> the <i>teruma</i> from the remainder.</p>
+      <p><b>And Shmuel</b> also <b>says: <i>Teruma</i> from outside of Eretz</b> Yisrael <b>is prohibited only</b> to a member of a priestly household <b>whose impurity comes from his body,</b> e.g., a man who experiences a seminal emission or a menstruating woman. It is not prohibited to a priest who came into contact with a corpse, an animal carcass, or the carcass of a creeping animal. <b>And this statement,</b> that such <i>teruma</i> is forbidden to one whose impurity comes from his body, applies only <b>with regard to eating</b> it. <b>But with regard to touching</b> <i>teruma</i> from outside of Eretz Yisrael, <b>we have no</b> problem <b>with it.</b></p>
+      <p><b>Ravina says: Therefore, a menstruating woman,</b> whose impurity comes from her body, <b>may separate <i>ḥalla</i></b> from dough outside of Eretz Yisrael, <b>and a minor priest,</b> who has never experienced a seminal emission and is therefore ritually pure, <b>may eat it. And if there is no minor priest</b> available, <b>she takes</b> the <i>ḥalla</i> <b>with the top of a skewer [<i>massa</i>] and throws it in the oven, and then separates another</b> piece from the dough as <b><i>ḥalla</i>,</b> not because it is necessary but <b>so that the</b> halakhic <b>category of <i>ḥalla</i> should not be forgotten. And an adult priest</b> may <b>eat it,</b> even if he is ritually impure.</p>
+      <p>The Gemara relates that <b>Rav Naḥman, Rav Amram, and Rami bar Ḥama were traveling in a ferry. Rav Amram went to relieve himself. A certain woman came before</b> Rav Naḥman and Rami bar Ḥama and <b>said to them:</b> In the case of one who is <b>impure</b> through contact with <b>a corpse, what is</b> the <i>halakha</i> <b>with regard to</b> whether <b>he may immerse</b> himself in a ritual bath <b>and partake of <i>teruma</i> from outside of Eretz</b> Yisrael? <b>Rav Naḥman said to Rami bar Ḥama:</b></p>
+      <p><b>But do we have sprinkling</b> of the ashes of the red heifer? Since without such sprinkling one remains impure after contact with a corpse, how does it help to immerse in a ritual bath? <b>Rami bar Ḥama said to him: Shouldn’t</b> Rav Naḥman <b>be concerned for</b> the opinion <b>of the old man,</b> i.e., Rav Amram? Wouldn’t it be better to wait until he returns before answering? <b>Meanwhile, Rav Amram came</b> back. <b>He said to them</b> that <b>this</b> is what <b>Rav says:</b> One who became impure with <b>impurity</b> imparted by <b>a corpse may immerse and partake of <i>teruma</i> from</b> produce grown <b>outside of Eretz</b> Yisrael.</p>
+      <p>The Gemara comments: <b>But the <i>halakha</i></b> is <b>not in accordance with his</b> opinion. <b>Mar Zutra said in the name of Rav Sheshet:</b> One who became <b>impure</b> through contact with the carcass of <b>a creeping animal may immerse</b> in a ritual bath <b>and partake of <i>teruma</i> from</b> produce grown <b>outside of Eretz</b> Yisrael. <b>But the <i>halakha</i></b> is <b>not in accordance with his</b> opinion.</p>
+      <p>§ The mishna teaches: <b>The firstborn animal is eaten year by year,</b> i.e., within its first year, whether it is blemished or unblemished. The Gemara comments: <b>From</b> the fact <b>that</b> the mishna <b>says: If a blemish developed within its</b> first <b>year,</b> rather than within the first year, that is <b>to say that we count</b> according <b>to its year,</b> not by the calendar year. In other words, the year is calculated from the day of the animal’s birth. <b>From where is this matter</b> derived?</p>
+      <p>It is derived from a verse, <b>as Rav Yehuda says</b> that <b>Rav says that the verse states: “You shall eat it before the Lord your God, year by year [<i>shana beshana</i>]</b> in the place that the Lord shall choose, you and your household” (Deuteronomy 15:20). The phrase “<i>shana beshana</i>,” which can also be translated as: A year in a year, indicates that the verse is referring to one year that enters another year. <b>Which</b> type of <b>year enters another</b> year? <b>You must say</b> that this is speaking of the <b>year of the firstborn</b> animal, which enters the following calendar year, since if the animal is born in the middle of the year, its first year includes part of the subsequent calendar year.</p>
+      <p><b>The school of Rav taught</b> that there is a different <i>halakha</i> derived from the phrase <b>“year by year.”</b> This phrase indicates that it may be eaten on <b>one day of this year and one day of that</b> next <b>year.</b> The verse thereby <b>taught with regard to</b> an unblemished <b>firstborn</b> animal, which is sacrificed in the Temple, <b>that it is eaten for two days and one night,</b> like a peace offering.</p>
+      <p>The Gemara asks: <b>From where</b> does <b>the school of Rav</b> derive the <i>halakha</i> that a firstborn must be eaten within its own year and that its year is not calculated according to the calendar year? <b>They derive it from</b> the <i>halakha</i> of other <b>sacrificial</b> animals, whose age is counted from their birth rather than by the calendar year. <b>And</b> with regard to the other <b>sacrificial</b> animals <b>themselves, from where do we</b> derive that their age is counted from their birth? <b>Rav Aḥa bar Yaakov says</b> that <b>the verse states:</b> “And when the days of her purification are fulfilled, for a son or for a daughter, she shall bring <b>a lamb in its first year</b> for a burnt offering, and a pigeon or a dove for a sin offering, to the door of the Tent of Meeting, to the priest” (Leviticus 12:6). This description of the lamb is referring to <b>its</b> own <b>year, and not a year of the counting of the world.</b></p>
+      <p>The Gemara asks: <b>And Rav, from where does he</b> derive that a firstborn <b>is eaten for two days and one night?</b> The Gemara answers: <b>He derives it from</b> a verse in which Moses spoke to Aaron and his sons with regard to eating the firstborn: <b>“And their flesh shall be yours, as the breast of waving and as the right thigh, it shall be yours”</b> (Numbers 18:18). <b>The verse</b> thereby <b>juxtaposed</b> the <i>halakha</i> of the firstborn <b>with the breast and thigh of a peace offering. Just as there,</b> it may be eaten for <b>two days and one night,</b> as stated explicitly in a verse (see Leviticus 7:16), <b>so too here,</b> a firstborn may be eaten for <b>two days and one night.</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> le daf 27 est la suite directe du daf 26. Il commence au milieu d'une baraïta sur le <b>droit de choisir le cohen</b> à qui donner les dons sacerdotaux, enchaîne sur la <b>téroumah de l'extérieur de la Terre d'Israël</b> (ses règles plus légères, le cas de la <b>'halla</b> d'une femme nidda, puis une anecdote sur le bateau), et se termine, après le passage de la Michna 4:1 étudiée sur le daf précédent, sur le <b>compte de l'année du premier-né</b> et sur la durée de sa consommation.</p>
+
+<h4>1. Le droit de choisir le cohen (<i>tovat hana'a</i>)</h4>
+
+<p>La baraïta du daf précédent disait que la <b>faveur du choix</b> (le bénéfice de pouvoir choisir le cohen ou le Lévi à qui donner) appartient au propriétaire. Elle donne maintenant un exemple, et fixe une limite :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Permis ?</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un Israélite a séparé la téroumah de son tas ; un autre Israélite lui donne une séla pour qu'il donne la téroumah au fils de sa fille, qui est cohen</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Permis</b></td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il achète seulement la faveur du choix. Ce n'est pas un salaire pour un service</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un cohen donne une séla pour que la téroumah aille à un autre cohen</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Interdit</b></td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rachi : puisque cela lui profite, il ressemble au cohen qui aide sur l'aire de battage et se fait payer</td></tr>
+</table>
+
+<h4>2. Pourquoi seulement la téroumah ?</h4>
+
+<p>La Guemara s'étonne : le tanna ne cite que la téroumah. Pourquoi ne parle-t-il pas aussi des autres dons : l'épaule, les mâchoires et la caillette que tout boucher donne, ou les dons du premier-né ? Réponse en deux temps :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Don</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Type de sainteté</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Risque d'erreur du cohen ?</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Téroumah</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Sainteté du corps</b> : elle ne peut pas devenir profane</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Non.</b> Tout le monde sait qu'elle reste sacrée, même si un propriétaire a payé</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">L'épaule, les mâchoires, la caillette, les dons du premier-né</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Sainteté de valeur</b> : le cohen peut les vendre à un Israélite</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);"><b>Oui.</b> Il pourrait croire que leur sainteté se rachète avec quatre zouz (une séla) et les traiter comme du profane, alors qu'il doit les manger en dignité, rôtis et assaisonnés de moutarde (Houlin 132b)</td></tr>
+</table>
+
+<p>Rachi précise le risque : le cohen peut vendre ces viandes à un Israélite, qui n'est pas tenu de les manger rôties et à la moutarde. Le cohen pourrait donc en conclure qu'elles se rachètent comme du profane. Tossefot ajoutent que ce « manger à la manière des rois » (Zevahim 28a) est écrit pour tous les dons de viande, alors qu'on ne trouve pas qu'il soit exigé pour la téroumah.</p>
+
+<h4>3. La téroumah de l'extérieur de la Terre d'Israël</h4>
+
+<p>La Guemara passe à un thème proche : la téroumah que les Sages ont instituée hors d'Israël. Comme elle ne vient que d'une règle rabbinique, ses lois sont plus légères que celles de la téroumah d'Israël :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Amora</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Illustration</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rava</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pas d'interdit du « cohen qui aide sur l'aire de battage » : on peut donner cette téroumah en salaire à un cohen qui aide</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav 'Hama la donnait à son serviteur cohen</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Shmouel</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Elle est <b>annulée par une majorité</b> de profane (et non un pour cent, comme la téroumah d'Israël)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabba (cohen, descendant de la maison de 'Eli) l'annulait dès le départ puis la mangeait même en état d'impureté</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Houna, fils de Rav Yehochoua</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il applique l'annulation par la majorité au vin de téroumah</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Deux cruches de profane + une de téroumah dans la cuve ; il en retire une. Ensuite, il verse une cruche et en retire une : la cuve garde deux cruches de vin devenu profane face à une cruche de téroumah</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Shmouel</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On peut <b>manger d'abord</b> et séparer ensuite</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rachi : on mange le tevel (produit non encore séparé) en gardant de quoi séparer la téroumah à la fin</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Shmouel</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Elle n'est interdite que pour celui dont <b>l'impureté sort de son corps</b>, et seulement pour <b>manger</b> ; le <b>contact</b> n'est pas un problème</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rachi : le zav, la zava, la nidda, le baal keri sont visés ; celui qui est impur par un mort est permis. Même si le contact la rend impure, on n'est pas averti de la garder de l'impureté</td></tr>
+</table>
+
+<h4>4. La 'halla de la femme nidda (Ravina)</h4>
+
+<p>Ravina en tire une conséquence pratique, sur la 'halla (la part de pâte) séparée hors d'Israël :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Situation</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce que fait Ravina</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Une femme nidda sépare la 'halla (son impureté vient de son corps)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Elle peut la prélever. Un <b>jeune cohen</b> la mange</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il n'y a pas de jeune cohen</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Elle prend la 'halla avec le bout d'une broche, la jette dans le four, <b>puis sépare une autre 'halla</b> pour que la loi de la 'halla ne soit pas oubliée. Un <b>cohen adulte</b> mange cette deuxième 'halla</td></tr>
+</table>
+
+<p>Rachi explique que le « jeune cohen » est préféré parce que le grand ne doit pas manger quand une impureté sort de son corps, sauf s'il s'est immergé. Selon une autre explication de Rachi, le jeune cohen est celui qui n'a jamais vu d'émission, donc aucune impureté n'est sortie de son corps. Il précise aussi que « cohen gadol » désigne ici un cohen qui a atteint l'âge des mitsvot (adulte), et non le grand prêtre.</p>
+
+<h4>5. L'histoire du bateau : l'impur par un mort mange-t-il ?</h4>
+
+<p>Rav Na'hman, Rav Amram et Rami bar 'Hama sont sur un bateau. Rav Amram est parti faire ses besoins, quand une femme demande si celui qui est impur par un mort peut s'immerger et manger la téroumah de l'extérieur du pays :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Personnage</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Parole</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Idée</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Na'hman</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">« Avons-nous donc l'aspersion ? »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sans les cendres de la vache rousse, celui qui est impur par un mort reste impur : l'immersion semble inutile. (Rachi comprend autrement : de nos jours il n'y a pas d'aspersion, donc l'attente du coucher du soleil n'est pas non plus requise)</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rami bar 'Hama</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">« Ne tenons-nous pas compte du vieux ? »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ne répondons pas avant le retour de Rav Amram</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Amram (arrivé)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">« Rav a dit : l'impur par un mort s'immerge et mange »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">L'immersion suffit, sans attendre le coucher du soleil, d'après Rachi</td></tr>
+</table>
+
+<p>La Guemara conclut aussitôt : <b>la halakha n'est pas comme Rav</b>. Mar Zoutra enseigne d'ailleurs, au nom de Rav Chéchet, que même l'impur par un rampant s'immerge et mange, et la Guemara ajoute que la halakha n'est pas comme lui non plus. Selon Tossefot, cela signifie que la halakha n'exige même pas l'immersion ; Rachi dit simplement que la Guemara répond ici à Rav.</p>
+
+<h4>6. Le premier-né : « année par année »</h4>
+
+<p>La Michna dit que le premier-né se mange « année par année », et que s'il a un défaut <b>dans son année</b>, on le garde jusqu'à la fin de cette année. La Guemara cherche à fonder deux idées :</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Idée</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Source</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raisonnement</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On compte l'année du premier-né <b>à partir de sa naissance</b>, pas selon le calendrier</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Yehouda au nom de Rav : « année par année » (Devarim 15:20)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">C'est l'année qui « entre dans l'autre » : si le premier-né naît en cours d'année, son année chevauche la suivante. Rachi : né en Nissan, on peut le garder jusqu'au Nissan suivant ; on ne dit pas « l'année est finie en Tichri »</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il se mange <b>deux jours et une nuit</b></td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">L'école de Rav : « année par année » = un jour de cette année + un jour de l'autre</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rachi : si on l'abat le dernier jour de son année, on le mange ce jour-là et le lendemain, qui est dans l'année suivante : deux jours</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi l'année se compte de sa naissance (pour l'école de Rav)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav A'ha bar Yaakov : « un agneau de son année » (Vayikra 12:6)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">« Son année » signifie l'année qui lui est propre, pas l'année du compte du monde. On l'apprend des autres offrandes, puis on l'applique au premier-né</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi deux jours et une nuit (Rav)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Bemidbar 18:18 : « comme la poitrine de l'élévation et comme la cuisse droite »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le verset assimile le premier-né à la poitrine et à la cuisse du sacrifice de paix, qui se mangent deux jours et une nuit (Vayikra 7:16). Le daf se termine ici ; la suite viendra au daf 28</td></tr>
+</table>
+
+<p>Le daf s'arrête sur cette dernière dérivation. Rachi note, à propos du verset de Rav, que le sacrifice de remerciement ne se mange qu'un jour et une nuit, et que la poitrine et la cuisse qui en sont prélevées sont comme lui : le daf suivant reprendra cette comparaison dès sa première ligne.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> (début du daf) explique la « faveur du choix » comme une chose minime. Si un cohen donne une séla pour que la téroumah aille à un autre cohen, un parent, c'est interdit : puisque cela lui profite, il ressemble au cohen qui aide sur l'aire de battage. Sur la question « pourquoi ne dit-il pas les dons de la prêtrise », il lit le texte ainsi : le tanna aurait pu citer aussi le boucher qui sépare ses dons ou le berger qui a des premiers-nés. Pour « les dons du premier-né sont d'une sainteté de valeur », il explique que le cohen peut en vendre la viande, l'épaule, les mâchoires et la caillette à un Israélite, qui n'est pas tenu de les manger rôtis et à la moutarde, ce qui peut induire le cohen en erreur.</p>
+
+<p>Sur la téroumah de l'extérieur du pays, Rachi précise que son interdit est rabbinique, donc que le cohen qui aide peut en recevoir. Pour « annulée par une majorité », il comprend : un non-cohen peut la manger sans exiger un pour cent, et après mélange avec une majorité de profane, un non-cohen ou un cohen impur peut la manger. Sur Rabba, il précise qu'il était cohen, descendant de la maison de 'Eli. Pour « on mange et on s'en va », il comprend que l'on mange le tevel en laissant de quoi séparer la téroumah à la fin. Pour « l'impureté sort de son corps », il cite le zav, la zava, la nidda et le baal keri, et dit que celui qui est impur par un mort est permis.</p>
+
+<p>Sur Ravina, Rachi explique « jeune cohen » : un cohen qui n'est pas encore adulte, parce que l'adulte aurait une impureté sortie de son corps, à moins de s'être immergé. Autre explication : un cohen qui n'a jamais vu d'émission séminale (il cite les Sheeltot de Rav A'ha). Il comprend « avec le bout d'une broche » comme un moyen de ne pas toucher la 'halla autant que possible, puisqu'elle l'a déjà nommée 'halla. Pour « cohen gadol », il écrit : un cohen qui a atteint l'âge des mitsvot.</p>
+
+<p>Pour l'histoire du bateau, Rachi explique « <i>leapnoyei</i> » comme « faire ses besoins », et « s'immerger et manger sans <i>he'erev shemesh</i> » comme : sans attendre la tombée de la nuit. Pour « avons-nous l'aspersion ? », il dit : de nos jours il n'y a pas d'aspersion, donc l'attente du coucher du soleil n'est pas non plus nécessaire. Sur « ne tenons-nous pas compte du vieux ? », il comprend : ne devons-nous pas respecter l'honneur de Rav Amram absent ? Il n'est pas bon de donner une décision avant son retour.</p>
+
+<p>Pour le premier-né, Rachi explique « selon son année à lui » : s'il naît en Nissan, on peut le garder jusqu'au Nissan suivant, sans dire que l'année du compte du monde est terminée en Tichri. Pour « l'année du premier-né », il dit que, quand on suit l'année du premier-né, elle entre dans l'autre année, car lorsque le premier-né a un an, une deuxième année du compte du monde a commencé en Tichri. Pour « un jour dans cette année », il explique : si on l'abat le dernier jour de son année, on le mange ce jour-là et le lendemain, qui appartient à l'année suivante. Enfin, pour « et leur chair sera à toi », il dit que le verset parle du premier-né, dans la paracha de Kora'h, et que le sacrifice de remerciement ne se mange qu'un jour et une nuit, de même que la poitrine et la cuisse qui en sont prélevées.</p>
+
+<p><b>Tossefot</b> commencent par les dons du cohen : ils rappellent que l'expression « à la manière des rois » (<i>lemishha</i> et <i>legedula</i>, Zevahim 28a) est écrite pour tous les dons de viande, y compris l'épaule, les mâchoires et la caillette, comme le laisse entendre ce passage ; pour la téroumah on ne trouve pas qu'elle exige un tel mode de consommation, car la « grandeur » ne concerne peut-être que la viande.</p>
+
+<p>Sur « la téroumah de l'extérieur du pays est annulée par une majorité », Tossefot s'opposent à Rachi : l'annulation sert à permettre la téroumah <b>à un cohen impur</b>, comme le montre Rabba, et non à un non-cohen ; Menahot 67a montre que cette téroumah reste interdite à un non-cohen sauf dans la proportion de un pour cent. Ils précisent aussi qu'il faut lire « Rabba » et non « Rava », car Rabba était cohen alors que Rava ne l'était pas (Houlin 133a).</p>
+
+<p>Sur « on mange et on s'en va, puis on sépare », Tossefot notent que cela laisse entendre qu'il n'est pas nécessaire que le tas soit « <i>mukaf</i> » ; ils proposent une autre lecture que celle de Rachi.</p>
+
+<p>Sur Ravina, Tossefot s'étonnent : pourquoi précise-t-on « jeune cohen », alors qu'un cohen adulte peut manger après s'être immergé ? Rabbi Yitzhak (le Ri) répond que cette 'halla n'a pas de mesure minimale ; comme c'est une petite quantité, on la donne à un jeune cohen. La téroumah de céréales, plus volumineuse, ne convient pas pour un jeune cohen qui la gaspillerait. Pour « le bout d'une broche », ils objectent à Rachi : le contact étant permis, il n'a pas à éviter de la toucher. Ils expliquent que la <i>massa</i> est un instrument avec lequel on retourne braises et bois, ce qui permet de mettre la 'halla dans le four, au milieu du feu. Pour « et sépare une autre 'halla », ils notent qu'on n'a imposé la seconde que lorsqu'il n'y a pas de jeune cohen, contrairement aux lieux proches d'Israël de la Michna 'Halla 4:8, où l'on sépare toujours deux 'halot, car ces lieux sont assimilés à la terre d'Israël impure.</p>
+
+<p>Sur « avons-nous l'aspersion ? », Tossefot font un long développement. Ils disent d'abord qu'on ne dit pas que l'impur par un mort allait se faire asperger en Terre d'Israël pour manger la 'halla de l'extérieur : on ne s'est pas soucié de l'impureté de mort pour la 'halla de l'extérieur du pays, car il est impossible de s'en garder, notamment à cause de l'impureté de l'épée, qui rend impur comme un mort (Nazir 53b). Pour les autres impuretés de la Torah, c'est interdit tant que l'on ne s'est pas immergé. Ils expliquent ensuite la Michna 'Halla 4:8 (trois zones : jusqu'à Kezib, une 'halla ; de Kezib jusqu'au fleuve et à Amanah, deux 'halot, l'une pour le feu, l'autre pour le cohen ; au-delà d'Amanah, deux 'halot également, avec des mesures différentes) et la raison de ces différences.</p>
+
+<p>Sur « la halakha n'est pas comme lui », Tossefot notent que la Guemara ne veut pas dire que la halakha exige l'immersion : elle n'en exige même pas, contrairement à ce que laisse entendre la lecture de Rachi.</p>
+
+<p>Enfin, sur « année par année, quelle année entre dans l'autre ? », Tossefot rapprochent l'expression « année par année » de son emploi pour l'ouvrier loué (Vayikra 25:53) et pour la dîme (voir plus loin, Bekhorot 53b), et discutent comment ce verset sert à plusieurs enseignements dans Baba Metsia 65a, Roch Hachana 6a, Zevahim 29a et Temoura 21b. Ils concluent que notre sugya suit l'avis de ceux que le Talmud appelle « d'autres » (<i>Aherim</i>), qui rapprochent le premier-né de la dîme.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf éclaire deux règles qui existent encore aujourd'hui : la 'halla séparée hors d'Israël et le compte de l'année du premier-né.</p>
+
+<h4>La 'halla hors d'Israël</h4>
+<p>Le Choulhan Aroukh (Yoré Dé'a 322:3) enseigne que l'on sépare la 'halla hors d'Israël par institution des Sages, <b>pour que la loi de la 'halla ne soit pas oubliée en Israël</b> : c'est la même raison que celle donnée par Ravina dans notre daf. Il reprend aussi (322:5) la règle de ce daf : la 'halla de l'extérieur du pays n'est interdite à la consommation que pour un cohen dont l'impureté sort de son corps ; les autres impuretés, même celle d'un mort, sont permises. Elle peut donc être mangée par un jeune cohen qui n'a pas encore vu d'émission, ou par une jeune fille qui n'a pas encore vu de nidda, sans séparer de seconde 'halla.</p>
+<p>Le Rema ajoute (322:5) qu'aujourd'hui, comme on ne mange plus la 'halla, <b>la coutume répandue est de ne séparer qu'une seule 'halla, sans mesure, et de la brûler</b>, comme on le faisait pour la 'halla destinée au feu. On a aussi l'usage de prélever la quantité d'un <i>kazayit</i> (Maharil).</p>
+
+<h4>L'année du premier-né</h4>
+<p>Le Choulhan Aroukh (Yoré Dé'a 306:7) reprend notre sugya : le premier-né, même s'il a un défaut, se mange <b>dans son année</b>, et l'on compte cette année <b>à partir du jour de sa naissance</b> si l'on est sûr que ses mois étaient accomplis, sinon à partir du huitième jour. S'il lui vient un défaut dans son année, on peut le garder douze mois (306:8) ; s'il lui vient à la fin de son année, on le garde trente jours à partir de l'apparition du défaut, même s'il dépasse ainsi son année. Aujourd'hui, tant que le premier-né n'a pas été montré à un sage, on peut le garder deux ou trois ans ; à partir du moment où il est montré au sage, les délais ci-dessus s'appliquent (306:9).</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.27" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
