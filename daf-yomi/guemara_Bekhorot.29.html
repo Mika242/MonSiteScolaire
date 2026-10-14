@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bekhorot 29 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Bekhorot 29</h1>
+    <p>Daf 29</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>כְּאִילָא בְּיַבְנֶה, שֶׁהִתִּירוּ לוֹ (בְּיַבְנֶה) חֲכָמִים לִהְיוֹת נוֹטֵל אַרְבַּע אִיסָּרוֹת לִבְהֵמָה דַּקָּה, וְשִׁשָּׁה לְגַסָּה, בֵּין תָּם וּבֵין בַּעַל מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי טַעְמָא? הַאי נְפִישׁ טִירְחֵיהּ, וְהַאי לָא נְפִישׁ טִירְחֵיהּ.</p>
+      <p>בֵּין תָּם וּבֵין בַּעַל מוּם. בִּשְׁלָמָא בַּעַל מוּם — מִשּׁוּם דְּקָא שָׁרֵי לֵיהּ, אֶלָּא תָּם אַמַּאי? דְּאִם כֵּן, אָתֵי לְמִיחְשְׁדֵיהּ, וְאָמְרִי: הַאי בַּעַל מוּם תָּם הוּא, וְהַאי דְּקָא שָׁרֵי לֵיהּ — מִשּׁוּם אַגְרָא.</p>
+      <p>אִי הָכִי, תָּם נָמֵי אָמְרִי: בַּעַל מוּם הוּא, וְהַאי דְּלָא קָשָׁרֵי לֵיהּ סָבַר כִּי הֵיכִי דְּלִשְׁקוֹל אַגְרֵיהּ זִימְנָא אַחֲרִיתִי! חַד זִימְנָא תַּקִּינוּ לֵיה רַבָּנַן, תְּרֵי זִימְנֵי לָא תַּקִּינוּ לֵיה רַבָּנַן.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הַנּוֹטֵל שְׂכָרוֹ לָדוּן — דִּינָיו בְּטֵילִים, לְהָעִיד — עֵדוֹתָיו בְּטֵילִין, לְהַזּוֹת וּלְקַדֵּשׁ — מֵימָיו מֵי מְעָרָה, אֶפְרוֹ אֵפֶר מִקְלֶה.</p>
+      <p>אִם הָיָה כֹּהֵן, מְטַמְּאֵהוּ מִתְּרוּמָתוֹ — מַאֲכִילוֹ וּמַשְׁקוֹ וְסָכוֹ, וְאִם הָיָה זָקֵן — מַרְכִּיבוֹ עַל הַחֲמוֹר, וְנוֹתֵן לוֹ שְׂכָרוֹ כְּפוֹעֵל.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מְנָהָנֵי מִילֵּי? אָמַר רַב יְהוּדָה אָמַר רַב, דְּאָמַר קְרָא: ״רְאֵה לִמַּדְתִּי אֶתְכֶם וְגוֹ׳״, מָה אֲנִי בְּחִנָּם — אַף אַתֶּם בְּחִנָּם.</p>
+      <p>תַּנְיָא נָמֵי הָכִי: ״כַּאֲשֶׁר צִוַּנִי ה׳ אֱלֹהָי״ — מָה אֲנִי בְּחִנָּם, אַף אַתֶּם בְּחִנָּם. וּמִנַּיִן שֶׁאִם לֹא מָצָא בְּחִנָּם שֶׁיְּלַמֵּד בְּשָׂכָר? תַּלְמוּד לוֹמַר: ״אֱמֶת קְנֵה״. וּמִנַּיִן שֶׁלֹּא יֹאמַר: כְּשֵׁם שֶׁלְּמַדְתִּיהָ בְּשָׂכָר כָּךְ אֲלַמְּדֶנָּה בְּשָׂכָר? תַּלְמוּד לוֹמַר: ״אֱמֶת קְנֵה וְאַל תִּמְכֹּר״.</p>
+      <p>לְהַזּוֹת וּלְקַדֵּשׁ — מֵימָיו מֵי מְעָרָה, אֶפְרוֹ אֵפֶר מִקְלֶה. וּרְמִינְהוּ: הַמְקַדֵּשׁ בְּמֵי חַטָּאת בְּאֵפֶר חַטָּאת — הֲרֵי זוֹ מְקוּדֶּשֶׁת, אַף עַל פִּי שֶׁהוּא יִשְׂרָאֵל!</p>
+      <p>אָמַר אַבָּיֵי: לָא קַשְׁיָא — כָּאן בִּשְׂכַר הֲבָאָה וּמִלּוּי, כָּאן בִּשְׂכַר הַזָּאָה וְקִידּוּשׁ.</p>
+      <p>דַּיְקָא נָמֵי, דְּקָתָנֵי הָכָא ״לְהַזּוֹת וּלְקַדֵּשׁ״, וְהָתָם קָתָנֵי ״הַמְקַדֵּשׁ בְּמֵי חַטָּאת וּבְאֵפֶר חַטָּאת״, שְׁמַע מִינַּהּ.</p>
+      <p>אִם הָיָה כֹּהֵן מְטַמְּאֵהוּ מִתְּרוּמָתוֹ כּוּ׳. אִיהוּ גּוּפֵיהּ הֵיכִי אָזֵיל?</p>
+      <p>לְבֵית הַפְּרָס דְּרַבָּנַן, דְּאָמַר רַב יְהוּדָה אָמַר רַב: מְנַפֵּחַ אָדָם בֵּית הַפְּרָס וְהוֹלֵךְ.</p>
+      <p>וְרַב יְהוּדָה בַּר אַמֵּי מִשְּׁמֵיהּ דְּרַב יְהוּדָה אָמַר: בֵּית הַפְּרָס שֶׁנִּידַּשׁ טָהוֹר.</p>
+      <p>אִי נָמֵי: בִּשְׁאָר טוּמְאוֹת, דְּלָא מַזְהַר עֲלַיְיהוּ.</p>
+      <p>אִם הָיָה זָקֵן — מַרְכִּיבוֹ עַל הַחֲמוֹר. תְּנָא: כְּפוֹעֵל בָּטֵל. אָמַר אַבָּיֵי: כְּפוֹעֵל בָּטֵל שֶׁל אוֹתָהּ מְלָאכָה.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הֶחָשׁוּד עַל הַבְּכוֹרוֹת, אֵין לוֹקְחִין מִמֶּנּוּ בְּשַׂר צְבָאִים, וְלֹא עוֹרוֹת שֶׁאֵינָן עֲבוּדִים. רַבִּי אֱלִיעֶזֶר אוֹמֵר: לוֹקְחִין מִמֶּנּוּ עוֹרוֹת שֶׁל נְקֵבָה, וְאֵין לוֹקְחִין מִמֶּנּוּ צֶמֶר מְלוּבָּן וְצוֹאִי, אֲבָל לוֹקְחִין מִמֶּנּוּ טְוִי וּבְגָדִים.</p>
+      <p><strong><big>גְּמָ׳</big></strong> בְּשַׂר צְבָאִים. דְּמִיחַלַּף בִּדְעֶגְלָה.</p>
+      <p>וְלֹא עוֹרוֹת שֶׁאֵינָן עֲבוּדִים. הָא עֲבוּדִים זָבְנִינַן. אִם אִיתָא דִּבְכוֹר הֲוָה — לָא הֲוָה טָרַח בֵּיהּ, סָבַר: אִי שָׁמְעוּ בֵּיהּ רַבָּנַן מַפְסְדוּ לֵיהּ מִינַּאי.</p>
+      <p>רַבִּי אֱלִיעֶזֶר אוֹמֵר: לוֹקְחִין מִמֶּנּוּ עוֹרוֹת שֶׁל נְקֵבָה. מַאי טַעְמָא? מִידָּע יְדִיעַ.</p>
+      <p>וְתַנָּא קַמָּא, אִם כֵּן, זָכָר נָמֵי חָיֵיק לְזַכְרוּתֵיהּ וְאָמַר ״עַכְבָּרִים אַכְלוּהּ״, וְאִידַּךְ — בֵּי עַכְבָּרִים מִידָּע יְדִיעַ.</p>
+      <p>וְאֵין לוֹקְחִין מִמֶּנּוּ צֶמֶר מְלוּבָּן וְצוֹאִי, הַשְׁתָּא צֶמֶר מְלוּבָּן לָא זָבְנִינַן, צוֹאִי מִיבַּעְיָא? אֶלָּא, חֲדָא קָתָנֵי: צֶמֶר מְלוּבָּן מִצּוֹאָתוֹ.</p>
+      <p>אֲבָל לוֹקְחִין מִמֶּנּוּ טְוִי וּבְגָדִים. הַשְׁתָּא טְוִי זָבְנִינַן, בְּגָדִים מִיבַּעְיָא? מַאי בְּגָדִים? נַמְטֵי.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הֶחָשׁוּד עַל הַשְּׁבִיעִית — אֵין לוֹקְחִין מִמֶּנּוּ פִּשְׁתָּן, וַאֲפִילּוּ סְרָק, אֲבָל לוֹקְחִין מֵהֶם טְוִי וְאָרִיג.</p>
+      <p><strong><big>גְּמָ׳</big></strong> הַשְׁתָּא טְוִי זָבְנִינַן, אָרִיג מִיבַּעְיָא? מַאי ״אָרִיג״? תִּיכֵּי.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הֶחָשׁוּד לִהְיוֹת מוֹכֵר תְּרוּמָה לְשׁוּם חוּלִּין — אֵין לוֹקְחִין מִמֶּנּוּ אֲפִילּוּ מַיִם וָמֶלַח, דִּבְרֵי רַבִּי יְהוּדָה. רַבִּי שִׁמְעוֹן אוֹמֵר: כֹּל שֶׁיֵּשׁ בּוֹ זִיקַּת תְּרוּמָה וּמַעַשְׂרוֹת אֵין לוֹקְחִין מִמֶּנּוּ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> לְאֵתוֹיֵי מַאי? לְאֵתוֹיֵי קִרְבֵי דָגִים, דִּמְעָרְבִי בְּהוּ שֶׁמֶן זַיִת.</p>
+      <p>הָהוּא טַבָּחָא דַּהֲוָה חָשׁוּד לְזַבּוֹנֵי</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>… <b>comme Ila à Yavné</b>, à qui les Sages de Yavné ont permis de prendre <b>quatre issar pour une décision sur un petit bétail et six pour un gros bétail</b>, à condition qu'il soit payé <b>que le premier-né soit sans défaut ou qu'il ait un défaut</b>.</p>
+      <p><b>GUEMARA :</b> quelle est la raison pour laquelle les Sages de Yavné ont fixé quatre issar pour le petit bétail et six pour le gros ? Parce que l'examen du gros bétail <b>demande beaucoup d'effort</b>, alors que celui du petit n'en demande pas autant.</p>
+      <p>§ La Michna dit qu'un expert comme Ila prend son salaire <b>qu'il trouve l'animal sans défaut ou défectueux</b>. La Guemara demande : si l'animal est défectueux, on comprend qu'il prenne son salaire, puisqu'il le déclare permis à l'abattage. Mais <b>s'il a examiné un animal sans défaut</b>, pourquoi est-il payé ? La Guemara répond : <b>si l'on ne le payait que pour un animal défectueux</b>, on le soupçonnerait de l'avoir déclaré défectueux, alors qu'il est sans défaut, simplement pour toucher son salaire.</p>
+      <p>La Guemara objecte : <b>alors on pourrait aussi le soupçonner</b> à l'inverse, lorsqu'il déclare l'animal sans défaut : peut-être l'animal est-il défectueux, mais l'expert préfère le déclarer sans défaut pour être payé une seconde fois, quand on le lui présentera de nouveau. La Guemara répond : <b>les Sages de Yavné ont institué qu'il prenne son salaire une seule fois</b>, mais ils n'ont pas institué qu'il le prenne <b>deux fois</b> pour le même animal. Il n'a donc aucun intérêt à déclarer sans défaut un animal défectueux.</p>
+      <p><b>MICHNA :</b> <b>celui qui prend un salaire pour juger, ses jugements sont nuls.</b> <b>Celui qui prend un salaire pour témoigner, ses témoignages sont nuls.</b> <b>Celui qui prend un salaire pour asperger</b> les eaux de purification sur celui qui est impur au contact d'un mort, <b>ou pour sanctifier</b> ces eaux (en y mêlant les cendres), <b>ses eaux sont comme des eaux de caverne</b> et <b>ses cendres comme de simples cendres de foyer</b>.</p>
+      <p>Bien que l'on ne puisse pas prendre de salaire, <b>si celui qui examine le premier-né, ou le juge, ou le témoin, est un cohen</b> et que celui qui a besoin de lui l'a rendu impur et l'a empêché de manger sa <b>téroumah</b>, ce dernier <b>doit lui donner à manger, à boire et de l'huile pour s'oindre</b>, de ses biens profanes. Et si celui qui examine, juge ou témoigne est <b>un vieillard</b>, celui qui a besoin de lui <b>le fait monter sur un âne</b>. Dans tous ces cas, <b>il lui donne son salaire comme à un ouvrier</b> qui reste inactif, car il n'a pas pu faire son travail ce jour-là.</p>
+      <p><b>GUEMARA :</b> la Michna enseigne que les jugements de celui qui prend un salaire sont nuls. D'où l'apprend-on ? <b>Rav Yehouda dit au nom de Rav</b> : le verset dit : « <b>Voyez, je vous ai enseigné des lois et des ordonnances, comme l'Éternel mon D.ieu me l'a ordonné</b> » (Deutéronome 4:5). Comme Moshé a appris la parole de D.ieu <b>gratuitement</b>, vous l'avez apprise de lui <b>gratuitement</b>, et il en est ainsi pour toutes les générations.</p>
+      <p>La baraïta l'enseigne aussi : « Voyez, je vous ai enseigné… comme l'Éternel mon D.ieu me l'a ordonné » : <b>comme j'ai appris gratuitement, vous avez appris gratuitement</b>. Et d'où apprend-on que, <b>si l'on ne trouve personne qui enseigne gratuitement, on doit apprendre même en payant</b> ? Le verset dit : « <b>Acquiers la vérité</b> et ne la vends pas » (Proverbes 23:23). Et d'où apprend-on qu'on ne doit pas dire : <b>comme j'ai appris en payant, j'enseignerai en étant payé</b> ? Le verset dit : « Acquiers la vérité, <b>et ne la vends pas</b> ».</p>
+      <p>La Michna dit : celui qui prend un salaire pour asperger ou sanctifier, <b>ses eaux sont comme des eaux de caverne</b>. On en déduit qu'on ne peut tirer aucun profit des eaux et des cendres de la vache rousse. La Guemara objecte à partir d'une Michna (Kiddouchin 58a) : celui qui fiance une femme <b>avec les eaux de purification ou avec les cendres de purification</b>, <b>elle est fiancée</b>, <b>même s'il est Israël</b>, ni cohen ni lévite. On en déduit qu'on peut tirer profit de ces eaux ou de ces cendres.</p>
+      <p><b>Abaye dit</b> : ce n'est pas une difficulté. Là, la Michna de Kiddouchin parle de celui qui fiance avec <b>la valeur du salaire pour avoir apporté les cendres de loin et rempli le récipient d'eau</b>, ce pour quoi le salaire est permis. Ici, la Michna parle du salaire pour <b>l'aspersion et la sanctification</b> elles-mêmes.</p>
+      <p>La Guemara remarque : selon cette réponse, <b>le langage des deux Michnayot est aussi précis</b> : ici, elle dit « <b>pour asperger</b> ou <b>pour sanctifier</b> », c'est-à-dire pour l'acte même ; là, elle dit « <b>avec les eaux de purification ou avec les cendres de purification</b> », ce qui indique que les eaux et les cendres ne sont pas encore mélangées. La Guemara conclut : <b>apprends-en</b> que c'est la bonne explication.</p>
+      <p>§ La Michna dit que, si celui qui examine, juge ou témoigne est un cohen, et qu'on l'a rendu impur et empêché de manger sa téroumah, celui qui a besoin de lui doit le nourrir. La Guemara demande : mais <b>lui-même, comment a-t-il été autorisé</b> à aller en un lieu qui le rend impur ? Un cohen n'a pas le droit de se rendre impur.</p>
+      <p>La Guemara répond : il s'agit d'un cas où il est allé dans un <b>beit haperas</b> (un champ où l'on a labouré une tombe et où il peut y avoir des fragments d'os), où l'entrée est interdite à un cohen seulement par les Sages. Rav Yehouda dit au nom de Rav : <b>on peut souffler sur la poussière</b> avant chaque pas, ce qui découvre les os qui seraient dessous, <b>et marcher</b>.</p>
+      <p><b>Rav Yehouda bar Ami</b> dit au nom de Rav Yehouda : <b>un beit haperas piétiné</b>, où les gens ont marché et ont tracé un chemin, <b>est pur</b>, car toute l'interdiction n'est qu'une rigueur rabbinique. Autre explication : la Michna parle d'un cohen qui s'est rendu impur par <b>d'autres impuretés</b>, au sujet desquelles les cohanim <b>ne sont pas avertis</b> : il n'est interdit au cohen de se rendre impur qu'au contact d'un mort, mais il ne peut pas manger la téroumah s'il est impur de toute autre manière.</p>
+      <p>§ La Michna dit que si celui qui examine, juge ou témoigne est un vieillard, on le fait monter sur un âne, et on lui donne son salaire comme à un ouvrier. <b>Les Sages ont enseigné</b> (Tossefta, Baba Metsia 4:11) : il lui donne son salaire comme à <b>un ouvrier inactif</b>. <b>Abaye dit</b> : c'est comme un ouvrier qui reste inactif <b>du travail dont il est empêché</b>. Il reçoit donc la somme qu'une personne accepterait pour renoncer à son travail habituel et accomplir ce que dit la Michna, compte tenu de la difficulté de son travail et du montant de sa rémunération.</p>
+      <p><b>MICHNA :</b> si quelqu'un est <b>soupçonné à propos des premiers-nés</b> de les abattre et de vendre leur viande alors que c'est interdit, <b>on ne lui achète pas de viande</b>, même <b>de la viande de cerf</b>, ni <b>de peaux non tannées</b>. <b>Rabbi Éliézer dit</b> : on peut lui acheter les peaux de femelles, car les lois du premier-né ne s'appliquent qu'aux mâles. On ne lui achète pas <b>de laine blanchie ou sale</b>. On peut lui acheter <b>du fil filé</b>, et à plus forte raison <b>des vêtements</b>.</p>
+      <p><b>GUEMARA :</b> pourquoi la Michna interdit-elle même la viande de cerf ? Parce qu'elle peut être confondue avec <b>de la viande de veau</b>, d'aspect semblable.</p>
+      <p>La Michna dit : on ne lui achète pas de peaux non tannées. On en déduit qu'on peut lui acheter <b>des peaux tannées</b> : si c'était la peau d'un premier-né, il ne se donnerait pas cette peine, car il se dirait que si les Sages entendent parler de cette peau d'un premier-né, ils la lui confisqueront.</p>
+      <p>La Michna dit que Rabbi Éliézer permet les peaux de femelles. <b>Quelle en est la raison</b> ? <b>Les gens savent distinguer</b> la peau d'un mâle de celle d'une femelle.</p>
+      <p>La Guemara demande : alors, selon le premier Tanna, pourquoi interdit-il les peaux de femelles ? Il dit : si on le permettait, il pourrait aussi vendre des peaux de mâles, en <b>coupant la partie mâle</b> et en disant que <b>les souris l'ont mangée</b>. Et Rabbi Éliézer, pourquoi ne craint-il pas cela ? Parce qu'il pense que <b>l'endroit rongé par les souris se reconnaît</b>.</p>
+      <p>§ La Michna dit qu'on ne lui achète pas de laine <b>blanchie ou sale</b>. La Guemara demande : puisque la Michna interdit la laine blanchie, malgré l'effort de blanchiment, <b>est-il nécessaire d'enseigner la laine sale</b> ? Elle répond : la Michna enseigne un seul cas, <b>de la laine blanchie et nettoyée de sa saleté</b>.</p>
+      <p>La Michna dit qu'on peut lui acheter du fil filé, et à plus forte raison des vêtements. La Guemara demande : puisqu'elle a enseigné le fil, est-il nécessaire d'enseigner les vêtements ? Elle répond : il s'agit de <b>vêtements en feutre</b> (<i>namtei</i>), qui ne sont pas faits de fil filé.</p>
+      <p><b>MICHNA :</b> celui qui est <b>soupçonné à propos de la septième année</b> (de semer ou de commercer avec les produits de cette année), on ne lui achète pas <b>de lin</b>, même <b>peigné</b>, où l'on a mis beaucoup de travail. Mais on peut lui acheter <b>du fil filé et du tissu</b>.</p>
+      <p><b>GUEMARA :</b> puisque la Michna a enseigné le fil filé, est-il nécessaire d'enseigner le tissu ? Elle répond : il s'agit de <b>laine tissée en chaînes</b> (<i>tikhei</i>), qui n'est pas filée.</p>
+      <p><b>MICHNA :</b> celui qui est <b>soupçonné de vendre de la téroumah comme du profane</b>, on ne lui achète <b>même pas de l'eau et du sel</b>, selon <b>Rabbi Yehouda</b>. <b>Rabbi Shimon dit</b> : on ne lui achète rien qui ait un lien avec la téroumah et les dîmes. Mais on peut lui acheter <b>de l'eau et du sel</b>, qui n'y sont pas soumis.</p>
+      <p><b>GUEMARA :</b> que vient ajouter Rabbi Shimon ? Il vient ajouter <b>les entrailles de poisson</b>, car on les mélange à de l'huile d'olive, et il se peut que ce soit de l'huile de téroumah.</p>
+      <p>La Guemara raconte : il y avait <b>un boucher</b> soupçonné de vendre… (le récit se poursuit au daf suivant).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>like Ila in Yavne, whom the Sages in Yavne permitted to take</b> a wage of <b>four <i>issar</i> for</b> issuing a ruling concerning <b>a small animal and six</b> <i>issar</i> <b>for</b> issuing a ruling concerning <b>a large animal.</b> They permitted this provided that he would be paid <b>whether</b> it turned out that the firstborn was <b>unblemished or whether</b> it was <b>blemished.</b></p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>What is the reason</b> that the Sages in Yavne said that Ila could take a wage of four <i>issar</i> for issuing a ruling concerning a small animal but six <i>issar</i> for issuing a ruling concerning a large animal? The Gemara answers: Examining <b>this</b> one, a firstborn of a large animal, for blemishes involves <b>great effort; but</b> examining <b>that</b> one, the firstborn of a small animal, does <b>not</b> involve such <b>great effort.</b></p>
+      <p>§ The mishna teaches that one like Ila may take his wages provided that he would be paid <b>whether</b> it turns out that the firstborn is <b>unblemished or whether</b> it is <b>blemished.</b> The Gemara inquires: <b>Granted,</b> if the animal is <b>blemished</b> he takes his wages, <b>because he deems</b> the animal <b>permitted</b> to be slaughtered and eaten; <b>but</b> if he examined <b>an unblemished</b> animal, <b>why</b> does he take his wages? The Gemara answers <b>that if so,</b> i.e., if he would be paid for examining only a blemished animal, people <b>would come to suspect him and say</b> that <b>this</b> animal that he declared to be <b>blemished</b> is in fact <b>unblemished, and</b> he declared it blemished and thereby <b>deemed it permitted</b> to be eaten only <b>due to</b> the fact that he wanted to claim his <b>wages.</b></p>
+      <p>The Gemara challenges: <b>If so,</b> then in a situation where the examiner is paid either way, people might <b>also state</b> a similar claim with regard to one who rules that it is <b>an unblemished</b> animal. They may suspect that <b>this</b> animal is really <b>blemished, and</b> the reason that <b>this</b> expert <b>did not deem it permitted</b> is that <b>he holds</b> that it is preferable for him to declare it unblemished <b>so that he can collect his wages another time,</b> when he examines it later and declares it blemished. The Gemara answers: <b>The Sages</b> of Yavne <b>instituted</b> an ordinance that he may take his wages for examining a firstborn <b>once,</b> but <b>the Sages did not institute</b> that he may take his wages <b>twice</b> for examining the same animal. Since he will not get paid a second time for the same animal, he has no incentive to declare it unblemished if it has a blemish.</p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who takes his wages to judge</b> cases, <b>his rulings are void.</b> In the case of one who takes wages <b>to testify, his testimonies are void.</b> With regard to one who takes wages <b>to sprinkle</b> the purification waters of the red heifer upon one who contracted impurity imparted by a corpse, <b>and</b> one who takes wages <b>to sanctify</b> those waters, the halakhic status of <b>his water is</b> that of <b>cave water, and</b> the status of <b>his ashes is</b> that of mere <b>burnt ashes.</b></p>
+      <p>Although taking actual wages is prohibited, <b>if</b> the one examining the firstborn, or the judge, or the witness, <b>was a priest,</b> and the one who requires his services <b>rendered him impure</b> and prevented him <b>from</b> partaking of <b>his <i>teruma</i>,</b> that person <b>must provide</b> the priest <b>with food, drink, and</b> oil for <b>smearing</b> on his body from his own non-sacred property. <b>And likewise if</b> the one examining the firstborn, or the judge, or the witness, <b>was an elderly person,</b> the one who requires his services <b>transports him on a donkey. And</b> in all these cases, although it is prohibited to take wages, the one who requires his services <b>gives him his wages like</b> the wages of <b>a laborer,</b> as he was unable to perform his usual labor that day.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that the rulings of one who takes wages to judge cases are void. The Gemara asks: <b>From where is this matter,</b> that a judge may not be paid for his rulings, derived? <b>Rav Yehuda says</b> that <b>Rav says</b> that it is derived from a verse, <b>as the verse states: “Behold, I have taught you</b> statutes and ordinances, as the Lord my God commanded me, that you should do so in the midst of the land that you are going in to possess” (Deuteronomy 4:5). This teaches that <b>just as I,</b> Moses, learned the word of God <b>for free, so too, you</b> learned it from me <b>for free,</b> and this is also how you should act with all future generations.</p>
+      <p><b>This</b> <i>halakha</i> <b>is also taught</b> in a <i>baraita</i>: “Behold, I have taught you statutes and ordinances, <b>as the Lord my God commanded me”</b> (Deuteronomy 4:5). <b>Just as I</b> learned from God <b>for free, so too, you</b> learned from me <b>for free. And from where</b> is it derived <b>that if</b> one <b>cannot find</b> someone to teach him <b>for free that he should learn</b> even <b>by</b> giving <b>payment? The verse states: “Buy the truth,</b> and do not sell it; also wisdom, and instruction, and understanding” (Proverbs 23:23). <b>And from where</b> is it derived <b>that</b> one <b>should not say: Just as I learned by</b> giving <b>payment, so too, I will teach it by</b> receiving <b>payment? The verse states: “Buy the truth, and do not sell it.”</b></p>
+      <p>The mishna teaches: With regard to one who takes wages <b>to sprinkle</b> the purification waters of the red heifer, <b>and</b> one who takes wages <b>to sanctify</b> those waters, the halakhic status of <b>his water is</b> that of <b>cave water, and</b> the status of <b>his ashes is</b> that of mere <b>burnt ashes.</b> This indicates that one may not derive any benefit from the water or ashes of the red heifer. <b>And</b> the Gemara <b>raises a contradiction</b> from a mishna (<i>Kiddushin</i> 58a): With regard to <b>one who betroths</b> a woman <b>with the water of purification, or with the ashes of purification, she is betrothed, and</b> this is the <i>halakha</i> <b>even if</b> the man betrothing her is <b>an Israelite,</b> not a priest or a Levite. This indicates that one may derive benefit from the waters or ashes of purification.</p>
+      <p><b>Abaye said:</b> This is <b>not difficult,</b> since <b>there,</b> the mishna in <i>Kiddushin</i> is referring to one who betroths a woman <b>with</b> the value of <b>the payment for bringing</b> the ashes from afar <b>and filling</b> the vessel with the purification water, for which it is permitted to accept payment. Performing this act for the woman is comparable to giving her an item of value, since she will not have to pay someone to bring and fill the vessel for her. <b>Here,</b> the mishna is referring <b>to payment for</b> the actual <b>sprinkling and sanctifying</b> of the ashes.</p>
+      <p>The Gemara comments: According to this answer, the language of the two <i>mishnayot</i> is <b>also precise, as it teaches here: To sprinkle, or: To sanctify,</b> indicating that he receives payment for the actual sprinkling and sanctification; <b>and it teaches there,</b> in the mishna in <i>Kiddushin</i>, that she is betrothed <b>with the water of purification or with the ashes of purification,</b> which indicates that the water and ashes have not yet been mixed together. The Gemara affirms: <b>Learn from it</b> that this is the correct explanation of the <i>mishnayot</i>.</p>
+      <p>§ The mishna teaches: Although taking wages is prohibited, <b>if</b> the one examining the firstborn, or the judge, or the witness, <b>was a priest,</b> and the one who required his services <b>rendered him impure</b> and prevented him <b>from</b> partaking of <b>his <i>teruma</i>,</b> he must provide the priest with food, drink, and oil. The Gemara asks: But <b>he himself,</b> the priest, <b>how</b> was he permitted to <b>go</b> to a place that caused him to become impure? It is prohibited for a priest to render himself ritually impure.</p>
+      <p>The Gemara answers that this is referring to a case where he went <b>to an area in which uncertainty exists concerning the location of a grave or a corpse [<i>beit haperas</i>],</b> into which it is prohibited <b>by rabbinic law</b> for a priest to enter. <b>As Rav Yehuda says</b> that <b>Rav says: A person</b> who passes through <b>a <i>beit haperas</i> may blow</b> on the dust before taking each step, which would expose any bone beneath the dust, <b>and walk.</b> A priest may rely on that method of examination and enter the field.</p>
+      <p><b>And Rav Yehuda bar Ami says in the name of Rav Yehuda: A <i>beit haperas</i> that has been trodden</b> underfoot, thereby creating a path, is <b>pure,</b> and one no longer needs to be concerned about bones, as the entire prohibition is a stringency by rabbinic law. Nevertheless, a priest who walks through such a field may not partake of <i>teruma</i> until he has purified himself.</p>
+      <p><b>Alternatively,</b> the Gemara suggests that the mishna is referring to a case where the priest becomes impure <b>with other</b> forms of <b>impurity,</b> with regard to <b>which</b> priests <b>are not admonished.</b> A priest is prohibited from becoming impure only through contact with a corpse. Yet, he may not partake of <i>teruma</i> if he becomes impure even in any other manner.</p>
+      <p>§ The mishna teaches: <b>If</b> the one examining the firstborn, or the judge, or the witness, <b>was an elderly person,</b> the one who required his services <b>transports him on a donkey.</b> And in all these cases, although it is prohibited to take wages, the one who required his services gives him his wages like the wages of a laborer, as he was unable to perform his usual labor that day. The Sages <b>taught</b> (<i>Tosefta</i>, <i>Bava Metzia</i> 4:11): The owner <b>gives him his wage as</b> if he were <b>an idle laborer. Abaye says:</b> It means that he is paid <b>as a laborer</b> who is <b>idle from that</b> typical <b>labor</b> of his from which he is kept idle. In other words, he must receive the amount of money a person would be willing to accept to refrain from his current occupation and engage in the actions discussed in the mishna. This calculation accounts for both the degree of difficulty of his steady employment and the amount of his remuneration.</p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who is suspect with regard to firstborn</b> animals of slaughtering them and selling their meat when it is prohibited to do so, <b>one may neither purchase</b> meat <b>from him,</b> including <b>even deer meat, nor</b> may one purchase from him <b>hides that are not tanned. Rabbi Eliezer says: One</b> may <b>purchase hides of female animals from him,</b> as the <i>halakhot</i> of firstborn animals are in effect only with regard to males. <b>And one</b> may <b>not purchase bleached or dirty wool from him. But one</b> may <b>purchase spun</b> thread <b>from him, and</b> all the more so may one purchase <b>garments</b> from him.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that one may not purchase from him even <b>deer meat.</b> The Gemara explains that the reason is <b>that</b> it could be <b>confused with</b> meat <b>of a calf,</b> as they are similar in appearance.</p>
+      <p>The mishna teaches: <b>Nor</b> may one purchase from him <b>hides that are not tanned.</b> The Gemara infers from here that <b>we</b> may <b>purchase tanned</b> hides from one who is suspect with regard to firstborn animals. The reason is that <b>if it is so that it is</b> a hide <b>of a firstborn, he would not make</b> such <b>an effort with it</b> to tan it. This is because he would <b>think: If the Sages hear that</b> this hide is from a firstborn, they will <b>cause me a loss</b> by confiscating it <b>from me.</b></p>
+      <p>The mishna teaches that <b>Rabbi Eliezer says: One</b> may <b>purchase hides of female animals from him,</b> as the <i>halakhot</i> of firstborn animals are in effect only with regard to males. The Gemara asks: <b>What is the reason?</b> People <b>know</b> the difference between the hide of a male animal and the hide of a female animal, due to the differences in anatomy.</p>
+      <p>The Gemara asks: <b>But</b> if so, according to <b>the first <i>tanna</i>,</b> why is it prohibited to purchase hides of female animals from one who is suspect with regard to firstborn animals? The Gemara answers that the first <i>tanna</i> claims as follows: <b>If so,</b> i.e., if it is permitted to purchase hides of female animals, one might <b>also</b> come to sell hides of <b>male</b> animals, as he will <b>sever the male</b> reproductive organ <b>and say</b> that <b>mice ate</b> this part of the hide. The Gemara asks: <b>And the other,</b> Rabbi Eliezer, why is he not concerned that one might cut off that part of the hide and sell it as the hide of a female? The Gemara answers that Rabbi Eliezer maintains that the <b>place of</b> the <b>mice is known,</b> i.e., one can tell by looking at the hide whether it was eaten by mice or cut with a knife.</p>
+      <p>§ The mishna teaches: <b>And one</b> may <b>not purchase bleached or dirty wool from him.</b> The Gemara asks: <b>Now</b> that the mishna has taught that <b>we</b> may <b>not purchase bleached</b> wool <b>from him,</b> despite the fact he has expended effort in bleaching it, which indicates that it is not from a firstborn, <b>is</b> it <b>necessary</b> to teach that one may not purchase <b>dirty</b> wool from him? The Gemara answers: <b>Rather,</b> the <i>tanna</i> <b>is teaching one</b> case here, that of <b>wool</b> that was <b>bleached</b> and cleaned <b>from its dirt.</b></p>
+      <p>The mishna teaches: <b>But one</b> may <b>purchase spun</b> thread <b>from him, and</b> all the more so one may purchase <b>garments</b> from him. The Gemara asks: <b>Now</b> that the mishna has taught that <b>we may purchase spun</b> thread from one who is suspect with regard to firstborn, <b>is</b> it <b>necessary</b> to teach that one may purchase <b>garments?</b> The Gemara answers: <b>What</b> does the mishna mean which it says: <b>Garments?</b> It is referring to <b>felt [<i>namtei</i>]</b> garments, which are not made of spun thread.</p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who is suspect with regard to the Sabbatical</b> Year, i.e., of sowing or engaging in commerce with Sabbatical-Year produce, <b>one may not purchase flax from him, and</b> this applies <b>even</b> to <b>combed</b> flax, in which much labor and exertion was invested. <b>But one</b> may <b>purchase spun</b> thread <b>and woven</b> fabric <b>from</b> such individuals.</p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>Now</b> that the mishna has taught that <b>we may purchase spun</b> thread from one who is suspect with regard to the Sabbatical Year, <b>is</b> it <b>necessary</b> to teach the case of <b>woven fabric?</b> The Gemara answers: <b>What</b> does the mishna mean when it says: <b>Woven?</b> It means wool woven into <b>chains,</b> which is not spun.</p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who is suspect with regard to selling <i>teruma</i> under the guise of non-sacred</b> produce, <b>one</b> may <b>not purchase even water and salt from him;</b> this is <b>the statement of Rabbi Yehuda. Rabbi Shimon says: One</b> may <b>not purchase from him any</b> item <b>that has relevance to <i>teruma</i> and tithes.</b> However, one may purchase water and salt from him, as <i>teruma</i> and tithes do not apply to them.</p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>What is added</b> by Rabbi Shimon’s statement that one may not purchase any item that has relevance to <i>teruma</i> and tithes from one who is suspect with regard to selling <i>teruma</i>? The Gemara answers: Rabbi Shimon’s statement serves <b>to add fish innards</b> to this prohibition, <b>as</b> people <b>mix olive oil with them,</b> and it might be oil of <i>teruma</i>.</p>
+      <p>The Gemara relates: There was <b>a certain butcher who was suspected of selling</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> le daf 29 commence à la fin de la Michna sur l'expert Ila de Yavné, qui peut prendre un salaire pour examiner les premiers-nés. Il part de ce cas pour poser un principe plus large : on ne prend pas de salaire pour juger, témoigner ou accomplir certaines mitsvot. Il enchaîne sur la Michna des personnes <b>soupçonnées</b> de fautes liées aux premiers-nés, à la septième année et à la téroumah, avec ce qu'on peut ou non leur acheter. Il se termine au début de l'histoire d'un boucher soupçonné, qui se poursuit au daf suivant.</p>
+
+<h4>1. Le salaire d'Ila à Yavné (29a)</h4>
+<p>Les Sages de Yavné ont permis à Ila, expert en défauts, de prendre un salaire. La Guemara explique les montants et ce qui évite le soupçon :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Question</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Réponse de la Guemara</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi quatre issar pour le petit bétail et six pour le gros ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Examiner le gros bétail demande plus d'effort. Rachi : il faut le jeter à terre, l'attacher et voir son défaut</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Pourquoi payer même si l'animal est sans défaut ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sinon, on le soupçonnerait de déclarer l'animal défectueux pour toucher son salaire</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ne le soupçonnera-t-on pas de déclarer sans défaut un animal défectueux, pour être payé une seconde fois ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Les Sages de Yavné ont institué un salaire pour un seul examen, pas deux. Il n'a donc aucun intérêt à le faire</td></tr>
+</table>
+
+<p>Tossafot reprennent cette dernière réponse : on pourrait encore soupçonner l'expert de déclarer l'animal sans défaut pour s'épargner l'effort d'un second examen. Ils répondent que les Sages ne l'ont pas obligé à examiner de nouveau, mais seulement à ne pas prendre de salaire pour ce qu'il a déjà vu. De plus, on ne le soupçonnera jamais de permettre l'interdit pour échapper à cet effort.</p>
+
+<h4>2. Pas de salaire pour juger, témoigner ou asperger (29a)</h4>
+<p>La Michna énumère trois cas où le salaire invalide l'acte, puis les exceptions pour ne pas faire perdre l'intéressé :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Conséquence</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Compensation</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Celui qui prend un salaire pour juger</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ses jugements sont nuls</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">—</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Celui qui prend un salaire pour témoigner</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ses témoignages sont nuls</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">—</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Celui qui prend un salaire pour asperger ou sanctifier les eaux de la vache rousse</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ses eaux sont comme des eaux de caverne, ses cendres comme de simples cendres</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">—</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un cohen que l'on a rendu impur pour ce service</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On ne peut le payer, mais celui qui a besoin de lui perd sa téroumah</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Celui qui requiert ses services lui donne à manger, à boire et de l'huile, de ses biens profanes</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un vieillard</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il ne peut pas marcher</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On le fait monter sur un âne</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Dans tous ces cas</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On ne paie pas le service lui-même</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On lui donne un salaire d'ouvrier inactif pour la journée perdue</td></tr>
+</table>
+
+
+<h4>3. D'où apprend-on qu'on ne prend pas de salaire ? (29a)</h4>
+<p>Rav Yehouda au nom de Rav apprend l'interdiction de Deutéronome 4:5 : « comme l'Éternel mon D.ieu me l'a ordonné ». Moshé a appris gratuitement, donc on enseigne gratuitement. La baraïta ajoute deux précisions :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Question</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Verset et réponse</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Et si on ne trouve personne qui enseigne gratuitement ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On doit apprendre en payant : « Acquiers la vérité » (Proverbes 23:23). Rachi : la vérité, c'est la Torah</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Peut-on enseigner en étant payé, puisqu'on a payé soi-même ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Non : « et ne la vends pas » (Proverbes 23:23)</td></tr>
+</table>
+
+<p>Tossafot posent la question de la Michna de Kétoubot : on y enseigne que le juge qui prend un salaire est « laid » mais ses jugements valent. Elle parle d'un salaire pour inactivité (<i>agar batala</i>), qui est évident et donc permis. Tossafot distinguent aussi le salaire de la peine de celui du « pot-de-vin » interdit par Chémot 23 : le premier rémunère l'effort, le second est donné pour que le juge plaide en faveur de l'un. Les juges des décrets (<i>gezerot</i>) à Jérusalem étaient payés par la caisse du Temple, car ils ne pouvaient exercer aucun métier. Enfin, de nos jours, on enseigne la Torah contre salaire à celui qui n'a pas de quoi vivre, ou quand le salaire est clairement celui du temps perdu ; et pour les enfants on peut être payé pour la garde et pour l'enseignement de la cantillation (Nédarim 37a).</p>
+
+<h4>4. Les eaux de la vache rousse et les fiançailles (29a)</h4>
+<p>La Michna dit que celui qui prend un salaire pour asperger ou sanctifier annule ses eaux. Cela semble contredire la Michna de Kiddouchin 58a, qui dit qu'un homme fiance une femme avec les eaux ou les cendres de purification. Abaye distingue :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Michna</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">De quoi elle parle</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ici (Bekhorot) : « pour asperger », « pour sanctifier »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le salaire de l'acte lui-même : aspersion et mélange des cendres et de l'eau. Il est interdit, car c'est ce qui accomplit la mitsva (Rachi)</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Là (Kiddouchin) : « avec les eaux », « avec les cendres »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le salaire de l'effort : apporter les cendres de loin à Jérusalem et remplir le récipient d'eau. Le salaire est permis, et la valeur sert aux fiançailles</td></tr>
+</table>
+
+<p>La Guemara note que les mots des deux Michnayot confirment cette distinction : « pour asperger ou pour sanctifier » parle de l'acte, alors que « avec les eaux ou avec les cendres » parle de matières encore séparées. Rachi (sur « avec les eaux de purification ») ajoute que le mot « eaux » désigne le remplissage de l'eau, tandis que pour les cendres on peut parler du fait de les apporter. Tossafot jugent forcée l'explication de Rachi sur « même s'il est Israël » et pensent que la Michna de Kiddouchin le dit par ressemblance avec le début de cette Michna, qui énumère la téroumah, les dîmes, les dons et les eaux de purification.</p>
+
+<h4>5. Le cohen qui se rend impur (29a)</h4>
+<p>La Michna dit qu'un cohen est rendu impur pour ce service. La Guemara se demande comment il a pu s'y rendre, puisqu'il lui est interdit de se rendre impur. Elle propose trois réponses :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Explication</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le <i>beit haperas</i></td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un champ où une tombe a été labourée : son impureté est rabbinique. Rav Yehouda au nom de Rav : on peut souffler sur la poussière avant chaque pas pour découvrir un éventuel os, et marcher. Rachi : un os de la taille d'un grain d'orge rend impur par contact et par port, mais pas sous la tente</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le <i>beit haperas</i> piétiné</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Yehouda bar Ami : il est pur. Rachi : il est impossible qu'un os de la taille d'un grain d'orge n'ait pas été piétiné, et le doute n'existe qu'à cause de cet os</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Une autre impureté</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le cohen est averti de ne pas se rendre impur seulement au contact d'un mort, mais il peut se rendre impur à des cadavres d'animaux ou à des reptiles, ce qui le prive de la téroumah</td></tr>
+</table>
+
+<p>Tossafot notent que, selon cette réponse, souffler sur la poussière permet d'aller témoigner, mais que le cohen reste impur, comme le dit la Michna (« il rend impur de sa téroumah »). Ils mentionnent la position de Rabbeinou Tam : le souffle est valable pour toute chose (Erouvin 30b).</p>
+
+<h4>6. Le salaire de l'ouvrier inactif (29a)</h4>
+<p>Pour le vieillard, la Michna dit qu'on lui donne un salaire comme à un ouvrier. Les Sages (Tossefta, Baba Metsia 4:11) précisent : comme à un <b>ouvrier inactif</b>. Abaye : c'est comme un ouvrier inactif <b>de son travail habituel</b>.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Travail habituel</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Calcul (Rachi)</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Travail facile et bien payé, par exemple percer des perles</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On lui retire très peu de son salaire, car il peut facilement renoncer au travail du jour</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Travail pénible, par exemple celui du menuisier</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">On lui dit : prends un zouz au lieu de trois et reste inactif. Il y gagne, car il évite un travail pénible</td></tr>
+</table>
+
+<p>Tossafot contestent l'explication de Rachi : si on lui donnait seulement la différence pour passer à un travail plus léger, il pourrait prendre un salaire pour juger ou témoigner. Pour eux, l'expression signifie qu'on lui donne ce que gagnerait un ouvrier qui reste <b>totalement</b> inactif. Ils rapprochent la règle de la restitution d'un objet perdu (Baba Metsia 31b).</p>
+
+<h4>7. La Michna des soupçonnés : premiers-nés (29a-29b)</h4>
+<p>La Michna dresse la liste de ce qu'on ne peut pas acheter à quelqu'un soupçonné d'abattre des premiers-nés pour vendre leur viande :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Objet</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Peut-on l'acheter ?</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison de la Guemara</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Viande, même de cerf</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Non</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La viande de cerf (rouge) peut être confondue avec la viande de veau (Rachi)</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Peaux non tannées</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Non</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Si les peaux sont tannées, c'est qu'elles ne viennent pas d'un premier-né : le vendeur ne se donnerait pas cette peine, de peur que les Sages ne les lui confisquent</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Peaux de femelles</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Éliézer : oui. Premier Tanna : non</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Éliézer : on distingue les peaux de mâles et de femelles. Premier Tanna : il pourrait couper la partie mâle et dire que les souris l'ont mangée. Éliézer répond que l'on reconnaît l'endroit rongé</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Laine blanchie ou sale</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Non</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La Michna enseigne un seul cas : la laine blanchie et nettoyée de sa saleté (Rachi : sale = non lavée)</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Fil filé, et à plus forte raison vêtements</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Oui</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le fil est déjà permis. Les « vêtements » sont ici en feutre (<i>namtei</i>), non filés</td></tr>
+</table>
+
+
+<h4>8. Soupçonnés pour la septième année et la téroumah (29b)</h4>
+<p>La Michna applique le même principe à deux autres fautes :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Soupçon</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce qui est interdit</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce qui est permis</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La septième année (semer ou commercer avec les produits de la septième année)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le lin, même peigné</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le fil filé et le tissu (Guemara : laine tissée en chaînes non filées)</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La téroumah vendue comme profane</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda : même l'eau et le sel. Rabbi Shimon : tout ce qui est soumis à la téroumah et aux dîmes</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Shimon : l'eau et le sel</td></tr>
+</table>
+
+<p>La Guemara demande ce que Rabbi Shimon ajoute à Rabbi Yehouda. Elle répond qu'il ajoute les <b>entrailles de poisson</b> : on les mélange à de l'huile d'olive, qui pourrait être de la téroumah. Le daf s'arrête sur le début de l'histoire d'un boucher soupçonné, qui se poursuit à la page suivante.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> (début du daf, 29a) précise que l'expert comme Ila est d'abord un homme pieux de Yavné, donc on ne le soupçonne pas. Il explique « sans défaut ou défectueux » : si l'expert dit qu'il s'agit d'un défaut permanent, il reçoit son salaire ; s'il dit qu'il est passager, la question est pourquoi il prend un salaire, puisque cela n'aide en rien le propriétaire et qu'il interdit seulement l'animal. Sur « gros bétail demande plus d'effort », il explique : il faut le jeter à terre, le lier et voir son défaut.</p>
+
+<p>Sur « pour asperger », Rachi précise qu'il s'agit de l'eau de purification de la vache rousse ; sur « pour sanctifier », de mêler la cendre de la vache à l'eau vive dans un récipient. Sur « cendres de foyer », il dit que toute cendre est appelée ainsi. Sur « il rend impur de sa téroumah », il explique que le cohen doit acheter du profane et le manger, et que le profane coûte plus cher que la téroumah, car il est destiné à tous, alors que la téroumah ne convient qu'aux cohanim.</p>
+
+<p>Sur la question de Kiddouchin, Rachi explique que le salaire permis est celui d'apporter les cendres de loin à Jérusalem et de remplir l'eau, c'est-à-dire le salaire de la peine, non celui qui prépare la mitsva. Il ajoute que « eaux de purification » évoque le remplissage de l'eau et que, pour les cendres, on peut comprendre l'apport des cendres. Sur le <i>beit haperas</i>, il explique qu'un os de la taille d'un grain d'orge rend impur par contact et par port mais pas sous la tente, que le souffle écarte la poussière sans toucher l'os, et que néanmoins le cohen ne peut pas manger la téroumah (Haguiga 25b : on vérifie pour ceux qui font la Pâque, pas pour ceux qui mangent la téroumah). Pour un <i>beit haperas</i> piétiné, il explique qu'il est impossible qu'un os de cette taille n'ait pas été piétiné.</p>
+
+<p>Sur « comme un ouvrier inactif de ce travail », Rachi prend l'exemple de celui qui perce des perles : son travail est facile et bien payé, donc on lui retire peu. Un menuisier au travail pénible accepterait un zouz au lieu de trois pour rester inactif.</p>
+
+<p>Sur la Michna du soupçonné, Rachi explique que « soupçonné à propos du premier-né » vise celui qu'on soupçonne de lui causer un défaut. Il précise que la viande de cerf est rouge et peut être confondue avec celle d'un veau premier-né sans défaut. Il traduit la laine <i>namtei</i> par le feutre en vieux français, et dit que pour le fil on peut acheter, car si le tissu venait d'un premier-né le vendeur n'aurait pas pris la peine de le filer. Sur la septième année, il explique « soupçonné de semer ou de faire commerce avec les <i>sefihim</i> », c'est-à-dire des produits de la septième année. Sur « même de l'eau et du sel », il précise que c'est une sanction.</p>
+
+<p><b>Tossafot</b> (sur « les Sages n'ont pas institué deux fois ») répondent qu'on ne le soupçonnera jamais de permettre l'interdit pour s'épargner l'effort d'un second examen. Sur « le juge qui prend un salaire », ils renvoient à Kétoubot 105 et distinguent le salaire de l'effort du pot-de-vin. Sur « avec les eaux de purification », ils jugent forcée l'explication de Rachi sur « même s'il est Israël ». Sur le <i>beit haperas</i>, ils discutent longuement la position de Rabbeinou Tam sur la valeur du souffle (Pessahim 92a, Erouvin 30b). Sur « comme un ouvrier inactif », ils contestent l'explication de Rachi.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf fonde deux règles toujours vivantes : l'interdiction de prendre un salaire pour juger, et celle d'enseigner la Torah contre salaire.</p>
+
+<h4>Le juge qui prend un salaire</h4>
+<p>Le Choulhan Aroukh ('Hochen Michpat 9:5) reprend la Michna de Bekhorot 29a : celui qui prend un salaire pour juger, tous ses jugements sont nuls. Le commentaire cite la Guemara de notre daf (Rav Yehouda au nom de Rav, Deutéronome 4:5). Le salaire pour le temps perdu (<i>agar batala</i>), que Tossafot distinguent du pot-de-vin, reste permis quand il est évident.</p>
+
+<h4>Enseigner la Torah contre salaire</h4>
+<p>Le Choulhan Aroukh (Yoré Dé'a 246:5) reprend la baraïta : celui qui ne trouve personne pour lui enseigner gratuitement apprend en payant, mais il ne doit pas dire : « comme j'ai appris en payant, j'enseignerai en étant payé » ; il enseigne gratuitement. Il ajoute que la pratique actuelle d'enseigner contre salaire est permise si l'enseignant n'a pas de quoi vivre, et même s'il en a, si le salaire est clairement celui du temps perdu à cesser toutes ses affaires. Cela correspond à ce que disent Tossafot.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.29" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
