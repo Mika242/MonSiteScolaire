@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bekhorot 28 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Bekhorot 28</h1>
+    <p>Daf 28</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וְאִידַּךְ, אִי מֵהָתָם אִיכָּא לְמֵימַר חָזֶה וָשׁוֹק שֶׁל תּוֹדָה.</p>
+      <p>וְאִידַּךְ, אָמַר קְרָא: ״לְךָ יִהְיֶה״ — הוֹסִיף לְךָ הַכָּתוּב הֲוָיָה אַחֶרֶת בִּבְכוֹר.</p>
+      <p>וְאִידַּךְ, הָא מֵהָתָם אִיכָּא לְמֵימַר: הַאי ״יִהְיֶה לָּךְ״ — לִימֵּד עַל בְּכוֹר בַּעַל מוּם שֶׁנּוֹתְנוֹ לְכֹהֵן, שֶׁלֹּא מָצִינוּ לוֹ בְּכׇל הַתּוֹרָה כּוּלָּהּ.</p>
+      <p>וְאִידַּךְ, אָמַר ״וּבְשָׂרָם״ — אֶחָד תָּם וְאֶחָד בַּעַל מוּם, וְאִידַּךְ — ״וּבְשָׂרָם״ דְּהָנֵי בְּכוֹרוֹת דְּכוּלְּהוּ יִשְׂרָאֵל קָאָמַר.</p>
+      <p>נוֹלַד לוֹ מוּם בְּתוֹךְ שְׁנָתוֹ, רַשַּׁאי לְקַיְּימוֹ כׇּל שְׁנֵים עָשָׂר חֹדֶשׁ. אִיבַּעְיָא לְהוּ: הֵיכִי קָאָמַר? נוֹלַד לוֹ בְּתוֹךְ שְׁנָתוֹ, רַשַּׁאי לְקַיְּימוֹ כׇּל שְׁנֵים עָשָׂר חֹדֶשׁ, וּלְאַחַר שְׁנָתוֹ נָמֵי שְׁלֹשִׁים? אוֹ דִלְמָא: הֵיכָא דְּנוֹלַד בּוֹ מוּם בְּתוֹךְ שְׁנָתוֹ, רַשַּׁאי לְקַיְּימוֹ כׇּל שְׁנֵים עָשָׂר חֹדֶשׁ וְתוּ לָא, וְהֵיכָא דְּנוֹלַד לוֹ אַחַר שְׁנָתוֹ, אֵינוֹ רַשַּׁאי לְקַיְּימוֹ אֶלָּא שְׁלֹשִׁים?</p>
+      <p>תָּא שְׁמַע, דְּתַנְיָא: בְּכוֹר בִּזְמַן הַזֶּה, עַד שֶׁלֹּא נִרְאָה לְהַרְאוֹתוֹ לֶחָכָם — רַשַּׁאי לְקַיְּימוֹ שְׁתַּיִם וְשָׁלֹשׁ שָׁנִים, וּמִשֶּׁנִּרְאָה לְהַרְאוֹתוֹ לֶחָכָם, נוֹלַד לוֹ מוּם בְּתוֹךְ שְׁנָתוֹ — רַשַּׁאי לְקַיְּימוֹ כׇּל שְׁנֵים עָשָׂר חֹדֶשׁ.</p>
+      <p>אַחַר שְׁנָתוֹ אֵינוֹ רַשַּׁאי לְקַיְּימוֹ אֲפִילּוּ יוֹם אֶחָד, וַאֲפִילּוּ שָׁעָה אַחַת. אֲבָל מִפְּנֵי הֲשָׁבַת אֲבֵידָה לַבְּעָלִים, אָמְרוּ: רַשַּׁאי לְקַיְּימוֹ שְׁלֹשִׁים יוֹם.</p>
+      <p>וַעֲדַיִין תִּיבְּעֵי לִי: שְׁלֹשִׁים יוֹם אַחַר שְׁנָתוֹ, אוֹ דִלְמָא קוֹדֶם שְׁנָתוֹ?</p>
+      <p>תָּא שְׁמַע: נוֹלַד לוֹ מוּם בַּחֲמִשָּׁה עָשָׂר יוֹם בְּתוֹךְ שְׁנָתוֹ, מַשְׁלִימִין לוֹ חֲמִשָּׁה עָשָׂר יוֹם אַחַר שְׁנָתוֹ. שְׁמַע מִינַּהּ, מְסַיַּיע לְרַבִּי אֶלְעָזָר, דְּאָמַר רַבִּי אֶלְעָזָר: נוֹתְנִין לוֹ שְׁלֹשִׁים יוֹם מִשָּׁעָה שֶׁנּוֹלַד בּוֹ מוּם.</p>
+      <p>אִיכָּא דְּאָמְרִי, אָמַר רַבִּי אֶלְעָזָר: מִנַּיִן לִבְכוֹר שֶׁנּוֹלַד בּוֹ מוּם בְּתוֹךְ שְׁנָתוֹ שֶׁנּוֹתְנִין לוֹ שְׁלֹשִׁים יוֹם אַחַר שְׁנָתוֹ? שֶׁנֶּאֱמַר: ״לִפְנֵי ה׳ אֱלֹהֶיךָ תֹאכְלֶנּוּ שָׁנָה בְשָׁנָה״, (אֵיזוֹ) [אֵילּוּ] הֵן יָמִים הַחֲשׁוּבִין שָׁנָה — הֱוֵי אוֹמֵר אֵלּוּ שְׁלֹשִׁים יוֹם.</p>
+      <p>מֵיתִיבִי: נוֹלַד לוֹ מוּם בַּחֲמִשָּׁה עָשָׂר יוֹם בְּתוֹךְ שְׁנָתוֹ — מַשְׁלִימִין לוֹ חֲמִשָּׁה עָשָׂר יוֹם אַחַר שְׁנָתוֹ. הַשְׁלָמָה — אִין, מֵיהֲבָא — לָא! תְּיוּבְתָּא דְּרַבִּי אֶלְעָזָר, תְּיוּבְתָּא.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הַשּׁוֹחֵט אֶת הַבְּכוֹר וּמַרְאֶה אֶת מוּמוֹ — רַבִּי יְהוּדָה מַתִּיר, רַבִּי מֵאִיר אוֹמֵר: הוֹאִיל וְנִשְׁחַט שֶׁלֹּא עַל פִּי מוּמְחֶה — אָסוּר. מִי שֶׁאֵינוֹ מוּמְחֶה וְרוֹאֶה אֶת הַבְּכוֹר, וְנִשְׁחַט עַל פִּיו — הֲרֵי זֶה יִקָּבֵר, וִישַׁלֵּם מִבֵּיתוֹ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר רַבָּה בַּר בַּר חָנָה: בְּדוּקִּין שֶׁבָּעַיִן — דְּכוּלֵּי עָלְמָא לָא פְּלִיגִי דְּאָסוּר, מִפְּנֵי שֶׁהֵן מִשְׁתַּנִּין. לֹא נֶחְלְקוּ אֶלָּא בְּמוּמִין שֶׁבַּגּוּף, דְּרַבִּי מֵאִיר סָבַר: גָּזְרִינַן מוּמִין שֶׁבַּגּוּף אַטּוּ דּוּקִּין שֶׁבָּעַיִן, וְרַבִּי יְהוּדָה סָבַר: לָא גָּזְרִינַן מוּמִין שֶׁבַּגּוּף אַטּוּ דּוּקִּין שֶׁבָּעַיִן.</p>
+      <p>תַּנְיָא נָמֵי הָכִי: הַשּׁוֹחֵט אֶת הַבְּכוֹר וּמַרְאֶה אֶת מוּמָיו — רַבִּי יְהוּדָה אוֹמֵר: בְּדוּקִּין שֶׁבְּעַיִן אָסוּר, מִפְּנֵי שֶׁהֵן מִשְׁתַּנִּין, בְּמוּמִין שֶׁבַּגּוּף מוּתָּר, מִפְּנֵי שֶׁאֵין מִשְׁתַּנִּין. רַבִּי מֵאִיר אוֹמֵר: אֶחָד זֶה וְאֶחָד זֶה אָסוּר, מִפְּנֵי שֶׁהֵן מִשְׁתַּנִּין. מִפְּנֵי שֶׁהֵן מִשְׁתַּנִּין סָלְקָא דַּעְתָּךְ? מוּמִין שֶׁבַּגּוּף מִי מִשְׁתַּנִּין?! אֶלָּא מִפְּנֵי הַמִּשְׁתַּנִּין.</p>
+      <p>אָמַר רַב נַחְמָן בַּר יִצְחָק:</p>
+      <p>מַתְנִיתִין נָמֵי דַּיְקָא, רַבִּי מֵאִיר אוֹמֵר: הוֹאִיל וְנִשְׁחַט שֶׁלֹּא עַל פִּי מוּמְחֶה אָסוּר. שְׁמַע מִינַּהּ קְנָסָא קָא קָנֵיס רַבִּי מֵאִיר, שְׁמַע מִינַּהּ.</p>
+      <p>אִיבַּעְיָא לְהוּ: מִפְּנֵי הַמִּשְׁתַּנִּין — דְּכוּלְּהוּ מִשְׁתַּנִּי, אוֹ דִלְמָא אִיכָּא דְּמִשְׁתַּנֵּי וְאִיכָּא דְּלָא מִשְׁתַּנֵּי?</p>
+      <p>לְמַאי נָפְקָא מִינַּהּ? לְאַכְחוֹשֵׁי סָהֲדִי. אִי אָמְרַתְּ: כּוּלְּהוּ מִשְׁתַּנִּי — שַׁקָּרֵי נִינְהוּ, וְאִי אָמְרַתְּ: אִיכָּא דְּמִשְׁתַּנֵּי וְאִיכָּא דְּלָא מִשְׁתַּנֵּי — סָמְכִינַן עֲלַיְיהוּ. מַאי?</p>
+      <p>תָּא שְׁמַע, דְּאָמַר רַבָּה בַּר בַּר חָנָה: שָׂח לִי רַבִּי יֹאשִׁיָּה דְּמִן אוּשָׁא, בֹּא וְאַרְאֶךָּ בְּדוּקִּין שֶׁהֵן מִשְׁתַּנִּים. מִדְּקָאָמַר לֵיהּ ״בֹּא וְאַרְאֶךָּ״, מִכְּלָל דְּאִיכָּא דְּמִשְׁתַּנֵּי וְאִיכָּא דְּלָא מִשְׁתַּנֵּי.</p>
+      <p>מִי שֶׁאֵינוֹ מוּמְחֶה, וְרָאָה אֶת הַבְּכוֹר וְנִשְׁחַט עַל פִּיו, הֲרֵי זֶה יִקָּבֵר, וִישַׁלֵּם מִבֵּיתוֹ. לֵימָא תְּנַן סְתָמָא כְּרַבִּי מֵאִיר? דִּלְמָא בְּדוּקִּין שֶׁבָּעַיִן, וְדִבְרֵי הַכֹּל.</p>
+      <p>תָּנָא: כְּשֶׁהוּא מְשַׁלֵּם — מְשַׁלֵּם רְבִיעַ לַדַּקָּה, וּמֶחֱצָה לַגַּסָּה. מַאי טַעְמָא? אָמַר רַב פָּפָּא: זֶה הֶפְסֵד מְרוּבֶּה, וְזֶה הֶפְסֵד מוּעָט.</p>
+      <p>אִי הָכִי, לְפוּם פְּסֵידָא לִישַׁלֵּם! אָמַר רַב הוּנָא בַּר מָנוֹחַ מִשְּׁמֵיהּ דְּרַב אַחָא בַּר אִיקָא: מִשּׁוּם גְּזֵירַת מְגַדְּלֵי בְּהֵמָה דַּקָּה נָגְעוּ בָּהּ.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> דָּן אֶת הַדִּין, זִיכָּה אֶת הַחַיָּיב וְחִיֵּיב אֶת הַזַּכַּאי, טִימֵּא אֶת הַטָּהוֹר וְטִיהֵר אֶת הַטָּמֵא — מַה שֶּׁעָשָׂה עָשׂוּי, וִישַׁלֵּם מִבֵּיתוֹ. וְאִם הָיָה מוּמְחֶה לְבֵית דִּין — פָּטוּר מִלְּשַׁלֵּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> לֵימָא תְּנַן סְתָמָא כְּרַבִּי מֵאִיר, דְּדָאֵין דִּינָא דִּגְרָמֵי? אָמַר רַבִּי אִילְעָא אָמַר רַב: כְּגוֹן שֶׁנָּשָׂא וְנָתַן בַּיָּד.</p>
+      <p>בִּשְׁלָמָא חִיֵּיב אֶת הַזַּכַּאי — כְּגוֹן שֶׁנָּשָׂא וְנָתַן בַּיָּד, אֶלָּא זִיכָּה אֶת הַחַיָּיב הֵיכִי דָּמֵי? אִי דַּאֲמַר לֵיהּ ״פָּטוּר אַתָּה״ — וְהָא לֹא נָשָׂא וְנָתַן בַּיָּד! אָמַר רָבִינָא: כְּגוֹן שֶׁהָיָה לוֹ מַשְׁכּוֹן וּנְטָלוֹ הֵימֶנּוּ.</p>
+      <p>טִימֵּא אֶת הַטָּהוֹר — דְּאַגַּע בְּהוּ שֶׁרֶץ, טִיהֵר אֶת הַטָּמֵא — שֶׁעֵירְבָן עִם פֵּירוֹתָיו.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> וּמַעֲשֶׂה בְּפָרָה שֶׁנִּיטְּלָה הָאֵם שֶׁלָּהּ, וְהֶאֱכִילָהּ רַבִּי טַרְפוֹן לִכְלָבִים, וּבָא מַעֲשֶׂה לִפְנֵי חֲכָמִים בְּיַבְנֶה, וְהִתִּירוּהָ.</p>
+      <p>וְאָמַר תּוֹדוֹס הָרוֹפֵא: אֵין פָּרָה וַחֲזִירָה יוֹצְאָה מֵאֲלֶכְּסַנְדְּרִיָּא שֶׁל מִצְרַיִם, שֶׁאֵין חוֹתְכִין הָאֵם שֶׁלָּהּ, בִּשְׁבִיל שֶׁלֹּא תֵּלֵד.</p>
+      <p>אָמַר רַבִּי טַרְפוֹן: הָלְכָה חֲמוֹרְךָ טַרְפוֹן! אָמַר לוֹ רַבִּי עֲקִיבָא: רַבִּי טַרְפוֹן, אַתָּה מוּמְחֶה לְבֵית דִּין, וְכׇל הַמּוּמְחֶה לְבֵית דִּין פָּטוּר מִלְּשַׁלֵּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> וְתִיפּוֹק לֵיהּ, דְּטָעָה בִּדְבַר מִשְׁנָה, וְטָעָה בִּדְבַר מִשְׁנָה חוֹזֵר!</p>
+      <p>חֲדָא וְעוֹד קָאָמַר: חֲדָא — דְּטָעָה בִּדְבַר מִשְׁנָה חוֹזֵר, וְעוֹד — אִי נָמֵי בְּשִׁיקּוּל הַדַּעַת טָעִיתָה, מוּמְחֶה לְבֵית דִּין אַתָּה, וְכׇל הַמּוּמְחֶה לְבֵית דִּין פָּטוּר מִלְּשַׁלֵּם.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הַנּוֹטֵל שָׂכָר לִהְיוֹת רוֹאֶה אֶת הַבְּכוֹרוֹת — אֵין שׁוֹחֲטִין עַל פִּיו, אֶלָּא אִם כֵּן הָיָה מוּמְחֶה.</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>… <b>Et les autres</b>, les Sages de l'école de Rav, <b>pourquoi n'apprennent-ils pas de ce verset</b> que le premier-né se mange <b>deux jours et une nuit</b> ? La Guemara répond : si on l'apprenait de là, on pourrait dire que le verset compare le premier-né à <b>la poitrine et à la cuisse du sacrifice de remerciement</b>, qui ne se mangent qu'un jour et une nuit.</p>
+      <p>La Guemara demande : <b>et l'autre, Rav Yehouda au nom de Rav</b>, que répond-il ? Le verset dit : « <b>Leur chair sera à toi, comme la poitrine de l'agitation et comme la cuisse droite, elle sera à toi</b> » (Nombres 18:18). Le verset ajoute une seconde mention (« elle sera à toi ») pour enseigner que le cohen a <b>un jour de plus</b> pour manger le premier-né : il est comparé à la poitrine et à la cuisse du sacrifice de paix, non à celui du remerciement.</p>
+      <p>La Guemara demande : <b>et les autres</b>, les Sages de l'école de Rav, que répondent-ils ? Ils répondent : on peut dire que cette formule « elle sera à toi » enseigne, pour <b>le premier-né ayant un défaut, que le propriétaire doit le donner au cohen</b>. Ce point est nécessaire, car <b>nous n'avons trouvé nulle part dans toute la Torah</b> que le premier-né défectueux est donné au cohen de façon explicite.</p>
+      <p>La Guemara demande : <b>et l'autre, Rav Yehouda</b>, d'où apprend-il que le premier-né défectueux est donné au cohen ? Le verset dit : « <b>Leur chair</b> sera à toi », au pluriel : <b>aussi bien le premier-né sans défaut que celui qui en a un.</b> Les autres répondent : le mot « leur chair » est au pluriel non pour désigner les animaux défectueux, mais parce qu'il parle <b>des premiers-nés de tous les Israélites.</b></p>
+      <p>§ La Michna enseigne : <b>si un défaut est apparu dans la première année, il est permis au propriétaire de garder l'animal les douze mois entiers ; si un défaut est apparu après les douze mois, il est permis de le garder trente jours seulement.</b> Un doute est posé devant les Sages : de quel cas parle la Michna ? Veut-elle dire que, si le défaut est apparu dans la première année, le propriétaire peut garder l'animal les douze mois, <b>et aussi trente jours après l'année</b> ? Ou bien parle-t-elle <b>de deux situations différentes</b> : défaut apparu pendant l'année, douze mois et pas davantage ; défaut apparu après un an, trente jours seulement ?</p>
+      <p>La Guemara propose : <b>viens entendre</b> cette baraïta. <b>Pour un premier-né à l'époque actuelle</b>, quand il n'y a pas de Temple et que l'animal ne peut être offert, <b>tant qu'il n'a pas de défaut que l'on peut montrer à un expert</b>, le propriétaire peut le garder <b>deux ou trois ans</b>. Mais <b>dès qu'un défaut montrable apparaît dans la première année</b>, il peut le garder <b>les douze mois entiers</b>.</p>
+      <p>La baraïta continue : <b>après la première année</b>, il n'a pas le droit de le garder, <b>même un jour ou une heure</b>. Mais <b>à cause de la mitsva de rendre un objet perdu à son propriétaire</b>, c'est-à-dire pour lui laisser le temps de trouver un cohen, les Sages ont dit : il peut le garder <b>trente jours</b>. La Guemara suppose que la dernière partie de la baraïta parle encore d'un défaut apparu pendant la première année.</p>
+      <p>La Guemara demande : mais le doute peut encore être posé sur cette baraïta elle-même : les trente jours sont-ils donnés <b>si le défaut est apparu après l'année</b>, ou bien <b>avant la fin de l'année</b> ? Autrement dit, « après son année » peut désigner un animal dont le défaut est apparu seulement alors, ou un animal qui avait déjà un défaut et qui arrive ensuite à la fin de son année.</p>
+      <p>La Guemara propose : <b>viens entendre</b> une autre baraïta : si l'animal a eu un défaut <b>le quinzième jour avant la fin de son année</b>, on lui <b>complète quinze jours après son année</b>. La Guemara en conclut que le propriétaire peut garder le premier-né trente jours de plus lorsque le défaut est apparu dans l'année. Cela soutient <b>Rabbi Éléazar</b>, qui dit : pour un animal qui a eu un défaut vers la fin de son année, <b>on donne au propriétaire trente jours à partir du moment où le défaut est apparu.</b></p>
+      <p>Certains disent que <b>Rabbi Éléazar</b> déduit cela d'un verset : « <b>Tu le mangeras devant l'Éternel ton D.ieu, d'année en année, au lieu que l'Éternel choisira</b> » (Deutéronome 15:20). Cela enseigne qu'on peut le manger <b>une année et encore une autre année</b>. Quels jours comptent comme une partie importante d'une année ? <b>Trente jours</b>, qui comptent à certains égards comme une année entière.</p>
+      <p>La Guemara objecte : la baraïta dit que si l'animal a eu un défaut <b>le quinzième jour avant la fin de son année</b>, on lui <b>complète quinze jours après son année</b>. Cela signifie qu'on <b>complète</b> jusqu'à trente jours depuis l'apparition du défaut ; mais si le défaut est apparu plus tôt, la baraïta ne lui donne pas trente jours de plus après l'année. La Guemara conclut : <b>la réfutation de Rabbi Éléazar est bien une réfutation décisive.</b></p>
+      <p><b>MICHNA :</b> si quelqu'un <b>abat le premier-né</b> et <b>montre ensuite son défaut à un expert</b>, qui établit que c'est bien un défaut permettant l'abattage, <b>Rabbi Yehouda permet</b> au cohen d'en profiter. <b>Rabbi Meïr dit</b> : puisqu'il a été abattu <b>sans l'avis d'un expert</b>, il est interdit. Si celui qui l'a examiné <b>n'était pas un expert</b> et que l'animal a été abattu sur son avis, <b>il doit être enterré</b>, et celui qui l'a examiné <b>paie au cohen de ses biens.</b></p>
+      <p><b>GUEMARA :</b> Rabba bar bar 'Hana dit : la discussion entre Rabbi Meïr et Rabbi Yehouda <b>ne porte pas sur un défaut de la cornée de l'œil</b>. Là, tous s'accordent à interdire l'animal, car <b>de tels défauts changent après la mort de l'animal</b> : on ne peut plus savoir s'il était permanent ou temporaire. Ils ne divergent que sur <b>les défauts du corps</b>, qui ne changent pas. Rabbi Meïr décrète l'interdit pour les défauts du corps <b>à cause des défauts de la cornée</b>, et Rabbi Yehouda ne le décrète pas.</p>
+      <p>Une baraïta l'enseigne aussi : si quelqu'un abat le premier-né puis montre ses défauts à un expert, <b>Rabbi Yehouda dit</b> : si le défaut est <b>à la cornée</b>, l'animal est interdit, car il change ; <b>s'il est sur le corps</b>, l'animal est permis, car il ne change pas. <b>Rabbi Meïr dit</b> : l'un et l'autre sont interdits, parce qu'ils changent. La Guemara demande : peut-on penser que les défauts du corps sont interdits parce qu'ils changent ? Non : ils sont interdits <b>par un décret fondé sur les défauts de la cornée.</b></p>
+      <p><b>Rav Na'hman bar Yitz'hak dit</b> : la Michna est aussi précise, car elle dit que <b>Rabbi Meïr dit : « puisqu'il a été abattu sans l'avis d'un expert, il est interdit »</b>. On en conclut que <b>Rabbi Meïr le punit de ne pas l'avoir montré à un expert</b> : l'animal est interdit à titre de sanction, non par doute, puisque les défauts du corps ne changent pas, mais par un décret des Sages. La Guemara conclut que la Michna s'entend comme l'a expliqué Rabba bar bar 'Hana.</p>
+      <p>Un doute fut posé devant les Sages : la baraïta dit « à cause des défauts de la cornée, qui changent ». Est-ce que <b>tous</b> les défauts de la cornée changent après la mort, ou bien certains changent et d'autres non ? La différence concerne <b>des témoins qui contredisent</b> et disent que l'animal avait le même défaut à l'œil de son vivant. Si tous changent, les témoins sont des menteurs ; si certains ne changent pas, le tribunal peut s'appuyer sur eux. Quelle est la solution ?</p>
+      <p>La Guemara répond : viens entendre. Rabba bar bar 'Hana dit : <b>Rabbi Yoshiya d'Ousha m'a dit : viens, je te montrerai les cornées qui changent.</b> Puisqu'il dit « celles qui changent », on conclut que <b>certaines changent et d'autres non.</b></p>
+      <p>§ La Michna enseigne : si celui qui a examiné <b>n'était pas un expert</b>, l'animal est enterré et il paie. La Guemara demande : dira-t-on que la Michna anonyme est selon Rabbi Meïr, qui interdit tout premier-né abattu sans l'avis d'un expert ? Non : peut-être la Michna parle-t-elle <b>d'un défaut de la cornée</b>, qui change après la mort, et <b>tous s'accordent</b> alors.</p>
+      <p>§ Les Sages ont enseigné dans une baraïta : celui qui paie au cohen un premier-né devenu interdit paie <b>un quart de la valeur d'un petit bétail</b> (mouton ou chèvre) ou <b>la moitié de la valeur d'un gros bétail</b>. Pourquoi cette différence ? <b>Rav Pappa</b> dit : la perte du bœuf est <b>grande</b> ; celle du mouton ou de la chèvre est <b>petite</b>.</p>
+      <p>La Guemara objecte : dans ce cas, qu'il paie selon la perte réelle. Rav Houna bar Manoa'h dit au nom de Rav A'ha bar Ika : les Sages ont touché à la question et ont fixé un quart seulement, <b>à cause du décret contre ceux qui élèvent du petit bétail en Terre d'Israël</b>, puisque ces bêtes causent des dégâts à la terre. On ne les élève que dans certaines zones, de sorte que le cohen a été <b>épargné d'un grand effort</b>.</p>
+      <p><b>MICHNA :</b> si un juge a rendu un jugement et s'est trompé, <b>acquittant le coupable ou condamnant l'innocent</b>, ou <b>déclarant pur ce qui est impur, ou impur ce qui est pur</b>, et qu'il a causé une perte d'argent à un plaideur, <b>ce qu'il a fait est fait</b> (le jugement tient) et <b>le juge paie de sa maison</b>. Et si le juge était <b>expert pour le tribunal</b>, <b>il est exempt.</b></p>
+      <p><b>GUEMARA :</b> La Guemara demande : dira-t-on que la Michna anonyme est selon Rabbi Meïr, qui rend responsable pour un dommage causé indirectement ? Rabbi Ilaa dit au nom de Rav : il s'agit d'un cas où le juge <b>a pris l'objet à l'un et l'a donné à l'autre de sa main</b>, donc il a causé directement le dommage.</p>
+      <p>La Guemara objecte : « il condamne l'innocent » se comprend, car il a pris l'objet à l'innocent et l'a donné à l'autre. Mais « il acquitte le coupable » ? Il a dit seulement « tu es exempt ». Ravina dit : le prêteur avait <b>un gage du débiteur</b>, et le juge le lui a pris pour le rendre à l'autre.</p>
+      <p>« Il a déclaré pur ce qui est impur » : comment cause-t-il une perte de ses propres mains ? Il a fait <b>toucher à l'objet pur un reptile</b>, pour le rendre impur. « Il a déclaré impur ce qui est pur » : il a <b>mélangé</b> le produit impur au produit pur de la personne, et le tout est devenu impur lorsque le juge expert a déclaré ensuite que le produit était impur.</p>
+      <p><b>MICHNA :</b> il y eut un cas d'une vache dont <b>la matrice avait été enlevée</b>. Rabbi Tarfon, consulté, la déclara <b>terefa</b> (interdite). Sur sa décision, le propriétaire <b>la fit manger aux chiens</b>. L'affaire vint devant les Sages de Yavné, qui la déclarèrent <b>permise</b>. <b>Todos le médecin</b> dit : une vache ou un porc ne sort d'Alexandrie d'Égypte que si on lui <b>coupe la matrice</b> pour qu'il ne se reproduise pas ailleurs. Ces animaux vivaient longtemps ainsi, preuve que l'opération ne les rend pas terefa.</p>
+      <p>Rabbi Tarfon dit alors : « <b>Ton âne est parti, Tarfon !</b> » (il pensait devoir indemniser le propriétaire). Rabbi Akiva lui dit : <b>tu es un expert pour le tribunal</b>, et tout expert pour le tribunal est exempt de payer.</p>
+      <p><b>GUEMARA :</b> La Guemara demande : Rabbi Akiva aurait pu dire que Rabbi Tarfon <b>s'est trompé dans une chose écrite dans la Michna</b> (Houlin 54a), et que <b>celui qui se trompe dans une chose de la Michna, la décision est annulée.</b> Elle répond : Rabbi Akiva donne <b>un motif et en ajoute un autre</b>. Premier motif : une erreur dans la Michna annule la décision. Second motif : même si tu t'étais trompé dans la pondération des avis, <b>tu es un juge reconnu comme expert par le public</b>, et tout juge reconnu comme expert est exempt de payer.</p>
+      <p><b>MICHNA :</b> si quelqu'un <b>prend un salaire pour examiner les premiers-nés</b> et dire s'ils ont un défaut, on n'abat pas le premier-né sur son avis, à moins qu'il ne soit un expert…</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>And the other</b> ones, i.e., the Sages from the school of Rav, why don’t they derive the <i>halakha</i> that a firstborn is eaten for two days and one night from that verse? The Gemara answers that <b>if</b> it were derived <b>from there, it</b> would <b>be</b> possible <b>to say</b> that the verse is comparing the <i>halakha</i> of a firstborn to the <b>breast and thigh of a thanks offering,</b> which are eaten for only one day and night.</p>
+      <p>The Gemara asks: <b>And the other</b> one, Rav Yehuda, citing Rav, how does he respond to this? <b>The verse states:</b> “And their flesh shall be yours, as the breast of waving and as the right thigh, <b>it shall be yours”</b> (Numbers 18:18). <b>The verse adds another</b> mention of a form of the term <b>being</b> in the second phrase: “It shall be yours,” to teach <b>that</b> the priest has an additional day to eat <b>a firstborn</b> animal, i.e., that it is compared to the breast and thigh of a peace offering, not to that of a thanks offering.</p>
+      <p>The Gemara asks: <b>And the other</b> ones, the Sages from the school of Rav, how do they respond to this claim? The Gemara answers: With regard to the inference <b>from there, it is</b> possible <b>to say</b> that <b>this</b> phrase: <b>“It shall be yours,” teaches with regard to a blemished firstborn that</b> the owner must <b>give it to the priest.</b> This derivation is necessary, <b>as we have not found this</b> <i>halakha</i> that a blemished firstborn is given to a priest stated explicitly <b>anywhere in the entire Torah.</b></p>
+      <p>The Gemara asks: <b>And the other</b> one, Rav Yehuda, citing Rav, from where does he derive that a blemished firstborn is given to a priest? The verse <b>states: “And their flesh</b> shall be yours,” in the plural, i.e., <b>both an unblemished</b> firstborn <b>and a blemished</b> firstborn. The Gemara asks: <b>And the other</b> ones, the Sages from the school of Rav, how do they respond? The Gemara answers that they would claim that the term <b>“and their flesh”</b> is written in the plural not because it is referring to blemished animals, but because it <b>is said</b> in reference <b>to those firstborn</b> animals <b>of all the Israelites.</b></p>
+      <p>§ The mishna teaches: If <b>a blemish developed within its</b> first <b>year,</b> it is <b>permitted</b> for the owner <b>to maintain</b> the animal <b>for the entire twelve months;</b> if a blemish developed after twelve months have passed, it is permitted for the owner to maintain the animal for only thirty days. <b>A dilemma was raised before</b> the Sages: With regard to <b>what</b> case <b>is</b> the mishna <b>speaking?</b> Does the mishna mean that if <b>a blemish developed within</b> the animal’s first <b>year,</b> the owner is <b>permitted to maintain</b> the animal <b>for the entire twelve months, and after</b> the animal’s first <b>year also</b> for another <b>thirty</b> days? <b>Or perhaps</b> the mishna is referring to two different situations, i.e., in a case <b>where the blemish developed within</b> the animal’s first <b>year</b> the owner is <b>permitted to maintain</b> the animal <b>for the entire twelve months, but nothing more; and</b> in a case <b>where it developed</b> a blemish <b>after</b> one <b>year, he is permitted to maintain it for only thirty</b> days.</p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear, as it is taught</b> in a <i>baraita</i>: With regard to <b>a firstborn in the present</b> time, when there is no Temple and the animal cannot be brought as an offering, <b>until</b> it has developed a blemish that <b>can be shown to an expert,</b> it is <b>permitted</b> for the owner <b>to maintain</b> the animal <b>for two or three years. But once</b> the animal develops a blemish <b>that can be shown to an expert,</b> if <b>the blemish developed within its</b> first <b>year,</b> it is <b>permitted</b> for the owner <b>to maintain it for the entire twelve months.</b></p>
+      <p>The <i>baraita</i> continues: <b>After</b> the animal’s first <b>year,</b> the owner <b>does not have permission to maintain it even</b> for <b>one day, or even one hour. But due to</b> the mitzva of <b>returning a lost item to the owners,</b> i.e., to give the owner time to find a priest and give him the animal, the Sages <b>said:</b> The owner <b>is permitted to maintain</b> the animal for <b>thirty days.</b> The Gemara assumes that in its latter clause the <i>baraita</i> is still addressing a blemish that developed in the first year. If so, the thirty days evidently apply in such a case.</p>
+      <p>The Gemara asks: <b>But still, let the dilemma be raised</b> with regard to that <i>baraita</i> itself: Are the <b>thirty days</b> granted in a case where the animal develops a blemish <b>after its</b> first <b>year? Or perhaps</b> these thirty days are granted if it develops a blemish <b>before</b> the end of <b>its</b> first <b>year.</b> In other words, when the <i>baraita</i> states: After its first year, this can be interpreted as referring to an animal whose blemish developed only then, or to one that had a blemish earlier and subsequently reached the end of its first year.</p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear</b> a <i>baraita</i>: If the animal <b>developed a blemish on the fifteenth day within its</b> first <b>year,</b> i.e., fifteen days before the end of its year, <b>one completes for it fifteen days after its year. Conclude from</b> this <i>baraita</i> that the owner may maintain a firstborn for an additional thirty days if it develops the blemish during its first year. The Gemara adds that <b>this supports</b> the opinion <b>of Rabbi Elazar, as Rabbi Elazar says:</b> With regard to an animal that developed a blemish toward the end of its year, <b>one gives</b> the owner <b>thirty days from the time that</b> the animal <b>developed a blemish.</b></p>
+      <p><b>There are</b> those <b>who say</b> that <b>Rabbi Elazar says: From where</b> is it derived with regard <b>to a firstborn</b> animal <b>that developed a blemish during its</b> first <b>year that one gives</b> the owner <b>thirty days after its year?</b> It is derived from a verse, <b>as it is stated: “You shall eat it before the Lord your God year by year</b> in the place that the Lord shall choose, you and your household” (Deuteronomy 15:20). It is derived from here that it may be eaten for one year and for another year. <b>Which are</b> the <b>days that are considered</b> to be a significant part of <b>a year? You must say these are thirty days,</b> which in certain respects are considered a complete year. This indicates that such a firstborn may be eaten for up to thirty days beyond the first twelve months.</p>
+      <p>According to this version of the discussion, the Gemara <b>raises an objection:</b> It is taught in a <i>baraita</i> that if the animal <b>developed a blemish on the fifteenth day within its year,</b> i.e., fifteen days before the end of its year, <b>one completes for it fifteen days after its year.</b> This indicates that with regard to <b>completing</b> a total of thirty days from the time the animal developed the blemish, <b>yes,</b> the owner may continue to maintain the animal in such a case. But if the blemish developed earlier, the <i>baraita</i> does <b>not give him</b> an extra thirty days beyond the conclusion of the year. The Gemara concludes: <b>The refutation of</b> the opinion of <b>Rabbi Elazar</b> is indeed <b>a conclusive refutation.</b></p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who slaughters the firstborn</b> animal <b>and</b> only then <b>shows its blemish</b> to an expert to determine whether it is a blemish, and it was established by the expert that it is in fact a blemish that renders its slaughter permitted, <b>Rabbi Yehuda deems</b> it <b>permitted</b> for a priest to derive benefit from the firstborn. <b>Rabbi Meir says: Since it was slaughtered not according to</b> the ruling of <b>an expert,</b> it is <b>prohibited.</b> In a case involving <b>one who is not an expert, and he examined the firstborn</b> animal <b>and it was slaughtered on the basis of his</b> ruling, <b>that</b> animal <b>must be buried,</b> and the non-expert <b>must pay</b> compensation to the priest <b>from his property.</b></p>
+      <p><strong>GEMARA:</strong> <b>Rabba bar bar Ḥana says:</b> The dispute in the mishna between Rabbi Meir and Rabbi Yehuda does not apply in the case of a blemish <b>on the cornea of the eye.</b> In that situation <b>everyone agrees that</b> the animal <b>is prohibited, because</b> such blemishes in the eye <b>change</b> after the animal’s death, which means that there is no way of determining at that late stage whether it had been a permanent blemish or a temporary one. <b>They disagree only with regard to blemishes that</b> are <b>on the</b> animal’s <b>body,</b> which do not change after death. <b>As Rabbi Meir holds</b> that <b>we issue a decree</b> prohibiting the animal in the case of <b>blemishes that</b> are <b>on the</b> animal’s <b>body due to</b> the case of blemishes <b>on the cornea, and Rabbi Yehuda holds</b> that <b>we do not issue a decree</b> with regard to <b>blemishes that</b> are <b>on the</b> animal’s <b>body due to</b> the case of blemishes <b>on the cornea.</b></p>
+      <p><b>This is also taught</b> in a <i>baraita</i>: In the case of <b>one who slaughters a firstborn</b> animal <b>and</b> afterward <b>shows its blemishes</b> to an expert, <b>Rabbi Yehuda says:</b> If the blemish is <b>on the cornea of the eye</b> the animal is <b>prohibited, because</b> such blemishes <b>change.</b> But <b>in</b> the case of <b>blemishes on its body</b> the animal is <b>permitted, because</b> these blemishes <b>do not change. Rabbi Meir says: Both this,</b> blemishes on the eye, <b>and that,</b> blemishes on the body, <b>are prohibited because they change.</b> The Gemara inquires: Could it <b>enter your mind</b> that blemishes on the body are prohibited <b>because they change? Do blemishes on the body change</b> after the death of the animal? <b>Rather,</b> the blemishes on the body are prohibited <b>due to</b> a decree based on the case of blemishes on the cornea, <b>which change.</b></p>
+      <p><b>Rav Naḥman bar Yitzḥak says:</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> le daf 28 est la suite du daf 27. Il commence au milieu de la discussion sur le verset « <i>yihyeh lekha</i> » à propos du premier-né, enchaîne sur la <b>durée pendant laquelle on peut garder un premier-né défectueux</b>, étudie ensuite la <b>Michna sur l'abattage sans l'avis d'un expert</b> et le montant à payer au cohen, puis la <b>responsabilité du juge qui se trompe</b>, avec l'épisode de Rabbi Tarfon. Il se termine au début de la Michna suivante, sur celui qui reçoit un salaire pour examiner les premiers-nés.</p>
+
+<h4>1. « Elle sera à toi » : deux jours ou un défaut ? (28a)</h4>
+<p>Le daf 27 se terminait sur la durée de consommation du premier-né. La Guemara continue la discussion de Rav Yehouda, au nom de Rav, et des Sages de l'école de Rav, autour des mots « elle sera à toi » dans Nombres 18:18 :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce qu'il apprend des mots « elle sera à toi »</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Objection</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Yehouda au nom de Rav</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le cohen a un jour de plus pour manger le premier-né : il est comparé à la poitrine et à la cuisse du sacrifice de paix, non à celles du remerciement</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Les Sages de l'école de Rav répondent que la mention ajoutée enseigne autre chose</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Les Sages de l'école de Rav</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le premier-né défectueux est donné au cohen. Ce point n'est écrit nulle part ailleurs dans toute la Torah</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Yehouda l'apprend du pluriel « leur chair »</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Les Sages de l'école de Rav (sur le pluriel)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le pluriel « leur chair » parle des premiers-nés de tous les Israélites, pas des défectueux</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">—</td></tr>
+</table>
+
+
+<h4>2. Combien de temps garder un premier-né défectueux ? (28a)</h4>
+<p>La Michna dit : si le défaut est apparu <b>dans la première année</b>, on peut garder l'animal douze mois ; s'il est apparu <b>après</b> les douze mois, trente jours seulement. La Guemara se demande si ces deux règles décrivent deux cas séparés, ou si les trente jours s'ajoutent aux douze mois quand le défaut apparaît dans l'année.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Source</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ce qu'elle dit</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Conclusion</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Baraïta « à l'époque actuelle »</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Tant qu'il n'y a pas de défaut montrable, on peut garder l'animal deux ou trois ans. Si le défaut apparaît dans la première année, douze mois. Après l'année : pas un jour, mais trente jours à cause de la mitsva de rendre un objet perdu (laisser le temps de trouver un cohen)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La Guemara suppose que les trente jours s'appliquent encore à un défaut apparu dans l'année</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Doute sur la baraïta</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">« Après son année » : défaut apparu après l'année, ou défaut apparu avant ?</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il faut une autre baraïta</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Baraïta du quinzième jour</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un défaut apparu quinze jours avant la fin de l'année : on complète quinze jours après</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Soutient Rabbi Éléazar : trente jours à partir de l'apparition du défaut</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Éléazar (« d'année en année »)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Les trente jours comptent comme une année, d'où trente jours de plus après l'année</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La Guemara le réfute : la baraïta « complète » jusqu'à trente jours, mais n'ajoute pas trente jours entiers</td></tr>
+</table>
+
+<p>La Guemara conclut que la <b>réfutation de Rabbi Éléazar est décisive</b> : « on complète », mais on ne donne pas trente jours entiers (<i>hashlama ein, mihava lo</i>). Rachi en tire la conclusion : les trente jours de la Michna parlent d'un défaut apparu <b>après</b> l'année ; si le défaut est apparu dans l'année, on garde l'animal jusqu'à la fin de l'année, et l'on peut seulement compléter.</p>
+
+<h4>3. Abattre avant d'avoir montré le défaut (28a-28b)</h4>
+<p>La Michna oppose Rabbi Yehouda et Rabbi Meïr à propos d'un premier-né abattu avant d'être montré à un expert, puis reconnu comme défectueux :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi Meïr</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Défaut du corps (par exemple une oreille fendue)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Permis, car ce défaut ne change pas après la mort</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Interdit, par décret à cause des défauts de la cornée</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Défaut de la cornée de l'œil</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Interdit, car il change après la mort</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Interdit, car il change après la mort</td></tr>
+</table>
+
+<p>Rabba bar bar 'Hana explique donc que la discussion porte seulement sur les défauts du corps. <b>Rav Na'hman bar Yitz'hak</b> trouve un appui dans la Michna elle-même : Rabbi Meïr dit « puisqu'il a été abattu sans l'avis d'un expert », donc c'est une <b>sanction</b>, non un doute.</p>
+<p>Un doute est ensuite posé : <b>tous</b> les défauts de la cornée changent-ils après la mort ? Il compte pour des témoins qui contredisent et disent que le défaut était déjà là de son vivant. La preuve vient de Rabbi Yoshiya d'Ousha, qui dit : « Je te montrerai les cornées <b>qui changent</b> », ce qui indique que certaines ne changent pas.</p>
+
+<h4>4. Combien paie celui qui n'était pas un expert ? (28b)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Animal</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Paiement au cohen</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Explication de la Guemara</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Petit bétail (mouton, chèvre)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Un quart de la valeur</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Pappa : la perte est petite. Rav Houna bar Manoa'h : décret contre ceux qui élèvent du petit bétail en Terre d'Israël ; le cohen a été épargné d'un grand effort</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Gros bétail (bœuf)</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">La moitié de la valeur</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rav Pappa : la perte est grande</td></tr>
+</table>
+
+
+<h4>5. Le juge qui se trompe (28b)</h4>
+<p>La Michna dit que le juge qui s'est trompé et a causé une perte d'argent <b>paie de sa maison</b>, sauf s'il était <b>expert pour le tribunal</b>. La Guemara cherche comment il a causé le dommage <b>de ses propres mains</b>, pour que la Michna soit conforme à Rabbi Meïr :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas de la Michna</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Comment le dommage est direct</th></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il condamne l'innocent</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Le juge prend l'objet à l'innocent et le donne à l'autre</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il acquitte le coupable</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Ravina : le prêteur avait un gage ; le juge le lui prend et le rend au débiteur</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il déclare pur ce qui est impur</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il fait toucher l'objet pur à un reptile, pour le rendre impur</td></tr>
+<tr><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il déclare impur ce qui est pur</td><td style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Il mélange le produit impur au produit pur, et le tout devient impur</td></tr>
+</table>
+
+
+<h4>6. Rabbi Tarfon et la vache d'Alexandrie (28b)</h4>
+<p>Rabbi Tarfon avait déclaré <b>terefa</b> une vache dont la matrice avait été enlevée, et le propriétaire l'a donnée aux chiens. Les Sages de Yavné l'ont déclarée permise, et Todos le médecin a confirmé qu'à Alexandrie on coupait la matrice des vaches et des porcs pour qu'ils ne se reproduisent pas ailleurs. Rabbi Tarfon dit : « Ton âne est parti, Tarfon ! » Rabbi Akiva répond qu'il est un <b>expert pour le tribunal</b>, donc exempt.</p>
+<p>La Guemara demande pourquoi Rabbi Akiva ne dit pas simplement que Rabbi Tarfon s'est trompé sur <b>une chose de la Michna</b> (Houlin 54a), ce qui annule sa décision. Elle répond que Rabbi Akiva <b>donne un motif et en ajoute un autre</b> : même si Rabbi Tarfon s'était trompé dans la <b>pondération des avis</b>, un juge reconnu comme expert par le public est exempt de payer.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> (début du daf, 28a) explique que Rav Yehouda apprend de « elle sera à toi » une autre « existence » du premier-né, soit un jour de plus. Pour les autres, « elle sera à toi » enseigne le premier-né défectueux, car « nous n'avons trouvé nulle part dans toute la Torah » qu'il soit donné au cohen en dehors de cet élargissement.</p>
+
+<p>Sur la Michna, Rachi précise que « les douze mois » sont comptés depuis la naissance. Si le défaut apparaît après l'année, on peut garder l'animal trente jours depuis l'apparition du défaut. Sur « à l'époque actuelle », il explique que le premier-né sans défaut n'est pas utilisable. Sur « mitsva de rendre un objet perdu », il dit que le cohen peut ne pas être trouvé, et que, si l'Israélite abat l'animal, la viande se gâterait ; s'il ne trouve pas de cohen, il l'abat et la sale jusqu'à ce qu'il en trouve un. Cela montre que les trente jours parlent d'un défaut apparu dans l'année.</p>
+
+<p>Sur le verset « d'année en année », Rachi comprend « deux années », et dit que trente jours comptent comme une année pour tous (Roch Hachana 10b). Sur « le quinzième jour », il explique que la baraïta ne permet pas trente jours entiers après l'année quand le défaut est apparu bien avant la fin de l'année : on ne peut que compléter. Sur « hashlama ein, mihava lo », il précise qu'on ne donne pas trente jours entiers.</p>
+
+<p>Sur les <i>dukin</i> (défauts de la cornée), Rachi traduit « taie » (<i>taïla</i>), rapprochant Isaïe 40. Il explique qu'après la mort l'œil change à cause de la douleur de la mort : même si le défaut paraît maintenant permanent, de son vivant il aurait pu passer. Sur « Rabbi Meïr ne trouve aucun défaut », il dit que Rabbi Meïr n'a rien trouvé en lui, mais l'a puni d'avoir abattu sans l'avis d'un expert. Sur le doute des témoins, il explique que si l'on dit que tous les défauts de la cornée changent, les témoins mentent et l'animal est interdit pour tous ; sinon, Rabbi Yehouda, qui ne sanctionne pas, s'appuie sur eux.</p>
+
+<p>Sur le paiement du quart ou de la moitié, Rachi explique qu'il s'agit d'un <b>argent douteux</b> : l'expert aurait peut-être permis l'animal, ce qui fait qu'il l'a fait perdre au cohen, ou peut-être non. Sur « décret contre ceux qui élèvent du petit bétail », il donne deux explications : en permettant le premier-né, le juge a épargné au cohen un grand effort d'élevage ; ou bien la sanction est due au fait que ceux qui élèvent du petit bétail en Terre d'Israël transgressent les paroles des Sages (Baba Kama 79b), donc ils ne prennent qu'un quart.</p>
+
+<p>Sur la Michna du juge, Rachi explique qu'un expert pour le tribunal est exempt car on ne peut pas lui dire : pourquoi as-tu jugé, alors que tu ne connais pas la loi ? Il rappelle que Rabbi Meïr tient pour <i>dina de-garmi</i> (Baba Kama 100a). Pour la vache de Rabbi Tarfon, il explique que les vaches et porcs d'Alexandrie étaient très appréciés et vendus cher, et qu'on voulait qu'ils ne se reproduisent pas dans un autre royaume. Sur « tu es expert », il précise que même un non-expert serait exempt ici, car une erreur dans une chose de la Michna annule la décision (Houlin 54a ; Sanhédrin 33a). Sur <i>shikoul hadaat</i>, il renvoie à Sanhédrin 6a : deux Tannaïm ou Amoraïm en désaccord sans décision, et la pratique commune suit l'un d'eux ; si le juge suit l'autre, ce qui est fait est fait et il paie de sa maison.</p>
+
+<p><b>Tossafot.</b> Sur « à l'époque actuelle » (28a), ils critiquent l'explication de Rachi (« tant qu'il n'a pas de défaut ») : si l'on garde l'animal deux ou trois ans, on n'est pas tenu de l'enfermer dans une grotte. Ils expliquent plutôt : « tant qu'il n'a pas été montré à un sage » signifie qu'il ne s'est pas trouvé de sage, et que l'on n'est pas tenu de le conduire au loin. Sur « rendre un objet perdu », un maître des Tossafistes dit que la Michna parle du cas où l'animal est entre les mains du cohen, qui n'a pas besoin de la viande maintenant ; les Sages lui ont donné trente jours, tandis qu'un Israélite attend toujours de trouver un cohen.</p>
+
+<p>Sur Rabbi Meïr et ses décrets (28a), les Tossafot rappellent que la halakha est selon lui pour ses décrets, mais ici le Talmud parle de <b>sanction</b>, et les <i>Sheeltot</i> de Rav A'haï la distinguent d'un décret. Sur le quart et la moitié, ils disent que ce n'est pas un doute au sens strict, mais une <b>règle des Sages</b> ; ils proposent aussi que les Sages aient estimé que l'animal ne vaut pas plus de la moitié tant qu'il reste en doute, comme la teroumah qui ne vaut que la moitié du profane (Ketouvot 58a). Sur le petit bétail, ils disent que les Sages ont restreint son élevage aux forêts hors des zones habitées, ce qui explique qu'il vaille moins.</p>
+
+<p>Sur la Michna du juge (28b), les Tossafot demandent d'où la Guemara voit que la Michna parle d'un juge seul, et répondent que la fin de la Michna (« expert pour le tribunal » et Rabbi Tarfon) montre qu'il s'agit d'un seul juge. Ils s'étonnent aussi que la Guemara ne prouve pas que la Michna suit Rabbi Meïr à partir de la première partie, sur celui qui n'était pas expert et dont l'avis a mené à l'abattage.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>La partie de ce daf qui reste vivante aujourd'hui est celle de la <b>responsabilité du juge qui se trompe</b>, que le Choulhan Aroukh reprend dans 'Hochen Michpat 25.</p>
+
+<h4>Le juge qui se trompe</h4>
+<p>Le Choulhan Aroukh ('Hochen Michpat 25:1) enseigne que le juge qui s'est trompé dans des choses claires et connues (des lois explicites dans la Michna, la Guemara ou les décisionnaires) voit son jugement <b>annulé</b>, comme la Guemara le dit de l'erreur dans une chose de la Michna. Quand il est impossible de revenir sur le jugement (par exemple celui qui a reçu l'argent est parti outre-mer, ou le juge a déclaré impur ce qui était pur, ou a permis une bête terefa qu'on a donnée aux chiens), le juge expert est <b>exempt de payer</b>.</p>
+<p>Pour l'erreur de <b>pondération des avis</b> (<i>shikoul hadaat</i>), le Choulhan Aroukh ('Hochen Michpat 25:2) dit que, lorsque Tannaïm ou Amoraïm sont en désaccord sans décision explicite et que le juge a agi selon l'un d'eux sans savoir que la pratique suivait l'autre, un juge <b>expert</b> annule son jugement s'il le peut. S'il ne peut pas revenir en arrière, il est <b>exempt de payer</b>. Cela correspond à la réponse finale de Rabbi Akiva à Rabbi Tarfon.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.28" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
