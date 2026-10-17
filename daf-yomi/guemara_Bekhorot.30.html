@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 30 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 30</h1>
+    <p>Daf 30</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>תַּרְבָּא דְּאַטְמָא בְּמַר דְּכַנְתָּא, קַנְסֵיהּ רָבָא לְזַבּוֹנֵי אֲפִילּוּ אַמְגּוֹזֵי. אֲמַר לֵיהּ רַב פָּפָּא לְרָבָא: כְּמַאן? כְּרַבִּי יְהוּדָה? אִי כְּרַבִּי יְהוּדָה, אֲפִילּוּ מַיִם וָמֶלַח נָמֵי!</p>
+      <p>לְעוֹלָם רַבִּי שִׁמְעוֹן, וּבְאִיסּוּרָא דְּגוּפֵיהּ קָנְסִינַן לֵיהּ. סְתָם דַּרְדְּקֵי גְּרוּ בְּאַמְגּוֹזֵי, וְאָזֵיל וּמְשַׁבֵּשׁ לִבְנֵי טַבָּחֵי, וְגָרֵי לְהוּ בְּאַמְגּוֹזֵי, וּמַיְיתוּ לֵיהּ תַּרְבָּא דְּאַטְמָא, וּמְזַבֵּין לֵיהּ בְּמַר דְּכַנְתָּא.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הֶחָשׁוּד עַל הַשְּׁבִיעִית — אֵינוֹ חָשׁוּד עַל הַמַּעַשְׂרוֹת, הֶחָשׁוּד עַל הַמַּעַשְׂרוֹת — אֵינוֹ חָשׁוּד עַל הַשְּׁבִיעִית. הֶחָשׁוּד עַל זֶה וְעַל זֶה — חָשׁוּד עַל הַטְּהָרוֹת, וְיֵשׁ שֶׁהוּא חָשׁוּד עַל הַטְּהָרוֹת — וְאֵינוֹ חָשׁוּד לֹא עַל זֶה וְלֹא עַל זֶה. זֶה הַכְּלָל: הֶחָשׁוּד עַל דָּבָר — לֹא דָּנוֹ וְלֹא מְעִידוֹ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי טַעְמָא? שְׁבִיעִית לָא בָּעֲיָא חוֹמָה, מַעֲשֵׂר — כֵּיוָן דְּבָעֵי חוֹמָה, חֲמִיר לֵיהּ.</p>
+      <p>הֶחָשׁוּד עַל הַמַּעֲשֵׂר. מַאי טַעְמָא? מַעֲשֵׂר אִית לֵיהּ פִּדְיוֹן, שְׁבִיעִית — כֵּיוָן דְּקָא מִיתַּסְרָא לֵיהּ וְלֵית לֵיהּ פִּדְיוֹן — חֲמִירָא לֵיהּ.</p>
+      <p>הֶחָשׁוּד עַל זֶה וְעַל זֶה. כֵּיוָן דַּחֲשִׁיד אַדְּאוֹרָיְיתָא, כׇּל שֶׁכֵּן אַדְּרַבָּנַן.</p>
+      <p>וְיֵשׁ חָשׁוּד עַל הַטְּהָרוֹת. מַאי טַעְמָא? נְהִי אַדְּרַבָּנַן חֲשִׁיד, אַדְּאוֹרָיְיתָא לָא חֲשִׁיד. וּרְמִינְהִי: נֶאֱמָן עַל הַטְּהָרוֹת — נֶאֱמָן עַל שְׁבִיעִית, הָא חֲשִׁיד — חֲשִׁיד!</p>
+      <p>אָמַר רַבִּי אִילְעַי: מַתְנִיתִין כְּשֶׁרְאִינוּהוּ שֶׁנּוֹהֵג בְּצִינְעָא בְּתוֹךְ בֵּיתוֹ.</p>
+      <p>רַבִּי יַנַּאי בְּרַבִּי יִשְׁמָעֵאל אָמַר: כְּגוֹן דַּהֲוָה חֲשִׁיד לְתַרְוַיְיהוּ, וַאֲתָא קַמֵּי רַבָּנַן וְקַבֵּיל אַתַּרְוַיְיהוּ, וַהֲדַר אִיחֲשַׁד אַחַד מִינַּיְיהוּ, דְּאָמְרִינַן: מִיגּוֹ דַּחֲשִׁיד אַהָא — חֲשִׁיד נָמֵי אַאִידַּךְ.</p>
+      <p>אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: זוֹ דִּבְרֵי רַבִּי עֲקִיבָא סְתִימְתָּאָה, אֲבָל חֲכָמִים אוֹמְרִים: חָשׁוּד עַל הַשְּׁבִיעִית — חָשׁוּד עַל הַמַּעֲשֵׂר.</p>
+      <p>מַאן חֲכָמִים? רַבִּי יְהוּדָה, דִּבְאַתְרֵיהּ דְּרַבִּי יְהוּדָה שְׁבִיעִית חֲמִירָא לְהוּ, דְּהָהוּא דַּהֲוָה קָרֵי לֵיהּ לְחַבְרֵיהּ ״דַּיָּירָא בַּר דַּיָּירְתָּא״, אֲמַר לֵיהּ: תֵּיתֵי לִי דְּלָא אֲכַלִי פֵּירוֹת שְׁבִיעִית כְּוָותָךְ.</p>
+      <p>אִיכָּא דְּאָמְרִי, אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: זוֹ דִּבְרֵי רַבִּי עֲקִיבָא סְתִימְתָּאָה, אֲבָל חֲכָמִים אוֹמְרִים: חָשׁוּד עַל הַמַּעֲשֵׂר חָשׁוּד עַל הַשְּׁבִיעִית. וּמַאן חֲכָמִים? רַבִּי מֵאִיר הִיא, דְּאָמַר: חָשׁוּד לְדָבָר אֶחָד הָוֵי חָשׁוּד לְכׇל הַתּוֹרָה כּוּלָּהּ.</p>
+      <p>רַבִּי יוֹנָה וְרַבִּי יִרְמְיָה תַּלְמִידֵי רַבִּי זְעֵירָא, וְאָמְרִי לַהּ רַבִּי יוֹנָה וְרַבִּי זְעֵירָא תַּלְמִידֵי רַבִּי יוֹחָנָן, חַד אָמַר: אֲבָל חֲכָמִים אוֹמְרִים חָשׁוּד עַל הַשְּׁבִיעִית</p>
+      <p>חָשׁוּד עַל הַמַּעֲשֵׂר, וּמַאן חֲכָמִים? רַבִּי יְהוּדָה, וְחַד אָמַר: הֶחָשׁוּד עַל הַמַּעֲשֵׂר חָשׁוּד עַל הַשְּׁבִיעִית, וּמַאן חֲכָמִים? רַבִּי מֵאִיר.</p>
+      <p>דְּתַנְיָא: עַם הָאָרֶץ שֶׁקִּיבֵּל עָלָיו דִּבְרֵי חֲבֵירוּת, וְנֶחְשַׁד לְדָבָר אֶחָד — נֶחְשַׁד לְכׇל הַתּוֹרָה כּוּלָּהּ, דִּבְרֵי רַבִּי מֵאִיר. וַחֲכָמִים אוֹמְרִים: אֵינוֹ נֶחְשָׁד אֶלָּא לְאוֹתוֹ דָּבָר בִּלְבַד.</p>
+      <p>הַגֵּר שֶׁקִּיבֵּל עָלָיו דִּבְרֵי תוֹרָה, אֲפִילּוּ נֶחְשַׁד לְדָבָר אֶחָד — הָוֵי חָשׁוּד לְכׇל הַתּוֹרָה כּוּלָּהּ, וַהֲרֵי הוּא כְּיִשְׂרָאֵל מְשׁוּמָּד. נָפְקָא מִינַּהּ, דְּאִי קַדֵּישׁ — קִידּוּשָׁיו קִידּוּשִׁין.</p>
+      <p>תָּנוּ רַבָּנַן: הַבָּא לְקַבֵּל דִּבְרֵי חֲבֵירוּת, חוּץ מִדָּבָר אֶחָד — אֵין מְקַבְּלִין אוֹתוֹ. גּוֹי שֶׁבָּא לְקַבֵּל דִּבְרֵי תוֹרָה, חוּץ מִדָּבָר אֶחָד — אֵין מְקַבְּלִין אוֹתוֹ. רַבִּי יוֹסֵי בְּרַבִּי יְהוּדָה אוֹמֵר: אֲפִילּוּ דִּקְדּוּק אֶחָד מִדִּבְרֵי סוֹפְרִים.</p>
+      <p>וְכֵן בֶּן לֵוִי שֶׁבָּא לְקַבֵּל דִּבְרֵי לְוִיָּה, וְכֹהֵן שֶׁבָּא לְקַבֵּל דִּבְרֵי כְהוּנָּה, חוּץ מִדָּבָר אֶחָד — אֵין מְקַבְּלִין אוֹתוֹ, שֶׁנֶּאֱמַר: ״הַמַּקְרִיב אֶת דַּם הַשְּׁלָמִים וְגוֹ׳״, הָעֲבוֹדָה הַמְּסוּרָה לִבְנֵי אַהֲרֹן, כׇּל כֹּהֵן שֶׁאֵינוֹ מוֹדֶה בָּהּ — אֵין לוֹ חֵלֶק בַּכְּהוּנָּה.</p>
+      <p>תָּנוּ רַבָּנַן: הַבָּא לְקַבֵּל דִּבְרֵי חֲבֵירוּת, אִם רְאִינוּהוּ שֶׁנּוֹהֵג בְּצִינְעָה בְּתוֹךְ בֵּיתוֹ — מְקַבְּלִין אוֹתוֹ, וְאַחַר כָּךְ מְלַמְּדִין אוֹתוֹ. וְאִם לָאו — מְלַמְּדִין אוֹתוֹ, וְאַחַר כָּךְ מְקַבְּלִין אוֹתוֹ. רַבִּי שִׁמְעוֹן בֶּן יוֹחַי אוֹמֵר: בֵּין כָּךְ וּבֵין כָּךְ מְקַבְּלִין אוֹתוֹ, וְהוּא לָמֵד כְּדַרְכּוֹ וְהוֹלֵךְ.</p>
+      <p>תָּנוּ רַבָּנַן: מְקַבְּלִין לִכְנָפַיִם, וְאַחַר כָּךְ מְקַבְּלִין לִטְהָרוֹת, וְאִם אָמַר: ״אֵינִי מְקַבֵּל אֶלָּא לִכְנָפַיִם״ — מְקַבְּלִין אוֹתוֹ. קִיבֵּל לַטְּהָרוֹת וְלֹא קִיבֵּל לַכְּנָפַיִם — אַף לַטְּהָרוֹת לֹא קִיבֵּל.</p>
+      <p>תָּנוּ רַבָּנַן: עַד כַּמָּה מְקַבְּלִין אוֹתוֹ? בֵּית שַׁמַּאי אוֹמְרִים: לְמַשְׁקִין — שְׁלֹשִׁים יוֹם, לִכְסוּת — שְׁנֵים עָשָׂר חוֹדֶשׁ. וּבֵית הִלֵּל אוֹמְרִים: אֶחָד זֶה וְאֶחָד זֶה — לִשְׁנֵים עָשָׂר חוֹדֶשׁ.</p>
+      <p>אִם כֵּן, הָוֵה לֵיהּ מִקּוּלֵּי בֵּית שַׁמַּאי וּמֵחוּמְרֵי בֵּית הִלֵּל, אֶלָּא בֵּית הִלֵּל אוֹמְרִים: אֶחָד זֶה וְאֶחָד זֶה לִשְׁלשִׁים.</p>
+      <p>(סִימָן: חָבֵר, תַּלְמִיד, תְּכֵלֶת, מֶכֶס, חָזַר, גַּבַּאי, בְּעַצְמוֹ).</p>
+      <p>תָּנוּ רַבָּנַן: הַבָּא לְקַבֵּל דִּבְרֵי חֲבֵירוּת — צָרִיךְ לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים, וּבָנָיו וּבְנֵי בֵּיתוֹ אֵינָן צְרִיכִין לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים. רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: אַף בָּנָיו וּבְנֵי בֵיתוֹ צְרִיכִין לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים, לְפִי שֶׁאֵינוֹ דּוֹמֶה חָבֵר שֶׁקִּיבֵּל לְבֶן חָבֵר שֶׁקִּיבֵּל.</p>
+      <p>תָּנוּ רַבָּנַן: הַבָּא לְקַבֵּל דִּבְרֵי חֲבֵירוּת — צָרִיךְ לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים, וַאֲפִילּוּ תַּלְמִיד חָכָם צָרִיךְ לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים. זָקֵן וְיוֹשֵׁב בִּישִׁיבָה — אֵינוֹ צָרִיךְ לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים, שֶׁכְּבָר קִיבֵּל עָלָיו מִשָּׁעָה שֶׁיָּשַׁב. אַבָּא שָׁאוּל אוֹמֵר: אַף תַּלְמִיד חָכָם אֵינוֹ צָרִיךְ לְקַבֵּל בִּפְנֵי שְׁלֹשָׁה חֲבֵירִים, וְלֹא עוֹד אֶלָּא שֶׁאֲחֵרִים מְקַבְּלִין לְפָנָיו.</p>
+      <p>אָמַר רַבִּי יוֹחָנָן: בִּימֵי בְּנוֹ שֶׁל רַבִּי חֲנִינָא בֶּן אַנְטִיגְנוֹס נִשְׁנֵית מִשְׁנָה זוֹ. רַבִּי יְהוּדָה וְרַבִּי יוֹסֵי אִיסְתַּפַּק לְהוּ מִילְּתָא בִּטְהָרוֹת, שַׁדַּרוּ רַבָּנַן לְגַבֵּי בְּנוֹ שֶׁל רַבִּי חֲנִינָא בֶּן אַנְטִיגְנוֹס, אֵזִילוּ אֱמַרוּ לֵיהּ: לְעַיֵּין בַּהּ. אַשְׁכְּחוּהּ דְּקָא טָעֵין טְהָרוֹת, אוֹתֵיב רַבָּנַן מִדִּידֵיהּ לְגַבַּיְיהוּ, וְקָאֵי אִיהוּ לְעַיּוֹנֵי בַּהּ.</p>
+      <p>אֲתוֹ אָמְרִי לֵיהּ לְרַבִּי יְהוּדָה וְרַבִּי יוֹסֵי, אֲמַר לְהוּ רַבִּי יְהוּדָה: אָבִיו שֶׁל זֶה בִּיזָּה תַּלְמִידֵי חֲכָמִים, אַף הוּא מְבַזֶּה תַּלְמִידֵי חֲכָמִים!</p>
+      <p>אָמַר לוֹ רַבִּי יוֹסֵי: כְּבוֹד זָקֵן יְהֵא מוּנָּח בִּמְקוֹמוֹ, אֶלָּא מִיּוֹם שֶׁחָרַב בֵּית הַמִּקְדָּשׁ נָהֲגוּ כֹּהֲנִים סִילְסוּל בְּעַצְמָן, שֶׁאֵין מוֹסְרִין אֶת הַטְּהָרוֹת לְכׇל אָדָם.</p>
+      <p>תָּנוּ רַבָּנַן: חָבֵר שֶׁמֵּת — אִשְׁתּוֹ וּבָנָיו וּבְנֵי בֵּיתוֹ הֲרֵי הֵן בְּחֶזְקָתָן, עַד שֶׁיֵּחָשֵׁדוּ. וְכֵן חָצֵר שֶׁמּוֹכְרִין בָּהּ תְּכֵלֶת — הֲרֵי הִיא בְּחֶזְקָתָהּ, עַד שֶׁתִּיפָּסֵל.</p>
+      <p>תָּנוּ רַבָּנַן: אֵשֶׁת עַם הָאָרֶץ שֶׁנִּשֵּׂאת לְחָבֵר, וְכֵן בִּתּוֹ שֶׁל עַם הָאָרֶץ שֶׁנִּשֵּׂאת לְחָבֵר, וְכֵן עַבְדּוֹ שֶׁל עַם הָאָרֶץ שֶׁנִּמְכַּר לְחָבֵר — כּוּלָּן צְרִיכִין לְקַבֵּל דִּבְרֵי חֲבֵירוּת בַּתְּחִלָּה. אֲבָל אֵשֶׁת חָבֵר שֶׁנִּשֵּׂאת לְעַם הָאָרֶץ, וְכֵן בִּתּוֹ שֶׁל חָבֵר שֶׁנִּשֵּׂאת לְעַם הָאָרֶץ, וְכֵן עַבְדּוֹ שֶׁל חָבֵר שֶׁנִּמְכַּר לְעַם הָאָרֶץ — אֵין צְרִיכִין לְקַבֵּל דִּבְרֵי חֲבֵירוּת בַּתְּחִלָּה.</p>
+      <p>רַבִּי מֵאִיר אוֹמֵר: אַף הֵן צְרִיכִין לְקַבֵּל עֲלֵיהֶן דִּבְרֵי חֲבֵירוּת לְכַתְּחִלָּה. רַבִּי שִׁמְעוֹן בֶּן אֶלְעָזָר אוֹמֵר מִשּׁוּם רַבִּי מֵאִיר: מַעֲשֶׂה בְּאִשָּׁה אַחַת שֶׁנִּשֵּׂאת לְחָבֵר וְהָיְתָה קוֹמַעַת לוֹ תְּפִילִּין עַל יָדוֹ, נִשֵּׂאת לְעַם הָאָרֶץ וְהָיְתָה קוֹשֶׁרֶת לוֹ קִשְׁרֵי מוֹכֵס עַל יָדוֹ.</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>… <b>de la graisse des reins qui est près de la cuisse</b>, graisse interdite, <b>à la place de la graisse des intestins</b>, qui est permise. Rava le punit : il lui interdit de vendre <b>même des noix</b>. Rav Pappa dit à Rava : <b>selon quel avis de la Michna</b> rends-tu ce jugement ? Selon Rabbi Yehouda ? Si c'est selon Rabbi Yehouda, il faudrait lui interdire <b>même de vendre de l'eau et du sel</b>.</p>
+      <p>Rava répond : <b>en réalité, c'est selon Rabbi Chimon</b>, pour qui on punit le soupçonné seulement sur ce qui est lié à l'interdit. Et ici nous le punissons <b>pour un objet lié à l'interdit lui-même</b> : les enfants sont attirés par les noix, cet homme a séduit les enfants des bouchers avec des noix ; ils lui ont apporté de la graisse des reins, et il l'a vendue comme graisse des intestins.</p>
+      <p><b>MICHNA :</b> <b>celui qui est soupçonné sur la septième année n'est pas soupçonné sur les dîmes ; celui qui est soupçonné sur les dîmes n'est pas soupçonné sur la septième année. Celui qui est soupçonné sur l'une et sur l'autre est soupçonné sur les choses pures. Et il y a celui qui est soupçonné sur les choses pures sans l'être ni sur l'une ni sur l'autre.</b> <b>Voici la règle : celui qui est soupçonné sur une chose ne la juge pas et ne témoigne pas à son sujet.</b></p>
+      <p><b>GUEMARA :</b> pourquoi celui qui est soupçonné sur la septième année n'est-il pas soupçonné sur les dîmes ? <b>La septième année n'a pas besoin de mur</b> (on ne la mange pas obligatoirement dans Jérusalem) ; <b>la seconde dîme, qui exige le mur</b>, lui paraît plus lourde. Et pourquoi celui qui est soupçonné sur les dîmes n'est-il pas soupçonné sur la septième année ? <b>La dîme a un rachat</b> ; la septième année, une fois interdite, <b>n'a pas de rachat</b>, et lui paraît plus lourde.</p>
+      <p>Pourquoi celui qui est soupçonné sur l'une et sur l'autre est-il soupçonné sur les choses pures ? <b>Puisqu'il est soupçonné sur la Torah, a fortiori sur le rabbinique.</b> Mais pourquoi y a-t-il celui qui est soupçonné sur les choses pures sans l'être sur les autres ? <b>Il est soupçonné sur le rabbinique, non sur la Torah.</b> La Guemara objecte avec une baraïta : <b>« celui qui est cru sur les choses pures est cru sur la septième année »</b>, d'où l'on déduit que, s'il est soupçonné sur les unes, il l'est sur l'autre.</p>
+      <p><b>Rabbi Ila'i</b> répond : la Michna parle de quelqu'un qu'<b>on a vu pratiquer discrètement chez lui</b> les règles de la septième année et des dîmes. <b>Rabbi Yannaï, fils de Rabbi Yishmaël</b>, répond : la baraïta parle de quelqu'un qui était soupçonné sur les deux, qui a <b>accepté les deux devant les Sages</b>, puis a été soupçonné sur l'une : on dit que celui qui est soupçonné sur l'une l'est aussi sur l'autre.</p>
+      <p>§ <b>Rabba bar bar ‘Hana</b> dit au nom de <b>Rabbi Yo‘hanan</b> : la Michna est de <b>Rabbi Akiva, la Michna « anonyme »</b>. <b>Mais les Sages disent : celui qui est soupçonné sur la septième année est soupçonné sur la dîme.</b> Qui sont ces Sages ? <b>Rabbi Yehouda</b>, car dans sa région, la septième année est une affaire grave : quand quelqu'un traitait son prochain de « converti, fils de convertie », celui-ci répondait : « j'aurai un bon salaire, car je ne mange pas de fruits de la septième année comme toi ! »</p>
+      <p>Selon une autre version, <b>les Sages disent : celui qui est soupçonné sur la dîme l'est sur la septième année</b>, et ces Sages sont <b>Rabbi Meïr</b>, qui dit : <b>celui qui est soupçonné sur une chose est soupçonné sur toute la Torah</b>. <b>Rabbi Yona et Rabbi Yirmeya</b> (ou : Rabbi Yona et Rabbi Zeira) divergent : l'un attribue la première version à Rabbi Yehouda, l'autre la seconde à Rabbi Meïr.</p>
+      <p>C'est ce que dit la baraïta : <b>un ‘am haarets qui a accepté les règles des ‘haverim, puis a été soupçonné sur une chose, est soupçonné sur toute la Torah</b> (Rabbi Meïr) ; <b>les Sages disent : seulement sur cette chose</b>. <b>Un converti qui a accepté la Torah et est soupçonné sur une chose est soupçonné sur toute la Torah</b>, et il est <b>comme un Juif apostat</b> : s'il fiance une femme, <b>ses fiançailles sont valables</b>.</p>
+      <p>Les Sages enseignent : <b>celui qui vient accepter les règles des ‘haverim sauf une chose n'est pas accepté</b>. <b>Un non-Juif qui vient se convertir sauf pour une chose n'est pas accepté</b>. Rabbi Yossi, fils de Rabbi Yehouda : <b>même un détail des paroles des Sages</b>. <b>De même un lévite ou un cohen</b> qui vient accepter les règles de sa fonction, sauf une chose, n'est pas accepté, car il est écrit : <b>« Celui des fils d'Aharon qui offre le sang des offrandes de paix et la graisse aura pour part la cuisse droite »</b> (Lévitique 7:33) : tout cohen qui n'admet pas le service tout entier n'a pas de part à la prêtrise.</p>
+      <p><b>Celui qui vient accepter les règles des ‘haverim</b> : si l'on a vu qu'il les pratique discrètement chez lui, <b>on l'accepte puis on l'instruit</b> ; sinon, <b>on l'instruit puis on l'accepte</b>. Rabbi Chimon ben Yo‘haï : <b>dans les deux cas on l'accepte</b>, et il apprend en chemin.</p>
+      <p>On l'accepte d'abord pour <b>les ailes</b> (<i>kenafayim</i>, le lavage des mains), puis pour les choses pures ; s'il dit qu'il n'accepte que les ailes, on l'accepte. Celui qui accepte les choses pures sans les ailes <b>n'est pas accepté même pour les choses pures</b>.</p>
+      <p><b>Jusqu'à quand l'accepte-t-on ?</b> Beit Shammaï : pour <b>les liquides, trente jours</b>, pour <b>les vêtements, douze mois</b>. Beit Hillel : pour les deux, douze mois. La Guemara objecte : ce serait <b>une rigueur de Beit Hillel et une indulgence de Beit Shammaï</b> qui ne figure pas dans le traité Edouyot ; il faut donc corriger : <b>Beit Hillel disent : trente jours pour les deux</b>.</p>
+      <p><i>(Mnémotechnique : ‘haver, élève, bleu-azur (tekhelet), péage, retour, collecteur, de lui-même.)</i></p>
+      <p>Les Sages enseignent : <b>celui qui vient accepter doit le faire devant trois ‘haverim</b>, mais <b>ses fils et les gens de sa maison n'ont pas besoin de le faire devant trois</b>. Rabban Chimon ben Gamliel : <b>même eux, devant trois</b>, car <b>un ‘haver qui a accepté ne ressemble pas au fils d'un ‘haver qui a accepté</b>. Même <b>un érudit</b> doit accepter devant trois ; <b>un ancien qui siège à la yéchiva</b> n'en a pas besoin, car il a accepté en s'asseyant. Abba Chaoul : <b>même l'érudit n'en a pas besoin</b>, et d'autres peuvent accepter devant lui.</p>
+      <p>Rabbi Yo‘hanan dit : <b>cette Michna a été enseignée du temps du fils de Rabbi ‘Hanina ben Antigonos</b>. Rabbi Yehouda et Rabbi Yossi eurent un doute sur une question de pureté et envoyèrent des élèves chez le fils de Rabbi ‘Hanina, qui s'occupait alors de choses pures. Il <b>fit asseoir des sages de sa propre yéchiva à côté d'eux</b> et se leva pour étudier la question. Rabbi Yehouda dit avec colère : « <b>Le père de celui-ci a méprisé les érudits, et lui aussi les méprise !</b> » Rabbi Yossi répondit : « <b>Que l'honneur de l'ancien reste à sa place</b> : depuis la destruction du Temple, <b>les cohanim se sont imposé une rigueur</b> : ils ne confient les choses pures à personne. »</p>
+      <p>Les Sages enseignent : <b>un ‘haver qui est mort</b> : sa femme, ses fils et les gens de sa maison <b>restent dans leur statut</b> jusqu'à ce qu'ils soient soupçonnés. De même, <b>une cour où l'on vend du bleu-azur</b> reste dans son statut jusqu'à ce qu'elle soit disqualifiée.</p>
+      <p><b>La femme d'un ‘am haarets qui épouse un ‘haver</b>, sa fille, son esclave vendu à un ‘haver, doivent tous <b>accepter les règles</b>. Mais la femme, la fille et l'esclave d'un ‘haver qui passent chez un ‘am haarets <b>n'ont pas besoin de les accepter</b>. Rabbi Meïr : <b>eux aussi doivent les accepter</b>. Rabbi Chimon ben Elazar rapporte au nom de Rabbi Meïr : une femme épousa un ‘haver et <b>lui attachait les tefilines sur le bras</b> ; elle épousa un collecteur d'impôts et <b>lui attachait les sceaux de péage</b>.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>fat of the</b> kidney adjacent to the <b>thigh,</b> which is forbidden, in place <b>of fat of the intestines,</b> which is permitted. <b>Rava penalized him</b> and prohibited him <b>even from selling nuts. Rav Pappa said to Rava: In accordance with</b> which opinion in the mishna is your ruling? It must be <b>in accordance with</b> the opinion of <b>Rabbi Yehuda. If it is in accordance with</b> the opinion of <b>Rabbi Yehuda,</b> then you should prohibit this butcher from selling <b>even water and salt.</b></p>
+      <p>Rava replied: <b>Actually,</b> my ruling is in accordance with the opinion of <b>Rabbi Shimon,</b> who holds that one is suspected only about those items that are related to the prohibition in question. <b>And we are</b> in fact <b>penalizing him with regard to</b> items related to <b>the prohibition itself.</b> How so? <b>Ordinary children are enticed by nuts, and</b> that individual <b>went and misled the children of butchers and enticed them with nuts, and they brought him fat of the</b> kidney that is adjacent to the <b>thigh, and he sold it as</b> though it were <b>fat of the intestines.</b></p>
+      <p><strong>MISHNA:</strong> <b>One who is suspect with regard to the Sabbatical</b> Year <b>is not suspect with regard to tithes;</b> and likewise, <b>one who is suspect with regard to tithes is not suspect with regard to the Sabbatical</b> Year. <b>One who is suspect with regard to this,</b> the Sabbatical Year, <b>or with regard to that,</b> tithes, is <b>suspect with regard to</b> selling ritually impure foods as though they were <b>ritually pure</b> items. <b>But there are those who are suspect with regard to ritually pure</b> items <b>who are not suspect with regard to this,</b> the Sabbatical Year, <b>nor with regard to that,</b> tithes. <b>This is the principle</b> with regard to these matters: Anyone <b>who is suspect with regard to</b> a specific <b>matter</b> may <b>neither adjudicate</b> cases <b>nor testify</b> in cases involving that matter.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that one who is suspect with regard to the Sabbatical Year is not suspect with regard to tithes. The Gemara asks: <b>What is the reason?</b> One is <b>not required</b> to eat produce of the <b>Sabbatical</b> Year within the <b>wall</b> of Jerusalem, and therefore he treats it lightly. As for second <b>tithe, since</b> one is <b>required</b> to eat it only within the <b>wall</b> of Jerusalem, it is possible that it seems more <b>stringent for him,</b> and therefore he is not suspect, despite the suspicions with regard to produce of the <b>Sabbatical</b> Year.</p>
+      <p>The mishna teaches: <b>One who is suspect with regard to tithe</b> is not suspect with regard to the Sabbatical Year. The Gemara asks: <b>What is the reason?</b> The Gemara answers: Since <b>there is redemption</b> for <b>tithes,</b> one might treat them lightly. As for produce of the <b>Sabbatical</b> Year, <b>since it is</b> always <b>prohibited to him and there is no redemption</b> of it, it is possible that it seems more <b>stringent for him,</b> and therefore he is not suspect.</p>
+      <p>The mishna teaches: <b>One who is suspect with regard to this,</b> the Sabbatical Year, <b>or with regard to that,</b> tithes, is suspect with regard to selling ritually impure foods as though they were ritually pure items. The Gemara explains: <b>Since he is suspect</b> with regard to matters that apply <b>by Torah law, all the more so that he</b> is suspect with regard to matters that are <b>by rabbinic law.</b> Eating non-sacred food in a state of ritual purity is an ordinance of the Sages; it does not apply by Torah law. Consequently, he is certainly not trusted with regard to that matter.</p>
+      <p>The mishna teaches: <b>But there are those who are suspect with regard to ritually pure</b> items who are not suspect with regard to this, the Sabbatical Year, or with regard to that, tithes. The Gemara asks: <b>What is the reason? Granted,</b> he is <b>suspect</b> with regard to prohibitions that are <b>by rabbinic law,</b> but <b>he is not suspect</b> with regard to prohibitions that are <b>by Torah law. And</b> the Gemara <b>raises a contradiction</b> from a <i>baraita</i>: If one is <b>trusted with regard to ritually pure</b> items he is <b>trusted with regard to</b> produce of the <b>Sabbatical</b> Year. It can be inferred from here that if he is <b>suspect</b> with regard to ritually pure items he is likewise <b>suspect</b> with regard to produce of the Sabbatical Year.</p>
+      <p><b>Rabbi Ilai says: The mishna</b> is referring to a case <b>where they saw him practicing</b> stringencies with regard to produce of the Sabbatical Year and tithes <b>privately, within his home.</b> Since he himself is known to be trustworthy in these matters in private, he is not suspected of violating these prohibitions in his business, despite his lack of trustworthiness with regard to ritual purity.</p>
+      <p><b>Rabbi Yannai, son of Rabbi Yishmael, said</b> that there is an alternative answer: The <i>baraita</i> is referring to a case <b>where one was suspect with regard to both</b> ritually pure items and produce of the Sabbatical Year, <b>and he came before the Sages and accepted</b> upon himself <b>that</b> he would observe <b>both of them, and afterward he was suspected with regard to one of them.</b> The reason for the <i>halakha</i> here is <b>that we say: Since he is suspect with regard to this</b> one of them, <b>he is also suspect with regard to the other</b> one. Although one of the prohibitions is more stringent than the other, the court has seen that he cannot be trusted to keep his word about either of them.</p>
+      <p>§ The mishna teaches: One who is suspect with regard to the Sabbatical Year is not suspect with regard to tithes. <b>Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: This is the statement of Rabbi Akiva, the unattributed.</b> Most unattributed statements of <i>tanna’im</i> were formulated by Rabbi Akiva’s students and reflect his opinions. <b>But the Rabbis say:</b> One who is <b>suspect with regard to</b> produce of <b>the Sabbatical</b> Year <b>is suspect with regard to tithe.</b></p>
+      <p>The Gemara asks: <b>Who</b> are the Sages referred to here as <b>the Rabbis?</b> It is <b>Rabbi Yehuda, as in Rabbi Yehuda’s locale they</b> considered produce of the <b>Sabbatical</b> Year an especially <b>stringent</b> prohibition. Therefore, if a resident of that place was suspect with regard to the Sabbatical Year, he was certainly not trusted with regard to tithes. <b>As</b> in that locale, if <b>a certain</b> person <b>would call another: A convert, son of</b> a female <b>convert,</b> wishing to insult him, that person would <b>say to him</b> in reply: <b>I have</b> a blessing <b>coming to me, as I do not eat produce of the Sabbatical</b> Year <b>like you</b> do. This indicates that the accusation of eating produce of the Sabbatical Year was a great insult, since they treated the Sabbatical Year stringently.</p>
+      <p><b>There are</b> those <b>who say</b> that <b>Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: This is the statement of Rabbi Akiva, the unattributed. But the Rabbis say:</b> One who is <b>suspect with regard to tithe is suspect with regard to</b> produce of the <b>Sabbatical</b> Year. <b>And who</b> are the Sages referred to here as <b>the Rabbis? It is Rabbi Meir, who says:</b> One who is <b>suspect with regard to one matter is suspect with regard to the entire Torah.</b></p>
+      <p>The Gemara relates that <b>Rabbi Yona and Rabbi Yirmeya,</b> who were <b>students of Rabbi Zeira,</b> disagreed about this matter. <b>And some say</b> that it was <b>Rabbi Yona and Rabbi Zeira, students of Rabbi Yoḥanan,</b> who disagreed. <b>One said: But the Rabbis say</b> that one who is <b>suspect with regard to</b> produce of the <b>Sabbatical</b> Year</p>
+      <p>is <b>suspect with regard to tithe. And who</b> are the Sages referred to here as <b>the Rabbis?</b> It is <b>Rabbi Yehuda,</b> as in his locale they treated the prohibition of produce of the Sabbatical Year stringently. <b>And</b> the other <b>one says: One who is suspect with regard to tithe is suspect with regard to</b> produce of the <b>Sabbatical</b> Year. <b>And who</b> are the Sages referred to here as <b>the Rabbis?</b> It is <b>Rabbi Meir.</b></p>
+      <p><b>As it is taught</b> in a <i>baraita</i> (<i>Tosefta</i>, <i>Demai</i> 2:4): With regard to <b>an <i>am ha’aretz</i>,</b> i.e., one who is unreliable with regard to ritual impurity and tithes, <b>who accepts upon himself</b> the commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status,</b> i.e., that he will be stringent in all matters observed by <i>ḥaverim</i>, including <i>teruma</i>, tithes, and <i>ḥalla</i>, and also undertake to eat only food that is ritually pure, and the Sages accepted him as trustworthy <b>but</b> subsequently he <b>was suspected with regard to one matter</b> in which others saw him act improperly, <b>he is suspected with regard to the entire Torah.</b> This is the <b>statement of Rabbi Meir. And the Rabbis say: He is suspected only with regard to that particular matter.</b></p>
+      <p>It is also taught in a <i>baraita</i> (<i>Tosefta</i>, <i>Demai</i> 2:4): With regard to <b>a convert who accepted upon himself</b> upon his conversion <b>matters of Torah,</b> i.e., all of the mitzvot, <b>even if he is suspect with regard to one matter</b> alone, <b>he is suspect with regard to the entire Torah, and he is</b> considered <b>like a Jewish transgressor [<i>meshummad</i>],</b> who habitually transgresses the mitzvot. The Gemara explains that the practical <b>difference</b> resulting from the fact that he is considered like a Jewish transgressor is <b>that if he betroths</b> a woman, <b>his betrothal is</b> a valid <b>betrothal,</b> and they are married. Although he is suspect with regard to the entire Torah, he does not return to his prior gentile status.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: In the case of <b>one who comes to accept upon himself</b> the commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status except for one matter,</b> which he does not wish to observe, <b>he is not accepted,</b> and he is not trustworthy even with regard to those matters that he does wish to accept upon himself. Likewise, in the case of <b>a gentile who comes to</b> convert and takes upon himself to <b>accept the words of Torah except for one matter, he is not accepted</b> as a convert. <b>Rabbi Yosei, son of Rabbi Yehuda, says: Even</b> if he refuses to accept <b>one detail of rabbinic law,</b> he is not accepted.</p>
+      <p>The <i>baraita</i> continues: <b>And similarly,</b> in the case of <b>a Levite who comes to accept the matters of a Levite, or a priest who comes to accept the matters of priesthood, except for one matter, he is not accepted. As it is stated:</b> “He among the sons of Aaron, <b>that sacrifices the blood of the peace offerings,</b> and the fat, shall have the right thigh for a portion” (Leviticus 7:33). This means that with regard to <b>the</b> Temple <b>service, which is handed</b> over <b>to the sons of Aaron, any priest who does not admit to it</b> in its entirety <b>has no share in the priesthood.</b></p>
+      <p>The Gemara continues on a similar topic. <b>The Sages taught</b> in a <i>baraita</i>: In the case of <b>one who comes to accept upon himself</b> a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status, if we have seen that he practices</b> such matters <b>in private, within his home, he is accepted, and afterward he is taught</b> the precise details of being a <i>ḥaver</i>. <b>But if</b> we have <b>not</b> seen him act as a <i>ḥaver</i> in his home, <b>he is taught</b> first <b>and afterward accepted. Rabbi Shimon ben Yoḥai says: Whether</b> in <b>this</b> case <b>or that</b> case, <b>he is</b> first <b>accepted, and he</b> then <b>continues to learn in</b> the <b>usual manner,</b> i.e., as a <i>ḥaver</i> he learns from others how to behave.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: An <i>am ha’aretz</i> who wishes to become a <i>ḥaver</i> <b>is accepted</b> first <b>with regard to hands,</b> i.e., he is presumed to be stringent concerning the ritual purity of his hands by making sure to wash his hands before handling pure items, <b>and afterward he is accepted</b> as trustworthy <b>for purity</b> in general. <b>And if he says: I</b> wish to <b>accept</b> purity <b>only with regard to hands, he is accepted</b> for this. If he wishes to <b>accept</b> upon himself the stringencies of a <i>ḥaver</i> <b>with regard to ritual purity but he does not accept</b> upon himself the stringencies <b>with regard to hands,</b> i.e., to wash his hands, which is a simple act, <b>he is not accepted even for purity</b> in general.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: <b>Until when is he accepted,</b> i.e., how much time must elapse before he is considered trustworthy as a <i>ḥaver</i>? <b>Beit Shammai say: With regard to liquids, thirty days. With regard to</b> impurity of <b>clothing,</b> about which <i>ḥaverim</i> would be careful as well, <b>twelve months. And Beit Hillel say: Both</b> with regard to <b>this,</b> liquids, <b>and that,</b> clothing, he must maintain the practice <b>for twelve months</b> before he is fully accepted as a <i>ḥaver</i>.</p>
+      <p>The Gemara raises a difficulty: <b>If so, this is</b> one <b>of</b> the rare cases of <b>the leniencies of Beit Shammai and of the stringencies of Beit Hillel,</b> and yet it is not included in tractate <i>Eduyyot</i>, which lists all of the cases where Beit Shammai are more lenient than Beit Hillel. <b>Rather,</b> the text of the <i>baraita</i> must be emended so that it reads: <b>Beit Hillel say: Both</b> with regard to <b>this,</b> liquids <b>and that,</b> clothing, he must maintain the practice <b>for thirty</b> days before he is fully accepted as a <i>ḥaver</i>.</p>
+      <p>§ The Gemara provides <b>a mnemonic</b> to remember the topics from here until the end of the chapter: <b><i>Ḥaver</i>; student; sky-blue dye [<i>tekhelet</i>]; tax; return;</b> tax <b>collector; by himself.</b></p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: <b>One who comes to accept upon himself</b> a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status must accept</b> it <b>in the presence of three <i>ḥaverim</i>. But his children and</b> the <b>members of his household are not required to accept</b> the status of <i>ḥaver</i> separately <b>in the presence of three <i>ḥaverim</i>. Rabban Shimon ben Gamliel says: Even his children and</b> the <b>members of his household must accept</b> the status of <i>ḥaver</i> <b>in the presence of three <i>ḥaverim</i>, because a <i>ḥaver</i>, who accepted it</b> himself in the presence of three others, <b>is not comparable to the son of a <i>ḥaver</i>,</b> who <b>accepted</b> that status only due to his father but did not accept it himself explicitly, and their accepting the status not in the presence of three people is insufficient.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: <b>One who comes to accept upon himself</b> a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status must accept</b> it <b>in the presence of three <i>ḥaverim</i>, and even a Torah scholar</b> who wishes to become a <i>ḥaver</i> <b>must accept</b> the status of <i>ḥaver</i> <b>in the presence of three <i>ḥaverim</i>.</b> But <b>an elder who sits</b> and studies Torah <b>in a yeshiva is not required to accept</b> the status of <i>ḥaver</i> <b>in the presence of three <i>ḥaverim</i>, as he already accepted it upon himself from the moment he sat</b> and dedicated himself to study Torah in yeshiva. <b>Abba Shaul says: Even a Torah scholar is not required to accept</b> the status of <i>ḥaver</i> <b>in the presence of three <i>ḥaverim</i>; and not only</b> does he have the status of <i>ḥaver</i> without an explicit declaration in the presence of three <i>ḥaverim</i>, <b>but others</b> can <b>accept</b> that they wish to become a <i>ḥaver</i> <b>in his presence.</b></p>
+      <p><b>Rabbi Yoḥanan says: This mishna,</b> i.e., the ruling that a Torah scholar must declare his intent to become a <i>ḥaver</i> in the presence of three <i>ḥaverim</i>, <b>was taught in the days of the son of Rabbi Ḥanina ben Antigonus.</b> At that time, <b>Rabbi Yehuda and Rabbi Yosei were uncertain about</b> a certain <b>matter of ritual purity. The Sages sent</b> a delegation of their students <b>to the son of Rabbi Ḥanina ben Antigonus</b> and told them to <b>go</b> and <b>tell him to examine</b> this matter. The students <b>found him while he was carrying</b> items that were ritually <b>pure.</b> The son of Rabbi Ḥanina ben Antigonus <b>seated Sages from his own</b> yeshiva <b>next to</b> the students who came to ask the question, because he did not trust these students to keep his items pure. <b>And he stood and examined</b> the matter.</p>
+      <p>The students returned and <b>came and told Rabbi Yehuda and Rabbi Yosei</b> that the son of Rabbi Ḥanina ben Antigonus had treated them as though they had the status of <i>amei ha’aretz</i>. <b>Rabbi Yehuda said to them</b> in anger: <b>This one’s father,</b> i.e., Rabbi Ḥanina ben Antigonus, <b>degraded Torah scholars</b> by not trusting them with matters of ritual purity. And <b>he too,</b> the son of Rabbi Ḥanina ben Antigonus, <b>degrades Torah scholars.</b></p>
+      <p><b>Rabbi Yosei said to him: Let the honor of the elder,</b> i.e., both the father and son, <b>be left in its place.</b> He did not act in this manner to degrade Torah scholars. <b>Rather, from the day the Temple was destroyed, the priests were accustomed to act with a higher standard for themselves,</b> and they decided <b>that they will not pass ritually pure</b> items <b>to any</b> other <b>person.</b> Therefore, the son of Rabbi Ḥanina, as a priest, acted appropriately.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: In the case of <b>a <i>ḥaver</i> that died, his wife and children and members of his household retain their presumptive</b> status <b>until they are suspected</b> of engaging in inappropriate deeds. <b>And similarly,</b> in the case of <b>a courtyard in which one sells sky-blue dye, it retains its presumptive</b> status as a place in which fit sky-blue dye is sold <b>until it is disqualified</b> due to the merchant’s unscrupulous behavior.</p>
+      <p><b>The Sages taught</b> in a <i>baraita</i>: <b>The</b> former <b>wife of an <i>am ha’aretz</i> who</b> later <b>marries a <i>ḥaver</i>, and likewise the daughter of an <i>am ha’aretz</i> who marries a <i>ḥaver</i>, and likewise the slave of an <i>am ha’aretz</i> who is sold to a <i>ḥaver</i>, must all accept</b> upon themselves a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status. But</b> with regard to <b>the</b> former <b>wife of a <i>ḥaver</i> who</b> later <b>marries an <i>am ha’aretz</i>, and likewise the daughter of a <i>ḥaver</i> who marries an <i>am ha’aretz</i>, and likewise the slave of a <i>ḥaver</i> who was sold to an <i>am ha’aretz</i>,</b> these people <b>need not accept</b> upon themselves a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status <i>ab initio</i>,</b> as each of them is already accustomed to behave as a <i>ḥaver</i>.</p>
+      <p>The <i>baraita</i> continues: <b>Rabbi Meir says: They too must accept</b> upon themselves a commitment to observe <b>the matters</b> associated with <b><i>ḥaver</i> status <i>ab initio</i>. And similarly, Rabbi Shimon ben Elazar would</b> illustrate this point and <b>say in the name of Rabbi Meir:</b> There was <b>an incident involving a certain woman who married a <i>ḥaver</i> and would tie [<i>koma’at</i>] for him phylacteries on his hand,</b> and she later <b>married a tax collector and would tie for him tax seals on his hand,</b> which shows that her new husband had a great influence on her level of piety.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf, qui commence par la fin de l'affaire du boucher punie par Rava (29b), nous fait passer à la <b>Michna 4:10</b>, puis à un long développement sur le <b>statut de ‘haver</b> : celui qui s'engage à observer scrupuleusement la pureté et les prélèvements. Le fil conducteur est la <b>confiance</b> : qui croit-on, pour quoi, et jusqu'où va le soupçon ?</p>
+
+<h4>1. Rava et le boucher : le soupçon lié à l'interdit</h4>
+<p>Un boucher vendait de la graisse des reins (interdite) comme graisse des intestins (permise). Rava lui interdit de vendre même des noix. Rav Pappa objecte : c'est l'avis de Rabbi Yehouda (qui interdit même l'eau et le sel), non celui de Rabbi Chimon. Rava répond qu'il suit Rabbi Chimon : les noix ne sont pas un objet banal ici, car elles servent à attirer les enfants des bouchers, qui rapportent la graisse interdite. L'objet est donc lié à l'interdit lui-même.</p>
+
+<h4>2. Les raisons de la Michna</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné sur la septième année, pas sur les dîmes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La septième année n'exige pas de manger dans Jérusalem : on la prend à la légère. La seconde dîme, qui l'exige, pèse davantage</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné sur les dîmes, pas sur la septième année</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La dîme se rachète ; la septième année, interdite, ne se rachète pas : elle pèse davantage</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné sur les deux, donc sur les <i>tehorot</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné pour la Torah, a fortiori pour le rabbinique</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné sur les <i>tehorot</i> seulement</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné pour le rabbinique, pas pour la Torah</td></tr>
+</table>
+
+<h4>3. Une objection et deux réponses</h4>
+<p>Une baraïta dit : « celui qui est cru sur les <i>tehorot</i> est cru sur la septième année ». On en déduit que celui qui est soupçonné sur les unes l'est sur l'autre, ce qui contredit la Michna. Deux réponses :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rabbi</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Réponse</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Ila'i</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La Michna parle de quelqu'un qu'on a vu pratiquer ces règles discrètement chez lui : on ne le soupçonne pas de faire autrement en public</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yannaï, fils de Rabbi Yishmaël</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La baraïta parle de quelqu'un qui avait accepté les deux devant les Sages, puis a été soupçonné sur l'un : on le soupçonne alors sur l'autre</td></tr>
+</table>
+
+<h4>4. Qui sont « les Sages » ? Rabbi Akiva, Rabbi Yehouda et Rabbi Meïr</h4>
+<p>Rabbi Yo‘hanan dit que la Michna est de Rabbi Akiva (les Michnayot « anonymes » sont de lui), alors que « les Sages » disent que celui qui est soupçonné sur la septième année l'est sur la dîme. Ces Sages sont Rabbi Yehouda, dans la région duquel la septième année était traitée avec grande rigueur (être accusé d'en manger était une insulte). Selon une autre version, les Sages disent que celui qui est soupçonné sur la dîme l'est sur la septième année : c'est Rabbi Meïr, pour qui soupçonné sur une chose, on l'est sur toute la Torah.</p>
+
+<h4>5. Le soupçon et l'acceptation du statut de ‘haver</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Situation</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">‘Am haarets qui a accepté puis a été pris en faute sur une chose</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Meïr : soupçonné sur toute la Torah. Les Sages : seulement sur cette chose</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Converti pris en faute sur une chose</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Soupçonné sur toute la Torah, comme un Juif apostat ; ses fiançailles restent valables</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Celui qui veut accepter sauf une chose</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il n'est pas accepté. De même pour un non-Juif qui veut se convertir ; Rabbi Yossi, fils de Rabbi Yehouda : même un détail des Sages</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cohen ou lévite qui accepte sauf une chose</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas accepté (Lévitique 7:33) : il faut admettre le service entier</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Qui a-t-on vu pratiquer discrètement chez lui ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On l'accepte puis on l'instruit ; sinon on l'instruit puis on l'accepte (Rabbi Chimon ben Yo‘haï : acceptation dans les deux cas)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le lavage des mains</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On accepte d'abord pour les mains ; qui refuse les mains n'est pas accepté même pour les choses pures</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Délai</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Beit Shammaï : trente jours pour les liquides, douze mois pour les vêtements. Beit Hillel : douze mois pour les deux, ou, après correction, trente jours pour les deux</td></tr>
+</table>
+
+<h4>6. Témoins, famille et histoire de Rabbi ‘Hanina</h4>
+<p>L'acceptation se fait devant trois ‘haverim. Les enfants et les gens de la maison n'ont pas à le faire (Rabban Chimon ben Gamliel : si). L'érudit doit le faire, sauf l'ancien assis à la yéchiva (et selon Abba Chaoul, même l'érudit en est dispensé). L'histoire du fils de Rabbi ‘Hanina ben Antigonos montre le cas : il fit surveiller des élèves venus l'interroger, ce qui a choqué Rabbi Yehouda. Rabbi Yossi l'explique : depuis la destruction du Temple, les cohanim se sont imposé de ne confier les choses pures à personne.</p>
+
+<h4>7. Statuts hérités</h4>
+<p>La famille d'un ‘haver mort garde son statut jusqu'à preuve du contraire, tout comme une cour qui vend du bleu-azur reste présumée honnête jusqu'à disqualification. La femme, la fille ou l'esclave d'un ‘am haarets qui passent chez un ‘haver doivent accepter les règles ; l'inverse n'est pas exigé (Rabbi Meïr : ils doivent aussi). La femme qui attachait les tefilines à son mari ‘haver et les sceaux de péage à son mari collecteur montre l'influence du foyer.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> : « graisse des reins sur la cuisse » est interdite (<i>taravah</i>), et on la fait passer pour la graisse pure appelée <i>kanta</i> (en ancien français, <i>entraille</i>). Les enfants sont « attirés » par les noix ; le boucher les trompe et les engage pour lui apporter la graisse que ceux-ci volent à leur père. La Michna : celui qui est soupçonné sur la septième année n'est pas soupçonné sur les dîmes, et l'on peut acheter chez lui du grain durant les autres années du cycle, en le dîmant comme un doute. « Les choses pures » sont rabbiniques : manger du profane dans la pureté. Sur « Rabbi Akiva anonyme » : Rachi rapporte l'avis selon lequel « Michna anonyme : Rabbi Meïr ; baraïta anonyme : Rabbi Nathan, tous selon Rabbi Akiva » (Sanhédrin 86a) et le rejette, car l'on dit aussi « Rabbi Menahem anonyme » ou « Rabbi Chimon anonyme » ; la raison est simplement que la plupart des Michnayot anonymes suivent Rabbi Akiva. « Fils de convertie » : une insulte, et la réponse « j'aurai un bon salaire » veut dire : « récompense pour moi, car je ne mange pas des fruits de la septième année comme toi ».</p>
+<p><b>Rachi</b> (suite) : « divrei ‘haverout » (règles de ‘haver), expliquées dans la Tosefta de Demaï : ne pas donner terouma et dîme à un ‘am haarets, ne pas préparer de purs chez un ‘am haarets, manger le profane dans la pureté, et dîmer ce qu'on mange, vend ou achète. « Détails des Sofrim » : rigueur rabbinique. Lévi : chanter, servir, être portier ; « des fils d'Aharon » : appliquer toutes les règles propres aux fils d'Aharon. « Les ailes » : se laver les mains avant de manger et avant de toucher des aliments de terouma (les mains sont au second degré d'impureté). « Liquides » : l'impureté des liquides est rabbinique (Pessa‘him 16b) ; « vêtements » : les vêtements d'un ‘am haarets sont <i>midras</i> pour les pharisiens (‘Haguiga 18b). « Je ne ressemble pas » : un enfant n'a pas d'acceptation propre, il suit son père, qui est plus attentif. Le fils de Rabbi ‘Hanina ben Antigonos était cohen ; son père n'est pas critiqué ainsi, dit Rachi, sinon « sous le coup de la colère ».</p>
+<p><b>Tosafot</b> : Rabbénou Tam lit « <i>mar dekanta</i> » (une variante du mot) comme « <i>mar</i> » en parallèle de <i>mar dechehita</i>. À propos de « cette Michna : on a vu qu'il pratique discrètement », Tossafot s'étonnent : on dirait que le ‘am haarets ordinaire est suspect sur la septième année comme sur la pureté, alors que Guittin 61a laisse entendre qu'il ne l'est pas ; ils proposent des solutions (autres années, fruits connus, etc.). Sur « dans la région de Rabbi Yehouda », Tossafot demandent pourquoi on soupçonne pour la seconde dîme alors que l'on peut la racheter sur une valeur minime, et répondent que parfois on n'a pas de pièce sous la main ni assez de dîme pour racheter une pièce. Sur « les Sages disent seulement cette chose », ils expliquent : cette chose et les semblables, pour exclure « toute la Torah ».</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf fixe des principes d'ensemble sur la confiance et le soupçon, sans énoncer une loi pratique unique :</p>
+<ul>
+<li><b>Le soupçon est limité.</b> On se méfie d'un homme sur le domaine où il a failli, et sur les interdits semblables ou plus légers (Michna 4:10 ; Rambam).</li>
+<li><b>Les Sages contre Rabbi Meïr.</b> Pour Rabbi Meïr, soupçonné sur une chose, on l'est sur toute la Torah ; pour les Sages, seulement sur cette chose et ses semblables.</li>
+<li><b>Le converti.</b> Pris en faute sur une chose, il est soupçonné sur toute la Torah, mais ses fiançailles restent valables.</li>
+<li><b>L'acceptation doit être entière.</b> Celui qui accepte « sauf une chose » n'est pas accepté ; l'acceptation se fait devant trois ‘haverim.</li>
+<li><b>Le statut des familles.</b> La famille d'un ‘haver garde son statut jusqu'à preuve du contraire.</li>
+</ul>
+<p>Le statut de ‘haver décrit ici est propre à une époque où la pureté rituelle des aliments était vécue de façon courante. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.30" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
