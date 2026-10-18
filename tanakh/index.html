@@ -267,6 +267,20 @@
 // Chaque unite (paracha ou chapitre) :
 //   { id, nom, nomHeb, type: 'paracha'|'chapitre', fiche: {...}|null, qcm: {...}|null }
 // ═══════════════════════════════════════════
+// Pages complementaires liees a une paracha (hors fiche/QCM) — cle = id de l'unite
+const extrasUnites = {
+  'bereshit-paracha': [
+    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham', href: 'arbre_genealogique.html' }
+  ],
+  'noach': [
+    { ico: '🚢', name: 'L\'arche de Noé — plan et détails illustrés', href: 'arche_de_noe.html' },
+    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham (table des nations)', href: 'arbre_genealogique.html' }
+  ],
+  'lech-lecha': [
+    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham (famille de Térah)', href: 'arbre_genealogique.html' }
+  ]
+};
+
 const data = {
   'torah': {
     label: 'Torah', labelHeb: 'תורה', color: '#7c3aed',
@@ -441,6 +455,10 @@ function openPanel(id) {
           const qcmHtml = u.qcm
             ? `<a class="fiche-link" href="${u.qcm.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${u.qcm.name}${u.qcm.nbQuestions ? `<span class="qcm-nb-badge">${u.qcm.nbQuestions} questions</span>` : ''}</div></a>`
             : `<div class="empty-msg">Pas encore de QCM disponible.</div>`;
+          const extras = (extrasUnites[u.id] || []).filter(() => u.type === 'paracha');
+          const extrasHtml = extras.length
+            ? `<div class="mat-col-label" style="margin-top:12px">🔗 Pour approfondir</div>` + extras.map(x => `<a class="fiche-link" href="${x.href}"><div class="fiche-ico">${x.ico}</div><div class="fiche-text">${x.name}</div></a>`).join('')
+            : '';
           const label = u.type === 'paracha' ? 'Paracha' : 'Chapitre';
           return `
             <div class="chap-block" id="${chapId}">
@@ -457,6 +475,7 @@ function openPanel(id) {
                   <div class="mat-col-fiches">
                     <div class="mat-col-label">📚 Fiche</div>
                     ${ficheHtml}
+                    ${extrasHtml}
                   </div>
                   <div class="mat-col-qcms">
                     <div class="mat-col-label">📝 QCM d'évaluation</div>
