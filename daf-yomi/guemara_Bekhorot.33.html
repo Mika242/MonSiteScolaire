@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 33 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 33</h1>
+    <p>Daf 33</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וּבֵית הִלֵּל: הָנֵי מִילֵּי תָּם, אֲבָל בַּעַל מוּם כְּתִיב ״הַטָּמֵא וְהַטָּהוֹר יַחְדָּיו יֹאכְלֶנּוּ״, וּמָה טָמֵא שֶׁאֵינוֹ אוֹכֵל בְּקָדָשִׁים קַלִּים אוֹכֵל בִּבְכוֹר, זָר שֶׁאוֹכֵל בְּקָדָשִׁים קַלִּים אֵינוֹ דִּין שֶׁיֹּאכַל בִּבְכוֹר.</p>
+      <p>אִיכָּא לְמִיפְרַךְ: מָה לְטָמֵא, שֶׁכֵּן הוּתַּר מִכְּלָלוֹ בַּעֲבוֹדַת צִבּוּר!</p>
+      <p>וּבֵית הִלֵּל, אַטּוּ בַּעֲבוֹדָה קָאָמַר? בַּאֲכִילָה קָאָמְרִינַן, אֲכִילַת זָר עֲדִיף.</p>
+      <p>וְרַבִּי עֲקִיבָא מַתִּיר, וַאֲפִילּוּ גּוֹי. מַאי טַעְמָא דְּרַבִּי עֲקִיבָא? ״כַּצְּבִי וְכָאַיָּל״ — מָה צְבִי וְאַיָּל מוּתָּר לְגוֹי, אַף פְּסוּלִין מוּתָּר לְגוֹי.</p>
+      <p>וְאִידַּךְ? תְּלָתָא ״צְבִי וְאַיָּל״ כְּתִיבִי, חַד לְכִדְרַבִּי יִצְחָק, וְחַד לְכִדְרַבִּי אוֹשַׁעְיָא, וְחַד לְכִדְרַבִּי אֶלְעָזָר הַקַּפָּר.</p>
+      <p>וְאִידַּךְ? מָה צְבִי וְאַיָּל פְּטוּרִים מִן הַבְּכוֹרָה, אַף פְּסוּלֵי הַמּוּקְדָּשִׁין פְּטוּרִין מִן הַבְּכוֹרָה.</p>
+      <p>תָּנוּ רַבָּנַן: בְּכוֹר אֵין מַאֲכִילִין אוֹתוֹ לְנִדּוֹת, דִּבְרֵי בֵּית שַׁמַּאי. וּבֵית הִלֵּל אוֹמְרִים: מַאֲכִילִין אוֹתוֹ לְנִדּוֹת. מַאי טַעְמָא דְּבֵית שַׁמַּאי? דִּכְתִיב: ״וּבְשָׂרָם יִהְיֶה לָךְ״, מָה הָתָם נִדּוֹת לָא, אַף הָכָא נִדּוֹת לָא.</p>
+      <p>וּבֵית הִלֵּל: הָנֵי מִילֵּי תָּם, אֲבָל בַּעַל מוּם — ״הַטָּמֵא וְהַטָּהוֹר יֹאכְלֶנּוּ״.</p>
+      <p>וּבֵית שַׁמַּאי, הָנֵי מִילֵּי הֵיכָא דְּאֵין טוּמְאָה יוֹצְאָה עָלָיו מִגּוּפוֹ, אֲבָל הֵיכָא דְּטוּמְאָה יוֹצְאָה עָלָיו מִגּוּפוֹ — לָא.</p>
+      <p>דְּאַשְׁכְּחַן דְּפַלֵּיג רַחֲמָנָא בֵּין טוּמְאָה יוֹצְאָה עָלָיו מִגּוּפוֹ, לְבֵין שֶׁאֵין טוּמְאָה יוֹצְאָה עָלָיו מִגּוּפוֹ, דִּתְנַן: הַפֶּסַח שֶׁבָּא בְּטוּמְאָה — לֹא יֹאכְלוּ מִמֶּנּוּ זָבִים וּמְצוֹרָעִין וְזָבוֹת וְנִדּוֹת וְיוֹלְדוֹת.</p>
+      <p>וּבֵית הִלֵּל: הָתָם הוּא דְּגַלִּי רַחֲמָנָא ״טְמֵא נֶפֶשׁ״, אֲבָל הָכָא ״טָמֵא״ סְתָמָא כְּתִיב, לָא שְׁנָא.</p>
+      <p>תָּנוּ רַבָּנַן: אֵין מַרְגִּילִין בְּיוֹם טוֹב, כַּיּוֹצֵא בּוֹ אֵין מַרְגִּילִין בַּבְּכוֹר, וְלֹא בִּפְסוּלֵי הַמּוּקְדָּשִׁין.</p>
+      <p>בִּשְׁלָמָא יוֹם טוֹב — דְּקָא טָרַח טִירְחָא דְּלָא חֲזֵי לֵיהּ. אֶלָּא בְּכוֹר — מַאן תַּנָּא? אָמַר רַב חִסְדָּא: בֵּית שַׁמַּאי הִיא, דְּאָמַר אֵין מַאֲכִילִין אוֹתוֹ לְנִדּוֹת.</p>
+      <p>וְלֹא בִּפְסוּלֵי הַמּוּקְדָּשִׁין. מַאן תַּנָּא? אָמַר רַב חִסְדָּא: רַבִּי אֶלְעָזָר בְּרַבִּי שִׁמְעוֹן הִיא, דִּתְנַן: הָיוּ לְפָנָיו שְׁתֵּי חַטָּאוֹת, אַחַת תְּמִימָה וְאַחַת בַּעֲלַת מוּם — תְּמִימָה תִּקְרַב, בַּעֲלַת מוּם תִּיפָּדֶה.</p>
+      <p>נִשְׁחֲטָה בַּעֲלַת מוּם, אִם עַד שֶׁלֹּא נִזְרַק דָּמָהּ שֶׁל תְּמִימָה — מוּתֶּרֶת, אִם מִשֶּׁנִּזְרַק דָּמָהּ שֶׁל תְּמִימָה — אֲסוּרָה.</p>
+      <p>רַבִּי אֶלְעָזָר בְּרַבִּי שִׁמְעוֹן אוֹמֵר: אֲפִילּוּ בָּשָׂר בִּקְדֵירָה, וְנִזְרַק דָּמָהּ שֶׁל תְּמִימָה — אֲסוּרָה.</p>
+      <p>וְרַב חִסְדָּא, לוֹקְמַהּ כּוּלַּהּ כְּבֵית שַׁמַּאי! דִּלְמָא עַד כָּאן לָא קָאָמְרִי בֵּית שַׁמַּאי אֶלָּא בִּבְכוֹר, דִּקְדוּשָּׁתוֹ מֵרֶחֶם, אֲבָל פְּסוּלֵי הַמּוּקְדָּשִׁין דְּאֵין קְדוּשָּׁתוֹ מֵרֶחֶם — לָא.</p>
+      <p>וְלוֹקְמַהּ כּוּלַּהּ כְּרַבִּי אֶלְעָזָר בְּרַבִּי שִׁמְעוֹן! דִּילְמָא עַד כָּאן לָא קָאָמַר רַבִּי אֶלְעָזָר בְּרַבִּי שִׁמְעוֹן הָתָם אֶלָּא פְּסוּלֵי הַמּוּקְדָּשִׁין, דְּאַלִּימִי לְמִיתְפַּס פִּדְיוֹנוֹ, אֲבָל בְּכוֹר דְּלָא אַלִּים לְמִיתְפַּס פִּדְיוֹנוֹ — לָא.</p>
+      <p>וְרַבִּי אֶלְעָזָר בְּרַבִּי שִׁמְעוֹן לֵית לֵיהּ כׇּל פְּסוּלֵי הַמּוּקְדָּשִׁין נִמְכָּרִין בָּאִיטְלִיז וְנִשְׁקָלִין בְּלִיטְרָא? אַלְמָא דְּכֵיוָן דְּאִיכָּא רַוְוחָא לְהֶקְדֵּשׁ שָׁרֵי לֵהּ!</p>
+      <p>אָמַר רַב מָרִי בְּרֵיהּ דְּרַב כָּהֲנָא: מַה שֶּׁמַּשְׁבִּיחַ בָּעוֹר — פּוֹגֵם בַּבָּשָׂר. בְּמַעְרְבָא מִשְּׁמֵיהּ דְּרָבִינָא אָמְרִי: מִפְּנֵי שֶׁנִּרְאֶה כְּעוֹבֵד עֲבוֹדָה בְּקָדָשִׁים.</p>
+      <p>רַבִּי יוֹסֵי בַּר אָבִין אוֹמֵר: גְּזֵירָה שֶׁמָּא יְגַדֵּל מֵהֶן עֲדָרִים עֲדָרִים.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> בְּכוֹר שֶׁאֲחָזוֹ דָּם, אֲפִילּוּ מֵת — אֵין מַקִּיזִין לוֹ דָּם, דִּבְרֵי רַבִּי יְהוּדָה. וַחֲכָמִים אוֹמְרִים: יַקִּיז, וּבִלְבַד שֶׁלֹּא יַעֲשֶׂה בּוֹ מוּם, וְאִם עָשָׂה בּוֹ מוּם — הֲרֵי זֶה לֹא יִשְׁחַט עָלָיו. רַבִּי שִׁמְעוֹן אוֹמֵר: יַקִּיז, אַף עַל פִּי שֶׁהוּא עוֹשֶׂה בּוֹ מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> תָּנוּ רַבָּנַן: בְּכוֹר שֶׁאֲחָזוֹ דָּם — מַקִּיזִין לוֹ אֶת הַדָּם בִּמְקוֹם שֶׁאֵין עוֹשִׂים בּוֹ מוּם, וְאֵין מַקִּיזִין לוֹ אֶת הַדָּם בִּמְקוֹם שֶׁעוֹשִׂין בּוֹ מוּם, דִּבְרֵי רַבִּי מֵאִיר.</p>
+      <p>וַחֲכָמִים אוֹמְרִים: אַף בִּמְקוֹם שֶׁעוֹשֶׂה בּוֹ מוּם, וּבִלְבַד שֶׁלֹּא יִשְׁחַט עַל אוֹתוֹ הַמּוּם. רַבִּי שִׁמְעוֹן אוֹמֵר: אַף נִשְׁחָט עַל אוֹתוֹ הַמּוּם. רַבִּי יְהוּדָה אוֹמֵר: אֲפִילּוּ מֵת — אֵין מַקִּיזִין לוֹ אֶת הַדָּם.</p>
+      <p>מַתְנֵי לֵיהּ רַבִּי אֶלְעָזָר לִבְרֵיהּ, וְאָמְרִי לַהּ רַבִּי חִיָּיא לִבְרֵיהּ: כַּמַּחְלוֹקֶת כָּאן, כָּךְ מַחְלוֹקֶת בְּחָבִית שֶׁל תְּרוּמָה, דִּתְנַן: חָבִית שֶׁל תְּרוּמָה שֶׁנּוֹלַד בָּהּ סְפֵק טוּמְאָה — רַבִּי אֱלִיעֶזֶר אוֹמֵר: אִם הָיְתָה בִּמְקוֹם הַתּוּרְפָּה — יַנִּיחֶנָּה בְּמָקוֹם הַמּוּצְנָע, אִם הָיְתָה מְגוּלָּה — יְכַסֶּנָּה.</p>
+      <p>רַבִּי יְהוֹשֻׁעַ אוֹמֵר: אִם הָיְתָה מוּנַּחַת בְּמָקוֹם הַמּוּצְנָע — יַנִּיחֶנָּה בִּמְקוֹם הַתּוּרְפָּה, אִם הָיְתָה מְכוּסָּה — יְגַלֶּנָּה. רַבָּן גַּמְלִיאֵל אוֹמֵר: לֹא יְחַדֵּשׁ בָּהּ דָּבָר.</p>
+      <p>רַבִּי מֵאִיר כְּרַבִּי אֱלִיעֶזֶר, וְרַבָּנַן כְּרַבִּי יְהוֹשֻׁעַ, וְרַבִּי יְהוּדָה כְּרַבָּן גַּמְלִיאֵל.</p>
+      <p>מִמַּאי? דִּלְמָא עַד כָּאן לָא קָאָמַר רַבִּי מֵאִיר הָתָם, דְּקָא עָבֵיד בְּיָדַיִם, אֲבָל הָכָא דִּגְרָמָא — כְּרַבִּי יְהוֹשֻׁעַ סְבִירָא לֵיהּ!</p>
+      <p>וְעַד כָּאן לָא קָאָמַר רַבִּי אֱלִיעֶזֶר הָתָם, אֶלָּא שֶׁמָּא יָבֹא אֵלִיָּהוּ וִיטַהֲרֶנָּה, אֲבָל הָכָא, דְּאִי שָׁבֵיק לֵיהּ מָיֵית — כְּרַבָּנַן סְבִירָא לֵיהּ!</p>
+      <p>וְעַד כָּאן לָא קָאָמְרִי רַבָּנַן הָכָא, דְּאִי שָׁבֵיק לֵיהּ מָיֵית, אֲבָל הָתָם — שֶׁמָּא יָבֹא אֵלִיָּהוּ וִיטַהֲרֶנָּה, כְּרַבִּי אֱלִיעֶזֶר סְבִירָא לְהוּ! וְעַד כָּאן לָא קָאָמַר רַבִּי יְהוּדָה הָכָא, דְּקָא עָבֵיד בְּיָדַיִם, אֲבָל הָתָם דִּגְרָמָא — כְּרַבִּי יְהוֹשֻׁעַ סְבִירָא לֵיהּ!</p>
+      <p>וְעַד כָּאן לָא קָאָמַר רַבָּן גַּמְלִיאֵל הָתָם, דְּשֶׁמָּא יָבֹא אֵלִיָּהוּ וִיטַהֲרֶנָּה, אֲבָל הָכָא, דְּאִי שָׁבֵיק לֵיהּ מָיֵית, כְּרַבָּנַן סְבִירָא לֵיהּ!</p>
+      <p>וְעוֹד, הָכָא בִּקְרָאֵי פְּלִיגִי וְהָכָא בִּקְרָאֵי פְּלִיגִי, דְּאָמַר רַבִּי חִיָּיא בַּר אַבָּא אָמַר רַבִּי יוֹחָנָן: הַכֹּל מוֹדִים בִּמְחַמֵּץ אַחַר מְחַמֵּץ שֶׁהוּא חַיָּיב, דִּכְתִיב ״לֹא תֵאָפֶה חָמֵץ״ וְ״לֹא תֵעָשֶׂה״.</p>
+      <p>בִּמְסָרֵס אַחֵר מְסָרֵס שֶׁהוּא חַיָּיב, דִּכְתִיב: ״וּמָעוּךְ וְכָתוּת וְנָתוּק וְכָרוּת״, אִם עַל כּוֹרֵת חַיָּיב, עַל נוֹתֵק לֹא כׇּל שֶׁכֵּן? אֶלָּא לְהָבִיא נוֹתֵק אַחַר כּוֹרֵת, שֶׁהוּא חַיָּיב.</p>
+      <p>לֹא נֶחְלְקוּ אֶלָּא בְּמֵטִיל מוּם בְּבַעַל מוּם, דְּרַבִּי מֵאִיר סָבַר: ״כׇּל מוּם לֹא יִהְיֶה בּוֹ״, וְרַבָּנַן סָבְרִי: ״תָּמִים יִהְיֶה לְרָצוֹן״.</p>
+      <p>וְרַבִּי מֵאִיר, הַאי ״תָּמִים יִהְיֶה לְרָצוֹן״ מַאי עָבֵיד לֵיהּ? מִיבְּעֵי לֵיהּ לְמַעוֹטֵי בַּעַל מוּם מֵעִיקָּרוֹ.</p>
+      <p>בַּעַל מוּם מֵעִיקָּרוֹ — פְּשִׁיטָא, דִּיקְלָא בְּעָלְמָא הוּא!</p>
+      <p>אֶלָּא לְמַעוֹטֵי פְּסוּלֵי הַמּוּקְדָּשִׁין לְאַחַר פִּדְיוֹנָן, סָלְקָא דַּעְתָּךְ אָמֵינָא: הוֹאִיל וַאֲסִירִי בְּגִיזָּה וַעֲבוֹדָה — בְּמוּמִין נָמֵי לִיתַּסְרוּ, קָא מַשְׁמַע לַן.</p>
+      <p>וְרַבָּנַן נָמֵי, הָכְתִיב ״כׇּל מוּם לֹא יִהְיֶה בּוֹ״! לִגְרָמָא הוּא דְּאָתֵי, דְּתַנְיָא: ״מוּם לֹא יִהְיֶה בּוֹ״ — אֵין לִי</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Et Beit Hillel répondent</b> à l'objection de Beit Shammaï : cette règle (« comme le poitrail et la cuisse ») ne vaut que pour <b>un premier-né sans défaut</b>, qui est offert sur l'autel. Mais pour un premier-né avec défaut, il est écrit : « <b>tu le mangeras dans tes portes, l'impur et le pur ensemble</b> » (Deutéronome 12:22 ; 15:22). Beit Hillel déduisent <b>par un raisonnement a fortiori</b> : si <b>un cohen impur</b>, qui ne peut pas manger les offrandes de moindre sainteté, <b>peut manger</b> un premier-né avec défaut, <b>un non-cohen</b>, qui peut manger les offrandes de moindre sainteté (comme les sacrifices de paix ou la dîme du bétail), <b>ne le pourrait-il pas ?</b></p>
+      <p><b>La Guemara objecte</b> : on peut réfuter : <b>qu'a de particulier le cohen impur ?</b> Son interdit général a été <b>permis dans certains cas, pour le service public</b> : s'il n'y a pas de cohen pur, des cohanim impurs peuvent accomplir le service. Un non-cohen ne peut jamais l'accomplir. <b>Beit Hillel répondent</b> : ce n'est pas du service que nous parlons, mais <b>de la consommation</b>, et sur ce point <b>le non-cohen est supérieur à l'impur</b>. La réfutation ne s'applique donc pas.</p>
+      <p>§ La baraïta dit que, selon Rabbi Akiva, Beit Hillel permettent même à un non-Juif. <b>Quelle est sa raison ?</b> Le verset dit : « <b>comme la gazelle et comme le cerf</b> » (Deutéronome 15:22). De même que la gazelle et le cerf se mangent par un non-Juif, <b>de même</b> les consacrés disqualifiés.</p>
+      <p><b>Et l'autre</b> (qui n'est pas d'accord avec Rabbi Akiva) ? <b>« Gazelle » et « cerf » sont écrits trois fois</b> à propos des consacrés disqualifiés (Deutéronome 12:15, 12:22, 15:22). L'un sert à l'enseignement de <b>Rabbi Yits'hak et de Rabbi Oshaya</b>, l'autre à celui de <b>Rabbi Elazar Hakapar</b>. Le dernier enseigne que, comme la gazelle et le cerf sont exemptés de la loi du premier-né (« tous les premiers-nés mâles qui naîtront de ton gros et de ton menu bétail », Deutéronome 15:19), les consacrés disqualifiés sont exemptés eux aussi.</p>
+      <p>§ <b>Les Sages enseignent dans une baraïta</b> : <b>on ne donne pas à manger à des femmes nidot</b> (en état de nidda) <b>le premier-né qui a un défaut</b> : ce sont les paroles de Beit Shammaï. <b>Beit Hillel disent</b> : on peut le leur donner. <b>Raison de Beit Shammaï</b> : « leur chair sera à toi, comme le poitrail de l'offrande agitée et comme la cuisse droite » (Nombres 18:18). De même que le poitrail et la cuisse ne peuvent pas être mangés par une nidda, de même le premier-né.</p>
+      <p><b>Beit Hillel répondent</b> : cela ne vaut que pour <b>le premier-né sans défaut</b>. Pour celui qui a un défaut, le verset dit : « l'impur et le pur ». <b>Beit Shammaï répliquent</b> : « l'impur » ne vaut que pour <b>celui dont l'impureté ne sort pas de son corps</b> (impureté due à un mort, à un reptile). Celui dont l'impureté <b>sort de son corps</b> (le <i>zav</i>, la nidda) en est exclu. <b>Distinction connue</b> : dans le sacrifice pascal offert dans l'impureté parce que la majorité d'Israël est impure, <b>les zavim, les lépreux, les zavot et les nidot ne mangent pas</b> (Michna Pessa'him 95b), car seule l'impureté due à un mort est repoussée.</p>
+      <p><b>Beit Hillel répondent</b> : <b>pour la Pâque</b> cette distinction est écrite : « impur par un mort » (Nombres 9:10). Mais ici le texte dit simplement « l'impur », sans distinction.</p>
+      <p>§ <b>Les Sages enseignent</b> : <b>on n'écorche pas par les pieds</b> (en gardant la peau entière pour en faire un récipient) <b>le jour de fête</b>. <b>Ni un premier-né</b>, même avec défaut, <b>ni des consacrés disqualifiés</b>, même rachetés et abattus pour manger, car c'est un déshonneur.</p>
+      <p><b>La Guemara demande</b> : pour la fête, on comprend, car on fait un effort dont on n'a pas besoin ce jour-là. Mais pour le premier-né, <b>quel tanna</b> l'enseigne ? <b>Rav ‘Hisda</b> : c'est <b>Beit Shammaï</b>, qui interdisent de le donner aux nidot, car pour eux le premier-né avec défaut reste dans sa sainteté comme celui sans défaut.</p>
+      <p><b>Et pour les consacrés disqualifiés ?</b> <b>Rav ‘Hisda</b> : c'est <b>Rabbi Elazar, fils de Rabbi Chimon</b>, selon la baraïta : <b>on avait devant soi deux sacrifices pour péché</b> mis de côté pour que, si l'un se perd, l'autre expie. L'un était sans défaut, l'autre eut un défaut après la consécration. <b>On offre l'animal sans défaut</b>, et l'on <b>rachète celui qui a un défaut</b>. S'il est <b>abattu après rachat avant que le sang de l'autre soit versé</b>, il est permis à manger. Si on l'abat <b>après</b> que le sang a été versé, il est interdit à manger et à utiliser, car le sacrifice dont le propriétaire a obtenu l'expiation par un autre doit mourir. <b>Rabbi Elazar, fils de Rabbi Chimon</b>, dit : même si la viande est dans la marmite, elle reste interdite. Pour lui, les consacrés disqualifiés gardent une part de leur sainteté même abattus.</p>
+      <p><b>La Guemara demande</b> : que Rav ‘Hisda rattache toute la baraïta à Beit Shammaï ! <b>Réponse</b> : peut-être Beit Shammaï ne retiennent la sainteté du défaut que pour <b>le premier-né</b>, dont la sainteté vient de la matrice. Et pourquoi ne pas tout rattacher à Rabbi Elazar, fils de Rabbi Chimon ? Peut-être que, pour lui, c'est seulement pour les autres consacrés, dont la sainteté est assez forte pour passer à l'argent du rachat, mais pas pour un premier-né qui n'a pas de rachat.</p>
+      <p><b>La Guemara objecte</b> : Rabbi Elazar, fils de Rabbi Chimon, admet pourtant la Michna qui permet de vendre les consacrés disqualifiés à la boucherie et de les peser à la livre, parce qu'il en résulte un profit pour le Trésor (31a-b). Pourquoi donc ne pas permettre aussi d'écorcher par les pieds, qui rapporte plus ? <b>Réponses</b> : <b>Rav Mari fils de Rav Kahana</b> : ce que l'on gagne sur la peau, on le perd sur la viande, qui est entaillée. <b>À l'Ouest, au nom de Ravina</b> : cela ressemble à un travail fait sur des consacrés. <b>Rabbi Yossi bar Avin</b> : c'est un décret des Sages, de peur qu'on garde les animaux en attendant un acheteur et qu'on élève des troupeaux d'animaux disqualifiés, et qu'on en vienne à les tondre ou à les faire travailler.</p>
+      <p><b>MICHNA (5:3) :</b> <b>un premier-né saisi par le sang</b>, même s'il doit mourir, <b>on ne le saigne pas</b> ; ce sont les paroles de Rabbi Yehouda. <b>Les Sages disent</b> : on le saigne pourvu qu'on ne lui cause pas de défaut, et si on lui en cause un, on ne l'abat pas à cause de lui. <b>Rabbi Chimon</b> : on le saigne même s'il lui vient un défaut.</p>
+      <p><b>GUEMARA :</b> <b>Les Sages enseignent</b> : <b>un premier-né saisi par le sang</b>, on le saigne à un endroit qui ne cause pas de défaut permanent, mais non à un endroit qui en cause un : ce sont les paroles de <b>Rabbi Meïr</b>. <b>Les Sages disent</b> : même à un endroit qui cause un défaut, pourvu qu'on ne l'abatte pas à cause de lui. <b>Rabbi Chimon</b> : on peut même l'abattre à cause de lui. <b>Rabbi Yehouda</b> : même s'il doit mourir, on ne le saigne pas.</p>
+      <p><b>Rabbi Elazar enseignait à son fils</b> (certains disent Rabbi ‘Hiyya à son fils) : de même qu'il y a ici une controverse, il y en a une dans la Michna sur <b>la jarre de terouma</b> (Terouma 8:8) : <b>Rabbi Eliezer</b> dit qu'on doit la protéger de l'impureté : si elle est à un endroit exposé, on la cache ; si elle est cachée, on la couvre. <b>Rabbi Yehoshoua</b> dit : ce n'est pas nécessaire ; cachée, on peut la remettre à un endroit exposé. <b>Rabban Gamliel</b> : on ne fait rien de nouveau, on la laisse comme elle est.</p>
+      <p><b>La Guemara rapproche</b> : Rabbi Meïr correspond à Rabbi Eliezer, les Sages à Rabbi Yehoshoua, Rabbi Yehouda à Rabban Gamliel. <b>Elle objecte</b> : peut-être Rabbi Meïr n'interdit la saignée que parce que le défaut est causé par un acte direct, alors que pour la jarre l'impureté est indirecte, et il suivrait Rabbi Yehoshoua. Et peut-être Rabbi Eliezer protège la jarre parce qu'Élie pourrait venir la déclarer pure, alors que pour le premier-né, qui mourrait certainement, il suivrait les Sages. Et pareillement pour chacun des autres.</p>
+      <p><b>Une autre raison de ne pas comparer</b> : ici ils discutent d'une interprétation de versets, et là d'autres versets. <b>Rabbi ‘Hiyya bar Abba au nom de Rabbi Yo'hanan</b> : tous admettent que celui qui <b>fait lever</b> une offrande de farine <b>après un autre qui l'a déjà fait lever</b> est puni de coups, car il est dit : « elle ne sera pas cuite avec du levain » (Lévitique 6:10) et « aucune offrande ne sera faite avec du levain » (Lévitique 2:11). De même, tous admettent que celui qui <b>châtre un animal après qu'un autre l'a déjà châtré</b> est passible, d'après « ce qui a les testicules meurtris, écrasés, arrachés ou coupés, vous ne l'offrirez pas… et dans votre pays vous ne le ferez pas » (Lévitique 22:24) : le verset inclut même celui qui arrache après celui qui coupe.</p>
+      <p><b>Ils ne discutent donc que sur le fait de causer un défaut à un animal déjà défectueux</b>, comme celui dont la circulation du sang est gênée. <b>Rabbi Meïr</b> : « <b>tout défaut ne sera pas en lui</b> » (Lévitique 22:21) inclut même un animal déjà défectueux. <b>Les Sages</b> : « <b>parfait pour être agréé</b> » signifie que l'interdit ne s'applique qu'à un animal actuellement parfait et apte à être agréé sur l'autel.</p>
+      <p><b>Et Rabbi Meïr, que fait-il du « parfait pour être agréé » ?</b> Il exclut l'animal <b>né avec un défaut</b>. <b>La Guemara repousse</b> : il n'y a pas besoin d'exclure celui qui est né avec un défaut, il est comme un palmier, il ne peut jamais être consacré. <b>Donc</b> Rabbi Meïr l'utilise pour exclure <b>les consacrés disqualifiés après rachat</b> : on aurait pu penser que, comme on ne peut ni les tondre ni les faire travailler, on ne peut pas non plus leur causer un défaut ; le verset enseigne que c'est permis.</p>
+      <p><b>Et les Sages</b>, qui expliquent par « parfait pour être agréé », qu'en font-ils de « il n'y aura pas de défaut en lui » ? Ils en tirent que l'interdit s'étend aussi à un défaut causé <b>par un acte indirect</b>, d'après une baraïta : le verset dit « il n'y aura pas de défaut en lui » ; j'en ai déduit…</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>And Beit Hillel</b> would respond to that claim: <b>This statement</b> applies only to an <b>unblemished</b> firstborn offering, which is sacrificed upon the altar. <b>But</b> concerning <b>a blemished</b> firstborn <b>it is written:</b> “You shall eat it within your gates; <b>the impure and the pure may eat it alike”</b> (Deuteronomy 12:22; see Deuteronomy 15:22). Beit Hillel derive an <i>a fortiori</i> inference: <b>And if a ritually impure</b> priest, <b>who may not eat</b> the meat <b>of offerings of lesser sanctity,</b> nevertheless <b>may eat</b> the meat <b>of</b> a blemished <b>firstborn</b> offering, then with regard to <b>a non-priest, who may eat</b> the meat of <b>offerings of lesser sanctity,</b> e.g., peace offerings and animal tithe offerings, <b>is it not logical that he may eat</b> the meat <b>of</b> a blemished <b>firstborn</b> offering?</p>
+      <p>The Gemara raises a difficulty: This <i>a fortiori</i> inference <b>can be refuted: What</b> is notable <b>about</b> the case of <b>a ritually impure</b> priest? It is notable in <b>that its general</b> prohibition <b>was permitted</b> in certain circumstances, specifically <b>with regard to the communal service.</b> If there are no ritually pure priests, the sacrificial service may be performed by ritually impure priests. By contrast, it is never permitted for a non-priest to perform the sacrificial service. Accordingly, one cannot derive the <i>halakha</i> concerning a non-priest via an <i>a fortiori</i> inference from an impure priest.</p>
+      <p><b>And Beit Hillel</b> would respond: <b>Is that to say</b> that the <i>a fortiori</i> inference was <b>stated with regard to</b> the sacrificial <b>service,</b> which was the subject of that refutation? Not so; rather, <b>we state</b> it <b>with regard to</b> the <b>eating</b> of sacrificial meat, and the <b>eating of a non-priest is superior</b> to that of a ritually impure priest. Accordingly, the refutation of the <i>a fortiori</i> inference is inapplicable.</p>
+      <p>§ The <i>baraita</i> stated that according to <b>Rabbi Akiva,</b> Beit Hillel <b>deems</b> it <b>permitted</b> for non-priests, <b>and even gentiles,</b> to partake of blemished firstborn offerings. The Gemara asks: <b>What is the reason of Rabbi Akiva?</b> The verse states: <b>“Like the gazelle and like the deer”</b> (Deuteronomy 15:22). <b>Just as a gazelle and a deer</b> are <b>permitted to</b> be eaten by <b>a gentile, so too, disqualified</b> blemished firstborn offerings are <b>permitted to</b> be eaten by <b>a gentile.</b></p>
+      <p>The Gemara asks: <b>And the other one,</b> i.e., the <i>tanna</i> who disagrees with Rabbi Akiva’s version of the opinion of Beit Hillel, who does not deem it permitted for a gentile to partake of a blemished firstborn offering, what is his reason? The Gemara answers that the terms <b>“gazelle” and “hart” are written three</b> times in the context of disqualified consecrated animals, in Deuteronomy 12:15, 12:22, and 15:22. <b>One</b> is required <b>for</b> the statement <b>of Rabbi Yitzḥak and Rabbi Oshaya, and one</b> is needed <b>for</b> the statement <b>of Rabbi Elazar HaKappar.</b></p>
+      <p><b>And the other</b> verse teaches that <b>just as a gazelle and a deer are exempt from</b> the first of their offspring being counted <b>a firstborn,</b> as the verse states: “All the firstling males that are born of your herd and of your flock” (Deuteronomy 15:19), referring specifically to domesticated animals but not undomesticated animals such as a gazelle and a deer; <b>so too, disqualified consecrated</b> animals <b>are exempt from</b> the first of their offspring being counted <b>a firstborn</b> (see 14a).</p>
+      <p>§ <b>The Sages taught</b> in a <i>baraita</i>: <b>One may not give</b> a blemished <b>firstborn</b> offering <b>to menstruating women to eat;</b> this is <b>the statement of Beit Shammai. And Beit Hillel say: One may give it to menstruating women to eat.</b> The Gemara asks: <b>What is the reason of Beit Shammai? It is written</b> with regard to the firstborn offering: <b>“And their flesh shall be yours,</b> as the wave breast and the right thigh” (Numbers 18:18). <b>Just as there,</b> with regard to the wave breast and the right thigh, <b>menstruating women</b> may <b>not</b> eat them, as these consecrated meats may not be eaten by a ritually impure individual, <b>so too here,</b> with regard to the firstborn offering, <b>menstruating women</b> may <b>not</b> eat its meat, as it too is consecrated.</p>
+      <p><b>And Beit Hillel</b> would respond: <b>This statement,</b> i.e., this verse, is referring only to the meat of <b>an unblemished</b> firstborn offering. Only such meat is compared to the wave breast and the right thigh. <b>But</b> with regard to <b>a blemished</b> firstborn offering, the verse explicitly states that <b>the impure and the pure may eat it</b> (see Deuteronomy 15:22).</p>
+      <p><b>And Beit Shammai</b> would claim: <b>This statement,</b> that the ritually impure may eat the meat of a blemished firstborn offering, applies only <b>where the impurity does not issue upon him from his</b> own <b>body</b> but is contracted from an external source, e.g., from a corpse or the carcass of a creeping animal. <b>But where the impurity issues upon him from his</b> own <b>body,</b> such as in the case of a <i>zav</i> or a menstruating woman, that individual may <b>not</b> eat the meat of a blemished firstborn offering.</p>
+      <p>Beit Shammai continue: This is a valid distinction, <b>as we find that the Merciful One distinguishes between</b> a case where the <b>impurity issues upon</b> an individual <b>from his</b> own <b>body</b> and <b>between</b> a case where the <b>impurity does not issue upon him from his</b> own <b>body. As we learned</b> in a mishna (<i>Pesaḥim</i> 95b): When <b>the Paschal offering is sacrificed in</b> a state of <b>ritual impurity,</b> due to the fact that the majority of the Jewish people are ritually impure, then <b><i>zavim</i> and lepers and <i>zavot</i> and menstruating women and women after childbirth may not eat from it.</b> The sacrificing of the Paschal offering overrides only ritual impurity imparted by a corpse; it does not override other forms of ritual impurity.</p>
+      <p><b>And Beit Hillel</b> would respond: <b>It is</b> only <b>there,</b> in the case of the Paschal offering, that a difference of that kind applies, <b>as the Merciful One revealed</b> that only an individual whose impurity did not issue from his own body is permitted to eat the Paschal offering, as the verse states: <b>“Impure</b> by reason of <b>a dead body”</b> (Numbers 9:10). <b>But here,</b> with regard to the firstborn offering, the term <b>“impure” is written unspecified:</b> “The impure and the pure may eat it alike.” Therefore, in this case there <b>is no difference</b> between the two types of impurity.</p>
+      <p>§ <b>The Sages taught</b> in a <i>baraita</i>: <b>One may not skin an animal from its feet [<i>margilin</i>] on a Festival.</b> Although it is permitted to slaughter and skin an animal on a Festival, one may not skin it in such a manner that he will retain the hide intact to function as a vessel. <b>Similarly, one may not skin a firstborn</b> offering <b>from its feet,</b> even on a weekday and even if it is blemished, <b>nor</b> is skinning by way of the feet permitted <b>in</b> the case of <b>disqualified consecrated</b> animals. Such an act is considered degrading to the animal, even if the animal has been redeemed and slaughtered.</p>
+      <p>The Gemara asks: <b>Granted,</b> one may not skin an animal from its feet on <b>a Festival, as one is</b> thereby <b>performing an effort whose</b> outcome <b>is not needed for</b> use on the Festival. <b>But</b> with regard to <b>a firstborn</b> offering, <b>who</b> is the <i>tanna</i> who <b>taught</b> that skinning it from its feet is prohibited? <b>Rav Ḥisda says: It is</b> the opinion of <b>Beit Shammai, who say</b> that <b>one may not feed</b> the meat of a firstborn offering <b>to menstruating women.</b> According to Beit Shammai, a blemished firstborn retains its sanctity as though it were unblemished, and must be treated in the manner of sacrificial meat. Skinning an animal from its feet is considered an act inappropriate for such meat and is therefore prohibited.</p>
+      <p>The Gemara analyzes the next clause of the <i>baraita</i>: <b>Nor</b> is skinning by way of the feet permitted <b>in</b> the case of <b>disqualified consecrated</b> animals. The Gemara asks: <b>Who</b> is the <i>tanna</i> who <b>taught</b> this? <b>Rav Ḥisda says: It is Rabbi Elazar, son of Rabbi Shimon, as we learned</b> in a <i>baraita</i>: One <b>had before him two sin offerings</b> that he consecrated to achieve atonement for his sin so that in the event that one of them was lost or died the other would effect atonement. <b>One</b> of them was <b>unblemished and</b> the other <b>one</b> became <b>blemished</b> after having been consecrated. The <i>halakha</i> is that the <b>unblemished</b> offering <b>should be sacrificed,</b> whereas the <b>blemished</b> one <b>should be redeemed.</b></p>
+      <p>The <i>baraita</i> continues: <b>If</b> the <b>blemished</b> animal <b>was</b> redeemed and <b>slaughtered before the blood of</b> the <b>unblemished</b> one <b>was sprinkled</b> on the altar to effect the atonement, the blemished animal is <b>permitted</b> to be eaten. But <b>if</b> the blemished one was slaughtered after <b>the blood of the unblemished</b> animal <b>was already sprinkled</b> upon the altar, the blemished animal is <b>prohibited</b> both in consumption and benefit. Since its owner’s atonement is effected by the sprinkling of the blood of the unblemished offering on the altar, at this stage the blemished animal must be put to death, in accordance with the <i>halakha</i> that a sin offering whose owner achieved atonement with another sin offering must die.</p>
+      <p><b>Rabbi Elazar, son of Rabbi Shimon, says: Even</b> if the blemished animal was slaughtered and its <b>meat</b> is being cooked <b>in the pot, and</b> only then was the <b>blood of the unblemished</b> animal <b>sprinkled</b> on the altar, the meat of the blemished animal is still <b>prohibited.</b> Rabbi Elazar, son of Rabbi Shimon, maintains that disqualified blemished offerings retain a measure of their sanctity even after being slaughtered. Since the blemished sin offering was not yet eaten when the blood of the unblemished one was sprinkled, it is considered a sin offering whose owner has achieved atonement, and therefore it is prohibited for one to derive benefit from it. The opinion of Rabbi Elazar, son of Rabbi Shimon, accords with the ruling of the <i>baraita</i> with regard to skinning a disqualified consecrated animal from its feet.</p>
+      <p>The Gemara raises a difficulty: <b>But let Rav Ḥisda establish the entire</b> <i>baraita</i> <b>in accordance with</b> the opinion of <b>Beit Shammai.</b> The Gemara explains: <b>Perhaps Beit Shammai say</b> that the sanctity of a blemished offering is retained <b>only in</b> the case of <b>a firstborn</b> offering, <b>as its sanctity is from the womb. But</b> with regard to <b>a disqualified consecrated</b> animal, <b>whose sanctity is not from the womb,</b> perhaps they do <b>not</b> maintain that its sanctity remains even after it has been slaughtered. It is therefore necessary to attribute the latter clause of the <i>baraita</i> to Rabbi Elazar, son of Rabbi Shimon.</p>
+      <p>The Gemara suggests: <b>But</b> if so, <b>let</b> Rav Ḥisda <b>establish the entire</b> <i>baraita</i> <b>in accordance with</b> the opinion of <b>Rabbi Elazar, son of Rabbi Shimon.</b> The Gemara answers: <b>Perhaps Rabbi Elazar, son of Rabbi Shimon, says</b> that the sanctity of a slaughtered blemished offering is retained <b>only there,</b> with regard to other <b>disqualified consecrated</b> animals, <b>because</b> their level of sanctity is <b>strong</b> enough <b>to transfer</b> their sanctity to their <b>redemption</b> money. <b>But</b> with regard to a blemished <b>firstborn</b> offering, <b>whose</b> level of sanctity is <b>not strong</b> enough <b>to transfer</b> it to <b>its redemption</b> money, perhaps its sanctity is <b>not</b> retained, and therefore one may skin the hide from its feet.</p>
+      <p>The Gemara asks: <b>But doesn’t Rabbi Elazar, son of Rabbi Shimon,</b> agree with the ruling of the mishna (31a) that <b>all disqualified consecrated</b> animals <b>are sold in the butchers’ market and weighed</b> and sold <b>by the <i>litra</i>,</b> in the manner of non-sacred meat? Certainly he agrees with that <i>halakha</i>. <b>Evidently, since there is a benefit</b> that accrues <b>to</b> the <b>Temple</b> treasury, the <i>tanna</i> of the mishna <b>deems this permitted.</b> As it was taught (31b), the meat of disqualified consecrated animals may be treated in this manner despite the fact that it retains a measure of sanctity. The reason is that if the owner knows that it is permitted for him to perform this more lucrative action, he is likely to spend more money to redeem the animal in the first place, which benefits the Temple treasury. By the same logic, why doesn’t Rabbi Elazar, son of Rabbi Shimon, permit the more lucrative action of skinning the animal from its feet?</p>
+      <p>The Gemara cites several resolutions. <b>Rav Mari, son of Rav Kahana, said</b> that <b>the benefit gained to the hide</b> by skinning it whole is offset by the <b>detriment</b> caused <b>to the flesh.</b> Part of the animal’s flesh is severed from the carcass during the skinning process, thereby lowering its value. <b>In the West,</b> Eretz Yisrael, <b>they say in the name of Ravina</b> that skinning a disqualified consecrated animal from its feet is prohibited <b>because it appears as though</b> he is <b>performing work with sacrificial</b> animals, which is prohibited.</p>
+      <p><b>Rabbi Yosei bar Avin says</b> that this prohibition is a rabbinic <b>decree, lest one</b> retain the disqualified consecrated animals in his possession while waiting for a consumer to purchase the hides, and in the meantime <b>raise many herds</b> of disqualified animals <b>from them.</b> In such a case, he might shear or work the animals in a prohibited manner.</p>
+      <p><strong>MISHNA:</strong> With regard to <b>a firstborn</b> animal <b>that was congested with</b> excess <b>blood, even</b> if the animal will <b>die</b> if one does not let the excess blood, <b>one may not let its blood,</b> as this might cause a blemish, and it is prohibited to cause a blemish on consecrated animals. This is <b>the statement of Rabbi Yehuda. And the Rabbis say: One may let</b> the blood <b>provided that he will not cause a blemish</b> while doing so, <b>and if he caused a blemish, the animal may not be slaughtered on</b> account of <b>that</b> blemish. Since he was the cause of the blemish, he may not slaughter the animal until it develops a different, unrelated blemish. <b>Rabbi Shimon says: One may let</b> the blood <b>even if he</b> thereby <b>causes a blemish</b> in the animal.</p>
+      <p><strong>GEMARA:</strong> <b>The Sages taught</b> in a <i>baraita</i>: With regard to <b>a firstborn</b> animal <b>that was congested with</b> excess <b>blood,</b> and which can be healed only through bloodletting, <b>one may let</b> the animal’s <b>blood</b> by cutting it <b>in a place where</b> the incision <b>does not cause</b> a permanent <b>blemish. But one may not let</b> the animal’s <b>blood</b> by cutting it <b>in a place where</b> the incision <b>causes</b> a permanent <b>blemish,</b> as it is prohibited to intentionally cause a blemish in a firstborn animal; this is <b>the statement of Rabbi Meir.</b></p>
+      <p><b>And the Rabbis say: One may even let</b> the animal’s blood by cutting it <b>in a place where</b> the incision <b>causes</b> a permanent <b>blemish, provided that he does not slaughter</b> the animal <b>on</b> the basis <b>of that blemish,</b> even though in general, a firstborn animal may be slaughtered once it develops any permanent blemish. <b>Rabbi Shimon says:</b> The animal <b>may even be slaughtered on</b> the basis <b>of that blemish. Rabbi Yehuda says: Even</b> if the firstborn would <b>die</b> if its blood is not let, <b>one may not let its blood</b> at all.</p>
+      <p>The Gemara relates: <b>Rabbi Elazar taught his son, and some say</b> it was <b>Rabbi Ḥiyya</b> who taught <b>his son:</b> Just <b>as</b> there is <b>a dispute here</b> in this <i>baraita</i> with regard to bloodletting, <b>so</b> there is <b>a dispute</b> in a mishna <b>with regard to a barrel of <i>teruma</i>. As we learned</b> (<i>Terumot</i> 8:8): In the case of <b>a barrel of <i>teruma</i></b> oil <b>with regard to which uncertainty developed</b> concerning its status of <b>ritual impurity,</b> and which therefore may not be eaten, <b>Rabbi Eliezer says</b> that one must nevertheless safeguard the <i>teruma</i> from impurity. Therefore, <b>if</b> the barrel <b>was resting in a vulnerable location,</b> where it might come into contact with impurity, one <b>should place it in a concealed location, and if it was exposed, he should cover it.</b></p>
+      <p><b>Rabbi Yehoshua says:</b> That is not necessary. Rather, <b>if it was placed in a concealed location,</b> one <b>may place it in a vulnerable location. If it was covered he may expose it,</b> as he need no longer safeguard this <i>teruma</i> from impurity. <b>Rabban Gamliel says:</b> One <b>should do nothing new with it,</b> i.e., he should leave the barrel as it is.</p>
+      <p>The Gemara clarifies: <b>Rabbi Meir,</b> who deems it permitted to let the firstborn offering’s blood provided that one does not cause a blemish, holds <b>in accordance with</b> the opinion of <b>Rabbi Eliezer,</b> who deems it prohibited to place the barrel in an exposed location lest it become ritually impure, which is equivalent to a blemish. <b>And the Rabbis,</b> who deem bloodletting permitted even if it will cause a blemish, hold <b>in accordance with</b> the opinion of <b>Rabbi Yehoshua,</b> who rules that the contents of the barrel may be exposed to ritual impurity. <b>And Rabbi Yehuda,</b> who says that bloodletting is not permitted under any circumstance, holds <b>in accordance with</b> the opinion of <b>Rabban Gamliel,</b> who rules that the barrel should be left as is and not be handled at all.</p>
+      <p>The Gemara rejects this suggestion: <b>From where</b> can one prove that these comparisons are accurate? <b>Perhaps Rabbi Meir states</b> his opinion, that one may not let blood in a place that will cause a blemish, <b>only there, as</b> the individual is <b>causing</b> the blemish <b>by</b> direct <b>action. But here,</b> in the case of the barrel, <b>where</b> the ritual impurity results <b>from an indirect</b> action, perhaps <b>he holds in accordance with</b> the opinion of <b>Rabbi Yehoshua.</b></p>
+      <p><b>And</b> furthermore, perhaps <b>Rabbi Eliezer states</b> his opinion that the barrel should be protected <b>only here,</b> because <b>perhaps Elijah will come and deem it ritually pure. But there,</b> with regard to the firstborn offering, <b>where if one leaves</b> the animal <b>it will</b> certainly <b>die,</b> perhaps <b>he holds in accordance with the</b> opinion of <b>the Rabbis,</b> that bloodletting is permitted in order to prevent the animal’s death.</p>
+      <p><b>And</b> likewise, <b>perhaps the Rabbis state</b> their opinion <b>only here,</b> with regard to the firstborn offering, <b>as if one leaves it,</b> the animal <b>will</b> certainly <b>die. But there,</b> in the case of the barrel of <i>teruma</i>, perhaps they accept the claim that one must safeguard the <i>teruma</i>, because <b>perhaps Elijah will come and deem it ritually pure,</b> which would mean that <b>they hold in accordance with</b> the opinion of <b>Rabbi Eliezer.</b> It can also be suggested that <b>Rabbi Yehuda states</b> his opinion, that bloodletting is prohibited in all circumstances, <b>only here,</b> with regard to the firstborn offering, <b>as</b> the individual is <b>causing</b> the blemish <b>by</b> direct <b>action. But there,</b> in the case of the barrel, <b>where</b> the ritual impurity results from an <b>indirect</b> action, perhaps <b>he holds in accordance with</b> the opinion of <b>Rabbi Yehoshua.</b></p>
+      <p><b>And</b> perhaps <b>Rabban Gamliel states</b> his opinion, that the barrel should not be moved at all, <b>only there,</b> because <b>perhaps Elijah will come and deem it ritually pure. But here,</b> with regard to the firstborn offering, <b>where if one leaves it, it will</b> certainly <b>die,</b> it is possible that <b>he holds in accordance with</b> the opinion of <b>the Rabbis.</b></p>
+      <p><b>And furthermore,</b> one cannot draw parallels between the opinions of the two sources, as <b>here</b> the <i>tanna’im</i> <b>disagree with regard to</b> the exposition of certain <b>verses, and there they disagree with regard to</b> the exposition of certain other <b>verses. As Rabbi Ḥiyya bar Abba says</b> that <b>Rabbi Yoḥanan says: All</b> of the Sages who disagree as to whether one may let the blood of the firstborn animal <b>concede that one who leavens</b> a meal offering <b>after</b> another had already <b>leavened</b> it is <b>liable</b> to receive lashes for the additional leavening, <b>as it is written: “It shall not be baked with leaven”</b> (Leviticus 6:10), <b>and</b> it is also stated: “No meal offering that you sacrifice to God <b>shall be made</b> with leaven” (Leviticus 2:11). This indicates that one is liable for every act of leavening performed on a meal offering.</p>
+      <p>Similarly, everyone agrees <b>that one who castrates</b> an animal <b>after one who has</b> already <b>castrated</b> it <b>is liable, as it is written: “Those whose testicles are bruised or crushed or detached or cut</b> shall not be offered to the Lord, and you shall not do this in your land” (Leviticus 22:24). <b>If one is liable</b> when the seminal vesicles <b>are cut,</b> then when the testicles <b>are detached</b> altogether, is he <b>not all the more so</b> liable? <b>Rather,</b> this verse serves to <b>include</b> one who <b>detaches</b> the testicles <b>after</b> one who <b>cuts</b> the seminal vesicles, to indicate <b>that he is liable.</b> Apparently, one is liable for castrating an animal that is already sterilized.</p>
+      <p>These Sages <b>disagree only with regard to one who causes a blemish in</b> an already <b>blemished</b> animal, such as one whose blood circulation is constricted. <b>As Rabbi Meir maintains</b> that as the verse states: “It shall be perfect to be accepted; <b>there shall be no blemish in it”</b> (Leviticus 22:21), this categorical statement includes even the causing of a blemish in an offering that is already blemished. <b>And the Rabbis maintain</b> that the phrase <b>“It shall be perfect to be accepted”</b> indicates that the prohibition against causing a blemish applies only to an animal that is currently perfect, i.e., unblemished, and can therefore be accepted, i.e., it is fit to be sacrificed upon the altar. If the animal is already blemished, there is no prohibition against causing an additional blemish in it.</p>
+      <p>The Gemara asks: <b>And Rabbi Meir, what does he do with this</b> verse: <b>“It shall be perfect to be accepted”?</b> The Gemara answers: <b>That</b> verse serves <b>to exclude</b> only an animal that was <b>blemished from the outset,</b> i.e., an animal that was born with a blemish. In such a case, there is no prohibition against causing an additional blemish in it. But if the animal was initially unblemished and later developed a blemish, it is prohibited to cause another blemish in it.</p>
+      <p>The Gemara rejects this suggestion: There is no need to exclude an animal that was <b>blemished from the outset,</b> as <b>it is merely like a palm tree,</b> i.e., it can never attain the status of an animal consecrated as an offering. Therefore, it is obvious that the prohibition against causing a blemish does not apply to this animal.</p>
+      <p><b>Rather,</b> Rabbi Meir maintains that the phrase “It shall be perfect to be accepted” serves <b>to exclude disqualified consecrated</b> animals, to teach that <b>after their redemption,</b> when they become non-sacred, the prohibition against causing a blemish does not apply to them any longer. This exclusion is necessary, as it might <b>enter your mind to say</b> that <b>since</b> even after they have been redeemed and are non-sacred, just as it is <b>prohibited</b> to <b>shear</b> these animals <b>or</b> use them for <b>labor,</b> perhaps <b>let</b> it <b>also be prohibited</b> to cause <b>a blemish upon them.</b> Consequently, this verse <b>teaches us</b> that there is no prohibition against causing a blemish in these animals.</p>
+      <p>The Gemara asks: <b>And</b> as for <b>the Rabbis as well,</b> who derive their opinion from the verse: “It shall be perfect to be accepted,” <b>isn’t it written: “There shall not be any blemish in it,”</b> which indicates an expansion of the prohibition against causing a blemish upon an offering? The Gemara answers: <b>That</b> verse <b>comes</b> to teach <b>that</b> the prohibition against causing a blemish extends also to a blemish caused as the result of <b>an indirect</b> action. <b>As it is taught</b> in a <i>baraita</i>: The verse states: <b>“There shall not be</b> any <b>blemish in it”</b> (Leviticus 22:21); from here <b>I have</b> derived</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf poursuit la discussion de la Michna 5:2 sur ceux qui peuvent manger un premier-né avec un défaut, puis aborde deux sujets : l'écorchage d'un premier-né par les pieds, et, avec la Michna 5:3, la saignée d'un premier-né congestionné.</p>
+
+<h4>1. Beit Hillel et le non-cohen</h4>
+<p>Beit Hillel répondent à l'objection de Beit Shammaï (le verset « comme le poitrail et la cuisse ») que celui-ci ne parle que du premier-né sans défaut. Pour un premier-né avec défaut, le verset dit « l'impur et le pur ensemble ». Ils tirent un a fortiori : si un cohen impur peut le manger, un non-cohen le pourrait-il aussi. La Guemara réfute l'a fortiori par la différence du service public, mais Beit Hillel répondent que l'on parle de consommation, où le non-cohen est supérieur à l'impur.</p>
+
+<h4>2. Rabbi Akiva et le non-Juif</h4>
+<p>Rabbi Akiva déduit du verset « comme la gazelle et comme le cerf » (Deutéronome 15:22) que, de même qu'un non-Juif peut manger de la gazelle, il peut manger un premier-né avec défaut. L'autre tanna explique que les mots « gazelle » et « cerf » sont écrits trois fois pour les consacrés disqualifiés et servent à d'autres enseignements.</p>
+
+<h4>3. Les nidot</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">École</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Position</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Beit Shammaï</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On ne donne pas le premier-né avec défaut à une nidda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Comme le poitrail et la cuisse » : une nidda ne les mange pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Beit Hillel</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On le lui donne</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le verset dit « l'impur et le pur ensemble », sans distinction</td></tr>
+</table>
+
+<p>Beit Shammaï ajoutent que « l'impur » ne désigne que l'impureté qui ne sort pas du corps (due à un mort ou à un reptile). Ils appuient leur distinction sur le sacrifice pascal des impurs (Pessa'him 95b). Beit Hillel répondent que, pour la Pâque, la distinction est écrite dans le verset (« impur par un mort », Nombres 9:10), alors qu'ici le texte dit « l'impur » sans précision.</p>
+
+<h4>4. Écorcher par les pieds</h4>
+<p>Une baraïta interdit d'écorcher par les pieds, de façon à garder la peau entière : le jour de fête, un premier-né (même avec défaut) et les consacrés disqualifiés (même rachetés). Rav ‘Hisda rattache le premier-né à Beit Shammaï (pour eux, il garde sa sainteté), et les consacrés disqualifiés à Rabbi Elazar, fils de Rabbi Chimon, qui leur garde une sainteté même abattus. La Guemara cherche pourquoi on n'autorise pas ce procédé alors qu'on permet la vente à la livre : réponses de Rav Mari, de Ravina et de Rabbi Yossi bar Avin.</p>
+
+<h4>5. Michna 5:3 : la saignée du premier-né</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Tanna</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Position dans la baraïta</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Parallèle avec la jarre de terouma</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Meïr</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On saigne là où il n'y a pas de défaut permanent</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Eliezer : on protège la jarre de l'impureté</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Sages</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On saigne même là où il y a un défaut, mais on n'abat pas à cause de lui</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehoshoua : on peut l'exposer à l'impureté</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On ne saigne pas du tout</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabban Gamliel : on ne la touche pas</td></tr>
+</table>
+
+<p>La Guemara refuse ce parallèle, car les deux controverses reposent sur des versets différents. Tous les tannaïm admettent qu'on est coupable de faire lever la pâte après un autre, ou de châtrer après un autre. La seule controverse porte sur le fait de causer un défaut à un animal déjà défectueux : Rabbi Meïr l'interdit (« tout défaut ne sera pas en lui »), les Sages le permettent (« parfait pour être agréé »).</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> : « Cela ne vaut que pour le premier-né sans défaut » : il est comparé au poitrail et à la cuisse, car le verset dit juste avant « leur sang tu l'aspergeras » ; mais pour celui avec défaut, il est écrit dans la section du premier-né « l'impur et le pur ensemble ». Le non-cohen mange les offrandes de moindre sainteté : sacrifice de paix, dîme du bétail et Pâque.</p>
+<p><b>Rachi</b> (suite) : « Comme le poitrail et la cuisse » : une nidda n'en mange pas, car l'impur qui mange du consacré encourt la peine de <i>karet</i>. « On n'écorche pas par les pieds » : on ne retire pas la peau entière pour en faire un soufflet de forgeron ou un récipient de miel ou d'huile, comme on le fait avec les peaux de moutons écorchées entières. « Il n'est pas apte pour lui » : le jour de fête. « Deux sacrifices de péché » : mis de côté en garantie, de sorte que si l'un se perd, l'autre expie.</p>
+<p><b>Rachi</b> (sur la Michna 5:3) : « saisi par le sang » : en langue vulgaire <i>afindor</i>. « Même s'il doit mourir » : si on ne le saigne pas. Rabbi Yehouda interdit même à un endroit sans défaut, de peur que, pressé pour son argent, l'homme saigne ensuite à un endroit qui cause un défaut. Les Sages permettent pourvu qu'on ne coupe pas et qu'on n'abîme pas l'oreille ou la lèvre. Rabbi Chimon permet même à un endroit qui cause un défaut.</p>
+<p><b>Tosafot</b> : sur « Beit Hillel : cela ne vaut que pour le premier-né sans défaut », ils expliquent que, même si le verset parle aussi du premier-né avec défaut, l'a fortiori est valable, comme dans Zeva'him 10b. Sur « on ne donne pas aux nidot », la règle vaut aussi pour celui qui a eu une pollution, car la Torah n'autorise que l'impureté permise pour la Pâque. Sur la baraïta des deux sacrifices de péché, les Tosafot expliquent que la Michna parle d'une vache avec défaut dont la sainteté est passée sur la vache sans défaut.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf contient des principes sur la sainteté des animaux consacrés et sur l'interdit de leur causer un défaut :</p>
+<ul>
+<li><b>Premier-né avec défaut.</b> D'après Beit Hillel (que la loi suit), un premier-né avec défaut se mange partout, par toute personne, impure ou pure, et même par un non-Juif (Choulhan Aroukh, Yoré Dé'a 306:5). Voir la fiche : <a href="../choulhan-aroukh/yd_306.html">Yoré Dé'a, siman 306</a>.</li>
+<li><b>Causer un défaut.</b> Il est interdit de causer directement un défaut à un animal consacré, comme à un premier-né. Un soin, comme une saignée pour sauver l'animal, est discuté entre Rabbi Yehouda, les Sages et Rabbi Chimon dans la Michna 5:3 ; le Choulhan Aroukh permet la saignée sans intention de causer un défaut, et autorise l'abattage si un défaut en résulte (Yoré Dé'a 313:6). Voir la fiche : <a href="../choulhan-aroukh/yd_313.html">Yoré Dé'a, siman 313 – Interdit de causer un défaut à un premier-né</a>.</li>
+<li><b>Écorcher par les pieds.</b> Il est interdit d'écorcher un premier-né ou un consacré disqualifié par les pieds, en gardant la peau entière.</li>
+<li><b>Acte direct et acte indirect.</b> La Guemara distingue entre causer un défaut par un acte direct et par un acte indirect : le verset « il n'y aura pas de défaut en lui » interdit aussi le second.</li>
+</ul>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.33" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
