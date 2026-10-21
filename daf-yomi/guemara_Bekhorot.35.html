@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 35 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 35</h1>
+    <p>Daf 35</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>טִימֵּא טְהָרוֹת וָמֵת — לֹא קָנְסוּ בְּנוֹ אַחֲרָיו. מַאי טַעְמָא? הֶיזֵּק שֶׁאֵינוֹ נִיכָּר לָא שְׁמֵיהּ הֶיזֵּק, קְנָסָא דְּרַבָּנַן — לְדִידֵיהּ קְנַסוּ רַבָּנַן, לִבְרֵיהּ לָא קְנַסוּ רַבָּנַן.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> מַעֲשֶׂה בְּזָכָר שֶׁל רְחֵלִים זָקֵן, וּשְׂעָרוֹ מְדוּלְדָּל, וְרָאָהוּ קַסְטוֹר אֶחָד וְאָמַר: מָה טִיבוֹ שֶׁל זֶה? אָמְרוּ לוֹ: בְּכוֹר הוּא, וְאֵינוֹ נִשְׁחָט אֶלָּא אִם כֵּן הָיָה בּוֹ מוּם. נָטַל (פיגום) [פִּיגְיוֹם] וְצָרַם אׇזְנוֹ, וּבָא מַעֲשֶׂה לִפְנֵי חֲכָמִים וְהִתִּירוּ, וְאַחַר שֶׁהִתִּירוּ הָלַךְ וְצֵירֵם בְּאׇזְנֵי בְכוֹרוֹת אֲחֵרִים וְאָסְרוּ.</p>
+      <p>פַּעַם אַחַת הָיוּ תִּינוֹקוֹת מְשַׂחֲקִין בַּשָּׂדֶה, וְקָשְׁרוּ זַנְבֵי טְלָאִים זֶה בָּזֶה, וְנִפְסְקָה זְנָבוֹ שֶׁל אֶחָד מֵהֶם, וַהֲרֵי הוּא בְּכוֹר, וּבָא מַעֲשֶׂה לִפְנֵי חֲכָמִים וְהִתִּירוּ. רָאוּ שֶׁהִתִּירוּ, הָלְכוּ וְקָשְׁרוּ זַנְבוֹת בְּכוֹרוֹת אֲחֵרִים, וְאָסְרוּ. זֶה הַכְּלָל: כֹּל שֶׁהוּא לְדַעְתּוֹ — אָסוּר, שֶׁלֹּא לְדַעְתּוֹ — מוּתָּר.</p>
+      <p><strong><big>גְּמָ׳</big></strong> פַּעַם אַחֶרֶת הָיָה כּוּ׳. וּצְרִיכָא, דְּאִי אַשְׁמְעִינַן גּוֹי — דְּלָא אָתֵי לְמִיסְרַךְ, אֲבָל קָטָן דְּאָתֵי לְמִיסְרַךְ — אֵימָא לָא.</p>
+      <p>וְאִי אַשְׁמוֹעִינַן קָטָן, מִשּׁוּם דְּלָא אָתֵי לְאִיחַלּוֹפֵי בְּגָדוֹל, אֲבָל גּוֹי דְּאָתֵי לְאִיחַלּוֹפֵי בְּגָדוֹל — אֵימָא לָא. צְרִיכָא.</p>
+      <p>אָמַר רַב חִסְדָּא אָמַר רַב קַטִּינָא: לֹא שָׁנוּ אֶלָּא דַּאֲמַרוּ לֵיהּ ״אֶלָּא אִם כֵּן הָיָה בּוֹ מוּם״, אֲבָל אִם אֲמַרוּ לֵיהּ ״אִם נַעֲשָׂה בּוֹ מוּם״ — כְּמַאן דַּאֲמַרוּ לֵיהּ ״זִיל עֲבֵיד בֵּיהּ מוּמָא״ דָּמֵי.</p>
+      <p>אָמַר רָבָא: מִכְּדֵי מִמֵּילָא הוּא, מָה לִי ״הָיָה״, מָה לִי ״נַעֲשָׂה״? אֶלָּא ״נַעֲשָׂה״ נָמֵי מִמֵּילָא הוּא, וְלָא שְׁנָא.</p>
+      <p>זֶה הַכְּלָל: כֹּל שֶׁהוּא לְדַעַת — אָסוּר. לְאֵיתוֹיֵי מַאי? לְאֵיתוֹיֵי גְּרָמָא.</p>
+      <p>שֶׁלֹּא לְדַעַת — לְאֵיתוֹיֵי מֵסִיחַ לְפִי תוּמּוֹ.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הָיָה בְּכוֹר רֹדְפוֹ, בְּעָטוֹ, וְעָשָׂה בּוֹ מוּם — הֲרֵי זֶה שׁוֹחֲטִין עָלָיו.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר רַב פָּפָּא: לֹא שָׁנוּ אֶלָּא שֶׁבְּעָטוֹ בִּשְׁעַת רְדִיפָה, אֲבָל לְאַחַר רְדִיפָה — לָא. פְּשִׁיטָא!</p>
+      <p>מַהוּ דְּתֵימָא: צַעְרֵיהּ הוּא דְּמִדְּכַר, קָא מַשְׁמַע לַן.</p>
+      <p>אִיכָּא דְּאָמְרִי, אָמַר רַב פָּפָּא: לָא תֵּימָא בִּשְׁעַת רְדִיפָה — אִין, אֲבָל שֶׁלֹּא בִּשְׁעַת רְדִיפָה — לָא, אֶלָּא אֲפִילּוּ לְאַחַר רְדִיפָה נָמֵי. מַאי טַעְמָא? צַעֲרֵיהּ [הוּא] דְּמִדְּכַר.</p>
+      <p>אָמַר רַב יְהוּדָה: מוּתָּר לְהַטִּיל מוּם בִּבְכוֹר קוֹדֶם שֶׁיָּצָא לַאֲוִיר הָעוֹלָם. אָמַר רָבָא: גַּדְיָא בְּאוּדְנֵיהּ, אִימְּרָא בְּשִׂפְוָותֵיהּ. אִיכָּא דְּאָמְרִי: אִימְּרָא נָמֵי בְּאוּדְנֵיהּ, אֵימוֹר דֶּרֶךְ צְדָעָיו נְפַק.</p>
+      <p>אָמַר רָבָא: אָכֵל וְלָא מִיחֲזֵי, פָּעֵי וּמִיחֲזֵי — הָוֵי מוּמָא. מַאי קָא מַשְׁמַע לַן? תְּנֵינָא: הַחוּטִין הַחִיצוֹנוֹת — שֶׁנִּפְגְּמוּ וְשֶׁנִּגְמְמוּ, הַפְּנִימִיּוֹת — שֶׁנֶּעֶקְרוּ. מַאי טַעְמָא? לָאו מִשּׁוּם דְּכִי פָּעֵי מִיחְזֵי?!</p>
+      <p>אָמַר רַב פָּפָּא: רָבָא נָמֵי טַעְמָא דְמַתְנִיתִין מְפָרֵשׁ, מַאי טַעְמָא נֶעְקְרוּ הָוֵי מוּמָא — מִשּׁוּם דְּכִי פָּעֵי מִיחְזֵי.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> כׇּל הַמּוּמִין הָרְאוּיִין לָבֹא בִּידֵי אָדָם, רוֹעֵי יִשְׂרָאֵל נֶאֱמָנִין, רוֹעִים כֹּהֲנִים אֵינָן נֶאֱמָנִין. רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: נֶאֱמָן הוּא עַל שֶׁל חֲבֵירוֹ, וְאֵין נֶאֱמָן עַל שֶׁל עַצְמוֹ. רַבִּי מֵאִיר אוֹמֵר: הֶחָשׁוּד עַל הַדֶּבֶר, לֹא דָּנוֹ וְלֹא מְעִידוֹ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> רַבִּי יוֹחָנָן וְרַבִּי אֶלְעָזָר, חַד אָמַר: ״רוֹעֵי יִשְׂרָאֵל״ בֵּי כֹהֲנִים — נֶאֱמָנִין, לִלְגִימָא לָא חָיְישִׁינַן.</p>
+      <p>רוֹעֵי כֹּהֲנִים בֵּי יִשְׂרָאֵל — אֵין נֶאֱמָנִין, מֵימָר אָמַר: כֵּיוָן דְּקָא טָרַחְנָא בֵּיהּ, לָא שָׁבֵיק לְדִידִי וְיָהֵיב לְאַחֲרִינֵי.</p>
+      <p>וְהוּא הַדִּין כֹּהֵן לְכֹהֵן, דְּחָיְישִׁינַן לְגוֹמְלִין.</p>
+      <p>וַאֲתָא רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל לְמֵימַר: נֶאֱמָן הוּא עַל שֶׁל חֲבֵירוֹ, וְאֵינוֹ נֶאֱמָן עַל שֶׁל עַצְמוֹ. וַאֲתָא רַבִּי מֵאִיר לְמֵימַר: הֶחָשׁוּד עַל הַדֶּבֶר לֹא דָּנוֹ וְלֹא מְעִידוֹ.</p>
+      <p>וְחַד אָמַר: ״רוֹעֵי יִשְׂרָאֵל״ וְהֵן כֹּהֲנִים — נֶאֱמָנִין,</p>
+      <p>מֵימָר אָמַר: לָא שָׁבֵיק צוּרְבָּא מֵרַבָּנַן וְיָהֵיב לְדִידִי. ״רוֹעֵי כֹהֲנִים״ וְהֵן יִשְׂרָאֵל — אֵינָן נֶאֱמָנִין, דְּחָיְישִׁינַן לִלְגִימָא.</p>
+      <p>וְכׇל שֶׁכֵּן כֹּהֵן לְכֹהֵן, דְּחָיְישִׁינַן לְגוֹמְלִין, וְחָיְישִׁינַן לִלְגִימָא. וַאֲתָא רַבָּן שִׁמְעוֹן לְמֵימַר: נֶאֱמָן עַל שֶׁל חֲבֵירוֹ, וְאֵינוֹ נֶאֱמָן עַל שֶׁל עַצְמוֹ. וַאֲתָא רַבִּי מֵאִיר לְמֵימַר: הֶחָשׁוּד עַל הַדָּבָר, לֹא דָּנוֹ וְלֹא מְעִידוֹ.</p>
+      <p>בִּשְׁלָמָא לְמַאן דְּאָמַר: רוֹעֵי יִשְׂרָאֵל וְהֵן כֹּהֲנִים נֶאֱמָנִין — הַיְינוּ דַּאֲתָא רַבִּי מֵאִיר לְמֵימַר: הֶחָשׁוּד עַל הַדָּבָר לֹא דָּנוֹ וְלֹא מְעִידוֹ.</p>
+      <p>אֶלָּא לְמַאן דְּאָמַר: רוֹעֵי כֹהֲנִים בֵּי יִשְׂרָאֵל אֵין נֶאֱמָנִין — מַאי אֲתָא רַבִּי מֵאִיר לְאַשְׁמוֹעִינַן? הַיְינוּ תַּנָּא קַמָּא!</p>
+      <p>אִיכָּא בֵּינַיְיהוּ דְּרַבִּי יְהוֹשֻׁעַ בֶּן קַפּוֹסַאי, דְּתַנְיָא: רַבִּי יְהוֹשֻׁעַ בֶּן קַפּוֹסַאי אוֹמֵר: בְּכוֹר בֵּי כֹהֵן צָרִיךְ שְׁנַיִם מִן הַשּׁוּק לְהָעִיד עָלָיו.</p>
+      <p>רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: אֲפִילּוּ בְּנוֹ, אֲפִילּוּ בִּתּוֹ. רַבִּי יוֹסֵי אוֹמֵר: אֲפִילּוּ עֲשָׂרָה וְהֵן בְּנֵי בֵיתוֹ אֵין מְעִידִין עָלָיו.</p>
+      <p>כְּמַאן אָזְלָא הָא דְּאָמַר רַב חִסְדָּא אָמַר רַב קַטִּינָא: סְפֵק בְּכוֹר שֶׁנּוֹלַד בֵּי יִשְׂרָאֵל, צָרִיךְ שְׁנַיִם מִן הַשּׁוּק לְהָעִיד עָלָיו?</p>
+      <p>כְּמַאן? כְּרַבִּי יְהוֹשֻׁעַ בֶּן קַפּוֹסַאי.</p>
+      <p>רַב נַחְמָן אָמַר: בְּעָלִים מְעִידִין עָלָיו, דְּאִי לָא תֵּימָא הָכִי, מַעֲשֵׂר לְרַבִּי מֵאִיר מִי מֵעִיד עָלָיו?</p>
+      <p>מַעֲשֵׂר וַדַּאי מְהֵימַן, דְּאִי בָּעֵי שָׁדֵי בֵּיהּ מוּמָא בְּכוּלֵּיהּ עֶדְרֵיהּ. אֶלָּא סְפֵק בְּכוֹר, לְרַבִּי מֵאִיר מִי מֵעִיד עָלָיו?</p>
+      <p>וְכִי תֵּימָא, הָכִי נָמֵי דְּלֵית לֵיהּ תַּקַּנְתָּא, וְהָתְנַן, שֶׁהָיָה רַבִּי יוֹסֵי אוֹמֵר: כֹּל שֶׁחֲלִיפָיו בְּיַד כֹּהֵן פָּטוּר מִן הַמַּתָּנוֹת, וְרַבִּי מֵאִיר מְחַיֵּיב!</p>
+      <p>אֶלָּא שְׁמַע מִינַּהּ: בְּעָלִים מְעִידִין עָלָיו, כֹּהֲנִים הוּא דַּחֲשִׁידִי אַמּוּמֵי, יִשְׂרָאֵל לָא חֲשִׁידִי אַמּוּמֵי.</p>
+      <p>אִיתְּמַר: רַב נַחְמָן אָמַר: הֲלָכָה כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, רָבָא אָמַר: הֲלָכָה כְּרַבִּי יוֹסֵי.</p>
+      <p>וּמִי אָמַר רָבָא הָכִי? וְהָאָמַר רָבָא: בְּעָלִים עוֹמְדִים עִמָּנוּ בַּחוּץ, נִכְנַס שָׁלֵם וְיָצָא חָבוּל — מְעִידִין עָלָיו! אֵימָא: כׇּל בְּעָלִים עוֹמְדִים, וְלָא חָיְישִׁינַן.</p>
+      <p>אִי הָכִי מַאי לְמֵימְרָא? מַהוּ דְּתֵימָא: נֵיחוּשׁ לַחֲשָׁדָא, קָא מַשְׁמַע לַן. וְהִלְכְתָא כְּרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל, וְדַוְקָא בְּנוֹ וּבִתּוֹ, אֲבָל אִשְׁתּוֹ לָא. מַאי טַעְמָא? אִשְׁתּוֹ כְּגוּפוֹ דָּמֵי.</p>
+      <p>אֲמַר לֵיהּ רַב פָּפָּא לְאַבָּיֵי: לְרַבִּי מֵאִיר דְּאָמַר הֶחָשׁוּד עַל הַדָּבָר לֹא דָּנוֹ וְלֹא מְעִידוֹ, וְקָאָמַר רַבִּי מֵאִיר הֶחָשׁוּד לְדָבָר אֶחָד חָשׁוּד לְכׇל הַתּוֹרָה כּוּלָּהּ, כֹּהֲנִים הָכִי נָמֵי דְּלָא דָּיְינִי דִּינָא? וְהָכְתִיב ״וְעַל פִּיהֶם יִהְיֶה כׇּל רִיב וְכׇל נָגַע״!</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>…que si quelqu'un a rendu impure la pureté d'autrui et est mort sans payer, les Sages n'ont pas puni son fils</b> après lui. Pourquoi ? Parce qu'un dommage qui n'est pas apparent n'est pas un dommage de par la Torah ; il y a une peine rabbinique, mais les Sages n'ont puni que lui, pas son fils.</p>
+      <p><b>MICHNA.</b> Il y eut un cas : un vieux bélier dont la laine pendait, car c'était un premier-né. Un officier romain (<i>kastor</i>) le vit et dit à son propriétaire : « Quel est le statut de cet animal, que tu l'as laissé vieillir sans l'abattre ? » On lui dit : « C'est un premier-né, on ne l'abat que s'il a un défaut. » L'officier prit un poignard et entailla l'oreille. L'affaire vint devant les Sages, qui permirent. Puis l'officier alla entailler d'autres premiers-nés, mais les Sages les interdirent.</p>
+      <p>Une autre fois, des enfants jouaient dans le champ et attachèrent les queues des agneaux ; la queue de l'un, un premier-né, fut arrachée. Les Sages permirent. Ceux qui virent qu'ils avaient permis allèrent attacher d'autres queues, et les Sages interdirent. <b>Voici le principe</b> : tout défaut causé à dessein est interdit ; sans intention, il est permis.</p>
+      <p><b>GUEMARA.</b> Les deux histoires sont nécessaires. Si la Michna n'avait enseigné que celle du non-Juif, on aurait pensé que les Sages ont permis parce qu'on ne craint pas qu'il prenne l'habitude de causer des défauts, l'interdit ne le concernant pas ; mais pour un enfant juif, on craint qu'il prenne cette habitude, donc on n'aurait pas permis même la première fois. Et si la Michna n'avait enseigné que celle de l'enfant, on aurait pensé que les Sages ont permis parce qu'on ne confondra pas un enfant avec un adulte ; mais pour un adulte non-Juif, on craint la confusion.</p>
+      <p><b>Rav 'Hisda dit au nom de Rav Ketina</b> : on a enseigné que c'est permis seulement si les présents ont dit à l'officier : « On n'abat un premier-né que s'il a un défaut » (qui vient de lui-même). Mais s'ils ont dit : « …que si un défaut lui a été causé » (<i>nitaasé</i>, qui indique une intervention humaine), c'est comme s'ils lui avaient dit : « Va lui causer un défaut », et c'est interdit. <b>Rava</b> objecte : les deux formules sont au passif, et les deux indiquent que le défaut vient de lui-même ; il n'y a pas de différence.</p>
+      <p><b>Le principe</b> : « tout défaut causé à dessein » ajoute l'acte indirect, qui est lui aussi interdit. Et « sans intention : permis » ajoute le cas où le non-Juif n'a pas questionné mais a appris d'un homme qui parlait à la légère : bien que le non-Juif ait causé le défaut, le Juif ne l'y a pas poussé, et c'est permis.</p>
+      <p><b>MICHNA (5:4).</b> Si un premier-né le poursuivait et qu'il l'a frappé du pied et lui a causé un défaut, il peut l'abattre. <b>GUEMARA.</b> <b>Rav Pappa dit</b> : c'est permis seulement s'il l'a frappé pendant la poursuite ; s'il l'a frappé après, c'est interdit, car il voulait lui causer un défaut pour le permettre. La Guemara objecte : c'est évident. Réponse : il fallait l'enseigner de peur qu'on dise qu'il l'a frappé après, par colère, en se rappelant son tourment, et non pour le permettre ; Rav Pappa enseigne qu'on présume qu'il l'a frappé exprès. Selon une autre version, Rav Pappa dit le contraire : même s'il l'a frappé après la poursuite, c'est permis, car on présume qu'il l'a fait par colère.</p>
+      <p><b>Rav Yehouda dit</b> : on peut causer un défaut à un petit premier-né avant qu'il sorte à l'air du monde, car il n'est saint qu'à la naissance. <b>Rava</b> : pour un chevreau, on le fait sur l'oreille, car ses longues oreilles sortent avant la tête ; pour un agneau, on ne peut le faire que sur la lèvre. Selon une autre version, pour l'agneau aussi sur l'oreille, car il sort par les tempes et ses oreilles se voient d'abord.</p>
+      <p><b>Rava dit</b> : si un premier-né a un défaut dans la bouche, invisible quand il mange mais visible quand il ouvre grand la bouche et crie, c'est un défaut qui permet de l'abattre. Quel est l'apport ? On l'apprend de la Michna (39a) : les gencives externes endommagées, et les gencives internes arrachées, sont des défauts. <b>Rav Pappa</b> : Rava n'enseigne pas une nouvelle halakha mais explique la raison de la Michna : si les gencives internes arrachées sont un défaut, c'est parce que, quand l'animal crie, le défaut se voit.</p>
+      <p><b>MICHNA.</b> Pour tous les défauts qui peuvent être causés par la main de l'homme, les bergers israélites sont crus, les bergers cohanim ne le sont pas. <b>Rabban Chimon ben Gamliel</b> : un cohen est cru pour le premier-né d'un autre, pas pour le sien. <b>Rabbi Meir</b> : celui qui est soupçonné sur une affaire ne juge ni ne témoigne, même pour un autre.</p>
+      <p><b>GUEMARA.</b> <b>Rabbi Yo'hanan et Rabbi Elazar</b> divergent sur le sens. L'un dit : les bergers israélites sont ceux qui sont chez un cohen ; on est cru, car on ne craint pas qu'ils mentent pour une gorgée du premier-né. Les bergers cohanim sont ceux qui sont chez un Israélite ; ils ne sont pas crus, car le cohen peut dire : « Puisque j'ai peiné avec ce premier-né, l'Israélite ne me laissera pas pour le donner à un autre cohen. » De même un cohen qui témoigne pour un autre cohen n'est pas cru, par crainte de service réciproque. <b>Rabban Chimon ben Gamliel</b> : le cohen est cru pour le premier-né d'un autre, pas pour le sien. <b>Rabbi Meir</b> : un cohen soupçonné ne juge ni ne témoigne, même pour un autre.</p>
+      <p><b>L'autre explique</b> : les bergers israélites sont des cohanim chez un Israélite : ils sont crus, car on ne les soupçonne pas de mentir pour la viande, l'Israélite ne laissant pas un cohen savant pour donner l'animal à un berger ignorant. Les bergers cohanim sont des Israélites chez un cohen, qui ne sont pas crus, de crainte qu'ils mentent pour une gorgée. A fortiori un cohen pour un autre cohen.</p>
+      <p>La Guemara demande : selon le second avis, on comprend pourquoi Rabbi Meir contredit (un cohen soupçonné ne témoigne pas même pour un autre). Mais selon le premier, qu'enseigne Rabbi Meir ? C'est l'avis du premier tanna ! Elle répond : la différence porte sur <b>Rabbi Yehoshoua ben Kefousaï</b> : si un premier-né de la maison d'un cohen a eu un défaut, il faut deux témoins du marché (qui ne sont pas de sa maison), même cohanim. <b>Rabban Chimon ben Gamliel</b> : même son fils et sa fille peuvent témoigner. <b>Rabbi Yossé</b> : même dix, s'ils sont de sa maison, ils ne témoignent pas. Le premier tanna : seul le cohen berger n'est pas cru ; un cohen indépendant est cru, comme Rabbi Yehoshoua ben Kefousaï. Rabbi Meir ne croit même pas le cohen indépendant.</p>
+      <p><b>Rav 'Hisda au nom de Rav Ketina</b> : pour un animal né chez un Israélite dont le statut de premier-né est douteux (par exemple, on ne sait si la mère a déjà mis bas), il faut deux témoins du marché pour attester son défaut, comme Rabbi Yehoshoua ben Kefousaï. <b>Rav Na'hman</b> : les propriétaires israélites eux-mêmes peuvent témoigner. Sinon, si tous les intéressés sont soupçonnés, comment un Israélite témoigne-t-il d'un animal de dîme, selon Rabbi Meir ? Il faut donc que l'Israélite ne soit pas soupçonné de causer des défauts. La Guemara rejette : pour la dîme, le propriétaire est certainement cru, car il peut légitimement causer des défauts à tout le troupeau avant de séparer la dîme. Rav Na'hman dit : si l'Israélite n'est pas cru pour un animal dont le premier-né est douteux, selon Rabbi Meir il n'a pas de remède, car personne n'est cru. Mais Rabbi Yossé n'enseigne-t-il pas (18b) qu'un animal dont les remplaçants sont chez un cohen est exempt des dons des prêtres, et Rabbi Meir l'y oblige ? Comme Rabbi Meir permet de manger un animal de statut douteux, il admet un témoignage sur son défaut. Donc les propriétaires israélites peuvent témoigner pour leurs animaux douteux ; seuls les cohanim sont soupçonnés.</p>
+      <p><b>Il a été dit</b> : Rav Na'hman dit que la halakha suit Rabban Chimon ben Gamliel (un cohen est cru pour le premier-né d'un autre cohen, même de sa maison). <b>Rava</b> dit que la halakha suit Rabbi Yossé (les membres de sa maison ne sont pas crus). La Guemara objecte : Rava ne dit-il pas lui-même que si le propriétaire cohen est dehors avec nous et que l'animal entre entier et sort blessé, les membres de la maison témoignent ? Réponse : il s'agit du cas où toute la maison est dehors et le berger seul est resté dedans : il est cru, car on ne le soupçonne pas. <b>Conclusion</b> : la halakha suit Rabban Chimon ben Gamliel : les membres de la maison du cohen, fils et fille, peuvent témoigner pour son premier-né, mais pas sa femme, car elle est comme lui-même.</p>
+      <p><b>Rav Pappa dit à Abayé</b> : selon Rabbi Meir, un cohen soupçonné ne juge ni ne témoigne même pour un autre, et celui qui est soupçonné d'une faute l'est de toute la Torah ; il faudrait donc que les cohanim ne puissent jamais juger. N'est-il pas écrit à propos des cohanim : « Selon leur parole se décidera toute querelle » (Deutéronome 21:5) ?</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>that if <b>one rendered impure</b> the <b>ritually pure items</b> of another <b>and died</b> before paying, the Sages <b>did not penalize his son after his</b> death and require him to pay for the damage. <b>What is the reason</b> for this? The reason is that <b>damage that is not evident,</b> i.e., which does not involve any visible change, <b>is not considered damage</b> by Torah law. There is <b>a penalty</b> imposed <b>by rabbinic law,</b> as the injured party suffered a loss, but <b>the Sages penalized</b> only <b>him; the Sages did not penalize his son.</b></p>
+      <p><strong>MISHNA:</strong> There was <b>an incident involving an old ram whose hair was</b> long and <b>dangling,</b> because it was a firstborn offering. <b>And one</b> Roman <b>quaestor [<i>kastor</i>] saw it and said</b> to its owner: <b>What is the status [<i>tivo</i>] of this</b> animal that you allowed it to grow old and you did not slaughter it? <b>They said to him:</b> It <b>is a firstborn</b> offering, <b>and</b> therefore <b>it may be slaughtered only if it has a blemish.</b> The quaestor <b>took a dagger [<i>pigom</i>] and slit its ear. And the incident came before</b> the <b>Sages</b> for a ruling, <b>and they deemed</b> its slaughter <b>permitted. And after</b> the Sages <b>deemed</b> its slaughter <b>permitted,</b> the quaestor <b>went and slit the ears of other firstborn</b> offerings, <b>but</b> in these cases the Sages <b>deemed</b> their slaughter <b>prohibited,</b> despite the fact that they were now blemished.</p>
+      <p><b>One time children were playing in the field and they tied the tails of lambs to each other, and the tail of one of them was severed, and it was a firstborn</b> offering. <b>And the incident came before the Sages</b> for a ruling <b>and they deemed</b> its slaughter <b>permitted.</b> The people who <b>saw that they deemed</b> its slaughter <b>permitted went and tied the tails of other firstborn</b> offerings, <b>and</b> the Sages <b>deemed</b> their slaughter <b>prohibited. This</b> is <b>the principle:</b> With regard to <b>any</b> blemish <b>that is</b> caused <b>intentionally,</b> the animal’s slaughter is <b>prohibited;</b> if the blemish is caused <b>unintentionally,</b> the animal’s slaughter is <b>permitted.</b></p>
+      <p><strong>GEMARA:</strong> The mishna mentions that <b>one time</b> children <b>were</b> involved in a case in which they unintentionally blemished a firstborn offering whose subsequent slaughter the Sages deemed permitted. The Gemara notes: <b>And</b> although the first clause of the mishna mentions a similar occurrence, the incident involving the children is <b>necessary. As, had</b> the <i>tanna</i> <b>taught us</b> only the incident involving the <b>gentile,</b> it might have been thought that the Sages permitted the slaughter of the firstborn offering only there, <b>as</b> it is <b>not</b> a problem if the gentile <b>will acquire the habit</b> of causing blemishes, because that prohibition does not apply to gentiles. <b>But</b> with regard to a Jewish <b>minor,</b> it is a concern <b>that he</b> is likely <b>to acquire the habit</b> of causing blemishes in firstborn offerings, and therefore one might <b>say</b> that even the first, unintentional time should <b>not</b> be permitted.</p>
+      <p><b>And had</b> the <i>tanna</i> <b>taught us</b> only the incident involving <b>a minor,</b> it might have been thought that the Sages deemed the firstborn offering permitted only there, <b>since</b> there is <b>no</b> concern that people <b>will come to confuse</b> a minor <b>with an adult.</b> People would not erroneously conclude that it is permitted to cause a blemish on a firstborn offering intentionally merely due to an incident involving a minor. <b>But</b> in the case of <b>a gentile</b> adult, where this is a concern <b>that</b> people would <b>come to confuse</b> him <b>with</b> a Jewish <b>adult,</b> one might <b>say</b> that even the first, unintentional time should <b>not</b> be permitted. It is therefore <b>necessary</b> for the mishna to teach both cases.</p>
+      <p>§ The Gemara analyzes the incident involving the Roman quaestor. <b>Rav Ḥisda says</b> that <b>Rav Ketina says: They taught</b> that the firstborn offering is permitted <b>only</b> in a case <b>where</b> the bystanders <b>said to</b> the quaestor: A firstborn offering may not be slaughtered <b>unless it has a blemish,</b> as this is referring to a blemish that develops naturally. <b>But if they said to him</b> that a firstborn offering may be slaughtered only <b>if a blemish was caused</b> to form <b>upon it,</b> which indicates human intervention, <b>it is considered as though they</b> explicitly <b>told him: Go and cause a blemish on it,</b> in which case the animal is prohibited.</p>
+      <p>The Gemara cites a dissenting opinion. <b>Rava said: Now</b> consider, both expressions in fact indicate that the blemish occurred <b>by itself,</b> as both statements are in the passive. Accordingly, <b>what</b> difference is it <b>to me</b> whether the bystanders used the expression: If it <b>had</b> a blemish, or the expression: A blemish <b>was caused</b> in it? <b>Rather,</b> the expression: <b>Was caused, also</b> indicates that it occurred <b>by itself, and</b> there <b>is no difference</b> between the expressions. In both instances the firstborn offering would be permitted.</p>
+      <p>The mishna teaches that <b>this</b> is <b>the principle:</b> In the case of <b>any</b> blemish <b>that is</b> caused <b>with</b> his <b>intent,</b> the animal’s slaughter is <b>prohibited.</b> The Gemara explains: <b>What</b> does this principle serve <b>to add?</b> It serves <b>to add an indirect</b> action, i.e., a blemish caused in this manner is also considered an intentional act and the animal may not be slaughtered on its account.</p>
+      <p>The Gemara further inquires: What is added by the phrase in the second part of the principle: If the blemish was caused <b>without</b> his <b>intent,</b> the animal’s slaughter is permitted? This serves <b>to add</b> an instance where a gentile did not inquire about the nature of the firstborn offering, but rather discovered it from one who <b>speaks offhandedly.</b> Although the gentile intentionally caused a blemish in the animal, since the Jew did not intentionally prompt him to cause it, the animal is permitted.</p>
+      <p><strong>MISHNA:</strong> If one’s <b>firstborn</b> offering <b>was pursuing him,</b> and <b>he kicked</b> the animal <b>and caused a blemish in it, he may slaughter</b> the animal <b>on</b> account of <b>that</b> blemish.</p>
+      <p><strong>GEMARA:</strong> <b>Rav Pappa says: They taught</b> that the firstborn offering may be slaughtered <b>only</b> in an instance <b>where he kicked it at the time of its pursuit. But</b> if the individual kicked the animal <b>after</b> its <b>pursuit,</b> it may <b>not</b> be slaughtered, as he intended to cause a blemish in order to render it permitted to be slaughtered. The Gemara raises a difficulty: It is <b>obvious</b> that it is not permitted to slaughter the animal in such a case.</p>
+      <p>The Gemara explains: Rav Pappa’s statement is necessary, <b>lest you say</b> that it is in fact permitted to slaughter the firstborn offering since he kicked it after its pursuit only out of anger, as <b>he recalls his distress</b> caused by its pursuit of him, and not in order to render the animal permitted to be slaughtered. Rav Pappa therefore <b>teaches us</b> that it is assumed that he kicked the animal with the express intention of causing a blemish in it, not merely out of anger, and therefore it may not be slaughtered.</p>
+      <p><b>There are</b> those <b>who say</b> the opposite version of this discussion. <b>Rav Pappa says: Do not say</b> that if the individual kicked the firstborn offering <b>at the time of</b> the <b>pursuit,</b> then <b>yes,</b> it is permitted to slaughter it, <b>but</b> if he kicked it <b>not at the time of</b> the <b>pursuit,</b> it is <b>not</b> permitted to slaughter it. <b>Rather, even</b> if he kicked it <b>after</b> its <b>pursuit</b> of him, it is <b>also</b> permitted. <b>What is the reason?</b> It is assumed that he kicked it after the pursuit not with the intention of causing a blemish, but because <b>he recalls his distress</b> caused by its pursuit of him.</p>
+      <p>§ <b>Rav Yehuda says: It is permitted to cause a blemish in a firstborn</b> fetus <b>before it emerges into the air of the world,</b> as it obtains its sacred status only when it is born. Applying this ruling, <b>Rava said:</b> In the case of <b>a kid,</b> it is practical to cause a blemish <b>on its ear.</b> Since a kid’s ears are long they emerge from the birth canal prior to the head. With regard to <b>a lamb,</b> whose ears are short and do not appear before the head, it is practical to cause a blemish only <b>on its lip. There are</b> those <b>who say</b> that there is a different version of this statement: In the case of <b>a lamb as well,</b> it is practical to cause a blemish <b>on its ear,</b> as one can <b>say</b> that <b>it emerges</b> from the birth canal <b>through its temples,</b> in which case its ears are visible first.</p>
+      <p><b>Rava says:</b> In a case where a firstborn has a blemish in its mouth, if, when it <b>eats,</b> the blemish <b>is not visible,</b> but when it opens its mouth wide and <b>cries out, it is visible,</b> this <b>is</b> considered <b>a blemish,</b> rendering the animal fit for slaughter. The Gemara asks: <b>What is</b> this <b>teaching us? We learn</b> this in the mishna (39a) with regard to blemishes that render a firstborn offering fit for slaughter: <b>The external gums that were damaged</b> and lacking or <b>that were scratched,</b> and likewise, <b>the internal</b> gums <b>that were</b> entirely <b>extracted,</b> are considered blemished. <b>What is the reason</b> that if the internal gums were extracted it is considered a blemish? Is it <b>not because when</b> the animal opens its mouth wide and <b>cries out, it is visible?</b> If so, what is the novelty of Rava’s statement?</p>
+      <p><b>Rav Pappa says</b> in response: <b>Rava</b> is not in fact teaching a novel <i>halakha</i>. Rather, he <b>is explaining the reason</b> for the ruling <b>of the mishna: What is the reason</b> that if the internal gums <b>were extracted it is</b> considered <b>a blemish?</b> It is <b>that when</b> the animal opens its mouth wide and <b>cries out,</b> the blemish <b>is visible.</b></p>
+      <p><strong>MISHNA:</strong> With regard to <b>all the blemishes that are capable of being brought about by a person, Israelite shepherds are deemed credible</b> to testify that the blemishes were not caused intentionally. But <b>priest-shepherds are not deemed credible,</b> as they are the beneficiaries if the firstborn is blemished. <b>Rabban Shimon ben Gamliel says:</b> A priest is <b>deemed credible</b> to testify <b>about</b> the firstborn <b>of another, but is not deemed credible</b> to testify <b>about</b> the firstborn belonging <b>to him. Rabbi Meir says:</b> A priest <b>who is suspect about the matter</b> of causing a blemish may <b>neither adjudicate nor testify</b> in cases involving that matter, even on behalf of another.</p>
+      <p><strong>GEMARA:</strong> <b>Rabbi Yoḥanan and Rabbi Elazar</b> disagree with regard to the meaning of the mishna. <b>One</b> of them <b>says</b> that the case of <b>Israelite shepherds</b> is where the shepherds are in <b>the house of priests,</b> i.e., in the employ of a priest. These shepherds are <b>deemed credible</b> to testify that the blemishes were not caused intentionally, as <b>we are not concerned</b> they are lying <b>for a swallow [<i>lilegima</i>]</b> of the firstborn that their priest employer might give them in exchange.</p>
+      <p>And the case of <b>priest-shepherds</b> is where the shepherds are in <b>the house of an Israelite,</b> i.e., in the latter’s employ. In such a case, the priest-shepherds <b>are not deemed credible</b> to testify that the blemishes were not caused intentionally, as the priest-shepherd <b>can say: Since I have toiled with</b> this firstborn offering, my Israelite employer <b>will not forsake me and give</b> it <b>to another</b> priest. The priest is assumed to be lying, as he has a motive to cause a blemish in the animal.</p>
+      <p><b>And the same is true</b> in the case of <b>a priest</b> who testifies <b>for</b> the sake of another <b>priest.</b> Although the first priest would not derive benefit from his testimony immediately, he is nevertheless not deemed credible to testify, <b>as we are concerned about reciprocal</b> behavior, i.e., the other priest might later repay the favor and lie on his behalf.</p>
+      <p><b>And Rabban Shimon ben Gamliel comes to say</b> that the testimony of a priest in such a case, when he testifies <b>about</b> the firstborn <b>of another</b> priest, <b>is deemed credible,</b> as there is no concern about reciprocal behavior. But <b>he is not deemed</b> credible <b>with regard to his own</b> firstborn. <b>And Rabbi Meir comes to say</b> that a priest, <b>who is suspect about the matter</b> of causing a blemish, may <b>neither adjudicate nor testify</b> in cases involving that matter, even on behalf of another. The difference between the opinion of Rabbi Meir and that of the first <i>tanna</i> will be discussed further on.</p>
+      <p>The Gemara cites the other explanation of the mishna: <b>And</b> the other <b>one</b> of the two <i>amora’im</i> <b>says:</b> The case of <b>Israelite shepherds</b> is where the shepherds <b>are priests</b> in the employ of an Israelite. The mishna is teaching that these shepherds <b>are deemed credible</b> to testify that the blemishes on their employer’s firstborn offering were not caused intentionally, as they are not suspected of lying in order to obtain its meat.</p>
+      <p>The reason is that it is assumed that the priest-shepherd would <b>say:</b> My Israelite employer <b>will not forsake</b> a priest who is <b>a Torah scholar and give</b> the blemished animal <b>to me,</b> an unlearned shepherd. The case of <b>priest-shepherds</b> is where the shepherds <b>are Israelites</b> in the employ of a priest. These shepherds are <b>not deemed credible</b> to testify, <b>as we are concerned</b> that they might be lying <b>for a swallow</b> of the firstborn that their priest employer would give them in exchange.</p>
+      <p><b>And all the more so</b> the testimony of <b>a priest for</b> the sake of another <b>priest</b> is not deemed credible, <b>as we are concerned that</b> the two might engage in <b>reciprocal</b> behavior, <b>and we are concerned</b> that the priest-shepherd might be lying <b>for a swallow</b> of the firstborn offering. <b>And Rabban Shimon ben Gamliel comes to say</b> that the priest-shepherd <b>is deemed credible</b> to testify <b>with regard to</b> the firstborn offering <b>of another</b> priest, <b>but is not deemed credible</b> to testify <b>with regard to</b> a firstborn belonging to <b>himself. And Rabbi Meir comes to say</b> that a priest <b>who is suspect about the matter</b> of causing a blemish may <b>neither adjudicate nor testify</b> in cases involving that matter, even on behalf of another.</p>
+      <p>The Gemara raises a difficulty: <b>Granted, according to</b> the second opinion, i.e., <b>the one who says</b> the first <i>tanna</i> maintains that the case of <b>Israelite shepherds</b> is where the shepherds <b>are priests</b> in the employ of an Israelite, and they <b>are deemed credible</b> to testify, <b>this is</b> the reason <b>that Rabbi Meir comes to</b> disagree and <b>say</b> that a priest <b>who is suspect about the matter</b> of causing a blemish may <b>neither adjudicate nor testify</b> even for the sake of an Israelite employer.</p>
+      <p><b>But according to</b> the first opinion, i.e., <b>the one who says</b> that the first <i>tanna</i> maintains that the case of <b>priest-shepherds</b> is where the shepherds are in <b>an Israelite’s house,</b> and they <b>are not deemed credible</b> to testify, <b>what is Rabbi Meir coming to teach us? This is</b> the same opinion as that of the <b>first <i>tanna</i></b> himself.</p>
+      <p>The Gemara answers: <b>There is</b> a difference <b>between</b> the opinions of the first <i>tanna</i> and Rabbi Meir <b>with regard to</b> a statement <b>of Rabbi Yehoshua ben Kefusai. As it is taught</b> in a <i>baraita</i> that <b>Rabbi Yehoshua ben Kefusai says:</b> If <b>a firstborn</b> animal <b>in the house of a priest</b> developed a blemish, <b>two</b> people <b>from the marketplace,</b> i.e., not from the priest’s household, are <b>required to testify about it</b> that the blemish was not caused deliberately. This unqualified statement indicates that the two people can even be priests, provided that they are not household members.</p>
+      <p>The <i>baraita</i> continues: <b>Rabban Shimon ben Gamliel says: Even</b> the priest’s <b>son</b> and <b>even his daughter</b> may testify about it. <b>Rabbi Yosei says: Even</b> in a case where there are <b>ten</b> people, if <b>they are members of his household, they may not testify about it.</b> The first <i>tanna</i> of the mishna maintains that only a priest who is a shepherd of the animal in question is not deemed credible to testify, but the testimony of an independent priest is credible. This accords with the opinion of Rabbi Yehoshua ben Kefusai, who allows the testimony of any two independent people, including a priest. Conversely, Rabbi Meir does not deem credible even the testimony of an independent priest, as indicated by his general statement about suspect priests.</p>
+      <p>The Gemara discusses a related statement: <b>In accordance with whose</b> opinion <b>is that which Rav Ḥisda says</b> that <b>Rav Ketina says:</b> In the case of an animal whose status as a <b>firstborn</b> is <b>uncertain that was born</b> in the <b>house,</b> i.e., in the possession, <b>of an Israelite,</b> e.g., it was uncertain whether the mother had previously given birth, in which case the animal remains in the possession of the Israelite and may be eaten upon developing a blemish, <b>two</b> people <b>from the marketplace</b> are <b>required to testify about it?</b></p>
+      <p><b>In accordance with whose</b> opinion is this statement? It is <b>in accordance with</b> the opinion of <b>Rabbi Yehoshua ben Kefusai.</b> Just as he requires two independent people to testify about a firstborn offering in the possession of a priest, as he is suspected of intentionally causing the blemish, so too, he requires two independent people to testify in the case of an uncertain status of a firstborn offering born in the possession of an Israelite.</p>
+      <p><b>Rav Naḥman</b> disagrees and <b>says:</b> The Israelite <b>owners</b> themselves <b>may testify about it. As, if you do not say so,</b> but instead maintain that any involved person is suspected of deliberately causing a blemish in his firstborn animal, this poses a difficulty with regard to the <i>halakha</i> of an animal <b>tithe</b> offering, which may also be eaten if it developed a blemish. <b>According to Rabbi Meir, who can testify about it?</b> Rabbi Meir maintains that anyone who is suspect about the matter of causing a blemish on his own behalf may neither adjudicate nor testify in cases involving that matter even on behalf of another. If so, how can anyone, even an Israelite, testify about any blemished animal-tithe offering? It must be that an Israelite is not suspected of deliberately causing blemishes.</p>
+      <p>The Gemara rejects this claim: With regard to the animal <b>tithe</b> offering, the owner is <b>certainly deemed credible</b> to testify that its blemish occurred naturally, <b>because if he wants,</b> he could legitimately <b>cause a blemish in his entire flock</b> before the obligation to separate tithes came into effect. <b>Rather,</b> this is what Rav Naḥman stated: If an Israelite is not deemed credible to testify about a blemish found on an animal whose status as a <b>firstborn</b> is <b>uncertain,</b> then <b>according to Rabbi Meir, who can testify about it?</b> Both Israelites and priests stand to gain if their animal whose status as a firstborn is uncertain develops a blemish, and therefore no one should be deemed credible to testify about it.</p>
+      <p><b>And if you would say</b> that <b>indeed,</b> according to Rabbi Meir, an animal whose status as a firstborn is uncertain <b>has no remedy</b> that can render it fit for slaughter, as no one is deemed credible to testify about its blemish, this cannot be correct. <b>But didn’t we learn</b> in a mishna (18b) <b>that Rabbi Yosei would say: Any</b> animal <b>whose replacements</b> are <b>in the possession of a priest is exempt from,</b> i.e., not subject to, the mitzva of giving <b>the</b> priestly <b>gifts, and Rabbi Meir deems</b> him <b>obligated</b> to give the gifts? Since Rabbi Meir permits the consumption of an animal whose status as a firstborn is uncertain, evidently he allows testimony about its blemish in such a case.</p>
+      <p><b>Rather, learn from this</b> that the Israelite <b>owners may testify about</b> their animals whose status as a firstborn are uncertain, despite the fact that priests may not. The reason is that <b>it is</b> only <b>priests who are suspected of</b> causing <b>blemishes; Israelites are not suspected of</b> causing <b>blemishes.</b></p>
+      <p>§ It <b>was stated: Rav Naḥman says</b> that the <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel,</b> that a priest is deemed credible to testify about the blemished firstborn animal of another priest, even if he is a household member. <b>Rava says:</b> The <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabbi Yosei,</b> that one’s household members are not deemed credible to testify.</p>
+      <p>The Gemara asks: <b>And does Rava</b> actually <b>say this? But doesn’t Rava say:</b> If the priestly <b>owner</b> of a firstborn animal was <b>standing outside with us,</b> and the animal <b>entered</b> the house <b>whole and emerged injured,</b> the household members <b>may testify about it</b> that the blemish was not caused by a person. Evidently, Rava maintains that the members of the priest’s household are deemed credible to testify about the priest’s firstborn. The Gemara answers: One can <b>say</b> that Rava is referring to a case where <b>all the owners,</b> i.e., the household members, <b>are standing outside,</b> while the shepherd alone remains inside. When the firstborn animal emerges injured, the shepherd is deemed credible to testify about the blemish <b>and we are not concerned</b> that he is lying.</p>
+      <p>The Gemara asks: <b>If so,</b> that all of the household members were outside, <b>what</b> is the purpose <b>of stating</b> that the shepherd is deemed credible? This ruling is obvious. The Gemara answers: This ruling is necessary <b>lest you say</b> that <b>we should entertain a suspicion</b> that the shepherd himself caused the blemish. Rava therefore <b>teaches us</b> that this is not so, and the shepherd is deemed credible. The Gemara concludes: <b>And the <i>halakha</i></b> is <b>in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel,</b> that a priest’s household members may testify about his blemished firstborn offering. <b>And</b> this applies <b>specifically</b> to <b>his son and daughter, but his wife</b> may <b>not</b> testify. <b>What is the reason? One’s wife is as oneself.</b></p>
+      <p>§ <b>Rav Pappa said to Abaye: According to Rabbi Meir, who says that</b> a priest <b>who is suspect about the matter</b> of causing a blemish may <b>neither adjudicate nor testify</b> in cases involving that matter even on behalf of another, <b>and</b> in addition <b>Rabbi Meir says</b> that <b>one who is suspected of</b> transgressing <b>one matter,</b> i.e., who is known to have committed one transgression, <b>is suspected of</b> transgressing <b>the entire Torah,</b> it should follow that <b>priests</b> should <b>also not</b> be allowed to <b>administer judgment</b> at all. <b>But isn’t it written</b> with regard to the priests: <b>“And according to their word shall every controversy and every stroke be”</b> (Deuteronomy 21:5)?</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Cette page de Bekhorot contient la fin de la Michna 5:3, la Michna 5:4 et la discussion sur la crédibilité de ceux qui disent qu'un défaut est venu de lui-même.</p>
+
+<h4>1. Fin de la Michna 5:3 : l'officier romain et les enfants</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Histoire</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Qui cause le défaut</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Décision</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le vieux bélier</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un officier romain, au poignard</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Permis la première fois</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ni le propriétaire ni les Sages n'ont voulu le défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Autres premiers-nés</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'officier, ayant vu la permission</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Interdit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il agit en sachant que cela permet l'animal</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les agneaux</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Des enfants, en jouant</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Permis la première fois</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Personne ne voulait causer le défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Autres queues attachées</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Des gens qui ont vu la permission</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Interdit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ils l'ont fait pour le permettre</td></tr>
+</table>
+
+<h4>2. Le sens des mots</h4>
+<p>Rav 'Hisda au nom de Rav Ketina distingue « s'il a un défaut » (qui vient de lui-même) et « si un défaut lui a été causé » (action humaine) ; Rava dit que les deux formules sont passives et ne diffèrent pas. Le principe de la Michna ajoute l'acte indirect pour l'interdit, et le non-Juif qui apprend d'un homme parlant à la légère pour le permis.</p>
+
+<h4>3. Michna 5:4 : le coup de pied</h4>
+<p>Si le premier-né poursuit son maître et reçoit un coup de pied, on peut l'abattre. Rav Pappa distingue le coup donné pendant la poursuite (permis) et après (suspect).</p>
+
+<h4>4. Défaut avant la naissance et dans la bouche</h4>
+<p>Rav Yehouda permet de causer un défaut avant la sortie à l'air du monde ; Rava applique cela à l'oreille du chevreau, et enseigne qu'un défaut dans la bouche, visible quand l'animal crie, est un défaut.</p>
+
+<h4>5. Qui est cru ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Berger israélite</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Berger cohen</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cohen pour autrui</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Premier tanna</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas cru</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabban Chimon ben Gamliel</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cru pour celui d'un autre, pas pour le sien</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Meir</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas cru</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Aucun cohen soupçonné ne juge ni ne témoigne</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehoshoua ben Kefousaï</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">—</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">—</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux témoins du marché pour un premier-né de maison de cohen</td></tr>
+</table>
+
+<h4>6. Le premier-né douteux</h4>
+<p>Pour un animal dont le statut de premier-né est douteux, Rav 'Hisda demande deux témoins du marché ; Rav Na'hman croit les propriétaires israélites, car seuls les cohanim sont soupçonnés.</p>
+
+<h4>7. La halakha</h4>
+<p>Rav Na'hman : comme Rabban Chimon ben Gamliel ; Rava : comme Rabbi Yossé. La conclusion est que les membres de la maison du cohen (fils et fille) peuvent témoigner pour lui, mais pas sa femme.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p>Rachi explique les cas et les motifs de soupçon ; les Tossafot précisent les cas du chevreau et du berger.</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Commentaire</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Explication</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Qastor »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un officier, un gouverneur</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Pigoum »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Une lance, un poignard</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Dommage non apparent »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les objets purs restent devant lui et on ne voit aucun dégât : ce n'est pas un dommage de par la Torah</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Le chevreau par l'oreille »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ses oreilles longues se voient avant que toute la tête sorte ; l'animal n'est pas encore comme né</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Le défaut dans la bouche »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il faut un défaut visible, car le premier-né n'est abattu que sur un défaut visible (Bekhorot 37a)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Une gorgée »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le soupçon de mentir pour obtenir un peu de viande du premier-né</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Service réciproque »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le cohen témoigne maintenant pour un autre, qui témoignera pour lui plus tard</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « Le premier-né douteux »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Celui d'une brebis qui n'a pas encore mis bas et qui a deux mâles : l'un à l'Israélite, l'autre au cohen</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tossafot : « Le chevreau »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Quand on voit que seule une petite partie de la tête est sortie, on peut causer un défaut à l'oreille sans craindre que le reste ne soit sorti</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tossafot : « Il ne laissera pas un sage »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Tossafot rapprochent ce passage de celui du chapitre 2 (18b) sur la cour du propriétaire : on y parle de cohanim que le propriétaire connaît ou aime et à qui il a l'habitude de donner</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tossafot : « Rabbi Yehoshoua ben Kefousaï »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Selon le premier tanna, les cohanim du marché sont crus ; selon Rabbi Meir, même deux du marché ne le sont pas</td></tr>
+</table><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Les règles de cette page sont dans le Choulhan Aroukh, Yoré Dé'a 313-314 :</p>
+<ul>
+<li><b>Défaut voulu ou non.</b> Défaut causé à dessein : interdit ; sans intention : permis (YD 313).</li>
+<li><b>Le Cohen est soupçonné.</b> Il faut un témoin que le défaut est venu de lui-même (YD 314:1).</li>
+<li><b>Le berger.</b> Le berger israélite chez un cohen est cru ; le berger cohen chez un Israélite ne l'est pas (YD 314:2).</li>
+<li><b>La maison du Cohen.</b> Ses fils et sa maison témoignent pour lui, mais pas sa femme (YD 314:4).</li>
+</ul>
+<p>Voir les fiches : <a href="../choulhan-aroukh/yd_314.html">Yoré Dé'a, siman 314 – Qui est cru pour le défaut d'un premier-né</a> et <a href="../choulhan-aroukh/yd_313.html">Yoré Dé'a, siman 313</a>.</p>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.35" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
