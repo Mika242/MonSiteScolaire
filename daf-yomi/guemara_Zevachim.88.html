@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 88 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Zevachim · Guemara</div>
+    <h1>Guemara 88</h1>
+    <p>Daf 88</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>חַטַּאת הָעוֹף פְּסוּלָה הֵיכִי מַזֶּה מִדָּמָהּ? הָוֵה לֵיהּ יָרוּד! שְׁאָר פְּסוּלִים הֵיכִי זָרֵיק לְהוּ מִדָּמָהּ?</p>
+      <p>דְּמַגַּע לְהוּ. הָא הַזָּאָה הִיא?! מִיצּוּי הִיא! הָא זְרִיקָה?! שְׁפִיכָה הִיא!</p>
+      <p>וְעוֹד, דֶּרֶךְ הַזָּאָה בְּכָךְ?! דֶּרֶךְ זְרִיקָה בְּכָךְ?!</p>
+      <p>אָמַר רַב אָשֵׁי: אִי דְּנָקֵט לְהוּ בְּרֹאשׁ הַמִּזְבֵּחַ – הָכִי נָמֵי; כִּי קָאָמַר – דִּתְלָנְהוּ בְּקַנְיָא. מַאי? תֵּיקוּ.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> כְּלֵי הַלַּח מְקַדְּשִׁין אֶת הַלַּח, וּמִדּוֹת יָבֵשׁ מְקַדְּשׁוֹת אֶת הַיָּבֵשׁ. אֵין כְּלִי הַלַּח מְקַדֶּשֶׁת אֶת הַיָּבֵשׁ, וְלֹא יָבֵשׁ מְקַדֵּשׁ אֶת הַלַּח. כְּלֵי הַקּוֹדֶשׁ שֶׁנִּיקְּבוּ, אִם עוֹשִׂין בָּהֶן מֵעֵין מְלַאכְתָּן שֶׁהָיוּ עוֹשִׂין, וְהֵן שְׁלֵימִים – מְקַדְּשִׁין, וְאִם לָאו – אֵין מְקַדְּשִׁין. וְכוּלָּן אֵין מְקַדְּשִׁין אֶלָּא בַּקּוֹדֶשׁ.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר שְׁמוּאֵל: לֹא שָׁנוּ אֶלָּא מִדּוֹת, אֲבָל מִזְרָקוֹת – מְקַדְּשִׁין, שֶׁנֶּאֱמַר: ״שְׁנֵיהֶם מְלֵאִים סֹלֶת״.</p>
+      <p>אֲמַר לֵיהּ רַב אַחָא מִדִּיפְתִּי לְרָבִינָא: מִנְחָה לַחָה הִיא! אֲמַר לֵיהּ: לֹא נִצְרְכָה אֶלָּא לַיָּבֵשׁ שֶׁבָּהּ. אִיבָּעֵית אֵימָא: מִנְחָה לְגַבֵּי דָּם – כְּיָבֵשׁ דָּמֵי.</p>
+      <p>אָמַר שְׁמוּאֵל: כְּלֵי שָׁרֵת – אֵין מְקַדְּשִׁין אֶלָּא שְׁלֵימִין, אֵין מְקַדְּשִׁין אֶלָּא מְלֵאִין, אֵין מְקַדְּשִׁין אֶלָּא מִתּוֹכָן. וְאָמְרִי לָהּ: אֵין מְקַדְּשִׁין אֶלָּא שְׁלֵימִין וּמְלֵאִים וּמִבִּפְנִים.</p>
+      <p>מַאי בֵּינַיְיהוּ? אִיכָּא בֵּינַיְיהוּ בֵּירוּצֵי מִדּוֹת. בְּמַתְנִיתָא תָּנָא: אֵין מְקַדְּשִׁין אֶלָּא שְׁלֵימִין, וּמְלֵאִים, וּמִתּוֹכָן, וּבִפְנִים.</p>
+      <p>אָמַר רַבִּי אַסִּי אָמַר רַבִּי יוֹחָנָן: לֹא שָׁנוּ אֶלָּא שֶׁאֵין דַּעְתּוֹ לְהוֹסִיף, אֲבָל דַּעְתּוֹ לְהוֹסִיף – רִאשׁוֹן רִאשׁוֹן קוֹדֶשׁ.</p>
+      <p>תַּנְיָא נָמֵי הָכִי: מְלֵאִין – אֵין מְלֵאִין אֶלָּא שְׁלֵימִין. אָמַר רַבִּי יוֹסֵי: אֵימָתַי – בִּזְמַן שֶׁאֵין דַּעְתּוֹ לְהוֹסִיף; אֲבָל דַּעְתּוֹ לְהוֹסִיף – רִאשׁוֹן רִאשׁוֹן קוֹדֶשׁ.</p>
+      <p>אֵין כְּלִי הַלַּח מְקַדֵּשׁ [וְכוּ׳]. אָמַר רַב, וְאִיתֵּימָא רַב אַסִּי: אֵין מְקַדְּשִׁין לִיקְרַב, אֲבָל מְקַדְּשִׁין לִיפָּסֵל.</p>
+      <p>אִיכָּא דְּמַתְנֵי לַהּ אַהָא: אֵין מְבִיאִין מְנָחוֹת וּנְסָכִים וּמִנְחַת בְּהֵמָה וּבִיכּוּרִים מִן הַמְדוּמָּע, וְאֵין צָרִיךְ לוֹמַר מֵעׇרְלָה וְכִלְאֵי הַכֶּרֶם. וְאִם הֵבִיא – לֹא קִדֵּשׁ. אָמַר רַב, וְאִיתֵּימָא רַב אַסִּי: לֹא קִדֵּשׁ לִיקְרַב, אֲבָל קָדַשׁ לִיפָּסֵל.</p>
+      <p>תָּנוּ רַבָּנַן: כְּלֵי קֹדֶשׁ שֶׁנִּיקְּבוּ – אֵין מַתִּיכִין אוֹתָן, וְאֵין מַתִּיכִין לְתוֹכָן אֲבָר. נִפְגְּמוּ – אֵין מְתַקְּנִין אוֹתָן. סַכִּין שֶׁנִּפְגְּמָה – אֵין מַשְׁחִיזִין אֶת פְּגִימָתָהּ. נִשְׁמְטָה – אֵין מַחְזִירִין אוֹתָהּ. אַבָּא שָׁאוּל אוֹמֵר: סַכִּין מַטְרֶפֶת הָיְתָה בַּמִּקְדָּשׁ, וְנִמְנוּ עָלֶיהָ כֹּהֲנִים וּגְנָזוּהָ.</p>
+      <p>תָּנוּ רַבָּנַן: בִּגְדֵי כְהוּנָּה, אֵין עוֹשִׂין אוֹתָם מַעֲשֵׂה מַחַט אֶלָּא מַעֲשֵׂה אוֹרֵג, שֶׁנֶּאֱמַר: ״מַעֲשֵׂה אֹרֵג״. נִתְגַּעֲלוּ, אֵין מְכַבְּסִין [אוֹתָן] לֹא בְּנֶתֶר וְלֹא בְּאָהָל.</p>
+      <p>הָא בַּמַּיִם – מְכַבְּסִין?! אָמַר אַבָּיֵי, הָכִי קָאָמַר: הוּגְּעוּ בְּמַיִם – מְכַבְּסִין אוֹתָן בְּנֶתֶר וְאָהָל;</p>
+      <p>הוּגְּעוּ לְנֶתֶר וְאָהָל – אַף בְּמַיִם אֵין מְכַבְּסִים. וְיֵשׁ אוֹמְרִים: אֵין מְכַבְּסִין אוֹתָן כׇּל עִיקָּר, שֶׁאֵין עֲנִיּוּת בִּמְקוֹם עֲשִׁירוּת.</p>
+      <p>תָּנוּ רַבָּנַן: מְעִיל – כּוּלּוֹ שֶׁל תְּכֵלֶת הָיָה, שֶׁנֶּאֱמַר: ״וַיַּעַשׂ אֶת מְעִיל הָאֵפוֹד כְּלִיל תְּכֵלֶת״. שׁוּלָיו כֵּיצַד? מֵבִיא תְּכֵלֶת וְאַרְגָּמָן וְתוֹלַעַת שָׁנִי שְׁזוּרִין, וְעוֹשֶׂה אוֹתָן כְּמִין רִימּוֹנִים שֶׁלֹּא פִּיתְּחוּ פִּיהֶן, וּכְמִין קוֹנָאוֹת שֶׁל קְנָסוֹת שֶׁבְּרָאשֵׁי תִינוֹקוֹת.</p>
+      <p>וּמֵבִיא שִׁבְעִים וּשְׁנַיִם זַגִּין שֶׁבָּהֶן שִׁבְעִים וּשְׁנַיִם עִינְבָּלִין, וְתוֹלֶה בָּהֶן שְׁלֹשִׁים וְשִׁשָּׁה בְּצַד זֶה וּשְׁלֹשִׁים וְשִׁשָּׁה מִצַּד זֶה. רַבִּי דּוֹסָא אוֹמֵר מִשּׁוּם רַבִּי יְהוּדָה: שְׁלֹשִׁים וְשִׁשָּׁה הָיוּ – שְׁמוֹנֶה עֶשְׂרֵה מִצַּד זֶה וּשְׁמֹנֶה עֶשְׂרֵה מִצַּד זֶה.</p>
+      <p>אָמַר רַבִּי עִינְיֹנִי בַּר שָׂשׂוֹן: כְּמַחְלוֹקֶת כָּאן כָּךְ מַחְלוֹקֶת בְּמַרְאוֹת נְגָעִים, דִּתְנַן: מַרְאוֹת נְגָעִים – רַבִּי דּוֹסָא בֶּן הַרְכִּינָס אוֹמֵר: שְׁלֹשִׁים וְשִׁשָּׁה, עֲקַבְיָא בֶּן מַהֲלַלְאֵל אוֹמֵר: שִׁבְעִים וּשְׁנַיִם.</p>
+      <p>וְאָמַר רַבִּי עִינְיֹנִי בַּר שָׂשׂוֹן: לָמָּה נִסְמְכָה פָּרָשַׁת קׇרְבָּנוֹת לְפָרָשַׁת בִּגְדֵי כְהוּנָּה? לוֹמַר לָךְ: מָה קׇרְבָּנוֹת מְכַפְּרִין, אַף בִּגְדֵי כְהוּנָּה מְכַפְּרִין.</p>
+      <p>כְּתוֹנֶת – מְכַפֶּרֶת עַל שְׁפִיכוּת (דם) [דָּמִים], שֶׁנֶּאֱמַר: ״וַיִּשְׁחֲטוּ שְׂעִיר עִזִּים וַיִּטְבְּלוּ אֶת הַכֻּתֹּנֶת בַּדָּם״. מִכְנָסַיִם – מְכַפֶּרֶת עַל גִּילּוּי עֲרָיוֹת, שֶׁנֶּאֱמַר: ״וַעֲשֵׂה לָהֶם מִכְנְסֵי בָד [לְכַסּוֹת (אֶת) בְּשַׂר עֶרְוָה]״. מִצְנֶפֶת – מְכַפֶּרֶת עַל גַּסֵּי הָרוּחַ. מִנַּיִן? אָמַר רַבִּי חֲנִינָא: יָבֹא דָּבָר שֶׁבַּגּוֹבַהּ, וִיכַפֵּר עַל גּוֹבַהּ.</p>
+      <p>אַבְנֵט – מְכַפֵּר עַל הִרְהוּר הַלֵּב, הֵיכָא דְּאִיתֵיהּ. חוֹשֶׁן – מְכַפֵּר עַל הַדִּינִין, שֶׁנֶּאֱמַר: ״וְעָשִׂיתָ חֹשֶׁן מִשְׁפָּט״. אֵפוֹד – מְכַפֵּר עַל עֲבוֹדָה זָרָה, שֶׁנֶּאֱמַר: ״אֵין אֵפוֹד וּתְרָפִים״.</p>
+      <p>מְעִיל – מְכַפֵּר עַל לָשׁוֹן הָרָע. מִנַּיִן? אָמַר רַבִּי חֲנִינָא: יָבֹא דָּבָר שֶׁבַּקּוֹל, וִיכַפֵּר עַל קוֹל הָרָע. וְצִיץ – מְכַפֵּר עַל עַזּוּת פָּנִים; בְּצִיץ כְּתִיב: ״וְהָיָה עַל מֵצַח אַהֲרֹן״, וּבְעַזּוּת פָּנִים כְּתִיב: ״וּמֵצַח אִשָּׁה זוֹנָה הָיָה לָךְ״.</p>
+      <p>אִינִי?! וְהָא אָמַר רַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי: שְׁנֵי דְּבָרִים לֹא מָצִינוּ לָהֶן כַּפָּרָה בְּקׇרְבָּנוֹת, וּמָצִינוּ לָהֶן כַּפָּרָה מִמָּקוֹם אַחֵר; וְאֵלּוּ הֵן: שְׁפִיכוּת דָּמִים וְלָשׁוֹן הָרָע!</p>
+      <p>שְׁפִיכוּת דָּמִים – מֵעֶגְלָה עֲרוּפָה, וְלָשׁוֹן הָרָע – מִקְּטֹרֶת. דְּתָנֵי רַב חֲנַנְיָה: מִנַּיִן לִקְטֹרֶת שֶׁמְּכַפֶּרֶת? שֶׁנֶּאֱמַר: ״וַיִּתֵּן אֶת הַקְּטֹרֶת וַיְכַפֵּר עַל הָעָם״.</p>
+      <p>וְתָנֵי דְּבֵי רַבִּי יִשְׁמָעֵאל: עַל מָה קְטֹרֶת מְכַפֶּרֶת? עַל לָשׁוֹן הָרָע. יָבֹא דָּבָר שֶׁבַּחֲשַׁאי, וִיכַפֵּר עַל מַעֲשֶׂה חֲשַׁאי.</p>
+      <p>קַשְׁיָא לָשׁוֹן הָרָע אַלָּשׁוֹן הָרָע, קַשְׁיָא שְׁפִיכוּת דָּמִים אַשְּׁפִיכוּת דָּמִים!</p>
+      <p>לָא קַשְׁיָא; הָא דִּידִיעַ מַאן קַטְלֵיהּ, הָא דְּלָא יְדִיעַ מַאן קַטְלֵיהּ. אִי דִּידִיעַ מַאן קַטְלֵיהּ – בַּר קְטָלָא הוּא! בְּמֵזִיד וְלָא אַתְרוֹ בֵּיהּ.</p>
+      <p>וְלָשׁוֹן הָרָע אַלָּשׁוֹן הָרָע נָמֵי לָא קַשְׁיָא – הָא בְּצִינְעָא, הָא בְּפַרְהֶסְיָא.</p>
+      <p><strong><big>הֲדַרַן עֲלָךְ הַמִּזְבֵּחַ מְקַדֵּשׁ</big></strong></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>…alors, pour un oiseau-expiatoire disqualifié que l'on a pincé en haut de l'autel</b>, comment asperge-t-on de son sang sur la paroi de l'autel ? Dès que le prêtre lève l'oiseau pour asperger, il est considéré comme descendu de l'autel, et il ne peut plus asperger, car tout ce qui est disqualifié et qui est descendu de l'autel ne remonte pas. De même pour le sang d'autres sacrifices disqualifiés qui sont montés sur l'autel : comment asperge-t-on, puisque l'on asperge depuis l'air au-dessus de l'autel ? Il faut donc que <b>l'air au-dessus de l'autel soit considéré comme l'autel</b>.</p>
+      <p>La Guemara écarte cette preuve : peut-être n'asperge-t-on pas de façon normale mais en pressant le sang contre la paroi, sans passer dans l'air. Mais est-ce de l'aspersion ? C'est du pressage, qui se fait pour l'oiseau-holocauste, non pour l'oiseau-expiatoire ; et pour les autres sacrifices, c'est du versement. Il faut donc que l'air au-dessus de l'autel soit comme l'autel.</p>
+      <p><b>Rav Achi dit</b> : si la question concerne le prêtre qui tient le sang ou les membres en se tenant en haut de l'autel, ils sont considérés comme montés, et ils ne descendent pas. Mais la question de l'espace au-dessus de l'autel se posait pour le cas où il les suspend avec une perche au-dessus de l'autel, tandis que lui se tient sur le sol de la cour. Quel est le statut ? <b>La question reste sans réponse</b> (<i>teiku</i>).</p>
+      <p><b>MICHNA.</b> Les <b>ustensiles de service</b> qui servent pour les liquides ne sanctifient que des liquides, et ceux qui servent de mesures pour le sec ne sanctifient que du sec. Les ustensiles pour liquides ne sanctifient pas le sec, ni ceux pour le sec les liquides. Les ustensiles sacrés qui ont été percés : si l'on continue à s'en servir comme avant, <b>ils sanctifient</b> ; sinon, ils ne sanctifient pas. Et tous sanctifient seulement <b>dans la zone sacrée</b>, la cour du Temple.</p>
+      <p><b>GUEMARA.</b> <b>Chmouel dit</b> : les Sages ont enseigné que les ustensiles pour liquides ne sanctifient pas le sec seulement pour les mesures de vin ou d'huile ; mais <b>les coupes</b>, qui recueillent le sang, sanctifient aussi le sec, car il est écrit : « <b>Une coupe d'argent de soixante-dix sicles… pleines de fleur de farine pétrie à l'huile pour l'offrande</b> » (Nombres 7:13).</p>
+      <p><b>Rav A'ha de Difti dit à Ravina</b> : l'offrande de farine, pétrie à l'huile, est comptée comme un liquide ; on ne peut pas en déduire pour le sec. <b>Ravina répond</b> : le verset sert pour les parties sèches de l'offrande, la farine qui n'a pas été bien mêlée à l'huile ; ou bien l'offrande, bien que mêlée à l'huile, est sèche par rapport au sang.</p>
+      <p><b>Chmouel dit aussi</b> : les ustensiles de service ne sanctifient que <b>s'ils sont entiers</b> (sans trou), <b>pleins</b> (une mesure apte à l'offrande) et <b>de l'intérieur</b> (non ce qui touche l'extérieur). Selon une autre version : entiers, pleins, de l'intérieur. La différence entre les deux : la mesure comble. Une baraïta enseigne les deux.</p>
+      <p><b>Rabbi Assi, au nom de Rabbi Yo'hanan</b> : « pleins » vaut seulement si l'intention initiale du prêtre n'était pas d'ajouter ; mais s'il avait l'intention d'ajouter, chaque quantité déposée au départ devient sacrée, même petite. <b>Rabbi Yossé</b> dans une baraïta : « pleins » sont des mesures entières, quand l'intention n'était pas d'ajouter ; sinon, chaque quantité est sacrée.</p>
+      <p><b>Rav dit</b> (ou Rav Assi) : les ustensiles pour liquides ne sanctifient pas le sec <b>pour le permettre à l'autel</b>, mais ils le sanctifient <b>pour qu'il soit disqualifié</b> : s'il est touché par un <i>tévoul yom</i> ou sort de la cour, il est disqualifié.</p>
+      <p>On enseigne aussi : on n'apporte pas de farine, de libations, d'offrandes accompagnant un animal ou de prémices <b>d'un mélange contenant de la terouma</b>, car ce que tout Juif ne peut manger ne peut servir d'offrande ; a fortiori pas de fruits de <i>orla</i> ou de mélanges dans la vigne. S'il en a apporté, ce n'est pas sanctifié. Rav dit : non sanctifié pour l'autel, mais sanctifié pour être disqualifié.</p>
+      <p><b>Ustensiles percés.</b> Les Sages ont enseigné : on ne fond pas les ustensiles sacrés percés pour boucher le trou, ni du plomb pour cela ; s'ils sont abîmés, on ne les répare pas ; un couteau abîmé, on n'aiguise pas l'endroit abîmé ; si la lame s'est détachée du manche, on ne la remet pas. <b>Abba Chaoul</b> : il y avait au Temple un couteau dont le métal était mou et qui rendait souvent les animaux interdits ; les prêtres ont voté de le cacher.</p>
+      <p><b>Vêtements des prêtres.</b> Les Sages ont enseigné : on ne fabrique pas les vêtements des prêtres par couture mais par tissage d'une seule pièce, car il est écrit : « <b>ouvrage tissé</b> » (Exode 28:32). S'ils sont salis, on ne les lave pas, ni au natron ni au savon. La Guemara demande : donc à l'eau, on peut ? <b>Abaye</b> : s'ils ne sont sales qu'au point où l'eau suffirait, on peut les laver au natron et au savon, car ils ne sont pas considérés comme sales. Mais s'ils sont sales au point d'exiger natron ou savon, on ne les lave pas, même à l'eau. Certains disent : on ne les lave pas du tout, car « il n'y a pas de pauvreté là où il y a de la richesse » : on ne porte que des vêtements neufs et propres.</p>
+      <p><b>La robe du grand prêtre</b> était tissée entièrement de laine azur (Exode 39:22). Les <b>pans</b> : le tailleur apporte de la laine azur, pourpre et écarlate, qui sont retorses ensemble, et en fait des grenades qui n'ont pas ouvert leur bouche, comme les cônes des casques sur la tête des enfants. Pour accomplir « des clochettes d'or pur, entre les grenades » (Exode 39:25), il apporte <b>soixante-douze clochettes</b> (leurs enveloppes d'or contenant soixante-douze battants) et les suspend sur les pans : trente-six de chaque sorte d'un côté, trente-six de l'autre. <b>Rabbi Dossa, au nom de Rabbi Yehouda</b> : trente-six clochettes, dix-huit de chaque côté.</p>
+      <p><b>Rabbi Inini bar Sason</b> : cette divergence sur le nombre des clochettes est comme celle sur le nombre des nuances de lèpre : Rabbi Dossa ben Harkinas dit trente-six, ‘Akavya ben Mahalalel soixante-douze (Néga'im 1:4).</p>
+      <p><b>Rabbi Inini bar Sason dit aussi</b> : pourquoi le passage des sacrifices (Lévitique 1-7) est-il à côté de celui des vêtements des prêtres (Lévitique 8) ? Pour dire que, <b>comme les sacrifices expient, les vêtements des prêtres expient</b>.</p>
+      <p><b>La tunique</b> expie le <b>sang versé</b>, car il est écrit : « Ils égorgèrent un bouc et trempèrent la tunique dans le sang » (Genèse 37:31). <b>Le caleçon</b> expie les <b>unions interdites</b>, car il est écrit : « Fais-leur des caleçons de lin pour couvrir la chair de leur nudité » (Exode 28:42). <b>La tiare</b> expie les <b>orgueilleux</b> : Rabbi 'Hanina : ce qui est placé en hauteur sur la tête expie l'élévation du cœur.</p>
+      <p><b>La ceinture</b> expie les <b>pensées du cœur</b> : elle expie les fautes de l'endroit où elle est placée, au-dessus du cœur. <b>Le pectoral</b> expie les <b>jugements injustes</b>, car il est écrit : « Tu feras un pectoral de jugement » (Exode 28:15). <b>L'éphod</b> expie l'<b>idolâtrie</b>, car il est écrit : « Sans éphod ni théraphim » (Osée 3:4) : quand il n'y a pas d'éphod, il y a la faute des théraphim ; s'il y a l'éphod, il n'y a pas d'idolâtrie.</p>
+      <p><b>La robe</b> expie la <b>médisance</b> (<i>lachon hara</i>) : Rabbi 'Hanina : ce qui produit un son (les clochettes) vient expier un mauvais son. <b>La plaque d'or</b> (<i>tsits</i>) expie l'<b>effronterie</b> : il est écrit à son sujet « sur le front d'Aharon » (Exode 28:38), et pour l'effronterie « tu avais un front de prostituée » (Jérémie 3:3).</p>
+      <p>La Guemara objecte : <b>Rabbi Yehoshoua ben Lévi</b> ne dit-il pas qu'il y a deux fautes pour lesquelles on ne trouve pas d'expiation par des sacrifices, mais d'ailleurs : le sang versé et la médisance ? Pour le sang versé, l'expiation est la <b>génisse dont on brise la nuque</b> (<i>eglah arufa</i>), quand on trouve un corps sans connaître le meurtrier. Pour la médisance, c'est l'<b>encens</b>, comme l'enseigne Rav 'Hananya : « Il mit l'encens et fit expiation pour le peuple » (Nombres 17:12), après que les Israélites avaient parlé contre Moïse et Aharon.</p>
+      <p>L'école de <b>Rabbi Yichmaël</b> enseigne : l'encens expie la médisance, pour que ce qui est offert en secret (l'encens, que le prêtre offre seul) vienne expier ce qui se fait en secret (la médisance).</p>
+      <p>Il y a donc une contradiction : selon Rabbi Inini, la robe expie la médisance, selon la baraïta c'est l'encens ; selon lui la tunique expie le sang versé, selon la baraïta c'est la génisse.</p>
+      <p>La Guemara répond : pour le sang versé, la tunique expie quand on sait qui a tué, la génisse quand on ne sait pas. Objection : si l'on sait, il mérite la mort, et il n'y a pas d'expiation pour le pays autrement (Nombres 35:33). Réponse : il s'agit d'un meurtre volontaire, sans avertissement par des témoins, donc le tribunal ne peut pas le mettre à mort. Pour la médisance : l'encens expie la médisance dite en secret ; la robe, qui porte des clochettes sonores, expie la médisance dite en public.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>then with regard to the case of <b>a disqualified bird sin offering</b> that was pinched at the top of the altar, <b>how</b> does one <b>sprinkle from its blood</b> on the wall of the altar? When the priest raises the bird in his hand in order to sprinkle its blood, the bird <b>is</b> considered to have <b>descended</b> from upon the altar and he cannot sprinkle its blood, as the <i>halakha</i> with regard to all disqualified items is that once they have descended from upon the altar they shall not ascend. Likewise, concerning the blood of <b>other</b> offerings that were <b>disqualified</b> that ascended upon the altar, <b>how</b> does he <b>sprinkle from their blood,</b> since it is sprinkled from the airspace above the altar? Rather, it must be that the airspace above the altar is considered as the altar.</p>
+      <p>The Gemara rejects this proof: It is possible that in such cases one does not sprinkle the blood in its normal fashion, but in such a manner <b>that he presses it</b> against the wall of the altar immediately without the blood passing through the air. The Gemara rejects this suggestion: <b>Is this</b> considered <b>sprinkling?</b> It <b>is squeezing,</b> an act that is performed for a bird burnt offering, not for a bird sin offering. Likewise, if one sprinkles the blood of other disqualified offerings in this manner, is <b>this sprinkling? It is pouring.</b></p>
+      <p><b>And furthermore,</b> with regard to a disqualified bird burnt offering, is <b>the manner of sprinkling in such</b> a fashion? And in the case of other disqualified offerings, is <b>the manner of sprinkling in such</b> a fashion? It is not. Rather, the airspace above the altar must be considered as the altar.</p>
+      <p><b>Rav Ashi said: If</b> the question concerns a case <b>where</b> the priest <b>held</b> the blood or limbs while standing <b>at the top of the altar,</b> they would <b>indeed</b> be considered as having ascended the altar, and shall not descend from it. But <b>when</b> the dilemma was <b>stated</b> with regard to the airspace above the altar, it was with regard to an instance <b>where he suspended them with a pole</b> above the altar, while he himself stood on the floor of the Temple courtyard. <b>What</b> is the <i>halakha</i> in such a case? The Gemara responds that the dilemma <b>shall stand</b> unresolved.</p>
+      <p><strong>MISHNA:</strong> The mishna elaborates on the <i>halakha</i> taught in the previous mishna (86a) that service vessels sanctify items placed in them. <b>The</b> service <b>vessels</b> used for <b>liquids sanctify</b> only <b>liquids</b> used in the service, <b>and</b> the service vessels that serve as <b>dry measures sanctify</b> only <b>dry</b> items used in the service. <b>The</b> service <b>vessels</b> used for <b>liquids do not sanctify dry</b> items, <b>and</b> the service vessels used for <b>dry</b> items <b>do not sanctify liquids.</b> With regard to <b>sacred vessels that were perforated, if one</b> continues to <b>utilize them</b> for a use <b>similar to the use for which they would utilize them</b> previously when <b>they</b> were <b>whole, they</b> continue to <b>sanctify</b> their contents. <b>And if not, they do not sanctify</b> their contents. <b>And all of</b> these vessels <b>sanctify</b> items <b>only</b> when they are <b>in the sacred</b> area, i.e., the Temple courtyard.</p>
+      <p><strong>GEMARA:</strong> With regard to the statement of the mishna that the vessels used for liquids do not sanctify dry items, <b>Shmuel says:</b> The Sages <b>taught</b> this <i>halakha</i> <b>only</b> with regard to <b>measures</b> used for liquids, i.e., wine or oil. <b>But cups,</b> which are used for collecting the blood of offerings, <b>sanctify</b> dry items as well, <b>as it is stated</b> in the verse: “One silver cup of seventy shekels, after the shekel of the sanctuary; <b>both of them full of fine flour</b> mingled with oil for a meal offering” (Numbers 7:13), indicating that the cups were also fashioned for use with flour, a dry item.</p>
+      <p><b>Rav Aḥa of Difti said to Ravina:</b> The <b>meal offering</b> of the verse <b>is</b> also considered <b>a liquid,</b> as it is mixed with oil, and one cannot derive from it the <i>halakha</i> with regard to items that are entirely dry. Ravina <b>said to him:</b> The verse cited by Shmuel <b>was only necessary to</b> derive the <i>halakha</i> of <b>the dry</b> portions <b>of</b> a meal offering, teaching that even flour that remained dry because it did not get thoroughly mixed with the oil is sanctified by the cups as well. <b>If you wish, say</b> instead: <b>A meal offering,</b> even though it is mixed with oil, is, <b>in comparison to blood, considered as a dry</b> item. Accordingly, one can derive from the verse that the cups sanctify all dry items.</p>
+      <p>Additionally, <b>Shmuel says: Service vessels sanctify</b> items <b>only</b> when the vessels are <b>whole,</b> i.e., they do not have a hole; <b>they sanctify only full</b> measures, i.e., when they contain a measurement fit for offering; and <b>they sanctify</b> items <b>only from within them</b> and not items that merely touched their exterior. <b>And some say</b> there is another version of the statement of Shmuel: Service vessels <b>sanctify</b> items <b>only</b> when the vessels are <b>whole, and</b> when they contain <b>full</b> measures, <b>and from inside.</b></p>
+      <p>The Gemara asks: <b>What</b> is the difference <b>between</b> these two versions? The Gemara responds: The difference <b>between them is</b> with regard to <b>heaping measures.</b> According to the first version, that service vessels sanctify only items that are within them, nothing that overflows is included. The Gemara notes that it <b>was taught in a <i>baraita</i></b> in accordance with both versions: Service vessels <b>sanctify</b> items <b>only</b> when they are <b>whole, and</b> only <b>full</b> measurements, <b>and from within them, and inside.</b></p>
+      <p>With regard to the <i>halakha</i> that service vessels sanctify only full measurements, <b>Rabbi Asi says</b> that <b>Rabbi Yoḥanan says: They taught</b> this <i>halakha</i> <b>only when</b> the priest’s initial <b>intention</b> was <b>not to add</b> to that which was already placed inside the vessel. <b>But</b> if <b>his</b> initial <b>intention</b> was <b>to add,</b> then <b>each initial</b> amount placed in the vessel becomes <b>sacred,</b> no matter how small.</p>
+      <p><b>This</b> distinction <b>is also taught</b> in a <i>baraita</i>: With regard to the <i>halakha</i> that service vessels sanctify <b>full</b> measurements, <b>full</b> measurements are <b>nothing other than whole</b> measurements. <b>Rabbi Yosei said: When</b> are full measurements whole ones? It is <b>at a time that</b> the priest’s <b>intention</b> was <b>not to add. But</b> if <b>his intention</b> was <b>to add, each initial</b> amount is <b>sacred.</b></p>
+      <p>§ The mishna teaches that <b>the</b> service <b>vessels</b> used for <b>liquids do not sanctify</b> dry items. With regard to this <i>halakha</i>, <b>Rav says, and some say</b> that <b>Rav Asi</b> says: The service vessels used for liquids <b>do not sanctify</b> dry items to permit them <b>for sacrifice</b> upon the altar, <b>but they sanctify</b> dry items in order for the items <b>to be disqualified</b> by them, i.e., dry items placed in such vessels may be disqualified by that which disqualifies only sanctified items, e.g., if they are touched by one who immersed that day, or if they emerged from the Temple courtyard.</p>
+      <p><b>There are</b> those <b>who teach this</b> statement <b>with regard to this</b> <i>halakha</i>: <b>One may not bring meal offerings, or libations, or meal offerings</b> accompanying <b>an animal, or first fruits, from a mixture</b> containing <i>teruma</i>, since that which may not be consumed by all Jews may not be used for an offering. <b>And needless to say,</b> one may not bring these items <b>from</b> the fruit of a tree that is <b><i>orla</i>,</b> i.e., a tree during the first three years after its planting, from which it is prohibited to eat, <b>or</b> from <b>diverse kinds</b> sown <b>in a vineyard,</b> both of which are prohibited for consumption to priests as well. <b>And if he brought</b> an offering from them, it is <b>not sanctified.</b> With regard to this issue, <b>Rav says, and some say</b> that <b>Rav Asi</b> says: It is <b>not sanctified for sacrifice</b> upon the altar, <b>but</b> it is <b>sanctified</b> in order <b>to be disqualified.</b></p>
+      <p>§ With regard to perforated vessels, <b>the Sages taught:</b> In the case of <b>sacred vessels that were perforated, one may not melt them</b> in order to seal the perforation, <b>and one may not melt lead into them</b> for such a purpose. If the vessels <b>were damaged, one may not repair them.</b> Concerning <b>a knife that was damaged, one may not sharpen</b> the spot of <b>its damage.</b> If the blade <b>separated</b> from the handle, <b>one may not restore it. Abba Shaul says: There was</b> a certain <b>knife in the Temple</b> whose metal was soft and easily damaged, such that when used it would often <b>render</b> animals <b>prohibited,</b> thereby disqualifying them. Accordingly, the <b>priests voted concerning it, and</b> elected to <b>hide it.</b></p>
+      <p><b>The Sages taught: Priestly vestments are not fashioned</b> by <b>needlework,</b> i.e., by stitching various parts together, but <b>rather</b> through <b>woven work,</b> whereby the entire garment is initially woven into one entity, <b>as it is stated: “Woven work”</b> (Exodus 28:32). If the garments <b>were soiled one may not launder</b> them, <b>neither with natron nor with soap,</b> two common detergents.</p>
+      <p>The Gemara asks: <b>But</b> may it be inferred from this that <b>with water one may launder</b> the priestly vestments? <b>Abaye said: This</b> is what the <i>baraita</i> <b>is saying:</b> If the dirtied garments have only <b>reached</b> the point where laundering them <b>with water</b> alone would suffice, <b>one may launder them with natron and soap,</b> as they are not considered soiled.</p>
+      <p>But if the garments became so dirty that they <b>reached</b> a point that laundering them would require the use of <b>natron or soap,</b> then <b>one may not launder</b> them, <b>even with water. And some say: One may not launder</b> the priestly vestments <b>at all,</b> even if laundering them with water would suffice, <b>because there is no poverty in a place of wealth,</b> i.e., only priestly vestments that were clean as new should be worn, as is befitting the Temple service, and those that were laundered should not be worn.</p>
+      <p>§ With regard to the priestly vestments, <b>the Sages taught</b> in a <i>baraita</i>: <b>The robe</b> of the High Priest <b>was</b> sewn <b>entirely of sky-blue wool, as it is stated: “And he made the robe of the ephod</b> of woven work, <b>all of sky-blue wool”</b> (Exodus 39:22). With regard to <b>its skirts,</b> concerning which it states: “And they made upon the skirts of the robe pomegranates of sky blue, and purple, and scarlet, twined” (Exodus 39:24), <b>how</b> were they fashioned? The tailor <b>brings sky-blue wool, and purple wool, and scarlet wool,</b> which are <b>twined</b> together, <b>and fashions them</b> to appear <b>as pomegranates that have not opened their mouths,</b> i.e., they are sewn in the appearance of pomegranates that are not yet ripe enough for the crown on top to open, <b>and as</b> the <b>cones [<i>konaot</i>] of</b> the <b>helmets [<i>kenasot</i>] that</b> are found <b>on the heads of children.</b></p>
+      <p><b>And</b> in order to fulfill that which is stated: “And they made bells of pure gold, and put the bells between the pomegranates” (Exodus 39:25), he <b>brings seventy-two bells,</b> i.e., the outer part of bells, made from gold, <b>that</b> contain <b>inside them seventy-two bell clappers, and he suspends</b> them <b>on</b> the skirts: <b>Thirty-six</b> of each, i.e., pomegranates and bells, <b>on this side</b> of the robe, <b>and thirty-six</b> of each <b>on that side,</b> as the verse states: “A bell and a pomegranate, a bell and a pomegranate, upon the skirts of the robe around it” (Exodus 39:26). <b>Rabbi Dosa says in the name of Rabbi Yehuda: There were thirty-six</b> bells suspended around the skirt, <b>eighteen from this side and eighteen from that side.</b></p>
+      <p><b>Rabbi Inini bar Sason says: Just as</b> there is <b>a disagreement here</b> between <i>tanna’im</i> with regard to the total number of bells suspended around the skirt of the robe of the High Priest, <b>so</b> is there <b>a disagreement</b> between <i>tanna’im</i> <b>with regard to</b> the total number of <b>shades of</b> leprous <b>marks. As we learned</b> in a mishna (<i>Nega’im</i> 1:4): With regard to the total number of <b>shades of</b> leprous <b>marks, Rabbi Dosa ben Harkinas says:</b> There are <b>thirty-six,</b> while <b>Akavya ben Mahalalel says:</b> There are <b>seventy-two.</b></p>
+      <p>§ The Gemara cites another statement of this sage: <b>And Rabbi Inini bar Sason says: Why</b> was <b>the passage</b> in the Torah that discusses <b>offerings</b> (Leviticus, chapters 1–7) <b>juxtaposed to the passage</b> that discusses the <b>priestly vestments</b> (Leviticus, chapter 8)? It was juxtaposed <b>to tell you</b> that <b>just as offerings effect atonement, so too, priestly vestments effect atonement.</b></p>
+      <p>The <b>tunic atones for bloodshed, as it is stated</b> with regard to the brothers of Joseph after they plotted to kill him: <b>“And they killed a goat, and dipped the tunic in the blood”</b> (Genesis 37:31). The <b>trousers atone for forbidden sexual relations, as it is stated</b> with regard to fashioning the priestly vestments: <b>“And you shall make them linen trousers to cover the flesh of their nakedness”</b> (Exodus 28:42). The <b>mitre atones for the arrogant. From where</b> is this derived? <b>Rabbi Ḥanina says:</b> It is logical that <b>an item</b> that is placed <b>at an elevation,</b> i.e., on the head of a priest, <b>shall come and atone for</b> the sin of <b>an elevated</b> heart.</p>
+      <p>Rabbi Inini bar Sason continues: The <b>belt atones for thought of the heart.</b> The Gemara elaborates: The belt atones for the sins occurring <b>where it is</b> situated, i.e., over the heart. The <b>breastplate</b> of the High Priest <b>atones for</b> improper <b>judgments, as it is stated: “And you shall make a breastplate of judgment”</b> (Exodus 28:15). The <b>ephod</b> of the High Priest <b>atones for idol worship, as it is stated:</b> “And <b>without ephod or teraphim”</b> (Hosea 3:4), meaning that when there is no ephod, the sin of teraphim, i.e., idol worship, is found. Therefore, it may be inferred that if there is an ephod, there is no sin of idol worship.</p>
+      <p>The <b>robe</b> of the High Priest <b>atones for malicious speech. From where</b> is this known? <b>Rabbi Ḥanina says:</b> It is logical that <b>an item that</b> produces <b>sound,</b> i.e., the robe, which has bells, <b>shall come and atone for an evil sound. And</b> the <b>frontplate</b> of the High Priest <b>atones for brazenness.</b> This is derived from the fact that <b>with regard to the frontplate it is written: “And it shall be upon Aaron’s forehead”</b> (Exodus 28:38), <b>and with regard to brazenness it is written: “And you had a harlot’s forehead”</b> (Jeremiah 3:3).</p>
+      <p>The Gemara asks: <b>Is that so,</b> that the priestly vestments atone for these sins? <b>But doesn’t Rabbi Yehoshua ben Levi say:</b> There are <b>two matters</b> that <b>we do not find for them an atonement with offerings, but we find for them an atonement from another place, and they are: Bloodshed and malicious speech.</b></p>
+      <p>With regard to <b>bloodshed,</b> its atonement comes <b>from</b> the <b>heifer whose neck is broken.</b> This is referring to a case where a murdered body is found but the identity of the murderer is not known. In such an instance, the Torah mandates that the neck of a heifer must be broken as an atonement for the murder. <b>And</b> with regard to <b>malicious speech,</b> its atonement comes <b>from incense, as Rav Ḥananya teaches</b> in a <i>baraita</i>: <b>From where</b> is it derived that <b>the incense effects atonement? As it is stated</b> after the Israelites spoke slanderously against Moses and Aaron and a plague was sent against them: <b>“And he put on the incense, and made atonement for the people”</b> (Numbers 17:12).</p>
+      <p>The Gemara continues: <b>And</b> similarly, <b>the school of Rabbi Yishmael teaches: For what does incense effect atonement?</b> It effects atonement <b>for malicious speech,</b> in order that <b>an item that</b> is offered <b>in private,</b> i.e., the incense, which is offered by a priest acting alone, <b>shall come and atone for an action</b> generally occurring in <b>private,</b> i.e., malicious speech.</p>
+      <p>Accordingly, there is <b>a difficulty</b> between that which is stated with regard to <b>malicious speech and</b> that which is stated with regard to <b>malicious speech,</b> as according to Rabbi Inini bar Sason the robe atones for malicious speech, whereas according to the <i>baraita</i> it is only the incense that effects atonement for that transgression. Likewise, there is <b>a difficulty</b> between that which is stated with regard to <b>bloodshed and</b> that which is stated with regard to <b>bloodshed,</b> as according to Rabbi Inini bar Sason the tunic effects atonement for bloodshed, whereas according to the <i>baraita</i> only the heifer whose neck is broken effects atonement for it.</p>
+      <p>The Gemara answers: With regard to bloodshed, it is <b>not difficult,</b> as <b>this,</b> the tunic, effects atonement for bloodshed in an instance <b>where it is known who killed</b> the victim, and <b>this,</b> the heifer, effects atonement in an instance <b>where it is not known who killed</b> the victim. The Gemara challenges: <b>If it is known who killed</b> the victim, that man <b>is deserving of death,</b> and there is no atonement for the community otherwise, as it is stated: “And no atonement can be made for the land for the blood that is shed within it, but by the blood of him that shed it” (Numbers 35:33). The Gemara responds: It is referring to a case where he murdered <b>intentionally but</b> witnesses <b>did not forewarn him</b> of the consequences of committing murder. Therefore, the court may not execute him, as no earthly punishment may be administered without forewarning.</p>
+      <p><b>And</b> with regard to the contradiction between that which is stated with regard to <b>malicious speech and</b> that which is stated with regard to <b>malicious speech,</b> it is <b>also not difficult. This,</b> the incense, effects atonement for malicious speech spoken <b>in private,</b> whereas <b>this,</b> the robe, on which the bells that produce noise are placed, effects atonement for malicious speech spoken <b>in public.</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Cette page de Zevachim contient la fin d'une question sur l'air au-dessus de l'autel, la Michna sur les ustensiles qui sanctifient, et le long passage sur les vêtements des Cohanim, qui expient chacun une faute. Ce passage éclaire la paracha Tetzavé, qui décrit ces vêtements (Exode 28).</p>
+
+<h4>1. L'air au-dessus de l'autel</h4>
+<p>La Guemara cherche si l'air au-dessus de l'autel compte comme l'autel : un oiseau ou du sang disqualifié, monté puis levé pour asperger, est-il « descendu » ? La preuve proposée est écartée, et le cas où le prêtre suspend avec une perche reste sans réponse (<i>teiku</i>).</p>
+
+<h4>2. Les ustensiles qui sanctifient (Michna)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Contenu</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Liquide et sec</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un ustensile pour liquides sanctifie des liquides, un ustensile pour le sec sanctifie du sec</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ustensile percé</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il sanctifie encore s'il sert comme avant</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Lieu</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Seulement dans la cour du Temple</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Chmouel</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les coupes à sang sanctifient aussi le sec (Nombres 7:13)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Conditions de Chmouel</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Entier, plein, de l'intérieur</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le sec n'est pas sanctifié pour l'autel mais pour être disqualifié</td></tr>
+</table>
+
+<h4>3. Les vêtements qui expient (Rabbi Inini bar Sason)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Vêtement</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Faute expiée</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Source</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tunique (<i>ketonet</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sang versé</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Ils trempèrent la tunique dans le sang » (Genèse 37:31)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Caleçon (<i>mikhnassayim</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Unions interdites</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Pour couvrir la chair de leur nudité » (Exode 28:42)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tiare (<i>mitsnefet</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'orgueil</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ce qui est en hauteur expie l'élévation du cœur</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ceinture (<i>avnet</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les pensées du cœur</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle est placée au-dessus du cœur</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pectoral (<i>'hoshen</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les jugements injustes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Pectoral de jugement » (Exode 28:15)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Éphod</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'idolâtrie</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Sans éphod ni théraphim » (Osée 3:4)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Robe (<i>me'il</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La médisance publique</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les clochettes produisent un son</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plaque d'or (<i>tsits</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'effronterie</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Sur le front d'Aharon » / « front de prostituée »</td></tr>
+</table>
+
+<h4>4. Deux difficultés</h4>
+<p>Le sang versé a pour expiation la génisse à la nuque brisée (quand le meurtrier est inconnu), et la médisance a pour expiation l'encens (Nombres 17:12). La Guemara résout : la tunique expie quand on sait qui a tué mais que le meurtrier ne peut être jugé (pas d'avertissement) ; la génisse, quand on ne sait pas. L'encens expie la médisance en secret, la robe la médisance en public.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p>Rachi et les Tossafot précisent trois points : le rôle de la robe et de l'encens, la tunique et l'expiation, et l'éphod.</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Commentaire</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Explication</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « la tunique expie le sang versé »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La tunique expie pour la communauté, afin qu'elle ne soit pas punie quand on sait qui a tué</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « une chose de la voix »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les clochettes, qui font du bruit, expient la médisance</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « sans éphod »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Quand il n'y a pas d'éphod, la faute des théraphim apparaît ; s'il y a un éphod, il n'y a pas de théraphim</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rachi : « en secret » et « en public »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'encens expie ce qui se fait en secret ; le son des clochettes expie ce qui est dit en public</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tossafot : « comme ici, dans les nuances de lèpre »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbénou Tam lie les deux : la robe expie la médisance, et la lèpre vient pour la médisance (Arakhin 16a)</td></tr>
+</table>
+
+<p>Les Tossafot discutent aussi de la raison pour laquelle la Guemara n'attribue pas l'expiation du sang versé aux vêtements à l'époque où le Sanhédrin cessa de juger les peines capitales.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Le Temple n'existe plus, mais cette page nourrit plusieurs règles.</p>
+<ul>
+<li><b>La médisance est grave.</b> La Guemara présente l'encens et la robe comme les expiations de la médisance, ce qui souligne la gravité de cette faute.</li>
+<li><b>L'encens.</b> On récite le <i>Pitoum haKétoret</i> après la prière (SA Orah Haïm 132:2). Voir <a href="../choulhan-aroukh/oh_132.html">Orah Haïm, siman 132 – Ouva leTsion, Alénou, Pitoum haKétoret</a>.</li>
+<li><b>Les vêtements des Cohanim.</b> Ils étaient tissés d'une seule pièce et jamais lavés au natron ni au savon : « il n'y a pas de pauvreté là où il y a de la richesse ».</li>
+</ul>
+<p>Voir aussi la paracha qui décrit ces vêtements : <a href="../tanakh/paracha_tetzaveh.html">Tetzavé</a>.</p>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Zevachim.88" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
