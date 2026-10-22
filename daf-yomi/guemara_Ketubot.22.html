@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 22 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Ketubot · Guemara</div>
+    <h1>Guemara 22</h1>
+    <p>Daf 22</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>תְּרֵי וּתְרֵי נִינְהוּ. אִי עַרְעָר דִּפְגַם מִשְׁפָּחָה, גִּלּוּי מִלְּתָא בְּעָלְמָא הוּא. לְעוֹלָם אֵימָא לָךְ עַרְעָר דְּגַזְלָנוּתָא, וְקָאָמְרִי הָנֵי: יָדְעִינַן בֵּיהּ דַּעֲבַד תְּשׁוּבָה.</p>
+      <p>אָמַר רַבִּי זֵירָא: הָא מִלְּתָא מֵרַבִּי אַבָּא שְׁמִיעַ לִי, וְאִי לָאו רַבִּי אַבָּא דְּמִן עַכּוֹ, שְׁכַחְתַּהּ: שְׁלֹשָׁה שֶׁיָּשְׁבוּ לְקַיֵּים אֶת הַשְּׁטָר וּמֵת אֶחָד מֵהֶם — צְרִיכִין לְמִיכְתַּב: ״בְּמוֹתַב תְּלָתָא הֲוֵינָא, וְחַד לֵיתוֹהִי״.</p>
+      <p>אָמַר רַב נַחְמָן בַּר יִצְחָק: וְאִי כְּתַב בֵּיהּ: שְׁטָרָא דְּנַן נְפַק לִקְדָמַנָא בֵּי דִינָא — תּוּ לָא צְרִיךְ. וְדִלְמָא בֵּית דִּין חָצוּף הוּא, וּכְדִשְׁמוּאֵל. דְּאָמַר שְׁמוּאֵל: שְׁנַיִם שֶׁדָּנוּ, דִּינֵיהֶם דִּין, אֶלָּא שֶׁנִּקְרָא בֵּית דִּין חָצוּף.</p>
+      <p>דִּכְתִיב בֵּיהּ: ״בֵּי דִינָא דְּרַבַּנָא אָשֵׁי״. וְדִלְמָא רַבָּנַן דְּבֵי רַב אָשֵׁי כְּדִשְׁמוּאֵל סְבִירָא לְהוּ! דִּכְתִיב בֵּיהּ: ״וְאָמַר לַנָא רַבַּנָא אָשֵׁי״.</p>
+      <p><big><strong>מַתְנִי׳</strong></big> הָאִשָּׁה שֶׁאָמְרָה: ״אֵשֶׁת אִישׁ הָיִיתִי וּגְרוּשָׁה אֲנִי״ — נֶאֱמֶנֶת. שֶׁהַפֶּה שֶׁאָסַר, הוּא הַפֶּה שֶׁהִתִּיר. וְאִם יֵשׁ עֵדִים שֶׁהָיְתָה אֵשֶׁת אִישׁ, וְהִיא אוֹמֶרֶת: ״גְּרוּשָׁה אֲנִי״, אֵינָהּ נֶאֱמֶנֶת. אָמְרָה: ״נִשְׁבֵּיתִי, וּטְהוֹרָה אֲנִי״ — נֶאֱמֶנֶת. שֶׁהַפֶּה שֶׁאָסַר, הוּא הַפֶּה שֶׁהִתִּיר. וְאִם יֵשׁ עֵדִים שֶׁנִּשְׁבֵּית, וְהִיא אוֹמֶרֶת: ״טְהוֹרָה אֲנִי״ — אֵינָהּ נֶאֱמֶנֶת. וְאִם מִשֶּׁנִּשֵּׂאת בָּאוּ עֵדִים — הֲרֵי זוֹ לֹא תֵּצֵא.</p>
+      <p><big><strong>גְּמָ׳</strong></big> אָמַר רַב אַסִּי: מִנַּיִן לְהַפֶּה שֶׁאָסַר הוּא הַפֶּה שֶׁהִתִּיר מִן הַתּוֹרָה? שֶׁנֶּאֱמַר: ״אֶת בִּתִּי נָתַתִּי לָאִישׁ הַזֶּה לְאִשָּׁה״. ״לָאִישׁ״ — אָסְרָה, ״הַזֶּה״ — הִתִּירָה.</p>
+      <p>לְמָה לִי קְרָא? סְבָרָא הִיא: הוּא אַסְרַהּ, וְהוּא שָׁרֵי לַהּ! אֶלָּא כִּי אִיצְטְרִיךְ קְרָא, לְכִדְרַב הוּנָא אָמַר רַב. דְּאָמַר רַב הוּנָא אָמַר רַב: מִנַּיִן לָאָב שֶׁנֶּאֱמָן לֶאֱסוֹר אֶת בִּתּוֹ מִן הַתּוֹרָה, שֶׁנֶּאֱמַר: ״אֶת בִּתִּי נָתַתִּי לָאִישׁ״. ״הַזֶּה״ לְמָה לִי?</p>
+      <p>מִיבְּעֵי לֵיהּ לְכִדְתָנֵי רַבִּי יוֹנָה. דְּתָנֵי רַבִּי יוֹנָה: ״אֶת בִּתִּי נָתַתִּי לָאִישׁ הַזֶּה״. ״הַזֶּה״ — וְלֹא לַיָּבָם.</p>
+      <p>תָּנוּ רַבָּנַן: הָאִשָּׁה שֶׁאָמְרָה ״אֵשֶׁת אִישׁ אֲנִי״, וְחָזְרָה וְאָמְרָה ״פְּנוּיָה אֲנִי״ — נֶאֱמֶנֶת. וְהָא שַׁוְּויַהּ לְנַפְשַׁהּ חֲתִיכָה דְּאִיסּוּרָא? אָמַר רָבָא בַּר רַב הוּנָא: כְּגוֹן שֶׁנָּתְנָה אַמַּתְלָא לִדְבָרֶיהָ. תַּנְיָא נָמֵי הָכִי: אָמְרָה אֵשֶׁת אִישׁ אֲנִי, וְחָזְרָה וְאָמְרָה: פְּנוּיָה אֲנִי — אֵינָהּ נֶאֱמֶנֶת. וְאִם נָתְנָה אַמַּתְלָא לִדְבָרֶיהָ — נֶאֱמֶנֶת.</p>
+      <p>וּמַעֲשֶׂה נָמֵי בְּאִשָּׁה אַחַת גְּדוֹלָה שֶׁהָיְתָה גְּדוֹלָה בְּנוֹי, וְקָפְצוּ עָלֶיהָ בְּנֵי אָדָם לְקַדְּשָׁהּ. וְאָמְרָה לָהֶם: ״מְקוּדֶּשֶׁת אֲנִי״. לְיָמִים עָמְדָה וְקִידְּשָׁה אֶת עַצְמָהּ. אָמְרוּ לָהּ חֲכָמִים: מָה רָאִית לַעֲשׂוֹת כֵּן? אָמְרָה לָהֶם: בַּתְּחִלָּה שֶׁבָּאוּ עָלַי אֲנָשִׁים שֶׁאֵינָם מְהוּגָּנִים, אָמַרְתִּי: ״מְקוּדֶּשֶׁת אֲנִי״, עַכְשָׁיו שֶׁבָּאוּ עָלַי אֲנָשִׁים מְהוּגָּנִים, עָמַדְתִּי וְקִדַּשְׁתִּי אֶת עַצְמִי. וְזוֹ הֲלָכָה הֶעֱלָה רַב אַחָא שַׂר הַבִּירָה לִפְנֵי חֲכָמִים בְּאוּשָׁא, וְאָמְרוּ: אִם נָתְנָה אַמַּתְלָא לִדְבָרֶיהָ — נֶאֱמֶנֶת.</p>
+      <p>בְּעָא מִינֵּיהּ שְׁמוּאֵל מֵרַב: אָמְרָה ״טְמֵאָה אֲנִי״, וְחָזְרָה וְאָמְרָה ״טְהוֹרָה אֲנִי״, מַהוּ? אֲמַר לֵיהּ: אַף בְּזוֹ, אִם נָתְנָה</p>
+      <p>אַמַּתְלָא לִדְבָרֶיהָ — נֶאֱמֶנֶת. תְּנָא מִינֵּיהּ אַרְבָּעִים זִימְנִין, וַאֲפִילּוּ הָכִי לָא עֲבַד שְׁמוּאֵל עוֹבָדָא בְּנַפְשֵׁיהּ.</p>
+      <p>תָּנוּ רַבָּנַן: שְׁנַיִם אוֹמְרִים ״מֵת״, וּשְׁנַיִם אוֹמְרִים ״לֹא מֵת״. שְׁנַיִם אוֹמְרִים ״נִתְגָּרְשָׁה״, וּשְׁנַיִם אוֹמְרִים ״לֹא נִתְגָּרְשָׁה״ — הֲרֵי זוֹ לֹא תִּנָּשֵׂא, וְאִם נִשֵּׂאת — לֹא תֵּצֵא. רַבִּי מְנַחֵם בַּר יוֹסֵי אוֹמֵר: תֵּצֵא. אָמַר רַבִּי מְנַחֵם בַּר יוֹסֵי: אֵימָתַי אֲנִי אוֹמֵר תֵּצֵא, בִּזְמַן שֶׁבָּאוּ עֵדִים, וְאַחַר כָּךְ נִשֵּׂאת. אֲבָל נִשֵּׂאת וְאַחַר כָּךְ בָּאוּ עֵדִים — לֹא תֵּצֵא.</p>
+      <p>מִכְּדֵי תְּרֵי וּתְרֵי נִינְהוּ, הַבָּא עָלֶיהָ בְּאָשָׁם תָּלוּי קָאֵי! אָמַר רַב שֵׁשֶׁת: כְּגוֹן שֶׁנִּשֵּׂאת לְאֶחָד מֵעֵדֶיהָ. הִיא גּוּפַהּ בְּאָשָׁם תָּלוּי קָיְימָא! בְּאוֹמֶרֶת: ״בָּרִי לִי״.</p>
+      <p>אָמַר רַבִּי יוֹחָנָן, שְׁנַיִם אוֹמְרִים: ״מֵת״, וּשְׁנַיִם אוֹמְרִים: ״לֹא מֵת״ — הֲרֵי זוֹ לֹא תִּנָּשֵׂא, וְאִם נִשֵּׂאת — לֹא תֵּצֵא. שְׁנַיִם אוֹמְרִים ״נִתְגָּרְשָׁה״, וּשְׁנַיִם אוֹמְרִים ״לֹא נִתְגָּרְשָׁה״ — הֲרֵי זוֹ לֹא תִּנָּשֵׂא, וְאִם נִשֵּׂאת — תֵּצֵא.</p>
+      <p>מַאי שְׁנָא רֵישָׁא וּמַאי שְׁנָא סֵיפָא? אָמַר אַבָּיֵי: תַּרְגְּמַהּ בְּעֵד אֶחָד. עֵד אֶחָד אוֹמֵר ״מֵת״, הֵימְנוּהוּ רַבָּנַן כְּבֵי תְרֵי, וְכִדְעוּלָּא. דְּאָמַר עוּלָּא: כׇּל מָקוֹם שֶׁהֶאֱמִינָה תּוֹרָה עֵד אֶחָד — הֲרֵי כָּאן שְׁנַיִם, וְהַאי דְּקָאָמַר ״לֹא מֵת״ — הָוֵה לֵיהּ חַד, וְאֵין דְּבָרָיו שֶׁל אֶחָד בִּמְקוֹם שְׁנַיִם.</p>
+      <p>אִי הָכִי, אֲפִילּוּ לְכַתְּחִלָּה נָמֵי! מִשּׁוּם דְּרַב אַסִּי. דְּאָמַר רַב אַסִּי: ״הָסֵר מִמְּךָ עִקְּשׁוּת פֶּה וּלְזוּת שְׂפָתַיִם הַרְחֵק מִמֶּךָּ״.</p>
+      <p>סֵיפָא, עֵד אֶחָד אוֹמֵר ״נִתְגָּרְשָׁה״, וְעֵד אֶחָד אוֹמֵר ״לֹא נִתְגָּרְשָׁה״, תַּרְוַיְיהוּ בְּאֵשֶׁת אִישׁ קָמַסְהֲדִי. וְהַאי דְּקָאָמַר נִתְגָּרְשָׁה — הָוֵה לֵיהּ חַד, וְאֵין דְּבָרָיו שֶׁל אֶחָד בִּמְקוֹם שְׁנַיִם.</p>
+      <p>רָבָא אָמַר: לְעוֹלָם תְּרֵי וּתְרֵי נִינְהוּ. וְרָאָה רַבִּי יוֹחָנָן דְּבָרָיו שֶׁל רַבִּי מְנַחֵם בַּר יוֹסֵי בְּגֵרוּשִׁין, וְלֹא רָאָה בְּמִיתָה. מַאי טַעְמָא? מִיתָה — אֵינָהּ יְכוֹלָה מַכְחַשְׁתּוֹ, גֵּרוּשִׁין — יְכוֹלָה מַכְחַשְׁתּוֹ.</p>
+      <p>וּמִי חֲצִיפָה כּוּלֵּי הַאי? וְהָאָמַר רַב הַמְנוּנָא: הָאִשָּׁה שֶׁאָמְרָה לְבַעְלָהּ ״גֵּרַשְׁתַּנִי״ — נֶאֱמֶנֶת. חֲזָקָה אֵין אִשָּׁה מְעִיזָּה פָּנֶיהָ בִּפְנֵי בַּעְלָהּ! הָנֵי מִילֵּי הֵיכָא דְּלֵיכָּא עֵדִים דְּקָא מְסַיְּיעִי לַהּ, אֲבָל הֵיכָא דְּאִיכָּא עֵדִים דְּקָא מְסַיְּיעִי לַהּ — מְעִיזָּה וּמְעִיזָּה.</p>
+      <p>רַב אַסִּי אָמַר: כְּגוֹן דְּאָמְרִי עֵדִים ״עַכְשָׁיו מֵת״, ״עַכְשָׁיו גֵּירְשָׁהּ״. מִיתָה לֵיכָּא לְבָרוּרַהּ. גֵּירוּשִׁין אִיכָּא לְבָרוּרַהּ, דְּאָמְרִינַן לָהּ: אִם אִיתָא דְּהָכִי הֲוָה, אַחֲזִי לַן גִּיטִּיךְ.</p>
+      <p>תָּנוּ רַבָּנַן: שְׁנַיִם אוֹמְרִים ״נִתְקַדְּשָׁה״, וּשְׁנַיִם אוֹמְרִים ״לֹא נִתְקַדְּשָׁה״ — הֲרֵי זוֹ לֹא תִּנָּשֵׂא, וְאִם נִשֵּׂאת לֹא תֵּצֵא. שְׁנַיִם אוֹמְרִים ״נִתְגָּרְשָׁה״, וּשְׁנַיִם אוֹמְרִים ״לֹא נִתְגָּרְשָׁה״ — הֲרֵי זו לֹא תִּנָּשֵׂא, וְאִם נִשֵּׂאת — תֵּצֵא.</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>(Fin de la discussion précédente.)</b> Les témoins qui ont déclaré qu'un juge est inapte et les juges qui l'ont déclaré apte sont deux témoins contre deux témoins, et l'accusation de vol n'est pas totalement écartée. S'il s'agissait d'une contestation de filiation, par exemple un esclave cananéen inapte à être juge, c'est un fait qui finit toujours par se savoir et qui ne demande pas de témoignage ; il n'y a donc pas de conflit d'intérêts. La Guemara conclut : il s'agit d'une accusation de vol, et les juges disent : « Nous savons qu'il s'est repenti et qu'il est maintenant apte à juger », ce qui ne contredit pas le témoignage antérieur.</p>
+      <p><b>Rabbi Zeira</b> : j'ai entendu cela de Rabbi Abba, et sans Rabbi Abba d'Akko, je l'aurais oublié. Trois juges siégeant pour ratifier un acte, dont l'un est mort avant de signer : les deux survivants doivent modifier la formule et écrire : « Nous siégions à trois juges, et l'un des juges n'est plus en vie », afin qu'on comprenne que l'acte a été ratifié par trois juges, même si deux seulement ont signé. <b>Rav Na'hman bar Yits'hak</b> : s'ils ont écrit « cet acte a été présenté devant nous, le tribunal », il n'est pas nécessaire d'ajouter qu'ils étaient trois, car « tribunal » sans précision désigne trois juges. La Guemara objecte : peut-être était-ce un « tribunal effronté », selon Chmouel qui dit que deux juges qui ont siégé rendent un jugement valable, mais qu'ils ont transgressé l'institution rabbinique des trois juges. Réponse : il est écrit « devant le tribunal de notre maître Rav Ashi », donc conforme au protocole ; et même si l'on dit que ses collègues suivent Chmouel, il est écrit que Rav Ashi leur a appris comment ratifier l'acte.</p>
+      <p><b>MICHNA.</b> Une femme qui dit : « J'étais mariée et je suis maintenant divorcée » est crue et peut se remarier, car <b>la bouche qui a interdit est la bouche qui a permis</b>. Mais s'il y a des témoins qu'elle était mariée et qu'elle dit « je suis divorcée », elle n'est pas crue. De même, une femme qui dit : « J'ai été capturée, mais je suis pure » est crue et peut épouser un Cohen, car la bouche qui a interdit est la bouche qui a permis ; mais s'il y a des témoins qu'elle a été capturée, elle n'est pas crue. Et si les témoins sont venus après son mariage, elle n'a pas à quitter son mari.</p>
+      <p><b>GUEMARA.</b> <b>Rav Assi</b> : d'où dans la Torah vient le principe « la bouche qui a interdit est la bouche qui a permis » ? De « J'ai donné ma fille à cet homme » (Deutéronome 22:16) : en disant « à l'homme », le père l'a rendue interdite à tous ; en disant « cet », il l'a rendue permise à son mari. La Guemara demande : pourquoi le verset ? C'est la logique. Le verset sert pour la règle de Rav Houna au nom de Rav : le père est cru pour interdire sa fille (« J'ai donné ma fille à l'homme »). Et « cet » enseigne, selon Rabbi Yona, que ces règles s'appliquent au mari qui calomnie sa femme et non au lévir.</p>
+      <p><b>Baraïta</b> : une femme qui dit « je suis mariée » puis « je suis libre » est crue. La Guemara objecte : elle s'est rendue interdite ! Rava bar Rav Houna : elle a donné une raison (<i>amatla</i>) à sa première déclaration. Une baraïta dit qu'elle n'est pas crue, mais si elle a donné une raison, elle est crue. Un cas : une femme importante, d'une grande beauté, que beaucoup de gens demandaient en mariage, disait « je suis déjà fiancée ». Plus tard elle se fiança à un homme. Les Sages lui demandèrent pourquoi ; elle dit : « Au début, des gens peu scrupuleux me demandaient, et j'ai dit que j'étais fiancée ; maintenant des gens scrupuleux sont venus, et je me suis fiancée à l'un d'eux. » Rav A'ha Sar haBira posa la question aux Sages à Ouchâ : si elle a donné une raison, elle est crue.</p>
+      <p><b>Chmouel</b> demanda à Rav : si une femme dit à son mari « je suis impure (menstruée) » puis « je suis pure » ? Rav : si elle a donné une raison, elle est crue. Chmouel apprit cela de lui quarante fois, mais, confronté à un cas similaire, il ne s'appuya pas sur cette indulgence pour lui-même.</p>
+      <p><b>Baraïta</b> : si deux témoins disent « le mari est mort » et deux « il n'est pas mort », ou deux « elle a été divorcée » et deux « elle ne l'a pas été », elle ne se remarie pas ; si elle s'est remariée, elle ne quitte pas son mari. Rabbi Ménahem bar Yossé : elle doit le quitter, mais seulement si les témoins sont venus avant son remariage ; si le remariage a précédé, elle ne quitte pas. La Guemara demande : n'est-ce pas un doute et celui qui a des relations avec elle devrait un sacrifice pour faute douteuse (<i>acham talouï</i>) ? <b>Rav Chéchet</b> : elle a épousé l'un des témoins qui disent qu'elle est libre ; pour lui il n'y a pas de doute. Elle-même ? Elle dit : « Il est clair pour moi qu'il est mort. »</p>
+      <p><b>Rabbi Yo'hanan</b> : deux témoins « il est mort » et deux « il n'est pas mort » : elle ne se remarie pas, et si elle s'est remariée, elle ne quitte pas. Deux « elle a été divorcée » et deux « elle ne l'a pas été » : elle ne se remarie pas, et si elle s'est remariée, elle quitte. Pourquoi cette différence ? <b>Abayé</b> : il s'agit de témoins uniques. Un témoin unique de la mort est cru comme deux (institution des Sages pour permettre à la femme de se remarier, selon Oula) ; le second témoin, qui dit « il n'est pas mort », est un témoin unique, sans valeur face à deux. Elle ne quitte pas son mari. Mais elle ne se remarie pas d'emblée, à cause de Rav Assi : pour tout doute, « éloigne de toi une bouche tortueuse » (Proverbes 4:24). Dans la seconde clause, les deux disent qu'elle était mariée, et le témoin unique du divorce n'a pas de valeur contre deux : elle quitte son mari.</p>
+      <p><b>Rava</b> : il s'agit vraiment de deux contre deux, et Rabbi Yo'hanan a trouvé juste l'avis de Rabbi Ménahem bar Yossé pour le divorce mais non pour la mort. Pour la mort, si son mari revient vivant, elle ne peut pas le nier, donc son remariage est crédible : si elle n'était pas sûre, elle ne se serait pas remariée. Pour le divorce, si le mari revient et dit qu'il ne l'a pas divorcée, elle peut le nier ; son remariage est donc suspect, et les Sages l'ont sanctionnée : elle quitte son mari. La Guemara objecte : une femme est-elle assez effrontée pour mentir devant son mari ? Rav Hamnouna a dit qu'une femme qui dit à son mari « tu m'as divorcée » est crue, car elle n'est pas effrontée devant son mari. Réponse : seulement quand elle n'a pas de témoins qui la soutiennent ; quand elle a des témoins, elle l'est.</p>
+      <p><b>Rav Assi</b> : il s'agit de témoins qui disent « il est mort maintenant » ou « il l'a divorcée maintenant ». Pour la mort, on ne peut pas vérifier immédiatement. Pour le divorce, on peut : on lui dit « montre-nous ton acte de divorce » ; puisque le divorce est récent, on ne peut pas dire qu'elle l'a perdu. Si elle ne le présente pas, les témoins sont des faux témoins. Elle quitte donc son mari.</p>
+      <p><b>Baraïta</b> : deux témoins « elle a été fiancée » et deux « elle ne l'a pas été » : elle ne se marie pas à un autre, mais si elle s'est mariée, elle ne quitte pas son mari. Deux « elle a été divorcée » et deux « elle ne l'a pas été » : elle ne se remarie pas et, si elle l'a fait, elle quitte son mari.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>the witnesses who testified that he is unfit and the judges who testified that he is fit <b>are two</b> witnesses <b>and two</b> witnesses who contradict them, and in that case, the allegation of theft is not completely eliminated. <b>If</b> it was <b>a challenge</b> based on an allegation of <b>flawed lineage,</b> e.g., he is a Canaanite slave and therefore unfit to serve as a judge, that <b>is a mere revealing of a matter</b> that will ultimately be revealed in any case and does not require actual testimony. Therefore, there is no conflict of interest preventing the judges from asserting his fitness after they signed. The Gemara concludes: <b>Actually, I will say to you</b> that it was <b>a challenge</b> based on an allegation <b>of theft, and these</b> judges <b>say: We know about him that he repented</b> and is now fit to serve as a judge. In that case, their testimony does not contradict the original testimony that he was guilty of theft.</p>
+      <p>§ <b>Rabbi Zeira said: This matter, I heard from Rabbi Abba, and if it was not for Rabbi Abba of Akko, I would have forgotten it.</b> With regard to a case of <b>three</b> judges <b>who convened</b> as a tribunal <b>to ratify a document, and one of them died</b> before signing the ratification, the surviving judges <b>must</b> emend the standard formula of the ratification and <b>write: We were</b> convened <b>in a session of three</b> judges, <b>and one</b> of the judges <b>is no longer</b> alive. In that way it is clear that although only two judges signed, the document was ratified by three judges.</p>
+      <p><b>Rav Naḥman bar Yitzḥak said: And if</b> the judges <b>wrote in</b> the ratification: <b>This document was produced before us, the court;</b> they <b>no longer need</b> to add that they were three judges, as, when unmodified, the term court connotes a tribunal of three judges. The Gemara asks: <b>And perhaps it was an impudent court, and</b> that is <b>in accordance with</b> the opinion of <b>Shmuel, as Shmuel said: Two</b> judges <b>who</b> convened a tribunal and <b>judged, their verdict is a</b> binding <b>verdict; however,</b> because they contravened the rabbinic ordinance mandating that a court be comprised of three judges, <b>they are called an impudent court.</b> Therefore, writing: Before us, the court, does not rule out the possibility that the document was ratified by fewer than three judges.</p>
+      <p>The Gemara answers: It is clear that the document was ratified by the requisite three judges, <b>as it is written in</b> the ratification: Before us, <b>the court of our</b> teacher <b>Rav Ashi,</b> which presumably conforms to rabbinic protocol. The Gemara asks: <b>And perhaps the Rabbis of the court of Rav Ashi hold in accordance with</b> the opinion of <b>Shmuel</b> and they convened an impudent court, whose ruling is binding. The Gemara answers: It is clear, <b>as it is written in</b> the ratification: Before us, the court of our teacher Rav Ashi, <b>and our</b> teacher <b>Rav Ashi said to us</b> how to ratify the document.</p>
+      <p><strong>MISHNA:</strong> With regard to <b>a woman who said: I was a married woman and</b> now <b>I am a divorcée, she is deemed credible</b> and permitted to remarry, <b>as the mouth that prohibited</b> and established that she was married <b>is the mouth that permitted,</b> and established that she is divorced. <b>However, if there are witnesses that she was a married woman, and she says: I am a divorcée, she is not deemed credible.</b> Similarly, with regard to a woman who <b>said: I was taken captive but I am pure,</b> as I was not raped in captivity, <b>she is deemed credible</b> and permitted to marry a priest, <b>as the mouth that prohibited</b> and established that she was taken captive <b>is the mouth that permitted</b> and established that she was not defiled. <b>But if there are witnesses that she was taken captive, and she says: I am pure, she is not deemed credible. And if witnesses came after she married, this</b> woman need <b>not leave</b> her husband.</p>
+      <p><strong>GEMARA:</strong> <b>Rav Asi said: From where in the Torah</b> is the principle: <b>The mouth that prohibited is the mouth that permitted,</b> derived? It is derived <b>as it is stated: “I gave my daughter to this man [<i>la’ish hazeh</i>] as a wife”</b> (Deuteronomy 22:16). When the father said that he married her off <b>“to the man [<i>la’ish</i>]”</b> without revealing his identity, <b>he rendered her forbidden</b> to all men. When he then says <b>“this [<i>hazeh</i>],”</b> thereby identifying the man to whom he married her off, <b>he renders her permitted</b> to her husband.</p>
+      <p>The Gemara asks: <b>Why do I</b> need to derive this from <b>the verse? It is</b> based on <b>logic: He rendered her forbidden and he rendered her permitted. Rather, where this verse is necessary, is</b> in order <b>to</b> derive the <i>halakha</i> <b>that Rav Huna said</b> that <b>Rav said, as Rav Huna said</b> that <b>Rav said: From where in the Torah</b> is it derived that <b>a father is deemed credible to render his daughter forbidden?</b> It is derived <b>as it is stated: “I gave my daughter to the man [<i>la’ish</i>]”</b> (Deuteronomy 22:16). The Gemara asks: <b>Why do I</b> need the subsequent term <b>“this [<i>hazeh</i>]”?</b></p>
+      <p>The Gemara explains: The verse <b>is necessary to</b> derive the <i>halakha</i> that <b>Rabbi Yona taught; as Rabbi Yona taught</b> in a <i>baraita</i> that in the verse: <b>“I gave my daughter to this man,”</b> written in the context of a husband slandering his wife, <b>“this”</b> is written to infer: The <i>halakhot</i> in this passage apply to a man who slanders his wife and <b>not to the <i>yavam</i>,</b> in the case of levirate marriage.</p>
+      <p>§ <b>The Sages taught</b> with regard to <b>the woman who said: I am a married woman, and then said: I am unmarried,</b> that <b>she is deemed credible.</b> The Gemara asks: <b>But didn’t she render herself an entity of prohibition?</b> When she said that she was married she rendered herself forbidden to all men. How then can she abrogate the prohibition? The Gemara answers that <b>Rava bar Rav Huna said:</b> It is referring to a case <b>where she provided a rationale [<i>amatla</i>] for her</b> initial <b>statement</b> and explained why she said that she was a married woman. <b>That was also taught</b> in a <i>baraita</i> with regard to <b>the woman who said: I am a married woman, and then said: I am unmarried,</b> that <b>she is not deemed credible. And if she provided a rationale for her</b> initial <b>statement, she is deemed credible.</b></p>
+      <p><b>And there was also an incident involving an important woman who was outstanding in beauty, and</b> many <b>men were clamoring to betroth her. And she said to them: I am</b> already <b>betrothed. Sometime later she arose and betrothed herself</b> to a man. <b>The Sages said to her: What did you see</b> that led you <b>to do so? She said to them: Initially, when unscrupulous people approached me</b> seeking to marry me, <b>I said: I am betrothed. Now that scrupulous people approached me, I arose and betrothed myself</b> to one of them. <b>And</b> the Gemara notes: <b>This <i>halakha</i> was raised by Rav Aḥa Sar HaBira before the Sages in Usha,</b> the seat of the Sanhedrin, <b>and</b> the Sages <b>said: If she provided a rationale for her statement, she is deemed credible.</b></p>
+      <p><b>Shmuel raised a dilemma before Rav:</b> If a woman <b>said</b> to her husband: <b>I am ritually impure</b> as I am menstruating, <b>and then said: I am pure, what is</b> the <i>halakha</i>? Is she permitted based on her latter statement, or did she render herself an entity of prohibition with her first statement and therefore remains forbidden? Rav <b>said to him: Even in that</b> case, <b>if she provided a</b></p>
+      <p><b>rationale for her statement, she is deemed credible.</b> The Gemara relates: Shmuel <b>learned</b> this <i>halakha</i> <b>from him forty times</b> to ensure that he would not forget it, <b>and even so,</b> when confronted with a similar situation, <b>Shmuel did not</b> rely on that lenient ruling and did not <b>take action with regard to himself</b> and his wife.</p>
+      <p>§ <b>The Sages taught</b> that if <b>two</b> witnesses <b>say:</b> The husband <b>died, and two</b> witnesses <b>say: He did not die;</b> or if <b>two</b> witnesses <b>say:</b> This woman <b>was divorced, and two</b> witnesses <b>say: She was not divorced, this</b> woman <b>may not remarry</b> as there is no unequivocal testimony that she is unmarried. <b>And if she remarried,</b> she need <b>not leave</b> her husband. <b>Rabbi Menaḥem bar Yosei says:</b> She must <b>leave</b> her husband. And <b>Rabbi Menaḥem bar Yosei said: When do I say</b> that <b>she must leave</b> her husband? It is in a case <b>where witnesses came</b> to testify that she is still married <b>and she remarried thereafter. However, if she remarried and the witnesses came thereafter,</b> she need <b>not leave</b> her husband based on the uncertainty created by contradictory witnesses.</p>
+      <p>The Gemara asks: <b>After all, they are two</b> witnesses testifying that she is married <b>and two</b> witnesses testifying that she is not; how then can the ruling be that after remarrying she need not leave her husband? In that case, <b>one who engages in intercourse with her stands liable</b> to bring <b>a guilt-offering for uncertainty.</b> For any prohibition whose certain violation renders one liable to bring a sin-offering, its uncertain violation renders one liable to bring a guilt-offering for uncertainty. <b>Rav Sheshet said:</b> This is a case <b>where she married one of her witnesses</b> who testified that she is unmarried. As far as he is concerned, there is no uncertainty. The Gemara asks: <b>She herself stands liable</b> to bring <b>a guilt-offering for uncertainty,</b> as she has no independent knowledge whether her husband died. The Gemara answers that this is a case <b>where she says: It is clear to me</b> that he died.</p>
+      <p>§ <b>Rabbi Yoḥanan said</b> that if <b>two</b> witnesses <b>say:</b> The husband <b>died, and two</b> witnesses <b>say: He did not die, this</b> woman <b>may not remarry. And if she remarried</b> she need <b>not leave</b> her husband. If <b>two</b> witnesses <b>say:</b> This woman <b>was divorced, and two</b> witnesses <b>say: She was not divorced, this</b> woman <b>may not remarry. And if she remarried</b> she must <b>leave</b> her husband.</p>
+      <p>The Gemara asks: <b>What is different</b> in <b>the first clause</b> of Rabbi Yoḥanan’s statement, where, if she remarried, she need not leave her husband, <b>and what is the different</b> in <b>the second clause,</b> where, if she remarried, she must leave her husband? <b>Abaye said: Interpret</b> Rabbi Yoḥanan’s statement <b>in</b> a case where each testimony was given by <b>one witness.</b> If <b>one witness says:</b> The husband <b>died, the Sages</b> instituted an ordinance and <b>accorded him credibility like</b> that of <b>two</b> witnesses in order to enable his wife to remarry. <b>And</b> that is <b>in accordance with</b> the opinion of <b>Ulla, as Ulla said: Wherever the Torah deemed one witness credible,</b> his legal status <b>there</b> is that of <b>two</b> witnesses. <b>And</b> the legal status of <b>that</b> second witness <b>who says: He did not die, is</b> that of <b>one</b> witness, <b>and the statement of one</b> witness has <b>no</b> validity <b>in a place</b> where there is the testimony of <b>two</b> witnesses. Therefore, she need not leave her husband.</p>
+      <p>The Gemara asks: <b>If so,</b> that this is a case of the testimony of two witnesses against the testimony of one witness, it should be permitted for her to remarry <b>even <i>ab initio</i>.</b> The Gemara answers that she may not remarry <i>ab initio</i> <b>due to</b> the opinion of <b>Rav Asi, as Rav Asi said</b> that in any case of uncertainty, the verse <b>“Remove from you a crooked mouth, and perverse lips put far from you”</b> (Proverbs 4:24) applies. Although it is not a strictly prohibited action, it is, nevertheless, inappropriate.</p>
+      <p>In <b>the latter clause</b> of Rabbi Yoḥanan’s statement, where <b>one witness says:</b> This woman <b>was divorced, and one witness says: She was not divorced, both of them are testifying</b> that she was <b>a married woman, and that</b> witness <b>who says: She was divorced, is one</b> witness, <b>and the statement of one</b> witness has <b>no</b> validity <b>in a place</b> where there is the testimony of <b>two</b> witnesses. Therefore, even if she remarried she must leave her husband.</p>
+      <p><b>Rava</b> explained the difference between the two cases in Rabbi Yoḥanan’s statement and <b>said: Actually</b> it is a case where <b>they are two</b> witnesses testifying that she is married <b>and two</b> testifying that she is not, <b>and Rabbi Yoḥanan saw the statement of Rabbi Menaḥem bar Yosei</b> as correct <b>in</b> the case of <b>divorce but did not see</b> it as correct <b>in</b> the case of <b>death. What is the reason</b> that he distinguishes between the two cases? In the case of <b>death,</b> if ultimately her husband returns alive, <b>she is unable to deny</b> that <b>he</b> is alive. Therefore, the woman’s decision to remarry is credible, as if she were not certain that he was dead, she would not have remarried. However, in the case of <b>divorce,</b> if her husband returns and claims that he did not divorce her, <b>she is able to deny his</b> claim. Therefore, her decision to remarry is suspect, and the Sages penalized her and established that she must leave her husband.</p>
+      <p>The Gemara asks: <b>And is</b> the woman <b>impudent</b> to <b>that extent,</b> that she would lie in the presence of her husband and claim that he divorced her? <b>But didn’t Rav Hamnuna say</b> with regard to <b>a woman who said to her husband: You divorced me, she is deemed credible,</b> as there is a <b>presumption that a woman is not insolent in the presence of her husband?</b> The Gemara answers: <b>This</b> statement that she is not insolent <b>applies only</b> in a case <b>where there are no witnesses who are supporting her; however,</b> in a case <b>where there are witnesses who are supporting her, she would certainly be insolent.</b></p>
+      <p><b>Rav Asi</b> explained the difference between the two cases in Rabbi Yoḥanan’s statement and <b>said</b> that it is a case <b>where the witnesses say: He died now,</b> or: <b>He divorced her now.</b> With regard to the husband’s <b>death, there is no</b> way <b>to</b> immediately <b>clarify</b> whether or not he is dead. With regard to <b>divorce there is</b> a way <b>to</b> immediately <b>clarify</b> whether or not he divorced her, <b>as we say to</b> the woman: <b>If it is so that this</b> is what happened, <b>show us your bill of divorce.</b> Since the testimony was that the divorce was now, it is not feasible that she lost the bill of divorce. If she fails to produce the bill of divorce, the witnesses that testify that she is divorced are apparently false witnesses. Therefore, even if she remarried she must leave her husband.</p>
+      <p>§ <b>The Sages taught:</b> In a case where <b>two</b> witnesses <b>say:</b> This woman <b>was betrothed, and two</b> witnesses <b>say: She was not betrothed, this</b> woman <b>may not marry</b> another, <b>and if she remarried,</b> she need <b>not leave</b> her husband. In a case where <b>two</b> witnesses <b>say:</b> This woman <b>was divorced, and two</b> witnesses <b>say: She was not divorced, this</b> woman <b>may not remarry. And if she remarried,</b> she must <b>leave</b> her husband.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Cette page de Ketoubot traite de la <b>crédibilité de la femme qui parle de son propre statut</b> : « la bouche qui a interdit est la bouche qui a permis ». Ce principe est celui que la Guemara de Bekhorot 36 applique au Cohen qui dit « c'est un premier-né et son défaut est avec lui » (voir <a href="guemara_Bekhorot.36.html">Bekhorot 36</a>).</p>
+
+<h4>1. Les juges et la ratification d'un acte</h4>
+<p>La Guemara conclut le débat précédent sur un juge accusé de vol. Elle règle ensuite la formule de ratification : si l'un des trois juges est mort avant de signer, on écrit « nous siégions à trois, et l'un n'est plus en vie ». Un tribunal sans précision est un tribunal de trois.</p>
+
+<h4>2. « La bouche qui a interdit est la bouche qui a permis »</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« J'étais mariée et je suis divorcée »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Crue, s'il n'y a pas de témoins qu'elle était mariée</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« J'ai été capturée mais je suis pure »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Crue, et permise à un Cohen, s'il n'y a pas de témoins de la captivité</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les témoins viennent après son mariage</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle ne quitte pas son mari</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Source (Rav Assi)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« J'ai donné ma fille à cet homme » (Deutéronome 22:16)</td></tr>
+</table>
+
+<h4>3. La femme qui donne une raison</h4>
+<p>Une femme qui a dit « je suis mariée » puis « je suis libre » n'est pas crue, sauf si elle a donné une raison à sa première déclaration (<i>amatla</i>) : par exemple pour écarter des prétendants peu scrupuleux. Rav A'ha Sar haBira a fait confirmer cette règle par les Sages à Ouchâ.</p>
+
+<h4>4. Témoins contradictoires sur le mari</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux témoins « mort », deux « pas mort »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle ne se remarie pas ; si elle l'a fait, elle ne quitte pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux « divorcée », deux « pas divorcée »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle ne se remarie pas ; si elle l'a fait, elle quitte son mari</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Abayé</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Témoins uniques : un témoin unique de la mort est cru comme deux</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rava</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pour la mort, le retour du mari ne laisse pas de contestation ; pour le divorce, elle pourrait nier</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Assi</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Si le divorce est récent, elle doit produire l'acte</td></tr>
+</table></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p>Les termes techniques de la page, d'après le texte de la Guemara.</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Terme</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sens</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tribunal effronté (<i>beit din 'hatsouf</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un tribunal de deux juges : son jugement est valable selon Chmouel, mais il a transgressé l'institution des trois juges</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Amatla</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La raison que donne la femme à sa première déclaration</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Faute douteuse (<i>acham talouï</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le sacrifice dû pour une faute douteuse qui, si elle était certaine, exigerait un sacrifice expiatoire</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Témoin unique</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un témoin unique de la mort du mari est cru comme deux, par institution des Sages</td></tr>
+</table><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Cette page fonde plusieurs règles.</p>
+<ul>
+<li><b>La bouche qui a interdit est la bouche qui a permis.</b> Une femme est crue quand elle dit qu'elle était mariée et qu'elle est divorcée, s'il n'y a pas de témoins qu'elle était mariée.</li>
+<li><b>La raison donnée.</b> Une femme qui s'est contredite est crue si elle donne une raison.</li>
+<li><b>Les juges.</b> La ratification d'un acte exige trois juges ; si l'un est mort, on le précise dans l'acte.</li>
+</ul>
+<p>Voir aussi <a href="guemara_Bekhorot.36.html">Bekhorot 36</a>, où le même principe est appliqué au Cohen et au premier-né, ainsi que <a href="../choulhan-aroukh/yd_314.html">Yoré Dé'a 314</a>.</p>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Ketubot.22" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
