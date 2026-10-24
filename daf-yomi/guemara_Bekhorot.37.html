@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 37 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 37</h1>
+    <p>Daf 37</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>לְאַפּוֹקֵי מִדְּרַבִּי יוֹסֵי, שְׁלֹשָׁה מְפִירִין אֶת הַנֶּדֶר בִּמְקוֹם שֶׁאֵין חָכָם לְאַפּוֹקֵי מִדְּרַבִּי יְהוּדָה, דְּתַנְיָא: הֲפָרַת נְדָרִים בִּשְׁלֹשָׁה, רַבִּי יְהוּדָה אוֹמֵר: אֶחָד מֵהֶם חָכָם.</p>
+      <p>בִּמְקוֹם שֶׁאֵין חָכָם. כְּגוֹן מַאן? אָמַר רַב נַחְמָן: כְּגוֹן אֲנָא. רַבִּי יְהוּדָה אוֹמֵר: אֶחָד מֵהֶן חָכָם, מִכְּלָל דְּהָנָךְ כֹּל דְּהוּ? אָמַר רָבִינָא: דְּמַסְבְּרִי לֵיהּ וְסָבַר.</p>
+      <p>רַבִּי יוֹסֵי אוֹמֵר: אֲפִילּוּ יֵשׁ שָׁם עֶשְׂרִים וּשְׁלֹשָׁה כּוּ׳. אָמַר רַב חֲנַנְאֵל אָמַר רַב: אֵין הֲלָכָה כְּרַבִּי יוֹסֵי. פְּשִׁיטָא, יָחִיד וְרַבִּים הֲלָכָה כְּרַבִּים! מַהוּ דְּתֵימָא נִמּוּקוֹ עִמּוֹ? קָא מַשְׁמַע לַן.</p>
+      <p>תִּפְשׁוֹט מֵהָא, דְּהָךְ קַמַּיְיתָא מִשְּׁמֵיהּ דִּשְׁמוּאֵל אִיתְּמַר, דְּאִי מִשְּׁמֵיהּ דְּרַב — תַּרְתֵּי לְמָה לִי?</p>
+      <p>חֲדָא (מכלל) [מִכְּלָלָא] דַּחֲבִירְתַּהּ אִיתְּמַר.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הַשּׁוֹחֵט אֶת הַבְּכוֹר, וְנוֹדַע שֶׁלֹּא הֶרְאָהוּ — מַה שֶּׁאָכְלוּ אָכְלוּ, וְיַחְזִיר לָהֶם הַדָּמִים, וּמַה שֶּׁלֹּא אָכְלוּ — הַבָּשָׂר יִקָּבֵר, וְיַחְזִיר אֶת הַדָּמִים.</p>
+      <p>וְכֵן הַשּׁוֹחֵט אֶת הַפָּרָה וּמְכָרָהּ, וְנוֹדַע שֶׁהִיא טְרֵפָה — מַה שֶּׁאָכְלוּ אָכְלוּ, וּמַה שֶּׁלֹּא אָכְלוּ — הֵם יַחֲזִירוּ לוֹ אֶת הַבָּשָׂר, וְהוּא יַחֲזִיר לָהֶם אֶת הַדָּמִים. מְכָרוּהוּ לְגוֹיִם, אוֹ הִטִּילוּהוּ לִכְלָבִים — יְשַׁלְּמוּ דְּמֵי טְרֵפָה.</p>
+      <p><strong><big>גְּמָ׳</big></strong> תָּנוּ רַבָּנַן: הַמּוֹכֵר בָּשָׂר לַחֲבֵירוֹ וְנִמְצָא בְּשַׂר בְּכוֹר, פֵּירוֹת וְנִמְצָא טְבָלִים, יַיִן וְנִמְצָא יֵין נֶסֶךְ — מַה שֶּׁאָכְלוּ אָכְלוּ, וְיַחְזִיר לָהֶם אֶת הַדָּמִים.</p>
+      <p>רַבִּי שִׁמְעוֹן בֶּן אֶלְעָזָר אוֹמֵר: דְּבָרִים שֶׁהַנֶּפֶשׁ קָצָה בָּהֶן — יַחֲזִיר לָהֶן אֶת הַדָּמִים, וְשֶׁאֵין הַנֶּפֶשׁ קָצָה בָּהֶם — יְנַכֶּה לָהֶם אֶת הַדָּמִים. וְאֵלּוּ הֵן דְּבָרִים שֶׁהַנֶּפֶשׁ קָצָה בָּהֶן: נְבֵילוֹת וּטְרֵיפוֹת, שְׁקָצִים וּרְמָשִׂים. וְאֵלּוּ הֵן דְּבָרִים שֶׁאֵין הַנֶּפֶשׁ קָצָה בָּהֶן: בְּכוֹרוֹת, טְבָלִים וְיֵין נֶסֶךְ.</p>
+      <p>בְּכוֹר — וְלֵימָא לֵיהּ: מַאי אַפְסֵדְתָּךְ?</p>
+      <p>לָא צְרִיכָא, כְּגוֹן דְּזַבֵּין לֵיהּ מִמְּקוֹם מוּמָא, דַּאֲמַר לֵיהּ: אִי לָאו דְּאָכְלַתְּ הֲוָה מַחְזֵינָא לֵיהּ וְשָׁרֵי נִיהֲלֵיהּ, כְּרַבִּי יְהוּדָה.</p>
+      <p>טְבָלִים — הֲוָה מַתְקֵינְנָא לְהוּ וְאָכֵלְנָא לְהוּ, יֵין נֶסֶךְ — עַל יְדֵי תַּעֲרוֹבֶת, וּכְרַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל.</p>
+      <p>דִּתְנַן: יֵין נֶסֶךְ שֶׁנָּפַל לַבּוֹר — כּוּלּוֹ אָסוּר בַּהֲנָאָה. רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: יִמָּכֵר כּוּלּוֹ לְגוֹיִם, חוּץ מִדְּמֵי יֵין נֶסֶךְ שֶׁבּוֹ.</p>
+      <p><strong><big>הֲדַרַן עֲלָךְ כׇּל פְּסוּלֵי הַמּוּקְדָּשִׁין.</big></strong></p>
+      <p>מַתְנִי׳ <strong><big>עַל אֵלּוּ מוּמִין</big></strong> שׁוֹחֲטִין אֶת הַבְּכוֹר: נִפְגְּמָה אׇזְנוֹ מִן הַחַסְחוּס, אֲבָל לֹא הָעוֹר, נִסְדְּקָה אַף עַל פִּי שֶׁלֹּא חָסְרָה, נִיקְּבָה מְלֹא כַרְשִׁינָה, אוֹ שֶׁיָּבְשָׁה. אֵיזֶהוּ יְבֵשָׁה? כֹּל שֶׁתִּנָּקֵב וְאֵינָהּ מוֹצִיאָה טִיפַּת דָּם. רַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם אוֹמֵר: יְבֵשָׁה שֶׁתְּהֵא נִפְרֶכֶת.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אַמַּאי? פִּסֵּחַ וְעִוֵּר כְּתִיב!</p>
+      <p>כְּתִיב נָמֵי ״כִּי יִהְיֶה בוֹ מוּם״, וְאֵימָא: ״כִּי יִהְיֶה בּוֹ מוּם״ — כָּלַל, ״פִּסֵּחַ אוֹ עִוֵּר״ — פָּרַט, כְּלָל וּפְרָט אֵין בַּכְּלָל אֶלָּא מָה שֶׁבַּפְּרָט; פִּסֵּחַ וְעִוֵּר — אִין, מִידֵּי אַחֲרִינָא — לָא!</p>
+      <p>״כֹּל מוּם רָע״ — חָזַר וְכָלַל, כְּלָל וּפְרָט וּכְלָל — אִי אַתָּה דָן אֶלָּא כְּעֵין הַפְּרָט; מָה הַפְּרָט מְפוֹרָשׁ — מוּמִין שֶׁבַּגָּלוּי וְאֵינָן חוֹזְרִין, אַף כֹּל מוּמִין שֶׁבַּגָּלוּי וְאֵינָן חוֹזְרִין.</p>
+      <p>וְאֵימָא: מָה הַפְּרָט מְפוֹרָשׁ — מוּמִין שֶׁבַּגָּלוּי, וּבוֹטֵל מִמְּלַאכְתּוֹ, וְאֵינוֹ חוֹזֵר, אַף כֹּל — מוּמִין שֶׁבַּגָּלוּי, וּבוֹטֵל מִמְּלַאכְתּוֹ, וְאֵינוֹ חוֹזֵר. אַלְּמָה תְּנַן: נִפְגְּמָה אׇזְנוֹ מִן הַחַסְחוּס וְלֹא מִן הָעוֹר?</p>
+      <p>כֹּל מוּם רָע רִיבּוּיָא הוּא, אִי הָכִי, מוּמִין שֶׁבַּסֵּתֶר נָמֵי? אַלְּמָה תְּנַן: חוּטִין הַחִיצוֹנוֹת שֶׁנִּפְגְּמוּ וְשֶׁנִּגְמְמוּ, וְהַפְּנִימִיּוֹת שֶׁנֶּעֶקְרוּ —</p>
+      <p>נֶעְקְרוּ אִין, נִפְגְּמוּ וְנִגְמְמוּ לָא? בָּעֵינָא ״מוּם רָע״, וְלֵיכָּא! אִי הָכִי, מוּם עוֹבֵר נָמֵי! אַלְּמָה תְּנַן: וְלֹא מִן הָעוֹר?</p>
+      <p>מוּם עוֹבֵר סְבָרָא הוּא, הַשְׁתָּא מִיפְרָק לָא פָּרְקִינַן עִלָּוֵיהּ, מִשְׁחָט שָׁחֲטִינַן עִלָּוֵיהּ? דְּתַנְיָא: ״וְאִם כׇּל בְּהֵמָה טְמֵאָה אֲשֶׁר לֹא יַקְרִיבוּ מִמֶּנָּה קׇרְבָּן לַה׳״ — בְּבַעֲלֵי מוּמִין הַכָּתוּב מְדַבֵּר.</p>
+      <p>אַתָּה אוֹמֵר בְּבַעֲלֵי מוּמִין שֶׁנִּפְדּוּ הַכָּתוּב מְדַבֵּר, אוֹ אֵינוֹ אֶלָּא בִּבְהֵמָה טְמֵאָה מַמָּשׁ? כְּשֶׁהוּא אוֹמֵר ״וְאִם בִּבְהֵמָה הַטְּמֵאָה״, הֲרֵי בְּהֵמָה טְמֵאָה אָמוּר, הָא מָה אֲנִי מְקַיֵּים ״אֲשֶׁר לֹא יַקְרִיבוּ מִמֶּנָּה״? הֱוֵי אוֹמֵר: זֶה בַּעֲלֵי מוּמִין שֶׁנִּפְדּוּ.</p>
+      <p>יָכוֹל יִפָּדוּ עַל מוּם עוֹבֵר? תַּלְמוּד לוֹמַר: ״אֲשֶׁר לֹא יַקְרִיבוּ מִמֶּנָּה קׇרְבָּן לַה׳״ — מִי שֶׁאֵינָהּ קְרֵיבָה כׇּל עִיקָּר, יָצְתָה זוֹ שֶׁאֵינָהּ קְרֵיבָה הַיּוֹם אֶלָּא לְמָחָר.</p>
+      <p>אִיבָּעֵית אֵימָא: אִם כֵּן פִּסֵּחַ וְעִוֵּר לְמָה לִי?</p>
+      <p>נִסְדְּקָה אַף עַל פִּי שֶׁלֹּא חָסְרָה. תָּנוּ רַבָּנַן: הַסֶּדֶק — כׇּל שֶׁהוּא, הַפְּגִימָה — בֵּין בִּידֵי אָדָם בֵּין בִּידֵי שָׁמַיִם. מִכְּלָל דְּסֶדֶק בִּידֵי שָׁמַיִם לָא?</p>
+      <p>אֶלָּא, סֶדֶק וּפְגִימָה — בֵּין בִּידֵי שָׁמַיִם בֵּין בִּידֵי אָדָם. וְכַמָּה שִׁיעוּר פְּגִימָה? כְּדֵי שֶׁתַּחְגּוֹר בָּהּ צִיפּוֹרֶן.</p>
+      <p>נִקְּבָה מְלֹא וְכוּ׳. תָּנוּ רַבָּנַן: כַּמָּה נְקִיבַת הָאוֹזֶן? מְלֹא כַרְשִׁינָה. רַבִּי יוֹסֵי בְּרַבִּי יְהוּדָה אוֹמֵר: בְּכַעֲדָשָׁה. וְאֵיזוֹ הִיא יְבֵשָׁה? שֶׁאִם תִּינָּקֵב וְאֵינָהּ מוֹצִיאָה טִיפַּת דָּם. רַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם אוֹמֵר: יְבֵשָׁה כְּדֵי שֶׁתְּהֵא נִפְרֶכֶת.</p>
+      <p>תָּנָא: קְרוֹבִין דִּבְרֵיהֶן לִהְיוֹת שָׁוִין. דִּבְרֵיהֶן דְּמַאן? אִילֵימָא דְּתַנָּא קַמָּא וְרַבִּי יוֹסֵי בֶּן הַמְשׁוּלָּם — טוּבָא אִיכָּא! אֶלָּא דְּתַנָּא קַמָּא וְרַבִּי יוֹסֵי בְּרַבִּי יְהוּדָה.</p>
+      <p>כַּעֲדָשָׁה — אִין, בְּצִיר מִכַּעֲדָשָׁה — לָא? וּרְמִינְהִי: ״מַרְצֵעַ״ — אֵין לִי אֶלָּא מַרְצֵעַ, מִנַּיִן לְרַבּוֹת הַסּוֹל, וְהַסִּירָה, וְהַמַּחַט, וְהַמַּקְדֵּחַ, וְהַמַּכְתֵּב?</p>
+      <p>תַּלְמוּד לוֹמַר: ״וְלָקַחְתָּ״ — כׇּל דָּבָר שֶׁנִּלְקָח בַּיָּד, דִּבְרֵי רַבִּי יוֹסֵי בְּרַבִּי יְהוּדָה. רַבִּי אוֹמֵר: ״מַרְצֵעַ״ — מָה מַרְצֵעַ מְיוּחָד שֶׁל מַתֶּכֶת, אַף כֹּל שֶׁל מַתֶּכֶת.</p>
+      <p>וְקָתָנֵי סֵיפָא: אָמַר רַבִּי, יוּדָן בְּרִבִּי הָיָה דּוֹרֵשׁ: כְּשֶׁהֵן רוֹצְעִין, אֵין רוֹצְעִין אֶלָּא בַּמִּילָת.</p>
+      <p>וַחֲכָמִים אוֹמְרִים: אֵין עֶבֶד עִבְרִי כֹּהֵן נִרְצָע, מִפְּנֵי שֶׁנַּעֲשָׂה בַּעַל מוּם. וְאִם תֹּאמַר: בַּמִּילָת הָיוּ רוֹצְעִין, הֵיאַךְ עֶבֶד כֹּהֵן נַעֲשֶׂה בַּעַל מוּם? הָא אֵין רוֹצְעִין אֶלָּא בְּגוֹבַהּ שֶׁל אוֹזֶן.</p>
+      <p>אָמַר רַב חָנָא בַּר קַטִּינָא: לָא קַשְׁיָא — כָּאן לִשְׁחוֹט, כָּאן לִפְסוֹל.</p>
+      <p>מַאי כַּרְשִׁינָה? אָמַר רַב שֵׁרֵבְיָא: הִינְדָּא.</p>
+      <p>בְּעָא מִינֵּיהּ רַב הוֹשַׁעְיָא מֵרַב הוּנָא רַבָּה: כַּרְשִׁינָה הַנִּכְנֶסֶת וְיוֹצְאָה, אוֹ כַרְשִׁינָה הָעוֹמֶדֶת? אָמַר לוֹ: זוֹ לֹא שָׁמַעְתִּי, כַּיּוֹצֵא בָּהּ שָׁמַעְתִּי.</p>
+      <p>דִּתְנַן: הַשִּׁדְרָה וְהַגּוּלְגּוֹלֶת שֶׁחָסְרוּ, כַּמָּה חֶסְרוֹן בַּשִּׁדְרָה וְלֹא יְהֵא מְטַמֵּא בְּאֹהֶל? בֵּית שַׁמַּאי אוֹמְרִים: שְׁתֵּי חוּלְיוֹת, וּבֵית הִלֵּל אוֹמְרִים: חוּלְיָא אַחַת. וּבַגּוּלְגּוֹלֶת, בֵּית שַׁמַּאי אוֹמְרִים: כִּמְלֹא מַקְדֵּחַ, וּבֵית הִלֵּל אוֹמְרִים: כְּדֵי שֶׁיִּנָּטֵל מִן הַחַי וְיָמוּת.</p>
+      <p>וְיָתֵיב רַב חִסְדָּא וְקָמִיבַּעְיָא לֵיהּ: ״כְּדֵי שֶׁיִּנָּטֵל מִן הַחַי״ — וְכַמָּה? אֲמַר לֵיהּ רַב תַּחְלִיפָא בַּר אֲבוּדִימִי: הָכִי אָמַר שְׁמוּאֵל — כְּסֶלַע.</p>
+      <p>וְאִיתְּמַר: רַב סָפְרָא אָמַר: שְׁמַעְתְּתָא אֲמַר לֵיהּ, וְרַב שְׁמוּאֵל בַּר יְהוּדָה אָמַר: מַתְנִיתָא אֲמַר לֵיהּ, וְסִימָנָיךְ: תָּנֵי רַב שְׁמוּאֵל בַּר יְהוּדָה.</p>
+      <p>וַאֲמַר לֵיהּ: אִם כֵּן, עָשִׂיתָה דִּבְרֵי בֵּית שַׁמַּאי וְדִבְרֵי בֵּית הִלֵּל אֶחָד! דִּתְנַן: מָאוֹר שֶׁלֹּא נַעֲשָׂה בִּידֵי אָדָם, שִׁיעוּרוֹ מְלֹא אֶגְרוֹף גָּדוֹל, וְזֶהוּ אֶגְרוֹפוֹ שֶׁל בֶּן אֲבַטִּיחַ. אָמַר רַבִּי יוֹסֵי: וְיֶשְׁנוֹ כְּרֹאשׁ גָּדוֹל שֶׁל אָדָם.</p>
+      <p>נַעֲשָׂה בִּידֵי אָדָם, שִׁיעֲרוּהוּ כִּמְלֹא מַקְדֵּחַ גָּדוֹל שֶׁל לִשְׁכָּה, שֶׁהוּא כְּפוּנְדְּיוֹן (שֶׁל) הָאִיטַלְקִי, וּכְסֶלַע נִירוֹנִית, וְיֶשְׁנוֹ</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>(Fin de 36b.)</b> Cela exclut l'avis de <b>Rabbi Yossé</b> de la michna, qui interdit à tout nombre de laïcs de permettre un premier-né. Et la règle selon laquelle trois laïcs peuvent <b>annuler un vœu là où il n'y a pas de sage</b> exclut l'avis de <b>Rabbi Yehouda</b>, comme il est enseigné : l'annulation des vœux se fait devant trois ; <b>Rabbi Yehouda dit : l'un d'eux doit être un sage</b>, et s'il n'y en a pas, des laïcs ne peuvent pas annuler un vœu.</p>
+      <p>Rav 'Hiya bar Amram a dit que trois peuvent annuler un vœu là où il n'y a pas de sage ; on en déduit que, s'il y a un sage, <b>lui seul</b> le fait. <b>Qui est un tel sage ?</b> Rav Na'hman : <b>quelqu'un comme moi</b>. Rabbi Yehouda dit : l'un d'eux sage ; les deux autres sont-ils donc n'importe qui ? <b>Ravina</b> : chacun doit être quelqu'un <b>à qui l'on explique les lois des vœux et qui les comprend</b>.</p>
+      <p>La michna dit que <b>Rabbi Yossé</b> : même s'il y a vingt-trois (sages), on n'abat que sur la décision d'un expert. <b>Rav 'Hananel au nom de Rav : la halakha n'est pas comme Rabbi Yossé.</b> C'est évident : un individu contre plusieurs, la halakha suit les plusieurs ! Elle est nécessaire car on aurait pu dire que <b>son raisonnement (<i>nimmouko</i>) est avec lui</b> ; Rav 'Hananel enseigne qu'il n'en est rien.</p>
+      <p>Plus haut (36b), on a cité un enseignement dit soit par Rav soit par Chemouel : trois laïcs permettent un premier-né là où il n'y a pas d'expert. On propose de trancher : l'enseignement « pas comme Rabbi Yossé » est de Rav, donc le premier est de Chemouel, car sinon pourquoi deux fois ? <b>Réponse :</b> l'un a pu être déduit de l'autre par ses élèves.</p>
+      <p><b>MICHNA (5:6).</b> Celui qui abat un premier-né et vend sa viande, et l'on découvre qu'il ne l'avait pas montré : ce qu'ils ont mangé, ils l'ont mangé, et il rend l'argent ; ce qu'ils n'ont pas mangé, la viande est enterrée, et il rend l'argent. De même pour la vache trèfa : ce qu'ils n'ont pas mangé, ils le lui rendent et il rend l'argent ; vendue à des non-Juifs ou jetée aux chiens, ils paient la valeur de la viande trèfa.</p>
+      <p><b>GUEMARA.</b> Les Sages ont enseigné : celui qui vend de la viande à son prochain et l'on découvre que c'est du <b>premier-né</b>, des fruits et que c'est de la <b>tével</b> (non dîmé), du vin et que c'est du <b>vin de libation</b> : ce qu'ils ont mangé, ils l'ont mangé, et il rend tout l'argent. <b>Rabbi Chimon ben Elazar</b> dit : les choses dont <b>l'âme éprouve du dégoût</b> : il rend tout l'argent ; celles dont l'âme n'éprouve pas de dégoût : il déduit. Dégoûtantes : les <b>cadavres, les trèfot</b>, les bestioles et les rampants. Non dégoûtantes : le <b>premier-né</b>, la <b>tével</b> et le <b>vin de libation</b>.</p>
+      <p><b>La Guemara demande :</b> pour le premier-né, <b>que l'acheteur dise au vendeur : « Quel dommage t'ai-je causé ? »</b> Sans la vente, tu n'aurais pas eu le droit d'en profiter. <b>Réponse :</b> il s'agit du cas où il a vendu <b>un morceau de l'endroit du défaut</b> : « Si tu ne l'avais pas mangé, je l'aurais montré à un sage et il me l'aurait permis », selon <b>Rabbi Yehouda</b> (28a), qui permet de montrer même après l'abattage. Pour la <b>tével</b> : « j'aurais prélevé les dîmes et je l'aurais mangé ». Pour le <b>vin de libation</b> : il s'agit d'un <b>mélange</b>, selon <b>Rabban Chimon ben Gamliel</b> : « Le vin de libation tombé dans une citerne est entièrement interdit en jouissance » ; Rabban Chimon ben Gamliel dit : on vend tout à des non-Juifs, sauf la valeur du vin de libation qu'il contient.</p>
+      <p><b>Hadran alakh : « Kol pessoulei hamoukdachin ».</b></p>
+      <p><b>MICHNA (6:1).</b> Pour ces défauts, on abat le premier-né : oreille entamée dans le cartilage mais pas dans la peau ; fendue, même sans manque ; percée d'une vesce ; ou desséchée. Desséchée : percée, elle ne donne pas une goutte de sang ; Rabbi Yossé ben Meshoulam : elle s'effrite.</p>
+      <p><b>GUEMARA.</b> <b>Pourquoi ?</b> Il est écrit seulement « <b>boiteux ou aveugle</b> » (Deutéronome 15:21-22) ! Il est aussi écrit : « <b>S'il a un défaut</b> », qui inclut d'autres défauts. <b>Mais pourquoi ne pas dire :</b> « s'il a un défaut » est un <b>général</b>, « boiteux ou aveugle » un <b>détail</b> : dans un général suivi d'un détail, il n'y a dans le général que ce qui est dans le détail ! La Guemara répond : « <b>tout mauvais défaut</b> » est un <b>deuxième général</b>. Général, détail et général : on n'inclut que ce qui est <b>semblable au détail</b>. Comme le détail est un défaut <b>visible et qui ne guérit pas</b>, ainsi tout défaut visible et qui ne guérit pas.</p>
+      <p>On suggère : comme le détail est visible, <b>arrête le travail</b> et ne guérit pas ; or l'oreille entamée n'arrête pas le travail. La Guemara : « <b>tout mauvais défaut</b> » est une <b>extension</b>. Mais alors les défauts cachés aussi ? Pourquoi la michna dit-elle (39a) que des <b>gencives extérieures entamées ou écorchées</b> et des intérieures arrachées sont un défaut ? L'on déduit : <b>arrachées, oui ; entamées ou écorchées, non</b> (car cachés). Réponse : j'exige un « <b>mauvais</b> défaut », visible et qui enlaidit. Mais alors un défaut passager aussi ? Pourquoi la michna dit-elle « pas dans la peau » ? <b>Défaut passager : c'est un raisonnement</b> : si l'on ne rachète pas (les consacrés) pour un défaut passager, abat-on pour lui le premier-né qui ne se rachète pas ?</p>
+      <p>Source (baraïta) : « S'il s'agit d'un animal impur… » (Lévitique 27:11). C'est le défaut des animaux cachérs rachetés. Peut-être aussi pour un défaut passager ? Le verset dit : « dont on ne présente pas d'offrande » : un animal qui ne peut être offert aujourd'hui mais pourra l'être demain en est exclu. <b>Autre explication :</b> si même un défaut passager suffisait, pourquoi « boiteux ou aveugle » ? Le verset exclut le défaut passager, qui n'est pas comme ces deux, permanents.</p>
+      <p><b>« Fendue, même sans manque. »</b> Baraïta : la fente, quelle que soit sa taille ; l'entaille, <b>faite par l'homme ou par le Ciel</b>. Donc la fente par le Ciel ne compte pas ? Mais fente et entaille, de la main du Ciel ou de l'homme. <b>Mesure de l'entaille</b> : de quoi <b>retenir l'ongle</b>.</p>
+      <p><b>« Percée de la taille d'une vesce. »</b> Quelle est la taille du trou ? <b>Une vesce</b> (<i>karshina</i>). <b>Rabbi Yossé fils de Rabbi Yehouda</b> : une lentille. Desséchée : percée, elle ne laisse pas sortir de sang ; Rabbi Yossé ben Meshoulam : s'effrite. Un Sage a enseigné : leurs paroles sont <b>presque identiques</b> (la vesce et la lentille).</p>
+      <p>Une lentille, oui ; moins qu'une lentille, non ? Mais voici : « <b>l'alêne</b> » (Deutéronome 15:17) : cela ne vise que l'alêne ; d'où l'épine, l'aiguille, la tarière, le stylet ? Le verset dit « <b>tu prendras</b> » : tout ce qu'on prend en main (Rabbi Yossé fils de Rabbi Yehouda). <b>Rabbi</b> : comme l'alêne est de métal, ainsi tout objet de métal. Et la fin de la baraïta : Youdan le grand disait : on perce le <b>lobe</b>. Les Sages : on ne perce pas l'esclave hébreu cohen, car cela le rendrait défectueux. Et si l'on dit « le lobe », comment le défaut ? Cela guérit ! On perce donc le cartilage. <b>Rav 'Hana bar Katina</b> : ce n'est pas difficile. <b>Ici pour abattre, là pour disqualifier</b> : pour disqualifier (le Cohen, ou le sacrifice), un petit trou suffit.</p>
+      <p><b>Quelle est la vesce ?</b> Rav Chérévia : la <b>hinda</b>. Rav Hochaya demande à Rav Houna le Grand : une vesce <b>qui entre et sort</b> ou une vesce <b>qui reste</b> ? « Je n'ai pas entendu cela, mais j'ai entendu un cas semblable » : <b>entre et sort</b>, comme la tarière.</p>
+      <p>Comme il est enseigné (Oholot 2:3) : la colonne et le crâne incomplets ne rendent pas impur sous une tente. Combien manque-t-il à la colonne ? <b>Beit Chamaï : deux vertèbres ; Beit Hillel : une</b>. Au crâne : Beit Chamaï, comme un trou de tarière ; Beit Hillel : ce qui, enlevé à un vivant, le tuerait. <b>Rav 'Hisda</b> demande : « comme enlevé à un vivant » : combien ? Rav Ta'hlifa bar Avoudimi : <b>comme une sela</b> (Chemouel). Rav Safra : un enseignement d'amora ; Rav Chemouel bar Yehouda : une baraïta ; signe : « <i>tanei</i> Rav Chemouel bar Yehouda ». Rav 'Hisda : alors tu as fait de Beit Chamaï et Beit Hillel une seule opinion, car la sela et le trou de tarière sont identiques. Comme il est enseigné (Kelim 17:12) : une fenêtre non faite par l'homme, sa mesure est un <b>grand poing</b> (celui de Ben Avatiah) ; faite par l'homme, la mesure est la <b>grande tarière de la chambre</b> du Temple, qui équivaut au <i>pondion</i> italien et à la sela de Néron, et sa mesure est… (suite en 38a).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>is <b>to the exclusion of</b> the opinion <b>of Rabbi Yosei</b> in the mishna, who prohibits any number of laymen to deem a firstborn animal permitted. The ruling that a group of <b>three</b> laymen may <b>dissolve a vow in a place where there is no Sage</b> is <b>to the exclusion of</b> the opinion <b>of Rabbi Yehuda, as it is taught</b> in a <i>baraita</i>: <b>Dissolution of vows</b> requires a court of <b>three. Rabbi Yehuda says:</b> This is the <i>halakha</i> only if at least <b>one of them</b> is <b>a Sage.</b> If no Sage is available, laymen may not dissolve a vow.</p>
+      <p>Rav Ḥiyya bar Amram stated above that a group of three may dissolve a vow <b>in a place where there is no Sage.</b> This indicates that if there is a Sage, he alone may dissolve a vow. The Gemara asks: <b>Who, for example,</b> is considered such a Sage? <b>Rav Naḥman said: For example,</b> one such as <b>me.</b> The <i>baraita</i> further stated that <b>Rabbi Yehuda says:</b> At least <b>one of</b> the three laymen must be <b>a Sage.</b> The Gemara asks: Should one conclude <b>by inference that those</b> other two members can be <b>anyone,</b> even complete ignoramuses? <b>Ravina said</b> in explanation: Each member of the group must be one <b>to whom</b> the <i>halakhot</i> of vows <b>is explained and he</b> is able to <b>comprehend</b> them.</p>
+      <p>§ The mishna teaches that <b>Rabbi Yosei says: Even if there is</b> a court of <b>twenty-three</b> Sages <b>there,</b> it may be slaughtered only on the basis of the ruling of an expert. <b>Rav Ḥananel says</b> that <b>Rav says:</b> The <b><i>halakha</i></b> is <b>not in accordance with</b> the opinion of <b>Rabbi Yosei.</b> The Gemara challenges: This is <b>obvious,</b> as there is a principle that in a dispute between <b>an individual</b> Sage <b>and many</b> Sages, the <b><i>halakha</i></b> is <b>in accordance with</b> the opinion of the <b>many</b> Sages. The Gemara answers: Rav’s statement is necessary, <b>lest you say</b> that Rabbi Yosei is an exception to the principle, as <b>his reasoning [<i>nimmuko</i>] is with him,</b> i.e., his logic is sound. Rav Ḥananel therefore <b>teaches us</b> that this is not so, and the <i>halakha</i> does not follow his opinion.</p>
+      <p>Earlier (36b), the Gemara cited a ruling, which was issued either by Rav or Shmuel, that three regular Jews may deem a firstborn animal permitted in a place where there is no expert, in contrast to the opinion of Rabbi Yosei. The Gemara suggests: <b>Resolve</b> that dilemma <b>from this</b> statement in the name of Rav, that the <i>halakha</i> is not in accordance with the opinion of Rabbi Yosei. It can be inferred from here <b>that that first,</b> uncertain ruling <b>was stated in the name of Shmuel. As, if</b> it was stated <b>in the name of Rav, why do I</b> need <b>two</b> identical rulings?</p>
+      <p>The Gemara answers: This is insufficient proof, as it is possible that Rav did not issue two identical rulings. Rather, <b>one</b> ruling <b>was stated from the other, by inference.</b> Rav issued only one of these statements explicitly; the other was reported by his students in his name based on an inference from what he had said.</p>
+      <p><strong>MISHNA:</strong> In the case of <b>one who slaughters a firstborn</b> animal and sells its meat, <b>and it was discovered that he did not</b> initially <b>show it</b> to one of the Sages, the <i>halakha</i> is that it was actually prohibited to derive any benefit from the meat. In that case, <b>what</b> the buyers <b>ate, they ate, and</b> the Sages penalized the seller in that <b>he must return the money to them,</b> which they paid for the meat that they ate. <b>And</b> with regard to <b>that which they did not eat,</b> that <b>meat must be buried, and he must return the money</b> that they paid for the meat that they did not eat.</p>
+      <p><b>And likewise,</b> in the case of <b>one who slaughters a cow and sells it, and it was discovered that it is a <i>tereifa</i>, what</b> the buyers <b>ate, they ate, and what they did not eat, they must return the meat to</b> the seller, who may sell it to a gentile or feed it to the dogs, <b>and he must return the money to</b> the buyers. If the buyers <b>sold it to gentiles or cast it to the dogs, they pay</b> the seller <b>the value of a <i>tereifa</i>,</b> which is less than the value of kosher meat, and the seller refunds the balance to the buyers.</p>
+      <p><strong>GEMARA:</strong> <b>The Sages taught</b> in a <i>baraita</i>: In a case where <b>one sells meat to another and it was discovered</b> that it is the <b>meat</b> of <b>a firstborn</b> animal, which was not deemed permitted for consumption by an expert, or if one sells <b>produce</b> to another <b>and it was discovered</b> that it is <b>untithed produce,</b> or if one sells <b>wine</b> to another <b>and it turns out</b> that it is <b>wine</b> that was used for <b>a libation</b> in idol worship, the <i>halakha</i> is that <b>what</b> the purchasers <b>ate, they ate, and</b> the seller <b>reimburses them</b> all their <b>money.</b></p>
+      <p><b>Rabbi Shimon ben Elazar says,</b> qualifying this ruling: If he sold them <b>items from which one is</b> generally <b>repulsed, he must reimburse them</b> all their <b>money,</b> as they are presumed to not have derived benefit from the consumption of such items. <b>But</b> if he sold them <b>items from which one is not</b> generally <b>repulsed, he deducts for them the value</b> of the benefit from those items and reimburses them the balance. <b>And the following are items from which one is</b> generally <b>repulsed: Carcasses and <i>tereifot</i>, repugnant creatures, and creeping animals. And the following are items from which one is</b> generally <b>not repulsed: Firstborn</b> animals, <b>untithed produce, and wine</b> used for <b>a libation</b> in idol worship.</p>
+      <p>The Gemara asks: Why does the seller deduct the value of the meat of <b>a firstborn</b> animal eaten by the purchaser and reimburse him the difference? <b>Let</b> the purchaser <b>say to</b> the seller: <b>What loss have I caused you</b> by eating the meat? Had you not sold it to me, you would have had no rights to partake of it, as this is an unblemished firstborn animal from which deriving benefit is prohibited.</p>
+      <p>The Gemara answers: <b>No,</b> this ruling is <b>necessary</b> in a case <b>where he sold him</b> a cut of meat <b>from an area</b> on the animal that contained <b>a blemish,</b> but the seller had not yet brought the animal to be examined and deemed permitted by a Sage. In <b>that</b> instance, the seller can <b>say to</b> the purchaser: <b>Had you not eaten</b> the meat, <b>I would have shown</b> the animal to a Sage <b>and he</b> would have <b>deemed it permitted</b> to me. The Gemara notes that this is <b>in accordance with</b> the opinion of <b>Rabbi Yehuda</b> (28a), who permits a firstborn animal to be examined and deemed permitted even after it has been slaughtered.</p>
+      <p>The Gemara adds that with regard to <b>untithed produce,</b> although one could claim that the purchaser did not cause a loss to the seller, as untithed produce is prohibited for consumption, the seller can say to the purchaser: Had you not eaten my produce, <b>I would have remedied it,</b> i.e., separated its tithes, <b>and eaten it.</b> Similarly, with regard to <b>wine</b> used for <b>a libation</b> in idol worship, which is also prohibited to be consumed, this is referring to a seller who sold it <b>in a mixture</b> of permitted wine. In this case, had the purchaser not consumed the wine mixture, the seller could have derived benefit from it, <b>in accordance with</b> the opinion of <b>Rabban Shimon ben Gamliel.</b></p>
+      <p><b>As we learned</b> in a mishna (<i>Avoda Zara</i> 74a): In the case of <b>wine</b> used for <b>a libation</b> in idol worship <b>that fell into</b> a wine <b>cistern,</b> it is <b>prohibited</b> to <b>derive benefit</b> from <b>all</b> the wine in the cistern, even if the volume of the wine used for a libation was small in comparison to the volume of the rest of the wine in the cistern. <b>Rabban Shimon ben Gamliel says: All of the</b> wine in the cistern <b>may be sold to a gentile,</b> and the money paid for it is permitted, <b>except for the value of the wine</b> used for <b>a libation</b> that is <b>in it.</b></p>
+      <p><strong>MISHNA:</strong> <b>For these blemishes, one may slaughter the firstborn</b> animal outside the Temple: If the firstborn’s <b>ear was damaged</b> and lacking <b>from the cartilage [<i>haḥasḥus</i>], but not</b> if <b>the skin</b> was damaged; and likewise, if the ear <b>was split, although it is not lacking;</b> or if the ear <b>was pierced</b> with a hole <b>the size of a bitter vetch,</b> which is a type of legume; <b>or</b> if it was an ear <b>that</b> is <b>desiccated. What is a desiccated</b> ear that is considered a blemish? It is <b>any</b> ear <b>that</b> if <b>it is pierced it does not discharge a drop of blood. Rabbi Yosei ben HaMeshullam says: Desiccated</b> means that the ear is so dry <b>that it will crumble</b> if one touches it.</p>
+      <p><strong>GEMARA:</strong> With regard to the blemishes mentioned in this mishna and in the subsequent <i>mishnayot</i>, the Gemara asks: <b>Why</b> is it permitted to slaughter and eat a firstborn that sustained these blemishes? Only <b>a lame</b> animal <b>and a blind</b> animal are <b>written</b> in the verse that discusses this <i>halakha</i>. That verse states: “And if there be any blemish therein, lameness, or blindness, any ill blemish whatsoever, you shall not sacrifice it to the Lord your God. You shall eat it within your gates” (Deuteronomy 15:21–22).</p>
+      <p>The Gemara answers: <b>It is also written</b> in the beginning of the verse: <b>“If there be any blemish therein,”</b> which indicates that other blemishes are also included. The Gemara asks: <b>But</b> why not <b>say</b> that the phrase <b>“if there be any blemish therein”</b> is <b>a generalization,</b> while <b>“lameness, or blindness”</b> is <b>a detail.</b> According to the principles of midrashic exegesis, if <b>a generalization and a detail</b> are mentioned, <b>the generalization includes only that which is</b> specified <b>in the detail.</b> Therefore, it should be concluded that in the event of <b>lameness and blindness, yes,</b> one may slaughter the firstborn, but in the event of <b>another matter,</b> one may <b>not</b> slaughter it.</p>
+      <p>The Gemara answers: By subsequently stating: <b>“Any ill blemish,” it then generalized</b> again. Consequently, it is <b>a generalization and a detail and a generalization,</b> represented in the phrases “any blemish,” “lameness or blindness,” and “any ill blemish,” and according to the principles of midrashic exegesis, <b>you may deduce</b> that the verse is referring <b>only</b> to items <b>similar to the detail. Just as</b> the items mentioned in <b>the detail,</b> i.e., in the phrase “lameness or blindness,” are clearly <b>defined as blemishes that are exposed and do not regenerate, so too, all blemishes that are exposed and do not regenerate</b> are considered blemishes with regard to a firstborn.</p>
+      <p>The Gemara suggests: <b>But say</b> instead that <b>just as</b> the items mentioned in <b>the detail,</b> i.e., in the phrase “lameness or blindness,” are clearly <b>defined as blemishes that are exposed and</b> that cause an animal to <b>desist from its</b> normal <b>labor, and</b> they are blemishes that <b>do not regenerate, so too, all blemishes that are exposed and</b> that cause an animal to <b>desist from its labor and do not regenerate</b> are included in this <i>halakha</i>. If so, a blemish that does not fit these criteria would not render the firstborn permitted to be slaughtered. <b>Why</b> then <b>did we learn</b> in the mishna that if the firstborn’s <b>ear was damaged</b> and lacking <b>from the cartilage, but not</b> if it is lacking <b>from the skin,</b> it is considered a blemish, despite the fact that this does not cause the animal to desist from its labor?</p>
+      <p>The Gemara answers: The word “any” in <b>“any ill blemish” is an amplification,</b> and it includes even blemishes that are different from those defined by the detail. The Gemara challenges: <b>If so, blemishes that are hidden</b> should <b>also</b> be included. <b>Why</b> then <b>did we learn</b> in the mishna (39a) that animals with <b>external gums that were damaged</b> and lacking <b>or that were scratched [<i>veshenigmemu</i>] and</b> likewise animals with <b>internal</b> gums <b>that were</b> entirely <b>extracted</b> are considered blemished?</p>
+      <p>It can be inferred that if the internal gums <b>were extracted</b> then <b>yes,</b> one may slaughter the firstborn, but if they <b>were</b> merely <b>damaged or</b> they <b>were scratched,</b> one may <b>not,</b> since it is a hidden blemish. The Gemara answers: <b>I require</b> that it be <b>an “ill blemish,”</b> which must be exposed and degrading, <b>and</b> a hidden blemish <b>is not</b> considered such an “ill blemish.” The Gemara asks: <b>If so,</b> that all blemishes are included by the words: “Any ill blemish,” aside from hidden blemishes, <b>a temporary blemish</b> should <b>also</b> render it permitted for the firstborn to be slaughtered. <b>Why</b> then <b>did we learn</b> in the mishna: If the firstborn’s ear was damaged and lacking from the cartilage it may be slaughtered, <b>but not</b> if it is damaged and lacking <b>from the skin,</b> since it is a temporary blemish?</p>
+      <p>The Gemara answers: <b>A temporary blemish</b> is not excluded by the exegesis but <b>is</b> based on <b>logical reasoning: Now,</b> if <b>we do not</b> even <b>redeem</b> an offering <b>due to</b> a temporary blemish, <b>will we slaughter</b> a firstborn outside the Temple, for which redemption is not performed, <b>due to</b> a temporary blemish? The Gemara explains the source for this assertion that an offering is not redeemed because of a temporary blemish. <b>As it is taught</b> in a <i>baraita</i>: <b>“And if it be any impure animal, of which they may not bring an offering to the Lord”</b> (Leviticus 27:11). <b>The verse is speaking of</b> ritually pure animals with <b>blemishes.</b></p>
+      <p>The <i>baraita</i> continues: <b>Do you say that the verse is speaking of</b> animals with <b>blemishes that were redeemed, or</b> is it referring <b>only</b> to <b>an actual impure animal,</b> such as a donkey or a horse that was consecrated; but with regard to a kosher animal, perhaps its consecrated status cannot be removed by redemption even if it was blemished? <b>When</b> the verse <b>states: “And if it be of an impure animal”</b> (Leviticus 27:27), <b>a non-kosher animal is mentioned. So how do I realize</b> the meaning of: <b>“Of which they may not bring an offering”? You must say</b> that <b>this</b> is referring to <b>blemished</b> animals <b>that were redeemed,</b> indicating that redemption is permitted.</p>
+      <p>The <i>baraita</i> concludes: One <b>might</b> have thought that offerings <b>may be redeemed due to a temporary blemish</b> that they sustained. Therefore, <b>the verse states: “Of which they may not bring an offering to the Lord”</b> (Leviticus 27:11). This teaches that an animal <b>that is not sacrificed at all</b> is redeemed, which <b>excludes this</b> animal that has a temporary blemish, <b>which is not sacrificed today,</b> but <b>rather</b> may be sacrificed <b>tomorrow.</b></p>
+      <p>The Gemara comments: <b>If you wish, say</b> a different explanation as to why a temporary blemish is not included in the amplification of the verse: “Any ill blemish”: <b>If so,</b> that even a temporary blemish permits its slaughter, <b>why do I</b> need the verse to mention <b>a lame</b> animal <b>and a blind</b> animal? It would have sufficed to state: “Any ill blemish.” Rather, the verse excludes a temporary blemish that is unlike these two blemishes, which are permanent.</p>
+      <p>§ The mishna teaches: If the ear of the firstborn animal <b>was split, although it is not lacking,</b> one may slaughter the animal outside the Temple. With regard to this, <b>the Sages taught</b> in a <i>baraita</i>: <b>The split</b> that permits the animal to be slaughtered is one of <b>any size.</b> With regard to <b>the damage, whether</b> it was done <b>by the hand of a person or by the hand of God,</b> it may be slaughtered. The Gemara asks: Should it be derived <b>by inference that</b> with regard to <b>a split,</b> if it was caused <b>by the hand of God</b> it is <b>not</b> considered a blemish? That also should be considered an obvious blemish and render the animal permitted for slaughter.</p>
+      <p>The Gemara answers: <b>Rather,</b> the <i>baraita</i> should be interpreted as follows: The animal may be slaughtered for a split of any size, and with regard to <b>a split and damage, whether</b> it was done <b>by the hand of God or by the hand of a person,</b> the animal may be slaughtered. <b>And what is the measure of the damage</b> that is considered a blemish? It must be large enough <b>that a fingernail will be retained [<i>shetaḥgor</i>] on it,</b> i.e., if one passes his fingernail over the ear of the animal it can enter the area of the damage.</p>
+      <p>§ The mishna stated that if the ear of a firstborn animal <b>was pierced</b> with a hole <b>the size of</b> a bitter vetch, the animal is slaughtered because of it. With regard to this, <b>the Sages taught</b> in a <i>baraita</i>: <b>How large</b> must <b>the piercing of the ear</b> be? It must be <b>the size of a <i>karshina</i>. Rabbi Yosei, son of Rabbi Yehuda, says: Like</b> the size of <b>a lentil,</b> which is slightly smaller. <b>And what is a desiccated</b> ear that is considered a blemish? It is an ear <b>that if it is pierced, it does not discharge a drop of blood. Rabbi Yosei ben HaMeshullam says: Desiccated</b> means that the ear is <b>so</b> dry <b>that it will crumble</b> if one touches it.</p>
+      <p>A Sage <b>taught: Their statements are close to being identical</b> in practice. The Gemara asks: <b>The statements of whom</b> are close to being identical? <b>If we say</b> that he is referring to the statements <b>of the first <i>tanna</i> and Rabbi Yosei ben HaMeshullam</b> with regard to a desiccated ear, <b>there is a significant</b> difference between these two opinions. One says it is determined by whether blood emerges, while the other holds it is based on whether it crumbles. <b>Rather,</b> he is referring to the statement <b>of the first <i>tanna</i> and</b> the statement of <b>Rabbi Yosei, son of Rabbi Yehuda,</b> as a <i>karshina</i> and a lentil are almost identical in size.</p>
+      <p>The Gemara asks with regard to the statement of Rabbi Yosei, son of Rabbi Yehuda: If the ear was pierced with a hole <b>like</b> the size of <b>a lentil,</b> then <b>yes,</b> it is considered a blemish, but if it was pierced with a hole <b>less than</b> the size <b>of a lentil,</b> then is it <b>not</b> considered a blemish? <b>And</b> one can <b>raise a contradiction</b> from a <i>baraita</i>: The Torah provides a description of the process by which a Hebrew slave who has already completed his six years of servitude may continue on as a slave of his master: “And you shall take the <b>awl</b> and put it through his ear and in the door” (Deuteronomy 15:17). From this verse, <b>I have</b> derived <b>only</b> that <b>an awl</b> can be used. <b>From where</b> do I know <b>to include the palm thorn [<i>hassol</i>], a thorn, a needle, and a gimlet, and a stylus</b> for writing on wax as valid tools for piercing his ear?</p>
+      <p>Therefore, <b>the verse states: “And you shall take,”</b> which indicates that <b>anything that can be taken by hand</b> is a valid tool. This is <b>the statement of Rabbi Yosei, son of Rabbi Yehuda. Rabbi</b> Yehuda HaNasi <b>says:</b> Not all these items can be used. Rather, since the verse specifies <b>an “awl,”</b> only items similar to an awl can be used; <b>just as an awl is distinct</b> in that it is fashioned <b>of metal, so too, anything</b> fashioned <b>of metal</b> can be used.</p>
+      <p><b>And the latter clause</b> of the <i>baraita</i> <b>teaches: Rabbi</b> Elazar <b>said that Yudan the Distinguished would teach</b> as follows: <b>When they pierce</b> the ear of the slave, <b>they pierce only in the earlobe.</b></p>
+      <p><b>And the Rabbis say:</b> The piercing is not performed on that part of the ear, since there is a tradition that the ear of <b>a Hebrew slave</b> who is <b>a priest is not pierced, because</b> the piercing <b>renders him blemished</b> and unfit to serve in the Temple. <b>And if you say</b> that <b>they pierced</b> the slave <b>in the earlobe, how does a Hebrew slave</b> who is <b>a priest become blemished</b> through piercing? A wound on this part of the ear heals. <b>This</b> indicates that <b>they pierce only on the upper part of the ear,</b> through the cartilage.</p>
+      <p>In any event, it is clear from the statement of Rabbi Yosei, son of Rabbi Yehuda, that the piercing of a needle is considered a blemish, despite the fact that it is definitely smaller than the size of a lentil. The Gemara answers: <b>Rav Ḥana bar Ketina said:</b> It is <b>not difficult,</b> as <b>here,</b> Rabbi Yosei, son of Rabbi Yehuda, said that the hole must be the size of a lentil <b>with regard to slaughtering</b> an animal outside the Temple due to the blemish. <b>There, with regard to disqualifying</b> the animal from being sacrificed, even a tiny hole is considered a blemish, just as it renders the priest blemished.</p>
+      <p>§ According to the first opinion cited in the <i>baraita</i>, the size of the hole that is considered a blemish in the ear of the firstborn animal is like that of a <i>karshina</i>. The Gemara asks: <b>What is a <i>karshina</i>? Rav Sherevya says:</b> It is a bitter vetch, called <b><i>hinda</i></b> in Aramaic.</p>
+      <p>With regard to this <i>halakha</i>, <b>Rav Hoshaya asked Rav Huna the Great:</b> Is this measure referring to <b>a bitter vetch that</b> can <b>enter and exit</b> the hole in the ear, which means that the hole is slightly larger than the bitter vetch? <b>Or</b> is it referring to <b>a bitter vetch that is stationary</b> in the hole, meaning that the hole is precisely the size of a bitter vetch? Rav Huna the Great <b>said to him: I did not hear this</b> <i>halakha</i> specifically, but <b>I heard a similar</b> <i>halakha</i> <b>to it,</b> that the expression: The size of a bitter vetch [<i>melo karshina</i>], means that the bitter vetch can enter and exit the hole.</p>
+      <p><b>As we learned</b> in a mishna (<i>Oholot</i> 2:3): <b>The spine and the skull</b> of a corpse <b>that</b> are <b>incomplete</b> do not impart ritual impurity in a tent. This <i>halakha</i> was unanimously accepted, but the details were subject to dispute: <b>How much</b> is considered <b>a deficiency in the spine so that it will not impart impurity in a tent? Beit Shammai say:</b> If it is missing <b>two vertebrae, and Beit Hillel say:</b> Even if it is missing only <b>one vertebra,</b> it will not impart impurity. <b>And</b> likewise, they disagree concerning the deficiency <b>in the skull: Beit Shammai say</b> that it must be missing a piece <b>like the size of a drilled hole, and Beit Hillel say:</b> It must be missing <b>an amount that if removed from a living</b> person, <b>he would die.</b></p>
+      <p>The Gemara relates: <b>And Rav Ḥisda was sitting, and he raised a dilemma:</b> That which was stated: <b>An amount that if removed from a living</b> person, <b>how much</b> is that? <b>Rav Taḥlifa bar Avudimi said to him: This is what Shmuel says:</b> It is <b>like</b> the size of <b>a <i>sela</i></b> coin.</p>
+      <p>The Gemara notes: <b>And it was stated</b> that the <i>amora’im</i> disagreed with regard to whom Rabbi Taḥlifa cited when relating this <i>halakha</i> to Rav Ḥisda. <b>Rav Safra says</b> that <b>he told him a <i>halakha</i></b> of the <i>amora’im</i> citing Shmuel. <b>And Rav Shmuel bar Yehuda says</b> that <b>he told him a <i>baraita</i></b> that stipulated that the measure is like the size of a <i>sela</i> coin. <b>And your mnemonic</b> to remember what each one said is the common talmudic phrase: <b>Rav Shmuel bar Yehuda teaches [<i>tanei</i>],</b> generally indicating a source from a <i>tanna</i>, which hints that according to Rav Shmuel bar Yehuda, Rav Taḥlifa cited a <i>baraita</i> to Rav Ḥisda, while according to Rav Safra, he related a tradition from Shmuel.</p>
+      <p><b>And</b> Rav Ḥisda <b>said to</b> Rav Taḥlifa: <b>If so,</b> that the measure of the deficiency according to the opinion of Beit Hillel is the size of a <i>sela</i> coin, <b>you have made the statement of Beit Shammai and the statement of Beit Hillel one</b> and the same, since the size of a <i>sela</i> coin and a drilled hole is identical. <b>As we learned</b> in a mishna (<i>Kelim</i> 17:12): With regard to <b>a window that was not fashioned by the hands of a person,</b> such as where a stone fell out of the wall by itself, <b>its measure</b> for which ritual impurity is transmitted from room to room is like <b>the size of a large fist. And this is</b> the size of <b>the fist of Ben Avatiaḥ,</b> who was known to be an exceptionally large man. <b>Rabbi Yosei said: And</b> the size of this fist <b>is like</b> the size of <b>a large human head.</b></p>
+      <p>The mishna continues: But if the window <b>was made by the hand of a person, its measure</b> for which ritual impurity is transmitted is <b>like the size of the drilled hole</b> of the <b>large</b> drill <b>of the chamber</b> in the Temple, <b>which is like</b> the size of <b>the Italian <i>pundeyon</i> and like</b> the size of <b>a <i>sela</i> of</b> the emperor <b>Nero. And its</b> size <b>is</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> ce daf termine le chapitre 5 (« Kol pessoulei hamoukdachin ») et ouvre le chapitre 6 (« Al élou moumin »). Il contient deux Michnayot : la 5:6 (la vente de viande interdite) et la 6:1 (les défauts de l'oreille du premier-né).</p>
+
+<h4>1. Fin de 36b : les laïcs, les vœux et Rabbi Yossé</h4>
+<p>La Guemara précise que la règle des trois laïcs exclut deux avis : celui de Rabbi Yossé (seul un expert permet, même devant vingt-trois sages) et celui de Rabbi Yehouda (pour annuler un vœu, l'un des trois doit être un sage). Rav 'Hananel enseigne au nom de Rav que la halakha n'est pas comme Rabbi Yossé, même si son raisonnement (<i>nimmouko</i>) est bon.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Question</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Réponse</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Qui est un sage pour annuler un vœu ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Na'hman : quelqu'un comme moi</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les deux autres laïcs ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ravina : ils doivent comprendre les lois des vœux quand on les leur explique</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La halakha pour Rabbi Yossé ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas comme lui, même si son raisonnement est avec lui</td></tr>
+</table>
+
+<h4>2. Michna 5:6 : la vente de viande interdite</h4>
+<p>Voir la fiche de la <a href="michna_Mishnah_Bekhorot.5.6.html">Michna 5:6</a>. La Guemara cite une baraïta : celui qui vend de la viande de premier-né, des fruits non dîmés ou du vin de libation rend l'argent. Rabbi Chimon ben Elazar distingue les choses dont l'âme éprouve du dégoût, pour lesquelles il rend tout, de celles dont elle n'éprouve pas, pour lesquelles il déduit la valeur de ce que l'acheteur a consommé.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Catégorie (Rabbi Chimon ben Elazar)</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Exemples</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Remboursement</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'âme éprouve du dégoût</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cadavres, trèfot, bestioles, rampants</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tout l'argent</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'âme n'éprouve pas de dégoût</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Premier-né, tével, vin de libation</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'acheteur a tiré un profit : on le déduit</td></tr>
+</table>
+
+<p>La Guemara demande pourquoi on déduit, par exemple, pour le premier-né : « Quel dommage t'ai-je causé ? ». La réponse est que le vendeur aurait pu faire autoriser l'animal par un sage (Rabbi Yehouda permet de le montrer après l'abattage), préparer les dîmes de la tével, ou vendre le mélange de vin de libation à des non-Juifs, selon Rabban Chimon ben Gamliel.</p>
+
+<h4>3. Michna 6:1 : les défauts de l'oreille</h4>
+<p>Voir la fiche de la <a href="michna_Mishnah_Bekhorot.6.1.html">Michna 6:1</a>. La Guemara cherche l'origine scripturaire de défauts que le verset ne mentionne pas (« boiteux ou aveugle »). Elle utilise la méthode du général, du détail et du général : on inclut ce qui est semblable au détail.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Étape</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raisonnement</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Verset</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« S'il a un défaut » (général), « boiteux ou aveugle » (détail), « tout mauvais défaut » (général)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Règle</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Général + détail + général : on n'inclut que ce qui est semblable au détail</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Critère</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un défaut visible, qui enlaidit et ne guérit pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défauts cachés</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Exclus : « mauvais défaut » exige un défaut visible</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut passager</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Exclu par raisonnement : on ne rachète pas les consacrés pour un défaut passager (Lévitique 27:11)</td></tr>
+</table>
+
+<h4>4. Les mesures</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Défaut</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Mesure</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Fente (<i>sedek</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">N'importe quelle taille</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Entaille (<i>pegima</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Assez large pour retenir l'ongle ; par l'homme ou par le Ciel</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Trou (<i>nekiva</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Une vesce (<i>karshina</i>) ; Rabbi Yossé fils de Rabbi Yehouda : une lentille</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oreille desséchée</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Percée, elle ne laisse pas sortir une goutte de sang ; Rabbi Yossé ben Meshoulam : elle s'effrite</td></tr>
+</table>
+
+<h4>5. L'alêne et l'esclave hébreu</h4>
+<p>On objecte qu'un trou plus petit qu'une lentille ne serait pas un défaut, alors que l'aiguille perce l'oreille de l'esclave hébreu qui reste chez son maître (Deutéronome 15:17). Rav 'Hana bar Katina répond que la lentille est la mesure <b>pour abattre</b>, alors qu'un trou plus petit suffit <b>pour disqualifier</b>. La baraïta cite aussi l'avis des Sages : on ne perce pas l'esclave hébreu cohen, car cela le rendrait défectueux ; on perce donc le cartilage.</p>
+
+<h4>6. La vesce, la colonne et la sela</h4>
+<p>La Guemara définit la <i>karshina</i> comme la <i>hinda</i> et demande si le trou doit laisser entrer et sortir la vesce ou la tenir à l'étroit : elle conclut, par analogie avec la tarière, qu'elle doit entrer et sortir. Elle cite alors la michna d'Oholot sur la colonne et le crâne (Beit Chamaï et Beit Hillel), puis celle de Kelim sur la fenêtre, pour donner les mesures de la sela et du trou de tarière.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « pour exclure Rabbi Yossé » : l'avis de la michna. Sur « là où il n'y a pas de sage » : s'il y a un sage, lui seul permet. Sur « <i>nimmouko</i> » : son raisonnement ; il donnait un motif à chacune de ses paroles. Sur « chacun comprend » : les raisons des lois des vœux ; le sage enseigne les deux autres.</p>
+
+<p><b>Rachi</b> sur la baraïta : « dont l'âme éprouve du dégoût » : elle les repousse, comme dans « et Je les aurai en dégoût » (Lévitique 20). Sur « il déduit » : le vendeur prend une partie du prix. Sur « de l'endroit du défaut » : le Cohen qui abat la partie du défaut ; selon Rabbi Yehouda (28a), on peut montrer le défaut même après l'abattage. Sur le vin de libation : il n'est pas vendu pur, mais mélangé à du vin cachère.</p>
+
+<p><b>Rachi</b> sur « boiteux ou aveugle » : le verset ne vise que ce cas, « tu le mangeras dans tes portes » signifiant sans l'offrir. Sur « arrête le travail » : le boiteux est empêché de marcher, l'aveugle de voir. Sur « gencives » (<i>hoûtim</i>) : les extérieures sont au milieu de la bouche ; <i>nifgemou</i> : elles ont un peu manqué ; <i>nigmemou</i> : coupées au couteau sur la largeur, comme une fente. Sur « mauvais défaut » : seulement visible, qui enlaidit. Sur « <i>pessoulei hamoukdachin</i> » : les consacrés défectueux.</p>
+
+<p><b>Rachi</b> sur les mesures : « par le Ciel » : né avec ; « retenir l'ongle » : l'ongle s'arrête quand on examine comme on vérifie un couteau. Sur la vesce et la lentille : la vesce n'est que peu plus grande que la lentille. Sur l'alêne : <i>hasol</i> est un éclat à pointe, <i>sira</i> une épine, <i>makdeach</i> une tarière, <i>mikhtav</i> un stylet de fer. Sur « ici pour abattre, là pour disqualifier » : il y a beaucoup de défauts qui disqualifient le premier-né pour l'autel mais ne permettent pas de l'abattre.</p>
+
+<p><b>Tossafot</b> sur « annulent le vœu » : le terme <i>mefirin</i> est celui du verset, mais pour un sage on dit « permettre ». Sur Rabbi Yehouda : deux leçons existent ; ils demandent comment savoir que les deux autres sont « n'importe qui », et répondent que le sage de Rabbi Yehouda n'est pas l'expert (<i>moumhé</i>) évoqué plus haut. Sur « vin de libation » : bien que la Horayot (11a) le tienne pour dégoûtant chez l'apostat, il n'y a pas de dégoût ici, car il s'agit d'un mélange.</p>
+
+<p><b>Tossafot</b> sur « cartilage » (<i>hasos</i>) : le mot est lié au lobe, comme <i>rashei kenafayim</i>, et le Targoum d'Amos 3 traduit « le morceau d'oreille » par <i>hasos d'oudna</i>. Sur « visible et qui ne guérit pas » : même raisonnement qu'en Kiddouchin 24b pour la dent et l'œil de l'esclave ; ils demandent pourquoi la perte d'une dent n'est pas un défaut du premier-né, et répondent que chez l'animal les dents tombent par l'âge. Sur « on pouvait citer la michna » : plus bas est la liste de ceux sur lesquels on n'abat pas.</p>
+
+<p><b>Tossafot</b> sur « pour abattre, pour disqualifier » : puisque le Cohen est disqualifié, c'est un défaut de la Torah ; peut-être qu'on n'abat pas parce que le défaut n'est pas bien visible, par précaution contre les défauts cachés ; ou parce que le Cohen est disqualifié car il n'est pas semblable à la descendance d'Aharon ; ou parce qu'il s'agit d'un défaut passager et qu'on ne veut pas disqualifier même temporairement.</p>
+
+<h4>Glossaire</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Terme</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sens</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Pegima</i> / <i>sedek</i> / <i>nekiva</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Entaille / fente / trou dans l'oreille</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Karshina</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Vesce (graine) : mesure d'un trou</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Mum over</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut passager : n'autorise pas l'abattage</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Tével</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Produit dont on n'a pas séparé les dîmes</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Yayin nésekh</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Vin de libation à une idole : interdit en jouissance</td></tr>
+</table><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf fonde deux séries de règles.</p>
+
+<h4>Michna 5:6 : abattre un premier-né sans l'avoir montré à un sage</h4>
+<p>Le <a href="../choulhan-aroukh/yd_310.html">Choulhan Aroukh (Yoré Dé'a 310)</a> traite du premier-né abattu sans l'accord d'un sage, y compris de nos jours si on ne l'a pas montré à trois membres de la synagogue. Le <a href="../choulhan-aroukh/hm_234.html">Choulhan Aroukh ('Hochen Michpat 234)</a> traite de celui qui vend une chose interdite que l'acheteur a mangée, avec le remboursement qui en découle.</p>
+
+<h4>Michna 6:1 : les défauts de l'oreille</h4>
+<p>Il est interdit de causer soi-même un défaut au premier-né : voir le <a href="../choulhan-aroukh/yd_313.html">Choulhan Aroukh, Yoré Dé'a 313</a>. Le même siman précise que, selon la Torah, on peut causer un défaut permanent à un premier-né qui avait un défaut passager, mais les Sages l'ont interdit (313:5). Pour la crédibilité sur le défaut : <a href="../choulhan-aroukh/yd_314.html">Yoré Dé'a 314</a> ; pour le premier-né douteux : <a href="../choulhan-aroukh/yd_315.html">Yoré Dé'a 315</a>.</p>
+
+<h4>Vœux</h4>
+<p>La règle des trois laïcs pour annuler un vœu en l'absence de sage est traitée dans les lois de l'annulation des vœux.</p>
+
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.37" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
