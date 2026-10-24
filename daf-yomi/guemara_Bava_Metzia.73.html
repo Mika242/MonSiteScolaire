@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 73 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bava_Metzia · Guemara</div>
+    <h1>Guemara 73</h1>
+    <p>Daf 73</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>בִּרְשׁוּת מוֹכֵר – מוּתָּר, בִּרְשׁוּת לוֹקֵחַ – אָסוּר.</p>
+      <p>הַמּוֹלִיךְ פֵּירוֹת מִמָּקוֹם לְמָקוֹם, מְצָאוֹ חֲבֵירוֹ וְאָמַר לוֹ: תְּנֵם לִי וַאֲנִי אַעֲלֶה לְךָ פֵּירוֹת שֶׁיֵּשׁ לִי בְּאוֹתוֹ מָקוֹם, אִם יֵשׁ לוֹ פֵּירוֹת בְּאוֹתוֹ מָקוֹם – מוּתָּר, וְאִם לָאו – אָסוּר. וְהַחַמָּרִין מַעֲלִים בִּמְקוֹם הַיּוֹקֶר כְּבִמְקוֹם הַזּוֹל, וְאֵינָן חוֹשְׁשִׁין.</p>
+      <p>מַאי טַעְמָא? רַב פָּפָּא אָמַר: נִיחָא לְהוּ דִּמְגַלּוּ לְהוּ תַּרְעָא. רַב אַחָא בְּרֵיהּ דְּרַב אִיקָא אָמַר: נִיחָא לְהוּ דְּמוֹזְלִי גַּבַּיְיהוּ.</p>
+      <p>מַאי בֵּינַיְיהוּ? אִיכָּא בֵּינַיְיהוּ תַּגָּרָא חַדְתָּא.</p>
+      <p>בְּסוּרָא אָזְלִי אַרְבָּעָה אַרְבְּעָה, בְּכַפְרִי אָזְלָן שִׁיתָּא שִׁיתָּא. יָהֵיב רַב זוּזֵי לְחַמָּרֵי וּ[מְ]קַבֵּיל עֲלֵיהּ אוּנְסָא דְאוֹרְחָא, וְשָׁקֵיל מִינַּיְיהוּ חַמְשָׁה. וְנִשְׁקוֹל שִׁיתָּא! אָדָם חָשׁוּב שָׁאנֵי.</p>
+      <p>בְּעָא מִינֵּיהּ רַבִּי אַסִּי מֵרַבִּי יוֹחָנָן: מַהוּ לַעֲשׂוֹת בִּגְרוּטָאוֹת כֵּן? אֲמַר לֵיהּ: בִּיקֵּשׁ רַבִּי יִשְׁמָעֵאל בְּרַבִּי יוֹסֵי לַעֲשׂוֹת כֵּן בִּכְלֵי פִשְׁתָּן, וְלֹא הִנִּיחוֹ רַבִּי. אִיכָּא דְּאָמְרִי: בִּיקֵּשׁ רַבִּי לַעֲשׂוֹת בִּגְרוּטָאוֹת כֵּן, וְלֹא הִנִּיחוֹ רַבִּי יִשְׁמָעֵאל בְּרַבִּי יוֹסֵי.</p>
+      <p>פַּרְדֵּיסָא, רַב אָסַר וּשְׁמוּאֵל שָׁרֵי. רַב אָסַר, כֵּיוָן דִּלְקַמֵּיהּ שָׁוְיָא טְפֵי – מִתְחֲזֵי כִּי אֲגַר נְטַר לֵיהּ. וּשְׁמוּאֵל שָׁרֵי, כֵּיוָן דְּהָוֵי בֵּיהּ תִּיוְהָא – לָא מִיחֲזֵי כִּי אֲגַר נְטַר לֵיהּ.</p>
+      <p>אָמַר רַב שִׁימִי בַּר חִיָּיא: וּמוֹדֵי רַב בְּתוֹרֵי דִּנְפִישׁ פְּסֵידַיְיהוּ.</p>
+      <p>אֲמַר לְהוּ שְׁמוּאֵל לְהָנְהוּ דְּשָׁבְשִׁי שִׁבְשָׁא, הֲפוֹכוּ בְּאַרְעָא, כִּי הֵיכִי דִּקְנֵי לְכוּ גּוּפָא דְאַרְעָא, וְאִי לָא – הָוְיָא לְכוּ כְּהַלְוָאָה וְאָסוּר.</p>
+      <p>אֲמַר לְהוּ רָבָא לְהָנְהוּ דִּמְנַטְּרִי בָּאגֵי: פּוּקוּ הֲפוֹכוּ בְּבֵי דָרֵי, כִּי הֵיכִי דְּלָא תִּשְׁתַּלַּם שְׂכִירוּת דִּידְכוּ עַד הַהִיא שַׁעְתָּא, דִּשְׂכִירוּת אֵינָהּ מִשְׁתַּלֶּמֶת אֶלָּא בַּסּוֹף, וְהַהִיא שַׁעְתָּא אוֹזוֹלֵי דְּקָא מוֹזְלִי גַּבַּיְיכוּ.</p>
+      <p>אֲמַרוּ לֵיהּ רַבָּנַן לְרָבָא: קָא אָכֵיל מָר רִבִּית, דְּכוּלֵּי עָלְמָא שָׁקְלִי אַרְבְּעָה וּמְסַלְּקִי לְאָרִיסָא בְּנִיסָן, מָר נָטַר לְהוּ עַד אִיָּיר וְשָׁקֵיל שִׁיתָּא!</p>
+      <p>אֲמַר לְהוּ: אַתּוּן קָא עָבְדִיתוּן שֶׁלֹּא כַּדִּין, אַרְעָא לְאָרִיס מִשְׁתַּעְבַּד – אִי אַתּוּן מְסַלְּקִיתוּ לְהוּ בְּנִיסָן, מַפְסֵידְתּוּ לְהוּ בְּכַמָּה. אֲנָא נָטַרְנָא לְהוּ עַד אִיָּיר, וּמַרְוַוחְנָא לְהוּ בְּכַמָּה.</p>
+      <p>רַב מָרִי בַּר רָחֵל מַשְׁכֵּן לֵיהּ הָהוּא גּוֹי בֵּיתָא. הֲדַר זַבְּנֵהּ לְרָבָא. נְטַר תְּרֵיסַר יַרְחֵי שַׁתָּא, שְׁקַל אֲגַר בֵּיתָא אַמְטִי לֵיהּ לְרָבָא. אֲמַר לֵיהּ: הַאי דְּלָא אַמְטַאי לְמָר אֲגַר בֵּיתָא עַד הָאִידָּנָא, דִּסְתַם מַשְׁכַּנְתָּא שַׁתָּא, אִי בָּעֵי גּוֹי לְסַלֹּקֵי לָא הֲוָה מָצֵי מְסַלֵּק לִי, הַשְׁתָּא לִשְׁקוֹל מָר אֲגַר בֵּיתָא.</p>
+      <p>אֲמַר לֵיהּ: אִי הֲוָה יָדַעְנָא דַּהֲוָה מְמוּשְׁכַּן לֵיהּ לְמָר, לָא הֲוָה זָבֵינְנָא לֵיהּ. הַשְׁתָּא כְּדִינֵיהֶם עָבֵידְנָא לָךְ, כׇּל אֵימַת דְּלָא מְסַלְּקִי בְּזוּזֵי לָא שָׁקֵיל אֲגַר בֵּיתָא. אֲנָא נָמֵי לָא שָׁקֵילְנָא מִינָּךְ אֲגַר בֵּיתָא עַד דִּמְסַלֵּקְנָא לָךְ בְּזוּזֵי.</p>
+      <p>אֲמַר לֵיהּ רָבָא מִבַּרְנִישׁ לְרַב אָשֵׁי: חֲזִי מָר רַבָּנַן דְּקָא אָכְלִי רִבִּיתָא, דְּיָהֲבִי זוּזֵי אַחַמְרָא בְּתִשְׁרִי וּמְבַחֲרִי לֵהּ בְּטֵבֵת!</p>
+      <p>אֲמַר לֵיהּ: אִינְהוּ נָמֵי אַחַמְרָא קָא יָהֲבִי, אַחַלָּא לָא קָא יָהֲבִי – מֵעִיקָּרָא דְּחַמְרָא חַמְרָא, דְּחַלָּא חַלָּא, הָהִיא שַׁעְתָּא הוּא דְּקָמְבַחֲרִי.</p>
+      <p>רָבִינָא הֲוָה יָהֵיב זוּזֵי לִבְנֵי אַקְרָא דְּשַׁנְווֹתָא וְשָׁפְכִי לֵיהּ טְפֵי כּוּפִיתָא. אֲתָא לְקַמֵּיהּ דְּרַב אָשֵׁי, אֲמַר לֵיהּ: מִי שְׁרֵי? אֲמַר לֵיהּ: אִין, אַחוֹלֵי הוּא דְּקָא מָחֲלִי גַּבָּךְ.</p>
+      <p>אֲמַר לֵיהּ: הָא אַרְעָא לָאו דִּידְהוּ הִיא! אֲמַר לֵיהּ: אַרְעָא לְטַסְקָא מְשַׁעְבְּדָא. וּמַלְכָּא אָמַר: מַאן דְּיָהֵיב טַסְקָא – לֵיכוֹל אַרְעָא.</p>
+      <p>אֲמַר לֵיהּ רַב פָּפָּא לְרָבָא: חֲזִי מָר הָנֵי רַבָּנַן דְּיָהֲבִי זוּזֵי אַכְּרָגָא דְּאִינָשֵׁי וּמְשַׁעְבְּדִי בְּהוּ טְפֵי! אֲמַר לֵיהּ: הַשְׁתָּא אִיכּוֹ שְׁכֵיבִי לָא אֲמַרִי לְכוּ הָא מִילְּתָא. הָכִי אָמַר רַב שֵׁשֶׁת: מוּהְרְקַיְיהוּ דְּהָנֵי בְּטֻפְסָא דְמַלְכָּא מַנַּח, וּמַלְכָּא אָמַר: מַאן דְּלָא יָהֵיב כְּרָגָא לִשְׁתַּעְבַּיד לְמַאן דְּיָהֵיב כְּרָגָא!</p>
+      <p>רַב סְעוּרָם אֲחוּהּ דְּרָבָא הֲוָה תָּקֵיף אִינָשֵׁי דְּלָא מְעַלּוּ וּמְעַיֵּיל לְהוּ בְּגוּהַרְקָא דְּרָבָא. אֲמַר לֵיהּ רָבָא: שַׁפִּיר קָא עָבְדַתְּ, דִּתְנֵינָא: רְאִית[וֹ] שֶׁאֵינוֹ נוֹהֵג כַּשּׁוּרָה, מִנַּיִן שֶׁאַתָּה רַשַּׁאי לְהִשְׁתַּעְבֵּד בּוֹ – תַּלְמוּד לוֹמַר: ״לְעוֹלָם בָּהֶם תַּעֲבֹדוּ וּבְאַחֵיכֶם״. יָכוֹל אֲפִילּוּ נוֹהֵג כַּשּׁוּרָה – תַּלְמוּד לוֹמַר: ״וּבְאַחֵיכֶם בְּנֵי יִשְׂרָאֵל אִישׁ בְּאָחִיו וְגוֹ׳״.</p>
+      <p>אָמַר רַב חָמָא: הַאי מַאן דְּיָהֵיב זוּזֵי לְחַבְרֵיהּ לְמִיזְבַּן לֵיהּ חַמְרָא וּפְשַׁע וְלָא זְבַין לֵיהּ – מְשַׁלֵּם לֵיהּ כִּדְקָא אָזֵיל אַפַּרְווֹתָא דְזוּלְשְׁפָט.</p>
+      <p>אָמַר אַמֵּימָר אַמְרִיתָא לִשְׁמַעְתָּא קַמֵּיהּ דְּרַב זְבִיד מִנְּהַרְדְּעָא, אָמַר: כִּי קָאָמַר רַב חָמָא, הָנֵי מִילֵּי בְּ״יַיִן״ סְתָם, אֲבָל בְּ״יַיִן זֶה״ – לָא, מִי יֵימַר דִּמְזַבְּנִי לֵיהּ נִיהֲלֵיהּ?</p>
+      <p>רַב אָשֵׁי אָמַר: אֲפִילּוּ ״יַיִן״ סְתָם נָמֵי לָא, מַאי טַעְמָא – אַסְמַכְתָּא הִיא, וְאַסְמַכְתָּא לָא קָנְיָא.</p>
+      <p>וּלְרַב אָשֵׁי מַאי שְׁנָא מֵהָא דִּתְנַן: ״אִם אוֹבֵיר וְלָא אֶעֱבֵיד אֲשַׁלֵּם בְּמֵיטְבָא״, הָתָם בְּיָדוֹ,</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>(Suite du texte précédent.)</b> Si le colis reste <b>sous la responsabilité du vendeur</b> (c'est lui qui assume les accidents du chemin), <b>c'est permis</b> ; s'il est <b>sous la responsabilité de l'acheteur</b>, <b>c'est interdit</b>, car cela devient un prêt avec intérêt.</p>
+      <p><b>Enseignement :</b> quelqu'un <b>transporte des fruits d'un endroit à un autre</b> et un autre le rencontre : <b>« Donne-les-moi, et je te ferai monter des fruits que j'ai à cet endroit »</b>. <b>S'il a des fruits à cet endroit, c'est permis ; sinon, c'est interdit.</b> <b>Les âniers font monter (le prix) à l'endroit cher comme à l'endroit bon marché, et on ne s'en préoccupe pas.</b></p>
+      <p><b>La Guemara demande :</b> quelle en est la raison ? <b>Rav Pappa dit :</b> cela leur convient, parce qu'ils <b>ouvrent ainsi la porte</b> du nouveau marché (ils se font connaître et gagnent des clients). <b>Rav A'ha, fils de Rav Ika, dit :</b> cela leur convient, parce que <b>les prix leur sont réduits</b> là où ils achètent (les vendeurs, sachant qu'ils devront revendre moins cher, leur font un rabais).</p>
+      <p><b>Quelle différence entre les deux ?</b> <b>Le nouveau marchand</b> : selon Rav Pappa, c'est précisément pour lui que la raison joue ; selon Rav A'ha, les vendeurs ne le croiront pas et ne lui feront pas de rabais.</p>
+      <p><b>Récit :</b> à <b>Soura</b>, on vendait quatre mesures pour une pièce, à <b>Kafri</b> six. <b>Rav donna de l'argent aux âniers</b>, <b>assuma sur lui les accidents du chemin</b>, et prit d'eux <b>cinq</b>. La Guemara : <b>qu'il prenne six !</b> Réponse : <b>une personne importante est différente</b> (elle doit être plus stricte avec elle-même).</p>
+      <p><b>Rabbi Assi interrogea Rabbi Yo'hanan :</b> <b>qu'en est-il de faire de même avec des ferrailles (<i>gerutaot</i>) ?</b> Il répondit : <b>Rabbi Yichmaël fils de Rabbi Yossi voulut le faire avec des objets de lin, et Rabbi (Yehouda HaNassi) ne le lui permit pas.</b> Selon une autre version : <b>Rabbi voulut le faire avec des ferrailles, et Rabbi Yichmaël fils de Rabbi Yossi ne le lui permit pas.</b></p>
+      <p><b>Verger (<i>pardissa</i>) :</b> <b>Rav interdit et Chemouel permet.</b> Rav interdit : le prix sera plus élevé plus tard, donc <b>cela paraît comme un paiement pour l'attente</b>. Chemouel permet : puisqu'il peut y avoir de la perte (<i>tiyouta</i>), <b>cela ne paraît pas comme un paiement pour l'attente</b>. <b>Rav Chimi bar 'Hiyya dit :</b> <b>Rav admet</b> pour les <b>jeunes bœufs</b>, dont la perte est fréquente.</p>
+      <p><b>Chemouel dit à ceux qui achètent des sarments (<i>chivcha</i>) :</b> <b>retournez la terre</b>, afin d'acquérir la terre elle-même ; sinon, <b>ce serait comme un prêt et interdit.</b> <b>Rava dit à ceux qui gardent les champs (<i>baguei</i>) :</b> <b>allez retourner (les gerbes) sur l'aire de battage</b>, afin que votre salaire ne soit dû qu'à la fin (le salaire n'est dû qu'à la fin de la période d'embauche), et ce qu'on y ajoute est un rabais, non un paiement d'attente.</p>
+      <p><b>Les Rabbanan dirent à Rava :</b> <b>le maître mange de l'intérêt !</b> Tout le monde reçoit quatre <b>kor</b> du métayer et le renvoie en <b>Nissan</b>, alors que le maître attend jusqu'à <b>Iyar</b> et reçoit six. <b>Il leur dit :</b> <b>c'est vous qui agissez contrairement à la loi</b> : la terre est hypothéquée au métayer jusqu'à la fin de la récolte ; en le renvoyant en Nissan, vous lui faites perdre beaucoup ; moi, je l'attends jusqu'à Iyar et je le fais gagner beaucoup.</p>
+      <p><b>73b.</b> <b>Rav Mari bar Ra'hel</b> : un non-Juif lui avait mis en gage une maison, puis la vendit à <b>Rava</b>. Rav Mari attendit <b>douze mois</b>, prit le loyer de la maison et l'apporta à Rava. Il lui dit : <b>« Si je ne t'ai pas apporté le loyer jusqu'à maintenant, c'est que le gage sans durée précisée vaut une année : si le non-Juif avait voulu me renvoyer, il ne l'aurait pas pu. Maintenant, que le maître prenne le loyer. »</b> Rava lui dit : <b>« Si j'avais su que la maison t'était gagée, je ne l'aurais pas achetée. Maintenant, j'agis envers toi selon leur loi : tant qu'on ne te renvoie pas contre l'argent, tu ne verses pas de loyer. Moi non plus, je ne prends pas de loyer de toi jusqu'à ce que je te règle ton argent. »</b></p>
+      <p><b>Rava de Barnich dit à Rav Ashi :</b> <b>vois les maîtres qui mangent de l'intérêt : ils donnent l'argent pour du vin en Tichri et choisissent en Tévet !</b> <b>Rav Ashi :</b> <b>ils ont donné pour du vin, pas pour du vinaigre</b> : ce qui était vin au départ est vin ; ce qui est devenu vinaigre l'était déjà, mais cela ne se voyait pas ; ils ne font que choisir ce qu'ils ont payé.</p>
+      <p><b>Ravina</b> donnait de l'argent <b>aux gens de la forteresse de Chanvata</b> ; ils lui versaient <b>un pichet de plus</b>. Il vint devant Rav Ashi : <b>« Est-ce permis ? »</b> — <b>« Oui, ils te font cadeau. »</b> — <b>« Mais la terre n'est pas à eux ! »</b> — <b>« La terre est hypothéquée à l'impôt foncier (<i>taska</i>), et le roi dit : celui qui paie l'impôt mange la terre. »</b></p>
+      <p><b>Rav Pappa dit à Rava :</b> <b>vois ces maîtres qui paient l'impôt par tête (<i>karga</i>) pour des gens et les asservissent davantage !</b> Rava : <b>Rav Chéchet a dit : leur acte d'asservissement est déposé dans le coffre du roi, et le roi a dit : celui qui ne paie pas l'impôt servira celui qui le paie.</b></p>
+      <p><b>Rav Se'oram, frère de Rava,</b> saisissait de force <b>ceux qui ne se conduisaient pas bien</b> pour porter la litière de Rava. Rava : <b>tu as bien fait</b>, car il a été enseigné : <b>quand tu vois quelqu'un qui ne se conduit pas droitement, d'où sais-tu que tu peux l'asservir ? « Parmi eux vous travaillerez toujours et parmi vos frères… »</b> (Lévitique 25:46). Peut-être même s'il se conduit bien ? Le verset poursuit : <b>« Et sur vos frères, les enfants d'Israël, un homme sur son frère, vous ne dominerez pas durement. »</b></p>
+      <p><b>Rav 'Hama dit :</b> celui qui <b>donne de l'argent à un autre pour lui acheter du vin</b>, et que l'autre <b>néglige de l'acheter</b>, <b>lui paie au cours du port de Zolchefat</b>.</p>
+      <p><b>Amémar dit :</b> j'ai dit cela devant <b>Rav Zevid de Neharde'a</b> ; il dit : <b>Rav 'Hama parlait du « vin » sans précision ; mais pour « ce vin-ci », non</b> : qui dit que le propriétaire le lui aurait vendu ?</p>
+      <p><b>Rav Ashi dit :</b> <b>même pour « du vin » sans précision, non</b>. Quelle en est la raison ? <b>C'est une <i>asmakhta</i></b>, et <b>l'<i>asmakhta</i> n'acquiert pas</b>.</p>
+      <p><b>La Guemara demande :</b> <b>et selon Rav Ashi, quelle différence avec ce que nous avons appris (Bava Metzia 104a) : « Si je laisse en friche et ne travaille pas, je paierai au meilleur »</b> ? <b>Là, c'est en son pouvoir.</b></p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>then, if the package remains <b>in the possession of the seller,</b> i.e., the seller accepts upon himself responsibility for any accidental damage that occurs along the way, it is <b>permitted,</b> as the transaction is not a loan. But if it is <b>in the possession of the buyer,</b> meaning that the buyer accepts responsibility for accidental damage, then the transaction is <b>prohibited,</b> as it is considered a loan with interest.</p>
+      <p>With regard to <b>one who transports produce from</b> one <b>place to</b> another <b>place,</b> if <b>another finds him and says to him: Give</b> the produce <b>to me</b> now <b>and I will repay you with produce that I have in that place</b> to which you are going, then, <b>if he</b> actually <b>has produce in that place,</b> it is <b>permitted, but if not,</b> it is <b>prohibited. But donkey drivers</b> who transport merchandise from one place to another may accept money and <b>set</b> prices <b>in a place</b> where goods are sold at <b>expensive</b> prices <b>according to</b> the rate in effect in <b>another place,</b> where goods are sold at <b>inexpensive</b> prices, <b>and need not be concerned,</b> as this practice is permitted.</p>
+      <p>The Gemara asks: <b>What is the reason</b> this is permitted? <b>Rav Pappa says:</b> It is <b>satisfactory to them</b> to sell merchandise at a discounted rate, because by doing so <b>the gates</b> to the new market <b>are opened for them,</b> as in this way they begin to do business in this area and gain new customers. <b>Rav Aḥa, son of Rav Ika, said:</b> It is <b>satisfactory to them because</b> the prices <b>are reduced for them</b> in the places where they make their purchases. Since the sellers there hear that the donkey drivers will need to resell the merchandise at a lower price, the sellers give a discount to the donkey drivers. According to either opinion, the donkey drivers provide the additional produce to the customer not as interest on the loan but as a discount to promote their business.</p>
+      <p>The Gemara asks: <b>What is</b> the difference <b>between</b> these two reasons to allow this practice? The Gemara answers: <b>The</b> difference <b>between them</b> concerns <b>a merchant</b> who is <b>new</b> in the area. According to the one who holds that the reason he may sell the produce is in order to open the market for him, it applies especially to a merchant in this situation. But according to the one who holds that the reason is that he can procure his merchandise inexpensively, the sellers will not believe him if he is new to his trade, and they will not sell it to him at a discount.</p>
+      <p>The Gemara relates: <b>In Sura, four</b> <i>se’a</i> of wheat <b>were going</b> for a <i>sela</i>, and <b>in</b> the nearby town of <b>Kafri they were going</b> for <b>six</b> <i>se’a</i> for a <i>sela</i>. <b>Rav gave money to donkey drivers</b> to purchase wheat in Kafri <b>and accepted upon himself</b> responsibility for any <b>accident</b> that might happen <b>on the way,</b> rendering it permitted for him to set a price according to the rate in effect in Kafri, <b>and he accepted five</b> <i>se’a</i> of wheat for one <i>sela</i> <b>from them.</b> The Gemara challenges: Since he accepted responsibility for damage that might occur as a result of an accident, the produce was his at the time it was purchased, and therefore there was no loan. Consequently, <b>he should have accepted six</b> <i>se’a</i> for a <i>sela</i>. The Gemara explains: <b>An important person is different,</b> as he has to be more stringent with himself and more careful to avoid the appearance of interest.</p>
+      <p><b>Rabbi Asi asked Rabbi Yoḥanan: What is</b> the <i>halakha</i> about <b>doing so with</b> metal <b>scraps [<i>bigerutaot</i>]?</b> Is it permitted to make an agreement to purchase metal scraps at the low rate in effect elsewhere, just as it is permitted with wheat and other produce? Rabbi Yoḥanan <b>said to him: Rabbi Yishmael, son of Rabbi Yosei, wanted to do so with linen garments and Rabbi</b> Yehuda HaNasi <b>did not allow him</b> to do so. <b>There are</b> those <b>who say</b> a different version of this exchange: <b>Rabbi</b> Yehuda HaNasi <b>wanted to do so with</b> metal <b>scraps, and Rabbi Yishmael, son of Rabbi Yosei, did not permit him</b> to do so.</p>
+      <p>With regard to one who wants to purchase the produce of an entire <b>orchard,</b> in advance of the harvest, at a cheaper price, <b>Rav prohibits</b> this practice <b>and Shmuel permits</b> it. The Gemara explains: <b>Rav prohibits</b> it <b>because in the future</b> the produce will <b>be worth more,</b> so <b>it appears that</b> the seller <b>is paying</b> interest <b>to</b> the buyer <b>for waiting</b> before receiving the produce, and that has the appearance of interest. <b>And Shmuel permits</b> it, as, since <b>there can be spoilage</b> in the produce of the orchard and the buyer took upon himself responsibility for any losses, <b>it does not appear that</b> the seller <b>is paying</b> interest <b>to</b> the buyer <b>for waiting</b> before receiving the produce, as the buyer may either gain or lose.</p>
+      <p><b>Rav Shimi bar Ḥiyya said: Rav concedes</b> to Shmuel that an arrangement like this would be permitted <b>in</b> a case where one arranges to purchase young <b>oxen</b> at a later date, <b>as their loss is</b> likely to be <b>great.</b> Since it is common for one to incur a discernible loss when raising oxen, as some may die, this arrangement is regarded as an investment.</p>
+      <p><b>Shmuel said to those who purchase branches of grapevines</b> and pay in advance for the vine shoots that will be harvested later: Since the risk in this transaction is small, it has the appearance of interest and therefore you should <b>turn over</b> a bit of <b>the land</b> yourselves, i.e., perform some labor in farming the orchard, <b>so that you acquire</b> some of <b>the land itself for yourselves,</b> and by doing this you become partners with the owner. <b>And</b> this action is necessary because <b>if</b> you do <b>not</b> do this <b>it will be like a loan for you and</b> it will be <b>prohibited</b> for you to accept the branches.</p>
+      <p>Similarly, <b>Rava said to those who guard fields [<i>bagei</i>]</b> until the harvest is complete and receive their wages from the crops when the harvest is over: <b>Go out</b> and <b>turn over</b> some of the crops <b>in the threshing floor,</b> and thereby assist the owners in their work <b>in order that the wages for your hire are not payable until that time.</b> If you assist in the actual farming work, the halakhic period of your employment will continue until the processing of the grain is complete, and according to the <i>halakha</i> that the obligation to pay a person’s <b>wage</b> is incurred <b>only at the end</b> of the period for which he was hired, <b>it is then that</b> the owners <b>make a reduction for</b> the guards by giving them the crops at a reduced rate, and it is not payment of interest for delaying the wages that they should have been paid earlier. Consequently, such an arrangement is permitted.</p>
+      <p><b>The Rabbis said to Rava: The Master,</b> meaning Rava, <b>consumes interest.</b> They explained: <b>Everyone</b> else who leases his field to a sharecropper <b>receives four</b> <i>kor</i> of grain as payment, <b>and</b> the owners accept this payment and <b>remove the sharecropper</b> from the field <b>in</b> the month of <b>Nisan.</b> But <b>the Master waits until</b> the month of <b>Iyar and</b> then <b>takes six</b> <i>kor</i> from them. Consequently, they accused Rava of accepting an additional payment for waiting an extra month to take back his field.</p>
+      <p>Rava <b>said to them:</b> On the contrary, <b>you are</b> the ones who are <b>acting unlawfully,</b> as in truth all of <b>the land is liened to the sharecropper</b> until he finishes working it and harvests all that he can from it. <b>If you remove</b> sharecroppers from the field <b>in Nisan you cause them to lose a great</b> deal, as they do not have enough time to harvest all the produce from the field. <b>I wait for them until Iyyar, and</b> in this way <b>I enable them to profit a great</b> deal. Consequently, I act in accordance with <i>halakha</i> and receive a suitable payment for leasing the field for the proper length of time, whereas you deprive the sharecroppers of what is due to them, even though you receive less direct remuneration.</p>
+      <p>The Gemara relates: <b>A certain gentile mortgaged a house to Rav Mari bar Raḥel</b> for a loan that Rav Mari had provided him. <b>Afterward,</b> the gentile <b>sold</b> the house <b>to Rava.</b> Rav Mari <b>waited</b> for <b>twelve months</b> of <b>the year</b> to pass, <b>took</b> the amount of money necessary to pay <b>rent</b> for <b>the house</b> and <b>brought it to Rava,</b> who was now the owner of the house. Rav Mari <b>said to</b> Rava: <b>This</b> fact <b>that I did not bring the rental</b> fee for <b>the house to the Master until now</b> is <b>because</b> an <b>unspecified mortgage</b> is in effect for a period of <b>one year. If</b> that <b>gentile wanted to remove</b> me from the house by paying back the loan, <b>he could not remove me</b> from it until now. Consequently, the house actually belonged to me for that year, and I was not required to pay rent. Now, since the gentile can remove me from the house by repaying the loan, the house belongs to you. Therefore, <b>let the Master now take the rental</b> fee for <b>the house</b> for the coming year.</p>
+      <p>Rava <b>said to him: Had I known that</b> this house <b>was mortgaged to the Master, I would not have purchased it</b> at all, as I would have given you the chance to purchase it first. <b>Now,</b> therefore, <b>I will act toward you according to the law</b> of the gentiles, as I assumed the rights previously held by the gentile. According to gentile law, <b>as long as</b> the borrower <b>does not remove</b> the lender <b>by</b> paying back the <b>money,</b> he also <b>does not take a rental</b> fee for <b>the house,</b> as there is no prohibition against a gentile paying or receiving interest. Therefore, <b>I too will not take a rental</b> fee for <b>the house from you until I remove you by</b> forcing the gentile to pay the <b>money</b> that is owed to you.</p>
+      <p>The Gemara relates: <b>Rava of Barnish said to Rav Ashi: The Master sees the Sages who consume interest, as they give</b> people <b>money for wine in</b> the month of <b>Tishrei, and they select</b> the wine later, <b>in</b> the month of <b>Tevet.</b> Had they taken the wine immediately upon payment, there is a chance that it would have spoiled. Now, in return for paying for the wine in advance, they receive the benefit of guaranteeing that the wine they receive will not be spoiled. Rava of Barnish understood that this benefit, received in exchange for advance payment, is a form of interest.</p>
+      <p>Rav Ashi <b>said to him: They too gave</b> the money at the outset <b>for wine,</b> but <b>they did not give</b> it <b>for vinegar. That which was wine at the outset is</b> still <b>wine,</b> and <b>that</b> which became <b>vinegar was vinegar</b> when they paid for it but they did not know it. <b>It was at that time</b> of selection <b>that they</b> merely <b>selected</b> the wine that they had paid for previously. Since they agreed to buy wine, not vinegar, the benefit of actually receiving wine does not constitute interest.</p>
+      <p>The Gemara relates: <b>Ravina would give money</b> in advance <b>to the people of the fortress [<i>akra</i>] at</b> the river <b>Shanvata</b> in order to buy wine to be supplied after the grape harvest, <b>and</b> when they supplied the wine <b>they would pour an extra jug [<i>kufita</i>]</b> of wine <b>for him</b> as a gift, although there was no stipulation between them requiring this. Ravina <b>came before Rav Ashi</b> to ask whether this involved interest. Ravina <b>said to him: Is it permitted</b> to do this? Rav Ashi <b>said to him: Yes,</b> it is permitted, as <b>they forgo</b> payment for the extra wine <b>to your</b> benefit in order to maintain good relations with you. Since the additional wine is not provided as consideration for the advance payment, there is no problem of interest.</p>
+      <p>Ravina <b>said to him: But the land is not theirs.</b> The people of the fortress at Shanvata worked land belonging to others who abandoned their fields because they could not pay the real estate taxes. The people of the fortress paid the taxes and were therefore able to use the fields. Ravina was concerned that perhaps they did not own the grapes and were therefore unable to forgo payment for the additional amount as it did not belong to them. Rav Ashi <b>said to him: The land is liened</b> to the king <b>as</b> payment for the <b>taxes [<i>letaska</i>], and the king says: Whoever pays the tax may consume</b> the produce of <b>the land.</b> Consequently, the ones who pay the taxes have ownership of the wine by dint of the law of the kingdom.</p>
+      <p>The Gemara relates that <b>Rav Pappa said to Rava:</b> Let <b>the Master see these Sages who pay money for the tax [<i>akarga</i>] on</b> behalf of other <b>people and</b> afterward <b>make them work more</b> than is reasonable for the amount of money they paid. Rava <b>said to him: Now, if I were dead I could not say</b> the explanation of <b>this matter to you,</b> so it is good that you asked me while I am still alive, as I know that <b>this is what Rav Sheshet said: The document [<i>moharkayyhu</i>]</b> of servitude <b>of these</b> people <b>lies in the treasury of the king,</b> i.e., all of his subjects are considered his servants, <b>and the king said: The one who does not pay the head tax shall serve the one who does pay the head tax,</b> and consequently, by dint of the law of the kingdom they can have them work as much as they want.</p>
+      <p>The Gemara relates: <b>Rav Se’oram, the brother of Rava, would forcefully</b> seize <b>people who were not</b> acting <b>properly and</b> have them <b>carry Rava’s sedan chair. Rava said to him: You acted correctly, as we learn: If you see</b> a Jew <b>who does not behave properly, from where</b> is it derived <b>that you are permitted to have him work</b> as a slave? <b>The verse states: “Of them you may take your slaves forever; and over your brothers”</b> (Leviticus 25:46). It is derived from the conjunctive “and” linking the two clauses of the verse that there are circumstances where it is permitted to treat a fellow Jew as if he were a slave. One <b>might</b> have thought that this is the <i>halakha</i> <b>even if</b> a Jew <b>acts properly.</b> To counter this, <b>the verse states</b> in the continuation: <b>“And over your brothers the children of Israel</b> you shall not rule, <b>one over another,</b> with rigor.”</p>
+      <p><b>Rav Ḥama said:</b> With regard to <b>one who gave money to another to purchase wine for him, and</b> the other, i.e., the agent, <b>was negligent and did not purchase</b> it <b>for him,</b> the agent <b>must pay</b> the one who gave him the money <b>according to the going</b> rate of wine <b>in the port</b> city <b>of Zolshefat,</b> where the main wine market was located, and he must purchase the wine according to the price in that market even if it is more expensive than the amount he was given initially.</p>
+      <p><b>Ameimar said: I said this <i>halakha</i> before Rav Zevid of Neharde’a,</b> and when he heard it <b>he said: When Rav Ḥama said</b> this, he said <b>that statement in</b> a case where the buyer asked the agent to purchase <b>wine without specification</b> concerning exactly which wine he wanted. <b>But if</b> he said to the agent: Buy <b>this</b> specific <b>wine</b> for me, the agent who neglected to buy the wine is <b>not</b> obligated to buy it at a higher price later, as when he was sent to buy it initially, <b>who says that</b> the owner <b>would have sold it to him?</b> The one who gave the money to the agent was aware of the fact that the agent may not be able to successfully purchase that specific wine. Consequently, the obligation of the agent is simply to return the money, and nothing may be added to that sum, due to the prohibition of interest.</p>
+      <p><b>Rav Ashi said: Even</b> if he asked the agent to buy wine <b>without specification,</b> the agent is <b>also not</b> obligated to buy wine later for more than the amount he was given. <b>What is the reason</b> for this? The implicit obligation that the agent accepted upon himself, to pay the one who hired him with wine of a higher value than the amount of money he received, <b>is a transaction with inconclusive consent [<i>asmakhta</i>],</b> as any situation where one will have to pay more money than he received is similar to the payment of a fine, <b>and</b> the acceptance of <b>an <i>asmakhta</i> does not effect acquisition,</b> as his acceptance is assumed to be insincere.</p>
+      <p>The Gemara asks: <b>And</b> according <b>to Rav Ashi,</b> in <b>what</b> way <b>is</b> this case <b>different from that which we learned</b> in a mishna (104a) concerning a rental agreement for land, in which a sharecropper agreed to cultivate a field in return for a share of the produce and wrote: <b>If I let</b> the field <b>lie fallow and do not cultivate</b> it, <b>I will pay with the best</b>-quality produce? In that case, the sharecropper agreed to pay the amount he caused the owner to lose due to his lack of activity, and it was not ruled an <i>asmakhta</i>. The Gemara answers: <b>There,</b> the matter is <b>in his power,</b> as he can decide whether to work the field or not to work it.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> ce daf est au cœur du chapitre « Eizehou Néchekh » (chapitre 5), consacré à l'intérêt (<i>ribit</i>). Il n'y a pas de Michna sur ces deux faces : la Guemara y continue la liste des arrangements qui ressemblent à un prêt avec intérêt, mais qui sont permis parce que l'acheteur prend un risque ou parce que le supplément n'est pas le prix de l'attente.</p>
+
+<h4>1. Le transporteur et les âniers (73a)</h4>
+<p>Le texte permet de recevoir des fruits maintenant contre des fruits remis plus tard à un autre endroit, à condition que le preneur <b>ait déjà</b> des fruits à cet endroit : ils sont alors à sa disposition et c'est un achat, pas un prêt. Les âniers, eux, ont le droit de fixer le prix selon l'endroit cher même quand ils se rendent à l'endroit bon marché. Deux raisons sont données.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Raison du permis</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas du nouveau marchand</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Pappa</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ils ouvrent la porte du marché : ils se font connaître et gagnent des clients</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plus encore pour lui</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav A'ha bar Ika</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les vendeurs leur font un rabais, car ils savent qu'ils revendront moins cher</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas de rabais : on ne le croit pas</td></tr>
+</table>
+
+<p>Rav donne de l'argent à des ânier, assume les accidents du chemin et reçoit cinq mesures au lieu de six : <b>une personne importante</b> se doit d'être plus stricte, même quand la stricte loi lui permettrait six.</p>
+
+<h4>2. Acheter d'avance les récoltes (73a)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Position</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Acheter les fruits du verger d'avance</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav interdit (le prix monte, cela paraît comme un paiement de l'attente) ; Chemouel permet (il y a un risque de perte)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Jeunes bœufs (Rav 'Hiyya bar Chimi)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav admet, car les pertes sont fréquentes</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Acheter des sarments (Chemouel)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il faut retourner la terre pour acquérir un peu du terrain ; sinon, c'est un prêt</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Gardiens des champs (Rava)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il faut qu'ils aident à l'aire de battage, pour que leur salaire ne soit dû qu'à la fin</td></tr>
+</table>
+
+<p>Dans tous ces cas, la Guemara cherche à faire en sorte que le supplément reçu ne soit pas, aux yeux de tous, le prix de l'attente : soit parce que le preneur prend un risque réel, soit parce qu'il devient partenaire ou ouvrier avec un salaire qui n'est dû qu'au terme.</p>
+
+<h4>3. Rava et le métayer (73a)</h4>
+<p>Les Rabbanan accusent Rava d'intérêt : il attend Iyar pour reprendre sa terre au métayer et reçoit six kor au lieu de quatre. Rava répond que la terre est hypothéquée au métayer tant qu'il n'a pas fini sa récolte : il ne perçoit pas un prix d'attente, mais un loyer juste pour une période plus longue, alors que les autres renvoient leur métayer trop tôt et lui font perdre.</p>
+
+<h4>4. La maison gagée et vendue (73b)</h4>
+<p>Un non-Juif avait gagé une maison à Rav Mari, puis l'avait vendue à Rava. Rav Mari propose de payer un loyer à Rava, car, pendant l'année du gage, la maison était à lui. Rava refuse : il applique « leur loi » : tant que le prêteur n'est pas remboursé, il n'est pas redevable de loyer, et lui-même n'en prend pas jusqu'à ce qu'il règle la dette. C'est un principe que le <a href="../choulhan-aroukh/yd_172.html">Choulhan Aroukh (Yoré Dé'a 172:5)</a> reprend.</p>
+
+<h4>5. Le vin payé en Tichri, choisi en Tévet (73b)</h4>
+<p>Rava de Barnich craint que payer en Tichri pour recevoir en Tévet soit de l'intérêt. Rav Ashi répond qu'ils paient pour du vin, et que ce qui devient vinaigre l'était déjà au départ : il n'y a donc pas de supplément pour l'attente. Voir <a href="../choulhan-aroukh/yd_173.html">Yoré Dé'a 173:13</a>.</p>
+
+<h4>6. Le pichet de plus (73b)</h4>
+<p>Ravina verse de l'argent d'avance aux gens de la forteresse de Chanvata. Ils lui versent un pichet de plus, sans condition. Rav Ashi permet : ils lui font cadeau. L'objection de Ravina est que la terre n'est pas à eux : la réponse est que la terre est hypothéquée à l'impôt, et que « celui qui paie l'impôt mange la terre » (règle du royaume).</p>
+
+<h4>7. L'impôt par tête et « la loi du royaume » (73b)</h4>
+<p>Rava explique qu'un riche qui paie l'impôt par tête pour des gens peut les faire servir : leur acte d'asservissement est déposé dans le coffre du roi. C'est une application de <i>dina demalkhouta dina</i> (la loi du royaume fait loi). Rav Se'oram, frère de Rava, saisissait de force les gens qui se conduisent mal pour porter la litière de Rava, et Rava lui donne raison : le verset « parmi eux vous travaillerez toujours » inclut ce cas, mais « sur vos frères… vous ne dominerez pas durement » limite cette règle.</p>
+
+<h4>8. Le mandataire négligent et l'<i>asmakhta</i> (73b)</h4>
+<p>Si l'on donne de l'argent pour acheter du vin et que le mandataire néglige de l'acheter, Rav 'Hama dit qu'il paie selon le cours de Zolchefat, le port où l'on vend le vin. Rav Zevid distingue : pour du « vin » sans précision, oui ; pour « ce vin-ci », non. Rav Ashi va plus loin : même pour du vin sans précision, c'est une <i>asmakhta</i> (un engagement pris en pensant ne jamais devoir payer), et une <i>asmakhta</i> n'acquiert pas. L'objection porte sur la Michna de Bava Metzia 104a (« si je laisse en friche, je paierai au meilleur »), et la réponse est que là, la décision est entre ses mains.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « sous la responsabilité du vendeur » : c'est quand le vendeur assume les accidents du chemin ; il n'y a pas de prêt tant que la marchandise n'est pas vendue, car la plus-value appartient aux premiers propriétaires. Sur « les ânier » : ce sont des gens qui transportent le blé du lieu bon marché au lieu cher ; ils peuvent prendre des fonds de propriétaires riches et leur livrer plus tard à l'un cher, au prix de l'endroit bon marché. Sur « ouvrir la porte » : leurs clients les connaissent grâce à l'argent qu'ils ont reçu, et ils achètent à crédit.</p>
+
+<p><b>Rachi</b> sur « ferrailles » (<i>gerutaot</i>) : ce sont les autres marchandises, comme les débris d'or, d'argent et d'autres métaux, qui ne se vendent pas tous les jours comme le blé ; la raison de « ouvrir la porte » ne s'y applique donc pas. Sur le verger : on achète le vin du vignoble au prix bas, toute la récolte de l'année, quand les raisins sont encore verts. Sur <i>tiyouta</i> : ce sont les accidents possibles : grêle, pluie, gel.</p>
+
+<p><b>Rachi</b> sur « jeunes bœufs » : on vendange les vignes avec des bœufs et un char, entre les rangées ; les pattes des bêtes s'abîment sur les racines. Sur « sarments » : les propriétaires prêtent du blé aux métayers pour semer, et sont payés à l'aire de battage en blé nouveau ; pour « retourner la terre », il s'agit d'aider un peu au labour et à la moisson. Sur les gardiens : ils gardent les blés sur pied jusqu'à la moisson, et on leur ajoute un cadeau quand ils attendent leur salaire jusqu'à la fin du battage.</p>
+
+<p><b>Rachi</b> sur Rav Mari bar Ra'hel : il était le fils de la fille de Chemouel, capturée, qui épousa un non-Juif qui se convertit, appelé Issour le converti ; Rav Mari fut conçu hors de la sainteté et né dans la sainteté, et on le nomme d'après sa mère par honneur. Sur « il attendit une année » : il attendit une année entière avant de prendre le loyer. Sur le vin : le vin tourne facilement, d'où la responsabilité du vendeur. Sur « le pichet » : ils le versent de leur gré, sans condition ; sur <i>taska</i> : l'impôt foncier ; sur <i>karga</i> : l'argent que chaque Juif donne au roi par tête.</p>
+
+<p><b>Tossafot</b> sur « sous la responsabilité du vendeur » : cela vaut quand il a donné son salaire et sa nourriture à celui qui se donne de la peine, pour qu'il ne travaille pas en échange du prêt. Ils expliquent aussi que, contrairement à Rachi, la responsabilité du chemin de retour avec le blé était à la charge du propriétaire, et les ânier gagnaient seulement à l'aller. Pour « ouvrir la porte », ils adoptent l'explication de Rabbénou 'Hananel : les propriétaires qui prêtent informent les ânier des cours élevés et les aident à vendre. Sur les « jeunes bœufs », Rabbénou 'Hananel lit « jeunes veaux » : la perte est plus fréquente que celle du verger.</p>
+
+<p><b>Tossafot</b> sur « sarments » : ce mot est ailleurs le sens de « branches » (<i>chivchin</i> en araméen pour « sarments », Genèse 40:10) ; selon Rabbénou 'Hananel, on paie le propriétaire de la vigne pour les sarments, qui valent plus à la taille. Sur Rav Mari : il vivait à l'époque de Rava. Sur « le pichet de plus » : ce n'est pas un intérêt versé après coup, car on ne dit pas que cela est pour ses fonds immobilisés, à la différence du cas où l'on prête et où l'on habite chez lui.</p>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Terme</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sens</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Tiyouta</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Risque de perte qui justifie que l'acheteur soit un vrai preneur de risque</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Asmakhta</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Engagement pris en pensant ne jamais devoir l'exécuter : il n'acquiert pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Dina demalkhouta dina</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La loi du royaume fait loi</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Karga</i> / <i>taska</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Impôt par tête / impôt foncier</td></tr>
+</table><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf fonde les règles du chapitre sur les achats d'avance et les arrangements avec risque. Les règles ci-dessous sont celles du Choulhan Aroukh, Yoré Dé'a.</p>
+
+<h4>Transporter des fruits ou des marchandises</h4>
+<p><a href="../choulhan-aroukh/yd_173.html">Yoré Dé'a 173:17</a> : celui qui transporte des fruits d'un lieu bon marché vers un lieu cher et à qui l'on dit « donne-les-moi et je te donnerai des fruits là-bas à telle date » : si le preneur a des fruits à cet endroit, c'est permis ; sinon, c'est interdit. <a href="../choulhan-aroukh/yd_173.html">173:16</a> : on peut donner une pièce à un marchand pour qu'il apporte six mesures du village à telle date, à condition que ce soit sous la responsabilité de l'acheteur en cas de vol ou de perte ; une personne importante ne le fait pas, et pour les marchandises autres que les fruits, c'est interdit à tous. <a href="../choulhan-aroukh/yd_173.html">173:15</a> : si la marchandise est vendue ici bon marché et ailleurs cher, la règle dépend de qui porte la responsabilité du chemin.</p>
+
+<h4>Verger, sarments, gardiens des champs</h4>
+<p><a href="../choulhan-aroukh/yd_173.html">Yoré Dé'a 173:10</a> : il est interdit d'acheter les fruits d'un verger avant qu'ils soient mûrs, mais on peut acheter un veau bon marché et le laisser chez le vendeur jusqu'à ce qu'il grandisse. <a href="../choulhan-aroukh/yd_173.html">173:11</a> : celui qui paie d'avance les sarments de la vigne ne peut le faire qu'après avoir retourné la terre. <a href="../choulhan-aroukh/yd_173.html">173:12</a> : pour les gardiens des champs, on n'ajoute pas à leur salaire pour qu'ils attendent après le battage, sauf s'ils aident à battre et à nettoyer. <a href="../choulhan-aroukh/yd_173.html">173:13</a> : on peut payer d'avance du vin au moment de la vendange pour recevoir du bon vin en Nissan.</p>
+
+<h4>Maison gagée par un non-Juif et revendue</h4>
+<p><a href="../choulhan-aroukh/yd_172.html">Yoré Dé'a 172:5</a> : si un non-Juif a gagé sa cour à un Juif puis la vend à un autre Juif, le détenteur du gage n'a pas à verser de loyer à l'acheteur à partir de l'acquisition, et il habite sans loyer jusqu'à ce que le non-Juif lui rende son argent.</p>
+
+<h4>Fixer le prix sur les fruits</h4>
+<p>Pour la règle de la fixation du prix des fruits selon le cours, voir <a href="../choulhan-aroukh/yd_175.html">Yoré Dé'a 175</a> (le cours doit être établi dans la région, et on ne fixe pas sur le cours d'un petit village). Pour les autres règles de l'intérêt, voir aussi <a href="../choulhan-aroukh/yd_160.html">Yoré Dé'a 160</a>.</p>
+
+<p>La loi du royaume (<i>dina demalkhouta dina</i>) et le principe de l'<i>asmakhta</i> relèvent d'autres chapitres du Choulhan Aroukh ; ils ne sont pas détaillés ici. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bava_Metzia.73" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
