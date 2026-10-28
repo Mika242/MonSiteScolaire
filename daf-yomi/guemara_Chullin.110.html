@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 110 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Chullin · Guemara</div>
+    <h1>Guemara 110</h1>
+    <p>Daf 110</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>שֶׁבִּשְּׁלָהּ בַּחֲלָבָהּ – אֲסוּרָה, דַּאֲפִילּוּ דִּיעֲבַד נָמֵי לָא, תְּנָא נָמֵי רֵישָׁא שֶׁבִּשְּׁלָהּ.</p>
+      <p>כִּי סְלֵיק רַבִּי אֶלְעָזָר, אַשְׁכְּחֵיהּ לִזְעֵירִי, אֲמַר לֵיהּ: אִיכָּא תַּנָּא דְּאַתְנְיֵיהּ לְרַב כְּחָל? אַחְוְיֵיהּ לְרַב יִצְחָק בַּר אֲבוּדִימִי. אֲמַר לֵיהּ: אֲנִי לֹא שָׁנִיתִי לוֹ כְּחָל כׇּל עִיקָּר, וְרַב – בִּקְעָה מָצָא וְגָדַר בָּהּ גָּדֵר.</p>
+      <p>דְּרַב אִיקְּלַע לְטַטְלְפוּשׁ, שַׁמְעַהּ לְהַהִיא אִיתְּתָא דְּקָאָמְרָה לַחֲבִירְתַּהּ: רִיבְעָא דְּבִשְׂרָא כַּמָּה חֲלָבָא בָּעֵי לְבַשּׁוֹלֵי? אָמַר: לָא גְּמִירִי דְּבָשָׂר בְּחָלָב אָסוּר, אִיעַכַּב (וְקָאָסַר) [וַאֲסַר] לְהוּ כַּחְלֵי.</p>
+      <p>רַב כָּהֲנָא מַתְנֵי הָכִי. רַבִּי יוֹסֵי בַּר אַבָּא מַתְנֵי: אֲנָא, כְּחָל שֶׁל מְנִיקָה שָׁנִיתִי לוֹ, וּמִפִּלְפּוּלוֹ שֶׁל רַב חִיָּיא שְׁנָה לֵיהּ כְּחָל סְתָם.</p>
+      <p>רָבִין וְרַב יִצְחָק בַּר יוֹסֵף אִיקְּלַעוּ לְבֵי רַב פַּפֵּי, אַיְיתוֹ לְקַמַּיְיהוּ תַּבְשִׁילָא דִּכְחָל. רַב יִצְחָק בַּר יוֹסֵף אֲכַל, רָבִין לָא אֲכַל. אָמַר אַבָּיֵי: רָבִין תַּכָּלָא, אַמַּאי לָא אֲכַל? מִכְּדֵי, דְּבֵיתְהוּ דְּרַב פַּפֵּי בְּרַתֵּיה דְּרַבִּי יִצְחָק נַפָּחָא הֲוַאי, וְרַבִּי יִצְחָק נַפָּחָא מָרֵיהּ דְּעוֹבָדָא הֲוָה, אִי לָאו דִּשְׁמִיעַ לַהּ מִבֵּי נָשָׁא לָא הֲוָה עָבְדָא.</p>
+      <p>בְּסוּרָא לָא אָכְלִי כַּחְלֵי, בְּפוּמְבְּדִיתָא אָכְלִי כַּחְלֵי. רָמֵי בַּר תַּמְרֵי, דְּהוּא רָמֵי בַּר דִּיקּוּלֵי, מִפּוּמְבְּדִיתָא אִיקְּלַע לְסוּרָא בְּמַעֲלֵי יוֹמָא דְכִפּוּרֵי. אַפְּקִינְהוּ כּוּלֵּי עָלְמָא לְכַחְלִינְהוּ שְׁדִינְהוּ, אֲזַל אִיהוּ נַקְטִינְהוּ אַכְלִינְהוּ.</p>
+      <p>אַיְיתוּהּ לְקַמֵּיהּ דְּרַב חִסְדָּא, אֲמַר לֵיהּ: אַמַּאי תַּעֲבֵיד הָכִי? אֲמַר לֵיהּ: מֵאַתְרָא דְּרַב יְהוּדָה אֲנָא, דְּאָכֵיל. אֲמַר לֵיהּ: וְלֵית לָךְ נוֹתְנִין עָלָיו חוּמְרֵי הַמָּקוֹם שֶׁיָּצָא מִשָּׁם וְחוּמְרֵי הַמָּקוֹם שֶׁהָלַךְ לְשָׁם? אֲמַר לֵיהּ: חוּץ לַתְּחוּם אֲכַלְתִּינְהוּ.</p>
+      <p>וּבְמָה טְוִיתִינְהוּ? אֲמַר לֵיהּ: בְּפוּרְצָנֵי. וְדִלְמָא מִיֵּין נֶסֶךְ (הָוְיָא) [הֲווֹ]? אֲמַר לֵיהּ: לְאַחַר שְׁנֵים עָשָׂר חֹדֶשׁ הֲווֹ.</p>
+      <p>וְדִלְמָא דְּגָזֵל הֲוָה? אֲמַר לֵיהּ: יֵאוּשׁ בְּעָלִים הֲוָה, דִּקְדַחוּ בְּהוּ חִילְפֵי.</p>
+      <p>חַזְיֵיהּ דְּלָא הֲוָה מַנַּח תְּפִילִּין, אֲמַר לֵיהּ: מַאי טַעְמָא לָא מַנְּחַתְּ תְּפִילִּין? אֲמַר לֵיהּ: חוֹלֵי מֵעַיִין הוּא, וְאָמַר רַב יְהוּדָה: חוֹלֵי מֵעַיִין פָּטוּר מִן הַתְּפִילִּין.</p>
+      <p>חַזְיֵיהּ דְּלָא הֲוָה קָא רָמֵי חוּטֵי, אֲמַר לֵיהּ: מַאי טַעְמָא לֵית לָךְ חוּטֵי? אֲמַר לֵיהּ: טַלִּית שְׁאוּלָה הִיא, וְאָמַר רַב יְהוּדָה:</p>
+      <p>טַלִּית שְׁאוּלָה כׇּל שְׁלֹשִׁים יוֹם פְּטוּרָה מִן הַצִּיצִית.</p>
+      <p>אַדְּהָכִי, אַיְיתוּהּ לְהָהוּא גַּבְרָא דְּלָא הֲוָה מוֹקַר אֲבוּהּ וְאִמֵּיהּ, כַּפְתוּהּ.</p>
+      <p>אֲמַר לְהוּ: שִׁבְקוּהּ, דְּתַנְיָא: כׇּל מִצְוַת עֲשֵׂה שֶׁמַּתַּן שְׂכָרָהּ בְּצִדָּהּ – אֵין בֵּית דִּין שֶׁלְּמַטָּה מוּזְהָרִין עָלֶיהָ. אֲמַר לֵיהּ חֲזֵינָא לָךְ דְּחָרִיפַתְּ טוּבָא. אֲמַר לֵיהּ: אִי הֲוֵית בְּאַתְרֵיהּ דְּרַב יְהוּדָה, אַחְוִינָא לָךְ חוּרְפַּאי.</p>
+      <p>אֲמַר לֵיהּ אַבָּיֵי לְרַב סָפְרָא: כִּי סָלְקַתְּ לְהָתָם, בְּעִי מִינַּיְיהוּ: כַּבְדָּא, מָה אַתּוּן בֵּיהּ? כִּי סְלֵיק, אַשְׁכְּחֵיהּ לְרַב זְרִיקָא. אֲמַר לֵיהּ: אֲנָא שְׁלַקִי לֵיהּ לְרַבִּי אַמֵּי, וַאֲכַל.</p>
+      <p>כִּי אֲתָא לְגַבֵּיהּ, אֲמַר לֵיהּ: לְמֵיסַר נַפְשַׁהּ – לָא קָא מִיבַּעְיָא לִי, כִּי קָמִבַּעְיָא לִי – לְמֵיסַר חֲבִירְתַּהּ.</p>
+      <p>מַאי שְׁנָא לְמֵיסַר נַפְשַׁהּ דְּלָא מִיבַּעְיָא לָךְ – דִּתְנַן: אֵינָהּ נֶאֱסֶרֶת, לְמֵיסַר חֲבִירְתַּהּ נָמֵי לָא תִּבְּעֵי לָךְ! דִּתְנַן: הַכָּבֵד אוֹסֶרֶת וְאֵינָהּ נֶאֱסֶרֶת, מִפְּנֵי שֶׁהִיא פּוֹלֶטֶת וְאֵינָהּ בּוֹלַעַת. אֲמַר לֵיהּ: דִּילְמָא הָתָם בְּכַבְדָּא דְּאִיסּוּרָא,</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>(Fin du daf précédent.)</b> L'estomac d'un agneau qui tète, cuit avec son lait, est interdit ; même rôti, on ne le mange pas après coup. La baraïta emploie « cuit » dans la première partie pour garder la symétrie : « le pis cuit dans son lait est permis ».</p>
+      <p><b>La seconde version de Rav : le pis rôti est interdit.</b> Quand Rabbi Elazar monta de Babylonie en Eretz Israël, il trouva Ze'eiri et demanda : « Y a-t-il un tanna qui a enseigné à Rav qu'un pis rôti sans être déchiré est interdit ? » Ze'eiri lui montra Rav Yitzhak bar Avoudimi. Celui-ci dit : « Je n'ai pas enseigné à Rav que le pis est interdit ; Rav a trouvé une vallée sans clôture et l'a close. » Quand Rav arriva à Tatlefoush, il entendit une femme demander à une autre : « Combien de lait faut-il pour cuire un quart de livre de viande ? » Il se dit que ces gens ne savent pas que la viande dans le lait est interdite ; il resta là et leur interdit même le pis, pour qu'ils ne transgressent pas l'interdit de la viande cuite dans le lait.</p>
+      <p>Rav Kahana enseigne que Rav Yitzhak bar Avoudimi répondit ainsi. Rabbi Yossi bar Abba enseigne qu'il dit : « Je n'ai enseigné à Rav que le pis d'une bête qui allaite, qui contient beaucoup de lait. Et par l'acuité de Rabbi 'Hiya, le maître de Rav, qui supposait que Rav le comprendrait de lui-même, je l'ai enseigné sans précision. Rav a cru que cela valait pour toute bête. »</p>
+      <p><b>Le plat de pis chez Rav Pappi.</b> Ravin et Rav Yitzhak bar Yossef vinrent chez Rav Pappi, où l'on servit un plat de pis. Rav Yitzhak bar Yossef en mangea, Ravin non. Abayé : « Ravin endeuillé, pourquoi ne manges-tu pas ? La femme de Rav Pappi est la fille de Rabbi Yitzhak Nappa'ha, un maître des bonnes actions ; si elle n'avait pas entendu chez son père que c'est permis, elle ne l'aurait pas préparé. »</p>
+      <p><b>Sura et Poumbedita.</b> À Sura on ne mangeait pas du tout de pis, même déchiré et rôti ; à Poumbedita on en mangeait. Rami bar Tamri (Rami bar Dikoulei) de Poumbedita arriva à Sura la veille de Yom Kippour : on avait cuit beaucoup de viande et chacun jeta ses pis. Il les ramassa, les rôtit et les mangea. On l'amena devant Rav 'Hisda : « Pourquoi as-tu fait cela ? » — « Je suis de l'endroit de Rav Yehouda, qui mange du pis, c'est la coutume de Poumbedita. » — « Ne sais-tu pas que l'on impose au voyageur les rigueurs du lieu qu'il quitte et celles du lieu où il va ? » — « Cela vaut pour celui qui reste dans le lieu ; moi, j'ai mangé en dehors de la limite (<i>tekhoum</i>)… » (le texte continue).</p>
+      <p>Rav 'Hisda : « Avec quoi les as-tu rôtis ? » — « Avec des pépins de raisin trouvés près des vignes. » — « Peut-être venaient-ils de vin de libation ? » — « C'étaient de vieux pépins, plus de douze mois après (Avoda Zara 34a). » — « Peut-être volés ? » — « Les propriétaires avaient abandonné tout espoir : l'herbe poussait au milieu. »</p>
+      <p>Rav 'Hisda vit qu'il ne portait pas de téfilines : « Pourquoi ? » — « Je souffre des intestins, et Rav Yehouda dit que celui qui souffre ainsi est dispensé. » Il vit qu'il n'avait pas de tsitsit : « C'est un manteau emprunté ; Rav Yehouda dit : pendant les trente premiers jours, on est dispensé de tsitsit. » Pendant ce temps, on amena devant Rav 'Hisda un homme qui ne respectait pas son père et sa mère, et on l'attacha à un pilier pour le fouetter. Rami bar Tamri : « Laissez-le : une mitsva positive dont la récompense est écrite à côté, le tribunal ne la fait pas respecter par des coups. Or il est écrit : « afin que tes jours se prolongent » (Deutéronome 5:16). » Rav 'Hisda : « Je vois que tu es très vif. » — « Si tu étais là où habite Rav Yehouda, je pourrais te montrer ma vivacité bien mieux qu'ici. »</p>
+      <p><b>Le foie.</b> Abayé dit à Rav Safra : « Quand tu monteras en Eretz Israël, demande-leur comment on traite le foie. » Rav Zerika dit à Rav Safra : « J'ai cuit du foie pour Rabbi Ami et il l'a mangé. » Abayé : « Je ne me demande pas si le foie s'interdit lui-même : le sang qui en sort n'est pas réabsorbé. Je demande s'il interdit un autre morceau cuit avec lui. » Rav Safra : « Pourquoi ne te demandes-tu pas s'il s'interdit lui-même ? Parce que nous avons appris dans une michna (Terouma 10:11) que le foie interdit mais n'est pas interdit… » (la discussion continue au daf suivant).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>of a suckling lamb or calf <b>that one cooked</b> together <b>with</b> the <b>milk</b> it contains <b>is prohibited.</b> There, <b>even</b> if one roasted it he may <b>not</b> eat it <b>after the fact.</b> To preserve symmetry, the <i>tanna</i> of the <i>baraita</i> <b>taught</b> in <b>the first clause</b> in this manner <b>as well,</b> stating: An udder <b>that one cooked</b> in its milk is permitted.</p>
+      <p>§ The Gemara above cited a second version of Rav’s opinion, according to which an udder that was roasted without being torn is prohibited for consumption. The Gemara relates: <b>When Rabbi Elazar ascended</b> from Babylonia to Eretz Yisrael <b>he found Ze’eiri</b> and <b>said to him: Is there a <i>tanna</i> who taught Rav</b> that <b>an udder</b> roasted without first being torn is prohibited? Ze’eiri <b>showed him Rav Yitzḥak bar Avudimi.</b> Rav Yitzḥak bar Avudimi <b>said to</b> Rabbi Elazar: <b>I did not teach</b> Rav that <b>an udder</b> is prohibited <b>at all;</b> rather, <b>Rav found</b> an unguarded <b>valley and fenced it in.</b> Rav taught this stringent ruling as an additional safeguard in Babylonia, where Jews were not careful about the prohibition of meat cooked in milk.</p>
+      <p>The Gemara elaborates: <b>As</b> when <b>Rav arrived in Tatlefush, he heard a certain woman saying to another: How much milk does it require to cook a quarter</b> weight <b>of meat?</b> Rav <b>said:</b> Evidently, these people <b>are not learned</b> enough in <i>halakha</i> to know <b>that meat</b> cooked <b>in milk is prohibited.</b> Rav <b>tarried</b> in that place, <b>and prohibited</b> even <b>udders to them,</b> so that they would not come to violate the prohibition of meat cooked in milk.</p>
+      <p><b>Rav Kahana teaches</b> that Rav Yitzḥak bar Avudimi replied to Rabbi Elazar in <b>that</b> manner described above. By contrast, <b>Rabbi Yosei bar Abba teaches</b> that Rav Yitzḥak bar Avudimi said: <b>I taught</b> Rav only that <b>the udder of</b> an animal <b>nursing</b> offspring is prohibited, as its udder contains much milk. <b>And due to the sharp</b> mind <b>of Rav Ḥiyya,</b> Rav’s teacher, he assumed that Rav too would understand this without his saying so explicitly. Therefore, he <b>taught</b> this <i>halakha</i> to Rav with regard to <b>an unspecified udder.</b> Rav mistakenly thought that the ruling applies to all animals.</p>
+      <p>The Gemara relates that <b>Ravin and Rav Yitzḥak bar Yosef arrived at the house of Rav Pappi.</b> The servants <b>brought before them a dish</b> made <b>of udder. Rav Yitzḥak bar Yosef ate</b> of it, but <b>Ravin did not eat. Abaye said: Bereaved Ravin, why do you not eat? After all, Rav Pappi’s wife is the daughter of Rabbi Yitzḥak Nappaḥa, and Rabbi Yitzḥak Nappaḥa was a master of</b> good <b>deeds,</b> who was meticulous in his performance of mitzvot. <b>Had</b> Rav Pappi’s wife <b>not heard in her father’s house</b> that such a dish is permitted, <b>she would not have made</b> it.</p>
+      <p>The Gemara relates: <b>In Sura they would not eat udders</b> at all, even torn and roasted. But <b>in Pumbedita they would eat udders. Rami bar Tamrei, who is</b> also called <b>Rami bar Dikulei, from Pumbedita, arrived in Sura on the eve of Yom Kippur.</b> Since it is a mitzva to eat and drink then, large quantities of meat were cooked, and <b>everyone brought out their udders</b> from the animals they had slaughtered and <b>threw them</b> away. Rami bar Tamrei <b>went</b> and <b>gathered</b> the udders, roasted them, and <b>ate them,</b> in accordance with his custom.</p>
+      <p>The residents of Sura <b>brought</b> Rami bar Tamrei <b>before Rav Ḥisda,</b> who <b>said to him: Why did you do this?</b> Rami bar Tamrei <b>said to</b> Rav Ḥisda: <b>I am from the place of Rav Yehuda, who eats</b> udders, and this is the accepted custom in Pumbedita. Rav Ḥisda <b>said to him: And do you not hold</b> by the principle that the Sages <b>impose upon</b> a traveler <b>the stringencies of the place that he left and</b> also <b>the stringencies of the place to which he went?</b> You should have accepted the stringency of Sura and not eaten the udders. Rami bar Tamrei <b>said to</b> Rav Ḥisda: That principle applies only to one who remains in the place he is visiting, but <b>I ate</b> the udders <b>outside the boundaries</b> of Sura.</p>
+      <p>Rav Ḥisda further asked Rami bar Tamrei: <b>And with what did you roast</b> the udders? Rami bar Tamrei <b>said to him:</b> I roasted them <b>with grape seeds</b> [<b><i>purtzenei</i></b>] I found in the vines there. Rav Ḥisda objected: <b>But</b> how could you roast the udders with grape seeds, as <b>perhaps they were from wine</b> used for <b>a libation</b> to idolatry, from which it is prohibited to derive benefit. Rami bar Tamrei <b>said to him:</b> These <b>were</b> old seeds that still lay there <b>after twelve months</b> had passed since the grapes were used, and any prohibition had expired, as by that point they are assumed to have lost any prohibited liquid that previously remained inside (see <i>Avoda Zara</i> 34a).</p>
+      <p>Rav Ḥisda further objected: <b>But perhaps</b> these seeds <b>were from stolen</b> property, i.e., they belonged to someone and it was prohibited for you to take them. Rami bar Tamrei <b>said to him:</b> Even so, in this case <b>there was</b> certainly <b>despair of the owners</b> of recovering them, <b>as grass was growing among them.</b> Since the owners had allowed them to lie there for so long, they had clearly given up all hope of retrieving them.</p>
+      <p>Rav Ḥisda <b>saw that</b> Rami bar Tamrei <b>had not donned phylacteries,</b> and <b>said to him: What is the reason that you have not donned phylacteries?</b> Rami bar Tamrei <b>said to him: He,</b> i.e., I, am suffering from <b>intestinal illness, and Rav Yehuda said</b> that one who has <b>intestinal illness is exempt from the</b> mitzva of <b>phylacteries,</b> which require a clean body, because he would have to remove them constantly to defecate.</p>
+      <p>Rav Ḥisda further <b>saw that</b> Rami bar Tamrei <b>had not placed</b> the <b>threads</b> of ritual fringes on his garment and <b>said to him: What is the reason that you do not have</b> the <b>threads</b> of ritual fringes? Rami bar Tamrei <b>said to him: It is a borrowed robe, and Rav Yehuda said:</b></p>
+      <p>With regard to <b>a borrowed robe,</b> during <b>all</b> of the first <b>thirty days</b> that one borrows it, one is <b>exempt from</b> performing the mitzva of <b>ritual fringes</b> with it.</p>
+      <p><b>Meanwhile,</b> as Rav Ḥisda and Rami bar Tamrei were talking, the attendants <b>brought</b> in <b>a certain man</b> to Rav Ḥisda’s court <b>who would not honor his father and mother,</b> and <b>they tied him</b> to a pillar in order to flog him.</p>
+      <p>Rami bar Tamrei <b>said to them: Leave him</b> alone, <b>as it is taught</b> in a <i>baraita</i>: With regard to <b>any positive mitzva whose reward</b> is stated <b>alongside it</b> in the Torah, <b>the</b> earthly <b>court below is not warned to</b> enforce <b>it</b> through punishments such as flogging. And it is stated after the mitzva of honoring one’s father and mother: “That your days may be long, and that it go well with you” (Deuteronomy 5:16). Rav Ḥisda <b>said to</b> Rami bar Tamrei: <b>I see that you are very sharp.</b> Rami bar Tamrei <b>said to</b> Rav Ḥisda: <b>If you were in the place where Rav Yehuda</b> resides, <b>I would</b> be able to <b>show you my sharpness</b> of mind far better than here.</p>
+      <p>§ Pursuant to the discussion of different local customs, <b>Abaye said to Rav Safra: When you ascend there,</b> to Eretz Yisrael, <b>ask</b> the Sages there: With regard to <b>liver, how do you</b> treat <b>it? When</b> Rav Safra <b>ascended</b> to Eretz Yisrael <b>he found Rav Zerika</b> and asked him this question. Rav Zerika <b>said to him: I cooked</b> liver <b>for Rabbi Ami and he ate</b> it.</p>
+      <p><b>When</b> Rav Safra returned to Babylonia and <b>came before</b> Abaye and reported what Rav Zerika had said, Abaye <b>said to him: I do not raise the dilemma</b> as <b>to</b> whether liver <b>renders itself prohibited</b> if cooked alone. It is clear to me that the blood that diffuses out of the liver is not absorbed again while it cooks. <b>When I raise the dilemma,</b> it is <b>with regard to</b> whether liver <b>renders prohibited another</b> piece of meat cooked with it. Rav Zerika’s statement therefore has no bearing on my question.</p>
+      <p>Rav Safra asked Abaye: <b>What is different</b> about the issue of the liver <b>rendering itself prohibited, that you did not raise the dilemma</b> with regard to this case? It is presumably because the answer is obvious to you, <b>as we learned</b> in a mishna (<i>Terumot</i> 10:11) that liver <b>is not rendered prohibited</b> by its own cooking. But if so, <b>you should not raise the dilemma with regard to</b> whether it <b>renders the other</b> piece of meat <b>prohibited either, as we learned</b> in that same mishna: <b>Liver renders</b> food cooked with it in the same pot <b>prohibited but is not prohibited</b> itself, <b>because</b> while it does <b>expel</b> blood as it cooks, it <b>does not absorb</b> this blood again, since the blood diffuses only outward. Abaye <b>said to</b> Rav Safra: That mishna does not answer my question, as <b>perhaps there</b> it is referring specifically <b>to forbidden liver,</b> e.g., the liver of a non-kosher animal.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf continue la discussion sur le <b>pis</b>, avec l'histoire de la rigueur de Rav, puis des anecdotes de coutumes locales (Sura et Poumbedita) et commence la question du <b>foie</b>.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sujet</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Idée</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pourquoi Rav a-t-il interdit le pis ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pour éviter que des gens peu instruits transgressent l'interdit de la viande dans le lait (« il a clôturé la vallée »)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Autre version</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav a mal compris : l'interdit visait seulement le pis d'une bête qui allaite</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sura et Poumbedita</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">À Sura on ne mange pas de pis ; à Poumbedita oui</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le voyageur</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On lui impose les rigueurs du lieu qu'il quitte et du lieu où il va, tant qu'il y reste</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le foie</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le foie ne s'interdit pas lui-même, mais peut-il interdire un autre morceau ?</td></tr>
+</table>
+
+<p><b>Les anecdotes de Rami bar Tamri.</b> L'épisode montre plusieurs règles : les pépins vieux de plus de douze mois ne sont plus du vin de libation ; les propriétaires ont abandonné ce qui est couvert d'herbe ; celui qui souffre des intestins est dispensé des téfilines ; un manteau emprunté est dispensé de tsitsit pendant trente jours ; une mitsva dont la récompense est écrite à côté n'est pas imposée par des coups.</p>
+<p><b>Lien avec le Choulhan Aroukh.</b> Voir <a href="../choulhan-aroukh/yd_90.html">Yoré Dé'a 90</a> sur le pis.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> explique que « il a trouvé une vallée » veut dire que Rav a vu que l'on prenait l'interdit à la légère et a été strict. Il précise que « Tatlefoush » est un lieu, que le quart de livre désigne une mesure de viande, et que « <i>pourtseni</i> » désigne des pépins près des pressoirs. Sur le foie, il explique que « le foie est tout sang, coagulé, d'un goût de sang ».</p>
+<p><b>Tosafot</b> notent qu'une même formule (« il y a un tanna qui a enseigné à Rav ») apparaît en Baba Batra 87a, et que le principe du manteau emprunté est de la Torah selon Houlin 137a. Pour le foie, Rabbeinou Tam explique que toute la discussion concerne le foie non salé.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p><b>À retenir</b></p>
+<ul>
+<li><b>Le pis.</b> Après la Guemara, la pratique suit la rigueur : le pis déchiré peut être mangé, mais les coutumes varient (Sura s'abstenait).</li>
+<li><b>Le voyageur.</b> Il garde les rigueurs de son lieu d'origine et prend celles du lieu où il s'installe.</li>
+<li><b>Le foie.</b> Il ne s'interdit pas lui-même ; son effet sur un autre morceau est discuté au daf suivant.</li>
+</ul>
+<p>Voir <a href="../choulhan-aroukh/yd_90.html">Yoré Dé'a 90</a> pour la pratique.</p>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Chullin.110" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
