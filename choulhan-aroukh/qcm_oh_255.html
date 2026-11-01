@@ -386,14 +386,14 @@ const QCM_TITRE = "QCM — Siman 255";
 
 const notions = {"A": "La médoura et la mesure du feu", "B": "Braises et autres matières", "C": "Se chauffer pendant le Chabbat"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Qu'est-ce qu'une médoura ?","options":["Une lampe à huile","Un grand feu","Un four à pain","Un chandelier"],"points":2},{"numero":2,"notion":"A","enonce":"Que faut-il pour pouvoir en profiter pendant le Chabbat ?","options":["Qu'on l'ait allumée le Chabbat","Que la flamme monte d'elle-même avant le Chabbat","Que le feu soit éteint","Qu'un non-Juif la surveille"],"points":2},{"numero":3,"notion":"A","enonce":"Pour une seule bûche, qu'est-ce que le feu doit saisir ?","options":["La plus grande partie de son épaisseur et de son pourtour","Toute la maison","Un bout seulement","Un tiers"],"points":3},{"numero":4,"notion":"A","enonce":"Pourquoi interdit-on d'en profiter si elle n'est pas bien allumée ?","options":["Elle consomme trop","C'est une fête","Le feu s'éteint tout seul","On pourrait attiser et déplacer le bois"],"points":3},{"numero":5,"notion":"B","enonce":"Selon certains, que suffit-il pour des braises ?","options":["Un feu complet","Le double","Aucun feu","Un feu léger"],"points":3},{"numero":6,"notion":"B","enonce":"Pour la poix et le soufre, que suffit-il ?","options":["Aucun feu","Un feu complet","Un autre bois","Un feu léger avant le Chabbat"],"points":2},{"numero":7,"notion":"B","enonce":"Quand la médoura de roseaux est-elle permise avec un feu léger ?","options":["Quand les roseaux sont éparpillés","Toujours","Quand ils sont mouillés","Quand ils sont en fagots"],"points":3},{"numero":8,"notion":"B","enonce":"Pour des noyaux de dattes dans un panier, que faut-il ?","options":["Que la flamme monte d'elle-même","Un non-Juif","Rien","Un feu léger suffit"],"points":3},{"numero":9,"notion":"C","enonce":"Selon la Michna Beroura, le four d'hiver non enduit d'argile est comme ?","options":["Une lampe","Une bougie","Une médoura","Un chandelier"],"points":3},{"numero":10,"notion":"C","enonce":"Jusqu'à quand reste interdit un feu mal allumé, même ensuite bien pris ?","options":["Pour toujours","Jusqu'à midi","Jusqu'au lendemain soir","Jusqu'à la sortie du Chabbat"],"points":3},{"numero":11,"notion":"C","enonce":"Peut-on se chauffer devant un feu bien allumé avant le Chabbat ?","options":["Non","Seulement une heure","Seulement un non-Juif","Oui"],"points":2}];
+const questions = [{"numero":1,"notion":"A","enonce":"Qu'est-ce qu'une médoura ?","options":["Un grand feu","Un four à pain","Un chandelier","Une lampe à huile"],"points":2},{"numero":2,"notion":"A","enonce":"Que faut-il pour pouvoir en profiter pendant le Chabbat ?","options":["Que le feu soit éteint","Que la flamme monte d'elle-même avant le Chabbat","Qu'on l'ait allumée le Chabbat","Qu'un non-Juif la surveille"],"points":2},{"numero":3,"notion":"A","enonce":"Pour une seule bûche, qu'est-ce que le feu doit saisir ?","options":["La plus grande partie de son épaisseur et de son pourtour","Un bout seulement","Un tiers","Toute la maison"],"points":3},{"numero":4,"notion":"A","enonce":"Pourquoi interdit-on d'en profiter si elle n'est pas bien allumée ?","options":["Le feu s'éteint tout seul","Elle consomme trop","C'est une fête","On pourrait attiser et déplacer le bois"],"points":3},{"numero":5,"notion":"B","enonce":"Selon certains, que suffit-il pour des braises ?","options":["Un feu complet","Un feu léger","Le double","Aucun feu"],"points":3},{"numero":6,"notion":"B","enonce":"Pour la poix et le soufre, que suffit-il ?","options":["Un feu léger avant le Chabbat","Un autre bois","Aucun feu","Un feu complet"],"points":2},{"numero":7,"notion":"B","enonce":"Quand la médoura de roseaux est-elle permise avec un feu léger ?","options":["Toujours","Quand ils sont mouillés","Quand ils sont en fagots","Quand les roseaux sont éparpillés"],"points":3},{"numero":8,"notion":"B","enonce":"Pour des noyaux de dattes dans un panier, que faut-il ?","options":["Un feu léger suffit","Un non-Juif","Que la flamme monte d'elle-même","Rien"],"points":3},{"numero":9,"notion":"C","enonce":"Selon la Michna Beroura, le four d'hiver non enduit d'argile est comme ?","options":["Un chandelier","Une lampe","Une bougie","Une médoura"],"points":3},{"numero":10,"notion":"C","enonce":"Jusqu'à quand reste interdit un feu mal allumé, même ensuite bien pris ?","options":["Jusqu'au lendemain soir","Jusqu'à midi","Pour toujours","Jusqu'à la sortie du Chabbat"],"points":3},{"numero":11,"notion":"C","enonce":"Peut-on se chauffer devant un feu bien allumé avant le Chabbat ?","options":["Oui","Non","Seulement une heure","Seulement un non-Juif"],"points":2}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh8cH8aHBJkdgJoGXYDbR0KcBABCHJwYxMdbxluHW0camMeYXZgHAEUe3Bv";
+const REPONSES_ENCODEES = "Chh9cH8aHBJkdgJoGXYDbR0KchABCHFwYxMebxluH20camIeYXZgHAEUeHBv";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -500,7 +500,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -542,7 +546,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -550,7 +554,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

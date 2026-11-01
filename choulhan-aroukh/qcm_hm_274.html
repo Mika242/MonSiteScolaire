@@ -386,14 +386,14 @@ const QCM_TITRE = "QCM — Siman 274";
 
 const notions = {"A": "Champ vendu par un non-Juif", "B": "Les dix conditions de Yehochoua", "C": "L'essaim d'abeilles"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Un non-Juif vend un champ à un Juif sans écrire l'acte : que devient le champ ?","options":["Il est comme sans maître","Il appartient au Juif","Il revient au non-Juif","Il est interdit"],"points":2},{"numero":2,"notion":"A","enonce":"Qui acquiert un champ sans maître ?","options":["Le plus riche","Le plus ancien","Celui qui le saisit en premier","Le tribunal"],"points":2},{"numero":3,"notion":"A","enonce":"Où ce principe est-il expliqué selon le texte ?","options":["Au siman 194","Au siman 10","Au siman 320","Au siman 500"],"points":3},{"numero":4,"notion":"B","enonce":"Combien de conditions Yehochoua a-t-il posées ?","options":["Douze","Sept","Dix","Trois"],"points":2},{"numero":5,"notion":"B","enonce":"Selon le Rema, où ces conditions valent-elles ?","options":["Nulle part","Aussi hors de la Terre d'Israël","Seulement en Terre d'Israël","Seulement à Jérusalem"],"points":2},{"numero":6,"notion":"B","enonce":"Quelles sources citent ces conditions ?","options":["Le Zohar","Seulement le Rif","Seulement le Talmud","Le Rambam et le Tour"],"points":3},{"numero":7,"notion":"B","enonce":"Pourquoi l'auteur les a-t-il omises, selon le Rema ?","options":["Elles sont abolies","Il les a oubliées","Elles sont interdites","Peut-être parce qu'elles sont rares en exil"],"points":3},{"numero":8,"notion":"C","enonce":"Un essaim s'est posé sur l'arbre du voisin : que permettent certains ?","options":["Couper une branche et payer sa valeur","Brûler l'arbre","Rien du tout","Prendre tout l'arbre"],"points":2},{"numero":9,"notion":"C","enonce":"Qui cite cet avis au nom de son père, le Roch ?","options":["Le Rif","Le Rambam","Le Tour","Le Chakh"],"points":3},{"numero":10,"notion":"C","enonce":"Qui s'oppose à cet avis ?","options":["Le Rema","Le Rif et le Ramah","Le Tour","Le Roch"],"points":4},{"numero":11,"notion":"C","enonce":"Quel autre auteur partage l'avis qui interdit, selon le Chakh ?","options":["Le Rambam","Le Maharshal","Le Taz","Le Roch"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Un non-Juif vend un champ à un Juif sans écrire l'acte : que devient le champ ?","options":["Il est interdit","Il revient au non-Juif","Il appartient au Juif","Il est comme sans maître"],"points":2},{"numero":2,"notion":"A","enonce":"Qui acquiert un champ sans maître ?","options":["Le plus riche","Le plus ancien","Celui qui le saisit en premier","Le tribunal"],"points":2},{"numero":3,"notion":"A","enonce":"Où ce principe est-il expliqué selon le texte ?","options":["Au siman 10","Au siman 320","Au siman 194","Au siman 500"],"points":3},{"numero":4,"notion":"B","enonce":"Combien de conditions Yehochoua a-t-il posées ?","options":["Sept","Trois","Douze","Dix"],"points":2},{"numero":5,"notion":"B","enonce":"Selon le Rema, où ces conditions valent-elles ?","options":["Seulement en Terre d'Israël","Aussi hors de la Terre d'Israël","Nulle part","Seulement à Jérusalem"],"points":2},{"numero":6,"notion":"B","enonce":"Quelles sources citent ces conditions ?","options":["Le Zohar","Le Rambam et le Tour","Seulement le Talmud","Seulement le Rif"],"points":3},{"numero":7,"notion":"B","enonce":"Pourquoi l'auteur les a-t-il omises, selon le Rema ?","options":["Elles sont interdites","Elles sont abolies","Il les a oubliées","Peut-être parce qu'elles sont rares en exil"],"points":3},{"numero":8,"notion":"C","enonce":"Un essaim s'est posé sur l'arbre du voisin : que permettent certains ?","options":["Couper une branche et payer sa valeur","Brûler l'arbre","Rien du tout","Prendre tout l'arbre"],"points":2},{"numero":9,"notion":"C","enonce":"Qui cite cet avis au nom de son père, le Roch ?","options":["Le Chakh","Le Tour","Le Rambam","Le Rif"],"points":3},{"numero":10,"notion":"C","enonce":"Qui s'oppose à cet avis ?","options":["Le Tour","Le Rema","Le Rif et le Ramah","Le Roch"],"points":4},{"numero":11,"notion":"C","enonce":"Quel autre auteur partage l'avis qui interdit, selon le Chakh ?","options":["Le Roch","Le Maharshal","Le Rambam","Le Taz"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9cH8aHxVhdgJqGHYCbR0KchABCHJwZBYebxtvHW0camMeYXZiHAETfHBv";
+const REPONSES_ENCODEES = "Chh+cH8aHxVhdgBqGHYDbR0KchABCHBwZBYebxtvHW0camAeYXZhHAETfHBv";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -500,7 +500,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -542,7 +546,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -550,7 +554,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

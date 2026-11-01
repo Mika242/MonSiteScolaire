@@ -386,14 +386,14 @@ const QCM_TITRE = "QCM — Siman 262";
 
 const notions = {"A": "La maison et la table (se'if 1)", "B": "Les vêtements (se'if 2)", "C": "L'accueil du Chabbat (se'if 3)"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Que fait-on avant de revenir de la synagogue (262:1) ?","options":["On dort","On jeûne","On dresse la table et on prépare la maison","On voyage"],"points":2},{"numero":2,"notion":"A","enonce":"Combien de temps la table reste-t-elle dressée selon le Rema ?","options":["Jusqu'au kiddouch","Tout le Chabbat","Une heure","Jusqu'à midi"],"points":2},{"numero":3,"notion":"A","enonce":"Que dit l'ange bon lorsqu'il trouve la maison prête ?","options":["« Fermez la porte »","Rien","« Quelle misère »","« Que ce soit ainsi le Chabbat prochain »"],"points":3},{"numero":4,"notion":"B","enonce":"Que fait-on sans beaux vêtements (262:2) ?","options":["On emprunte au voisin","On reste chez soi","On allonge ses vêtements par honneur","On jeûne"],"points":3},{"numero":5,"notion":"B","enonce":"Quel verset fonde l'honneur des vêtements du Chabbat (Michna Beroura) ?","options":["« Que la lumière soit »","« Écoute Israël »","« Tu ne tueras pas »","« Tu l'honoreras » (Isaïe 58:13)"],"points":3},{"numero":6,"notion":"B","enonce":"Pour qui les vêtements du Chabbat sont-ils portés (Michna Beroura) ?","options":["Pour le rabbin","Pour les voisins","Pour les invités","Pour l'honneur du Chabbat, non pour ceux qui regardent"],"points":3},{"numero":7,"notion":"C","enonce":"À qui compare-t-on l'accueil du Chabbat (262:3) ?","options":["À un roi ou à une fiancée","À un voisin","À un ami","À un marchand"],"points":2},{"numero":8,"notion":"C","enonce":"Que disait Rabbi 'Hanina le vendredi soir ?","options":["« Fermons la boutique »","« Venez, sortons à la rencontre du Chabbat, la reine »","« Il est tard »","« Allons dormir »"],"points":3},{"numero":9,"notion":"C","enonce":"Quand se lave-t-on pour le Chabbat selon le Rema ?","options":["À midi","Le matin","Près du soir, pour s'habiller aussitôt","Le jeudi"],"points":3},{"numero":10,"notion":"C","enonce":"Que recommande la Michna Beroura pour la paix du Chabbat ?","options":["Cuisiner beaucoup","Parler fort","Voyager","Éviter toute dispute, surtout entre mari et femme"],"points":3}];
+const questions = [{"numero":1,"notion":"A","enonce":"Que fait-on avant de revenir de la synagogue (262:1) ?","options":["On voyage","On dort","On dresse la table et on prépare la maison","On jeûne"],"points":2},{"numero":2,"notion":"A","enonce":"Combien de temps la table reste-t-elle dressée selon le Rema ?","options":["Tout le Chabbat","Une heure","Jusqu'au kiddouch","Jusqu'à midi"],"points":2},{"numero":3,"notion":"A","enonce":"Que dit l'ange bon lorsqu'il trouve la maison prête ?","options":["« Que ce soit ainsi le Chabbat prochain »","« Fermez la porte »","Rien","« Quelle misère »"],"points":3},{"numero":4,"notion":"B","enonce":"Que fait-on sans beaux vêtements (262:2) ?","options":["On emprunte au voisin","On reste chez soi","On allonge ses vêtements par honneur","On jeûne"],"points":3},{"numero":5,"notion":"B","enonce":"Quel verset fonde l'honneur des vêtements du Chabbat (Michna Beroura) ?","options":["« Écoute Israël »","« Que la lumière soit »","« Tu ne tueras pas »","« Tu l'honoreras » (Isaïe 58:13)"],"points":3},{"numero":6,"notion":"B","enonce":"Pour qui les vêtements du Chabbat sont-ils portés (Michna Beroura) ?","options":["Pour l'honneur du Chabbat, non pour ceux qui regardent","Pour les voisins","Pour les invités","Pour le rabbin"],"points":3},{"numero":7,"notion":"C","enonce":"À qui compare-t-on l'accueil du Chabbat (262:3) ?","options":["À un marchand","À un roi ou à une fiancée","À un voisin","À un ami"],"points":2},{"numero":8,"notion":"C","enonce":"Que disait Rabbi 'Hanina le vendredi soir ?","options":["« Allons dormir »","« Fermons la boutique »","« Il est tard »","« Venez, sortons à la rencontre du Chabbat, la reine »"],"points":3},{"numero":9,"notion":"C","enonce":"Quand se lave-t-on pour le Chabbat selon le Rema ?","options":["À midi","Près du soir, pour s'habiller aussitôt","Le matin","Le jeudi"],"points":3},{"numero":10,"notion":"C","enonce":"Que recommande la Michna Beroura pour la paix du Chabbat ?","options":["Voyager","Cuisiner beaucoup","Éviter toute dispute, surtout entre mari et femme","Parler fort"],"points":3}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh/cH8aHBJkdgFrHnYCbR0KcBABCHJwYxMdbxppHG0camMeYXZgHHA=";
+const REPONSES_ENCODEES = "Chh/cH8aHRJkdgJrHnYCbR0KcBABCHFwYxMcbxppHm0camAeYXZhHHA=";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -500,7 +500,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -542,7 +546,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -550,7 +554,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `
