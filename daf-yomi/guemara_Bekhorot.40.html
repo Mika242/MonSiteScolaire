@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 40 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 40</h1>
+    <p>Daf 40</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>בְּשׁוּשַׁן הַבִּירָה, אַחַת עַל קֶרֶן מִזְרָחִית צְפוֹנִית וְאַחַת עַל קֶרֶן מִזְרָחִית דְּרוֹמִית, שֶׁעַל קֶרֶן מִזְרָחִית צְפוֹנִית הָיְתָה יְתֵירָה עַל שֶׁל מֹשֶׁה חֲצִי אֶצְבַּע, וְשֶׁעַל קֶרֶן מִזְרָחִית דְּרוֹמִית הָיְתָה יְתֵירָה עָלֶיהָ חֲצִי אֶצְבַּע, נִמְצֵאת יְתֵירָה עַל שֶׁל מֹשֶׁה אֶצְבַּע.</p>
+      <p>וְלָמָה הָיוּ אַחַת גְּדוֹלָה וְאַחַת קְטַנָּה? (כשהיו) [שֶׁהָיוּ] אוּמָּנִין נוֹטְלִין בַּקְּטַנָּה, וּמַחְזִירִין בַּגְּדוֹלָה, שֶׁלֹּא יָבוֹאוּ לִידֵי מְעִילָה.</p>
+      <p>תַּרְתֵּי לְמָה לִי? חֲדָא — דְּכַסְפָּא וְזַהֲבָא, וַחֲדָא — דְּבִנְיָינָא.</p>
+      <p>רַב נַחְמָן בַּר יִצְחָק, וְאִי תֵּימָא רַב הוּנָא בַּר נָתָן, לְאוֹתָהּ שֶׁשָּׁנִינוּ: שֶׁיֵּשׁ בָּשָׂר בֵּין חוּלְיָא לְחוּלְיָא מְלֹא אֶצְבַּע.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> אֵין לוֹ בֵּיצִים, אוֹ אֵין לוֹ אֶלָּא בֵּיצָה אַחַת. רַבִּי יִשְׁמָעֵאל אוֹמֵר: אִם יֵשׁ לוֹ שְׁנֵי כִּיסִין — יֵשׁ לוֹ שְׁתֵּי בֵּיצִים, אֵין לוֹ שְׁנֵי כִּיסִין — אֵין לוֹ אֶלָּא בֵּיצָה אַחַת. רַבִּי עֲקִיבָא אוֹמֵר: מוֹשִׁיבוֹ עַל עַכּוּזוֹ וּמְמַעֵךְ, אִם יֵשׁ בֵּיצָה — סוֹפָהּ לָצֵאת. מַעֲשֶׂה שֶׁמִּיעֵךְ וְלֹא יָצָא, נִשְׁחֲטָה וְנִמְצֵאת דְּבוּקָה בַּכְּסָלִים, וְהִתִּיר רַבִּי עֲקִיבָא וְאָסַר רַבִּי יוֹחָנָן בֶּן נוּרִי.</p>
+      <p><strong><big>גְּמָ׳</big></strong> הַשְׁתָּא אֵין לוֹ אֶלָּא בֵּיצָה אַחַת אָמְרַתְּ הָוֵי מוּמָא, אֵין לוֹ כְּלָל מִיבַּעְיָא? חַסּוֹרֵי מִיחַסְּרָא וְהָכִי קָתָנֵי: אֵין לוֹ שְׁתֵּי בֵּיצִים בִּשְׁתֵּי כִּיסִין אֶלָּא בְּכִיס אֶחָד, אִי נָמֵי שְׁתֵּי כִּיסִין וּבֵיצָה אַחַת — הֲרֵי זֶה מוּם.</p>
+      <p>רַבִּי יִשְׁמָעֵאל אוֹמֵר: יֵשׁ לוֹ שְׁתֵּי כִּיסִים — בְּיָדוּעַ שֶׁיֵּשׁ לוֹ שְׁתֵּי בֵּיצִים, אֵין לוֹ אֶלָּא כִּיס אֶחָד — כְּמִי שֶׁאֵין לוֹ אֶלָּא בֵּיצָה אַחַת דָּמֵי, וַאֲתָא רַבִּי עֲקִיבָא לְמֵימַר: בְּיָדוּעַ לָא אָמְרִינַן, אֶלָּא מוֹשִׁיבוֹ עַל עַכּוּזוֹ וּמְמַעֵךְ, אִם יֵשׁ בֵּיצָה סוֹפוֹ לָצֵאת.</p>
+      <p>וּמַעֲשֶׂה שֶׁמִּיעֵךְ וְלֹא יָצָא וְכוּ׳. תַּנְיָא, אָמַר רַבִּי יוֹסֵי: מַעֲשֶׂה בְּפָירָן שֶׁל בֵּית מְנַחֵם, שֶׁמִּיעֵךְ וְלֹא יָצָאת, וְנִשְׁחֲטָה וְנִמְצֵאת דְּבוּקָה בַּכְּסָלִים, וְהִתִּיר רַבִּי עֲקִיבָא, וְאָסַר רַבִּי יוֹחָנָן בֶּן נוּרִי.</p>
+      <p>אָמַר לוֹ רַבִּי עֲקִיבָא לְרַבִּי יוֹחָנָן בֶּן נוּרִי: עַד מָתַי אַתָּה מְכַלֶּה מָמוֹנָן שֶׁל יִשְׂרָאֵל! אָמַר לוֹ רַבִּי יוֹחָנָן בֶּן נוּרִי לְרַבִּי עֲקִיבָא: עַד מָתַי אַתָּה מַאֲכִיל יִשְׂרָאֵל נְבֵילוֹת! לָאו מִישְׁחָט שַׁחְטֵיהּ?</p>
+      <p>אֶלָּא: טְרֵיפוֹת. לָא אִיסּוּר טְרֵיפוֹת הוּא?! אֶלָּא: עַד מָתַי אַתָּה מַאֲכִיל יִשְׂרָאֵל קָדָשִׁים בַּחוּץ!</p>
+      <p><strong><big>מַתְנִי׳</big></strong> בַּעַל חָמֵשׁ רַגְלַיִם, אוֹ שֶׁאֵין לוֹ אֶלָּא שָׁלֹשׁ, וְשֶׁרַגְלָיו קְלוּטוֹת כְּשֶׁל חֲמוֹר, וְהַשָּׁחוּל וְהַכָּסוּל. אֵיזֶהוּ שָׁחוּל? שֶׁנִּשְׁמְטָה יְרֵיכוֹ. וְכָסוּל? שֶׁאַחַת מִירֵיכוֹתָיו גְּבוֹהוֹת.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אָמַר רַב הוּנָא: לֹא שָׁנוּ אֶלָּא שֶׁחָסֵר וְיָתֵר בַּיָּד, אֲבָל בָּרֶגֶל — טְרֵפָה נָמֵי הָוֵי, דְּכֹל יָתֵיר כְּנָטוּל דָּמֵי.</p>
+      <p>אָמַר רַב פָּפָּא: לָא תֵּימָא דַּעֲגִילָן וְלָא סְדִיקָן, אֶלָּא כֵּיוָן דַּעֲגִילָן, אַף עַל גַּב דִּסְדִיקָן.</p>
+      <p>וְהַשָּׁחוּל וְהַכָּסוּל וְכוּ׳. תָּנוּ רַבָּנַן: אֵיזֶהוּ כָּסוּל וְאֵיזֶהוּ שָׁחוּל? שָׁחוּל — שֶׁנִּשְׁמְטָה יְרֵיכוֹ, כָּסוּל — שֶׁרַגְלוֹ אֶחָד בְּתוֹךְ הַכֶּסֶל, וְרַגְלוֹ אֶחָד עַל גַּבֵּי הַכֶּסֶל. תָּנָא: הַשָּׂרוּעַ וְהַקָּלוּט — שָׂרוּעַ שֶׁנִּשְׁתַּרְבֵּב לוֹ יְרֵיכוֹ, קָלוּט — שֶׁרַגְלָיו קְלוּטוֹת כְּשֶׁל חֲמוֹר וּכְשֶׁל סוּס.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> נִשְׁבַּר עֶצֶם יָדוֹ וְעֶצֶם רַגְלוֹ, אַף עַל פִּי שֶׁאֵינוֹ נִיכָּר. מוּמִין אֵלּוּ מָנָה אִילָא בְּיַבְנֶה, וְהוֹדוּ לוֹ חֲכָמִים.</p>
+      <p>וְעוֹד שְׁלֹשָׁה הוֹסִיף, אָמְרוּ לוֹ: לֹא שָׁמַעְנוּ אֶת אֵלּוּ. שֶׁגַּלְגַּל עֵינוֹ עָגוֹל כְּשֶׁל אָדָם, וּפִיו דּוֹמֶה כְּשֶׁל חֲזִיר, וְשֶׁנִּיטַּל רוֹב הַמְדַבֵּר בִּלְשׁוֹנוֹ. בֵּית דִּין שֶׁל אַחֲרֵיהֶן אָמְרוּ: הֲרֵי זֶה מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אֵינוֹ נִיכָּר, מִי קָא הָוֵי מוּמָא? אָמַר רַב פָּפָּא: אֵינוֹ נִיכָּר מֵחֲמַת עַצְמוֹ, אֲבָל נִיכָּר מֵחֲמַת מְלָאכָה.</p>
+      <p>מוּמִין אֵלּוּ מָנָה וְכוּ׳. לְמֵימְרָא דְּלָאו הַיְינוּ אוֹרְחֵיהּ? וּרְמִינְהוּ: הַמַּפֶּלֶת מִין בְּהֵמָה וְחַיָּה וָעוֹף, בֵּין טְמֵאִין בֵּין טְהוֹרִין, אִם זָכָר תֵּשֵׁב לְזָכָר.</p>
+      <p>אִם נְקֵבָה — תֵּשֵׁב לִנְקֵבָה, אֵינוֹ יָדוּעַ — תֵּשֵׁב לְזָכָר וְלִנְקֵבָה, דִּבְרֵי רַבִּי מֵאִיר.</p>
+      <p>וְאָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: מַאי טַעְמֵיהּ דְּרַבִּי מֵאִיר? הוֹאִיל וְגַלְגַּל עֵינוֹ עָגוֹל כְּשֶׁל אָדָם! אָמַר רַב יוֹסֵף: לָא קַשְׁיָא, הָא בְּאוּכָּמָא, הָא בְּחִיוָּורָא.</p>
+      <p>וּפִיו דּוֹמֶה כְּשֶׁל חֲזִיר. אָמַר רַב פָּפָּא: לָא תֵּימָא דִּשְׁפִיד וּפְרִוס, אֶלָּא כֵּיוָן דִּפְרִוס אַף עַל גַּב דְּלָא שְׁפִיד.</p>
+      <p>וְשֶׁנִּיטַּל רוֹב הַמְדַבֵּר שֶׁבִּלְשׁוֹנוֹ. מַתְנִיתִין מַנִּי? רַבִּי יְהוּדָה הִיא, דְּתַנְיָא: וְאֶת שֶׁנִּיטַּל רוֹב הַלָּשׁוֹן, רַבִּי יְהוּדָה אוֹמֵר: רוֹב הַמְדַבֵּר שֶׁל לְשׁוֹנוֹ.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> וּמַעֲשֶׂה שֶׁהַלְּחִי הַתַּחְתּוֹן עוֹדֵף עַל הָעֶלְיוֹן, וְשָׁאַל רַבָּן גַּמְלִיאֵל לַחֲכָמִים, וְאָמְרוּ: הֲרֵי זֶה מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי תַּנָּא דְּקָתָנֵי ״וּמַעֲשֶׂה״? מִשּׁוּם דִּתְנַן ״פִּיו דּוֹמֶה לַחֲזִיר״, וּפְלִיגִי רַבָּנַן עֲלֵיהּ דְּרַבִּי, וְקָאָמְרִינַן: כִּי פְּלִיגִי רַבָּנַן עֲלֵיהּ דְּרַבִּי בִּשְׂפָתוֹ עֶלְיוֹנָה עוֹדֶפֶת עַל הַתַּחְתּוֹנָה, אֲבָל שֶׁהַתַּחְתּוֹנָה עוֹדֶפֶת עַל הָעֶלְיוֹנָה — הֲרֵי זֶה מוּם.</p>
+      <p>וּמַעֲשֶׂה נָמֵי שֶׁלְּחִי הַתַּחְתּוֹן עוֹדֵף עַל הָעֶלְיוֹן, שָׁאַל רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל לַחֲכָמִים וְאָמְרוּ: הֲרֵי זֶה מוּם.</p>
+      <p>וְהָא גַּבֵּי אָדָם הוּא דִּתְנַן: שְׂפָתוֹ הָעֶלְיוֹנָה עוֹדֶפֶת עַל הַתַּחְתּוֹנָה, אוֹ שֶׁתַּחְתּוֹנָה עוֹדֶפֶת עַל הָעֶלְיוֹנָה — הֲרֵי זֶה מוּם. גַּבֵּי אָדָם הוּא דִּכְתִיב: ״אִישׁ אִישׁ מִזֶּרַע אַהֲרֹן״, אִישׁ שֶׁשָּׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן, אֲבָל בִּבְהֵמָה לָא!</p>
+      <p>אָמַר רַב פָּפָּא: לָא קַשְׁיָא, הָא דְּאִית בַּהּ עֶצֶם, הָא דְּלֵית בַּהּ עֶצֶם.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> אוֹזֶן הַגְּדִי הָיְתָה כְּפוּלָה, אָמְרוּ חֲכָמִים: בִּזְמַן שֶׁהוּא עֶצֶם אֶחָד — מוּם, בִּזְמַן שֶׁאֵין בּוֹ עֶצֶם — אֵינוֹ מוּם. רַבִּי חֲנַנְיָא בֶּן גַּמְלִיאֵל אוֹמֵר: זְנַב הַגְּדִי שֶׁהוּא דּוֹמֶה לְשֶׁל חֲזִיר, וְשֶׁאֵין בָּהּ שְׁלֹשׁ חוּלְיוֹת — הֲרֵי זֶה מוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> תָּנוּ רַבָּנַן: פִּיו בָּלוּם וְרַגְלָיו מְבוּלָּמוֹת, מֵחֲמַת הָרוּחַ — אֵינוֹ מוּם, מֵחֲמַת הָעֶצֶם — הֲרֵי זֶה מוּם. אׇזְנָיו כְּפוּלוֹת, בְּחַסְחֲסוּת אַחַת — הֲרֵי זֶה מוּם, בִּשְׁתֵּי חַסְחֲסֻיוֹת — אֵינוֹ מוּם.</p>
+      <p>רַבָּן גַּמְלִיאֵל אוֹמֵר: זְנַב הַגְּדִי שֶׁהוּא דּוֹמֶה לְשֶׁל חֲזִיר. אָמַר רַב פָּפָּא: לָא תֵּימָא דְּקַטִּינָא, אֶלָּא דִּכְרִיכָא, אַף עַל גַּב דַּאֲלִימָא.</p>
+      <p>אוֹ שֶׁאֵין בָּהּ שָׁלֹשׁ חוּלְיוֹת וְכוּ׳. אָמַר רַב הוּנָא: בַּגְּדִי — שְׁתַּיִם הֲרֵי זֶה מוּם, שָׁלֹשׁ אֵינוֹ מוּם. בַּטָּלֶה — שָׁלֹשׁ הֲרֵי זֶה מוּם, אַרְבַּע אֵינוֹ מוּם. מֵיתִיבִי: בַּגְּדִי — אַחַת הֲרֵי זֶה מוּם, שְׁתַּיִם אֵינוֹ מוּם. בַּטָּלֶה — שְׁתַּיִם הֲרֵי זֶה מוּם, שָׁלֹשׁ אֵינוֹ מוּם. תְּיוּבְתָּא דְרַב הוּנָא.</p>
+      <p>וְרַב הוּנָא, מַתְנִיתִין אַטְעִיתֵיהּ; אִיהוּ סָבַר: מִדְּרֵישָׁא בִּגְדִי — סֵיפָא נָמֵי בִּגְדִי, וְלָא הִיא — רֵישָׁא בִּגְדִי, וְסֵיפָא בְּטָלֶה.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> רַבִּי חֲנִינָא בֶּן אַנְטִיגְנוֹס אוֹמֵר: אֶת שֶׁיַּבֶּלֶת בְּעֵינָיו, וְשֶׁנִּפְגַּם עֶצֶם יָדוֹ וְרַגְלוֹ, וְשֶׁנִּפְרַק עַצְמוֹ שֶׁל פִּיו, עֵינוֹ אַחַת גְּדוֹלָה וְאַחַת קְטַנָּה, אׇזְנוֹ אַחַת גְּדוֹלָה וְאַחַת קְטַנָּה, בַּמַּרְאֶה אֲבָל לֹא בַּמִּדָּה. רַבִּי יְהוּדָה אוֹמֵר: שְׁתֵּי בֵּיצָיו, אַחַת גְּדוֹלָה כִּשְׁתַּיִם שֶׁבַּחֲבֶירְתָּהּ, וְלֹא הוֹדוּ לוֹ חֲכָמִים.</p>
+      <p><strong><big>גְּמָ׳</big></strong> לְמֵימְרָא דְּיַבֶּלֶת הָוֵי מוּמָא? וּרְמִינְהוּ: וְאֵלּוּ שֶׁאֵין שׁוֹחֲטִין עֲלֵיהֶן לֹא בְּמִקְדָּשׁ וְלֹא בַּמְּדִינָה — בַּעַל גָּרָב וּבַעַל יַבֶּלֶת!</p>
+      <p>וְתִסְבְּרָא? הָא כְּתִיבָא ״יַבֶּלֶת״ בְּאוֹרָיְיתָא! אֶלָּא, לָא קַשְׁיָא: הָא — בְּגוּפוֹ, הָא — בְּעֵינוֹ.</p>
+      <p>מִכְּדֵי קְרָא סְתָמָא, מָה לִי בְּגוּפוֹ וּמָה לִי בְּעֵינוֹ? אֶלָּא לָא קַשְׁיָא, הָא דְּאִית בַּהּ עֶצֶם, הָא דְּלֵית בַּהּ עֶצֶם.</p>
+      <p>דִּקְרָא — דְּאִית בַּהּ עֶצֶם, מַתְנִיתִין — דְּלֵית בַּהּ עֶצֶם; בְּעֵינוֹ — הָוֵי מוּמָא, בְּגוּפָא — לָא הָוֵי מוּמָא.</p>
+      <p>וְלֵית לַהּ עֶצֶם בְּגוּפָא פְּסוּלָה? הֲרֵי תִּלְתּוּל בְּעָלְמָא הוּא, דִּתְנַן: רַבִּי אֱלִיעֶזֶר אוֹמֵר: בַּעֲלֵי הַתִּילּוּלִין פְּסוּלִין בָּאָדָם וּכְשֵׁירִין בַּבְּהֵמָה! אֶלָּא, אִידֵּי וְאִידֵּי בְּעֵינוֹ, וְלָא קַשְׁיָא: הָא — בַּשָּׁחוֹר, הָא — בַּלָּבָן.</p>
+      <p>וְהָא אֵין מוּמִין בַּלָּבָן! אֶלָּא: אִידֵּי וְאִידֵּי בַּלָּבָן, וְאָמַר רֵישׁ לָקִישׁ: לָא קַשְׁיָא, הָא — דְּאִית בַּהּ שֵׂעָר, הָא — דְּלֵית בַּהּ שֵׂעָר.</p>
+      <p>עֵינוֹ אַחַת גְּדוֹלָה וְכוּ׳. תָּנָא: גְּדוֹלָה כְּשֶׁל עֵגֶל, קְטַנָּה כְּשֶׁל אַוָּוז.</p>
+      <p>אׇזְנוֹ אַחַת גְּדוֹלָה וְכוּ׳. וְרַבָּנַן עַד כַּמָּה? תַּנְיָא, אֲחֵרִים אוֹמְרִים: אֲפִילּוּ אֵינָהּ לַשְּׁנִיָּה אֶלָּא כְּפוֹל — כְּשֵׁירָה.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> זְנַב הָעֵגֶל — שֶׁאֵינָהּ מַגַּעַת לָעַרְקוֹב, אָמְרוּ חֲכָמִים: כֹּל מַרְבִּית עֲגָלִים כֵּן, כׇּל זְמַן שֶׁיְּהוּ מְגַדְּלִין — הֵן נִמְתָּחוֹת. אֵיזֶהוּ עַרְקוֹב שֶׁאָמְרוּ? רַבִּי חֲנִינָא בֶּן אַנְטִיגְנוֹס אוֹמֵר: בְּעַרְקוֹב שֶׁבְּאֶמְצַע הַיָּרֵךְ.</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Daf 40a</b></p>
+      <p><b>Fin de la michna sur les coudées (suite de 39b).</b> Dans la chambre de Shoushan la capitale, située au-dessus de la porte orientale du Mont du Temple, il y avait deux coudées : une au coin nord-est, plus longue que la coudée de Moïse (six paumes) d'un demi-doigt, et une au coin sud-est, plus longue encore d'un demi-doigt ; on la trouve donc plus longue que celle de Moïse d'un doigt entier. Pourquoi deux mesures, une grande et une petite ? Pour que les artisans reçoivent leur paiement selon la petite et rendent leur travail selon la grande, afin de ne pas en venir à détourner des biens consacrés. Le doigt de la michna est celui de la baraïta : un quart de paume d'un homme moyen. La guemara demande : pourquoi deux grandes coudées ? L'une, la plus courte, servait à mesurer l'argent et l'or ; l'autre, plus longue d'un doigt entier, à la construction en bois et en pierre. Rav Na'hman bar Yitsh'ak (ou Rav Houna bar Natan) : la baraïta sur le doigt renvoie à ce que nous avons appris dans la michna sur les défauts : un doigt entier de chair entre une articulation et une autre.</p>
+      <p><b>Michna 6:6.</b> Le premier-né sans testicules ou avec un seul testicule peut être abattu. Rabbi Yichmaël : s'il a deux sacs, on sait qu'il a deux testicules ; sinon, un seul. Rabbi Akiva : on fait asseoir l'animal sur son arrière-train et on presse le sac ; s'il y a un testicule, il finira par sortir. Un jour on pressa le sac sans que le testicule sorte ; on abattit l'animal et on trouva le testicule attaché aux reins. Rabbi Akiva permit de manger sa chair et Rabbi Yo'hanan ben Nouri l'interdit.</p>
+      <p><b>Gemara.</b> Si avoir un seul testicule est un défaut, faut-il dire que l'absence totale en est un ? La michna est lacunaire : elle enseigne que si l'animal n'a pas deux testicules dans deux sacs, mais dans un seul sac, ou a deux sacs et un seul testicule, c'est un défaut. Rabbi Yichmaël : s'il a deux sacs, on sait qu'il a deux testicules et il n'est pas défectueux ; avec un seul sac, il est considéré comme n'ayant qu'un testicule, même s'il en a deux. Rabbi Akiva : on ne dit pas « c'est connu » ; on fait asseoir l'animal et on presse le sac ; si le testicule ne sort pas, c'est un défaut. Selon une baraïta de Rabbi Yossi, le cas arriva à Piran de Beit Menaḥem : on pressa le sac, l'autre testicule ne sortit pas, on abattit l'animal et on trouva le testicule attaché aux reins. Rabbi Akiva dit à Rabbi Yo'hanan ben Nouri : « Jusqu'à quand mangeras-tu les biens d'Israël ? » Il répondit : « Jusqu'à quand feras-tu manger aux Juifs des animaux morts non abattus ? » La guemara demande : n'ont-ils pas été abattus ? Il visait les <i>treifot</i> ; mais ce n'est pas un interdit de <i>treifa</i> : il dit en réalité « jusqu'à quand feras-tu manger des sacrifices hors du Parvis ? », car pour lui il n'y a pas de défaut et l'animal reste un sacrifice sans défaut.</p>
+      <p><b>Michna 6:7.</b> Un animal à cinq pattes, ou à trois, ou aux sabots fermés comme ceux d'un âne, le <i>chaoul</i> et le <i>kasoul</i> peuvent être abattus. Le <i>chaoul</i> : hanche déboîtée. Le <i>kasoul</i> : une hanche plus haute que l'autre.</p>
+      <p><b>Gemara.</b> Rav Houna : on n'a enseigné cela que pour une patte de devant en plus ou en moins ; pour une patte de derrière, l'animal est même <i>treifa</i>, car tout membre en trop est comme un membre enlevé. Rav Papa : ne dis pas que les sabots comptent seulement s'ils sont ronds et pas du tout fendus ; quand ils sont ronds, même fendus, c'est un défaut. Une baraïta : le <i>chaoul</i> est la hanche déboîtée ; le <i>kasoul</i> est celui dont une patte est dans le <i>kesal</i> (à sa place) et l'autre, déboîtée, au-dessus du <i>kesal</i>. Le <i>saroua</i> de la Torah est celui dont une cuisse est plus longue que l'autre ; le <i>kalout</i> a les sabots fermés comme ceux de l'âne et du cheval.</p>
+      <p><b>Michna 6:8.</b> Autres défauts : l'os de la patte de devant ou de derrière cassé, même s'il n'est pas visible. Ila, expert des défauts des premiers-nés, les énuméra à Yavné et les Sages s'en remirent à lui. Il en ajouta trois ; les Sages dirent : nous ne les avons pas entendus. Ila ajouta : un œil rond comme celui d'un homme, une bouche semblable à celle d'un porc, ou la majeure partie de la langue (celle qui sert à parler) enlevée. Le tribunal suivant dit de chacun : c'est un défaut.</p>
+      <p><b>Gemara.</b> Si ce n'est pas visible, est-ce un défaut ? Rav Papa : ce n'est pas visible en soi, mais l'est par son travail, c'est-à-dire la façon de marcher.</p>
+      <p><b>Daf 40b</b></p>
+      <p><b>L'œil rond.</b> N'est-il pas dans l'ordre des choses qu'un animal ait l'œil rond ? Objection de la michna de Niddah 21a : la femme qui avorte d'un animal domestique, d'un animal sauvage ou d'un oiseau, pur ou impur : si c'est un mâle, elle observe les jours du garçon (sept jours d'impureté) ; une femelle, ceux de la fille (quatorze jours d'impureté et soixante-six de pureté) ; si le sexe est inconnu, elle observe les rigueurs de l'un et de l'autre : c'est l'avis de Rabbi Meir. Rabba bar bar 'Hana au nom de Rabbi Yo'hanan : la raison de Rabbi Meir est que l'œil de ces animaux est rond comme celui d'un homme. Rav Yossef résout : il n'y a pas de difficulté : l'une parle du noir de l'œil, l'autre du blanc.</p>
+      <p><b>La bouche et la langue.</b> « Ou une bouche semblable à celle d'un porc » : Rav Papa : ne dis pas que la bouche doit être pointue et la lèvre supérieure recouvrante exactement comme celle du porc ; quand elle recouvre, même sans être pointue, c'est un défaut. « Ou la majeure partie de la langue » : cela suit Rabbi Yehouda, selon la baraïta : la majeure partie de la langue, c'est la majeure partie de la partie qui sert à la parole.</p>
+      <p><b>Michna 6:9.</b> Un cas où la mâchoire inférieure dépassait la supérieure : Rabban Gamliel demanda aux Sages, qui dirent : c'est un défaut. L'oreille du chevreau qui était double : quand c'est un seul os, défaut ; sinon, non. Rabbi 'Hananya ben Gamliel : la queue du chevreau semblable à celle d'un porc, ou si courte qu'elle n'a pas trois articulations, est un défaut.</p>
+      <p><b>Gemara.</b> À quoi se rapporte « il y eut un cas » ? Puisqu'on a appris la bouche de porc, où les Rabbanan contestent Ila, on dit que leur désaccord concerne la lèvre supérieure qui recouvre l'inférieure ; mais pour la mâchoire inférieure qui dépasse, tous conviennent que c'est un défaut. Une version rapporte aussi un cas devant Rabban Chimon ben Gamliel. Objection : la michna de Bekhorot 44a, sur l'homme, dit que la lèvre supérieure ou inférieure qui dépasse est un défaut, d'après « tout homme de la postérité d'Aaron » (Lévitique 22:4) qui exige un homme semblable à la semence d'Aaron ; pas pour un animal. Rav Papa : ici, la mâchoire inférieure contient un os plus long ; là, elle n'en contient pas.</p>
+      <p><b>Oreilles, bouche et queue.</b> Baraïta : si la bouche est resserrée, ou les pattes enflées, par le vent, ce n'est pas un défaut ; par l'os, c'est un défaut. Oreilles doubles : un cartilage, défaut ; deux cartilages, non. Rav Papa : pour la queue semblable à celle d'un porc, ne dis pas qu'elle doit être mince ; ronde, même épaisse, c'est un défaut. Rav Houna : chevreau, deux articulations, défaut ; trois, non ; agneau, trois, défaut ; quatre, non. Objection d'une baraïta : chevreau, une articulation, défaut ; deux, non ; agneau, deux, défaut ; trois, non. C'est une réfutation de Rav Houna. La michna l'avait trompé : il pensait que la fin parlait aussi du chevreau, alors que la première partie parle du chevreau et la seconde de l'agneau.</p>
+      <p><b>Michna 6:10.</b> Rabbi 'Hanina ben Antigonos : sont défectueux l'animal à la verrue dans les yeux, à l'os de la patte abîmé, à l'os de la bouche déboîté, à un œil grand et un petit ou à une oreille grande et une petite, quand cela se voit, mais pas quand on ne le sait qu'en mesurant. Rabbi Yehouda : un testicule aussi gros que deux de l'autre ; mais les Sages n'admirent pas son avis.</p>
+      <p><b>La verrue.</b> Est-ce un défaut ? Objection de la michna de Bekhorot 41a (les verrues ne permettent pas l'abattage). Mais la verrue est écrite dans la Torah ! Donc : l'une parle du corps, l'autre de l'œil. Mais le verset est général : quelle différence entre le corps et l'œil ? Autre réponse : avec ou sans os. Si elle est sans os sur le corps, l'animal est-il invalide ? Ce n'est qu'une chair qui pend (Rabbi Éliézer : invalide un homme, apte l'animal). Donc les deux parlent de l'œil : l'une du noir, l'autre du blanc. Mais « il n'y a pas de défaut dans le blanc » ! Donc les deux sont dans le blanc, et Reish Lakish dit : l'une parle d'une verrue avec poil (inapte à l'autel), l'autre sans poil ; la michna ici parle de la pupille.</p>
+      <p><b>Grand et petit.</b> Baraïta : grand comme l'œil d'un veau, petit comme celui d'une oie. Pour les testicules selon les Rabbanan : « Aḥerim » disent : même si le second ne dépasse pas une fève, l'animal est apte.</p>
+      <p><b>Michna 6:11.</b> La queue du veau qui n'atteint pas l'<i>arkov</i> : les Sages dirent que c'est un défaut, car toute la croissance des veaux est ainsi : tant qu'ils grandissent, leur queue s'étend. Quelle articulation ? Rabbi 'Hanina ben Antigonos : celle du milieu de la cuisse.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>in</b> the chamber of <b>Shushan the capital,</b> which was located above the eastern gate of the Temple Mount, <b>one in the northeast corner and one in the southeast corner.</b> The one <b>that was in the northeast corner was longer than</b> the cubit used <b>by Moses</b> in the building of the Tabernacle, which was six handbreadths, by <b>half a fingerbreadth,</b> and the one <b>that was in the southeast corner was longer than</b> the other one by another <b>half a fingerbreadth.</b> One therefore <b>finds it longer than Moses’</b> cubit by a full <b>fingerbreadth.</b></p>
+      <p>The mishna continues: <b>And why did</b> the Sages <b>say</b> that there should be two measures of a cubit, <b>one large and one small?</b> It was <b>so that the artisans</b> who were working in the Temple <b>would take</b> payment according the amount of work they did, as measured <b>by the small</b> cubit, <b>and return</b> it to the Temple through their work, as measured <b>by the large</b> cubit, <b>so they would not come to misuse consecrated property.</b> If they would accept any payment that they did not deserve, they would be misusing consecrated property. It was with regard to the fingerbreadth mentioned in this mishna that the <i>baraita</i> cited above teaches that it is one-fourth of a handbreadth of any average person.</p>
+      <p>The Gemara asks: <b>Why do I</b> need <b>two</b> large cubits? The Gemara answers: <b>One,</b> the shorter of the two, was used <b>to</b> measure <b>silver and gold.</b> Since silver and gold were valuable, the difference between the two measurements was set at only half a fingerbreadth, so that the artisans would not suffer too great a loss. <b>And</b> the other <b>one,</b> which was longer than Moses’ cubit by a full fingerbreadth, was used <b>in</b> the <b>construction</b> of wood and stone structures.</p>
+      <p><b>Rav Naḥman bar Yitzḥak, and some say Rav Huna bar Natan,</b> said: This <i>baraita</i>, which states that a fingerbreadth is one-fourth of a handbreadth of any average person, is referring <b>to that which we learned</b> in the mishna here with regard to the blemishes of a firstborn animal: In a case <b>where there is a full fingerbreadth of flesh between one joint and another joint.</b> That measure of a full fingerbreadth is one-fourth of a handbreadth.</p>
+      <p><strong>MISHNA:</strong> The firstborn animal may be slaughtered if <b>it has no testicles or</b> if <b>it has only one testicle. Rabbi Yishmael says: If</b> the animal <b>has two</b> scrotal <b>sacs,</b> it can be assumed that <b>it has two testicles;</b> if the animal <b>does not have two</b> scrotal <b>sacs,</b> it can be assumed that <b>it has only one testicle. Rabbi Akiva says:</b> The matter can be ascertained: <b>One seats</b> the animal <b>on its rump and mashes</b> the sac; <b>if there is a testicle, ultimately</b> it is going <b>to emerge.</b> There was <b>an incident where one mashed</b> the sac <b>and</b> the testicle <b>did not emerge.</b> Then, the animal <b>was slaughtered and</b> the testicle <b>was discovered attached to the loins. And Rabbi Akiva permitted</b> the consumption of its flesh, as the testicle had not previously emerged, <b>and Rabbi Yoḥanan ben Nuri prohibited</b> its consumption.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that a firstborn may be slaughtered if it has no testicles or if it has only one testicle. The Gemara asks: <b>Now</b> that with regard to a case where <b>it has only one testicle you said</b> that <b>it is a blemish, is</b> it <b>necessary</b> to state the same in a case where <b>it has no</b> testicles <b>at all?</b> The Gemara answers that the mishna <b>is incomplete and this</b> is what <b>it is teaching:</b> If <b>it does not have two testicles in two</b> scrotal <b>sacs, but in one sac,</b> or <b>alternatively,</b> if it has <b>two sacs and one testicle, it is a blemish.</b></p>
+      <p>The Gemara continues this version of the mishna. <b>Rabbi Yishmael says:</b> If the animal <b>has two</b> scrotal <b>sacs, it is known that it has two testicles,</b> and therefore it is not blemished and may not be slaughtered; if the animal <b>has only one</b> scrotal <b>sac it is considered like one that has only one testicle,</b> even if it actually has two testicles. <b>And Rabbi Akiva comes to say:</b> If it has two sacs, <b>we do not say</b> the claim of: <b>It is known. Rather, one seats</b> the animal <b>on its rump and mashes</b> the sac; <b>if there is a testicle, ultimately</b> it is going <b>to emerge.</b> If the testicle does not emerge, clearly it has only one testicle and is blemished.</p>
+      <p>§ The mishna teaches: <b>And</b> there was <b>an incident where one mashed</b> the sac <b>and</b> the testicle <b>did not emerge.</b> Then the animal was slaughtered and the testicle was discovered attached to the loins. And Rabbi Akiva permitted the consumption of its flesh, and Rabbi Yoḥanan ben Nuri prohibited its consumption. The Gemara elaborates on this incident: <b>It is taught</b> in a <i>baraita</i> that <b>Rabbi Yosei said:</b> There was <b>an incident in Piran of Beit Menaḥem where</b> a firstborn animal apparently had only one testicle, and someone <b>mashed</b> its sac <b>and</b> the other testicle <b>did not emerge. And</b> the animal <b>was slaughtered and</b> the testicle <b>was discovered attached to the loins. And Rabbi Akiva permitted</b> its consumption, <b>and Rabbi Yoḥanan ben Nuri prohibited</b> its consumption.</p>
+      <p>The <i>baraita</i> continues: <b>Rabbi Akiva said to Rabbi Yoḥanan ben Nuri: Until when will you consume the property of the Jewish people</b> by prohibiting animals in such cases? <b>Rabbi Yoḥanan ben Nuri said to Rabbi Akiva: Until when will you feed the Jewish people</b> unslaughtered animal <b>carcasses?</b> The Gemara asks: How could Rabbi Yoḥanan ben Nuri use the term animal carcasses here? After all, <b>aren’t they</b> properly <b>slaughtered?</b></p>
+      <p>The Gemara responds: <b>Rather,</b> Yoḥanan ben Nuri actually referred to <b>animals with a wound that will cause them to die within twelve months [<i>tereifot</i>].</b> The Gemara challenges: But <b>it is not a prohibition of <i>tereifot</i>. Rather,</b> he said: <b>Until when will you feed the Jewish people sacrificial</b> animals <b>outside</b> the Temple courtyard? According to Rabbi Yoḥanan ben Nuri this is not a blemish, and therefore the animal is an unblemished offering, which may not be eaten outside the Temple.</p>
+      <p><strong>MISHNA:</strong> An animal <b>with five legs, or</b> one <b>that has only three, or</b> one <b>whose</b> hooves on its <b>legs were closed like</b> those <b>of a donkey</b> and not split, <b>or the <i>shaḥul</i>, or the <i>kasul</i></b> may be slaughtered. <b>What is a <i>shaḥul</i>?</b> It is an animal with <b>a thighbone that was dislocated. And</b> what is <b>a <i>kasul</i>?</b> It is an animal whose build is asymmetrical in <b>that one of its thighs is higher</b> than the other.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that an animal with five legs or three legs is blemished. <b>Rav Huna says:</b> The Sages <b>taught</b> this <b>only</b> in a case <b>where</b> the animal <b>was missing or had an additional foreleg. But</b> if it was missing or had <b>an</b> additional <b>hind leg,</b> not only is it blemished, but <b>it is also a <i>tereifa</i>.</b> The reason is <b>that any extra</b> limb <b>is like a removed</b> limb, and an animal whose hind leg was removed is a <i>tereifa</i>.</p>
+      <p>With regard to the ruling of the mishna that an animal whose hooves were closed like those of a donkey is blemished, <b>Rav Pappa says: Do not say</b> that it is a blemish only in a case <b>where</b> its hooves are entirely like those of a donkey, i.e., <b>round and not split</b> at all. <b>Rather, when they are round, even though they are</b> also <b>split,</b> it is still considered a blemish.</p>
+      <p>The mishna teaches: <b>Or the <i>shaḥul</i>, or the <i>kasul</i></b> may be slaughtered. In this regard, <b>the Sages taught: What is</b> the <b><i>kasul</i> and what is</b> the <b><i>shaḥul</i>?</b> The <b><i>shaḥul</i></b> is an animal with <b>a thighbone that was dislocated.</b> The <b><i>kasul</i></b> is an animal that is irregular in <b>that one of its legs is inside the loin,</b> i.e., in its proper place, <b>and</b> in <b>one of its legs</b> the bone is dislocated and is <b>above the loin.</b> It is <b>taught</b> in a <i>baraita</i>: What are <b>the <i>saru’a</i> and <i>kalut</i></b> mentioned in the Torah (see Leviticus 22:23) among the animals disqualified from being sacrificed? The <b><i>saru’a</i></b> is one <b>whose thigh is longer</b> than the other; the <b><i>kalut</i></b> is one <b>whose</b> hooves on <b>its legs are closed like</b> those <b>of a donkey and like</b> those <b>of a horse.</b></p>
+      <p><strong>MISHNA:</strong> Additional blemishes that permit the slaughter of the firstborn include those where <b>the bone of its foreleg or the bone of its hind leg was broken, even though it is not conspicuous.</b> With regard to <b>these blemishes</b> listed in this chapter, <b>Ila,</b> who was expert in blemishes of the firstborn, <b>enumerated</b> them <b>in Yavne, and the Sages deferred to his</b> expertise.</p>
+      <p><b>And</b> Ila <b>added three additional</b> blemishes, and the Sages <b>said to him: We did not hear</b> about <b>those.</b> Ila added: An animal <b>whose eye is round like</b> that <b>of a person, or whose mouth is similar to</b> that <b>of a pig, or where most of</b> the segment of <b>its tongue</b> corresponding to the segment that facilitates <b>speech</b> in the tongue of a person <b>was removed. The court that followed them said</b> with regard to each of those three blemishes: <b>That is a blemish</b> that enables the slaughter of the firstborn.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that if the bone of its foreleg or the bone of its hind leg was broken it is considered a blemish, despite the fact that it is not conspicuous. The Gemara asks: If <b>it is not conspicuous, is it a blemish?</b> A blemish must be on an exposed part of the body (see 37b). <b>Rav Pappa says:</b> The mishna means that <b>it is not conspicuous on its own account,</b> i.e., the shape of the leg is no different from the usual. <b>But it is conspicuous on account of</b> its <b>work,</b> i.e., the manner in which the animal walks.</p>
+      <p>§ The mishna teaches that with regard to <b>these blemishes</b> listed in this chapter, Ila <b>enumerated</b> them in Yavne, and he added three more, including an animal whose eye is round like that of a person. The Gemara asks: Is this <b>to say that it is not the manner</b> of animals to have eyes of this kind? <b>And</b> one can <b>raise a contradiction</b> from a mishna (<i>Nidda</i> 21a): With regard to a woman <b>who miscarries</b> a fetus in the form of <b>a type of domesticated animal, undomesticated animal, or bird, whether it is a non-kosher</b> animal <b>or whether it is a kosher</b> animal, <b>if it is male,</b> the woman <b>observes</b> the periods of impurity, i.e., seven days, and purity, i.e., thirty-three days, established in the Torah <b>for</b> a woman who gives birth to <b>a male.</b></p>
+      <p><b>If</b> it is <b>female,</b> the woman <b>observes</b> the periods of impurity, i.e., fourteen days, and purity, i.e., sixty-six days, established in the Torah <b>for</b> a woman who gives birth to <b>a female.</b> If its sex <b>is unknown,</b> the woman <b>observes</b> the more severe restrictions from the case of the birth <b>of a male and</b> the more severe restrictions from the case of the birth <b>of a female:</b> She is impure for fourteen days like a woman who gave birth to a female, but blood that she sees thereafter is pure until only forty days after birth, like a woman who gave birth to a male. This is <b>the statement of Rabbi Meir.</b></p>
+      <p><b>And Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: What is the reason of Rabbi Meir? Since the eye</b> of these animals <b>is round like</b> that <b>of a person,</b> a woman who miscarries a fetus of this kind is impure. <b>Rav Yosef said</b> in resolution of this apparent contradiction: It is <b>not difficult; this</b> is referring <b>to the black</b> portion of the eye, whereas <b>that</b> is referring <b>to the white</b> portion of the eye.</p>
+      <p>The mishna teaches: <b>Or its mouth is similar to</b> that <b>of a pig. Rav Pappa says: Do not say</b> that this is referring only to a case <b>where</b> the mouth is <b>pointed and</b> the upper lip <b>overlaps</b> the bottom lip, exactly like that of a pig. <b>Rather, when it overlaps, even though it is not pointed,</b> this is a blemish.</p>
+      <p>The mishna teaches: <b>Or that most of</b> the segment of <b>its tongue</b> corresponding to the segment that facilitates <b>speech</b> in the tongue of a person <b>was removed.</b> The Gemara asks: <b>Whose</b> opinion is expressed in <b>the mishna? It is</b> the opinion of <b>Rabbi Yehuda, as it is taught</b> in a <i>baraita</i>: <b>Or that most of its tongue was removed; Rabbi Yehuda says: Most of</b> the segment of <b>its tongue</b> corresponding to the segment that facilitates <b>speech</b> in the tongue of a person must be removed to be considered a blemish.</p>
+      <p><strong>MISHNA:</strong> <b>And</b> there was <b>an incident where the lower jaw</b> of the firstborn <b>protruded beyond the upper</b> jaw, <b>and Rabban Gamliel asked the Sages</b> for a ruling, <b>and they said: That is a blemish</b> that enables the slaughter of the firstborn.</p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>What</b> is the ruling <b>taught</b> in the previous mishna <b>that</b> the <i>tanna</i> is referring to when he <b>teaches</b> here: <b>And</b> there was <b>an incident?</b> The Gemara answers: <b>Since we learned</b> in the list of blemishes in the previous mishna the case where <b>its mouth is similar to</b> that <b>of a pig, and the Rabbis disagree with Rabbi</b> Ila in that case, <b>we say</b> here that <b>when the Rabbis disagree with Rabbi</b> Ila, it is only in a case <b>where its upper lip overlaps the lower</b> lip. <b>But</b> in a case <b>where the lower</b> jaw <b>protrudes beyond the upper</b> jaw, everyone agrees that <b>this is a blemish.</b></p>
+      <p>The Gemara continues this version of the mishna: <b>And</b> there was <b>also an incident where the lower jaw</b> of the firstborn <b>protruded beyond the upper</b> jaw, and <b>Rabban Shimon ben Gamliel asked the Sages</b> for a ruling, <b>and they said: That is a blemish</b> that enables the slaughter of the firstborn.</p>
+      <p>The Gemara challenges: <b>But</b> it is <b>with regard to</b> the blemishes of <b>a person that we learned</b> in a mishna (44a): If <b>his upper lip protrudes beyond the lower</b> lip <b>or</b> his <b>lower</b> lip <b>protrudes beyond the upper</b> lip, <b>that is a blemish.</b> And <b>it is</b> only <b>with regard to a person that it is written: “Whatever man of the seed of Aaron”</b> (Leviticus 22:4), which teaches that in order to be fit for the Temple service a priest must be <b>a man who is equal to the seed of Aaron,</b> i.e., he has an ordinary appearance like other priests. <b>But</b> this requirement is <b>not</b> stated <b>with regard to an animal,</b> and therefore an animal should not be considered blemished if its lower lip protrudes beyond the upper lip.</p>
+      <p><b>Rav Pappa said</b> in response: That is <b>not difficult; this</b> mishna is referring to a case <b>where</b> the lower jaw <b>contains a bone</b> that is longer than the upper jaw, in which case it is a blemish even for an animal, whereas <b>that</b> mishna is referring to a case <b>where</b> the lower jaw <b>does not contain a bone,</b> and therefore it is a blemish only in the case of a person.</p>
+      <p><strong>MISHNA:</strong> With regard to <b>the ear of the kid</b> that <b>was doubled</b> and appeared like two ears, <b>the Sages said: When</b> the additional ear <b>is one bone,</b> i.e., it has its own cartilage, it is <b>a blemish; when it does not have</b> its own <b>bone it is not a blemish. Rabbi Ḥananya ben Gamliel says:</b> In the case of <b>the tail of a kid that is similar to</b> that <b>of a pig or</b> one that is so short <b>that it does not have three joints, that is a blemish.</b></p>
+      <p><strong>GEMARA:</strong> <b>The Sages taught:</b> In a case where <b>the mouth</b> of a firstborn animal is <b>swollen, and</b> likewise, if <b>its legs are swollen,</b> the following distinction applies: If it is swollen <b>due to the wind,</b> i.e., it simply swelled up, <b>it is not a blemish.</b> If it is swollen <b>due to</b> a particularly large <b>bone, this is a blemish.</b> If <b>its ears are doubled,</b> in a case <b>where</b> it has <b>one cartilage, this is a blemish;</b> in a case <b>where</b> it has <b>two cartilages, this is not a blemish.</b></p>
+      <p>§ The mishna teaches that <b>Rabban Gamliel says:</b> With regard to <b>the tail of a kid that is similar to</b> that <b>of a pig,</b> that is a blemish. <b>Rav Pappa says: Do not say</b> that it is a blemish only <b>where</b> its tail is <b>thin</b> like that of a pig; <b>rather,</b> if it is <b>round,</b> i.e., curly like a pig’s tail, <b>even though it is thick,</b> like the tail of a goat, this is considered a blemish.</p>
+      <p>§ The mishna stated: <b>Or</b> if the tail of a kid is so short <b>that it does not have three joints,</b> that is a blemish. <b>Rav Huna says: In</b> the case of the tail of <b>a kid,</b> if it has <b>two</b> joints, <b>that is a blemish;</b> if it has <b>three</b> joints, <b>it is not a blemish. With regard to a lamb,</b> if it has <b>three</b> joints, <b>that is a blemish;</b> if it has <b>four</b> joints, <b>it is not a blemish.</b> The Gemara <b>raises an objection</b> from a <i>baraita</i>: <b>In</b> the case of <b>a kid,</b> if its tail has <b>one</b> joint, <b>that is a blemish;</b> if it has <b>two</b> joints, <b>it is not a blemish. With regard to a lamb,</b> if it has <b>two</b> joints, <b>that is a blemish;</b> if it has <b>three</b> joints, <b>it is not a blemish.</b> The Gemara concludes: This is <b>a conclusive refutation of</b> the opinion of <b>Rav Huna.</b></p>
+      <p>The Gemara comments: <b>And Rav Huna</b> issued his statement because <b>the mishna misled him. He thought</b> that <b>from</b> the fact <b>that the first clause</b> is referring <b>to a kid,</b> whose tail is similar to that of a pig, it can be inferred that <b>the latter clause,</b> with its mention of three joints, is <b>also</b> referring <b>to a kid. But it is not so.</b> Rather, <b>the first clause</b> is referring <b>to a kid, but the latter clause</b> is referring <b>to a lamb,</b> as explained in the <i>baraita</i>.</p>
+      <p><strong>MISHNA:</strong> <b>Rabbi Ḥanina ben Antigonus says</b> that these are blemished animals: One <b>that has a wart in its eyes; and</b> one <b>where the bone of its foreleg or hind leg was damaged; and</b> one <b>where the bone of its mouth,</b> i.e., its jaw, <b>was dislocated;</b> and an animal with <b>one of its eyes large and one small,</b> or <b>one of its ears large and one small</b> where the difference in size is detectable <b>by sight, but not</b> if it is detectable only <b>by being measured. Rabbi Yehuda says:</b> An animal is blemished if with regard to <b>its two testicles, one is as large as two of the other, but the Rabbis did not agree with his</b> opinion.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that if an animal has a wart in its eyes, it is blemished. The Gemara asks: Is this <b>to say that a wart is</b> considered <b>a blemish? And</b> one can <b>raise a contradiction</b> from the mishna (41a): <b>And these</b> are the blemishes <b>that one does not slaughter</b> the firstborn <b>due to them, neither in the Temple nor in</b> the rest of <b>the country,</b> as these are not considered full-fledged blemishes…an animal <b>with boils</b> that are moist inside and out, <b>and</b> one <b>with warts.</b></p>
+      <p>The Gemara responds: <b>And</b> how can <b>you understand</b> that a wart is not a blemish? After all, <b>a wart is written in the Torah</b> in its list of blemishes (see Leviticus 22:22). <b>Rather,</b> it is <b>not difficult,</b> as <b>that</b> mishna, which states that a wart is not a full-fledged blemish, is referring to a blemish <b>on</b> the animal’s <b>body,</b> whereas <b>this</b> mention of a wart in the Torah and the mishna here is referring to a wart <b>in its eye.</b></p>
+      <p>The Gemara asks: <b>Now</b> consider that <b>the verse</b> is written in <b>an unspecified</b> manner. <b>What</b> difference is it <b>to me</b> if the wart is <b>on its body, and what</b> difference is it <b>to me</b> if the wart is <b>in its eye?</b> How is this distinction derived from the verse? The Gemara suggests an alternative explanation: <b>Rather,</b> it is <b>not difficult,</b> as <b>this</b> is referring to a wart <b>that has a bone,</b> and <b>that</b> is referring to a wart <b>that does not have a bone.</b></p>
+      <p>The Gemara elaborates: The wart mentioned <b>in the verse</b> and the mishna here is one <b>that has a bone,</b> whereas the wart addressed by <b>the mishna</b> there is one <b>that does not have a bone.</b> Consequently, if the wart is <b>in its eye, it is a blemish,</b> as stated in the verse and the mishna here, but if it is <b>on</b> its <b>body, it is not a blemish,</b> although the animal is disqualified from being sacrificed, in accordance with the ruling of the mishna there.</p>
+      <p>The Gemara asks: <b>And</b> with regard to a wart that <b>does not have a bone</b> and is <b>on the body,</b> is the animal <b>disqualified</b> from being sacrificed? <b>It is merely hanging</b> flesh, <b>as we learned</b> in a mishna (45b) that <b>Rabbi Eliezer says:</b> With regard to those <b>with</b> flesh or skin that <b>hangs</b> from their body, such a blemish <b>disqualifies a person, but with regard to</b> such <b>an animal,</b> it is <b>fit. Rather,</b> both <b>this</b> mishna here <b>and that</b> mishna there are referring to a wart <b>in the</b> animal’s <b>eye, and</b> it is <b>not difficult,</b> as <b>this</b> mishna is referring to a wart <b>in the black</b> of the eye, the pupil, whereas <b>that</b> mishna is referring to a wart <b>in the white</b> of the eye.</p>
+      <p>The Gemara asks: <b>But</b> it has been established that <b>there are no blemishes in the white</b> part of the eye, which indicates that the animal is not even disqualified from being sacrificed on the altar. <b>Rather,</b> both <b>this</b> statement that there are no blemishes in the white of the eye <b>and that</b> ruling of the mishna that a wart disqualifies the animal from being sacrificed are referring to a wart <b>in the white</b> part of the eye. <b>And Reish Lakish says:</b> It is <b>not difficult; this</b> is referring to a wart <b>that has a hair,</b> and therefore the animal is unfit for the altar, whereas <b>that</b> statement is referring to a case <b>where</b> the wart <b>does not have a hair.</b> As for the mishna here, which rules that a wart is a full-fledged blemish, it is referring to a wart in the pupil of the eye, as explained.</p>
+      <p>§ The mishna teaches with regard to an animal where <b>one of its eyes</b> is <b>large</b> and one is small that this is a blemish. In this regard, it is <b>taught</b> in a <i>baraita</i>: When the mishna states the term <b>large,</b> it means the eye is as large <b>as</b> the eye <b>of a calf,</b> and when it states the term <b>small,</b> it means it is as small <b>as</b> that of <b>a goose.</b></p>
+      <p>The mishna teaches: Or <b>one of its ears</b> is <b>large</b> and one is small, which is detectable by sight, but not if it is detectable only by being measured. Rabbi Yehuda says: An animal is blemished if with regard to its two testicles, one is as large as two of the other, but the Rabbis did not agree with his opinion. The Gemara asks: <b>And</b> according to <b>the Rabbis, how large</b> can the difference between the two testicles be without this discrepancy being considered a blemish? The Gemara answers that it <b>is taught</b> in a <i>baraita</i> that <b><i>Aḥerim</i> say: Even</b> if <b>the second,</b> smaller testicle is <b>no</b> bigger <b>than a bean,</b> the animal <b>is fit.</b></p>
+      <p><strong>MISHNA:</strong> In the case of <b>the tail of a calf that does not reach the leg joint [<i>la’arkov</i>], the Sages said:</b> It is a blemish, because <b>all growth of calves</b> is in <b>this</b> manner:<b>As long as they grow,</b> their tails <b>are extended</b> beneath the leg joint. <b>Which is the leg joint</b> about <b>which</b> the Sages <b>spoke? Rabbi Ḥanina ben Antigonus says:</b> They are referring <b>to</b> the <b>leg joint that is in the middle of the thigh.</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf (<b>Bekhorot 40</b>, chapitre 6) achève la michna sur les coudées de Shoushan, puis commente les michnayot 6:6 à 6:11 sur les défauts du premier-né.</p>
+
+<h4>1. Les deux coudées de Shoushan</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Mesure</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Usage</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Coudée de Moïse</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Six paumes</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plus longue d'un demi-doigt</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Mesurer l'argent et l'or</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plus longue d'un doigt entier</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Construction en bois et en pierre</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pourquoi deux mesures ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Recevoir selon la petite, rendre selon la grande, pour éviter le détournement de biens consacrés</td></tr>
+</table>
+
+<h4>2. Testicules (6:6)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Position</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yichmaël</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux sacs : deux testicules ; un sac : un seul</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Akiva</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Presser le sac ; si le testicule ne sort pas, défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cas de Piran</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Testicule trouvé attaché aux reins ; Rabbi Akiva permet, Rabbi Yo'hanan ben Nouri interdit</td></tr>
+</table>
+
+<h4>3. Pattes, sabots, hanches (6:7)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Point</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Précision de la guemara</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cinq ou trois pattes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Houna : pour une patte de derrière, l'animal est même <i>treifa</i></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sabots d'âne</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Papa : ronds, même fendus</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Chaoul / kasoul</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Hanche déboîtée ; une patte dans le <i>kesal</i>, l'autre déboîtée au-dessus</td></tr>
+</table>
+
+<h4>4. Les trois défauts d'Ila (6:8)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Défaut</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Précision</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Œil rond comme celui d'un homme</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Contradiction avec Niddah 21a, résolue par Rav Yossef : noir ou blanc de l'œil</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Bouche de porc</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Papa : lèvre supérieure recouvrante, même sans bouche pointue</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Langue amputée</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda : la majeure partie de la partie qui sert à la parole</td></tr>
+</table>
+
+<h4>5. Mâchoire, oreille, queue (6:9)</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Mâchoire inférieure qui dépasse</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut (tous en conviennent) ; Rav Papa : si elle contient un os</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oreille double</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut si un seul cartilage</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Queue de porc</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Papa : ronde, même épaisse</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Articulations de la queue</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Houna réfuté : chevreau une articulation, agneau deux</td></tr>
+</table>
+
+<h4>6. La verrue et les tailles (6:10)</h4>
+<p>La guemara tente plusieurs réponses (corps ou œil, avec ou sans os, noir ou blanc) puis retient Reish Lakish : avec poil ou sans poil ; la michna parle de la pupille. Œil grand comme celui d'un veau, petit comme celui d'une oie. Pour les testicules, <i>Aḥerim</i> : même un second de la taille d'une fève rend l'animal apte.</p>
+<h4>7. La queue du veau (6:11)</h4>
+<p>Une queue qui n'atteint pas l'articulation du milieu de la cuisse est un défaut. Pour les lois du premier-né de nos jours : <a href="../choulhan-aroukh/yd_309.html">Yoré Dé'a 309</a>, <a href="../choulhan-aroukh/yd_310.html">310</a>, <a href="../choulhan-aroukh/yd_313.html">313</a>, <a href="../choulhan-aroukh/yd_314.html">314</a>, <a href="../choulhan-aroukh/yd_315.html">315</a>. Sur l'œil rond : <a href="../daf-yomi/guemara_Niddah.21.html">Niddah 21</a>.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p>Dans notre base, <b>Rachi</b> et <b>Tosafot</b> sont disponibles pour ce daf en hébreu. Rachi explique : Shoushan est une galerie sur la porte orientale ; les artisans recevaient selon la petite coudée et rendaient selon la grande ; chaque testicule a son sac, divisé au milieu ; « sur l'arrière-train » ; le <i>chaoul</i> est la hanche déboîtée sans que le cartilage soit rongé (sinon <i>treifa</i>) ; le <i>kasoul</i> a une hanche plus haute ; l'os cassé se voit à la marche ; la queue du veau atteint l'<i>arkov</i> dans l'usage de leur croissance.</p>
+<p>Tosafot : à Piran de Beit Menaḥem, la Tosefta écrit « une vache de Beit Menaḥem » ; la hanche déboîtée l'est dès la naissance (sinon <i>treifa</i>, Houlin 55b) ; sur « <i>belum</i> », la bouche resserrée ; sur le blanc de l'œil, on suit celui qui dit qu'il n'y a pas de défaut dans le blanc.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p><b>À retenir</b></p>
+<ul>
+<li>L'absence d'un testicule est un défaut ; Rabbi Akiva fait presser le sac, Rabbi Yichmaël se fie au nombre de sacs.</li>
+<li>Cinq ou trois pattes, sabots arrondis, hanche déboîtée sont des défauts ; une patte de derrière en trop ou en moins est même <i>treifa</i> (Rav Houna).</li>
+<li>Ila ajouta trois défauts : œil rond, bouche de porc, langue amputée (Rav Papa précise la bouche).</li>
+<li>Mâchoire inférieure qui dépasse, oreille double d'un cartilage, queue de porc sont des défauts.</li>
+<li>La verrue de la pupille est un défaut ; une différence de taille doit se voir à l'œil.</li>
+</ul>
+<p>Voir <a href="../choulhan-aroukh/yd_309.html">Yoré Dé'a 309</a> et les simanim 310, 313 à 315 sur le premier-né, et <a href="../daf-yomi/guemara_Niddah.21.html">Niddah 21</a>. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.40" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
