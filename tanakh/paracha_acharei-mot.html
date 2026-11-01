@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Aharei Mot — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#7c3aed; --primaire-clair:#f5f3ff; --texte-primaire:#4c1d95;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#1e1b3a 0%,#312e81 50%,#7c3aed 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+.verset-num{display:inline-block;min-width:1.6em;font-size:.7em;font-weight:800;color:var(--primaire);vertical-align:super;margin-right:2px}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.synthese-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.synthese-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.synthese-bloc p:last-child{margin-bottom:0}
+.synthese-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.synthese-bloc b{color:var(--texte-primaire)}
+.synthese-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.synthese-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.synthese-bloc table{font-family:'Plus Jakarta Sans',sans-serif;width:100%;border-collapse:collapse;margin:12px 0}
+.synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
+.synthese-bloc table th{background:var(--surface2)}
+.synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+.ad-banner-inner {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border-radius: 18px;
+  padding: 14px 18px; transition: transform .15s;
+  box-shadow: var(--shadow-card);
+}
+.ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ad-banner-tag {
+  flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+  border-radius: 20px; padding: 3px 10px;
+}
+.ad-banner-icon {
+  flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+  background: var(--surface2); border-radius: 12px; padding: 4px;
+}
+.ad-banner-text { flex: 1; min-width: 0; }
+.ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+.ad-banner-cta {
+  flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+  background: var(--secondaire); padding: 8px 16px; border-radius: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour a l'accueil Tanakh">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Vayikra · Paracha</div>
+    <h1>Aharei Mot</h1>
+    <p>Torah, Vayikra (Leviticus 16:1-18:30)</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button><button class="tab" id="tab-t2" onclick="showTab('t2')">🧭 Synthese</button><button class="tab" id="tab-t4" onclick="showTab('t4')">✡️ Midrash</button><button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button><button class="tab" id="tab-t5" onclick="showTab('t5')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>['וַיְדַבֵּ֤ר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה אַחֲרֵ֣י מ֔וֹת שְׁנֵ֖י בְּנֵ֣י אַהֲרֹ֑ן בְּקׇרְבָתָ֥ם לִפְנֵי־יְהֹוָ֖ה וַיָּמֻֽתוּ׃', 'וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה דַּבֵּר֮ אֶל־אַהֲרֹ֣ן אָחִ֒יךָ֒ וְאַל־יָבֹ֤א בְכׇל־עֵת֙ אֶל־הַקֹּ֔דֶשׁ מִבֵּ֖ית לַפָּרֹ֑כֶת אֶל־פְּנֵ֨י הַכַּפֹּ֜רֶת אֲשֶׁ֤ר עַל־הָאָרֹן֙ וְלֹ֣א יָמ֔וּת כִּ֚י בֶּֽעָנָ֔ן אֵרָאֶ֖ה עַל־הַכַּפֹּֽרֶת׃', 'בְּזֹ֛את יָבֹ֥א אַהֲרֹ֖ן אֶל־הַקֹּ֑דֶשׁ בְּפַ֧ר בֶּן־בָּקָ֛ר לְחַטָּ֖את וְאַ֥יִל לְעֹלָֽה׃', 'כְּתֹֽנֶת־בַּ֨ד קֹ֜דֶשׁ יִלְבָּ֗שׁ וּמִֽכְנְסֵי־בַד֮ יִהְי֣וּ עַל־בְּשָׂרוֹ֒ וּבְאַבְנֵ֥ט בַּד֙ יַחְגֹּ֔ר וּבְמִצְנֶ֥פֶת בַּ֖ד יִצְנֹ֑ף בִּגְדֵי־קֹ֣דֶשׁ הֵ֔ם וְרָחַ֥ץ בַּמַּ֛יִם אֶת־בְּשָׂר֖וֹ וּלְבֵשָֽׁם׃', 'וּמֵאֵ֗ת עֲדַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל יִקַּ֛ח שְׁנֵֽי־שְׂעִירֵ֥י עִזִּ֖ים לְחַטָּ֑את וְאַ֥יִל אֶחָ֖ד לְעֹלָֽה׃', 'וְהִקְרִ֧יב אַהֲרֹ֛ן אֶת־פַּ֥ר הַחַטָּ֖את אֲשֶׁר־ל֑וֹ וְכִפֶּ֥ר בַּעֲד֖וֹ וּבְעַ֥ד בֵּיתֽוֹ׃', 'וְלָקַ֖ח אֶת־שְׁנֵ֣י הַשְּׂעִירִ֑ם וְהֶעֱמִ֤יד אֹתָם֙ לִפְנֵ֣י יְהֹוָ֔ה פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃', 'וְנָתַ֧ן אַהֲרֹ֛ן עַל־שְׁנֵ֥י הַשְּׂעִירִ֖ם גֹּרָל֑וֹת גּוֹרָ֤ל אֶחָד֙ לַיהֹוָ֔ה וְגוֹרָ֥ל אֶחָ֖ד לַעֲזָאזֵֽל׃', 'וְהִקְרִ֤יב אַהֲרֹן֙ אֶת־הַשָּׂעִ֔יר אֲשֶׁ֨ר עָלָ֥ה עָלָ֛יו הַגּוֹרָ֖ל לַיהֹוָ֑ה וְעָשָׂ֖הוּ חַטָּֽאת׃', 'וְהַשָּׂעִ֗יר אֲשֶׁר֩ עָלָ֨ה עָלָ֤יו הַגּוֹרָל֙ לַעֲזָאזֵ֔ל יׇֽעֳמַד־חַ֛י לִפְנֵ֥י יְהֹוָ֖ה לְכַפֵּ֣ר עָלָ֑יו לְשַׁלַּ֥ח אֹת֛וֹ לַעֲזָאזֵ֖ל הַמִּדְבָּֽרָה׃', 'וְהִקְרִ֨יב אַהֲרֹ֜ן אֶת־פַּ֤ר הַֽחַטָּאת֙ אֲשֶׁר־ל֔וֹ וְכִפֶּ֥ר בַּֽעֲד֖וֹ וּבְעַ֣ד בֵּית֑וֹ וְשָׁחַ֛ט אֶת־פַּ֥ר הַֽחַטָּ֖את אֲשֶׁר־לֽוֹ׃', 'וְלָקַ֣ח מְלֹֽא־הַ֠מַּחְתָּ֠ה גַּֽחֲלֵי־אֵ֞שׁ מֵעַ֤ל הַמִּזְבֵּ֙חַ֙ מִלִּפְנֵ֣י יְהֹוָ֔ה וּמְלֹ֣א חׇפְנָ֔יו קְטֹ֥רֶת סַמִּ֖ים דַּקָּ֑ה וְהֵבִ֖יא מִבֵּ֥ית לַפָּרֹֽכֶת׃', 'וְנָתַ֧ן אֶֽת־הַקְּטֹ֛רֶת עַל־הָאֵ֖שׁ לִפְנֵ֣י יְהֹוָ֑ה וְכִסָּ֣ה&thinsp;<b>׀</b> עֲנַ֣ן הַקְּטֹ֗רֶת אֶת־הַכַּפֹּ֛רֶת אֲשֶׁ֥ר עַל־הָעֵד֖וּת וְלֹ֥א יָמֽוּת׃', 'וְלָקַח֙ מִדַּ֣ם הַפָּ֔ר וְהִזָּ֧ה בְאֶצְבָּע֛וֹ עַל־פְּנֵ֥י הַכַּפֹּ֖רֶת קֵ֑דְמָה וְלִפְנֵ֣י הַכַּפֹּ֗רֶת יַזֶּ֧ה שֶֽׁבַע־פְּעָמִ֛ים מִן־הַדָּ֖ם בְּאֶצְבָּעֽוֹ׃', 'וְשָׁחַ֞ט אֶת־שְׂעִ֤יר הַֽחַטָּאת֙ אֲשֶׁ֣ר לָעָ֔ם וְהֵבִיא֙ אֶת־דָּמ֔וֹ אֶל־מִבֵּ֖ית לַפָּרֹ֑כֶת וְעָשָׂ֣ה אֶת־דָּמ֗וֹ כַּאֲשֶׁ֤ר עָשָׂה֙ לְדַ֣ם הַפָּ֔ר וְהִזָּ֥ה אֹת֛וֹ עַל־הַכַּפֹּ֖רֶת וְלִפְנֵ֥י הַכַּפֹּֽרֶת׃', 'וְכִפֶּ֣ר עַל־הַקֹּ֗דֶשׁ מִטֻּמְאֹת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל וּמִפִּשְׁעֵיהֶ֖ם לְכׇל־חַטֹּאתָ֑ם וְכֵ֤ן יַעֲשֶׂה֙ לְאֹ֣הֶל מוֹעֵ֔ד הַשֹּׁכֵ֣ן אִתָּ֔ם בְּת֖וֹךְ טֻמְאֹתָֽם׃', 'וְכׇל־אָדָ֞ם לֹא־יִהְיֶ֣ה&thinsp;<b>׀</b> בְּאֹ֣הֶל מוֹעֵ֗ד בְּבֹא֛וֹ לְכַפֵּ֥ר בַּקֹּ֖דֶשׁ עַד־צֵאת֑וֹ וְכִפֶּ֤ר בַּעֲדוֹ֙ וּבְעַ֣ד בֵּית֔וֹ וּבְעַ֖ד כׇּל־קְהַ֥ל יִשְׂרָאֵֽל׃', 'וְיָצָ֗א אֶל־הַמִּזְבֵּ֛חַ אֲשֶׁ֥ר לִפְנֵֽי־יְהֹוָ֖ה וְכִפֶּ֣ר עָלָ֑יו וְלָקַ֞ח מִדַּ֤ם הַפָּר֙ וּמִדַּ֣ם הַשָּׂעִ֔יר וְנָתַ֛ן עַל־קַרְנ֥וֹת הַמִּזְבֵּ֖חַ סָבִֽיב׃', 'וְהִזָּ֨ה עָלָ֧יו מִן־הַדָּ֛ם בְּאֶצְבָּע֖וֹ שֶׁ֣בַע פְּעָמִ֑ים וְטִהֲר֣וֹ וְקִדְּשׁ֔וֹ מִטֻּמְאֹ֖ת בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וְכִלָּה֙ מִכַּפֵּ֣ר אֶת־הַקֹּ֔דֶשׁ וְאֶת־אֹ֥הֶל מוֹעֵ֖ד וְאֶת־הַמִּזְבֵּ֑חַ וְהִקְרִ֖יב אֶת־הַשָּׂעִ֥יר הֶחָֽי׃', 'וְסָמַ֨ךְ אַהֲרֹ֜ן אֶת־שְׁתֵּ֣י <span class="mam-kq-trivial">יָדָ֗ו</span> עַ֣ל רֹ֣אשׁ הַשָּׂעִיר֮ הַחַי֒ וְהִתְוַדָּ֣ה עָלָ֗יו אֶת־כׇּל־עֲוֺנֹת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל וְאֶת־כׇּל־פִּשְׁעֵיהֶ֖ם לְכׇל־חַטֹּאתָ֑ם וְנָתַ֤ן אֹתָם֙ עַל־רֹ֣אשׁ הַשָּׂעִ֔יר וְשִׁלַּ֛ח בְּיַד־אִ֥ישׁ עִתִּ֖י הַמִּדְבָּֽרָה׃', 'וְנָשָׂ֨א הַשָּׂעִ֥יר עָלָ֛יו אֶת־כׇּל־עֲוֺנֹתָ֖ם אֶל־אֶ֣רֶץ גְּזֵרָ֑ה וְשִׁלַּ֥ח אֶת־הַשָּׂעִ֖יר בַּמִּדְבָּֽר׃', 'וּבָ֤א אַהֲרֹן֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד וּפָשַׁט֙ אֶת־בִּגְדֵ֣י הַבָּ֔ד אֲשֶׁ֥ר לָבַ֖שׁ בְּבֹא֣וֹ אֶל־הַקֹּ֑דֶשׁ וְהִנִּיחָ֖ם שָֽׁם׃', 'וְרָחַ֨ץ אֶת־בְּשָׂר֤וֹ בַמַּ֙יִם֙ בְּמָק֣וֹם קָד֔וֹשׁ וְלָבַ֖שׁ אֶת־בְּגָדָ֑יו וְיָצָ֗א וְעָשָׂ֤ה אֶת־עֹֽלָתוֹ֙ וְאֶת־עֹלַ֣ת הָעָ֔ם וְכִפֶּ֥ר בַּעֲד֖וֹ וּבְעַ֥ד הָעָֽם׃', 'וְאֵ֛ת חֵ֥לֶב הַֽחַטָּ֖את יַקְטִ֥יר הַמִּזְבֵּֽחָה׃', 'וְהַֽמְשַׁלֵּ֤חַ אֶת־הַשָּׂעִיר֙ לַֽעֲזָאזֵ֔ל יְכַבֵּ֣ס בְּגָדָ֔יו וְרָחַ֥ץ אֶת־בְּשָׂר֖וֹ בַּמָּ֑יִם וְאַחֲרֵי־כֵ֖ן יָב֥וֹא אֶל־הַֽמַּחֲנֶֽה׃', 'וְאֵת֩ פַּ֨ר הַֽחַטָּ֜את וְאֵ֣ת&thinsp;<b>׀</b> שְׂעִ֣יר הַֽחַטָּ֗את אֲשֶׁ֨ר הוּבָ֤א אֶת־דָּמָם֙ לְכַפֵּ֣ר בַּקֹּ֔דֶשׁ יוֹצִ֖יא אֶל־מִח֣וּץ לַֽמַּחֲנֶ֑ה וְשָׂרְפ֣וּ בָאֵ֔שׁ אֶת־עֹרֹתָ֥ם וְאֶת־בְּשָׂרָ֖ם וְאֶת־פִּרְשָֽׁם׃', 'וְהַשֹּׂרֵ֣ף אֹתָ֔ם יְכַבֵּ֣ס בְּגָדָ֔יו וְרָחַ֥ץ אֶת־בְּשָׂר֖וֹ בַּמָּ֑יִם וְאַחֲרֵי־כֵ֖ן יָב֥וֹא אֶל־הַֽמַּחֲנֶֽה׃', 'וְהָיְתָ֥ה לָכֶ֖ם לְחֻקַּ֣ת עוֹלָ֑ם בַּחֹ֣דֶשׁ הַ֠שְּׁבִיעִ֠י בֶּֽעָשׂ֨וֹר לַחֹ֜דֶשׁ תְּעַנּ֣וּ אֶת־נַפְשֹֽׁתֵיכֶ֗ם וְכׇל־מְלָאכָה֙ לֹ֣א תַעֲשׂ֔וּ הָֽאֶזְרָ֔ח וְהַגֵּ֖ר הַגָּ֥ר בְּתוֹכְכֶֽם׃', 'כִּֽי־בַיּ֥וֹם הַזֶּ֛ה יְכַפֵּ֥ר עֲלֵיכֶ֖ם לְטַהֵ֣ר אֶתְכֶ֑ם מִכֹּל֙ חַטֹּ֣אתֵיכֶ֔ם לִפְנֵ֥י יְהֹוָ֖ה תִּטְהָֽרוּ׃', 'שַׁבַּ֨ת שַׁבָּת֥וֹן הִיא֙ לָכֶ֔ם וְעִנִּיתֶ֖ם אֶת־נַפְשֹׁתֵיכֶ֑ם חֻקַּ֖ת עוֹלָֽם׃', 'וְכִפֶּ֨ר הַכֹּהֵ֜ן אֲשֶׁר־יִמְשַׁ֣ח אֹת֗וֹ וַאֲשֶׁ֤ר יְמַלֵּא֙ אֶת־יָד֔וֹ לְכַהֵ֖ן תַּ֣חַת אָבִ֑יו וְלָבַ֛שׁ אֶת־בִּגְדֵ֥י הַבָּ֖ד בִּגְדֵ֥י הַקֹּֽדֶשׁ׃', 'וְכִפֶּר֙ אֶת־מִקְדַּ֣שׁ הַקֹּ֔דֶשׁ וְאֶת־אֹ֧הֶל מוֹעֵ֛ד וְאֶת־הַמִּזְבֵּ֖חַ יְכַפֵּ֑ר וְעַ֧ל הַכֹּהֲנִ֛ים וְעַל־כׇּל־עַ֥ם הַקָּהָ֖ל יְכַפֵּֽר׃', 'וְהָֽיְתָה־זֹּ֨את לָכֶ֜ם לְחֻקַּ֣ת עוֹלָ֗ם לְכַפֵּ֞ר עַל־בְּנֵ֤י יִשְׂרָאֵל֙ מִכׇּל־חַטֹּאתָ֔ם אַחַ֖ת בַּשָּׁנָ֑ה וַיַּ֕עַשׂ כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֨ר אֶֽל־אַהֲרֹ֜ן וְאֶל־בָּנָ֗יו וְאֶל֙ כׇּל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵיהֶ֑ם זֶ֣ה הַדָּבָ֔ר אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה לֵאמֹֽר׃', 'אִ֥ישׁ אִישׁ֙ מִבֵּ֣ית יִשְׂרָאֵ֔ל אֲשֶׁ֨ר יִשְׁחַ֜ט שׁ֥וֹר אוֹ־כֶ֛שֶׂב אוֹ־עֵ֖ז בַּֽמַּחֲנֶ֑ה א֚וֹ אֲשֶׁ֣ר יִשְׁחַ֔ט מִח֖וּץ לַֽמַּחֲנֶֽה׃', 'וְאֶל־פֶּ֜תַח אֹ֣הֶל מוֹעֵד֮ לֹ֣א הֱבִיאוֹ֒ לְהַקְרִ֤יב קׇרְבָּן֙ לַֽיהֹוָ֔ה לִפְנֵ֖י מִשְׁכַּ֣ן יְהֹוָ֑ה דָּ֣ם יֵחָשֵׁ֞ב לָאִ֤ישׁ הַהוּא֙ דָּ֣ם שָׁפָ֔ךְ וְנִכְרַ֛ת הָאִ֥ישׁ הַה֖וּא מִקֶּ֥רֶב עַמּֽוֹ׃', 'לְמַ֩עַן֩ אֲשֶׁ֨ר יָבִ֜יאוּ בְּנֵ֣י יִשְׂרָאֵ֗ל אֶֽת־זִבְחֵיהֶם֮ אֲשֶׁ֣ר הֵ֣ם זֹבְחִים֮ עַל־פְּנֵ֣י הַשָּׂדֶה֒ וֶֽהֱבִיאֻ֣ם לַֽיהֹוָ֗ה אֶל־פֶּ֛תַח אֹ֥הֶל מוֹעֵ֖ד אֶל־הַכֹּהֵ֑ן וְזָ֨בְח֜וּ זִבְחֵ֧י שְׁלָמִ֛ים לַֽיהֹוָ֖ה אוֹתָֽם׃', 'וְזָרַ֨ק הַכֹּהֵ֤ן אֶת־הַדָּם֙ עַל־מִזְבַּ֣ח יְהֹוָ֔ה פֶּ֖תַח אֹ֣הֶל מוֹעֵ֑ד וְהִקְטִ֣יר הַחֵ֔לֶב לְרֵ֥יחַ נִיחֹ֖חַ לַיהֹוָֽה׃', 'וְלֹא־יִזְבְּח֥וּ עוֹד֙ אֶת־זִבְחֵיהֶ֔ם לַשְּׂעִירִ֕ם אֲשֶׁ֛ר הֵ֥ם זֹנִ֖ים אַחֲרֵיהֶ֑ם חֻקַּ֥ת עוֹלָ֛ם תִּֽהְיֶה־זֹּ֥את לָהֶ֖ם לְדֹרֹתָֽם׃', 'וַאֲלֵהֶ֣ם תֹּאמַ֔ר אִ֥ישׁ אִישׁ֙ מִבֵּ֣ית יִשְׂרָאֵ֔ל וּמִן־הַגֵּ֖ר אֲשֶׁר־יָג֣וּר בְּתוֹכָ֑ם אֲשֶׁר־יַעֲלֶ֥ה עֹלָ֖ה אוֹ־זָֽבַח׃', 'וְאֶל־פֶּ֜תַח אֹ֤הֶל מוֹעֵד֙ לֹ֣א יְבִיאֶ֔נּוּ לַעֲשׂ֥וֹת אֹת֖וֹ לַיהֹוָ֑ה וְנִכְרַ֛ת הָאִ֥ישׁ הַה֖וּא מֵעַמָּֽיו׃', 'וְאִ֨ישׁ אִ֜ישׁ מִבֵּ֣ית יִשְׂרָאֵ֗ל וּמִן־הַגֵּר֙ הַגָּ֣ר בְּתוֹכָ֔ם אֲשֶׁ֥ר יֹאכַ֖ל כׇּל־דָּ֑ם וְנָתַתִּ֣י פָנַ֗י בַּנֶּ֙פֶשׁ֙ הָאֹכֶ֣לֶת אֶת־הַדָּ֔ם וְהִכְרַתִּ֥י אֹתָ֖הּ מִקֶּ֥רֶב עַמָּֽהּ׃', 'כִּ֣י נֶ֣פֶשׁ הַבָּשָׂר֮ בַּדָּ֣ם הִוא֒ וַאֲנִ֞י נְתַתִּ֤יו לָכֶם֙ עַל־הַמִּזְבֵּ֔חַ לְכַפֵּ֖ר עַל־נַפְשֹׁתֵיכֶ֑ם כִּֽי־הַדָּ֥ם ה֖וּא בַּנֶּ֥פֶשׁ יְכַפֵּֽר׃', 'עַל־כֵּ֤ן אָמַ֙רְתִּי֙ לִבְנֵ֣י יִשְׂרָאֵ֔ל כׇּל־נֶ֥פֶשׁ מִכֶּ֖ם לֹא־תֹ֣אכַל דָּ֑ם וְהַגֵּ֛ר הַגָּ֥ר בְּתוֹכְכֶ֖ם לֹא־יֹ֥אכַל דָּֽם׃', 'וְאִ֨ישׁ אִ֜ישׁ מִבְּנֵ֣י יִשְׂרָאֵ֗ל וּמִן־הַגֵּר֙ הַגָּ֣ר בְּתוֹכָ֔ם אֲשֶׁ֨ר יָצ֜וּד צֵ֥יד חַיָּ֛ה אוֹ־ע֖וֹף אֲשֶׁ֣ר יֵאָכֵ֑ל וְשָׁפַךְ֙ אֶת־דָּמ֔וֹ וְכִסָּ֖הוּ בֶּעָפָֽר׃', 'כִּֽי־נֶ֣פֶשׁ כׇּל־בָּשָׂ֗ר דָּמ֣וֹ בְנַפְשׁוֹ֮ הוּא֒ וָֽאֹמַר֙ לִבְנֵ֣י יִשְׂרָאֵ֔ל דַּ֥ם כׇּל־בָּשָׂ֖ר לֹ֣א תֹאכֵ֑לוּ כִּ֣י נֶ֤פֶשׁ כׇּל־בָּשָׂר֙ דָּמ֣וֹ הִ֔וא כׇּל־אֹכְלָ֖יו יִכָּרֵֽת׃', 'וְכׇל־נֶ֗פֶשׁ אֲשֶׁ֨ר תֹּאכַ֤ל נְבֵלָה֙ וּטְרֵפָ֔ה בָּאֶזְרָ֖ח וּבַגֵּ֑ר וְכִבֶּ֨ס בְּגָדָ֜יו וְרָחַ֥ץ בַּמַּ֛יִם וְטָמֵ֥א עַד־הָעֶ֖רֶב וְטָהֵֽר׃', 'וְאִם֙ לֹ֣א יְכַבֵּ֔ס וּבְשָׂר֖וֹ לֹ֣א יִרְחָ֑ץ וְנָשָׂ֖א עֲוֺנֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּר֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃', 'כְּמַעֲשֵׂ֧ה אֶֽרֶץ־מִצְרַ֛יִם אֲשֶׁ֥ר יְשַׁבְתֶּם־בָּ֖הּ לֹ֣א תַעֲשׂ֑וּ וּכְמַעֲשֵׂ֣ה אֶֽרֶץ־כְּנַ֡עַן אֲשֶׁ֣ר אֲנִי֩ מֵבִ֨יא אֶתְכֶ֥ם שָׁ֙מָּה֙ לֹ֣א תַעֲשׂ֔וּ וּבְחֻקֹּתֵיהֶ֖ם לֹ֥א תֵלֵֽכוּ׃', 'אֶת־מִשְׁפָּטַ֧י תַּעֲשׂ֛וּ וְאֶת־חֻקֹּתַ֥י תִּשְׁמְר֖וּ לָלֶ֣כֶת בָּהֶ֑ם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃', 'וּשְׁמַרְתֶּ֤ם אֶת־חֻקֹּתַי֙ וְאֶת־מִשְׁפָּטַ֔י אֲשֶׁ֨ר יַעֲשֶׂ֥ה אֹתָ֛ם הָאָדָ֖ם וָחַ֣י בָּהֶ֑ם אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'אִ֥ישׁ אִישׁ֙ אֶל־כׇּל־שְׁאֵ֣ר בְּשָׂר֔וֹ לֹ֥א תִקְרְב֖וּ לְגַלּ֣וֹת עֶרְוָ֑ה אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אָבִ֛יךָ וְעֶרְוַ֥ת אִמְּךָ֖ לֹ֣א תְגַלֵּ֑ה אִמְּךָ֣ הִ֔וא לֹ֥א תְגַלֶּ֖ה עֶרְוָתָֽהּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אֵֽשֶׁת־אָבִ֖יךָ לֹ֣א תְגַלֵּ֑ה עֶרְוַ֥ת אָבִ֖יךָ הִֽוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֨ת אֲחֽוֹתְךָ֤ בַת־אָבִ֙יךָ֙ א֣וֹ בַת־אִמֶּ֔ךָ מוֹלֶ֣דֶת בַּ֔יִת א֖וֹ מוֹלֶ֣דֶת ח֑וּץ לֹ֥א תְגַלֶּ֖ה עֶרְוָתָֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֤ת בַּת־בִּנְךָ֙ א֣וֹ בַֽת־בִּתְּךָ֔ לֹ֥א תְגַלֶּ֖ה עֶרְוָתָ֑ן כִּ֥י עֶרְוָתְךָ֖ הֵֽנָּה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֨ת בַּת־אֵ֤שֶׁת אָבִ֙יךָ֙ מוֹלֶ֣דֶת אָבִ֔יךָ אֲחוֹתְךָ֖ הִ֑וא לֹ֥א תְגַלֶּ֖ה עֶרְוָתָֽהּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אֲחוֹת־אָבִ֖יךָ לֹ֣א תְגַלֵּ֑ה שְׁאֵ֥ר אָבִ֖יךָ הִֽוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אֲחֽוֹת־אִמְּךָ֖ לֹ֣א תְגַלֵּ֑ה כִּֽי־שְׁאֵ֥ר אִמְּךָ֖ הִֽוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אֲחִֽי־אָבִ֖יךָ לֹ֣א תְגַלֵּ֑ה אֶל־אִשְׁתּוֹ֙ לֹ֣א תִקְרָ֔ב דֹּדָֽתְךָ֖ הִֽוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת כַּלָּֽתְךָ֖ לֹ֣א תְגַלֵּ֑ה אֵ֤שֶׁת בִּנְךָ֙ הִ֔וא לֹ֥א תְגַלֶּ֖ה עֶרְוָתָֽהּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אֵֽשֶׁת־אָחִ֖יךָ לֹ֣א תְגַלֵּ֑ה עֶרְוַ֥ת אָחִ֖יךָ הִֽוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'עֶרְוַ֥ת אִשָּׁ֛ה וּבִתָּ֖הּ לֹ֣א תְגַלֵּ֑ה אֶֽת־בַּת־בְּנָ֞הּ וְאֶת־בַּת־בִּתָּ֗הּ לֹ֤א תִקַּח֙ לְגַלּ֣וֹת עֶרְוָתָ֔הּ שַׁאֲרָ֥ה הֵ֖נָּה זִמָּ֥ה הִֽוא׃', 'וְאִשָּׁ֥ה אֶל־אֲחֹתָ֖הּ לֹ֣א תִקָּ֑ח לִצְרֹ֗ר לְגַלּ֧וֹת עֶרְוָתָ֛הּ עָלֶ֖יהָ בְּחַיֶּֽיהָ׃', 'וְאֶל־אִשָּׁ֖ה בְּנִדַּ֣ת טֻמְאָתָ֑הּ לֹ֣א תִקְרַ֔ב לְגַלּ֖וֹת עֶרְוָתָֽהּ׃', 'וְאֶל־אֵ֙שֶׁת֙ עֲמִֽיתְךָ֔ לֹא־תִתֵּ֥ן שְׁכׇבְתְּךָ֖ לְזָ֑רַע לְטׇמְאָה־בָֽהּ׃', 'וּמִֽזַּרְעֲךָ֥ לֹא־תִתֵּ֖ן לְהַעֲבִ֣יר לַמֹּ֑לֶךְ וְלֹ֧א תְחַלֵּ֛ל אֶת־שֵׁ֥ם אֱלֹהֶ֖יךָ אֲנִ֥י יְהֹוָֽה׃', 'וְאֶ֨ת־זָכָ֔ר לֹ֥א תִשְׁכַּ֖ב מִשְׁכְּבֵ֣י אִשָּׁ֑ה תּוֹעֵבָ֖ה הִֽוא׃', 'וּבְכׇל־בְּהֵמָ֛ה לֹא־תִתֵּ֥ן שְׁכׇבְתְּךָ֖ לְטׇמְאָה־בָ֑הּ וְאִשָּׁ֗ה לֹֽא־תַעֲמֹ֞ד לִפְנֵ֧י בְהֵמָ֛ה לְרִבְעָ֖הּ תֶּ֥בֶל הֽוּא׃', 'אַל־תִּֽטַּמְּא֖וּ בְּכׇל־אֵ֑לֶּה כִּ֤י בְכׇל־אֵ֙לֶּה֙ נִטְמְא֣וּ הַגּוֹיִ֔ם אֲשֶׁר־אֲנִ֥י מְשַׁלֵּ֖חַ מִפְּנֵיכֶֽם׃', 'וַתִּטְמָ֣א הָאָ֔רֶץ וָאֶפְקֹ֥ד עֲוֺנָ֖הּ עָלֶ֑יהָ וַתָּקִ֥א הָאָ֖רֶץ אֶת־יֹשְׁבֶֽיהָ׃', 'וּשְׁמַרְתֶּ֣ם אַתֶּ֗ם אֶת־חֻקֹּתַי֙ וְאֶת־מִשְׁפָּטַ֔י וְלֹ֣א תַעֲשׂ֔וּ מִכֹּ֥ל הַתּוֹעֵבֹ֖ת הָאֵ֑לֶּה הָֽאֶזְרָ֔ח וְהַגֵּ֖ר הַגָּ֥ר בְּתוֹכְכֶֽם׃', 'כִּ֚י אֶת־כׇּל־הַתּוֹעֵבֹ֣ת הָאֵ֔ל עָשׂ֥וּ אַנְשֵֽׁי־הָאָ֖רֶץ אֲשֶׁ֣ר לִפְנֵיכֶ֑ם וַתִּטְמָ֖א הָאָֽרֶץ׃', 'וְלֹֽא־תָקִ֤יא הָאָ֙רֶץ֙ אֶתְכֶ֔ם בְּטַֽמַּאֲכֶ֖ם אֹתָ֑הּ כַּאֲשֶׁ֥ר קָאָ֛ה אֶת־הַגּ֖וֹי אֲשֶׁ֥ר לִפְנֵיכֶֽם׃', 'כִּ֚י כׇּל־אֲשֶׁ֣ר יַעֲשֶׂ֔ה מִכֹּ֥ל הַתּוֹעֵבֹ֖ת הָאֵ֑לֶּה וְנִכְרְת֛וּ הַנְּפָשׁ֥וֹת הָעֹשֹׂ֖ת מִקֶּ֥רֶב עַמָּֽם׃', 'וּשְׁמַרְתֶּ֣ם אֶת־מִשְׁמַרְתִּ֗י לְבִלְתִּ֨י עֲשׂ֜וֹת מֵחֻקּ֤וֹת הַתּֽוֹעֵבֹת֙ אֲשֶׁ֣ר נַעֲשׂ֣וּ לִפְנֵיכֶ֔ם וְלֹ֥א תִֽטַּמְּא֖וּ בָּהֶ֑ם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>L’Éternel parla à Moïse, après la mort des deux fils d’Aaron, qui, s’étant avancés devant l’Éternel, avaient péri, et il dit à Moïse: &quot;Signifie à Aaron, ton frère, qu’Il ne peut entrer à toute heure dans le sanctuaire, dans l’enceinte du voile, devant le propitiatoire qui est sur l’arche, s’il ne veut encourir la mort; car je me manifeste, dans un nuage, au-dessus du propitiatoire. Voici comment Aaron entrera dans le sanctuaire: avec un jeune taureau comme expiatoire, et un bélier comme holocauste. Il sera vêtu d’une tunique de lin consacrée, un caleçon de lin couvrira sa chair; une écharpe de lin le ceindra, et une tiare de lin sera sa coiffure. C’est un costume sacré, il doit se baigner dans l’eau avant de s’en vêtir. De la part de la communauté des enfants d’Israël, II prendra deux boucs pour l’expiation et un bélier comme holocauste. Et Aaron amènera le taureau expiatoire qui lui est destiné, afin d’obtenir grâce pour lui-même et pour sa maison. Et II prendra les deux boucs et les présentera devant le Seigneur, à l’entrée de la Tente d’assignation. Aaron tirera au sort pour les deux boucs: un lot sera pour l’Éternel, un lot pour Azazel. Aaron devra offrir le bouc que le sort aura désigné pour l’Éternel, et le traiter comme expiatoire; et le bouc que le sort aura désigné pour Azazel devra être placé, vivant, devant le Seigneur, pour servir à la propitiation, pour être envoyé à Azazel dans le désert. Aaron offrira son taureau expiatoire, fera propitiation pour lui-même et pour sa famille, et Immolera son taureau expiatoire. Il remplira l’encensoir de charbons ardents, pris sur l’autel qui est devant le Seigneur; prendra deux pleines poignées d’aromates pilés menu, et introduira le tout dans l’enceinte du voile. II jettera le fumigatoire sur le feu, devant le Seigneur, de sorte que le nuage aromatique enveloppe le propitiatoire qui abrite le Statut, et qu’il ne meure point. Alors il prendra du sang du taureau, en fera aspersion avec le doigt sur la face du propitiatoire, vers l’orient; et devant le propitiatoire, Il fera sept fois aspersion de ce sang avec le doigt. Il immolera le bouc expiatoire du peuple, en portera le sang dans l’enceinte du voile, et, procédant â son égard comme il aura fait pour le sang du taureau, Il en fera aspersion au-dessus du propitiatoire, et en avant du propitiatoire. Il purifiera ainsi le sanctuaire des souillures des enfants d’Israël, et de leurs transgressions et de toutes leurs fautes; et il agira de même pour la Tente d’assignation, qui réside avec eux, parmi leurs souillures. Que personne ne soit dans la Tente d’assignation lorsqu’il entrera pour faire propitiation dans le sanctuaire, jusqu’à sa sortie. Ayant ainsi fait propitiation pour lui-même, pour sa maison et pour toute l’assemblée d’Israël, il s’en ira vers l’autel qui est devant le Seigneur, pour en faire la propitiation: il prendra du sang du taureau et de celui du bouc, en appliquera sur les cornes de l’autel, tout autour, et fera de ce sang, avec son doigt, sept aspersions sur l’autel, qu’il purifiera et sanctifiera ainsi des souillures des enfants d’Israël. Quand il aura achevé de purifier le sanctuaire, la Tente d’assignation et l’autel, il fera amener le bouc vivant. Aaron appuiera ses deux mains sur la tête du bouc vivant; confessera, dans cette posture, toutes les iniquités des enfants d’Israël, toutes leurs offenses et tous leurs péchés, et, les ayant ainsi fait passer sur la tête du bouc, l’enverra, sous la conduite d’un exprès, dans le désert. Et le bouc emportera sur lui toutes leurs iniquités dans une contrée solitaire, et on lâchera le bouc dans ce désert. Aaron rentrera dans la Tente d’assignation; puis il dépouillera les vêtements de lin dont il s’était vêtu pour entrer dans le sanctuaire, et les y déposera. II baignera son corps dans l’eau, en lieu saint, et revêtira son costume; s’en ira offrir son holocauste et celui du peuple, et fera propitiation pour lui-même et pour le peuple. La graisse de l’expiatoire, il la fera fumer sur l’autel. Pour celui qui aura conduit le bouc vers Azazel, il lavera ses vêtements, baignera son corps dans l’eau, et alors seulement rentrera au camp. Le taureau expiatoire et le bouc expiatoire, dont le sang aura été introduit, pour la propitiation, dans le sanctuaire, on les transportera hors du camp, et l’on consumera par le feu leur peau, leur chair et leur fiente. Celui qui les aura brûlés lavera ses vêtements, baignera son corps dans l’eau, et alors seulement rentrera au camp. Et ceci sera pour vous une loi perpétuelle: au septième mois, le dixième jour du mois, vous mortifierez vos personnes et ne ferez aucun ouvrage, soit l’indigène, soit l’étranger séjournant parmi vous. Car en ce jour, on fera propitiation sur vous afin de vous purifier; vous serez purs de tous vos péchés devant l’Éternel. C’est pour vous un sabbat, un sabbat solennel, où vous devez mortifier vos personnes: loi perpétuelle. La propitiation sera accomplie par le pontife qu’on aura oint et installé pour succéder, comme tel, à son père; il revêtira le costume de lin, le costume sacré, et il fera propitiation pour le saint sanctuaire, propitiation pour la Tente d’assignation et pour l’autel, propitiation en faveur des pontifes et de tout le peuple réuni.  Que cela soit pour vous un statut perpétuel, afin de relever les enfants d’Israël de tous leurs péchés, une fois l’année.&quot; Et il agit comme l’Éternel l’avait ordonné à Moïse.</p>
+      <p>L’Éternel parla à Moïse en ces termes: &quot;Parle à Aaron et à ses fils, ainsi qu’à tous les enfants d’Israël, et dis-leur: voici ce que l’Éternel m’a ordonné de dire: Tout homme de la maison d’Israël qui égorgera une pièce de gros bétail, ou une bête à laine ou une chèvre, dans le camp, ou qui l’égorgera hors du camp, sans l’avoir amenée à l’entrée de la Tente d’assignation pour en faire une offrande à l’Éternel, devant son tabernacle, il sera réputé meurtrier, cet homme, il a répandu le sang; et cet homme-là sera retranché du milieu de son peuple. Afin que les enfants d’Israël amènent leurs victimes, qu’ils sacrifient en plein champ, qu’ils les amènent désormais à l’Éternel, à l’entrée de la Tente d’assignation, au pontife, et qu’ils les égorgent comme victimes rémunératoires en l’honneur de l’Éternel. Et le pontife lancera le sang sur l’autel de l’Éternel, à l’entrée de la Tente d’assignation, et il fera fumer la graisse comme parfum agréable à l’Éternel; et ils n’offriront plus leurs sacrifices aux démons, au culte desquels ils se prostituent. Que cela soit une loi immuable pour eux, dans leurs générations. Tu leur diras encore: Quiconque, de la maison d’Israël ou des étrangers qui séjourneraient parmi eux, offrira un holocauste ou un autre sacrifice, et ne conduira pas la victime à l’entrée de la Tente d’assignation pour qu’on la destine à l’Éternel, cet homme-là sera retranché de son peuple. Quiconque aussi, dans la maison d’Israël ou parmi les étrangers établis au milieu d’eux, mangera de quelque sang, je dirigerai mon regard sur la personne qui aura mangé ce sang, et je la retrancherai du milieu de son peuple. Car le principe vital de la chair gît dans le sang, et moi je vous l’ai accordé sur l’autel, pour procurer l’expiation à vos personnes; car c’est le sang qui fait expiation pour la personne. C’est pourquoi j’ai dit aux enfants d’Israël: Que nul d’entre vous ne mange du sang, et que l’étranger résidant avec vous n’en mange point. Tout homme aussi, parmi les enfants d’Israël ou parmi les étrangers résidant avec eux, qui aurait pris un gibier, bête sauvage ou volatile, propre à être mangé, devra en répandre le sang et le couvrir de terre. Car le principe vital de toute créature, c’est son sang qui est dans son corps, aussi ai-je dit aux enfants d’Israël: Ne mangez le sang d’aucune créature. Car la vie de toute créature c’est son sang: quiconque en mangera sera retranché. Toute personne, indigène ou étrangère, qui mangerait d’une bête morte ou déchirée, devra laver ses vêtements, se baigner dans l’eau et rester souillée jusqu’au soir, où elle redeviendra pure. Que si elle ne lave point ses vêtements et ne baigne point son corps, elle en portera la peine.&quot;</p>
+      <p>L’Éternel parla à Moïse en ces termes: &quot;Parle aux enfants d’Israël et dis-leur: c’est moi, l’Éternel, qui suis votre Dieu! Les pratiques du pays d’Égypte, où vous avez demeuré, ne les imitez pas, les pratiques du pays de Canaan où je vous conduis, ne les imitez pas et ne vous conformez point à leurs lois. C’est à mes statuts que vous devez obéir, ce sont mes lois que vous respecterez dans votre conduite: c’est moi, l’Éternel, qui suis votre Dieu. Vous observerez donc mes lois et mes statuts, parce que l’homme qui les pratique obtient, par eux, la vie: je suis l’Éternel. Que nul de vous n’approche d’aucune proche parente, pour en découvrir la nudité: je suis l’Éternel. Ne découvre point la nudité de ton père., celle de ta mère: c’est ta mère, tu ne dois pas découvrir sa nudité. Ne découvre point la nudité de la femme de ton père: c’est la nudité de ton père. La nudité de ta sœur, fille de ton père ou fille de ta mère, née dans la maison ou née au dehors, ne la découvre point. La nudité de la fille de ton fils, ou de la fille de ta fille, ne la découvre point; car c’est ta propre nudité. La fille de la femme de ton père, progéniture de ton père, celle-là est ta sœur: ne découvre point sa nudité. Ne découvre point la nudité de la sœur de ton père: c’est la proche parente de ton père. Ne découvre point la nudité de la sœur de ta mère, car c’est la proche parente de ta mère. Ne découvre point la nudité du frère de ton père: n’approche point de sa femme, elle est ta tante. Ne découvre point la nudité de ta bru: c’est la femme de ton fils, tu ne dols pas découvrir sa nudité. Ne découvre point la nudité de la femme de ton frère: c’est la nudité de ton frère. Ne découvre point la nudité d’une femme et celle de sa fille; n’épouse point la fille de son fils ni la fille de sa fille, pour en découvrir la nudité: elles sont proches parentes, c’est une Impudicité. N’épouse pas une femme avec sa sœur: c’est créer une rivalité, en découvrant la nudité de l’une avec celle de l’autre, de son vivant. Lorsqu’une femme est isolée par son impureté, n’approche point d’elle pour découvrir sa nudité. Ne t’unis point charnellement avec la femme de ton prochain: tu te souillerais par elle. Ne livre rien de ta progéniture en offrande à Molokh, pour ne pas profaner le nom de ton Dieu: je suis l’Éternel. Ne cohabite point avec un mâle, d’une cohabitation sexuelle: c’est une abomination. Ne t’accouple avec aucun animal, tu te souillerais par là; et qu’une femme ne s’offre point à l’accouplement d’un animal, c’est un désordre. Ne vous souillez point par toutes ces choses! Car ils se sont souillés par elles, les peuples que je chasse à cause de vous, et le pays est devenu Impur, et je lui ai demandé compte de son iniquité, et le pays a vomi ses habitants. Pour vous, respectez mes lois et mes statuts, et ne commettez aucune de ces horreurs. Vous indigènes, ni l’étranger qui séjournerait parmi vous. Car toutes ces horreurs, ils les ont commises, les gens du pays qui vous ont précédés, et le pays est devenu Impur. Craignez que cette terre ne vous vomisse si vous la souillez, comme elle a vomi le peuple qui l’habitait avant vous. Car, quiconque aura commis une de toutes ces abominations, les personnes agissant ainsi seront retranchées du sein de leur peuple. Soyez donc fidèles à mon observance, en ne suivant aucune de ces lois infâmes qu’on a suivies avant vous, et ne vous souillez point par leur pratique: je suis l’Éternel, votre Dieu!&quot;</p>
+      
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="synthese-bloc"><p>La paracha Aharei Mot (Lévitique 16:1 – 18:30) commence après la mort des deux fils d'Aharon. Elle décrit d'abord le <b>service du Cohen Gadol à Yom Kippour</b> : vêtements de lin, deux boucs tirés au sort, encens dans le Saint des Saints et confession. Elle interdit ensuite la <b>consommation du sang</b> et les sacrifices hors du Michkan, puis énumère les <b>unions interdites</b> et met en garde contre les pratiques de l'Égypte et de Canaan.</p>
+
+<h4>Structure de la paracha</h4>
+<table>
+<tr><th>Versets</th><th>Sujet</th><th>Contenu</th></tr>
+<tr><td>16:1-5</td><td>Entrée dans le Saint des Saints</td><td>Aharon n'entre pas à toute heure ; il vient avec un taureau et un bélier, vêtu de lin consacré, après s'être baigné</td></tr>
+<tr><td>16:6-10</td><td>Les deux boucs</td><td>Tirage au sort : un lot « pour l'Éternel », un lot « pour Azazel »</td></tr>
+<tr><td>16:11-19</td><td>Taureau, bouc et encens</td><td>Taureau expiatoire, encensoir et nuage d'encens, aspersions du sang vers le propitiatoire, purification du sanctuaire et de l'autel</td></tr>
+<tr><td>16:20-28</td><td>Le bouc envoyé</td><td>Confession sur la tête du bouc, envoi dans le désert ; Aharon dépose les vêtements de lin ; lavages de ceux qui participent</td></tr>
+<tr><td>16:29-34</td><td>Jour de l'expiation</td><td>Le dixième jour du septième mois : affliction des personnes, interdiction du travail, expiation par le Cohen Gadol</td></tr>
+<tr><td>17:1-9</td><td>Sacrifices au Michkan</td><td>Toute bête immolée doit être amenée à l'entrée de la Tente d'assignation</td></tr>
+<tr><td>17:10-16</td><td>Interdit du sang</td><td>Le sang est interdit ; il faut couvrir de terre le sang du gibier ; laver ses vêtements après avoir mangé une bête morte</td></tr>
+<tr><td>18:1-5</td><td>Ne pas imiter l'Égypte et Canaan</td><td>« Vous observerez mes lois et mes statuts »</td></tr>
+<tr><td>18:6-23</td><td>Unions interdites</td><td>Mère, épouse du père, sœur, belle-fille, sœur de l'épouse, niddah, adultère, Molokh, relations contre nature</td></tr>
+<tr><td>18:24-30</td><td>Conclusion</td><td>Le pays « vomit » ses habitants qui se souillent ; avertissement pour Israël</td></tr>
+</table>
+
+<h4>Le service de Yom Kippour</h4>
+<table>
+<tr><th>Étape</th><th>Ce que dit le texte</th></tr>
+<tr><td>Les vêtements (16:4)</td><td>Tunique, caleçon, ceinture et tiare de lin ; il se baigne avant de les mettre</td></tr>
+<tr><td>Le tirage au sort (16:8)</td><td>Un lot pour l'Éternel, un lot pour Azazel</td></tr>
+<tr><td>L'encens (16:12-13)</td><td>Un encensoir de charbons ardents, deux poignées d'aromates pilés ; le nuage couvre le propitiatoire</td></tr>
+<tr><td>Le sang (16:14-15)</td><td>Sept aspersions du sang du taureau, puis du bouc, vers le propitiatoire</td></tr>
+<tr><td>Le bouc envoyé (16:21-22)</td><td>Aharon pose ses mains, confesse les fautes d'Israël ; le bouc est envoyé au désert</td></tr>
+<tr><td>Le jour (16:29-31)</td><td>« Vous affligerez vos âmes » ; pas de travail</td></tr>
+</table></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="synthese-bloc"><p>Rachi et les Sages éclairent plusieurs passages.</p>
+
+<h4>La mort des fils d'Aharon (16:1)</h4>
+<p>Rachi rapporte la parabole de Rabbi Éléazar ben Azaria : un médecin dit à un malade « ne mange pas froid, ne dors pas dans l'humidité » ; un autre ajoute « de peur de mourir comme untel ». Le second avertissement est plus efficace : ainsi la Torah rappelle la mort des fils d'Aharon pour que celui-ci n'entre pas à toute heure.</p>
+
+<h4>Les vêtements de lin (16:4)</h4>
+<p>Le Cohen Gadol sert à l'intérieur avec quatre vêtements de lin et non avec les huit vêtements dorés, car « l'accusateur ne devient pas défenseur » : l'or rappelle le veau d'or. Il se baigne cinq fois ce jour-là, à chaque changement de vêtements.</p>
+
+<h4>Le tirage au sort (16:8-10)</h4>
+<p>Il se tient entre deux boucs, un à droite et un à gauche, plonge ses deux mains dans l'urne et en retire un lot dans chaque main. Voir <a href="../daf-yomi/guemara_Yoma.39.html">Yoma 39</a> et la <a href="../daf-yomi/michna_Mishnah_Yoma.4.1.html">michna Yoma 4:1</a>. <i>Azazel</i> désigne une montagne âpre, un rocher élevé.</p>
+
+<h4>L'interdit du sang (17:10-14)</h4>
+<p>Le sang est la vie de la chair et il est donné sur l'autel pour l'expiation. Le gibier et l'oiseau doivent être égorgés avec le sang couvert de terre. Voir <a href="../choulhan-aroukh/yd_66.html">Yoré Dé'a 66</a>.</p>
+
+<h4>« Vous observerez mes lois » (18:4-5)</h4>
+<p>Rachi distingue les <i>michpatim</i> (lois que la raison aurait dictées) et les <i>houkim</i> (décrets du Roi, auxquels l'inclination au mal et les nations opposent des objections : manger du porc, porter du <i>chaatnez</i>, l'eau de purification). « Et il vivra par elles » : dans le monde à venir.</p>
+
+<h4>Les unions interdites (18:6-23)</h4>
+<p>Le texte énumère les unions interdites : voir <a href="../choulhan-aroukh/eh_15.html">Even HaEzer 15</a> sur leurs degrés et le <i>guet</i> nécessaire pour les interdits rabbiniques. « Tu ne prendras pas une femme avec sa sœur » : interdit tant que la première est en vie (18:18). La niddah (18:19) : voir <a href="../choulhan-aroukh/yd_183.html">Yoré Dé'a 183</a>.</p>
+
+<h4>Yom Kippour</h4>
+<p>Pour les lois du jour : <a href="../choulhan-aroukh/oh_611.html">Orah 'Haïm 611</a>.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="synthese-bloc"><p><b>Rachi</b> précise surtout les gestes du service et les lois d'interdit.</p>
+
+<table>
+<tr><th>Verset</th><th>Commentaire de Rachi</th></tr>
+<tr><td>« Qu'il ne vienne pas à toute heure » (16:2)</td><td>Pour qu'il ne meure pas comme ses fils ; le nuage est le nuage de l'encens de Yom Kippour</td></tr>
+<tr><td>« Avec ceci » (16:3)</td><td>La valeur numérique de <i>bezot</i> est quatre cent dix, allusion au Premier Temple ; et pas à toute heure mais le dixième jour du septième mois</td></tr>
+<tr><td>« Tunique de lin » (16:4)</td><td>Il sert à l'intérieur avec quatre vêtements de lin, non avec les huit d'or, car l'accusateur ne devient pas défenseur</td></tr>
+<tr><td>« Il se baignera » (16:4)</td><td>Il se baigne à chaque changement de vêtements ; cinq fois ce jour-là</td></tr>
+<tr><td>« Son taureau expiatoire » (16:6)</td><td>Il vient de lui, non de la communauté ; il se confesse pour ses fautes et celles de sa maison</td></tr>
+<tr><td>« Il donnera des lots » (16:8)</td><td>Les deux boucs, l'un à droite et l'autre à gauche ; deux mains dans l'urne ; <i>Azazel</i> est une montagne âpre et élevée</td></tr>
+<tr><td>« Qu'il se tienne vivant » (16:10)</td><td>Le bouc est placé vivant jusqu'à son envoi, pour que l'on sache que son envoi n'est pas pour la mort</td></tr>
+<tr><td>« Fine » (16:12)</td><td>L'encens est pilé très fin ; la veille de Yom Kippour on le remettait au mortier</td></tr>
+<tr><td>« Il en fera sept fois l'aspersion » (16:14)</td><td>Une aspersion vers le haut et sept vers le bas</td></tr>
+<tr><td>« Il purifiera » (16:19)</td><td>« Il le purifiera » du passé, « et le sanctifiera » pour l'avenir</td></tr>
+<tr><td>« Qu'il se rende maître » (16:32)</td><td>Cette expiation n'est valable que par le Cohen Gadol</td></tr>
+<tr><td>« Le sang de quiconque » (17:10)</td><td>Il vise tout sang, pas seulement celui des offrandes ; « Je tournerai Ma face » : Dieu se détourne de toutes Ses affaires pour s'en occuper</td></tr>
+<tr><td>« Car l'âme de la chair est dans le sang » (17:11)</td><td>L'âme de toute créature dépend du sang ; il est donné sur l'autel pour expier l'âme de l'homme</td></tr>
+<tr><td>« Il le couvrira » (17:13)</td><td>Il ne mangera de viande qu'après cette préparation</td></tr>
+<tr><td>« Comme l'œuvre du pays d'Égypte » (18:3)</td><td>Les œuvres de l'Égypte et de Canaan sont les pires de toutes</td></tr>
+<tr><td>« Tes lois et tes statuts » (18:4)</td><td>Les <i>michpatim</i> auraient été dictés par la raison ; les <i>houkim</i> sont des décrets du Roi</td></tr>
+<tr><td>« Et il vivra par elles » (18:5)</td><td>Dans le monde à venir</td></tr>
+<tr><td>« Ne découvre pas la nudité de ton père » (18:7)</td><td>C'est l'épouse du père, par analogie avec « il a découvert la nudité de son père »</td></tr>
+<tr><td>« Et sa nudité de ta mère » (18:7)</td><td>Il s'agit aussi de sa mère qui n'est pas l'épouse du père</td></tr>
+<tr><td>« Ton fils et ta fille » (18:10)</td><td>La fille de la fille et la fille du fils sont interdites ; la fille de l'épouse est apprise par comparaison</td></tr>
+<tr><td>« Molokh » (18:21)</td><td>Idole qui consiste à faire passer son fils entre deux feux</td></tr>
+<tr><td>« Que la terre ne vous vomisse pas » (18:28)</td><td>Comme un fils de roi qui a avalé un aliment répugnant, la terre d'Israël rejette ceux qui commettent des fautes</td></tr>
+</table><div class="commentaires-sources">D'apres Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t5">
+  <div class="synthese-bloc"><p>La paracha donne lieu à plusieurs lois étudiées dans nos fiches.</p>
+<ul>
+<li><b>Yom Kippour :</b> affliction, interdit du travail, nuit comme jour : <a href="../choulhan-aroukh/oh_611.html">Orah 'Haïm 611</a>.</li>
+<li><b>Le tirage au sort des boucs :</b> <a href="../daf-yomi/guemara_Yoma.39.html">Yoma 39</a>.</li>
+<li><b>L'interdit du sang :</b> sang d'animal, d'œuf, de poisson : <a href="../choulhan-aroukh/yd_66.html">Yoré Dé'a 66</a>.</li>
+<li><b>Les unions interdites :</b> <a href="../choulhan-aroukh/eh_15.html">Even HaEzer 15</a>.</li>
+<li><b>La niddah :</b> <a href="../choulhan-aroukh/yd_183.html">Yoré Dé'a 183</a> et <a href="../daf-yomi/guemara_Niddah.21.html">Niddah 21</a>.</li>
+</ul>
+
+<h4>Cas pratiques</h4>
+<table>
+<tr><th>Situation</th><th>Que faire ?</th></tr>
+<tr><td>On trouve du sang dans un œuf</td><td>Voir Yoré Dé'a 66 : l'usage est d'interdire l'œuf</td></tr>
+<tr><td>Un incendie éclate à Yom Kippour</td><td>On peut sauver un repas pour la nuit (Orah 'Haïm 611)</td></tr>
+<tr><td>Un homme veut épouser la sœur de sa femme divorcée</td><td>Interdit tant que la première est en vie (Even HaEzer 15)</td></tr>
+<tr><td>Un cas douteux</td><td>Il faut consulter un rabbin compétent</td></tr>
+</table>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien etudier 📖
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits reserves<br>Sources : <a href="https://www.sefaria.org/Leviticus_16:1-18:30" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
