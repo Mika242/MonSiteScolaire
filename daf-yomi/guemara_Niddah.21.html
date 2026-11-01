@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 21 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Niddah · Guemara</div>
+    <h1>Guemara 21</h1>
+    <p>Daf 21</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>הַשָּׁרוֹנִי נִידּוֹן כַּכַּרְמְלִי, חַי וְלֹא מָזוּג, חָדָשׁ וְלֹא יָשָׁן.</p>
+      <p>אָמַר רַב יִצְחָק בַּר אֲבוּדִימִי: וְכוּלָּן, אֵין בּוֹדְקִין אוֹתָן אֶלָּא בְּכוֹס טְבֶרְיָא פָּשׁוּט. מַאי טַעְמָא? אָמַר אַבָּיֵי: שֶׁל כׇּל הָעוֹלָם כּוּלּוֹ מַחְזִיק לוֹג — עוֹשִׂין אוֹתוֹ מִמָּנֶה, שְׁנֵי לוּגִּין — עוֹשִׂין אוֹתוֹ מִמָּאתַיִם. כּוֹס טְבֶרְיָא פָּשׁוּט, אֲפִילּוּ מַחֲזִיק שְׁנֵי לוּגִּין — עוֹשִׂין אוֹתוֹ מִמָּנֶה, וְאַיְּידֵי דִּקְלִישׁ — יְדִיעַ בֵּיהּ טְפֵי.</p>
+      <p><strong><big>הֲדַרַן עֲלָךְ כָּל הַיָּד.</big></strong></p>
+      <p>מַתְנִי' <strong><big>הַמַּפֶּלֶת</big></strong> חֲתִיכָה, אִם יֵשׁ עִמָּהּ דָּם — טְמֵאָה, וְאִם לָאו — טְהוֹרָה. רַבִּי יְהוּדָה אוֹמֵר: בֵּין כָּךְ וּבֵין כָּךְ — טְמֵאָה.</p>
+      <p>הַמַּפֶּלֶת כְּמִין קְלִיפָּה, כְּמִין שַׂעֲרָה, כְּמִין עָפָר, כְּמִין יַבְחוּשִׁין אֲדוּמִּים — תָּטִיל לַמַּיִם: אִם נִמּוֹחוּ — טְמֵאָה, וְאִם לָאו — טְהוֹרָה.</p>
+      <p>הַמַּפֶּלֶת כְּמִין דָּגִים, חֲגָבִים, שְׁקָצִים וּרְמָשִׂים — אִם יֵשׁ עִמָּהֶם דָּם טְמֵאָה, וְאִם לָאו — טְהוֹרָה.</p>
+      <p>הַמַּפֶּלֶת מִין בְּהֵמָה, חַיָּה וָעוֹף, בֵּין טְמֵאִין בֵּין טְהוֹרִין — אִם זָכָר — תֵּשֵׁב לְזָכָר, וְאִם נְקֵבָה — תֵּשֵׁב לִנְקֵבָה.</p>
+      <p>וְאִם אֵין יָדוּעַ — תֵּשֵׁב לְזָכָר וְלַנְּקֵבָה, דִּבְרֵי רַבִּי מֵאִיר, וַחֲכָמִים אוֹמְרִים: כֹּל שֶׁאֵין בּוֹ מִצּוּרַת אָדָם אֵינוֹ וָלָד.</p>
+      <p><strong><big>גְּמָ'</big></strong> אָמַר רַב יְהוּדָה, אָמַר שְׁמוּאֵל: לֹא טִימֵּא רַבִּי יְהוּדָה אֶלָּא בַּחֲתִיכָה שֶׁל אַרְבַּעַת מִינֵי דָמִים, אֲבָל שֶׁל שְׁאָר מִינֵי דָמִים — טְהוֹרָה.</p>
+      <p>וְרַבִּי יוֹחָנָן אָמַר: שֶׁל אַרְבַּעַת מִינֵי דָמִים — דִּבְרֵי הַכֹּל טְמֵאָה, שֶׁל שְׁאָר מִינֵי דָמִים — דִּבְרֵי הַכֹּל טְהוֹרָה.</p>
+      <p>לֹא נֶחְלְקוּ אֶלָּא שֶׁהִפִּילָה, וְאֵינָהּ יוֹדַעַת מָה הִפִּילָה. רַבִּי יְהוּדָה סָבַר: זִיל בָּתַר רוֹב חֲתִיכוֹת, וְרוֹב חֲתִיכוֹת שֶׁל (מִינֵי) אַרְבַּעַת מִינֵי דָמִים הָוְיָין. וְרַבָּנַן סָבְרִי: לָא אָמְרִינַן רוֹב חֲתִיכוֹת שֶׁל אַרְבַּעַת מִינֵי דָמִים.</p>
+      <p>אִינִי? וְהָא כִּי אֲתָא רַב הוֹשַׁעְיָא מִנְּהַרְדְּעָא, אֲתָא וְאַיְיתִי מַתְנִיתָא בִּידֵיהּ: הַמַּפֶּלֶת חֲתִיכָה אֲדוּמָּה, שְׁחוֹרָה, יְרוּקָּה, וּלְבָנָה — אִם יֵשׁ עִמָּהּ דָּם טְמֵאָה, וְאִם לָאו — טְהוֹרָה. רַבִּי יְהוּדָה אוֹמֵר: בֵּין כָּךְ וּבֵין כָּךְ טְמֵאָה. קַשְׁיָא לִשְׁמוּאֵל בַּחֲדָא, וּלְרַבִּי יוֹחָנָן בְּתַרְתֵּי.</p>
+      <p>לִשְׁמוּאֵל בַּחֲדָא, דְּאָמַר שְׁמוּאֵל: לֹא טִימֵּא רַבִּי יְהוּדָה אֶלָּא בַּחֲתִיכָה שֶׁל אַרְבַּעַת מִינֵי דָמִים, וְהָא קָתָנֵי ״יְרוּקָּה וּלְבָנָה״, וּפְלִיג רַבִּי יְהוּדָה!</p>
+      <p>וְכִי תֵימָא, כִּי פְּלִיג רַבִּי יְהוּדָה אַאֲדוּמָּה וּשְׁחוֹרָה, וְאַיְּרוּקָּה וּלְבָנָה לָא, אֶלָּא יְרוּקָּה וּלְבָנָה לְמַאן קָתָנֵי לַהּ?</p>
+      <p>אִילֵּימָא רַבָּנַן — הַשְׁתָּא אֲדוּמָּה וּשְׁחוֹרָה מְטַהֲרִי רַבָּנַן, יְרוּקָּה וּלְבָנָה מִיבַּעְיָא? אֶלָּא לָאו לְרַבִּי יְהוּדָה, וּפְלִיג!</p>
+      <p>וְתוּ, לְרַבִּי יוֹחָנָן דְּאָמַר: שֶׁל אַרְבַּעַת מִינֵי דָמִים — דִּבְרֵי הַכֹּל טְמֵאָה, הָא קָתָנֵי: אֲדוּמָּה וּשְׁחוֹרָה, וּפְלִיגִי רַבָּנַן!</p>
+      <p>וְכִי תֵּימָא, כִּי פְּלִיגִי רַבָּנַן אַיְּרוּקָּה וּלְבָנָה, אֲבָל אַאֲדוּמָּה וּשְׁחוֹרָה לָא, אֶלָּא אֲדוּמָּה וּשְׁחוֹרָה לְמַאן קָתָנֵי לַהּ?</p>
+      <p>אִילֵימָא רַבִּי יְהוּדָה — הַשְׁתָּא יְרוּקָּה וּלְבָנָה טְמֵאָה, אֲדוּמָּה וּשְׁחוֹרָה מִיבַּעְיָא? אֶלָּא לָאו רַבָּנַן, וּפְלִיגִי!</p>
+      <p>אֶלָּא אָמַר רַב נַחְמָן בַּר יִצְחָק: בְּאֶפְשָׁר לִפְתִיחַת הַקֶּבֶר בְּלֹא דָּם קָמִיפַּלְגִי, וּבִפְלוּגְתָּא דְהָנֵי תַנָּאֵי, דְּתַנְיָא: קִשְּׁתָה שְׁנַיִם, וְלַשְּׁלִישִׁי הִפִּילָה, וְאֵינָהּ יוֹדַעַת מָה הִפִּילָה,</p>
+      <p>הֲרֵי זוֹ סְפֵק לֵידָה סְפֵק זִיבָה, מְבִיאָה קׇרְבָּן וְאֵינוֹ נֶאֱכָל.</p>
+      <p>רַבִּי יְהוֹשֻׁעַ אוֹמֵר: מְבִיאָה קׇרְבָּן וְנֶאֱכָל, שֶׁאִי אֶפְשָׁר לִפְתִיחַת הַקֶּבֶר בְּלֹא דָּם.</p>
+      <p>לִישָּׁנָא אַחְרִינָא אָמְרִי לַהּ: אָמַר רַב יְהוּדָה אָמַר שְׁמוּאֵל: לֹא טִימֵּא רַבִּי יְהוּדָה אֶלָּא בַּחֲתִיכָה שֶׁל אַרְבָּעָה מִינֵי דָמִים, אֲבָל שֶׁל שְׁאָר מִינֵי דָמִים — טְהוֹרָה.</p>
+      <p>אִינִי? וְהָא כִּי אֲתָא רַב הוֹשַׁעְיָא מִנְּהַרְדְּעָא, אֲתָא וְאַיְיתִי מַתְנִיתָא בִּידֵיהּ: הַמַּפֶּלֶת חֲתִיכָה אֲדוּמָּה, וּשְׁחוֹרָה, יְרוּקָּה, וּלְבָנָה — אִם יֵשׁ עִמָּהּ דָּם — טְמֵאָה, וְאִם לָאו — טְהוֹרָה. וְרַבִּי יְהוּדָה אוֹמֵר: בֵּין כָּךְ וּבֵין כָּךְ טְמֵאָה.</p>
+      <p>קָתָנֵי ״אֲדוּמָּה וּשְׁחוֹרָה, יְרוּקָּה וּלְבָנָה״, וּפְלִיג רַבִּי יְהוּדָה!</p>
+      <p>וְכִי תֵימָא, כִּי פְּלִיג רַבִּי יְהוּדָה אַאֲדוּמָּה וּשְׁחוֹרָה, אֲבָל יְרוּקָּה וּלְבָנָה לָא, אֶלָּא יְרוּקָּה וּלְבָנָה מַאן קָתָנֵי לַהּ?</p>
+      <p>אִילֵּימָא לְרַבָּנַן — הַשְׁתָּא אֲדוּמָּה וּשְׁחוֹרָה קָא מְטַהֲרִי רַבָּנַן, יְרוּקָּה וּלְבָנָה מִיבַּעְיָא? אֶלָּא לָאו לְרַבִּי יְהוּדָה, וּפְלִיג!</p>
+      <p>אֶלָּא אָמַר רַב יְהוּדָה: בְּאֶפְשָׁר לִפְתִיחַת הַקֶּבֶר בְּלֹא דָּם קָמִיפַּלְגִי, וּבִפְלוּגְתָּא דְהָנֵי תַנָּאֵי, דְּתַנְיָא: קִשְּׁתָה שְׁנַיִם, וְלַשְּׁלִישִׁי הִפִּילָה, וְאֵינָהּ יוֹדַעַת מָה הִפִּילָה — הֲרֵי זוֹ סְפֵק לֵידָה סְפֵק זִיבָה, מְבִיאָה קׇרְבָּן וְאֵינוֹ נֶאֱכָל.</p>
+      <p>רַבִּי יְהוֹשֻׁעַ אוֹמֵר: מְבִיאָה קׇרְבָּן וְנֶאֱכָל, לְפִי שֶׁאִי אֶפְשָׁר לִפְתִיחַת הַקֶּבֶר בְּלֹא דָּם.</p>
+      <p>תָּנוּ רַבָּנַן: הַמַּפֶּלֶת חֲתִיכָה, סוֹמְכוֹס אוֹמֵר מִשּׁוּם רַבִּי מֵאִיר, וְכֵן הָיָה רַבִּי שִׁמְעוֹן בֶּן מְנַסְיָא אוֹמֵר כִּדְבָרָיו: קוֹרְעָהּ, אִם יֵשׁ דָּם בְּתוֹכָהּ — טְמֵאָה, וְאִם לָאו — טְהוֹרָה.</p>
+      <p>כְּרַבָּנַן, וַעֲדִיפָא מִדְּרַבָּנַן. כְּרַבָּנַן — דְּאָמְרִי: אֶפְשָׁר לִפְתִיחַת הַקֶּבֶר בְּלֹא דָּם. וַעֲדִיפָא מִדְּרַבָּנַן — דְּאִינְהוּ סָבְרִי: עִמָּהּ — אִין, בְּתוֹכָהּ — לָא, וְסוֹמְכוֹס סָבַר: אֲפִילּוּ בְּתוֹכָהּ.</p>
+      <p>וְתַנְיָא אִידַּךְ: הַמַּפֶּלֶת חֲתִיכָה, רַבִּי אַחָא אוֹמֵר: קוֹרְעָהּ, אִם תּוֹכָהּ מַאֲדִים — טְמֵאָה, וְאִם לָאו — טְהוֹרָה.</p>
+      <p>כְּסוֹמְכוֹס, וַעֲדִיפָא מִסּוֹמְכוֹס.</p>
+      <p>וְתַנְיָא אִידַּךְ: הַמַּפֶּלֶת חֲתִיכָה, רַבִּי בִּנְיָמִין אוֹמֵר: קוֹרְעָהּ, אִם יֵשׁ בָּהּ עֶצֶם — אִמּוֹ טְמֵאָה לֵידָה. אָמַר רַב חִסְדָּא: וּבַחֲתִיכָה לְבָנָה. וְכֵן כִּי אֲתָא זוּגָא דְּמִן חַדְיָיב, אֲתָא וְאַיְיתִי מַתְנִיתָא בִּידֵיהּ: הַמַּפֶּלֶת חֲתִיכָה לְבָנָה — קוֹרְעָהּ, אִם יֵשׁ בָּהּ עֶצֶם — אִמּוֹ טְמֵאָה לֵידָה.</p>
+      <p>אָמַר רַבִּי יוֹחָנָן מִשּׁוּם רַבִּי שִׁמְעוֹן בֶּן יוֹחַי: הַמַּפֶּלֶת חֲתִיכָה — קוֹרְעָהּ, אִם יֵשׁ בָּהּ דָּם אָגוּר — טְמֵאָה, וְאִם לָאו — טְהוֹרָה, כְּסוֹמְכוֹס, וְקִילָּא מִכּוּלְּהוּ.</p>
+      <p>בְּעָא מִינֵּיהּ רַבִּי יִרְמְיָה מֵרַבִּי זֵירָא: הָרוֹאָה דָּם בִּשְׁפוֹפֶרֶת מַהוּ? ״בִּבְשָׂרָהּ״ אֲמַר רַחֲמָנָא, וְלֹא בִּשְׁפוֹפֶרֶת, אוֹ דִלְמָא הַאי ״בִּבְשָׂרָהּ״ מִיבְּעֵי לֵיהּ שֶׁמְּטַמְּאָה מִבִּפְנִים כְּבַחוּץ?</p>
+      <p>אֲמַר לֵיהּ: ״בִּבְשָׂרָהּ״ אֲמַר רַחֲמָנָא וְלֹא בִּשְׁפוֹפֶרֶת, דְּאִי ״בִּבְשָׂרָהּ״ מִבָּעֵי לֵיהּ שֶׁמְּטַמְּאָה מִבִּפְנִים כְּבַחוּץ, אִם כֵּן נֵימָא קְרָא ״בַּבָּשָׂר״, מַאי ״בִּבְשָׂרָהּ״? שְׁמַע מִינָּה תַּרְתֵּי.</p>
+      <p>וְהָא אָמַר רַבִּי יוֹחָנָן מִשּׁוּם רַבִּי שִׁמְעוֹן בֶּן יוֹחַי: הַמַּפֶּלֶת חֲתִיכָה — קוֹרְעָהּ, אִם יֵשׁ בָּהּ דָּם אָגוּר — טְמֵאָה, וְאִם לָאו — טְהוֹרָה!</p>
+      <p>הָכִי הַשְׁתָּא? הָתָם דַּרְכָּהּ שֶׁל אִשָּׁה לִרְאוֹת דָּם בַּחֲתִיכָה, הָכָא אֵין דַּרְכָּהּ שֶׁל אִשָּׁה לִרְאוֹת דָּם בִּשְׁפוֹפֶרֶת.</p>
+      <p>לֵימָא שְׁפוֹפֶרֶת תַּנָּאֵי הִיא, דְּתַנְיָא: הַמַּפֶּלֶת חֲתִיכָה, אַף עַל פִּי שֶׁמְּלֵאָה דָּם, אִם יֵשׁ עִמָּהּ דָּם — טְמֵאָה, וְאִם לָאו — טְהוֹרָה. רַבִּי אֱלִיעֶזֶר אוֹמֵר: ״בִּבְשָׂרָהּ״ — וְלֹא בַּשָּׁפִיר וְלֹא בַּחֲתִיכָה.</p>
+      <p>רַבִּי אֱלִיעֶזֶר — הַיְינוּ תַּנָּא קַמָּא! אֵימָא: שֶׁרַבִּי אֱלִיעֶזֶר אוֹמֵר ״בִּבְשָׂרָהּ״ — וְלֹא בַּשָּׁפִיר וְלֹא בַּחֲתִיכָה.</p>
+      <p>וַחֲכָמִים אוֹמְרִים: אֵין זֶה דַּם נִדָּה אֶלָּא דַּם חֲתִיכָה. תַּנָּא קַמָּא נָמֵי טַהוֹרֵי מְטַהֵר, אֶלָּא דְּפַלַּי פַּלּוֹיֵי אִיכָּא בֵינַיְיהוּ.</p>
+      <p>תַּנָּא קַמָּא סָבַר ״בִּבְשָׂרָהּ״ — וְלֹא בַּשָּׁפִיר וְלֹא בַּחֲתִיכָה, וְהוּא הַדִּין לִשְׁפוֹפֶרֶת. וְהָנֵי מִילֵּי הֵיכָא דְּשִׁיעָא, אֲבָל פַּלַּי פַּלּוֹיֵי — טְמֵאָה. מַאי טַעְמֵיהּ? ״בִּבְשָׂרָהּ״ קָרֵינָא בֵּיהּ.</p>
+      <p>וְאָתוּ רַבָּנַן לְמֵימַר: אַף עַל גַּב דְּפַלַּי פַּלּוֹיֵי — אֵין זֶה דַּם נִדָּה אֶלָּא דַּם חֲתִיכָה. הָא דַּם נִדָּה וַדַּאי טָמֵא, וַאֲפִילּוּ בִּשְׁפוֹפֶרֶת נָמֵי!</p>
+      <p>אָמַר אַבָּיֵי: בִּשְׁפוֹפֶרֶת כּוּלֵּי עָלְמָא לָא פְּלִיגִי דִּטְהוֹרָה,</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Daf 21a</b></p>
+      <p><b>Le vin pour l'examen du sang.</b> Pour l'examen du sang, le vin de Sharon est jugé comme le vin de Carmel non coupé, non coupé d'eau et non vieilli. Rav Yitz'hak bar Avoudimi : pour tout sang de la couleur du vin coupé, on n'examine qu'avec une simple coupe de Tibériade. Pourquoi ? Abayé : les ustensiles sont faits selon un standard : une coupe contenant un <i>log</i> est faite de cent <i>dinars</i> de matière, une coupe de deux <i>log</i> de deux cents ; mais la simple coupe de Tibériade, même de deux <i>log</i>, est faite de cent <i>dinars</i> ; la matière fine laisse mieux voir la rougeur du vin.</p>
+      <p><b>MICHNA (3:1-2).</b> Voir ci-dessus : la chair informe avec du sang rend impure comme niddah, sans sang pure ; Rabbi Yehouda déclare impure dans les deux cas. Les objets rouges se jettent dans l'eau ; poisson, sauterelle, reptile, ver : impure avec du sang ; animal ou oiseau : jours de mâle ou de femelle (Rabbi Meïr) ; les Sages : ce qui n'a pas forme humaine n'est pas un enfant.</p>
+      <p><b>GUEMARA : le désaccord sur la chair informe.</b> Rav Yehouda au nom de Chemouel : Rabbi Yehouda ne l'a déclarée impure sans sang que s'il s'agit d'un morceau qui a l'apparence d'un des quatre sangs impurs. Rabbi Yo'hanan : si le morceau a l'apparence d'un des quatre sangs impurs, tous s'accordent qu'elle est impure ; sinon, tous s'accordent qu'elle est pure. Ils ne discutent que si elle ne sait pas quelle apparence avait le morceau perdu : Rabbi Yehouda suit la majorité des morceaux, qui sont de l'apparence des quatre sangs ; les Sages disent qu'on ne dit pas que la majorité des morceaux est de cette apparence.</p>
+      <p><b>Une baraïta contraire.</b> Quand Rav Hoshaya vint de Neharde'a, il apporta une baraïta : « une femme qui expulse un morceau rouge, noir, vert ou blanc : avec du sang elle est impure, sinon pure ; Rabbi Yehouda dit : dans les deux cas elle est impure ». Cette baraïta pose une difficulté à Chemouel (sur un point : le vert et le blanc ne sont pas des sangs impurs, et pourtant Rabbi Yehouda est en désaccord) et deux difficultés à Rabbi Yo'hanan (le rouge et le noir : il dit que tous s'accordent qu'elle est impure, alors que les Sages la déclarent pure). Si l'on dit que Rabbi Yehouda ne discute que sur le rouge et le noir, pour qui la baraïta enseigne-t-elle le vert et le blanc ? Pour les Sages, c'est inutile ; c'est donc pour Rabbi Yehouda, ce qui contredit Chemouel. Et si l'on dit que les Sages ne discutent que sur le vert et le blanc, pour qui enseigne-t-elle le rouge et le noir ? Pour Rabbi Yehouda, c'est inutile ; c'est donc pour les Sages, ce qui contredit Rabbi Yo'hanan.</p>
+      <p><b>Autre explication de Rav Na'hman bar Yitz'hak.</b> Ils discutent de la possibilité d'une <i>ouverture de la matrice sans sang</i>, comme dans la baraïta : une femme a des douleurs d'accouchement avec du sang deux jours de suite, et le troisième jour elle expulse sans savoir ce qu'elle a expulsé (un fœtus mort-né ? du sang ?) : c'est un doute de naissance et un doute de zivah ; elle apporte un sacrifice, mais il n'est pas mangé par les Cohanim, car peut-être n'a-t-elle ni accouché ni vu de zivah, et son oiseau devient impropre. Rabbi Yehochoua dit : elle apporte un sacrifice et il est mangé, car elle est certainement accouchée ou zava, puisque l'ouverture de la matrice ne se fait pas sans sang.</p>
+      <p><b>Daf 21b</b></p>
+      <p><b>Autre version.</b> Rav Yehouda au nom de Chemouel : même enseignement. Même objection de la baraïta de Rav Hoshaya. Rav Yehouda donne alors la même explication : ils discutent de la possibilité d'ouverture de la matrice sans sang, comme la baraïta de la femme en travail et de Rabbi Yehochoua.</p>
+      <p><b>Déchirer le morceau.</b> Sumakhos au nom de Rabbi Meïr, et Rabbi Chimon ben Menassia : un Sage doit déchirer la chair ; s'il y a du sang à l'intérieur, elle est impure ; sinon, pure. Cela rejoint l'avis des Sages (l'ouverture est possible sans sang), mais est plus strict : les Sages ne déclarent impure que si le sang est sorti avec la chair, non s'il est trouvé à l'intérieur. Rabbi Aha : on la déchire, et si l'intérieur est rouge, même sans sang, elle est impure ; c'est plus strict que Sumakhos. Rabbi Binyamin : on la déchire ; s'il y a un os, c'est un fœtus et la mère est impure comme accouchée. Rav 'Hisda : cela vaut pour une chair blanche. Les deux Sages venus de 'Hadyav ont apporté une baraïta dans ce sens. Rabbi Yo'hanan au nom de Rabbi Chimon bar Yo'haï : on déchire ; s'il y a un amas de sang, elle est impure, sinon pure : c'est comme Sumakhos, mais plus indulgent que tous (il faut un amas de sang).</p>
+      <p><b>Le tube.</b> Rabbi Yirmeya demande à Rabbi Zeira : une femme qui a introduit un tube et voit du sang ? Il est écrit « et son flux dans sa chair sera du sang » (Lévitique 15:19) : peut-être seulement « dans sa chair » et non par un tube ; ou peut-être « dans sa chair » vient enseigner qu'elle est impure en trouvant du sang à l'intérieur comme en en voyant à l'extérieur. Rabbi Zeira : l'Miséricordieux dit « dans sa chair », donc par sa chair et non par un tube ; si le verset ne voulait enseigner que le sang à l'intérieur, il dirait « dans la chair » ; « dans sa chair » enseigne les deux : impure par le sang à l'intérieur, pure par le sang d'un tube. Objection : Rabbi Yo'hanan au nom de Rabbi Chimon bar Yo'haï déclare impure par un amas de sang dans la chair ! Réponse : là, c'est la manière de la femme de voir du sang dans un morceau ; ici, ce n'est pas la manière de voir du sang par un tube.</p>
+      <p><b>Une baraïta sur le tube.</b> Une femme qui expulse un morceau plein de sang : s'il y a du sang à l'extérieur, elle est impure ; sinon, pure. Rabbi Éliézer : « dans sa chair » enseigne qu'elle n'est rendue impure que par le sang qui sort en contact direct avec sa chair, non par le sang d'un sac embryonnaire ni d'un morceau. La guemara : l'avis de Rabbi Éliézer est le même que celui du premier tanna ; la baraïta tout entière est de Rabbi Éliézer et doit se lire « même si le morceau est plein de sang, elle est pure ». Les Sages : « s'il y a du sang dans le morceau, ce n'est pas du sang de niddah mais du sang du morceau ». Différence entre le premier tanna et les Sages : le cas où le morceau est fendu et son sang touche le corps de la femme. Le premier tanna : si le morceau est lisse, pure ; s'il est fendu, impure, car le sang touche sa chair. Les Sages : même fendu, pure, car ce n'est pas du sang de niddah, d'où l'on déduit que du vrai sang de niddah rend impure même par un tube. Abayé rejette : pour le tube, tous s'accordent qu'elle est pure.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>For the purposes of the examination of blood, <b>the</b> wine <b>of the Sharon</b> region in Eretz Yisrael <b>has the same status as undiluted Carmelite</b> wine <b>and not diluted</b> Carmelite wine, <b>new</b> Carmelite wine <b>and not old</b> Carmelite wine.</p>
+      <p><b>Rav Yitzḥak bar Avudimi says: And</b> in <b>all</b> cases of blood that has the color of diluted wine, <b>one examines</b> blood <b>only with a simple Tiberian cup.</b> The Gemara asks: <b>What is the reason? Abaye says:</b> Containers are designed according to <b>a universal</b> standard, such that a cup that can <b>contain a <i>log</i></b> of wine, <b>one fashions it from</b> material weighing <b>one hundred dinars,</b> whereas a cup that can contain <b>two <i>log</i>, one fashions it from</b> material weighing <b>two hundred dinars.</b> By contrast, in the case of <b>a simple Tiberian cup, even</b> one that can <b>contain two <i>log</i>, one fashions it from</b> material weighing <b>one hundred dinars. And since</b> the material from which the cup is made <b>is weak,</b> it is more transparent and therefore the redness of the wine inside is <b>more noticeable.</b> Consequently, one must compare the blood to wine in a cup of this kind.</p>
+      <p><strong>MISHNA:</strong> In the case of a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, <b>if there is blood</b> that emerges <b>with it,</b> the woman is <b>ritually impure</b> with the impurity of a menstruating woman. <b>And if not, she is pure,</b> as she is neither a menstruating woman nor a woman after childbirth. <b>Rabbi Yehuda says:</b> In <b>both this</b> case, where blood emerged, <b>and that</b> case, where no blood emerged, the woman <b>is impure</b> with the impurity of a menstruating woman, as there was certainly undetected blood that emerged with the flesh.</p>
+      <p>In the case of a woman <b>who discharges</b> an item <b>similar to a shell,</b> or <b>similar to a hair,</b> or <b>similar to soil,</b> or <b>similar to mosquitoes,</b> if such items are <b>red, she should cast</b> them <b>into water</b> to ascertain their nature: <b>If they dissolved,</b> it is blood, and the woman <b>is impure</b> with the impurity of a menstruating woman; <b>and if not, she is pure.</b></p>
+      <p>In the case of a woman <b>who discharges</b> an item <b>similar to fish</b> or to <b>grasshoppers, repugnant creatures, or creeping animals, if there is blood</b> that emerges <b>with them,</b> the woman <b>is impure</b> with the impurity of a menstruating woman. <b>And if not, she is pure.</b></p>
+      <p>With regard to a woman <b>who discharges</b> tissue in the form of <b>a type of domesticated animal, undomesticated animal, or bird, whether</b> it had the form of <b>a non-kosher</b> species or <b>a kosher</b> species, <b>if</b> it was <b>a male</b> fetus, then <b>she observes</b> the periods of impurity, seven days, and purity, thirty-three days, established in the Torah (see Leviticus 12:2–5) <b>for</b> a woman who gives birth to <b>a male. And if</b> the fetus was <b>a female,</b> the woman <b>observes</b> the periods of impurity, fourteen days, and purity, sixty-six days, established in the Torah <b>for</b> a woman who gives birth to <b>a female.</b></p>
+      <p><b>And if</b> the sex of the fetus <b>is unknown, she observes</b> the strictures that apply to a woman who gave birth both <b>to a male and to a female.</b> Accordingly, she is prohibited from engaging in intercourse for fourteen days, but after that, she will be permitted to engage in intercourse despite a discharge of uterine blood until thirty-three days pass after the seven days she would have been prohibited if the fetus were male. The prohibition to enter the Temple will continue until eighty days have passed from the discharge of the fetus. This is <b>the statement of Rabbi Meir. And the Rabbis say: Any</b> fetus <b>that is not of human form is not</b> regarded as <b>an offspring</b> with regard to observance of these periods, and she is permitted to engage in intercourse provided that she does not experience a discharge of uterine blood.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that if a woman discharges an amorphous piece of tissue and no blood emerges with it, the Rabbis say that she is pure, whereas Rabbi Yehuda says that she is impure. <b>Rav Yehuda says</b> that <b>Shmuel says: Rabbi Yehuda deemed</b> the woman <b>impure,</b> despite the fact that no blood emerged, <b>only in</b> the case of <b>a piece</b> of tissue that has the appearance <b>of</b> one of <b>the four types of</b> ritually impure <b>blood,</b> as in such a case the piece has the status of blood. <b>But</b> if it has the appearance <b>of other types of blood,</b> the woman <b>is pure.</b></p>
+      <p><b>And Rabbi Yoḥanan says</b> there is a different explanation of the dispute: If a woman discharges a piece of tissue that has the appearance <b>of</b> one of <b>the four types of</b> ritually impure <b>blood, everyone,</b> i.e., Rabbi Yehuda and the Rabbis, <b>agrees</b> that she <b>is impure.</b> Likewise, if it has the appearance <b>of other types of blood, everyone agrees</b> that <b>she is pure.</b></p>
+      <p><b>They disagree only</b> with regard to a case <b>where</b> the woman <b>discharged</b> an amorphous piece of tissue, <b>and she</b> herself <b>does not know</b> exactly <b>what</b> was the appearance of the piece of tissue that <b>she discharged,</b> e.g., if it was lost. <b>Rabbi Yehuda holds: Follow the majority of</b> discharges of amorphous <b>pieces</b> of tissue, <b>and the majority of pieces</b> of tissue <b>are</b> of the appearance <b>of</b> one of the <b>four types of</b> impure <b>blood. And the Rabbis hold: We do not say</b> that <b>the majority of pieces</b> of flesh have the appearance <b>of</b> one of the <b>four types of</b> impure <b>blood.</b></p>
+      <p>The Gemara asks: <b>Is that so? But when Rav Hoshaya came from Neharde’a, he came and brought a <i>baraita</i> with him</b> that states: In the case of a woman <b>who discharges a piece</b> of tissue that is <b>red, black, green, or white, if there is blood</b> that emerges <b>with it,</b> the woman <b>is impure, and if not, she is pure. Rabbi Yehuda says: Both</b> in <b>this</b> case, where blood emerged, <b>and</b> in <b>that</b> case, where no blood emerged, the woman <b>is impure.</b> This <i>baraita</i> poses <b>a difficulty to</b> the statement of <b>Shmuel with regard to one</b> aspect of his opinion, <b>and</b> it poses a difficulty <b>to</b> the statement of <b>Rabbi Yoḥanan with regard to two</b> aspects of his opinion.</p>
+      <p>The Gemara elaborates: It poses a difficulty <b>to</b> the statement of <b>Shmuel with regard to one</b> aspect of his opinion, <b>as Shmuel said</b> that <b>Rabbi Yehuda deemed</b> the woman <b>impure only in</b> the case of <b>a piece</b> of tissue that has the appearance <b>of</b> one of <b>the four types of</b> impure <b>blood, and</b> yet the <i>baraita</i> <b>teaches</b> that according to the Rabbis the woman is pure if the piece of tissue is <b>green or white,</b> which are not among the four colors of ritually impure blood, <b>and</b> that Rabbi Yehuda <b>disagrees</b> with their opinion.</p>
+      <p><b>And if you would say</b> that <b>when Rabbi Yehuda disagrees</b> with the Rabbis, it is <b>with regard to</b> the case of <b>a red or black</b> piece of tissue, as these are among the four colors of ritually impure blood, <b>but with regard to</b> the case of <b>a green or white</b> piece he does <b>not</b> disagree with them, i.e., he concedes that the woman is pure, this cannot be correct. The Gemara explains why that explanation of the <i>baraita</i> is not possible: <b>But</b> if so, <b>for</b> the sake of clarifying <b>whose</b> opinion <b>does</b> the <i>baraita</i> <b>teach</b> the case of <b>a green or white</b> piece of tissue?</p>
+      <p><b>If we say</b> that it comes to clarify the opinion of <b>the Rabbis,</b> that is unnecessary: <b>Now</b> that in a case of <b>a red or black</b> piece of tissue, which are among the four colors of ritually impure blood, <b>the Rabbis deem</b> the woman <b>pure, is</b> it <b>necessary</b> to state that they deem her pure in a case of <b>a green or white</b> piece? <b>Rather,</b> is it <b>not</b> coming <b>to</b> clarify the opinion of <b>Rabbi Yehuda,</b> teaching that the Rabbis deem the woman pure in this case, <b>but</b> Rabbi Yehuda <b>disagrees</b> with them and deems her impure? This contradicts the explanation of Shmuel.</p>
+      <p><b>And furthermore,</b> the <i>baraita</i> poses an additional difficulty <b>to</b> the opinion of <b>Rabbi Yoḥanan,</b> in addition to the first difficulty explained above, <b>as he said</b> that if the piece of tissue has the appearance <b>of</b> one of <b>the four types of</b> ritually impure <b>blood</b> then <b>everyone agrees</b> that the woman <b>is impure,</b> and yet the <i>baraita</i> <b>teaches</b> the case of <b>a red or black</b> piece <b>and</b> states that <b>the Rabbis disagree</b> with Rabbi Yehuda and deem the woman pure.</p>
+      <p><b>And if you would say</b> that <b>when the Rabbis disagree</b> with Rabbi Yehuda, it is <b>with regard to</b> the case of <b>a green or white</b> piece of tissue, <b>but in</b> the case of <b>a red or black</b> piece they do <b>not</b> disagree with him, as they concede that the woman is impure; <b>but</b> if that is so, then <b>for</b> the sake of clarifying <b>whose</b> opinion <b>does</b> the <i>baraita</i> <b>teach</b> the case of <b>a red or black</b> piece?</p>
+      <p><b>If we say</b> that it comes to clarify the opinion of <b>Rabbi Yehuda,</b> this is unnecessary: <b>Now</b> that Rabbi Yehuda holds that in a case of <b>a green or white</b> piece the woman <b>is impure,</b> despite the fact that they are not among the four colors of ritually impure blood, <b>is</b> it <b>necessary</b> to state that she is impure in a case of <b>a red or black</b> piece? <b>Rather,</b> is it <b>not</b> coming to clarify the opinion of <b>the Rabbis,</b> teaching that Rabbi Yehuda deems the woman impure in this case, <b>but the Rabbis disagree</b> with him and maintain that she is pure?</p>
+      <p><b>Rather, Rav Naḥman bar Yitzḥak says</b> there is a different explanation of the dispute between the Rabbis and Rabbi Yehuda: <b>They disagree with regard to</b> whether or not <b>opening of the womb is possible without</b> a discharge of <b>blood. And</b> they disagree <b>with regard to</b> the issue that is the subject of <b>the dispute between these <i>tanna’im</i>, as it is taught</b> in a <i>baraita</i>: If a woman experienced <b>difficulty in labor</b> during which blood emerged on <b>two</b> consecutive days, <b>and on the third</b> day <b>she discharged, but she does not know what she discharged,</b> i.e., whether it was a stillborn human fetus, and whether blood emerged during the miscarriage,</p>
+      <p><b>it is uncertain</b> whether <b>that</b> woman has the status of one who gave <b>birth,</b> and it is <b>uncertain</b> whether she has the status of a woman who experiences <b>an irregular discharge of blood from the uterus [<i>ziva</i>].</b> Therefore, <b>she brings an offering,</b> like any woman after childbirth or after <i>ziva</i>, <b>but</b> the offering <b>is not eaten</b> by the priests. The reason is that perhaps she neither gave birth nor experienced <i>ziva</i>, and is therefore exempt from bringing an offering. Consequently, her bird sin offering is disqualified, and is forbidden in consumption, as a bird offering is killed by pinching its neck, which is not the valid manner of slaughtering a non-sacred bird.</p>
+      <p><b>Rabbi Yehoshua says:</b> The woman <b>brings an offering, and it is eaten.</b> The reason is that she is certainly either a woman after childbirth or a <i>zava</i>, <b>as opening of the womb is not possible without</b> a discharge of <b>blood.</b> The <i>tanna’im</i> in the <i>baraita</i> disagree about whether opening of the womb is possible without a discharge of blood. Rav Naḥman bar Yitzḥak maintains that this is also the issue in dispute between Rabbi Yehuda and the Rabbis in the mishna.</p>
+      <p>§ <b>Some say another version</b> of the above discussion. <b>Rav Yehuda says</b> that <b>Shmuel says: Rabbi Yehuda deemed</b> the woman <b>impure,</b> despite the fact that no blood emerged, <b>only in</b> the case of <b>a piece</b> of tissue that has the appearance <b>of</b> one of the <b>four types of</b> ritually impure <b>blood, but</b> if it has the appearance <b>of other types of blood,</b> the woman <b>is pure.</b></p>
+      <p>The Gemara asks: <b>Is that so? But when Rav Hoshaya came from Neharde’a, he came and brought a <i>baraita</i> with him</b> that states: In the case of a woman <b>who discharges a piece</b> of tissue that is <b>red, or black, green, or white, if there is blood</b> that emerges <b>with it,</b> the woman <b>is impure, and if not, she is pure. And Rabbi Yehuda says:</b> In <b>both this</b> case, where blood emerged, <b>and that</b> case, where no blood emerged, the woman <b>is impure.</b></p>
+      <p>The Gemara concludes its challenge: The <i>baraita</i> <b>teaches</b> both a case where the piece of tissue is <b>red or black,</b> and a case where it is not one of the four types of impure blood but it is <b>green or white,</b> i.e., in all of these cases the Rabbis hold that the woman is pure, <b>and</b> yet <b>Rabbi Yehuda disagrees</b> with their opinion.</p>
+      <p><b>And if you would say</b> that <b>when Rabbi Yehuda disagrees</b> with the Rabbis, it is <b>with regard to</b> the case of <b>a red or black</b> piece of tissue, <b>but</b> with regard to the case of a <b>green or white</b> piece he does <b>not</b> disagree with them, as he concedes that the woman is pure; <b>but</b> if that is so, <b>for</b> the sake of clarifying <b>whose</b> opinion does the <i>baraita</i> <b>teach</b> the case of <b>a green or white</b> piece of tissue?</p>
+      <p><b>If we say</b> that it comes <b>to</b> clarify the opinion of <b>the Rabbis,</b> that is unnecessary: <b>Now</b> that in the case of <b>a red or black</b> piece of tissue <b>the Rabbis deem</b> the woman <b>pure, is it necessary</b> to state that they deem her pure in a case of <b>a green or white</b> piece? <b>Rather, is it not</b> coming <b>to</b> clarify the opinion of <b>Rabbi Yehuda,</b> teaching that the Rabbis deem the woman pure in this case, <b>but</b> Rabbi Yehuda <b>disagrees</b> with them and deems her impure? This contradicts the explanation of Shmuel.</p>
+      <p><b>Rather, Rav Yehuda says</b> there is a different explanation of the dispute between the Rabbis and Rabbi Yehuda: <b>They disagree with regard to</b> whether or not <b>opening of the womb is possible without</b> a discharge of <b>blood. And</b> they disagree <b>with regard to</b> the issue that is the subject of <b>the dispute between these <i>tanna’im</i>, as it is taught</b> in a <i>baraita</i>: If a woman experienced <b>difficulty in labor</b> during which blood emerged on <b>two</b> consecutive days, <b>and on the third</b> day <b>she discharged, but she does not know what she discharged, it is uncertain</b> whether she has the status of a woman who gave <b>birth,</b> and it is <b>uncertain</b> whether she has the status of a woman who experienced <b><i>ziva</i>.</b> Therefore <b>she brings an offering, but it is not eaten</b> by the priests.</p>
+      <p><b>Rabbi Yehoshua says:</b> The woman <b>brings an offering, and it is eaten.</b> The reason is that she is certainly either a woman after childbirth or a <i>zava</i>, <b>as opening of the womb is not possible without</b> a discharge of <b>blood.</b> This is also the matter in dispute between the Rabbis and Rabbi Yehuda.</p>
+      <p>§ <b>The Sages taught</b> in a <i>baraita</i>: In the case of a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, <b>Sumakhos says in the name of Rabbi Meir, and likewise Rabbi Shimon ben Menasya would say in accordance with his statement:</b> A Sage who is presented with this piece of tissue should <b>tear it</b> to examine it. <b>If there is blood inside it,</b> the woman is <b>ritually impure, and if not, she is pure.</b></p>
+      <p>The Gemara compares this <i>baraita</i> to the ruling of the mishna: This statement is basically <b>in accordance with</b> the opinion of <b>the Rabbis</b> in the mishna, <b>but it is</b> more <b>far-reaching,</b> i.e., more stringent, <b>than that</b> ruling of <b>the Rabbis. It is in accordance with</b> the opinion of <b>the Rabbis, as they say</b> that <b>opening of the womb is possible without</b> a discharge of <b>blood,</b> whereas Rabbi Yehuda maintains that opening of the womb is impossible without a discharge of blood. <b>But</b> the ruling of the <i>baraita</i> is more <b>far-reaching than that</b> ruling of <b>the Rabbis, as they hold</b> that if blood emerges <b>with</b> the piece of tissue, then <b>yes,</b> the woman is impure, but if blood is found <b>inside</b> the piece of tissue, she is <b>not</b> impure; <b>and Sumakhos holds</b> that <b>even</b> if blood is found <b>inside</b> the piece, the woman is impure.</p>
+      <p><b>And it is taught</b> in <b>another</b> <i>baraita</i> with regard to a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, that <b>Rabbi Aḥa says:</b> One <b>tears it</b> open, and <b>if its interior looks red,</b> even if it contains no blood, the woman <b>is impure; and if</b> it does <b>not</b> have a red appearance, <b>she is pure.</b></p>
+      <p>The Gemara compares this <i>baraita</i> to the aforementioned opinion of Sumakhos: This ruling of Rabbi Aḥa is basically <b>in accordance with</b> the opinion of <b>Sumakhos,</b> as Rabbi Aḥa also requires that the interior of the piece of tissue must be examined to see if there is blood on the inside, <b>but</b> it is more <b>far-reaching than</b> the opinion of <b>Sumakhos,</b> as Rabbi Aḥa deems the woman impure even if the piece of tissue merely looks red on the inside but does not contain blood.</p>
+      <p><b>And it is taught</b> in <b>another</b> <i>baraita</i> with regard to a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, that <b>Rabbi Binyamin says</b> one <b>tears it</b> open to examine it. <b>If it contains a bone,</b> it is considered a fetus, and <b>its mother is impure</b> with the impurity of a woman who gave <b>birth. Rav Ḥisda says: And</b> this applies <b>in</b> the case of <b>a white piece</b> of flesh; only in such a situation does the existence of a bone render it a fetus. <b>And likewise, when a pair</b> of Torah scholars <b>came from Ḥadyab, they came and brought a <i>baraita</i> with them:</b> In the case of a woman <b>who discharges a white piece</b> of tissue, one <b>tears it</b> open to examine it, and <b>if it contains a bone, its mother is impure</b> with the impurity of a woman who gave <b>birth.</b></p>
+      <p><b>Rabbi Yoḥanan says in the name of Rabbi Shimon ben Yoḥai:</b> With regard to a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, one <b>tears it</b> open to examine it. <b>If it contains</b> a quantity of <b>accumulated blood,</b> the woman <b>is impure; and if not, she is pure.</b> The Gemara comments: This is basically <b>in accordance with</b> the opinion of <b>Sumakhos,</b> that blood found inside the piece of tissue renders the woman impure, <b>but it is more lenient than all</b> the previous opinions, i.e., Sumakhos and Rabbi Aḥa, as according to Rabbi Shimon ben Yoḥai the woman is rendered impure only if there is a quantity of accumulated blood.</p>
+      <p>§ <b>Rabbi Yirmeya asked Rabbi Zeira:</b> In the case of a woman <b>who</b> inserted a tube into her vagina and <b>sees blood,</b> i.e., she found blood <b>in</b> the <b>tube, what is</b> the <i>halakha</i>? Rabbi Yirmeya clarified his question: Since it is stated: “And if a woman has an issue, and her issue <b>in her flesh</b> is blood, she shall be in her impurity seven days” (Leviticus 15:19), perhaps <b>the Merciful One states</b> in this verse that the woman is impure only if the blood is discharged through “her flesh” <b>and not through a tube. Or perhaps this</b> term: <b>“In her flesh,”</b> is <b>necessary</b> to teach the <i>halakha</i> <b>that</b> a woman <b>becomes impure</b> by finding blood <b>inside</b> her vagina <b>just as</b> she becomes impure by experiencing bleeding <b>outside</b> her vagina, i.e., once the blood enters the vaginal canal from the uterus the woman is ritually impure.</p>
+      <p>Rabbi Zeira <b>said to</b> Rabbi Yirmeya: <b>The Merciful One states: “In her flesh,”</b> meaning that the woman is impure only if the blood is discharged through “her flesh” <b>and not through a tube. As, if</b> the term <b>“in her flesh” is necessary</b> to teach <b>that</b> a woman <b>becomes impure</b> by finding blood <b>inside</b> her vagina <b>just as</b> by seeing blood <b>outside</b> her vagina, <b>if so, let the verse say: In the flesh. What</b> is the significance of the fact that the verse states: <b>“In her flesh”? Conclude two</b> conclusions <b>from</b> the term, both that a woman becomes impure by the presence of blood inside her vagina, and that a woman who experiences bleeding that emerged through a tube is ritually pure.</p>
+      <p>The Gemara asks: <b>But doesn’t Rabbi Yoḥanan say in the name of Rabbi Shimon ben Yoḥai:</b> With regard to a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, one <b>tears it</b> open to examine it; <b>if it contains</b> a quantity of <b>accumulated blood,</b> the woman <b>is impure, and if not, she is pure?</b> If a woman who sees blood that emerged inside a piece of tissue becomes impure, the same should apply to a woman who sees blood that emerged through a tube.</p>
+      <p>The Gemara responds: <b>How can</b> these cases <b>be compared? There,</b> with regard to a piece of tissue, the woman is impure, as <b>it is the manner of a woman to see blood inside</b> such <b>a piece</b> of tissue. Therefore, this blood fulfills the condition stated in the verse: “In her flesh.” By contrast, <b>here,</b> in the case of a tube, the woman should not be impure, as <b>it is not the manner of a woman to see blood</b> that emerged <b>through a tube.</b></p>
+      <p>The Gemara suggests: <b>Shall we say</b> that the <i>halakha</i> in the case of <b>a tube is</b> subject to a dispute between <b><i>tanna’im</i>? As it is taught</b> in a <i>baraita</i>: With regard to a woman <b>who discharges</b> an amorphous <b>piece</b> of tissue, <b>even though</b> the piece <b>is full of blood, if there is blood</b> on the outside that emerges <b>with it,</b> the woman <b>is impure; and if not, she is pure. Rabbi Eliezer says:</b> The term <b>“in her flesh”</b> teaches that a woman is rendered impure only by blood that emerges through direct contact with her flesh, <b>and not</b> by blood that emerges <b>in a gestational sac, nor</b> by blood that emerges <b>in</b> an amorphous <b>piece</b> of tissue.</p>
+      <p>The Gemara interrupts its citation of the <i>baraita</i> and asks: <b>Isn’t</b> the opinion of <b>Rabbi Eliezer</b> identical to that of <b>the first <i>tanna</i>?</b> The first <i>tanna</i> also says that a woman does not become impure due to blood found in a piece of tissue. Rather, the entire <i>baraita</i> is the opinion of Rabbi Eliezer, and one must <b>say</b> that the <i>baraita</i> should read as follows: Even if the piece of tissue is full of blood the woman is pure, <b>as Rabbi Eliezer says</b> that the term <b>“in her flesh”</b> teaches that a woman is rendered impure only by blood that emerges through direct contact with her flesh, <b>and not</b> by blood that emerges <b>in a gestational sac, nor</b> by blood that emerges <b>in a piece</b> of tissue.</p>
+      <p>The <i>baraita</i> continues: <b>And the Rabbis say:</b> If there is blood in the piece of tissue, <b>this is not menstrual blood, but rather the blood of</b> the <b>piece</b> of tissue. The Gemara asks: Doesn’t <b>the first <i>tanna</i> also deem</b> the woman <b>pure?</b> What is the difference between the opinion of the Rabbis and that of the first <i>tanna</i>? The Gemara answers: <b>Rather,</b> the difference <b>between</b> the opinion of the first <i>tanna</i> and that of the Rabbis <b>is</b> with regard to a case <b>where</b> the piece of tissue is <b>cracked,</b> and its blood comes in direct contact with the woman’s body.</p>
+      <p><b>The first <i>tanna</i> holds</b> that the term <b>“in her flesh”</b> teaches that a woman is rendered impure only by blood that emerges through direct contact with her flesh, <b>and not</b> by blood that emerges <b>in a gestational sac, nor</b> by blood that emerges <b>in a piece</b> of tissue. <b>And the same is true with regard to</b> blood that emerges through <b>a tube. But this statement</b> applies only in a case <b>where</b> the piece of tissue is <b>smooth, but</b> if it is <b>cracked,</b> the woman is <b>impure. What is the reason for</b> this exception? Since the blood comes in direct contact with the woman’s flesh, <b>we read</b> the term <b>“in her flesh” with regard to it,</b> i.e., it fulfills that condition.</p>
+      <p><b>And the Rabbis come to say: Even though</b> the piece of tissue <b>is cracked,</b> the woman is pure, as <b>this is not menstrual blood but rather the blood of</b> the <b>piece</b> of tissue. It can be inferred from here <b>that</b> if the blood is <b>menstrual blood,</b> the woman <b>is certainly impure, and</b> this is true <b>even</b> if the blood emerges <b>through a tube.</b> Accordingly, the <i>halakha</i> in the case of a tube is subject to a dispute between <i>tanna’im</i>.</p>
+      <p><b>Abaye says</b> that this suggestion should be rejected: <b>In</b> the case of <b>a tube, everyone agrees that</b> the woman <b>is pure,</b> as derived from the term “in her flesh.”</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf contient la <b>fin du chapitre 2</b> (examen des couleurs de sang avec du vin), puis le début du <b>chapitre 3</b> avec la michna sur la <b>chair informe</b> et les objets expulsés, et enfin une discussion sur le <b>sang vu par un tube</b>.</p>
+
+<h4>1. L'examen du sang avec du vin</h4>
+<p>Pour reconnaître la couleur « du vin coupé » parmi les quatre sangs impurs, on compare le sang au vin. Le vin de Sharon vaut celui de Carmel non coupé, non vieilli. On utilise une coupe de verre fin de Tibériade, plus transparente, pour mieux voir la rougeur.</p>
+
+<h4>2. Pourquoi la chair informe sans sang est-elle discutée ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Opinion</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Explication du désaccord entre Rabbi Yehouda et les Sages</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Objection de la baraïta</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Chemouel</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda déclare impure seulement un morceau qui a l'apparence d'un des quatre sangs impurs</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le vert et le blanc ne sont pas des sangs impurs, mais Rabbi Yehouda diffère</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yo'hanan</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Si le morceau est de la couleur des quatre sangs, tous déclarent impure ; ils discutent seulement quand elle ne sait pas son aspect : la majorité des morceaux a-t-elle cette couleur ?</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux difficultés : le rouge et le noir sont aussi discutés</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Na'hman bar Yitz'hak / Rav Yehouda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ils discutent de l'<b>ouverture de la matrice sans sang</b>, comme dans la baraïta de Rabbi Yehochoua</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas d'objection : explication retenue</td></tr>
+</table>
+
+<h4>3. Autres méthodes pour examiner le morceau</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sage</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Méthode et règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sumakhos / Rabbi Chimon ben Menassia</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On déchire le morceau ; du sang à l'intérieur rend impure</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Aha</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On déchire ; si l'intérieur est rouge, même sans sang, elle est impure</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Binyamin</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On déchire ; un os fait de lui un fœtus, la mère est impure comme accouchée</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Chimon bar Yo'haï</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">On déchire ; il faut un amas de sang (le plus indulgent)</td></tr>
+</table>
+
+<h4>4. Le sang d'un tube</h4>
+<p>Rabbi Zeira déduit de « dans sa chair » (Lévitique 15:19) qu'une femme est rendue impure par le sang qui sort par sa chair, non par un tube. Abayé conclut que pour le tube, tous s'accordent qu'elle est pure.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> explique les termes de la guemara. « Le sharoni » : coupé d'eau. Pour l'examen avec la coupe de Tibériade : une coupe de verre simple, fine, où la rougeur du vin se voit bien. La michna « avec du sang elle est impure » : pour cause de niddah ; « sinon elle est pure » : ce n'est pas une naissance, car si c'en était une elle serait impure même sans sang, selon « comme les jours de la niddah » (Lévitique 12:2). <i>Yevhoushin</i> : moustiques. Les quatre sangs : rouge, comme l'eau de terre, comme le safran, comme le vin coupé ; le noir n'est pas compté car c'est du rouge brûlé. Dans la baraïta de la femme en travail, « elle a eu des douleurs deux jours » : dans les onze jours entre deux niddot ; « elle a expulsé le troisième » : et ne sait pas si elle a vu du sang pendant cette naissance, ni s'il s'agit d'un mort-né ou d'un simple vent. « Ouverture de la matrice » : l'utérus. Pour « doute de naissance, doute de zivah » : doute si elle doit un sacrifice de zivah ou de naissance, ou aucun ; si elle a accouché le troisième jour d'un enfant complet, c'est une naissance. Pour « un amas de sang » : beaucoup de sang. Pour « un tube » : un roseau creux introduit à cet endroit, dans lequel on trouve du sang. Pour « dans sa chair » : le flux doit venir par les parois de la matrice, sans interposition ; ce verset parle de la niddah, la seconde section (Lévitique 15:25) de la zava. Pour la chair fendue (<i>pelei peloui</i>) : elle a des fentes sur l'extérieur où est le sang. Selon Rachi, le premier tanna ne la déclare pure que par décret du verset, et la même loi vaut pour le tube ; les Sages tardifs ne sont pas précis dans le texte : ils la déclarent pure parce que ce n'est pas du sang de niddah.</p>
+<p><b>Tosafot</b> demandent : si Rabbi Yehouda suit la majorité des morceaux, ne devrait-on pas dire moitié-moitié et la déclarer impure en domaine privé ? On répond (Niddah 18b) que même Rabbi Yehouda ne considère pas qu'il y a une majorité complète, et qu'on ne brûle pas la teroumah pour cela. Sur « elle apporte un sacrifice mais il n'est pas mangé » : le doute est qu'elle n'ait ni vu ni accouché, ou qu'elle ait vu et accouché, auquel cas ce serait des douleurs proches de l'accouchement et elle serait pure. Sur « s'il rougit à l'intérieur » : même s'il n'a pas rougi à l'extérieur ; si l'extérieur a rougi, c'est plus fort, même sans rougeur intérieure, puisque le sang amassé à l'intérieur ne vaut que selon Sumakhos, tandis que celui de l'extérieur vaut même selon les Sages. Pour <i>zouza</i> : le Arukh dit que c'est le nom d'un sage. Sur le tube : Tosafot demandent pourquoi la guemara dit « sang de niddah, impure même par un tube », alors qu'on pourrait comprendre « parce que le morceau est fendu et qu'on lit "dans sa chair" » ; ils répondent que le questionneur pensait que les Sages discutent la parole explicite de Rabbi Éliézer.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p><b>À retenir</b></p>
+<ul>
+<li>Chair informe expulsée avec du sang : impure comme niddah ; sans sang : pure selon les Sages, impure selon Rabbi Yehouda.</li>
+<li>Désaccord expliqué : possibilité d'une ouverture de la matrice sans sang.</li>
+<li>Sumakhos, Rabbi Aha, Rabbi Binyamin et Rabbi Chimon bar Yo'haï proposent de déchirer le morceau pour l'examiner.</li>
+<li>Le sang vu par un tube introduit : pure, d'après « dans sa chair » (Abayé : tous s'accordent).</li>
+</ul>
+<p>Voir <a href="../choulhan-aroukh/yd_183.html">Yoré Dé'a 183</a> et la paracha <a href="../tanakh/paracha_metzora.html">Metzora</a>. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Niddah.21" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
