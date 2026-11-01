@@ -271,13 +271,41 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </a>
     <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
   <div style="display:flex; align-items:center; gap:8px;">
@@ -286,6 +314,13 @@
   </div>
 </header>
 
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
 <div class="wrap">
 
   <!-- ÉCRAN D'ACCUEIL -->
@@ -293,7 +328,7 @@
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Guemara Bekhorot 3 (3a-3b)</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -352,14 +387,14 @@ const QCM_TITRE = "QCM Guemara Bekhorot 3 (3a-3b)";
 
 const notions = {"A": "Les penalites pour vente illegale", "B": "Le debat sur le verset et la part minimale", "C": "Les incidents pratiques", "D": "Synthese et halakha"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Concernant les penalites discutees en debut de daf, quelle(s) affirmation(s) sont exactes ?","options":["Reich Lakich est cite avec deux montants differents : dix fois et cent fois la valeur","La vente d'un esclave suit exactement la meme logique de penalite qu'un animal","La difference de penalite entre vente et gerance s'explique par le degre de separation avec le Juif"],"points":4},{"numero":2,"notion":"A","enonce":"Pourquoi la penalite pour la vente d'un esclave est-elle differente de celle pour un animal ?","options":["Parce que la vente d'un esclave est une affaire rare, pour laquelle les Sages n'ont pas legifere de la meme maniere","Parce que les animaux ont plus de valeur que les esclaves","Parce qu'un esclave ne revient jamais a son proprietaire initial"],"points":4},{"numero":3,"notion":"B","enonce":"Sur quel verset portent les interpretations opposees de Rabbi Yehouda et des Sages ?","options":["\"Prends les levites a la place de tout premier-ne\" (Bamidbar 3:45)","\"Tu rachetteras le premier-ne de l'homme\" (Bamidbar 18:15)","\"Consacre-Moi tout premier-ne, tout ce qui ouvre la matrice\" (Chemot 13:2)"],"points":4},{"numero":4,"notion":"B","enonce":"Concernant la part de propriete non-juive suffisante pour exempter un animal du statut de premier-ne, quelle(s) affirmation(s) sont exactes ?","options":["Le desaccord porte notamment sur la question de savoir si un tereifa peut vivre longtemps","Rav Houna estime que meme une simple oreille suffit","Rav Hisda et Rava exigent une part dans un membre vital","Tous les avis s'accordent a exiger la moitie de l'animal"],"points":4},{"numero":5,"notion":"B","enonce":"Quelle nuance apporte Rav Pappa a la discussion entre Rav Houna, Rav Hisda et Rava ?","options":["Il tranche definitivement en faveur de Rav Houna sans nuance","Il explique que ces avis ne sont pas contradictoires : l'un vise le foetus, l'autre la mere","Il rejette entierement les deux positions precedentes"],"points":4},{"numero":6,"notion":"C","enonce":"Concernant l'incident de Rav Mari bar Rahel, quelle(s) affirmation(s) sont exactes ?","options":["Il interdisait neanmoins de tondre ces animaux ou de les utiliser pour le travail","Cette pratique n'a jamais souleve aucune question dans la Guemara","La Guemara s'interroge sur la coherence de sa pratique","Il transferait la propriete des oreilles de ses animaux premiers-nes a un non-Juif"],"points":4},{"numero":7,"notion":"D","enonce":"Comment le daf se termine-t-il ?","options":["Par une nouvelle Michna totalement inedite sur un autre sujet","Par la restatement de la Michna sur l'exemption des cohanim et levites","Par une conclusion halakhique definitive sur les penalites"],"points":3},{"numero":8,"notion":"D","enonce":"Explique en quoi ce daf illustre une transition caracteristique du style talmudique, entre plusieurs sujets distincts.","options":["Chaque nouveau sujet est souvent introduit par le signe paragraphe (§) marquant un changement de discussion","Le daf se termine en preparant le terrain pour la suite de la discussion sur le daf suivant","Le daf suit un plan unique et lineaire du debut a la fin sans aucune transition","Le daf enchaine plusieurs sujets lies par association d'idees plutot que par un plan lineaire strict","Tous les sujets abordes sur ce daf sont totalement independants et sans aucun lien entre eux"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Concernant les penalites discutees en debut de daf, quelle(s) affirmation(s) sont exactes ?","options":["Reich Lakich est cite avec deux montants differents : dix fois et cent fois la valeur","La difference de penalite entre vente et gerance s'explique par le degre de separation avec le Juif","La vente d'un esclave suit exactement la meme logique de penalite qu'un animal"],"points":4},{"numero":2,"notion":"A","enonce":"Pourquoi la penalite pour la vente d'un esclave est-elle differente de celle pour un animal ?","options":["Parce que la vente d'un esclave est une affaire rare, pour laquelle les Sages n'ont pas legifere de la meme maniere","Parce qu'un esclave ne revient jamais a son proprietaire initial","Parce que les animaux ont plus de valeur que les esclaves"],"points":4},{"numero":3,"notion":"B","enonce":"Sur quel verset portent les interpretations opposees de Rabbi Yehouda et des Sages ?","options":["\"Consacre-Moi tout premier-ne, tout ce qui ouvre la matrice\" (Chemot 13:2)","\"Prends les levites a la place de tout premier-ne\" (Bamidbar 3:45)","\"Tu rachetteras le premier-ne de l'homme\" (Bamidbar 18:15)"],"points":4},{"numero":4,"notion":"B","enonce":"Concernant la part de propriete non-juive suffisante pour exempter un animal du statut de premier-ne, quelle(s) affirmation(s) sont exactes ?","options":["Le desaccord porte notamment sur la question de savoir si un tereifa peut vivre longtemps","Rav Houna estime que meme une simple oreille suffit","Rav Hisda et Rava exigent une part dans un membre vital","Tous les avis s'accordent a exiger la moitie de l'animal"],"points":4},{"numero":5,"notion":"B","enonce":"Quelle nuance apporte Rav Pappa a la discussion entre Rav Houna, Rav Hisda et Rava ?","options":["Il explique que ces avis ne sont pas contradictoires : l'un vise le foetus, l'autre la mere","Il tranche definitivement en faveur de Rav Houna sans nuance","Il rejette entierement les deux positions precedentes"],"points":4},{"numero":6,"notion":"C","enonce":"Concernant l'incident de Rav Mari bar Rahel, quelle(s) affirmation(s) sont exactes ?","options":["La Guemara s'interroge sur la coherence de sa pratique","Il interdisait neanmoins de tondre ces animaux ou de les utiliser pour le travail","Il transferait la propriete des oreilles de ses animaux premiers-nes a un non-Juif","Cette pratique n'a jamais souleve aucune question dans la Guemara"],"points":4},{"numero":7,"notion":"D","enonce":"Comment le daf se termine-t-il ?","options":["Par une conclusion halakhique definitive sur les penalites","Par la restatement de la Michna sur l'exemption des cohanim et levites","Par une nouvelle Michna totalement inedite sur un autre sujet"],"points":3},{"numero":8,"notion":"D","enonce":"Explique en quoi ce daf illustre une transition caracteristique du style talmudique, entre plusieurs sujets distincts.","options":["Le daf suit un plan unique et lineaire du debut a la fin sans aucune transition","Le daf enchaine plusieurs sujets lies par association d'idees plutot que par un plan lineaire strict","Chaque nouveau sujet est souvent introduit par le signe paragraphe (§) marquant un changement de discussion","Le daf se termine en preparant le terrain pour la suite de la discussion sur le daf suivant","Tous les sujets abordes sur ce daf sont totalement independants et sans aucun lien entre eux"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9AXYcanZyGGcTfQ9jDx0cAR9jHmF2dRxqdnJpeWR8D2MPHG0caGFvfAF3HBs=";
+const REPONSES_ENCODEES = "Chh9AXUcanZyGGcTfw9jDx0cAR9jHmF2dBxqdnJpemR9D2MPHG0caGBvfwF3HBs=";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -466,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -508,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -516,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

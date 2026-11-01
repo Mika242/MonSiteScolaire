@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 5:4</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 5:4";
 
 const notions = {"A": "Le premier-né qui poursuit", "B": "Qui est cru", "C": "Rabbi Meir et Rachi"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Que fait la Michna d'un premier-né qui poursuit son maître et reçoit un coup de pied ?","options":["On peut l'abattre à cause de ce défaut","On ne peut jamais l'abattre","On doit le vendre","On doit payer une amende"],"points":2},{"numero":2,"notion":"A","enonce":"Pourquoi est-ce permis ?","options":["L'animal est sauvage","Le défaut est causé sans intention de le permettre","Le défaut est ancien","Le maître est cohen"],"points":3},{"numero":3,"notion":"B","enonce":"Selon la Michna, quels bergers sont crus ?","options":["Aucun berger","Tous les bergers","Les bergers cohanim","Les bergers israélites"],"points":2},{"numero":4,"notion":"B","enonce":"Pourquoi les bergers cohanim ne sont-ils pas crus ?","options":["Ils sont pauvres","Ils profitent du premier-né s'il a un défaut","Ils sont ignorants","Ils vivent loin"],"points":3},{"numero":5,"notion":"B","enonce":"Que dit Rabban Chimon ben Gamliel ?","options":["Le cohen n'est jamais cru","Le cohen est cru pour le premier-né d'un autre, pas pour le sien","Seul le roi est cru","Le cohen est toujours cru"],"points":3},{"numero":6,"notion":"C","enonce":"Que dit Rabbi Meir ?","options":["Tous peuvent juger","Le berger juge","Celui qui est soupçonné sur une affaire ne juge pas et ne témoigne pas","Seul le soupçonné témoigne"],"points":4},{"numero":7,"notion":"C","enonce":"Que sont les « défauts qui peuvent être causés par la main de l'homme » selon Rachi ?","options":["Les défauts de l'oreille seulement","Tous les défauts","Les défauts de naissance seulement","Ceux que l'homme est capable de causer ; d'autres, comme cinq pattes, ne le sont pas"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Que fait la Michna d'un premier-né qui poursuit son maître et reçoit un coup de pied ?","options":["On peut l'abattre à cause de ce défaut","On doit payer une amende","On ne peut jamais l'abattre","On doit le vendre"],"points":2},{"numero":2,"notion":"A","enonce":"Pourquoi est-ce permis ?","options":["Le défaut est ancien","Le défaut est causé sans intention de le permettre","Le maître est cohen","L'animal est sauvage"],"points":3},{"numero":3,"notion":"B","enonce":"Selon la Michna, quels bergers sont crus ?","options":["Aucun berger","Tous les bergers","Les bergers israélites","Les bergers cohanim"],"points":2},{"numero":4,"notion":"B","enonce":"Pourquoi les bergers cohanim ne sont-ils pas crus ?","options":["Ils sont pauvres","Ils vivent loin","Ils sont ignorants","Ils profitent du premier-né s'il a un défaut"],"points":3},{"numero":5,"notion":"B","enonce":"Que dit Rabban Chimon ben Gamliel ?","options":["Le cohen est cru pour le premier-né d'un autre, pas pour le sien","Le cohen est toujours cru","Seul le roi est cru","Le cohen n'est jamais cru"],"points":3},{"numero":6,"notion":"C","enonce":"Que dit Rabbi Meir ?","options":["Le berger juge","Celui qui est soupçonné sur une affaire ne juge pas et ne témoigne pas","Tous peuvent juger","Seul le soupçonné témoigne"],"points":4},{"numero":7,"notion":"C","enonce":"Que sont les « défauts qui peuvent être causés par la main de l'homme » selon Rachi ?","options":["Tous les défauts","Les défauts de naissance seulement","Les défauts de l'oreille seulement","Ceux que l'homme est capable de causer ; d'autres, comme cinq pattes, ne le sont pas"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9cGESchViGh4faRB5En4UZXAZdgYMbxYeEBQ=";
+const REPONSES_ENCODEES = "Chh9cGESchViGh8faRB7En4UZHAZdgUMbxYeEBQ=";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

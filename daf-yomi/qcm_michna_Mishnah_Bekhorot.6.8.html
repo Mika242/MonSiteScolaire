@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 6:8</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 6:8";
 
 const notions = {"A": "Défauts d'Ila", "B": "Commentaires"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Quels défauts Ila ajouta-t-il ?","options":["Un œil rond comme celui d'un homme","Une queue courte","La langue amputée en grande partie","Une bouche semblable à celle d'un porc"],"points":4},{"numero":2,"notion":"A","enonce":"Où Ila énuméra-t-il les défauts ?","options":["À Yavné","À Jérusalem","À Babylone","À Tibériade"],"points":2},{"numero":3,"notion":"A","enonce":"Que répondirent les Sages à Ila ?","options":["Il s'est trompé","Nous ne l'avons pas entendu","Nous les refusons toujours","Nous les connaissions"],"points":2},{"numero":4,"notion":"B","enonce":"Comment un os cassé non visible est-il un défaut (Rav Papa) ?","options":["Il se voit à l'œil nu","Le défaut se voit à la marche de l'animal","Il est visible à la queue","Il ne se voit pas"],"points":2},{"numero":5,"notion":"B","enonce":"Que dit Rav Yossef sur l'œil rond ?","options":["Les deux parlent du blanc","Il n'y a pas de contradiction","Les deux sont identiques","L'une des michnayot parle du noir, l'autre du blanc de l'œil"],"points":2}];
+const questions = [{"numero":1,"notion":"A","enonce":"Quels défauts Ila ajouta-t-il ?","options":["Une queue courte","Un œil rond comme celui d'un homme","La langue amputée en grande partie","Une bouche semblable à celle d'un porc"],"points":4},{"numero":2,"notion":"A","enonce":"Où Ila énuméra-t-il les défauts ?","options":["À Yavné","À Babylone","À Tibériade","À Jérusalem"],"points":2},{"numero":3,"notion":"A","enonce":"Que répondirent les Sages à Ila ?","options":["Nous ne l'avons pas entendu","Nous les connaissions","Nous les refusons toujours","Il s'est trompé"],"points":2},{"numero":4,"notion":"B","enonce":"Comment un os cassé non visible est-il un défaut (Rav Papa) ?","options":["Il se voit à l'œil nu","Il ne se voit pas","Il est visible à la queue","Le défaut se voit à la marche de l'animal"],"points":2},{"numero":5,"notion":"B","enonce":"Que dit Rav Yossef sur l'œil rond ?","options":["Les deux sont identiques","Les deux parlent du blanc","L'une des michnayot parle du noir, l'autre du blanc de l'œil","Il n'y a pas de contradiction"],"points":2}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9AX9lcBViGh0faRB5En4UZXAadgsMHg==";
+const REPONSES_ENCODEES = "Chh8AX9lcBViGh0faRB4En4UZ3AadgoMHg==";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

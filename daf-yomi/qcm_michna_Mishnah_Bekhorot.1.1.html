@@ -271,13 +271,41 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </a>
     <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
   <div style="display:flex; align-items:center; gap:8px;">
@@ -286,6 +314,13 @@
   </div>
 </header>
 
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
 <div class="wrap">
 
   <!-- ÉCRAN D'ACCUEIL -->
@@ -293,7 +328,7 @@
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 1:1</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -352,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 1:1";
 
 const notions = {"A": "Le principe general de la Michna", "B": "Les cinq cas enumeres"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Concernant le principe general enonce par cette Michna, quelle(s) affirmation(s) sont exactes ?","options":["Ce principe s'appuie sur le verset mentionnant 'en Israel'","Le statut de premier-ne s'applique meme si l'animal appartient partiellement a un non-Juif","Un animal premier-ne n'a le statut sacre que s'il appartient exclusivement a un Juif","Un non-Juif possedant meme une petite part de l'animal suffit a l'exempter du statut de premier-ne"],"points":4},{"numero":2,"notion":"B","enonce":"Parmi les cinq cas enumeres par la Michna, lesquels concernent une association avec un non-Juif ?","options":["Celui qui donne son anesse en garde a un autre Juif","Celui qui s'associe avec un non-Juif dans la propriete d'une anesse","Celui qui achete le foetus d'une anesse d'un non-Juif","Celui qui recoit une anesse d'un non-Juif pour l'elever en partageant les petits","Celui qui rachete son anesse premiere-nee au Temple"],"points":4},{"numero":3,"notion":"B","enonce":"Concernant le cas de celui qui vend le foetus de son anesse a un non-Juif, quelle(s) affirmation(s) sont exactes ?","options":["Cette vente est totalement permise sans aucune restriction","Malgre cela, l'anesse est exemptee du statut de premier-ne","Cette vente n'est en principe pas permise"],"points":3},{"numero":4,"notion":"A","enonce":"Sur quel verset s'appuie le principe general de cette Michna concernant l'exclusivite juive de la propriete ?","options":["\"J'ai consacre a Moi tout premier-ne en Israel, homme et bete\" (Bamidbar 3:13)","\"Tu rachetteras le premier-ne de l'homme\" (Bamidbar 18:15)","\"Prends les levites a la place de tout premier-ne parmi les enfants d'Israel\" (Bamidbar 3:45)"],"points":4},{"numero":5,"notion":"B","enonce":"Concernant celui qui donne son anesse en gerance a un non-Juif, quelle(s) affirmation(s) sont exactes ?","options":["L'anesse ou son petit echappe au statut de premier-ne","Un non-Juif est partie prenante dans la propriete","Ce cas est traite differemment des quatre autres cas de la Michna"],"points":3},{"numero":6,"notion":"A","enonce":"Pourquoi la Michna prend-elle l'exemple de l'ane plutot que de la vache, selon Rachi ?","options":["Parce que les lois du rachat de l'ane premier-ne sont moins nombreuses que celles d'un animal pur","Il est d'usage d'exposer d'abord le sujet le plus court","Parce que l'ane est plus souvent la propriete d'un non-Juif que la vache"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Concernant le principe general enonce par cette Michna, quelle(s) affirmation(s) sont exactes ?","options":["Un non-Juif possedant meme une petite part de l'animal suffit a l'exempter du statut de premier-ne","Le statut de premier-ne s'applique meme si l'animal appartient partiellement a un non-Juif","Ce principe s'appuie sur le verset mentionnant 'en Israel'","Un animal premier-ne n'a le statut sacre que s'il appartient exclusivement a un Juif"],"points":4},{"numero":2,"notion":"B","enonce":"Parmi les cinq cas enumeres par la Michna, lesquels concernent une association avec un non-Juif ?","options":["Celui qui achete le foetus d'une anesse d'un non-Juif","Celui qui recoit une anesse d'un non-Juif pour l'elever en partageant les petits","Celui qui donne son anesse en garde a un autre Juif","Celui qui rachete son anesse premiere-nee au Temple","Celui qui s'associe avec un non-Juif dans la propriete d'une anesse"],"points":4},{"numero":3,"notion":"B","enonce":"Concernant le cas de celui qui vend le foetus de son anesse a un non-Juif, quelle(s) affirmation(s) sont exactes ?","options":["Malgre cela, l'anesse est exemptee du statut de premier-ne","Cette vente n'est en principe pas permise","Cette vente est totalement permise sans aucune restriction"],"points":3},{"numero":4,"notion":"A","enonce":"Sur quel verset s'appuie le principe general de cette Michna concernant l'exclusivite juive de la propriete ?","options":["\"Prends les levites a la place de tout premier-ne parmi les enfants d'Israel\" (Bamidbar 3:45)","\"Tu rachetteras le premier-ne de l'homme\" (Bamidbar 18:15)","\"J'ai consacre a Moi tout premier-ne en Israel, homme et bete\" (Bamidbar 3:13)"],"points":4},{"numero":5,"notion":"B","enonce":"Concernant celui qui donne son anesse en gerance a un non-Juif, quelle(s) affirmation(s) sont exactes ?","options":["L'anesse ou son petit echappe au statut de premier-ne","Ce cas est traite differemment des quatre autres cas de la Michna","Un non-Juif est partie prenante dans la propriete"],"points":3},{"numero":6,"notion":"A","enonce":"Pourquoi la Michna prend-elle l'exemple de l'ane plutot que de la vache, selon Rachi ?","options":["Parce que l'ane est plus souvent la propriete d'un non-Juif que la vache","Il est d'usage d'exposer d'abord le sujet le plus court","Parce que les lois du rachat de l'ane premier-ne sont moins nombreuses que celles d'un animal pur"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9AX9lcBViGhxud2d7En4UZQEDcB0KcxABFnlveRNtdnJpehUS";
+const REPONSES_ENCODEES = "Chh9AX9lcBViGh1udGd8En4UZAEAcB0KcRABFnlvehNtdnNpeRUS";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -466,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -508,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -516,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 4:3</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 4:3";
 
 const notions = {"A": "La discussion Rabbi Yehouda / Rabbi Meir", "B": "Défauts de l'œil et du corps", "C": "Halakha"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Qui est interdit dans la Michna 4:3 ?","options":["Un premier-né abattu avant d'avoir été montré à un expert (selon Rabbi Meir)","Un animal né un jour de fête","Un animal de moins de huit jours","Un animal sans défaut abattu pour le Temple"],"points":2},{"numero":2,"notion":"A","enonce":"Que dit Rabbi Yehouda ?","options":["C'est permis seulement pour un taureau","C'est permis sans expert","C'est permis, si l'expert constate ensuite un vrai défaut","C'est toujours interdit"],"points":2},{"numero":3,"notion":"A","enonce":"Que dit Rabbi Meir ?","options":["C'est permis avec deux témoins","C'est interdit, puisqu'il a été abattu sans l'avis d'un expert","C'est permis si le défaut est visible","C'est permis le soir"],"points":2},{"numero":4,"notion":"B","enonce":"Selon Bartenura, pour quels défauts tout le monde est-il d'accord que c'est interdit ?","options":["Les défauts de l'oreille","Les défauts de l'œil","Les défauts de la patte","Les défauts de la queue"],"points":3},{"numero":5,"notion":"B","enonce":"Pourquoi les défauts de l'œil sont-ils particuliers ?","options":["Ils changent après la mort de l'animal","Ils guérissent avec le temps","Ils ne comptent pas comme défauts","Ils ne se voient jamais"],"points":3},{"numero":6,"notion":"B","enonce":"Pourquoi Rabbi Meir interdit-il les défauts du corps ?","options":["Parce que le cohen s'y oppose","Parce que l'animal est impur","Par précaution, à cause des défauts de l'œil","Parce qu'ils sont toujours temporaires"],"points":3},{"numero":7,"notion":"C","enonce":"Qui la halakha suit-elle ?","options":["Rabbi Meir","Rabbi Yossi","Rabbi Akiva","Rabbi Yehouda"],"points":3},{"numero":8,"notion":"C","enonce":"Que dit le Choulhan Aroukh (Yoré Dé'a 309:2) ?","options":["On abat d'abord, on examine ensuite","Seul le cohen peut juger","L'avis d'un expert est inutile","Il faut l'avis d'un expert, même pour un défaut visible"],"points":3}];
+const questions = [{"numero":1,"notion":"A","enonce":"Qui est interdit dans la Michna 4:3 ?","options":["Un animal de moins de huit jours","Un animal né un jour de fête","Un premier-né abattu avant d'avoir été montré à un expert (selon Rabbi Meir)","Un animal sans défaut abattu pour le Temple"],"points":2},{"numero":2,"notion":"A","enonce":"Que dit Rabbi Yehouda ?","options":["C'est permis, si l'expert constate ensuite un vrai défaut","C'est permis seulement pour un taureau","C'est permis sans expert","C'est toujours interdit"],"points":2},{"numero":3,"notion":"A","enonce":"Que dit Rabbi Meir ?","options":["C'est permis avec deux témoins","C'est interdit, puisqu'il a été abattu sans l'avis d'un expert","C'est permis le soir","C'est permis si le défaut est visible"],"points":2},{"numero":4,"notion":"B","enonce":"Selon Bartenura, pour quels défauts tout le monde est-il d'accord que c'est interdit ?","options":["Les défauts de l'oreille","Les défauts de la queue","Les défauts de la patte","Les défauts de l'œil"],"points":3},{"numero":5,"notion":"B","enonce":"Pourquoi les défauts de l'œil sont-ils particuliers ?","options":["Ils ne comptent pas comme défauts","Ils changent après la mort de l'animal","Ils guérissent avec le temps","Ils ne se voient jamais"],"points":3},{"numero":6,"notion":"B","enonce":"Pourquoi Rabbi Meir interdit-il les défauts du corps ?","options":["Par précaution, à cause des défauts de l'œil","Parce qu'ils sont toujours temporaires","Parce que le cohen s'y oppose","Parce que l'animal est impur"],"points":3},{"numero":7,"notion":"C","enonce":"Qui la halakha suit-elle ?","options":["Rabbi Yehouda","Rabbi Akiva","Rabbi Yossi","Rabbi Meir"],"points":3},{"numero":8,"notion":"C","enonce":"Que dit le Choulhan Aroukh (Yoré Dé'a 309:2) ?","options":["On abat d'abord, on examine ensuite","Seul le cohen peut juger","L'avis d'un expert est inutile","Il faut l'avis d'un expert, même pour un défaut visible"],"points":3}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9cGEScRViGhwfaRB5En4UZHAYdgEMbxYdEGUYexMc";
+const REPONSES_ENCODEES = "Chh/cGEScxViGhwfaRB7En4UZXAYdgMMbxYeEGUYexMc";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

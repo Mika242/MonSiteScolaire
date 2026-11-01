@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 3:2</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 3:2";
 
 const notions = {"A": "La bête allaitante achetée à un non-Juif", "B": "Le troupeau et les mavkirot"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Selon Rabban Shimon ben Gamliel, que suppose-t-on d'une bête allaitante achetée à un non-Juif ?","options":["Qu'elle a déjà mis bas et allaite son propre petit","Que son statut est toujours douteux","Qu'elle n'a jamais mis bas et allaite le petit d'une autre","Qu'elle est certainement stérile"],"points":3},{"numero":2,"notion":"A","enonce":"Pourquoi, selon Rachi, ne craint-on pas qu'elle allaite le petit d'une autre ?","options":["Parce qu'une bête ne peut jamais allaiter le petit d'une autre","Parce que le cohen vérifie toujours le lait","Parce que les bêtes qui ont du lait sans avoir mis bas sont une minorité dont on ne tient pas compte","Parce que le non-Juif jure qu'elle a mis bas"],"points":4},{"numero":3,"notion":"A","enonce":"Si la bête allaitante achetée met bas plus tard, quel est le statut de son petit mâle selon cette Michna ?","options":["Il doit être racheté contre de l'argent","C'est un premier-né douteux","C'est un premier-né certain, dû au cohen","Ce n'est pas un premier-né, car on suppose qu'elle a déjà mis bas"],"points":4},{"numero":4,"notion":"B","enonce":"Que sont les mavkirot ?","options":["Des bêtes qui n'ont jamais eu de lait","Des bêtes qui ont déjà mis bas plusieurs fois","Des bêtes consacrées au Temple","Des bêtes jeunes qui viennent de mettre bas pour la première fois"],"points":3},{"numero":5,"notion":"B","enonce":"Dans le troupeau, que n'a pas à craindre le propriétaire ?","options":["Que les petits soient trop nombreux","Que le petit de celle-là soit venu téter auprès de celle-ci","Que le petit de celle-ci soit venu téter auprès de celle-là","Que les mères aient du lait"],"points":4},{"numero":6,"notion":"B","enonce":"Selon Rachi, que peut-on conclure dans le troupeau ?","options":["Les petits qui suivent des bêtes qui ne sont pas mavkirot sont des petits ordinaires certains","Les petits qui suivent les mavkirot sont des premiers-nés certains","Les petits qui suivent les mavkirot sont des petits ordinaires","Tous les petits sont des premiers-nés douteux"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Selon Rabban Shimon ben Gamliel, que suppose-t-on d'une bête allaitante achetée à un non-Juif ?","options":["Que son statut est toujours douteux","Qu'elle est certainement stérile","Qu'elle a déjà mis bas et allaite son propre petit","Qu'elle n'a jamais mis bas et allaite le petit d'une autre"],"points":3},{"numero":2,"notion":"A","enonce":"Pourquoi, selon Rachi, ne craint-on pas qu'elle allaite le petit d'une autre ?","options":["Parce que les bêtes qui ont du lait sans avoir mis bas sont une minorité dont on ne tient pas compte","Parce qu'une bête ne peut jamais allaiter le petit d'une autre","Parce que le cohen vérifie toujours le lait","Parce que le non-Juif jure qu'elle a mis bas"],"points":4},{"numero":3,"notion":"A","enonce":"Si la bête allaitante achetée met bas plus tard, quel est le statut de son petit mâle selon cette Michna ?","options":["C'est un premier-né certain, dû au cohen","Ce n'est pas un premier-né, car on suppose qu'elle a déjà mis bas","C'est un premier-né douteux","Il doit être racheté contre de l'argent"],"points":4},{"numero":4,"notion":"B","enonce":"Que sont les mavkirot ?","options":["Des bêtes qui n'ont jamais eu de lait","Des bêtes jeunes qui viennent de mettre bas pour la première fois","Des bêtes consacrées au Temple","Des bêtes qui ont déjà mis bas plusieurs fois"],"points":3},{"numero":5,"notion":"B","enonce":"Dans le troupeau, que n'a pas à craindre le propriétaire ?","options":["Que les mères aient du lait","Que le petit de celle-ci soit venu téter auprès de celle-là","Que les petits soient trop nombreux","Que le petit de celle-là soit venu téter auprès de celle-ci"],"points":4},{"numero":6,"notion":"B","enonce":"Selon Rachi, que peut-on conclure dans le troupeau ?","options":["Tous les petits sont des premiers-nés douteux","Les petits qui suivent les mavkirot sont des petits ordinaires","Les petits qui suivent les mavkirot sont des premiers-nés certains","Les petits qui suivent des bêtes qui ne sont pas mavkirot sont des petits ordinaires certains"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9cGEScRViGh4faRB7En4UZQEBcB4Kc2EcEBQ=";
+const REPONSES_ENCODEES = "Chh/cGEScxViGhwfaRB5En4UZQEAcB4KcWEeEBQ=";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

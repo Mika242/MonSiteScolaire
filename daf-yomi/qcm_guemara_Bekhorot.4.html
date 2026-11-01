@@ -271,13 +271,41 @@
     footer {
       text-align: center; padding: 30px 20px 10px; color: var(--ink3); font-size: .77rem;
     }
+    .ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+    .ad-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border-radius: 18px;
+      padding: 14px 18px; transition: transform .15s;
+      box-shadow: var(--shadow-card);
+    }
+    .ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: var(--shadow-pop); }
+    .ad-banner-tag {
+      flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+      border-radius: 20px; padding: 3px 10px;
+    }
+    .ad-banner-icon {
+      flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+      background: var(--surface2); border-radius: 12px; padding: 4px;
+    }
+    .ad-banner-text { flex: 1; min-width: 0; }
+    .ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+    .ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+    .ad-banner-cta {
+      flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+      background: var(--accent); padding: 8px 16px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-left">
-    <img src="TonCoachScolaire.png" alt="Logo" class="header-logo">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
+    </a>
     <div class="header-title">Ton <span>Coach</span> Scolaire</div>
   </div>
   <div style="display:flex; align-items:center; gap:8px;">
@@ -286,6 +314,13 @@
   </div>
 </header>
 
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
 <div class="wrap">
 
   <!-- ÉCRAN D'ACCUEIL -->
@@ -293,7 +328,7 @@
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Guemara Bekhorot 4 (4a-4b)</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -352,14 +387,14 @@ const QCM_TITRE = "QCM Guemara Bekhorot 4 (4a-4b)";
 
 const notions = {"A": "Le debat Abaye/Rava sur le sens de la Michna", "B": "Les questions de Rav Safra", "C": "Le debat Rabbi Yohanan/Reich Lakich", "D": "Synthese et halakha"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Concernant la premiere question posee par la Guemara sur ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Elle demande si ce sont les betes ou les personnes qui sont concernees par l'exemption","Elle demande si Aharon etait lui-meme premier-ne","Elle porte sur le sens exact de l'expression 'ils ont exempte' dans la Michna","Elle porte sur le nombre exact de premiers-nes recenses au desert"],"points":4},{"numero":2,"notion":"A","enonce":"Selon Abaye, que signifie 'cohanim et levites ont exempte' les premiers-nes d'Israel ?","options":["Que seuls les cohanim, et non les levites, sont concernes","Que les cohanim et levites eux-memes ont exempte leur propre statut de premier-ne","Que les betes des cohanim et levites ont exempte les betes premieres-nees d'Israel"],"points":4},{"numero":3,"notion":"A","enonce":"Concernant l'objection de Rava a la lecture d'Abaye, quelle(s) affirmation(s) sont exactes ?","options":["Rava note que le verbe de la Michna est actif ('ils ont exempte'), pas passif","Une autre Michna dement explicitement cette consequence","Si la lecture d'Abaye etait juste, cohanim et levites seraient exemptes meme du rachat d'un premier-ne d'animal pur","Rava accepte entierement la lecture d'Abaye sans aucune objection"],"points":4},{"numero":4,"notion":"A","enonce":"Selon Rava, la Michna signifie que...","options":["Seuls les cohanim, et non les levites, se sont exemptes eux-memes","Les betes des cohanim et levites ont exempte les betes d'Israel","Les cohanim et levites premiers-nes se sont exemptes eux-memes de leur propre statut"],"points":3},{"numero":5,"notion":"B","enonce":"Concernant les questions posees par Rav Safra, quelle(s) affirmation(s) sont exactes ?","options":["Aucune de ces questions ne recoit de reponse dans ce daf","L'une porte sur le cas d'Aharon, non compte dans le recensement initial","L'une porte sur le cas d'une levite (femme) qui accouche","L'une porte sur le cas d'un levite premier-ne qui possedait deja un agneau"],"points":4},{"numero":6,"notion":"B","enonce":"Quel verset permet de repondre a la difficulte posee par le cas d'Aharon ?","options":["\"Consacre-Moi tout premier-ne\" (קַדֶּשׁ לִי כׇל בְּכוֹר)","\"Les Levites\" (הַלְוִיִּם), compris comme regroupant tous les levites ensemble","\"Ouverture de la matrice\" (פֶּטֶר רֶחֶם)"],"points":4},{"numero":7,"notion":"C","enonce":"Concernant le second sujet aborde sur ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Il porte sur la question de savoir si les premiers-nes nes au desert etaient sanctifies","Il oppose Rabbi Yohanan et Reich Lakich","Il fait suite directement a la premiere discussion sans transition","Il concerne uniquement les premiers-nes d'animaux, pas les humains"],"points":4},{"numero":8,"notion":"C","enonce":"Quelle est la position de Rabbi Yohanan sur ce debat ?","options":["Aucun premier-ne, ni en Egypte ni au desert, n'etait sanctifie","Les premiers-nes nes au desert etaient egalement sanctifies","Seuls les premiers-nes nes en Egypte etaient sanctifies"],"points":3},{"numero":9,"notion":"C","enonce":"Sur quel argument scripturaire Reich Lakich fonde-t-il sa position ?","options":["La juxtaposition des versets \"quand Il te fera entrer\" et \"tu feras passer\", visant un moment precis","Le verset \"Consacre-Moi tout premier-ne\", comme commandement continu","Une baraita mentionnant explicitement \"trois lieux\" de sanctification"],"points":4},{"numero":10,"notion":"C","enonce":"Comment Rav Nahman bar Yitzhak reinterprete-t-il la baraita mentionnant \"trois lieux\" ou les premiers-nes ont ete sanctifies ?","options":["Comme trois lieux ou ils auraient du etre sanctifies, mais ne l'ont pas ete en pratique","Comme une confirmation directe de la position de Rabbi Yohanan","Comme une erreur de transmission a corriger"],"points":4},{"numero":11,"notion":"D","enonce":"Concernant la portee pratique actuelle de ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Le daf lui-meme reste largement theorique, lie a un episode historique du desert","Ce daf a une application quotidienne directe et immediate aujourd'hui","Les versets analyses ici (Bamidbar 18:15-16) fondent la halakha actuelle du Pidyon HaBen"],"points":4},{"numero":12,"notion":"D","enonce":"Dans les desaccords entre Rabbi Yohanan et Reich Lakich, quelle position la halakha suit-elle generalement ?","options":["Reich Lakich","Cela depend systematiquement du sujet, sans regle generale","Rabbi Yohanan"],"points":3},{"numero":13,"notion":"D","enonce":"Explique en quoi les deux discussions de ce daf, bien que portant sur des sujets differents, partagent une meme methode d'analyse talmudique.","options":["Aucune des deux discussions ne fait l'objet d'objections ou de contre-arguments","Les deux discussions s'appuient sur des versets et des raisonnements a fortiori ou par juxtaposition de mots","Chaque position avancee est ensuite testee contre des objections et des cas limites, avant d'etre validee ou nuancee","Les deux discussions ignorent totalement le texte biblique et reposent uniquement sur la logique pure","Les deux discussions partent d'une lecture precise d'un verset ou d'une formulation de la Michna, dont plusieurs interpretations sont possibles"],"points":4}];
+const questions = [{"numero":1,"notion":"A","enonce":"Concernant la premiere question posee par la Guemara sur ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Elle demande si Aharon etait lui-meme premier-ne","Elle demande si ce sont les betes ou les personnes qui sont concernees par l'exemption","Elle porte sur le sens exact de l'expression 'ils ont exempte' dans la Michna","Elle porte sur le nombre exact de premiers-nes recenses au desert"],"points":4},{"numero":2,"notion":"A","enonce":"Selon Abaye, que signifie 'cohanim et levites ont exempte' les premiers-nes d'Israel ?","options":["Que les cohanim et levites eux-memes ont exempte leur propre statut de premier-ne","Que seuls les cohanim, et non les levites, sont concernes","Que les betes des cohanim et levites ont exempte les betes premieres-nees d'Israel"],"points":4},{"numero":3,"notion":"A","enonce":"Concernant l'objection de Rava a la lecture d'Abaye, quelle(s) affirmation(s) sont exactes ?","options":["Si la lecture d'Abaye etait juste, cohanim et levites seraient exemptes meme du rachat d'un premier-ne d'animal pur","Une autre Michna dement explicitement cette consequence","Rava accepte entierement la lecture d'Abaye sans aucune objection","Rava note que le verbe de la Michna est actif ('ils ont exempte'), pas passif"],"points":4},{"numero":4,"notion":"A","enonce":"Selon Rava, la Michna signifie que...","options":["Seuls les cohanim, et non les levites, se sont exemptes eux-memes","Les cohanim et levites premiers-nes se sont exemptes eux-memes de leur propre statut","Les betes des cohanim et levites ont exempte les betes d'Israel"],"points":3},{"numero":5,"notion":"B","enonce":"Concernant les questions posees par Rav Safra, quelle(s) affirmation(s) sont exactes ?","options":["Aucune de ces questions ne recoit de reponse dans ce daf","L'une porte sur le cas d'Aharon, non compte dans le recensement initial","L'une porte sur le cas d'une levite (femme) qui accouche","L'une porte sur le cas d'un levite premier-ne qui possedait deja un agneau"],"points":4},{"numero":6,"notion":"B","enonce":"Quel verset permet de repondre a la difficulte posee par le cas d'Aharon ?","options":["\"Les Levites\" (הַלְוִיִּם), compris comme regroupant tous les levites ensemble","\"Ouverture de la matrice\" (פֶּטֶר רֶחֶם)","\"Consacre-Moi tout premier-ne\" (קַדֶּשׁ לִי כׇל בְּכוֹר)"],"points":4},{"numero":7,"notion":"C","enonce":"Concernant le second sujet aborde sur ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Il porte sur la question de savoir si les premiers-nes nes au desert etaient sanctifies","Il oppose Rabbi Yohanan et Reich Lakich","Il fait suite directement a la premiere discussion sans transition","Il concerne uniquement les premiers-nes d'animaux, pas les humains"],"points":4},{"numero":8,"notion":"C","enonce":"Quelle est la position de Rabbi Yohanan sur ce debat ?","options":["Les premiers-nes nes au desert etaient egalement sanctifies","Seuls les premiers-nes nes en Egypte etaient sanctifies","Aucun premier-ne, ni en Egypte ni au desert, n'etait sanctifie"],"points":3},{"numero":9,"notion":"C","enonce":"Sur quel argument scripturaire Reich Lakich fonde-t-il sa position ?","options":["Le verset \"Consacre-Moi tout premier-ne\", comme commandement continu","Une baraita mentionnant explicitement \"trois lieux\" de sanctification","La juxtaposition des versets \"quand Il te fera entrer\" et \"tu feras passer\", visant un moment precis"],"points":4},{"numero":10,"notion":"C","enonce":"Comment Rav Nahman bar Yitzhak reinterprete-t-il la baraita mentionnant \"trois lieux\" ou les premiers-nes ont ete sanctifies ?","options":["Comme une erreur de transmission a corriger","Comme une confirmation directe de la position de Rabbi Yohanan","Comme trois lieux ou ils auraient du etre sanctifies, mais ne l'ont pas ete en pratique"],"points":4},{"numero":11,"notion":"D","enonce":"Concernant la portee pratique actuelle de ce daf, quelle(s) affirmation(s) sont exactes ?","options":["Les versets analyses ici (Bamidbar 18:15-16) fondent la halakha actuelle du Pidyon HaBen","Ce daf a une application quotidienne directe et immediate aujourd'hui","Le daf lui-meme reste largement theorique, lie a un episode historique du desert"],"points":4},{"numero":12,"notion":"D","enonce":"Dans les desaccords entre Rabbi Yohanan et Reich Lakich, quelle position la halakha suit-elle generalement ?","options":["Reich Lakich","Rabbi Yohanan","Cela depend systematiquement du sujet, sans regle generale"],"points":3},{"numero":13,"notion":"D","enonce":"Explique en quoi les deux discussions de ce daf, bien que portant sur des sujets differents, partagent une meme methode d'analyse talmudique.","options":["Les deux discussions s'appuient sur des versets et des raisonnements a fortiori ou par juxtaposition de mots","Les deux discussions partent d'une lecture precise d'un verset ou d'une formulation de la Michna, dont plusieurs interpretations sont possibles","Chaque position avancee est ensuite testee contre des objections et des cas limites, avant d'etre validee ou nuancee","Les deux discussions ignorent totalement le texte biblique et reposent uniquement sur la logique pure","Aucune des deux discussions ne fait l'objet d'objections ou de contre-arguments"],"points":4}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9AXYcanZwGGcTf35+eB9tHG9jHmF2dW10AXEYZxN+D2MPHRwBaX0YfHBoGnZwbh57FWMJf3gfbRxvYx5hdnVtdAF2GBY=";
+const REPONSES_ENCODEES = "Chh8AXYcanZwGGcTf35+eB5tHG9gHmF2dW10AXEYZxN/D2MPHRwBaX0YfXBoGnRwbh55FWMJf3gfbRxvYB5hdnRtdwFwGBY=";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -466,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -508,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -516,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

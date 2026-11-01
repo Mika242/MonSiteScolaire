@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 4:6</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 4:6";
 
 const notions = {"A": "Le texte de la Michna", "B": "Explications et commentaires", "C": "Halakha et sources"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Que se passe-t-il si un juge prend un salaire pour juger ?","options":["Il doit rendre le double","Il devient cohen","Ses jugements sont nuls","Ses jugements sont valables"],"points":2},{"numero":2,"notion":"A","enonce":"Que se passe-t-il pour un témoin payé ?","options":["Son témoignage est nul","Il doit témoigner à nouveau","Son témoignage compte double","Il doit prêter serment"],"points":2},{"numero":3,"notion":"A","enonce":"Que devient l'eau de celui qui asperge contre salaire ?","options":["Une eau sacrée","Une eau de source","Une eau impure à vie","Une eau de caverne"],"points":2},{"numero":4,"notion":"B","enonce":"Quel verset est la source de l'interdit de salaire pour enseigner ou juger ?","options":["Vayikra 19:2","Devarim 4:5","Chemot 20:12","Bemidbar 18:15"],"points":3},{"numero":5,"notion":"B","enonce":"Que fait-on pour un cohen que l'on a rendu impur ?","options":["On le nourrit, on lui donne à boire et on l'oint","On le fait jeûner","On le renvoie chez lui","On lui donne un autre travail"],"points":3},{"numero":6,"notion":"B","enonce":"Que fait-on pour un vieillard ?","options":["On le fait monter sur l'âne","On le fait asseoir à la porte","On lui donne un bâton","On le fait marcher"],"points":3},{"numero":7,"notion":"C","enonce":"Selon le Rambam, que peut recevoir un juge ?","options":["Rien du tout, même le déplacement","Un salaire complet","Un dédommagement pour son temps perdu, ouvertement","Un cadeau en privé"],"points":3},{"numero":8,"notion":"C","enonce":"Quel passage du Choulhan Aroukh cite la règle du juge payé ?","options":["Yoré Dé'a 306:1","Orah 'Haïm 4:1","Even Haézer 1:1","Hochen Michpat 9:5"],"points":3}];
+const questions = [{"numero":1,"notion":"A","enonce":"Que se passe-t-il si un juge prend un salaire pour juger ?","options":["Ses jugements sont valables","Ses jugements sont nuls","Il doit rendre le double","Il devient cohen"],"points":2},{"numero":2,"notion":"A","enonce":"Que se passe-t-il pour un témoin payé ?","options":["Il doit témoigner à nouveau","Son témoignage compte double","Son témoignage est nul","Il doit prêter serment"],"points":2},{"numero":3,"notion":"A","enonce":"Que devient l'eau de celui qui asperge contre salaire ?","options":["Une eau de caverne","Une eau impure à vie","Une eau sacrée","Une eau de source"],"points":2},{"numero":4,"notion":"B","enonce":"Quel verset est la source de l'interdit de salaire pour enseigner ou juger ?","options":["Bemidbar 18:15","Chemot 20:12","Devarim 4:5","Vayikra 19:2"],"points":3},{"numero":5,"notion":"B","enonce":"Que fait-on pour un cohen que l'on a rendu impur ?","options":["On le fait jeûner","On lui donne un autre travail","On le renvoie chez lui","On le nourrit, on lui donne à boire et on l'oint"],"points":3},{"numero":6,"notion":"B","enonce":"Que fait-on pour un vieillard ?","options":["On le fait monter sur l'âne","On le fait marcher","On lui donne un bâton","On le fait asseoir à la porte"],"points":3},{"numero":7,"notion":"C","enonce":"Selon le Rambam, que peut recevoir un juge ?","options":["Un cadeau en privé","Un dédommagement pour son temps perdu, ouvertement","Rien du tout, même le déplacement","Un salaire complet"],"points":3},{"numero":8,"notion":"C","enonce":"Quel passage du Choulhan Aroukh cite la règle du juge payé ?","options":["Even Haézer 1:1","Hochen Michpat 9:5","Orah 'Haïm 4:1","Yoré Dé'a 306:1"],"points":3}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh/cGEScxViGh4faRB5En4UZHAYdgYMbxYfEGUYexMc";
+const REPONSES_ENCODEES = "Chh8cGEScRViGh0faRB6En4UZ3AYdgYMbxYcEGUYeRMc";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `

@@ -328,7 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
     <div class="qcm-hero">
       <div class="qcm-badge">📝 QCM d'évaluation · Daf Yomi · Daf Yomi</div>
       <h1>QCM Michna Bekhorot 3:3</h1>
-      <p>Teste vraiment ta préparation pour le Brevet sur ce chapitre. Ce n'est pas un simple rappel de cours : prends le temps de réfléchir à chaque question.</p>
+      <p>Teste ta compréhension du texte étudié : prends le temps de réfléchir à chaque question, en t'appuyant sur la Michna, la Guemara et leurs commentaires.</p>
     </div>
 
     <div class="info-panel">
@@ -387,14 +387,14 @@ const QCM_TITRE = "QCM Michna Bekhorot 3:3";
 
 const notions = {"A": "L'interdit de tondre le premier-né", "B": "Les gestes permis par Rabbi Yossi ben HaMechoulam"};
 
-const questions = [{"numero":1,"notion":"A","enonce":"Quel verset interdit de tondre le premier-né ?","options":["« Tu ne tondras pas le premier-né de ton menu bétail » (Devarim 15:19)","« Tu ne feras aucun travail » (Chemot 20:10)","« Tu ne muselleras pas le bœuf » (Devarim 25:4)","« Tu ne cuiras pas le chevreau dans le lait de sa mère » (Chemot 23:19)"],"points":3},{"numero":2,"notion":"A","enonce":"Pourquoi arracher le poil d'un premier-né pose-t-il problème ?","options":["Parce que le couperet est interdit au Temple","Parce que cela ressemble à une tonte, interdite sur un animal consacré","Parce que le poil du premier-né appartient au cohen","Parce que cela empêche l'abattage rituel"],"points":3},{"numero":3,"notion":"B","enonce":"Selon Rabbi Yossi ben HaMechoulam, que fait celui qui abat un premier-né ?","options":["Il tond entièrement le cou","Il abat sans toucher au poil, quelles que soient les conséquences","Il fait de la place avec un couperet de part et d'autre, en arrachant le poil","Il fait tomber le poil avec de l'eau chaude"],"points":4},{"numero":4,"notion":"B","enonce":"Quelle est la condition posée par Rabbi Yossi ben HaMechoulam ?","options":["Il doit brûler le poil","Il doit mettre le poil de côté pour le cohen","Il doit compter le poil arraché","Il ne doit pas déplacer le poil arraché de sa place"],"points":4},{"numero":5,"notion":"B","enonce":"Dans quels cas la Michna permet-elle d'arracher le poil ?","options":["Pour vendre la laine","Pour examiner l'emplacement du défaut","Pour faire de la place avant l'abattage","Pour fabriquer des vêtements"],"points":4},{"numero":6,"notion":"B","enonce":"Pourquoi examine-t-on l'emplacement du défaut ?","options":["Pour le vendre à un non-Juif","Pour qu'un Sage décide s'il est permis d'abattre le premier-né hors du Temple","Pour offrir le premier-né sur l'autel","Pour fixer le prix du premier-né"],"points":3}];
+const questions = [{"numero":1,"notion":"A","enonce":"Quel verset interdit de tondre le premier-né ?","options":["« Tu ne muselleras pas le bœuf » (Devarim 25:4)","« Tu ne feras aucun travail » (Chemot 20:10)","« Tu ne tondras pas le premier-né de ton menu bétail » (Devarim 15:19)","« Tu ne cuiras pas le chevreau dans le lait de sa mère » (Chemot 23:19)"],"points":3},{"numero":2,"notion":"A","enonce":"Pourquoi arracher le poil d'un premier-né pose-t-il problème ?","options":["Parce que le poil du premier-né appartient au cohen","Parce que cela empêche l'abattage rituel","Parce que cela ressemble à une tonte, interdite sur un animal consacré","Parce que le couperet est interdit au Temple"],"points":3},{"numero":3,"notion":"B","enonce":"Selon Rabbi Yossi ben HaMechoulam, que fait celui qui abat un premier-né ?","options":["Il fait tomber le poil avec de l'eau chaude","Il abat sans toucher au poil, quelles que soient les conséquences","Il fait de la place avec un couperet de part et d'autre, en arrachant le poil","Il tond entièrement le cou"],"points":4},{"numero":4,"notion":"B","enonce":"Quelle est la condition posée par Rabbi Yossi ben HaMechoulam ?","options":["Il ne doit pas déplacer le poil arraché de sa place","Il doit mettre le poil de côté pour le cohen","Il doit brûler le poil","Il doit compter le poil arraché"],"points":4},{"numero":5,"notion":"B","enonce":"Dans quels cas la Michna permet-elle d'arracher le poil ?","options":["Pour vendre la laine","Pour examiner l'emplacement du défaut","Pour fabriquer des vêtements","Pour faire de la place avant l'abattage"],"points":4},{"numero":6,"notion":"B","enonce":"Pourquoi examine-t-on l'emplacement du défaut ?","options":["Pour le vendre à un non-Juif","Pour offrir le premier-né sur l'autel","Pour fixer le prix du premier-né","Pour qu'un Sage décide s'il est permis d'abattre le premier-né hors du Temple"],"points":3}];
 
 // ============================================================
 // RÉPONSES ENCODÉES (XOR + base64, clé = référence du QCM)
 // Ce n'est PAS une sécurité forte : ça dissuade la lecture directe du code,
 // mais un décodage reste possible pour qui écrit quelques lignes de JS.
 // ============================================================
-const REPONSES_ENCODEES = "Chh9cGESchViGh8faRB7En4UZQEBcB8KchBw";
+const REPONSES_ENCODEES = "Chh/cGEScRViGh8faRB4En4UZQEAcB8KcBBw";
 
 function xorDecode(encoded, key) {
   const raw = atob(encoded);
@@ -501,7 +501,11 @@ function evaluerQCM() {
 
     scoreTotal += pointsObtenus;
     scoresParNotion[q.notion].obtenu += pointsObtenus;
-    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points });
+    // Détail des réponses pour la demande de correction par e-mail (questions non réussies uniquement)
+    const optTxt = (i) => (q.options[i] && (q.options[i].texte || q.options[i])) || '';
+    const cocheesFausses = cochees.filter(c => !correctes.includes(c)).map(optTxt);
+    const correctesManquees = correctes.filter(c => !cochees.includes(c)).map(optTxt);
+    detailQuestions.push({ numero: q.numero, notion: q.notion, statut, pointsObtenus, pointsMax: q.points, cocheesFausses, correctesManquees });
   });
 
   // On ne descend pas sous 0 pour le score total affiché (mais on garde le calcul brut pour le %)
@@ -543,7 +547,7 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
 
   let conseilTexte = '';
   if (reussite) {
-    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau jusqu'au Brevet.";
+    conseilTexte = "Bon niveau de préparation sur ce chapitre. Relis tout de même les notions ci-dessous qui ne sont pas encore à 100%, et refais ce type de QCM régulièrement pour maintenir ce niveau.";
   } else if (notionsAFaibles.length > 0) {
     conseilTexte = `Ce chapitre n'est pas encore assez maîtrisé pour l'examen. Concentre tes prochaines révisions sur : <strong>${notionsAFaibles.join(', ')}</strong>. Reprends la fiche de cours correspondante, puis retente ce QCM dans quelques jours.`;
   } else {
@@ -551,7 +555,15 @@ function afficherResultats(score, scoreMax, pct, scoresParNotion, detail) {
   }
 
   const sujetMail = encodeURIComponent(`Demande de correction — ${QCM_REF}`);
-  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)\n\nMerci !`);
+  const libStatut = { fausse: 'case(s) fausse(s) cochée(s)', partielle: 'réponse incomplète', vide: 'sans réponse' };
+  const lignesDetail = detail.filter(d => d.statut !== 'complete').map(d => {
+    let l = `- Question ${d.numero} (${d.pointsObtenus} / ${d.pointsMax} pts) : ${libStatut[d.statut] || d.statut}`;
+    if (d.cocheesFausses && d.cocheesFausses.length) l += `\n    Cochée(s) à tort : ${d.cocheesFausses.map(t => '« ' + t + ' »').join(' ; ')}`;
+    if (d.correctesManquees && d.correctesManquees.length) l += `\n    Non cochée(s) alors qu'exacte(s) : ${d.correctesManquees.map(t => '« ' + t + ' »').join(' ; ')}`;
+    return l;
+  }).join('\n');
+  const blocDetail = lignesDetail ? `\n\nDétail des questions non réussies :\n${lignesDetail}` : `\n\nToutes les questions ont été réussies.`;
+  const corpsMail = encodeURIComponent(`Bonjour,\n\nPourriez-vous m'envoyer la correction détaillée du QCM suivant :\n\nRéférence : ${QCM_REF}\nTitre : ${QCM_TITRE}\nScore obtenu : ${score} / ${scoreMax} points (${pct}%)${blocDetail}\n\nMerci !`);
   const mailtoLink = `mailto:contact@toncoachscolaire.fr?subject=${sujetMail}&body=${corpsMail}`;
 
   zone.innerHTML = `
