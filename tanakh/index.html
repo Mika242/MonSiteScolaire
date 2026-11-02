@@ -116,9 +116,11 @@
     .tile-torah    { background: #EDE9FE; }
     .tile-neviim   { background: #FFE8E8; }
     .tile-ketouvim { background: #FFF1DE; }
+    .tile-approfondir { background: #DDF3EF; grid-column: 1 / -1; }
     [data-theme="dark"] .tile-torah    { background: #2C1E3A; }
     [data-theme="dark"] .tile-neviim   { background: #3A1A1A; }
     [data-theme="dark"] .tile-ketouvim { background: #3A2A12; }
+    [data-theme="dark"] .tile-approfondir { background: #12332E; }
     .tile-emoji {
       font-size: 1.6rem; line-height: 1; margin-bottom: 10px;
       width: 46px; height: 46px; border-radius: 14px;
@@ -268,18 +270,7 @@
 //   { id, nom, nomHeb, type: 'paracha'|'chapitre', fiche: {...}|null, qcm: {...}|null }
 // ═══════════════════════════════════════════
 // Pages complementaires liees a une paracha (hors fiche/QCM) — cle = id de l'unite
-const extrasUnites = {
-  'bereshit-paracha': [
-    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham', href: 'arbre_genealogique.html' }
-  ],
-  'noach': [
-    { ico: '🚢', name: 'L\'arche de Noé — plan et détails illustrés', href: 'arche_de_noe.html' },
-    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham (table des nations)', href: 'arbre_genealogique.html' }
-  ],
-  'lech-lecha': [
-    { ico: '🌳', name: 'Arbre généalogique d\'Adam à Avraham (famille de Térah)', href: 'arbre_genealogique.html' }
-  ]
-};
+const extrasUnites = {};
 
 const data = {
   'torah': {
@@ -406,6 +397,16 @@ const data = {
   },
 };
 
+
+// Section « Approfondir » : pages indépendantes des parachiot
+const approfondir = {
+  label: 'Approfondir', labelHeb: 'העמקה', color: '#0f766e',
+  pages: [
+    { ico: '🌳', name: 'Arbre généalogique et chronologie : d\'Adam à Yehoshua', desc: 'Générations, âges, table des nations, douze tribus, et chronologie jusqu\'à l\'entrée en Canaan', href: 'arbre_genealogique.html' },
+    { ico: '🚢', name: 'L\'arche de Noé — plan et détails illustrés', desc: 'Dimensions, étages et aménagement de l\'arche', href: 'arche_de_noe.html' }
+  ]
+};
+
 const sedarimMeta = {
   'torah':    { emoji: '📖', tileClass: 'tile-torah',    court: 'Torah',    nom: 'Les cinq livres' },
   'neviim':   { emoji: '📯', tileClass: 'tile-neviim',   court: 'Nevi\'im', nom: 'Les prophètes' },
@@ -454,7 +455,16 @@ function renderTiles() {
     </div>`;
   }).join('');
 
-  grid.innerHTML = html;
+  const tuileAppro = `
+    <div class="tile tile-approfondir" onclick="openPanel('approfondir')" id="tile-approfondir">
+      <div class="tile-badge">${approfondir.pages.length} pages</div>
+      <div class="tile-emoji">🔎</div>
+      <div class="tile-level">${approfondir.label}</div>
+      <div class="tile-level-heb">${approfondir.labelHeb}</div>
+      <div class="tile-name">Pour aller plus loin que les fiches</div>
+      <div class="tile-pills">${approfondir.pages.map(x => `<span class="tile-pill">${x.ico}</span>`).join('')}</div>
+    </div>`;
+  grid.innerHTML = html + tuileAppro;
 }
 
 renderTiles();
@@ -473,6 +483,21 @@ function openPanel(id) {
 
   current = id;
   document.getElementById('tile-' + id).classList.add('active');
+  if (id === 'approfondir') {
+    panel.innerHTML = `
+    <div class="panel-inner">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <div class="panel-dot" style="background:${approfondir.color}"></div>
+          <h3>${approfondir.label} <span style="font-family:'Frank Ruhl Libre',serif;font-weight:500;color:var(--ink3);font-size:.85rem">${approfondir.labelHeb}</span></h3>
+        </div>
+        <button class="panel-close" onclick="closePanel()">✕</button>
+      </div>
+      <div class="panel-matieres">${approfondir.pages.map(x => `<a class="fiche-link" href="${x.href}"><div class="fiche-ico">${x.ico}</div><div class="fiche-text">${x.name}<br><small>${x.desc}</small></div></a>`).join('')}</div>
+    </div>`;
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    return;
+  }
   const d = data[id];
 
   const livresHtml = d.livres.map(lv => {
