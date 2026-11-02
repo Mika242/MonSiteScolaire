@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 26 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Berakhot · Guemara</div>
+    <h1>Guemara 26</h1>
+    <p>Daf 26</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>אַקַּמְטְרָא — כִּכְלִי בְּתוֹךְ כְּלִי דָּמֵי. אָמַר רַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי: סֵפֶר תּוֹרָה — צָרִיךְ לַעֲשׂוֹת לוֹ מְחִיצָּה עֲשָׂרָה. מָר זוּטְרָא אִיקְּלַע לְבֵי רַב אָשֵׁי, חַזְיֵיהּ לְדוּכְתֵּיהּ דְּמָר בַּר רַב אָשֵׁי דְּמַנַּח בֵּיהּ סֵפֶר תּוֹרָה וַעֲבֵיד לֵיהּ מְחִיצָה עֲשָׂרָה. אֲמַר לֵיהּ: כְּמַאן? כְּרַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי? אֵימַר דְּאָמַר רַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי דְּלֵית לֵיהּ בֵּיתָא אַחֲרִינָא, מָר הָא אִית לֵיהּ בֵּיתָא אַחֲרִינָא? אֲמַר לֵיהּ: לָאו אַדַּעְתַּאי.</p>
+      <p>כַּמָּה יַרְחִיק מֵהֶן וּמִן הַצּוֹאָה — אַרְבַּע אַמּוֹת. אָמַר רָבָא אָמַר רַב סְחוֹרָה אָמַר רַב הוּנָא: לֹא שָׁנוּ אֶלָּא לַאֲחוֹרָיו, אֲבָל לְפָנָיו — מַרְחִיק מְלֹא עֵינָיו, וְכֵן לִתְפִלָּה.</p>
+      <p>אִינִי?! וְהָא אָמַר רַפְרָם בַּר פָּפָּא אָמַר רַב חִסְדָּא: עוֹמֵד אָדָם כְּנֶגֶד בֵּית הַכִּסֵּא וּמִתְפַּלֵּל! הָכָא בְּמַאי עָסְקִינַן? בְּבֵית הַכִּסֵּא שֶׁאֵין בּוֹ צוֹאָה.</p>
+      <p>אִינִי?! וְהָאָמַר רַב יוֹסֵף בַּר חֲנִינָא: בֵּית הַכִּסֵּא שֶׁאָמְרוּ אַף עַל פִּי שֶׁאֵין בּוֹ צוֹאָה וּבֵית הַמֶּרְחָץ שֶׁאָמְרוּ, אַף עַל פִּי שֶׁאֵין בּוֹ אָדָם! אֶלָּא הָכָא בְּמַאי עָסְקִינַן — בְּחַדְתֵי.</p>
+      <p>וְהָא מִיבְּעֵי לֵיהּ לְרָבִינָא: הִזְמִינוֹ לְבֵית הַכִּסֵּא, מַהוּ? יֵשׁ זִימּוּן, אוֹ אֵין זִימּוּן? כִּי קָא מִיבְּעֵי לֵיהּ לְרָבִינָא: לְמֵיקַם עֲלֵיהּ לְצַלּוֹיֵי בְּגַוֵּיהּ אֲבָל כְּנֶגְדּוֹ — לָא.</p>
+      <p>אָמַר רָבָא: הָנֵי בָּתֵּי כִּסָּאֵי דְּפָרְסָאֵי אַף עַל גַּב דְּאִית בְּהוּ צוֹאָה — כִּסְתוּמִין דָּמוּ.</p>
+      <p><big><strong>מַתְנִי׳</strong></big> זָב שֶׁרָאָה קֶרִי, וְנִדָּה שֶׁפָּלְטָה שִׁכְבַת זֶרַע, וְהַמְשַׁמֶּשֶׁת שֶׁרָאֲתָה נִדָּה — צְרִיכִין טְבִילָה. וְרַבִּי יְהוּדָה פּוֹטֵר.</p>
+      <p><big><strong>גְּמָ׳</strong></big> אִיבַּעְיָא לְהוּ: בַּעַל קֶרִי, שֶׁרָאָה זִיבָה לְרַבִּי יְהוּדָה מַהוּ? כִּי פָּטַר רַבִּי יְהוּדָה הָתָם בְּזָב שֶׁרָאָה קֶרִי, דְּמֵעִיקָּרָא לָאו בַּר טְבִילָה הוּא. אֲבָל בַּעַל קֶרִי שֶׁרָאָה זִיבָה, דְּמֵעִיקָּרָא בַּר טְבִילָה הוּא מְחַיַּיב, אוֹ דִילְמָא לָא שְׁנָא.</p>
+      <p>תָּא שְׁמַע הַמְשַׁמֶּשֶׁת וְרָאֲתָה נִדָּה צְרִיכָה טְבִילָה, וְרַבִּי יְהוּדָה פּוֹטֵר. וְהָא מְשַׁמֶּשֶׁת וְרָאֲתָה נִדָּה כְּבַעַל קֶרִי שֶׁרָאָה זִיבָה דָּמְיָא, וְקָא פָּטַר רַבִּי יְהוּדָה, שְׁמַע מִינַּהּ. תָּנֵי רַבִּי חִיָּיא בְּהֶדְיָא: בַּעַל קֶרִי שֶׁרָאָה זִיבָה צָרִיךְ טְבִילָה, וְרַבִּי יְהוּדָה פּוֹטֵר.</p>
+      <p><br><br><big><strong>הדרן עלך מי שמתו</strong></big></p>
+      <p>מַתְנִי׳ <big><strong>תְּפִלַּת הַשַּׁחַר</strong></big> עַד חֲצוֹת. רַבִּי יְהוּדָה אוֹמֵר: עַד אַרְבַּע שָׁעוֹת. תְּפִלַּת הַמִּנְחָה עַד הָעֶרֶב, רַבִּי יְהוּדָה אוֹמֵר: עַד פְּלַג הַמִּנְחָה.</p>
+      <p>תְּפִלַּת הָעֶרֶב אֵין לָהּ קֶבַע. וְשֶׁל מוּסָפִים כׇּל הַיּוֹם, רַבִּי יְהוּדָה אוֹמֵר: עַד שֶׁבַע שָׁעוֹת.</p>
+      <p><big><strong>גְּמָ׳</strong></big> וּרְמִינְהוּ: מִצְוָתָהּ עִם הָנֵץ הַחַמָּה, כְּדֵי שֶׁיִּסְמוֹךְ גְּאוּלָּה לִתְפִלָּה, וְנִמְצָא מִתְפַּלֵּל בַּיּוֹם!</p>
+      <p>כִּי תַּנְיָא הַהִיא לְוָתִיקִין. דְּאָמַר רַבִּי יוֹחָנָן: וָתִיקִין הָיוּ גּוֹמְרִים אוֹתָהּ עִם הָנֵץ הַחַמָּה.</p>
+      <p>וְכוּלֵּי עָלְמָא עַד חֲצוֹת וְתוּ לָא, וְהָאָמַר רַב מָרִי בְּרֵיהּ דְּרַב הוּנָא בְּרֵיהּ דְּרַבִּי יִרְמְיָה בַּר אַבָּא אָמַר רַבִּי יוֹחָנָן: טָעָה וְלֹא הִתְפַּלֵּל עַרְבִית — מִתְפַּלֵּל בְּשַׁחֲרִית שְׁתַּיִם, שַׁחֲרִית — מִתְפַּלֵּל בְּמִנְחָה שְׁתַּיִם.</p>
+      <p>כּוּלֵּי יוֹמָא מְצַלֵּי וְאָזֵיל, עַד חֲצוֹת, יָהֲבִי לֵיהּ שְׂכַר תְּפִלָּה בִּזְמַנָּהּ, מִכָּאן וְאֵילָךְ, שְׂכַר תְּפִלָּה — יָהֲבִי לֵיהּ, שְׂכַר תְּפִלָּה בִּזְמַנָּהּ — לָא יָהֲבִי לֵיהּ.</p>
+      <p>אִיבַּעְיָא לְהוּ: טָעָה וְלֹא הִתְפַּלֵּל מִנְחָה, מַהוּ שֶׁיִּתְפַּלֵּל עַרְבִית שְׁתַּיִם? אִם תִּמְצָא לוֹמַר, טָעָה וְלֹא הִתְפַּלֵּל עַרְבִית מִתְפַּלֵּל שַׁחֲרִית שְׁתַּיִם, מִשּׁוּם דְּחַד יוֹמָא הוּא, דִּכְתִיב: ״וַיְהִי עֶרֶב וַיְהִי בֹקֶר יוֹם אֶחָד״, אֲבָל הָכָא תְּפִלָּה בִּמְקוֹם קׇרְבָּן הִיא, וְכֵיוָן דְּעָבַר יוֹמוֹ בָּטַל קׇרְבָּנוֹ. אוֹ דִילְמָא כֵּיוָן דִּצְלוֹתָא רַחֲמֵי הִיא, כׇּל אֵימַת דְּבָעֵי מְצַלֵּי וְאָזֵיל.</p>
+      <p>תָּא שְׁמַע דְּאָמַר רַב הוּנָא בַּר יְהוּדָה אָמַר רַבִּי יִצְחָק אָמַר רַבִּי יוֹחָנָן: טָעָה וְלֹא הִתְפַּלֵּל מִנְחָה — מִתְפַּלֵּל עַרְבִית שְׁתַּיִם, וְאֵין בָּזֶה מִשּׁוּם דְּעָבַר יוֹמוֹ בָּטַל קׇרְבָּנוֹ.</p>
+      <p>מֵיתִיבִי. ״מְעֻוָּת לֹא יוּכַל לִתְקֹן וְחֶסְרוֹן לֹא יוּכַל לְהִמָּנוֹת״: ״מְעֻוָּת לֹא יוּכַל לִתְקֹן״ — זֶה שֶׁבִּטֵּל קְרִיאַת שְׁמַע שֶׁל עַרְבִית וּקְרִיאַת שְׁמַע שֶׁל שַׁחֲרִית, אוֹ תְּפִלָּה שֶׁל עַרְבִית אוֹ תְּפִלָּה שֶׁל שַׁחֲרִית. ״וְחֶסְרוֹן לֹא יוּכַל לְהִמָּנוֹת״ — זֶה שֶׁנִּמְנוּ חֲבֵירָיו לִדְבַר מִצְוָה, וְלֹא נִמְנָה עִמָּהֶם.</p>
+      <p>אָמַר רַבִּי יִצְחָק אָמַר רַבִּי יוֹחָנָן: הָכָא בְּמַאי עָסְקִינַן — שֶׁבִּטֵּל בְּמֵזִיד.</p>
+      <p>אָמַר רַב אָשֵׁי: דַּיְקָא נָמֵי, דְּקָתָנֵי ״בִּטֵּל״, וְלָא קָתָנֵי ״טָעָה״, שְׁמַע מִינַּהּ.</p>
+      <p>תָּנוּ רַבָּנַן: טָעָה וְלֹא הִתְפַּלֵּל מִנְחָה בְּעֶרֶב שַׁבָּת — מִתְפַּלֵּל בְּלֵיל שַׁבָּת שְׁתַּיִם. טָעָה וְלֹא הִתְפַּלֵּל מִנְחָה בְּשַׁבָּת — מִתְפַּלֵּל בְּמוֹצָאֵי שַׁבָּת שְׁתַּיִם שֶׁל חוֹל. מַבְדִּיל בָּרִאשׁוֹנָה, וְאֵינוֹ מַבְדִּיל בִּשְׁנִיָּה. וְאִם הִבְדִּיל בַּשְּׁנִיָּה וְלֹא הִבְדִּיל בָּרִאשׁוֹנָה — שְׁנִיָּה עָלְתָה לוֹ, רִאשׁוֹנָה לֹא עָלְתָה לוֹ.</p>
+      <p>לְמֵימְרָא דְּכֵיוָן דְּלָא אַבְדִּיל בְּקַמַּיְיתָא כְּמַאן דְּלָא צַלִּי דָּמֵי, וּמַהְדְּרִינַן לֵיהּ?</p>
+      <p>וּרְמִינְהוּ: טָעָה וְלֹא הִזְכִּיר גְּבוּרוֹת גְּשָׁמִים בִּתְחִיַּית הַמֵּתִים וּשְׁאֵלָה בְּבִרְכַּת הַשָּׁנִים — מַחֲזִירִין אוֹתוֹ. הַבְדָּלָה בְּ״חוֹנֵן הַדַּעַת״ אֵין מַחֲזִירִין אוֹתוֹ, מִפְּנֵי שֶׁיָּכוֹל לְאוֹמְרָהּ עַל הַכּוֹס! קַשְׁיָא.</p>
+      <p>אִיתְּמַר, רַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא אָמַר: תְּפִלּוֹת אָבוֹת תִּקְּנוּם. רַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי אָמַר: תְּפִלּוֹת כְּנֶגֶד תְּמִידִין תִּקְּנוּם.</p>
+      <p>תַּנְיָא כְּווֹתֵיהּ דְּרַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא, וְתַנְיָא כְּווֹתֵיהּ דְּרַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי. תַּנְיָא כְּווֹתֵיהּ דְּרַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא: אַבְרָהָם תִּקֵּן תְּפִלַּת שַׁחֲרִית, שֶׁנֶּאֱמַר: ״וַיַּשְׁכֵּם אַבְרָהָם בַּבֹּקֶר אֶל הַמָּקוֹם אֲשֶׁר עָמַד שָׁם״, וְאֵין ״עֲמִידָה״ אֶלָּא תְּפִלָּה, שֶׁנֶּאֱמַר: ״וַיַּעֲמֹד פִּינְחָס וַיְפַלֵּל״.</p>
+      <p>יִצְחָק תִּקֵּן תְּפִלַּת מִנְחָה, שֶׁנֶּאֱמַר ״וַיֵּצֵא יִצְחָק לָשׂוּחַ בַּשָּׂדֶה לִפְנוֹת עָרֶב״, וְאֵין ״שִׂיחָה״ אֶלָּא תְּפִלָּה, שֶׁנֶּאֱמַר ״תְּפִלָּה לְעָנִי כִי יַעֲטֹף וְלִפְנֵי ה׳ יִשְׁפֹּךְ שִׂיחוֹ״.</p>
+      <p>יַעֲקֹב תִּקֵּן תְּפִלַּת עַרְבִית, שֶׁנֶּאֱמַר: ״וַיִּפְגַּע בַּמָּקוֹם וַיָּלֶן שָׁם״, וְאֵין ״פְּגִיעָה״ אֶלָּא תְּפִלָּה, שֶׁנֶּאֱמַר: ״וְאַתָּה אַל תִּתְפַּלֵּל בְּעַד הָעָם הַזֶּה וְאַל תִּשָּׂא בַעֲדָם רִנָּה וּתְפִלָּה וְאַל תִּפְגַּע בִּי״</p>
+      <p>וְתַנְיָא כְּווֹתֵיהּ דְּרַבִּי יְהוֹשֻׁעַ בֶּן לֵוִי: מִפְּנֵי מָה אָמְרוּ תְּפִלַּת הַשַּׁחַר עַד חֲצוֹת — שֶׁהֲרֵי תָּמִיד שֶׁל שַׁחַר קָרֵב וְהוֹלֵךְ עַד חֲצוֹת. וְרַבִּי יְהוּדָה אוֹמֵר: עַד אַרְבַּע שָׁעוֹת שֶׁהֲרֵי תָּמִיד שֶׁל שַׁחַר קָרֵב וְהוֹלֵךְ עַד אַרְבַּע שָׁעוֹת.</p>
+      <p>וּמִפְּנֵי מָה אָמְרוּ תְּפִלַּת הַמִּנְחָה עַד הָעֶרֶב — שֶׁהֲרֵי, תָּמִיד שֶׁל בֵּין הָעַרְבַּיִם קָרֵב וְהוֹלֵךְ עַד הָעֶרֶב. רַבִּי יְהוּדָה אוֹמֵר: עַד פְּלַג הַמִּנְחָה, שֶׁהֲרֵי תָּמִיד שֶׁל בֵּין הָעַרְבַּיִם קָרֵב וְהוֹלֵךְ עַד פְּלַג הַמִּנְחָה.</p>
+      <p>וּמִפְּנֵי מָה אָמְרוּ תְּפִלַּת הָעֶרֶב אֵין לָהּ קֶבַע — שֶׁהֲרֵי אֵבָרִים וּפְדָרִים שֶׁלֹּא נִתְעַכְּלוּ מִבָּעֶרֶב, קְרֵבִים וְהוֹלְכִים כׇּל הַלַּיְלָה.</p>
+      <p>וּמִפְּנֵי מָה אָמְרוּ שֶׁל מוּסָפִין כׇּל הַיּוֹם — שֶׁהֲרֵי קׇרְבָּן שֶׁל מוּסָפִין קָרֵב כׇּל הַיּוֹם. רַבִּי יְהוּדָה אוֹמֵר: עַד שֶׁבַע שָׁעוֹת, שֶׁהֲרֵי קׇרְבַּן מוּסַף קָרֵב וְהוֹלֵךְ עַד שֶׁבַע שָׁעוֹת.</p>
+      <p>וְאֵיזוֹ הִיא מִנְחָה גְדוֹלָה מִשֵּׁשׁ שָׁעוֹת וּמֶחֱצָה וּלְמַעְלָה. וְאֵיזוֹ הִיא מִנְחָה קְטַנָּה מִתֵּשַׁע שָׁעוֹת וּמֶחֱצָה וּלְמַעְלָה.</p>
+      <p>אִיבַּעְיָא לְהוּ: רַבִּי יְהוּדָה, פְּלַג מִנְחָה קַמָּא קָאָמַר אוֹ פְּלַג מִנְחָה אַחֲרוֹנָה קָאָמַר? תָּא שְׁמַע דְּתַנְיָא, רַבִּי יְהוּדָה אוֹמֵר: פְּלַג הַמִּנְחָה אַחֲרוֹנָה אָמְרוּ, וְהִיא אַחַת עֶשְׂרֵה שָׁעוֹת חָסֵר רְבִיעַ.</p>
+      <p>נֵימָא תֶּיהְוֵי תְּיוּבְתֵּיהּ דְּרַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא? אָמַר לְךָ רַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא: לְעוֹלָם אֵימָא לָךְ, תְּפִלּוֹת, אָבוֹת תִּקְּנוּם, וְאַסְמְכִינְהוּ רַבָּנַן אַקׇּרְבָּנוֹת. דְּאִי לָא תֵּימָא הָכִי, תְּפִלַּת מוּסָף לְרַבִּי יוֹסֵי בְּרַבִּי חֲנִינָא מַאן תַּקְּנַהּ. אֶלָּא תְּפִלּוֹת אָבוֹת תִּקְּנוּם, וְאַסְמְכִינְהוּ רַבָּנַן אַקׇּרְבָּנוֹת.</p>
+      <p>רַבִּי יְהוּדָה אוֹמֵר עַד אַרְבַּע שָׁעוֹת. אִיבַּעְיָא לְהוּ: עַד וְעַד בַּכְּלָל, אוֹ דִילְמָא עַד וְלֹא עַד בַּכְּלָל?! תָּא שְׁמַע רַבִּי יְהוּדָה אוֹמֵר: עַד פְּלַג הַמִּנְחָה. אִי אָמְרַתְּ בִּשְׁלָמָא עַד וְלֹא עַד בַּכְּלָל — הַיְינוּ דְּאִיכָּא בֵּין רַבִּי יְהוּדָה לְרַבָּנַן. אֶלָּא אִי אָמְרַתְּ עַד וְעַד בַּכְּלָל, רַבִּי יְהוּדָה</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>(Début de 26a : suite de la discussion sur les lieux interdits à la prière.)</b> Un livre mis dans un coffre est comme un récipient dans un récipient. Rabbi Yehoshoua ben Lévi dit : celui qui veut avoir des relations dans une pièce où se trouve un rouleau de la Torah doit élever une séparation de dix paumes. Mar Zoutra vint chez Rav Achi et vit un rouleau de la Torah dans la chambre de Mar bar Rav Achi, avec une séparation de dix paumes. Il lui dit : selon quel avis as-tu fait ainsi ? C'est selon Rabbi Yehoshoua ben Lévi ? Il ne l'a dit que dans un cas de contrainte, mais n'as-tu pas une autre pièce ? Il répondit : cela ne m'est pas venu à l'esprit.</p>
+      <p><b>Distance des excréments pour le Chéma et la prière.</b> Rava dit au nom de Rav Seh'ora, au nom de Rav Houna : la distance de quatre coudées n'a été dite que lorsque les excréments sont derrière soi ; s'ils sont devant, il faut s'éloigner jusqu'à ne plus les voir ; et de même pour la prière. La Guemara objecte : Rafram bar Papa n'a-t-il pas dit, au nom de Rav Hisda, qu'on peut se tenir face à des toilettes et prier ? Il s'agit de toilettes sans excréments. La Guemara objecte encore, d'après Rav Yossef bar 'Hanina (les toilettes des lois d'éloignement sont même celles sans excréments, et le bain des lois de choses saintes même sans personne dénudée) : il s'agit alors d'une construction neuve, bâtie comme toilettes mais pas encore utilisée. La Guemara demande : Ravina n'a-t-il pas posé la question de la construction désignée à cet usage ? Il se demandait si l'on peut prier à l'intérieur, non pas en face. Rava dit : ces toilettes perses, même avec des excréments, sont considérées comme fermées, car elles sont en pente et les excréments roulent sous terre.</p>
+      <p><b>MICHNA (3:6).</b> Le zav qui a eu une émission séminale, la nidda qui a rejeté de la semence, et la femme qui, après l'union conjugale, a vu qu'elle était nidda, doivent s'immerger ; Rabbi Yehouda les exempte.</p>
+      <p><b>GUEMARA.</b> Une question fut posée aux élèves de la yeshiva : si quelqu'un a eu une émission séminale, puis a eu un écoulement qui le rend zav, quel est l'avis de Rabbi Yehouda ? Dans la michna, Rabbi Yehouda exempte le zav qui a une émission séminale parce que, dès le départ, il n'est pas apte à l'immersion. Mais celui qui était apte à l'immersion, puis est devenu zav, Rabbi Yehouda lui demande-t-il l'immersion ? Ou n'y a-t-il aucune différence ? Venez écouter le dernier cas de la michna (la femme qui a vu qu'elle était nidda après l'union conjugale), que Rabbi Yehouda exempte : c'est comme celui qui a eu une émission séminale puis est devenu zav. Rabbi Yehouda ne distingue donc pas. Et Rabbi 'Hiya l'a enseigné ainsi.</p>
+      <p><b>MICHNA (4:1).</b> La prière du matin se dit jusqu'à midi ; Rabbi Yehouda : jusqu'à la quatrième heure. La prière de l'après-midi, jusqu'au soir ; Rabbi Yehouda : jusqu'à Plag haMin'ha. La prière du soir n'a pas d'heure fixe. Les prières additionnelles se disent toute la journée ; Rabbi Yehouda : jusqu'à la septième heure.</p>
+      <p><b>GUEMARA.</b> On a une contradiction avec une baraïta : la mitsva est de lire le Chéma du matin avec le lever du soleil, afin de rapprocher la Délivrance (dans les bénédictions) de la prière (Amida), et de prier de jour. La Guemara répond : cela ne vaut que pour les <i>vatikin</i> (les gens soigneux), comme dit Rabbi Yo'hanan : les vatikin terminent le Chéma au lever du soleil, mais les autres prient plus tard.</p>
+      <p>La Guemara demande : tous pensent-ils que la prière du matin ne se dit que jusqu'à midi ? Rav Mari dit au nom de Rabbi Yo'hanan : celui qui a fauté par erreur et n'a pas prié Arvit prie deux Amida au matin ; celui qui n'a pas prié le matin prie deux Amida à Min'ha. La Guemara répond : on peut prier toute la journée ; celui qui prie jusqu'à midi reçoit le salaire de la prière à son temps ; celui qui prie plus tard reçoit le salaire de la prière, mais non celui de la prière à son temps.</p>
+      <p>Une question fut posée : celui qui a oublié Min'ha peut-il prier deux Amida à Arvit ? Si l'on dit que pour l'oubli d'Arvit on prie deux Amida le matin, peut-être est-ce parce que le soir et le matin forment un seul jour (« il y eut un soir et il y eut un matin, un jour »). Ici, la prière remplace le sacrifice, et pour le sacrifice « son jour est passé, son sacrifice est annulé ». La Guemara répond par Rav Houna bar Yehouda au nom de Rabbi Yitz'hak et de Rabbi Yo'hanan : celui qui a oublié Min'ha prie deux Amida à Arvit, sans la règle « son jour est passé ».</p>
+      <p>La Guemara objecte avec une baraïta sur Ecclésiaste 1:15 (« ce qui est tordu ne peut être redressé ») : cela désigne celui qui a omis le Chéma du soir et du matin, ou la prière du soir ou du matin. Rabbi Yitz'hak dit au nom de Rabbi Yo'hanan : il s'agit de celui qui a omis volontairement ; celui qui a oublié par erreur peut se rattraper en priant deux fois à la prière suivante. Rav Achi dit : la formulation de la baraïta est précise (« omis » et non « oublié »).</p>
+      <p>Les Sages ont enseigné : celui qui a oublié Min'ha la veille de chabbat prie deux fois à Arvit (soir de chabbat). Celui qui a oublié Min'ha le chabbat prie deux Amida de semaine à Arvit de la sortie du chabbat ; il fait la Havdala dans la première (« Atah 'honantanou », dans la bénédiction « 'honen hada'at »), pas dans la seconde. Si l'on a fait la Havdala dans la seconde mais pas dans la première, la seconde a rempli l'obligation, pas la première. La Guemara demande : donc celui qui n'a pas dit la Havdala dans la première est comme s'il n'avait pas prié ? La question reste sans solution, en rapport avec une Tossefta sur celui qui oublie la mention de la pluie.</p>
+      <p><b>L'origine des prières.</b> Rabbi Yossi bar Rabbi 'Hanina dit : les prières ont été instituées par les patriarches. Rabbi Yehoshoua ben Lévi dit : elles ont été instituées d'après les sacrifices quotidiens. Une baraïta enseigne selon Rabbi Yossi bar 'Hanina : <b>Abraham a institué la prière du matin</b> (« Abraham se leva de bon matin vers le lieu où il s'était tenu devant D.ieu », Genèse 19:27 ; « se tenir » désigne la prière, comme pour Pin'has, Psaumes 106:30). <b>Isaac a institué la prière de l'après-midi</b> (« Isaac sortit méditer dans le champ vers le soir », Genèse 24:63 ; « méditer » est la prière, Psaumes 102:1). <b>Jacob a institué la prière du soir</b> (« il tomba sur le lieu et il y passa la nuit, car le soleil s'était couché », Genèse 28:11 ; la rencontre est la prière, Jérémie 7:16).</p>
+      <p>Et une baraïta enseigne selon Rabbi Yehoshoua ben Lévi : les prières suivent les sacrifices quotidiens. Pourquoi les Sages disent-ils que la prière du matin se dit jusqu'à midi ? Parce que le sacrifice perpétuel du matin peut être offert jusqu'à midi ; Rabbi Yehouda : jusqu'à quatre heures. Pourquoi la prière de l'après-midi se dit-elle jusqu'au soir ? Parce que le sacrifice perpétuel de l'après-midi s'offre jusqu'au soir ; Rabbi Yehouda : jusqu'à Plag haMin'ha. Pourquoi la prière du soir n'a-t-elle pas de limite ? À cause de la combustion des membres et des graisses, toute la nuit. Pourquoi la prière additionnelle se dit-elle toute la journée ? Parce que l'offrande additionnelle s'offre toute la journée ; Rabbi Yehouda : jusqu'à la septième heure.</p>
+      <p>Il y a deux temps pour la prière de l'après-midi : <b>Min'ha Guedola</b> (la grande) et <b>Min'ha Ketana</b> (la petite). Min'ha Guedola : à partir de six heures et demie, une demi-heure après midi ; Min'ha Ketana : à partir de neuf heures et demie. Une question fut posée : Rabbi Yehouda dit « Plag haMin'ha » : est-ce la moitié de la grande ou de la petite ? Une baraïta tranche : Rabbi Yehouda dit : la moitié de la dernière Min'ha, qui est onze heures moins un quart (une heure et quart avant la fin du jour). La Guemara se demande si cela réfute Rabbi Yossi bar 'Hanina ; réponse : les patriarches ont institué les prières, et les Sages ont rattaché leurs temps aux sacrifices. Sinon, qui a institué Moussaf ? Ce n'est pas une des prières des patriarches.</p>
+      <p>Une dernière question : quand Rabbi Yehouda dit « jusqu'à la quatrième heure », est-ce jusqu'à et y compris, ou jusqu'à sans inclure ? On tente de la résoudre par la michna (Min'ha jusqu'à Plag), sans conclusion définitive ici.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>atop a chest is like a vessel within a vessel.</b> On a similar note, <b>Rabbi Yehoshua ben Levi said:</b> One who wishes to engage in marital relations in a room in which there is <b>a Torah scroll, must erect a partition ten</b> handbreadths high. The Gemara relates: <b>Mar Zutra happened</b> to come <b>to the house of Rav Ashi</b> and <b>he saw</b> that <b>in the</b> bed <b>chamber of</b> his son <b>Mar bar Rav Ashi, there was a Torah scroll, and a partition of ten</b> handbreadths <b>had been erected for it. He said to him: In accordance with whose</b> opinion did you do this? Is it <b>in accordance with</b> the opinion of <b>Rabbi Yehoshua ben Levi? Say</b> that <b>Rabbi Yehoshua ben Levi said</b> this only as a makeshift solution in exigent situations, when <b>he has no other room</b> in which to place it, but <b>don’t</b> you, <b>Master, have another room</b> where you could place the Torah scroll? <b>He said to him:</b> Indeed, <b>that</b> did <b>not</b> enter <b>my mind.</b></p>
+      <p>We learned in the mishna: <b>And, how far must one distance himself from urine and from feces</b> in order to recite <i>Shema</i>? <b>Four cubits. Rava said</b> that <b>Rav Seḥora said</b> that <b>Rav Huna said: They only taught</b> that it is sufficient to distance oneself four cubits when the feces are <b>behind him, but</b> if they are <b>before him he must distance himself</b> to the point that it is <b>no longer within his range of vision;</b> and the <i>halakha</i> <b>is the same</b> for <b>prayer.</b></p>
+      <p>The Gemara challenges this: <b>Is that so? Didn’t Rafram bar Pappa say</b> that <b>Rav Ḥisda said: One may stand opposite a bathroom and pray.</b> The Gemara resolves this contradiction: <b>With what are we dealing here? With a bathroom that has no feces,</b> and therefore there is no need to distance himself to that extent.</p>
+      <p>The Gemara asks again: <b>Is that so? Didn’t Rav Yosef bar Ḥanina say: The bathroom to which</b> the Sages <b>referred</b> in all of the <i>halakhot</i> of distancing oneself was <b>even</b> one <b>in which there were no feces, and the bathhouse to which</b> the Sages <b>referred</b> in all of the <i>halakhot</i> of uttering sacred matters, was <b>even</b> one <b>in which there was no</b> naked <b>person. Rather, with what are we dealing here?</b> We are dealing <b>with a new</b> structure, built as a bathroom but not yet used for that purpose.</p>
+      <p>The Gemara asks: <b>Wasn’t this</b> already <b>raised as a dilemma</b> by <b>Ravina: One who designated</b> the structure for use <b>as a bathroom, what is its</b> legal status? Is <b>designation</b> effective <b>or is designation not</b> effective? The Gemara replies: <b>When Ravina raised the dilemma,</b> it was whether or not one may <b>stand and pray inside it, but</b> he had <b>no</b> dilemma whether or <b>not one may pray opposite it.</b></p>
+      <p><b>Rava said: These Persian bathrooms, even though they contain feces, they are considered as sealed,</b> as they are constructed on an incline so the feces will roll out of the bathroom underground.</p>
+      <p><strong>MISHNA:</strong> Continuing the earlier discussion of the <i>halakhot</i> of immersion for Torah study and prayer for one who experienced a seminal emission, the mishna discusses a case where individuals who were already impure with a severe form of ritual impurity are exposed to the impurity of a seminal emission as well. They are required to immerse themselves and purify themselves of the impurity of the seminal emission even though they remain impure due to the more severe impurity. Consequently, even a <b><i>zav</i>,</b> whose impurity lasts at least seven days, <b>who experienced a seminal emission,</b> for which, were he not a <i>zav</i>, he would be impure for only one day; <b>a menstruating woman who discharged semen,</b> despite the fact that she is already impure with a severe impurity unaffected by her immersion; <b>and</b> a woman <b>who engaged in conjugal relations</b> with her husband <b>and</b> later <b>saw menstrual blood,</b> all <b>require immersion. And Rabbi Yehuda exempts</b> them from immersion.</p>
+      <p><strong>GEMARA:</strong> <b>A dilemma was raised before</b> the students of the yeshiva: <b>One who experienced a seminal emission</b> and was therefore required to immerse himself, who later <b>saw a discharge</b> that rendered him a <b><i>zav</i>; according to Rabbi Yehuda, what is his legal status?</b> The Gemara explains the sides of the dilemma: <b>When,</b> in our mishna, <b>Rabbi Yehuda exempted a <i>zav</i> who saw a seminal emission</b> from immersion, that <b>was because from the outset he was not fit for immersion,</b> as the immersion would not be effective in purifying him from the impurity of a <i>zav</i>; <b>however, one who experienced a seminal emission,</b> who later <b>saw a discharge</b> that rendered him a <b><i>zav</i>,</b> who <b>was fit for immersion</b> and only later became impure with the severe impurity of a <i>zav</i>, would Rabbi Yehuda <b>require</b> immersion? <b>Or perhaps there is no difference</b> and he is exempt from immersion in both cases?</p>
+      <p>In order to resolve this dilemma, <b>come</b> and <b>hear</b> the last case of the mishna: A woman <b>who engaged in conjugal relations</b> with her husband <b>and</b> later <b>saw menstrual blood requires immersion. And Rabbi Yehuda exempts</b> them from immersion. <b>Isn’t the</b> woman <b>who engaged in conjugal relations</b> with her husband <b>and</b> later <b>saw menstrual blood like one who experienced a seminal emission,</b> who later <b>saw a discharge</b> that rendered him a <b><i>zav</i>,</b> as in both cases there is a less severe ritual impurity followed by a more severe impurity; <b>and</b> nevertheless, <b>Rabbi Yehuda exempts. Conclude from this</b> that Rabbi Yehuda does not distinguish between the cases. And indeed, <b>Rabbi Ḥiyya explicitly taught: One who experienced a seminal emission</b> who later <b>saw a discharge</b> that rendered him a <b><i>zav</i> requires immersion, and Rabbi Yehuda exempts.</b></p>
+      <p><strong>MISHNA:</strong> This mishna determines the times beyond which the different prayers may not be recited. According to the Rabbis, <b>the morning prayer</b> may be recited <b>until noon. Rabbi Yehuda says:</b> It may be recited only <b>until four hours</b> after sunrise. According to the Rabbis, <b>the afternoon prayer</b> may be recited <b>until the evening. Rabbi Yehuda says:</b> It may be recited only <b>until the midpoint of the afternoon [<i>pelag haminḥa</i>],</b> i.e., the midpoint of the period that begins with the sacrifice of the daily afternoon offering and ends at nightfall, which is the end of the afternoon.</p>
+      <p><b>The evening prayer</b> may be recited throughout the night and <b>is not fixed</b> to a specific hour. According to the Rabbis, <b>the additional prayer</b> may be recited <b>all day. Rabbi Yehuda says:</b> It may be recited only <b>until seven hours</b> after sunrise.</p>
+      <p><strong>GEMARA:</strong> We learned in the mishna that the morning prayer may be recited only until a few hours into the day. The Gemara <b>raises a contradiction</b> based on what was taught in a <i>baraita</i>: <b>The mitzva</b> is to recite the morning <i>Shema</i> <b>with sunrise</b> so that <b>he will juxtapose redemption,</b> which is mentioned in the blessings following <i>Shema</i>, <b>to</b> the <i>Amida</i> <b>prayer,</b> which is recited immediately after sunrise, and <b>find</b> himself <b>praying in the daytime.</b> Clearly, the time to recite the morning prayer is immediately after sunrise.</p>
+      <p>The Gemara responds: This <i>baraita</i> does not establish a binding <i>halakha</i>. Rather, it <b>taught that</b> rule specifically <b>with regard to those who are scrupulous in fulfillment of mitzvot [<i>vatikin</i>]. As Rabbi Yoḥanan said: <i>Vatikin</i> would finish</b> reciting the morning <i>Shema</i> <b>with sunrise,</b> but those who are not <i>vatikin</i> may recite their prayers later.</p>
+      <p>The Gemara asks: <b>Does everyone</b> hold that one may recite the morning prayer only <b>until noon and no later? Didn’t Rav Mari, son of Rav Huna, son of Rabbi Yirmeya bar Abba, say</b> that <b>Rabbi Yoḥanan said: One who erred and did not recite the evening prayer, prays in the morning prayer two</b> <i>Amida</i> prayers; one who erred and did not recite <b>the morning prayer, prays in the afternoon prayer two</b> <i>Amida</i> prayers? Apparently, the morning prayer may be recited until the evening, at least in the event that he forgot to recite it in the morning.</p>
+      <p>The Gemara answers: Indeed, <b>one may continue praying for the entire day.</b> However, if he prayed <b>until noon, they give him a reward for</b> reciting the <b>prayer at its</b> appointed <b>time.</b> If he prayed <b>from there on, they give him a reward for</b> reciting the <b>prayer. They do not give him a reward for</b> reciting the <b>prayer at its</b> appointed <b>time.</b></p>
+      <p>On the topic of one who forgot to pray and seeks to compensate for the prayer that he missed, <b>a dilemma was raised before them</b> in the study hall: <b>One who erred and did not recite the afternoon prayer, what is</b> the ruling? May he <b>recite</b> in <b>the evening prayer two</b> <i>Amida</i> prayers? The Gemara articulates the sides of the dilemma: <b>If you say</b> that <b>one who erred and did not pray the evening prayer prays in the morning prayer two</b> <i>Amida</i> prayers, perhaps that is <b>because</b> the evening and the morning are both part of <b>one day, as it is written: “And there was evening and there was morning, one day”</b> (Genesis 1:5); the evening and the following morning constitute a single unit. <b>But here,</b> in the case under discussion, perhaps <b>prayer is in place of sacrifice.</b> Since in the case of sacrifice we say, <b>since its day passed, its sacrifice is invalid</b> and there is no way to compensate for the missed opportunity, the same should be true for prayer. <b>Or, perhaps, since prayer is supplication, any time that one wishes, he may continue to pray?</b></p>
+      <p><b>Come and hear</b> a resolution to this dilemma from that <b>which Rav Huna bar Yehuda said</b> that <b>Rabbi Yitzḥak said</b> that <b>Rabbi Yoḥanan said: One who erred and did not recite the afternoon prayer, prays in the evening prayer two</b> <i>Amida</i> prayers <b>and there is no element of: Its day passed, its sacrifice is invalid.</b></p>
+      <p>With regard to the possibility to compensate for a prayer that he failed to recite at its appointed time, the Gemara <b>raises an objection</b> based on what was taught in a <i>baraita</i>. The meaning of the verse: <b>“That which is crooked cannot be made straight; and that which is wanting cannot be numbered”</b> (Ecclesiastes 1:15), is as follows: <b>That which is crooked cannot be made straight</b> refers to <b>one who omitted the evening <i>Shema</i> and the morning <i>Shema,</i> or the evening prayer, or the morning prayer. And that which is wanting cannot be numbered [<i>lehimanot</i>]</b> refers to <b>one whose friends reached a consensus [<i>nimnu</i>]</b> to perform <b>a mitzva and he was not part of their consensus [<i>nimnu</i>]</b> and, consequently, he missed his opportunity to join them in performance of the mitzva. This <i>baraita</i> clearly states that there is no way to compensate for a missed prayer.</p>
+      <p>To resolve this difficulty, <b>Rabbi Yitzḥak said</b> that <b>Rabbi Yoḥanan said: With what are we dealing here</b> in this <i>baraita</i>? We are dealing with a case where one <b>intentionally failed</b> to recite the prayer. Only then he has no remedy. However, one who failed to pray due to error can compensate for the missed prayer by reciting the next prayer twice.</p>
+      <p><b>Rav Ashi said:</b> The language of the <i>baraita</i> <b>is also precise as it teaches omitted and did not teach erred.</b> This indicates that the <i>halakha</i> is different in the case of error. The Gemara concludes: Indeed, <b>learn from this.</b></p>
+      <p>On a similar note, <b>the Sages taught</b> in a <i>baraita</i>: <b>One who erred and did not recite the afternoon prayer on the eve of Shabbat, prays in</b> the evening prayer <b>two</b> <i>Amida</i> prayers <b>on Shabbat evening. One who erred and did not recite the afternoon prayer on Shabbat, recites two weekday</b> <i>Amida</i> prayers in the evening prayer <b>at the conclusion of Shabbat. He recites <i>havdala</i> [</b>the prayer of <b>distinction]</b> between the sanctity of Shabbat and the profanity of the week by reciting: You have graced us, etc., in the fourth blessing of the <i>Amida,</i> which is: Who graciously grants knowledge, <b>in the first</b> prayer, as it is the actual evening prayer, <b>but he does not recite <i>havdala</i> in the second</b> prayer, which is in place of the afternoon prayer. Moreover, <b>if he recited <i>havdala</i> in the second</b> prayer <b>and did not recite <i>havdala</i> in the first, the second prayer fulfilled his</b> obligation, the <b>first one did not fulfill his</b> obligation.</p>
+      <p>The Gemara comments: <b>Is that to say</b> that <b>since he did not recite <i>havdala</i> in the first</b> prayer, he is <b>as one who did not pray and we require him to return</b> to the beginning of the prayer and repeat it? If so, the conclusion is that one who fails to recite <i>havdala</i> in the prayer must repeat that prayer.</p>
+      <p>The Gemara <b>raises a contradiction</b> to the above conclusion from the <i>Tosefta</i>: <b>One who erred and did not mention the might of the rains:</b> He makes the wind blow and rain fall <b>in</b> the second blessing of the <i>Amida</i>, the blessing on <b>the revival of the dead, and</b> one who erred and failed to recite <b>the request</b> for rain <b>in</b> the ninth blessing of the <i>Amida</i>, <b>the blessing of the years, we require him to return</b> to the beginning of the prayer and repeat it. However, one who erred and failed to recite <b><i>havdala</i> in</b> the blessing: <b>Who graciously grants knowledge, we do not require him to return</b> to the beginning of the prayer and repeat it, <b>as he can recite</b> <i>havdala</i> <b>over the cup</b> of wine, independent of his prayer. This contradiction was not resolved and remains <b>difficult.</b></p>
+      <p>The dispute between the Rabbis and Rabbi Yehuda with regard to the times beyond which the different prayers may not be recited is rooted in a profound disagreement, also manifest in a later amoraic dispute. <b>It was stated: Rabbi Yosei, son of Rabbi Ḥanina, said:</b> The practice of praying three times daily is ancient, albeit not in its present form; <b>prayers were instituted by the Patriarchs.</b> However, <b>Rabbi Yehoshua ben Levi said</b> that the <b>prayers were instituted based on the daily offerings</b> sacrificed in the Holy Temple, and the prayers parallel the offerings, in terms of both time and characteristics.</p>
+      <p>The Gemara comments: <b>It was taught</b> in a <i>baraita</i> <b>in accordance with</b> the opinion of <b>Rabbi Yosei, son of Rabbi Ḥanina, and it was taught</b> in a <i>baraita</i> <b>in accordance with</b> the opinion of <b>Rabbi Yehoshua ben Levi.</b> The Gemara elaborates: <b>It was taught</b> in a <i>baraita</i> <b>in accordance with</b> the opinion of <b>Rabbi Yosei, son of Rabbi Ḥanina: Abraham instituted the morning prayer, as it is stated</b> when Abraham came to look out over Sodom the day after he had prayed on its behalf: <b>“And Abraham rose early in the morning to the place where he had stood</b> before the Lord” (Genesis 19:27), <b>and</b> from the context as well as the language utilized in the verse, the verb <b>standing</b> means <b>nothing other than prayer,</b> as this language is used to describe Pinehas’ prayer after the plague, <b>as it is stated: “And Pinehas stood up and prayed</b> and the plague ended” (Psalms 106:30). Clearly, Abraham was accustomed to stand in prayer in the morning.</p>
+      <p><b>Isaac instituted the afternoon prayer, as it is stated: “And Isaac went out to converse [<i>lasuaḥ</i>] in the field toward evening”</b> (Genesis 24:63), <b>and conversation</b> means <b>nothing other than prayer, as it is stated: “A prayer of the afflicted when he is faint and pours out his complaint [<i>siḥo</i>] before the Lord”</b> (Psalms 102:1). Obviously, Isaac was the first to pray as evening approached, at the time of the afternoon prayer.</p>
+      <p><b>Jacob instituted the evening prayer, as it is stated: “And he encountered [<i>vayifga</i>] the place and he slept there</b> for the sun had set” (Genesis 28:11). The word <b>encounter</b> means <b>nothing other than prayer, as it is stated</b> when God spoke to Jeremiah: <b>“And you, do not pray on behalf of this nation and do not raise on their behalf song and prayer, and do not encounter [<i>tifga</i>] Me</b> for I do not hear you” (Jeremiah 7:16). Jacob prayed during the evening, after the sun had set.</p>
+      <p><b>And it was taught</b> in a <i>baraita</i> <b>in accordance with</b> the opinion of <b>Rabbi Yehoshua ben Levi</b> that the laws of prayer are based on the laws of the daily offerings: <b>Why did</b> the Rabbis <b>say</b> that <b>the morning prayer</b> may be recited <b>until noon? Because,</b> although the <b>daily morning offering</b> is typically brought early in the morning, it may be <b>sacrificed until noon. And Rabbi Yehuda says:</b> My opinion, that the morning prayer may be recited <b>until four hours</b> into the day, is <b>because the daily morning offering is sacrificed until four hours.</b></p>
+      <p><b>And why did</b> the Rabbis <b>say</b> that <b>the afternoon prayer</b> may be recited <b>until the evening? Because the daily afternoon offering is sacrificed until the evening. Rabbi Yehuda says</b> that <b>the afternoon prayer</b> may be recited only <b>until the midpoint of the afternoon because,</b> according to his opinion, <b>the daily afternoon offering is sacrificed until the midpoint of the afternoon.</b></p>
+      <p><b>And why did they say</b> that <b>the evening prayer is not fixed? Because</b> the burning of the <b>limbs and fats</b> of the offerings that were <b>not consumed</b> by the fire on the altar <b>until the evening.</b> They remained on the altar and were <b>offered continuously</b> throughout <b>the entire night.</b></p>
+      <p><b>And why did</b> the Rabbis <b>say</b> that <b>the additional prayer</b> may be recited <b>all day? Because the additional offering is brought</b> throughout <b>the entire day.</b> However, <b>Rabbi Yehuda says</b> that <b>the additional prayer</b> may be recited <b>until the seventh hour</b> of the day, <b>because the additional offering is sacrificed until the seventh hour.</b></p>
+      <p>The <i>baraita</i> continues and states that there are two times for the afternoon prayer. Greater, earlier <i>minḥa</i> [<i>minḥa gedola</i>] and lesser, later <i>minḥa</i> [<i>minḥa ketana</i>]. The Gemara clarifies the difference between them: <b>Which is <i>minḥa gedola</i>? From six-and-a-half hours</b> after sunrise <b>and on,</b> which is a half an hour after noon and on. It is the earliest time that the daily afternoon offering may be sacrificed, as in the case on the eve of Passover that occurs on Shabbat. <b>Which is <i>minḥa ketana</i>? From nine-and-a-half hours and on,</b> which is the standard time that the daily afternoon offering is sacrificed.</p>
+      <p>On that note, <b>a dilemma was raised before them: Rabbi Yehuda,</b> who holds that the afternoon prayer may be recited only until the midpoint of the afternoon, does <b>he say the midpoint of the first <i>minḥa</i>,</b> <i>minḥa gedola</i>? <b>Or,</b> does <b>he say the midpoint of the last <i>minḥa</i>? Come and hear</b> an explicit resolution to this dilemma: <b>As it was taught</b> in a <i>baraita</i>, <b>Rabbi Yehuda says: They said the midpoint of the last <i>minḥa</i>, and that is eleven hours minus a quarter</b> of an hour after sunrise, i.e., an hour-and-a-quarter hours before sunset.</p>
+      <p>In any case, it is clear that according to this <i>baraita</i> the <i>halakhot</i> of prayer are based on the Temple offerings. The Gemara suggests: <b>Let us say that this is a conclusive refutation of</b> the opinion of <b>Rabbi Yosei, son of Rabbi Ḥanina,</b> who held that the forefathers instituted the prayers. <b>Rabbi Yosei, son of Rabbi Ḥanina,</b> could have <b>said to you: Actually, I will say to you</b> that <b>the Patriarchs instituted the prayers and the Sages based</b> the times and characteristics of prayer <b>on the Temple offerings,</b> even though they do not stem from the same source. <b>As, if you do not say so,</b> that even Rabbi Yosei, son of Rabbi Ḥanina, would agree that the laws of offerings and those of prayers are related, <b>then, according to Rabbi Yosei, son of Rabbi Ḥanina, who instituted the additional prayer?</b> It is not one of the prayers instituted by the forefathers. <b>Rather,</b> even according to Rabbi Yosei, son of Rabbi Ḥanina, <b>the prayers were instituted by the Patriarchs and the Sages based them</b> on the laws of the <b>offerings.</b></p>
+      <p>We learned in the mishna that <b>Rabbi Yehuda says:</b> The morning prayer may be recited <b>until four hours</b> of the day. <b>A dilemma was raised before</b> the yeshiva students: When Rabbi Yehuda says <b>until,</b> does he mean <b>until and including</b> the fourth hour, <b>or, perhaps</b> when he says <b>“until”</b> he means <b>until and not including,</b> in which case one may not pray during the fourth hour? <b>Come and hear</b> a resolution to this dilemma based on the mishna. <b>Rabbi Yehuda says:</b> The afternoon prayer may be recited only <b>until the midpoint of the afternoon.</b> Now, <b>granted, if you say</b> that <b>until</b> means <b>until and not including, then there is</b> a difference <b>between</b> the opinion of <b>Rabbi Yehuda and</b> the opinion of <b>the Rabbis. However, if you say</b> that <b>until</b> means <b>until and including,</b> then the opinion of <b>Rabbi Yehuda</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p><b>Contexte :</b> ce daf est celui où la michna 3:6 (immersion de l'émission séminale) se termine et où commence le chapitre 4, « Tefilat HaShachar », avec la michna 4:1 sur les temps de la prière. Il contient aussi la célèbre discussion sur <b>l'origine des trois prières</b> : les patriarches ou les sacrifices.</p>
+
+<h4>1. Prier près d'un lieu impur</h4>
+<p>En haut de la page, la Guemara termine les lois d'éloignement : s'éloigner de quatre coudées des excréments pour le Chéma et la prière, la distance qui varie selon qu'ils sont devant ou derrière, les toilettes perses « fermées », et le rouleau de la Torah dans la chambre à coucher (séparation de dix paumes).</p>
+
+<h4>2. L'émission séminale et le zav (michna 3:6)</h4>
+<p>La Guemara demande si Rabbi Yehouda distingue celui qui était apte à l'immersion avant de devenir zav. Elle conclut que non : il exempte dans tous les cas.</p>
+
+<h4>3. Les temps de la prière du matin</h4>
+<p>La mitsva idéale est de prier au lever du soleil, comme les <i>vatikin</i>. On peut prier jusqu'à midi, et même plus tard, mais sans le salaire de la prière à son temps.</p>
+
+<h4>4. Rattraper une prière oubliée</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Prière oubliée</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Rattrapage</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Arvit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux Amida au matin</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cha'harit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux Amida à Min'ha</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Min'ha</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux Amida à Arvit</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Min'ha du chabbat</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux Amida de semaine à Arvit ; Havdala dans la première seulement</td></tr>
+</table>
+<p>Cela vaut pour celui qui a <b>oublié</b>, non pour celui qui a omis volontairement.</p>
+
+<h4>5. L'origine des prières : patriarches ou sacrifices ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Prière</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Patriarche (Rabbi Yossi bar 'Hanina)</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Verset</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Sacrifice (Rabbi Yehoshoua ben Lévi)</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cha'harit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Abraham</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Genèse 19:27</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sacrifice perpétuel du matin</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Min'ha</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Isaac</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Genèse 24:63</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sacrifice perpétuel de l'après-midi</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Arvit</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Jacob</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Genèse 28:11</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Combustion nocturne des membres et des graisses</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Moussaf</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">—</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">—</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Offrande additionnelle</td></tr>
+</table>
+<p>La Guemara conclut que les deux avis peuvent se concilier : les patriarches ont institué les prières, et les Sages en ont fixé les temps d'après les sacrifices. Pour la prière d'Isaac, voir la paracha <a href="../tanakh/paracha_chayei-sarah.html">'Hayé Sara</a> et le <a href="../choulhan-aroukh/oh_233.html">Choulhan Aroukh Orah 'Haïm 233</a>.</p>
+
+<h4>6. Min'ha Guedola, Min'ha Ketana et Plag haMin'ha</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr style="background:var(--surface2, #eef3f9);"><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Repère</th><th style="padding:8px; text-align:left; border:1px solid var(--border,#e2e8f0);">Heure du jour</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Min'ha Guedola</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">À partir de six heures et demie</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Min'ha Ketana</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">À partir de neuf heures et demie</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plag haMin'ha</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Onze heures moins un quart (une heure et quart avant la fin du jour)</td></tr>
+</table></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « <i>vatikin</i> » : ceux qui devancent pour accomplir les mitsvot et qui s'empressent de faire chaque chose en son temps ; ils prient après le lever du soleil, alors que ceux qui retardent ne doivent pas dépasser midi. Sur « tous » : les autres, qui retardent jusqu'à midi. Sur « si tu me réponds à ma question » (celui qui a oublié Min'ha) : et puisque son jour est passé, son sacrifice est annulé, et on ne l'offre pas un autre jour si son temps est fixe, comme les Moussafim de chaque jour. Sur « il fait la Havdala dans la première » : la première fois, il prie pour la prière du moment, donc il dit la Havdala dans « 'honen hada'at » ; la seconde est un rattrapage de la prière du chabbat et il n'y dit pas la Havdala.</p>
+<p><b>Rachi</b> sur « les patriarches les ont instituées » : comme enseigné dans la baraïta qui suit. Sur « d'après les sacrifices » : les hommes de la Grande Assemblée. Sur « Min'ha Guedola » : on ne peut pas avancer le sacrifice perpétuel de l'après-midi avant six heures et demie, car il est écrit « quand s'inclinent les ombres du soir » : dès que le soleil décline vers l'ouest. Sur « Min'ha Ketana » : le temps du sacrifice perpétuel de l'après-midi chaque jour, à partir de neuf heures et demie. Sur « Plag haMin'ha » : divise en deux les deux heures et demie qui restent, et tu trouveras la dernière moitié de la Min'ha, à partir de onze heures moins un quart. Sur « jusqu'à et y compris » : cette question est posée seulement pour Rabbi Yehouda, car pour les Sages « jusqu'à » n'inclut pas.</p>
+<p><b>Tosafot</b> sur « Isaac a institué la prière de Min'ha » : bien que le Talmud dise ailleurs (Yoma 28b) que la prière d'Abraham est « quand les murs brillent » (tôt le matin), c'est après qu'Isaac l'eut instituée. Sur « il n'y a de méditation que la prière » : ils s'étonnent que le traité Avoda Zara prouve que cette « méditation » est prière à partir de « Isaac sortit méditer dans le champ » ; on répond avec un cas semblable de la Meguila (Hadassa, « Esther »). Sur « Jacob a institué la prière du soir » : ils s'étonnent d'un récit de Houlin 91b où Jacob, arrivé à Haran, voulait revenir en arrière (il avait peut-être déjà prié en chemin).</p>
+<p><b>Tosafot</b> sur « Plag haMin'ha » : d'où Rabbi Yehouda tient-il cette limite ? Rabbi Yehouda pense que la prière correspond à l'encens (« que ma prière soit placée comme l'encens devant Toi », Psaumes 141:2). Sur « jusqu'à et y compris » : ils objectent d'un passage de Nidda, puis répondent que si l'on dit « jusqu'à et y compris », il y a aussi une rigueur : on doit prier et on ne dit pas « son temps est passé, son sacrifice est annulé », même pour la prière faite volontairement.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf est une des sources principales de la halakha de la prière quotidienne. Il fonde les trois prières (Cha'harit, Min'ha, Arvit), leurs temps et le principe du rattrapage.</p>
+
+<h4>À retenir</h4>
+<ul>
+<li><b>Trois prières, trois patriarches.</b> Abraham pour Cha'harit, Isaac pour Min'ha, Jacob pour Arvit (Berakhot 26b).</li>
+<li><b>Les sacrifices.</b> Les limites des prières suivent le temps des sacrifices du Temple (Berakhot 26b).</li>
+<li><b>Min'ha.</b> Min'ha Guedola à partir de six heures et demie, Min'ha Ketana à partir de neuf heures et demie, Plag haMin'ha onze heures moins un quart. Voir <a href="../choulhan-aroukh/oh_233.html">Choulhan Aroukh, Orah 'Haïm 233</a>.</li>
+<li><b>Rattrapage.</b> Celui qui a oublié une prière par erreur prie deux Amida à la prière suivante ; ce n'est pas valable pour celui qui a omis volontairement.</li>
+</ul>
+
+<h4>Dans la Torah</h4>
+<p>La prière d'Isaac est étudiée dans la paracha <a href="../tanakh/paracha_chayei-sarah.html">'Hayé Sara</a> (Genèse 24:63).</p>
+
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Berakhot.26" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
