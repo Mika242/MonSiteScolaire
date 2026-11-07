@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 43 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 43</h1>
+    <p>Daf 43</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>לִפְסוֹל בִּמְקוֹם אַחִים,</p>
+      <p>וְלַחְלוֹץ שֶׁלֹּא בִּמְקוֹם אַחִים, אִיכָּא בֵּינַיְיהוּ.</p>
+      <p><strong><big>הֲדַרַן עֲלָךְ עַל אֵלּוּ מוּמִין.</big></strong></p>
+      <p>מַתְנִי׳ <strong><big>מוּמִין אֵלּוּ</big></strong>, בֵּין קְבוּעִין בֵּין עוֹבְרִים — פּוֹסְלִין בָּאָדָם, וְיָתֵר עֲלֵיהֶן: הַכִּילוֹן, וְהַלַּפְתָּן, וְהַמַּקָּבָן, וְשֶׁרֹאשׁוֹ שָׁקוּט, וּסְקִיפַת.</p>
+      <p>וּבַעֲלֵי חֲטָרוֹת — רַבִּי יְהוּדָה מַכְשִׁיר, וַחֲכָמִים פּוֹסְלִין. הַקֵּרֵחַ פָּסוּל. אֵיזֶהוּ קֵרֵחַ? כֹּל שֶׁאֵין לוֹ שִׁיטָה שֶׁל שֵׂעָר מוּקֶּפֶת מֵאוֹזֶן לְאוֹזֶן, אִם יֵשׁ לוֹ — הֲרֵי זֶה כָּשֵׁר.</p>
+      <p><strong><big>גְּמָ׳</big></strong> אַמַּאי? וְהָאִיכָּא יַבֶּלֶת, דְּלָא כְּתִיב בְּאוֹרָיְיתָא בְּאָדָם! וְתוּ: דַּק תְּבַלּוּל, דְּלָא כְּתִיבִי בִּבְהֵמָה!</p>
+      <p>מֵילָף יָלְפִי מֵהֲדָדֵי, דְּתַנְיָא: בָּאָדָם לֹא נֶאֱמַר בּוֹ יַבֶּלֶת, בַּבְּהֵמָה לֹא נֶאֱמַר דַּק תְּבַלּוּל, מִנַּיִן לִיתֵּן אֶת הָאָמוּר שֶׁל זֶה בָּזֶה וְאֶת הָאָמוּר שֶׁל זֶה בָּזֶה? תַּלְמוּד לוֹמַר: ״גָּרָב״ ״גָּרָב״, ״יַלֶּפֶת״ ״יַלֶּפֶת״ לִגְזֵירָה שָׁוָה.</p>
+      <p>מַפְנֵי, דְּאִי לָא מַפְנֵי, אִיכָּא לְמִיפְרַךְ: אָדָם מִבְּהֵמָה לָא יָלֵיף, שֶׁכֵּן הִיא עַצְמָהּ קְרֵיבָה לְגַבֵּי מִזְבֵּחַ; בְּהֵמָה מֵאָדָם לָא יָלְפָא, שֶׁכֵּן נִתְרַבָּה בְּמִצְוֹת.</p>
+      <p>לָאיֵי, אַפְנוֹיֵי מַפְנֵי, לִכְתּוֹב רַחֲמָנָא ״יַלֶּפֶת״ וְלָא בָּעֵי ״גָּרָב״, וַאֲנָא אָמֵינָא: וּמָה יַלֶּפֶת דְּלָא מְאִיסָא הָוֵי מוּמָא, גָּרָב דִּמְאִיס לֹא כׇּל שֶׁכֵּן? ״גָּרָב״ ״גָּרָב״ דִּכְתַב רַחֲמָנָא לְמָה לִי? לְאַפְנוֹיֵי.</p>
+      <p>וְלִכְתְּבִינְהוּ רַחֲמָנָא כּוּלְּהוּ בְּחַד, וְגָרָב וְיַלֶּפֶת הָכָא וְהָכָא, וְלֵילְפוּ מֵחֲדָא!</p>
+      <p>אַהֵיָיא בְּהֵי לִיכְתֹּב רַחֲמָנָא? אִי כְּתַב בְּאָדָם, הֲוָה אָמֵינָא: כֹּל דְּפָסוּל בְּאָדָם פָּסוּל בִּבְהֵמָה, קָלוּט וְחוּטִין דְּלֵיתַנְהוּ בְּאָדָם, בִּבְהֵמָה נָמֵי לָא לִיפַּסְלוּ.</p>
+      <p>וְלִכְתּוֹב רַחֲמָנָא כּוּלְּהוּ בִּבְהֵמָה, הָוֵה אָמֵינָא: כֹּל דְּפָסוּל בִּבְהֵמָה פָּסוּל בְּאָדָם, גִּבֵּן וְחָרוּם דְּלֵיתַנְהוּ בִּבְהֵמָה — בְּאָדָם נָמֵי לָא לִיפַּסְלוּ.</p>
+      <p>וְלִכְתְּבִינְהוּ רַחֲמָנָא כּוּלְּהוּ בְּחַד, וְהָנָךְ דְּלֵיתַנְהוּ בְּאִידַּךְ — לִכְתּוֹב רַחֲמָנָא בִּבְהֵמָה, וְהָנָךְ דְּלֵיתַנְהוּ בְּאִידַּךְ — לִכְתּוֹב בְּאָדָם, וְגָרָב וְיַלֶּפֶת — הָכָא וְהָכָא, וְלֵילְפִי מֵהֲדָדֵי.</p>
+      <p>אֶלָּא, כְּתַנָּא דְּבֵי רַבִּי יִשְׁמָעֵאל, דְּתָנָא דְּבֵי רַבִּי יִשְׁמָעֵאל: כׇּל פָּרָשָׁה שֶׁנֶּאֶמְרָה וְנִשְׁנֵית — לֹא נִשְׁנֵית אֶלָּא בִּשְׁבִיל דָּבָר שֶׁנִּתְחַדֵּשׁ בָּהּ.</p>
+      <p>אָמַר רָבָא: לְמָה לִי דִּכְתַב רַחֲמָנָא מוּם בְּאָדָם, מוּם בְּקָדָשִׁים, מוּם בִּבְכוֹר?</p>
+      <p>צְרִיכָא, דְּאִי כְּתַב רַחֲמָנָא מוּם בְּאָדָם, שֶׁכֵּן נִתְרַבָּה בְּמִצְווֹת. אָדָם מִבְּכוֹר בְּהֵמָה לָא אָתֵי, שֶׁכֵּן הוּא עַצְמוֹ קָרֵב לְגַבֵּי מִזְבֵּחַ.</p>
+      <p>קָדָשִׁים מִבְּכוֹר לָא אָתֵי, שֶׁכֵּן קְדוּשָּׁתוֹ מֵרֶחֶם.</p>
+      <p>אָדָם מִקֳּדָשִׁים לָא אָתֵי, שֶׁכֵּן הֵן עַצְמָן קְרֵיבִין. בְּכוֹר מִקֳּדָשִׁים לָא אָתֵי, שֶׁכֵּן קְדוּשָּׁתוֹ מְרוּבָּה.</p>
+      <p>חֲדָא מֵחֲדָא לָא אָתְיָא, תֵּיתֵי חֲדָא מִתַּרְתֵּי? מֵהֵי תֵּיתֵי?! לָא לִכְתֹּב רַחֲמָנָא בִּבְכוֹר, וְתֵיתֵי מֵהָנָךְ? מָה לְהָנָךְ שֶׁכֵּן קְדוּשָּׁתָן מְרוּבָּה, וְנוֹהֲגִין בִּפְשׁוּטִין.</p>
+      <p>בְּקָדָשִׁים, וְתֵיתֵי מֵהָנָךְ? מָה לְהָנָךְ שֶׁכֵּן קְדוּשָּׁתָן מֵאֲלֵיהֶן!</p>
+      <p>בְּאָדָם, וְתֵיתֵי מֵהָנָךְ? מָה לְהָנָךְ שֶׁכֵּן הֵן עַצְמָן קְרֵיבִין לְגַבֵּי מִזְבֵּחַ! צְרִיכִי.</p>
+      <p>יָתֵר עֲלֵיהֶן בְּאָדָם. מְנָא הָנֵי מִילֵּי? אָמַר רַבִּי יוֹחָנָן, דְּאָמַר קְרָא: ״כֹּל אִישׁ אֲשֶׁר בּוֹ מוּם מִזֶּרַע אַהֲרֹן״, אִישׁ שֶׁשָּׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן.</p>
+      <p>מַאי אִיכָּא בֵּין מוּמָא לְשֶׁאֵינוֹ שָׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן? אִיכָּא מִשּׁוּם אַחוֹלֵי עֲבוֹדָה: מוּמָא מַחֵיל עֲבוֹדָה, דִּכְתִיב: ״מוּם בּוֹ וְלֹא יְחַלֵּל״, שֶׁאֵינוֹ שָׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן לָא מַחֵיל עֲבוֹדָה.</p>
+      <p>מַאי אִיכָּא בֵּין שֶׁאֵינוֹ שָׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן, וּמִשּׁוּם מַרְאִית הָעַיִן? אִיכָּא בֵּינַיְיהוּ עֲשֵׂה.</p>
+      <p>כִּילוֹן — דְּדָמֵי רֵישֵׁיהּ לְאַכְלָא, ״לַפְתָּא״ — דְּדָמֵי רֵישֵׁיהּ לְגַדְגָּלִידָא דְּלִיפְתָּא, תָּנָא: וְצַוָּארוֹ עוֹמֵד בְּאֶמְצַע רֹאשׁוֹ.</p>
+      <p>מַקָּבָן — דְּדָמֵי רֵישֵׁיהּ לְמַקָּבָן, ״וְשֶׁרֹאשׁוֹ שָׁקוּט״ — מִלְּפָנָיו, ״וּסְקִיפָת״ — מֵאֲחוֹרָיו, כִּדְאָמְרִי אִינָשֵׁי: שְׁקִיל פִּיסָּא. תָּנָא: וְצַוָּארוֹ שָׁקוּט וְשָׁמוּט. ״שָׁקוּט״ — דַּחֲבִיס מִחְבָּס, ״שָׁמוּט״ — דַּאֲרִיךְ וּשְׁמִיט.</p>
+      <p>וּבַעֲלֵי חֲטָרוֹת רַבִּי יְהוּדָה כּוּ׳. דְּאִית בֵּיהּ עֶצֶם, כּוּלֵּי עָלְמָא לָא פְּלִיגִי דְּפָסְלָא. כִּי פְּלִיגִי — דְּלֵית בֵּיהּ עֶצֶם: מָר סָבַר — הָא אֵינוֹ שָׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן, וּמָר סָבַר — קִרְקוּרָא דְּבִישְׂרָא בְּעָלְמָא הוּא.</p>
+      <p>הַקֵּרֵחַ פָּסוּל. אָמַר רָבָא: לֹא שָׁנוּ אֶלָּא שֶׁאֵין לוֹ לְאַחֲרָיו וְיֵשׁ לוֹ לְפָנָיו, אֲבָל יֵשׁ לוֹ לְאַחֲרָיו — כָּשֵׁר, וְכׇל שֶׁכֵּן שֶׁיֵּשׁ לוֹ לְאַחֲרָיו וְאֵין לוֹ לְפָנָיו.</p>
+      <p>וְאִיכָּא דְּמַתְנֵי אַסֵּיפָא, וְאִם יֵשׁ לוֹ — הֲרֵי זֶה כָּשֵׁר. אָמַר רָבָא: לֹא שָׁנוּ אֶלָּא שֶׁיֵּשׁ לוֹ לְאַחֲרָיו וְאֵין לוֹ לְפָנָיו, אֲבָל יֵשׁ לוֹ בֵּין לְאַחֲרָיו בֵּין לְפָנָיו — פָּסוּל, וְכׇל שֶׁכֵּן שֶׁיֵּשׁ לוֹ לְפָנָיו וְאֵין לוֹ לְאַחֲרָיו, וּדְאֵין לוֹ כְּלָל — דְּפָסוּל.</p>
+      <p>אָמַר רַבִּי יוֹחָנָן: הַקַּרְחָנִין וְהַנַּנָּסִין וְהַזַּבְלְגָנִין — פְּסוּלִין, לְפִי שֶׁאֵינָן שָׁוֶה בְּזַרְעוֹ שֶׁל אַהֲרֹן. קַרְחָנִין — תְּנֵינָא! נַנָּסִין — תְּנֵינָא!</p>
+      <p>זַבְלְגָנִין אִיצְטְרִיךְ לֵיהּ לְאַשְׁמוֹעִינַן, וּמַהוּ דְּתֵימָא מִשּׁוּם מַרְאִית הָעַיִן.</p>
+      <p>וְהָא כֹּל הֵיכָא דְּאִיכָּא מִשּׁוּם מַרְאִית הָעַיִן (אִיתְנָא) [מִיתְנָא] קָתָנֵי, וְשֶׁנָּשְׁרוּ רִיסֵי עֵינָיו פָּסוּל מִפְּנֵי מַרְאִית הָעַיִן! מַהוּ דְּתֵימָא: תָּנֵי חֲדָא, וְהוּא הַדִּין לְכוּלְּהוּ.</p>
+      <p>וְהָא כֹּל הֵיכָא דְּאִיכָּא מִיהְדָּר וּמִיתְנָא, קָא הָדַר וְתָנֵי: וְשֶׁנִּיטְּלוּ שִׁינָּיו פָּסוּל מִשּׁוּם מַרְאִית הָעַיִן! אֶלָּא, לְאַפּוֹקֵי מֵהָא דְּתַנְיָא, דְּתַנְיָא: הַקַּרְחָנִין וְהַנַּנָּסִין וְהַזַּבְלְגָנִין כְּשֵׁרִים, וְלֹא אָמְרוּ פָּסוּל אֶלָּא מִשּׁוּם מַרְאִית הָעַיִן.</p>
+      <p>מַאן הַאי תַּנָּא? רַבִּי יְהוּדָה הִיא, דְּתַנְיָא: רַבִּי יְהוּדָה אוֹמֵר: ״הַכֹּהֲנִים״ — לְרַבּוֹת הַקַּרְחָנִין.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> אֵין לוֹ גְּבִינִין, אוֹ אֵין לוֹ אֶלָּא גְּבִין אֶחָד — זֶהוּ גִּבֵּן הָאָמוּר בְּתוֹרָה. רַבִּי דּוֹסָא אוֹמֵר: (שֶׁגְּבִינִין) [שֶׁגְּבִינָיו] שׁוֹכְבִין. רַבִּי חֲנִינָא בֶּן אַנְטִיגְנוֹס אוֹמֵר: שֶׁיֵּשׁ לוֹ שְׁנֵי גַּבִּין וּשְׁתֵּי שִׁדְרָאוֹת.</p>
+      <p><strong><big>גְּמָ׳</big></strong> וְגִבֵּן — דְּאֵין לוֹ מַשְׁמַע? וּרְמִינְהוּ: ״גִּבֵּן״ — שֶׁיֵּשׁ לוֹ גְּבִינִין הַרְבֵּה, אֵין לוֹ גְּבִינִין, אוֹ אֵין לוֹ אֶלָּא גְּבִין אַחַד — מִנַּיִן? תַּלְמוּד לוֹמַר: ״אוֹ גִבֵּן״. אָמַר רָבָא: זֶהוּ מִדְרָשׁ ״אוֹ גִּבֵּן״.</p>
+      <p>רַבִּי דּוֹסָא אוֹמֵר כּוּ׳. לְמֵימְרָא דְּחָיֵי? וְהָא אִיתְּמַר: הַמַּפֶּלֶת בְּרִיָּה שֶׁיֵּשׁ לָהּ שְׁנֵי גַּבִּין וּשְׁתֵּי שִׁדְרָאוֹת, וְאָמַר רַב: בָּאִשָּׁה — אֵינוֹ וָולָד, בַּבְּהֵמָה — אָסוּר בַּאֲכִילָה!</p>
+      <p>כְּבָר רְמָא נִיהֲלֵיהּ רַב שִׁימִי בַּר חִיָּיא לְרַב, וַאֲמַר לֵיהּ: שִׁימִי אֶת! אֶלָּא בְּשֶׁשִּׁדְרָתוֹ עֲקוּמָּה.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הֶחָרוּם פָּסוּל. אֵיזֶהוּ חָרוּם? הַכּוֹחֵל שְׁתֵּי עֵינָיו כְּאַחַת. שְׁתֵּי עֵינָיו לְמַעְלָה, וּשְׁתֵּי עֵינָיו לְמַטָּה, עֵינוֹ אַחַת לְמַעְלָה וְעֵינוֹ אַחַת לְמַטָּה, רוֹאֶה אֶת הַחֶדֶר וְאֶת הָעֲלִיָּיה כְּאֶחָד, סָכֵי שֶׁמֶשׁ, וְהַזַּגְדָּן, וְהַצַּיְרָן, וְשֶׁנָּשְׁרוּ רִיסֵי עֵינָיו — פָּסוּל מִפְּנֵי מַרְאִית הָעַיִן.</p>
+      <p><strong><big>גְּמָ׳</big></strong> תָּנוּ רַבָּנַן: ״חָרוּם״ — שֶׁחוֹטְמוֹ שָׁקוּעַ, חוֹטְמוֹ סוֹלֵד, חוֹטְמוֹ בּוֹלֵם, חוֹטְמוֹ נוֹטֵף, מִנַּיִן? תַּלְמוּד לוֹמַר: ״אוֹ חָרוּם״. רַבִּי יוֹסֵי אוֹמֵר: אֵין ״חָרוּם״ אֶלָּא הַכּוֹחֵל שְׁתֵּי עֵינָיו כְּאַחַת. אָמְרוּ לוֹ: הִפְלַגְתָּ,</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Fin du désaccord entre Rabbi Yehouda et Rabbi Yossi fils de Rabbi Yehouda (42b-43a).</b> La différence pratique : s'il y a d'autres frères, selon Rabbi Yehouda, le toumtoum est un eunuque certain et sa <i>'halitsa</i> n'a aucun effet : la veuve peut se marier par lévirat avec l'un des autres frères ; selon Rabbi Yossi fils de Rabbi Yehouda, comme il peut ne pas être eunuque, sa <i>'halitsa</i> est peut-être valable et elle est interdite aux autres frères. Et s'il n'y a pas d'autres frères que ce toumtoum : selon Rabbi Yehouda, aucune <i>'halitsa</i> n'est nécessaire ; selon Rabbi Yossi fils de Rabbi Yehouda, il doit la faire, au cas où il serait mâle et non eunuque.</p>
+      <p><b>MICHNA (7:1).</b> Ces défauts de l'animal invalident aussi l'homme ; en plus : tête pointue, en navet, en marteau, enfoncée, arrière tronqué ; les bossus : Rabbi Yehouda les accepte, les Sages les invalident ; le chauve est invalide : celui qui n'a pas de rangée de cheveux d'une oreille à l'autre.</p>
+      <p><b>Les défauts communs à l'homme et à l'animal.</b> La Guemara demande : pourquoi dire que tous les défauts de l'animal invalident l'homme ? La verrue est écrite pour l'animal et non pour l'homme ; la cataracte (<i>davak</i>) et la tache blanche (<i>tevalloul</i>) sont écrites pour l'homme (Lévitique 21:20) et non pour l'animal. Réponse : ils se déduisent l'un de l'autre. Une baraïta : « galeux » et « galeux », « teigneux » et « teigneux », à propos de l'homme et de l'animal, sont une analogie verbale (<i>guezera chava</i>). Il faut que ces mots soient « libres » (sans autre emploi), pour que l'analogie ne puisse être réfutée. Sinon, on pourrait dire que l'animal est plus grave car il est offert, ou que l'homme l'est plus car il est tenu aux commandements. La Guemara prouve qu'ils sont libres : si la Torah avait écrit la teigne (non repoussante), la gale (repoussante) aurait été évidente ; leur répétition sert donc à l'analogie.</p>
+      <p><b>Pourquoi ne pas tout écrire à un seul endroit ?</b> La Guemara demande : que la Torah écrive tous les défauts pour l'homme (ou pour l'animal) et le reste par analogie. Réponse : si tout était écrit pour l'homme, on dirait que les sabots fendus et les gencives, absents chez l'homme, n'invalident pas l'animal ; si tout était écrit pour l'animal, on dirait que le <i>giben</i> et le <i>'harum</i>, absents chez l'animal, n'invalident pas l'homme. La Torah écrit donc les défauts communs et propres à chacun. Pourquoi alors répéter les communs ? Selon l'école de Rabbi Yishmaël, un passage répété l'est pour la nouveauté qu'il contient.</p>
+      <p><b>Pourquoi trois fois (homme, premier-né, offrandes) ?</b> Rava : tous sont nécessaires. S'il n'y avait que l'homme, on dirait que lui seul est invalidé car il est tenu aux commandements ; que le premier-né, car il est offert lui-même ; que les offrandes, car leur sainteté est plus grande (nombreuses sortes) ; et le premier-né, dont la sainteté est de naissance, a une sainteté particulière. Aucun ne peut être déduit des deux autres : chacun a une particularité (l'homme et les offrandes ont une sainteté plus grande que le premier-né ; l'homme et le premier-né ont une sainteté automatique, non conférée par un propriétaire ; le premier-né et les offrandes sont offerts, non l'homme).</p>
+      <p><b>Les défauts qui ne sont pas de vrais défauts.</b> D'où tire-t-on ceux de la michna qui ne sont pas de vrais défauts ? Rabbi Yo'hanan : de « un homme parmi la descendance d'Aharon qui aura un défaut » (Lévitique 21:21) : il faut un homme « égal » parmi les fils d'Aharon, d'apparence semblable aux autres. Différence entre un défaut complet et « pas égal » : la profanation du service. Le défaut complet profane le service accompli (« il a un défaut, et il ne profanera pas mes sanctuaires », Lévitique 21:23) ; celui qui n'est pas « égal » ne le profane pas. Différence avec ceux dont l'apparence seule est en cause (cils tombés) : l'interdit positif : celui qui n'est pas « égal » transgresse en servant ; celui dont l'apparence seule est en cause est invalidé par les Sages, sans interdit de la Torah.</p>
+      <p><b>Description des défauts de la tête.</b> <i>Kilon</i> : comme le couvercle d'un tonneau ; <i>liftan</i> : comme le haut d'un navet ; une baraïta : son cou est au milieu de la tête. <i>Makkavan</i> : comme un marteau, front saillant ; <i>chakout</i> : creux à l'avant ; <i>sekifas</i> : il semble qu'on ait ôté un morceau de l'arrière (« <i>chakil pissa</i> »). Une baraïta : celui qui a le cou court (caché entre les épaules) ou étroit (long et mince) est aussi invalide. Bossus : s'il y a un os, tous invalident ; sinon, les Sages invalident et Rabbi Yehouda dit que c'est un morceau de chair.</p>
+      <p><b>Le chauve.</b> Rava : le chauve n'est invalide que s'il n'a pas de rangée à l'arrière mais en a une à l'avant ; s'il en a devant et derrière, il est apte, et à plus forte raison derrière sans devant. Autre version : l'inverse pour la fin de la michna.</p>
+      <p><b>Rabbi Yo'hanan.</b> Rabbi Yo'hanan dit : les chauves (<i>kar'ha</i>), les nains et ceux qui ont les yeux qui coulent sont invalides, car ils ne sont pas égaux parmi les fils d'Aharon. Pourquoi le dire, puisque le chauve et le nain sont dans les michnayot ? Pour ceux qui ont les yeux qui coulent, qui ne sont dans aucune michna ; et pour dire que l'invalidation du chauve et du nain est de la Torah, non seulement à cause de l'apparence. Objection : quand la michna invalide à cause de l'apparence, elle le précise. Réponse : sans Rabbi Yo'hanan, on aurait pu dire que tout ce qui suit les bossus est à cause de l'apparence. Ou : il exclut la baraïta qui dit que ces personnes sont aptes selon la Torah, invalidées seulement à cause de l'apparence ; c'est Rabbi Yehouda, qui dit que « et les fils d'Aharon, les prêtres, disposeront les morceaux » (Lévitique 1:8) inclut les chauves.</p>
+      <p><b>MICHNA (7:2).</b> Celui qui n'a pas de sourcils ou n'en a qu'un est le <i>giben</i> de la Torah. Rabbi Dossa : celui dont les sourcils sont couchés. Rabbi 'Hanina ben Antigonos : celui qui a deux dos et deux colonnes. La Guemara demande si le <i>giben</i> peut être celui qui n'a pas de sourcils ; une baraïta dit qu'il a « beaucoup » de sourcils et déduit les autres de « ou ». Rava : la michna s'entend comme déduit de « ou ». Pour deux dos et deux colonnes, Rav dit qu'un tel avorton n'est pas un enfant (pas d'impureté de l'accouchement, interdit à la consommation) ; Rav Chimi bar 'Hiya avait déjà objecté à Rav, qui répondit : « Es-tu bien Chimi ? » (colonne courbée).</p>
+      <p><b>MICHNA (7:3).</b> Le <i>'harum</i> est invalide : celui qui farde ses deux yeux d'un trait ; deux yeux en haut ou en bas ; un en haut un en bas ; celui qui voit la chambre et l'étage comme un seul ; celui qui ne supporte pas le soleil ; <i>zougdos</i> ; <i>tsiran</i> ; cils tombés : à cause de l'apparence. Une baraïta : « <i>'harum</i> » désigne celui dont le nez est enfoncé ; si court, bouché ou pendant, déduit de « ou ». Rabbi Yossi : seulement celui qui farde ses deux yeux d'un trait. On lui répond : tu as exagéré dans la limitation. (La discussion se poursuit au daf suivant.)</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p>There is a practical difference <b>with regard to disqualifying</b> the widow, through his <i>ḥalitza</i>, from entering into levirate marriage <b>in a case</b> where there are other <b>brothers.</b> According to Rabbi Yehuda, who maintains that this individual is certainly a eunuch whose condition is caused naturally, his <i>ḥalitza</i> is of no effect whatsoever, and therefore she may enter into levirate marriage with one of the other brothers. Conversely, according to Rabbi Yosei, son of Rabbi Yehuda, since it is possible that he is not a eunuch and his <i>ḥalitza</i> is valid, she is forbidden to the other brothers as their brother’s wife.</p>
+      <p><b>And</b> there is also a practical difference <b>between their</b> opinions <b>with regard to performing <i>ḥalitza</i></b> with the widow <b>in a case where there are no brothers</b> other than this <i>tumtum</i>. According to Rabbi Yehuda, <i>ḥalitza</i> is not necessary in this case, as she requires <i>ḥalitza</i> only if her late husband had brothers who are obligated to perform levirate marriage, and this individual is definitely a eunuch whose condition is caused naturally. By contrast, Rabbi Yosei, son of Rabbi Yehuda, maintains that he must perform <i>ḥalitza</i> with her, in case he is a male and not a eunuch.</p>
+      <p><strong>MISHNA:</strong> Concerning <b>these blemishes</b> which were taught with regard to an animal, <b>whether</b> they are <b>permanent or transient, they</b> also <b>disqualify in</b> the case of <b>a person,</b> i.e., they disqualify a priest from performing the Temple service. <b>And in addition to those</b> blemishes, there are other blemishes that apply only to a priest: <b>One whose</b> head <b>is pointed,</b> narrow above and wide below; <b>and one whose</b> head <b>is turnip-like,</b> wide above and narrow below; <b>and one whose</b> head <b>is hammer-like,</b> with his forehead protruding; <b>and</b> one <b>whose head</b> has <b>an indentation; and</b> one <b>wherein the back of his head protrudes.</b></p>
+      <p><b>And</b> with regard to <b>those with humped</b> backs, <b>Rabbi Yehuda deems</b> them <b>fit</b> for service <b>and the Rabbis deem</b> them <b>disqualified. The <i>kere’aḥ</i> is disqualified</b> from performing the Temple service. <b>What is a <i>kere’aḥ</i>?</b> It is <b>anyone who does not have a row of hair encircling</b> his head <b>from ear to ear. If he has</b> a row of hair from ear to ear, <b>that</b> person is <b>fit</b> for service.</p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>Why</b> does the mishna say that all the blemishes that disqualify an animal disqualify a priest as well? <b>But there is</b> the blemish of <b>a wart, which is not written in the Torah with regard to a person</b> but is written with regard to an animal (see Leviticus 22:22). <b>And furthermore,</b> there are also the blemishes of <b>a cataract</b> and <b>a <i>tevallul</i>, which</b> appear in the Torah with regard to a person but <b>are not written</b> in the Torah <b>with regard to an animal</b> (see Leviticus 21:20). Why, then, does the mishna on 38a teach that such blemishes disqualify an animal?</p>
+      <p>The Gemara responds: These blemishes <b>are derived from one another, as it is taught</b> in a <i>baraita</i>: <b>In</b> the case of <b>a person,</b> i.e., a priest, <b>it is not stated of him</b> that <b>a wart</b> disqualifies him from Temple service, and <b>in</b> the case of <b>an animal, it is not stated</b> that <b>a cataract</b> or <b>a <i>tevallul</i></b> disqualify it from being sacrificed. <b>From where</b> is it derived that one <b>applies that which is said of this</b> case <b>to that</b> case, <b>and that which is said of this</b> case <b>to that</b> case? <b>The verse states: “Scabbed”</b> and <b>“scabbed,” “scurvy”</b> and <b>“scurvy,”</b> both with regard to a person and an animal (Leviticus 21:20; 22:22), which serves <b>to</b> draw <b>a verbal analogy</b> from the verses.</p>
+      <p>The Gemara notes: These verses must be <b>free,</b> i.e., they are superfluous and are stated only for the purpose of the verbal analogy. This means that the verbal analogy cannot be refuted by logical reasoning, whereas if the verses are not free one can refute the analogy if there is a significant difference between the two cases. <b>As, if they are not free,</b> the verbal analogy <b>can be refuted</b> as follows: One <b>cannot derive</b> the disqualifications of <b>a person</b> for performing the Temple service <b>from</b> those of <b>an animal,</b> as the case of an animal can be considered more stringent <b>because</b> the animal <b>itself is sacrificed upon the altar.</b> Similarly, one <b>cannot derive</b> the disqualifications of <b>an animal from</b> those of <b>a person,</b> as one can claim that the <i>halakha</i> with regard to a person should be more stringent, <b>since</b> a person <b>was included in</b> the performance of <b>mitzvot.</b></p>
+      <p><b>Indeed,</b> the terms <b>are free.</b> Accordingly, since these disqualifications are derived from a verbal analogy they must be accepted as though they were written explicitly in the Torah. The Gemara proves these verses are free: <b>Let the Merciful One write</b> that <b>scurvy</b> disqualifies a person and an animal, <b>and</b> it would be <b>unnecessary</b> for the Merciful One to write that <b>a scab</b> disqualifies them, as <b>I would say: And if scurvy, which is not repulsive, is</b> considered a disqualifying <b>blemish,</b> then in the case of <b>a scab, which is repulsive,</b> is it <b>not all the more so</b> a disqualifying blemish? If so, then with regard to <b>“scabbed”</b> and <b>“scabbed,” which the Merciful One writes</b> with regard to a person and an animal, <b>why do I</b> need them? Evidently, they are <b>to</b> be considered <b>free</b> for the verbal analogy.</p>
+      <p>The Gemara raises a difficulty: <b>But</b> if animals and priests are disqualified by the same blemishes, <b>let the Merciful One write all the</b> disqualifying blemishes <b>with regard to one</b> of them, either a person or an animal, <b>and</b> let the Merciful One write that <b>a scab and scurvy</b> disqualify both <b>here and here,</b> for the purpose of the verbal analogy, <b>and let</b> all the other blemishes <b>be derived</b> in one case <b>from</b> the other <b>one,</b> through the verbal analogy.</p>
+      <p>The Gemara responds: <b>To which</b> is this referring, i.e., <b>in which</b> case <b>should the Merciful One write</b> all the blemishes? <b>If</b> the Merciful One had <b>written</b> all of them <b>with regard to a person</b> then <b>I would say: All</b> blemishes <b>that disqualify in</b> the case of <b>a person</b> likewise <b>disqualify in</b> the case of <b>an animal.</b> If so, then with regard to <b>closed</b> hooves <b>and</b> damaged <b>gums, which are not</b> written <b>with regard to a person</b> as they are not relevant because a person has no hooves and his gums are covered with teeth, I would say: <b>In</b> the case of <b>an animal as well they should not disqualify.</b></p>
+      <p><b>And</b> if you would say: <b>Let the Merciful One write all</b> the blemishes <b>with regard to an animal, I would say: All</b> blemishes <b>that disqualify in</b> the case of <b>an animal</b> likewise <b>disqualify in</b> the case of <b>a person.</b> Accordingly, with regard to <b>a <i>gibben</i>,</b> one with blemished eyebrows, <b>or a <i>ḥarum</i>,</b> one with a sunken nose, <b>which are not</b> written <b>with regard to an animal</b> as such blemishes do not occur among animals, I would say: <b>In</b> the case of <b>a person as well they should not disqualify.</b> Therefore, the Torah delineates all the disqualifying blemishes with regard to both an animal and a person in order to state the blemishes that are unique to animals and the blemishes that are unique to people.</p>
+      <p>The Gemara asks: <b>But</b> even so, why is it necessary for the Torah to delineate all the common blemishes? <b>Let the Merciful One write all of them in</b> the verses discussing <b>one</b> of them, either an animal or a person, <b>and</b> as for <b>those that are not</b> relevant <b>for the other,</b> i.e., those blemishes that apply only in the case of an animal, <b>let the Merciful One write with regard to an animal, and</b> as for <b>those that are not</b> relevant <b>for the other,</b> i.e., those blemishes relevant only to a person, <b>let</b> the Merciful One <b>write with regard to a person. And</b> let the Torah write the blemishes of <b>a scab and scurvy</b> both <b>here and there,</b> for the purpose of the verbal analogy, <b>and let</b> the fact that their common blemishes disqualify in both cases <b>be derived from one another.</b></p>
+      <p><b>Rather,</b> the reason the Torah repeats their common blemishes is <b>in accordance with</b> that which <b>the school of Rabbi Yishmael taught, as the school of Rabbi Yishmael taught: Every passage</b> in the Torah <b>that was stated and repeated was repeated only for the novel element introduced therein.</b> It is the style of the Torah to repeat a passage even in order to teach only one additional <i>halakha</i>. Consequently, with regard to the blemishes of a person and an animal, their common blemishes were repeated on account of those blemishes that apply only to an animal or a person.</p>
+      <p>§ <b>Rava says: Why do I</b> need <b>the Merciful One to write</b> that <b>a blemish</b> causes disqualification from Temple service <b>in</b> the case of <b>a person,</b> i.e., a priest (see Leviticus 21:17–23), and that <b>a blemish</b> causes disqualification <b>in</b> the case of <b>sacrificial</b> animals (see Leviticus 22:20–25), and that <b>a blemish</b> causes disqualification for sacrifice <b>in</b> the case of <b>a firstborn</b> animal (see Deuteronomy 15:21)?</p>
+      <p>Rava answers: They are all <b>necessary. As, had the Merciful One written</b> only that <b>a blemish</b> causes disqualification <b>in</b> the case of <b>a person,</b> one might suggest that blemishes cause disqualification only in that case, <b>since</b> a person <b>was included in</b> the performance of <b>mitzvot.</b> Similarly, had the Merciful One written only that blemishes disqualify a firstborn animal from being sacrificed, it could be claimed that one <b>cannot derive</b> the disqualification of <b>a person</b> on account of blemishes <b>from</b> the disqualification of <b>a firstborn animal, since</b> an animal has an added aspect of stringency in that <b>it itself is sacrificed upon the altar.</b></p>
+      <p>Additionally, one <b>cannot derive</b> the disqualifications of <b>sacrificial</b> animals <b>from</b> those of <b>a firstborn</b> animal, <b>since</b> the <b>sanctity of</b> a firstborn animal is <b>from the womb,</b> i.e., from birth, whereas the sanctity of other offerings applies only upon consecration by a person, and they are therefore of a lesser sanctity.</p>
+      <p>Furthermore, had the Merciful One written only that sacrificial animals are disqualified due to blemishes, it could be claimed that one <b>cannot derive</b> the disqualifications of <b>a person from</b> that of <b>sacrificial</b> animals, <b>as</b> the offerings <b>themselves are sacrificed.</b> Similarly, one <b>cannot derive</b> the disqualifications of <b>a firstborn</b> animal <b>from</b> those of <b>sacrificial</b> animals, <b>as the sanctity</b> of other offerings <b>is greater</b> than that of a firstborn animal because there are many types of other offerings, whereas a firstborn animal has only one type of sanctification. Therefore, it was necessary for the Merciful One to specify that blemishes disqualify in each case.</p>
+      <p>The Gemara raises a difficulty: Granted, the disqualification of <b>one</b> of these cases <b>cannot be derived from</b> only a single other <b>one.</b> But <b>let one</b> of them <b>be derived from</b> the other <b>two.</b> The Gemara rejects this suggestion: <b>From which</b> two <b>should</b> the other one <b>be derived?</b> If you will say: <b>Let the Merciful One not write that</b> blemishes disqualify <b>a firstborn</b> animal <b>and</b> one should <b>derive</b> that case <b>from these,</b> i.e., the disqualifications of a person and sacrificial animals, this suggestion can be rejected. <b>What</b> is notable <b>about these?</b> They are notable <b>in that their sanctity is greater</b> than that of a firstborn offering, as in the case of a person, he is included in the performance of mitzvot; and in the case of a sacrificial animal, there are many types of offerings. <b>Moreover,</b> the <i>halakhot</i> of these blemishes <b>apply to regular,</b> i.e., non-firstborn, animals and people.</p>
+      <p>Furthermore, if one will say: Let the Merciful One not write that blemishes disqualify <b>sacrificial</b> animals <b>and</b> one should <b>derive</b> that case <b>from these</b> cases, a person, i.e., a priest, and a firstborn animal, this too can be rejected: <b>What</b> is notable <b>about these?</b> They are notable <b>in that their sanctity is automatic</b> and requires no consecration, as a priest is a priest by virtue of being the son of a priest, and a firstborn attains its status by being the first child of its mother, while offerings are consecrated by their owners.</p>
+      <p>Finally, if one will say: Let the Merciful One not write that blemishes disqualify <b>a person and</b> one should <b>derive</b> that case <b>from these</b> cases, the firstborn animal and sacrificial animals, this suggestion too can be rejected: <b>What</b> is notable <b>about these?</b> They are notable <b>in that they themselves are sacrificed upon the altar,</b> whereas a person is not. Therefore, all three verses <b>are necessary,</b> to teach that blemishes disqualify in all these cases.</p>
+      <p>§ The mishna teaches that <b>in addition to those</b> blemishes that disqualify an animal, there are other blemishes that apply <b>to a person</b> despite the fact that they are not actual defects. The Gemara asks: <b>From where are these matters</b> derived? <b>Rabbi Yoḥanan said:</b> These <i>halakhot</i> are derived from <b>that</b> which <b>the verse states: “No man among the seed of Aaron the priest who has a blemish</b> shall come forward to sacrifice the offerings of the Lord made by fire” (Leviticus 21:21). The verse indicates that the priest must be <b>a man who is equal among the seed of Aaron,</b> i.e., one whose appearance is similar to the other priests.</p>
+      <p>The Gemara asks: <b>What</b> difference <b>is there between</b> a priest disqualified from performing the Temple service due to a full-fledged <b>blemish</b> that disqualifies both people and animals, and a priest disqualified from performing the Temple service because <b>he is not equal among the seed of Aaron?</b> The Gemara responds: <b>There is</b> a difference between them <b>with regard to profaning</b> the Temple <b>service.</b> A priest with a full-fledged <b>blemish</b> who performs rites in the Temple <b>profanes</b> the <b>service</b> he has performed, <b>as it is written: “He has a blemish; that he not profane</b> My Sanctuaries” (Leviticus 21:23). A priest <b>who is not equal among the seed of Aaron</b> does <b>not profane</b> the <b>service</b> he performs.</p>
+      <p>The Gemara further asks: <b>What</b> difference <b>is there between</b> a priest disqualified from performing the Temple service because <b>he is not equal among the seed of Aaron,</b> e.g., one whose head is pointed, <b>and</b> a priest disqualified from performing the Temple service <b>due to the</b> mere <b>appearance of</b> a blemish, such as one whose eyelashes have fallen out, as stated in the <i>mishnayot</i> further on in this chapter? The Gemara responds: <b>There is</b> a difference <b>between them</b> with regard to the violation of the prohibition, which is stated as <b>a positive mitzva,</b> i.e., that priests who are equal shall serve in the Temple. A priest who is not equal among the seed of Aaron who performs the Temple service transgresses this prohibition. By contrast, a priest who is disqualified due to the appearance of a blemish is disqualified by rabbinic law, and he does not transgress a Torah prohibition by performing the Temple service.</p>
+      <p>§ The Gemara clarifies the blemishes that the mishna lists as disqualifying a priest: <b>One whose</b> head <b>is pointed [<i>kilon</i>],</b> this is one <b>whose head resembles the cover of a barrel,</b> narrow above and wide below. <b>One whose</b> head <b>is turnip-like,</b> this is one <b>whose head resembles the top of a turnip,</b> wide above and narrow below. The Sages <b>taught</b> in a <i>baraita</i> another detail relating to this blemish: <b>And his neck stands in the middle of his head,</b> i.e., his head protrudes equally in all directions around his neck, whereas a typical person’s neck is situated at the back of his head.</p>
+      <p><b>One whose</b> head <b>is hammer-like [<i>makkavan</i>],</b> this is one <b>whose head resembles a hammer,</b> with his forehead protruding. <b>And</b> one <b>whose</b> head is <b>indented [<i>shakut</i>],</b> this is one with a depression <b>in the front of his</b> head. <b>And</b> one <b>wherein the back of his head protrudes [<i>sekifat</i>]</b> is someone for whom it appears a piece <b>from the back of his</b> head has been removed, <b>as people say: A piece has been taken [<i>shakil pisa</i>].</b> <i>Sekifat</i> is understood to be an abbreviation of that term. The Sages <b>taught</b> in a <i>baraita</i>: <b>And</b> a priest <b>whose neck is short, or</b> one whose neck <b>is narrow,</b> is disqualified from performing the Temple service as well. A priest with <b>a short</b> neck is one <b>whose</b> neck <b>is hidden</b> and is not visible between his shoulders. A priest with <b>a narrow</b> neck is one <b>whose</b> neck <b>is long and narrow.</b></p>
+      <p>The mishna teaches: <b>And</b> with regard to <b>those with humped</b> backs, <b>Rabbi Yehuda</b> deems them fit for service and the Rabbis deem them disqualified. The Gemara elaborates: In a case <b>where there is a bone in</b> his hump, <b>everyone agrees that</b> the priest is <b>disqualified</b> for Temple service. <b>They disagree when there is no bone.</b> One <b>Sage,</b> i.e., the Rabbis, <b>holds</b> that <b>this</b> person <b>is not equal among the seed of Aaron</b> and is therefore disqualified from performing the Temple service; <b>and</b> one <b>Sage,</b> Rabbi Yehuda, <b>holds</b> that <b>it is merely a piece of flesh</b> and is not considered a blemish.</p>
+      <p>§ The mishna teaches that <b>the <i>kere’aḥ</i>,</b> i.e., anyone who does not have a row of hair encircling his head from ear to ear, <b>is disqualified</b> from performing the Temple service. <b>Rava says:</b> The Sages <b>taught</b> that a <i>kere’aḥ</i> is disqualified <b>only if he does not have</b> a row of hair <b>in the back</b> of <b>his</b> head <b>but he has</b> a row of hair <b>in the front. But</b> if <b>he has</b> a row of hair both in the front and <b>in the back,</b> he is <b>fit</b> for performing the Temple service. <b>And all the more so, when he has</b> hair <b>in the back but he does not have in the front</b> he is fit for performing the Temple service, as this is typical of older men.</p>
+      <p><b>And there are those who teach</b> the statement of Rava <b>with regard to the latter clause</b> of the mishna: <b>And if he has</b> a row of hair, <b>that</b> person is <b>fit</b> for performing the Temple service. <b>Rava says:</b> The Sages <b>taught</b> that such a person is fit <b>only when he has</b> a row of hair <b>in the back but he does not have in the front. But</b> if <b>he has</b> a row of hair <b>both in the back and in the front,</b> he is <b>disqualified</b> from performing the Temple service. <b>And all the more so,</b> one <b>who has</b> a row of hair <b>in the front and does not have in the back, or</b> one <b>who does not have</b> any hair <b>at all,</b> is <b>disqualified.</b></p>
+      <p>§ <b>Rabbi Yoḥanan says: The bald</b> priests, <b>and the</b> priests who are <b>dwarves, and the</b> priests with <b>leaky</b> eyes, are <b>disqualified</b> from performing the Temple service, <b>since they are not equal among the seed of Aaron.</b> The Gemara asks: Why is it necessary for Rabbi Yoḥanan to state this? With regard to <b>bald</b> priests, <b>we learn</b> in the mishna that they are disqualified. Similarly, with regard to priests who are <b>dwarves, we learn</b> in a mishna (45b) that they are disqualified.</p>
+      <p>The Gemara responds: <b>It was necessary for him to teach us</b> this statement with regard to priests with <b>leaky</b> eyes, as the <i>halakha</i> with regard to them does not appear in any mishna. <b>And</b> furthermore, it was necessary for him to reiterate the <i>halakha</i> with regard to bald priests and dwarves <b>lest you say</b> they are disqualified only by rabbinic law, <b>due to the appearance</b> of a blemish. Rabbi Yoḥanan therefore teaches that they are disqualified by Torah law, as they are not equal among the seed of Aaron.</p>
+      <p>The Gemara raises a difficulty: <b>But anywhere that</b> a priest is deemed disqualified <b>due to the appearance</b> of a blemish, the <b><i>tanna</i> teaches</b> this explicitly, e.g., in the mishna on this <i>amud</i>: <b>And one whose eyelashes have fallen out is disqualified</b> from performing the Temple service, <b>due to the appearance</b> of a blemish. The Gemara responds: Rabbi Yoḥanan’s statement is necessary, <b>lest you say</b> the <i>tanna</i> <b>taught</b> explicitly in <b>one</b> instance that a priest is disqualified due to the appearance of a blemish <b>but the same is true with regard to all of</b> those listed after the first clause of the mishna, starting from the case of priests with humped backs. Therefore, Rabbi Yoḥanan teaches that this is not the <i>halakha</i>.</p>
+      <p>The Gemara persists: <b>But anywhere that there is</b> a priest disqualified due to the appearance of a blemish, the <i>tanna</i> <b>repeats and teaches</b> explicitly that this is the reason. As the <i>tanna</i> <b>repeats and teaches</b> (44a): <b>And one whose teeth fell out is disqualified due to the appearance</b> of a blemish. <b>Rather,</b> the reason Rabbi Yoḥanan reiterates the <i>halakha</i> with regard to a bald priest and a dwarf is <b>to exclude that which is taught</b> in a <i>baraita</i>, <b>as it is taught</b> in a <i>baraita</i>: <b>The bald</b> priests, <b>the dwarves, and the</b> priests with <b>leaky</b> eyes <b>are fit</b> for performing the Temple service by Torah law, <b>and</b> the Sages <b>said</b> they are <b>disqualified only due to the appearance</b> of a blemish. Rabbi Yoḥanan therefore teaches that they are disqualified by Torah law, as they are not equal among the seed of Aaron.</p>
+      <p>The Gemara notes: <b>Who is this <i>tanna</i></b> who says that such priests are fit by Torah law? <b>It is Rabbi Yehuda, as it is taught</b> in a <i>baraita</i> that <b>Rabbi Yehuda says:</b> When the verse states: “And Aaron’s sons, <b>the priests,</b> shall lay the pieces” (Leviticus 1:8), this serves <b>to include the bald</b> priests in the performance of the Temple service.</p>
+      <p><strong>MISHNA:</strong> If a priest <b>has no eyebrows, or</b> if <b>he has only one eyebrow, that is the <i>gibben</i> that is stated in the Torah</b> in the list of blemished priests (see Leviticus 21:20). <b>Rabbi Dosa says:</b> A <i>gibben</i> is one <b>whose eyebrows</b> are so long that they <b>lie</b> flat and cover his eyes. <b>Rabbi Ḥanina ben Antigonus says:</b> A <i>gibben</i> is one <b>who has two backs and two spines.</b></p>
+      <p><strong>GEMARA:</strong> The mishna teaches that the <i>gibben</i> stated in the Torah is one who lacks eyebrows. The Gemara asks: <b>But</b> does <b><i>gibben</i> mean</b> one <b>who does not have</b> eyebrows? <b>And</b> the Gemara <b>raises a contradiction</b> from a <i>baraita</i>: When it is stated that a priest who is <b>a <i>gibben</i></b> is disqualified from performing the Temple service (see Leviticus 21:20), this is referring to one <b>who has many eyebrows.</b> With regard to one <b>who has no eyebrows or who has only one eyebrow, from where</b> is it derived that he is disqualified as well? <b>The</b> same <b>verse states: “Or a <i>gibben</i>.”</b> Clearly, the disqualification of one lacking eyebrows is not derived from the mention of a <i>gibben</i>, but from the term “or.” <b>Rava said</b> the mishna should be understood as follows: One who has no eyebrows is disqualified, and <b>this is</b> derived from <b>the exposition</b> of the phrase <b>“or a <i>gibben</i>.”</b></p>
+      <p>§ The mishna teaches that <b>Rabbi Dosa says</b> a <i>gibben</i> is one whose eyebrows are so long that they lie flat and cover his eyes, and Rabbi Ḥanina ben Antigonus says that a <i>gibben</i> is one who has two backs and two spines. The Gemara asks: Is this <b>to say that</b> a person with two backs and two spines is capable of <b>living? But it was stated</b> that the Sages discussed the case of <b>one who miscarries an entity that has two backs and two spines, and Rav said</b> that <b>in</b> the case of <b>a woman</b> who miscarries such an entity, it <b>is not</b> considered <b>an offspring,</b> as it cannot survive, and therefore she does not have the ritual impurity caused by childbirth, and <b>in</b> the case of <b>an animal</b> who miscarries, the entity is <b>prohibited for consumption.</b></p>
+      <p>The Gemara responds: <b>Rav Shimi bar Ḥiyya already raised this contradiction to Rav,</b> his grandfather, <b>and</b> Rav <b>said to him:</b> Are <b>you</b> really <b>Shimi?</b> Rabbi Ḥanina ben Antigonus is not referring literally to someone with two backs and two spines, <b>but to</b> a person <b>whose spine is crooked,</b> causing it to appear as though he has two spines. Such a person can survive but is disqualified from performing the Temple service.</p>
+      <p><strong>MISHNA:</strong> <b>The <i>ḥarum</i> is disqualified</b> from performing the Temple service. <b>What is a <i>ḥarum</i>?</b> It is <b>one who</b> can <b>paint both of his eyes as one,</b> with one brushstroke, because he has a sunken nose. If <b>both of one’s eyes</b> are <b>above or both of his eyes</b> are <b>below;</b> or if <b>one of his eyes</b> is <b>above and one of his eyes</b> is <b>below;</b> or if both eyes are in the proper place but <b>he sees</b> both <b>the room</b> on the ground floor <b>and the upper story as one,</b> at the same time; and likewise those unable to <b>look at the sun; and one whose eyes are different; and one whose eyes tear constantly,</b> these are disqualified from performing the Temple service. <b>And one whose eyelashes have fallen out</b> is <b>disqualified</b> from performing the Temple service <b>due to the appearance</b> of a blemish. Unlike the others listed in this mishna, who are disqualified by Torah law, one with this condition is not disqualified by Torah law. Rather, the Sages issued a decree prohibiting a priest with such a condition to perform the Temple service.</p>
+      <p><strong>GEMARA:</strong> <b>The Sages taught</b> in a <i>baraita</i>: When it is stated that <b>a <i>ḥarum</i></b> is considered a blemished priest (Leviticus 21:18), this is referring to a priest <b>whose nose is sunk.</b> If <b>his nose retreats,</b> i.e., it is very short and contracted upward, or if <b>his nose</b> is <b>blocked,</b> or if <b>his nose</b> is so long that it <b>droops, from where</b> is it derived that he is considered blemished? <b>The</b> same <b>verse states: “Or a <i>ḥarum</i>.”</b> The term “or” serves to include all blemishes of the nose. <b>Rabbi Yosei says: A <i>ḥarum</i> is only one who</b> can <b>paint both of his eyes as one. They said to him: You have gone</b> too <b>far</b> in limiting your definition of a <i>ḥarum</i>.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 43 achève la discussion sur le toumtoum, puis ouvre le <b>chapitre 7</b>, consacré aux défauts du <i>cohen</i>. Le raisonnement tient en quatre temps.</p>
+<h4>1. La fin du désaccord sur le toumtoum</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Selon Rabbi Yehouda</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Selon Rabbi Yossi fils de Rabbi Yehouda</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il y a d'autres frères</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>'Halitsa</i> du toumtoum sans effet : la veuve peut se marier par lévirat</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>'Halitsa</i> peut-être valable : la veuve est interdite aux autres frères</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il n'y a que ce toumtoum</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas de <i>'halitsa</i> nécessaire (eunuque certain)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il doit faire la <i>'halitsa</i> (peut-être mâle)</td></tr>
+</table>
+<h4>2. Défauts communs à l'homme et à l'animal : l'analogie verbale</h4>
+<p>La michna dit que tous les défauts de l'animal invalident l'homme. Mais certains sont écrits pour l'un seulement. La Guemara répond par l'analogie verbale : « galeux » et « teigneux » apparaissent pour l'homme et pour l'animal, et ces mots, libres, permettent de les rapprocher. Elle pose alors deux questions : pourquoi ne pas tout écrire une seule fois ? Parce que certains défauts sont propres à l'homme (<i>giben</i>, <i>'harum</i>) ou à l'animal (sabots, gencives) et qu'on n'aurait pas su qu'ils invalident dans l'autre cas. Et pourquoi répéter les défauts communs ? Selon l'école de Rabbi Yishmaël, un texte répété l'est pour la nouveauté qu'il contient.</p>
+<h4>3. Pourquoi la Torah invalide-t-elle trois fois ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Ce qu'on ne pourrait pas déduire des autres</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'homme (<i>cohen</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il n'est pas offert ; il est tenu aux commandements</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le premier-né</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sa sainteté est de naissance ; il est offert</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les offrandes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Leur sainteté est conférée par le propriétaire ; elles sont de nombreuses sortes et leur sainteté est plus grande</td></tr>
+</table>
+<p>Rava montre qu'on ne peut déduire aucun des trois des deux autres, car chaque paire a une particularité qui empêche la déduction.</p>
+<h4>4. Les défauts « d'apparence » du <i>cohen</i></h4>
+<p>Rabbi Yo'hanan déduit de « un homme égal parmi la descendance d'Aharon » les défauts de la michna qui ne sont pas de vrais défauts. Deux différences pratiques :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Catégorie</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Profane-t-il le service ?</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Interdit de la Torah ?</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut complet (écrit dans la Torah)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui (Lévitique 21:23)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Pas égal » parmi les fils d'Aharon (<i>kilon</i>, <i>liftan</i>, chauve, nain, yeux qui coulent)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Non</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui, interdit positif</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Seulement l'apparence (cils tombés, dents tombées)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Non</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Non : décret des Sages</td></tr>
+</table>
+<p>La Guemara décrit ensuite les formes de la tête, la loi des bossus, celle du chauve (il faut une rangée de cheveux d'une oreille à l'autre, avec les précisions de Rava), puis le <i>giben</i> (michna 7:2) et le <i>'harum</i> (michna 7:3).</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « pour invalider en cas de frères » : s'il y a avec lui des frères dignes et que le toumtoum a fait la <i>'halitsa</i> pour la veuve, selon Rabbi Yehouda ce n'est rien et elle n'est pas écartée des frères ; selon Rabbi Yossi, qui le tient pour un doute, elle est écartée des frères, car sa <i>'halitsa</i> est peut-être valable, et aucun frère ne peut l'épouser par lévirat. Et s'il n'y a que lui, selon Rabbi Yehouda elle est libre sans rien, car il est certainement eunuque ; selon Rabbi Yossi il faut la <i>'halitsa</i>, car peut-être n'est-il pas eunuque.</p>
+<p><b>Rachi</b> sur « ces défauts » et « verrue » : les défauts du premier-né invalident le <i>cohen</i> ; la verrue n'est pas écrite pour l'homme. La cataracte (<i>davak</i>) et la tache (<i>tevalloul</i>) se déduisent par analogie, car ils sont écrits pour l'homme et non pour l'animal. <b>Rachi</b> sur « galeux » : <i>garav</i> est la gale dure comme de la poterie, qui s'enfonce dans la chair et fait des sillons.</p>
+<p><b>Rachi</b> sur « sabots fendus » : l'homme n'a pas de sabots ; sur les gencives (<i>'houtin</i>) : chez l'homme, qui a des dents, les fils de la gencive ne se voient pas, alors que chez l'animal, qui n'a pas de dents en haut, on les voit et il est invalidé par leur brèche. Sur <i>giben</i> et <i>'harum</i> : <i>giben</i> désigne ses sourcils, et l'animal n'a pas de sourcils ; <i>'harum</i> désigne un nez entre les deux yeux, et l'animal n'a pas de nez entre les yeux.</p>
+<p><b>Rachi</b> sur « un homme égal parmi la descendance d'Aharon » : il faut un défaut ; or celui qui n'est pas égal l'est sans défaut véritable : il est tout de même invalide. Sur « apparence » : par exemple les cils tombés ou les dents arrachées, qui sont repoussants à voir. Sur l'interdit positif : celui qui n'est pas égal transgresse un commandement positif s'il sert, car le texte signifie : « celui qui est égal est <i>cohen</i> et servira ; celui qui ne l'est pas ne servira pas », et un interdit déduit d'un commandement positif est un commandement positif.</p>
+<p><b>Rachi</b> sur <i>kilon</i> : comme le couvercle d'un tonneau, étroit en haut et large en bas (voir Sanhédrin 28b) ; <i>liftan</i> : comme la tête d'un navet, large en haut ; <i>makkavan</i> : comme une hache à tête ronde et courte ; <i>chakout</i> : la tête est en pente à l'avant ; <i>sekifas</i> : il semble qu'un morceau ait été enlevé. « Qui se cache » : sa tête est enfoncée entre ses épaules.</p>
+<p><b>Rachi</b> sur « chauve » : il n'est invalide que s'il n'a pas de rangée de cheveux d'une oreille à l'autre à l'arrière, mais en a à l'avant ; s'il en a derrière et devant, il est apte, et à plus forte raison derrière sans devant : c'est plus gracieux que d'en avoir tout autour de la tête, auquel cas il est « chauve au milieu ».</p>
+<p><b>Rachi</b> sur « yeux qui coulent » : leurs yeux coulent et larmoient. Sur l'avis de Rabbi Yo'hanan : ne pas penser que s'ils sont invalidés dans la michna c'est à cause de l'apparence et qu'ils ne transgressent pas un interdit positif ; Rabbi Yo'hanan enseigne que c'est parce qu'ils ne sont pas égaux parmi les fils d'Aharon. Sur « les prêtres » (Lévitique 1:8) : Rabbi Yehouda inclut les chauves, comme dans le Torat Cohanim.</p>
+<p><b>Rachi</b> sur le <i>giben</i> : les <i>gevinim</i> sont les sourcils ; « beaucoup » : les deux sourcils se rejoignent. Sur « deux colonnes » : ce n'est pas un enfant viable, la mère n'est pas impure d'accouchement, et l'animal est interdit comme un avorton. Sur le <i>'harum</i> : voir la michna ; « <i>soled</i> » : court en longueur ; « <i>boulem</i> » : narines bouchées ; « <i>notef</i> » : long et pendant ; « tu as exagéré » : même si le nez n'est pas si enfoncé, il est <i>'harum</i>.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Les défauts du <i>cohen</i> concernent le service au Temple. Aujourd'hui, un <i>cohen</i> atteint de l'un de ces défauts reste <i>cohen</i> pour le rachat du premier-né, la <i>terouma</i> et la bénédiction (voir <a href="../choulhan-aroukh/oh_128.html">Orah Haïm 128</a>).</p>
+<h4>À retenir</h4>
+<ul>
+<li><b>Les défauts de l'animal invalident aussi le cohen.</b> Et en plus des formes de tête (<i>kilon</i>, <i>liftan</i>, <i>makkavan</i>, <i>chakout</i>, <i>sekifas</i>), des yeux, du nez, des sourcils (Bekhorot 43a).</li>
+<li><b>Analogie verbale.</b> Les mots « galeux » et « teigneux », écrits pour l'homme et pour l'animal, permettent de transférer les défauts de l'un à l'autre (Bekhorot 43a).</li>
+<li><b>Défaut complet ou « pas égal ».</b> Le défaut complet profane le service ; celui qui n'est pas égal parmi les fils d'Aharon transgresse un interdit positif mais ne profane pas ; l'apparence seule est un décret des Sages.</li>
+<li><b>Le chauve.</b> Il est invalide s'il n'a pas de rangée de cheveux d'une oreille à l'autre, avec les précisions de Rava (43a).</li>
+<li><b>Le toumtoum.</b> Selon Rabbi Yehouda, c'est un eunuque certain ; selon Rabbi Yossi fils de Rabbi Yehouda, c'est un doute, d'où une <i>'halitsa</i> à faire dans certains cas (42b-43a).</li>
+</ul>
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.43" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
