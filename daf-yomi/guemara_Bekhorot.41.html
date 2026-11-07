@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 41 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 41</h1>
+    <p>Daf 41</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p><strong><big>גְּמָ׳</big></strong> תָּנָא: קֶפֶץ הָעֶלְיוֹן וְלֹא קֶפֶץ הַתַּחְתּוֹן, וּכְנֶגְדּוֹ בְּגָמָל נִיכָּר.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> עַל אֵלּוּ מוּמִין שׁוֹחֲטִין אֶת הַבְּכוֹר, וּפְסוּלֵי הַמּוּקְדָּשִׁין נִפְדִּין עֲלֵיהֶן.</p>
+      <p><strong><big>גְּמָ׳</big></strong> הָא תּוּ לְמָה לִי? הָא תְּנָא לֵיהּ רֵישָׁא: עַל אֵלּוּ מוּמִין שׁוֹחֲטִין אֶת הַבְּכוֹר! סֵיפָא אִיצְטְרִיכָא: פְּסוּלֵי הַמּוּקְדָּשִׁין נִפְדִּין עֲלֵיהֶן. הָא נָמֵי פְּשִׁיטָא — מִישְׁחָט שָׁחֲטִינַן, מִיפְרָק מִיבַּעְיָא?</p>
+      <p>אֶלָּא, אַיְּידֵי דִּתְנָא שְׁלֹשָׁה הוֹסִיף, וְאָמְרוּ לוֹ: לֹא שָׁמַעְנוּ אֶת אֵלּוּ, וְקָתָנֵי וְאָתֵי דִּיחִידָאָה, וְקָא סָתֵים לַהּ בְּכוּלְּהוּ: עַל אֵלּוּ מוּמִין שׁוֹחֲטִין אֶת הַבְּכוֹר וּפְסוּלֵי הַמּוּקְדָּשִׁין נִפְדִּין עֲלֵיהֶן.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> וְאֵלּוּ שֶׁאֵין שׁוֹחֲטִין עֲלֵיהֶן, לֹא בַּמִּקְדָּשׁ וְלֹא בַּמְּדִינָה: חֲוַורְוָר, וְהַמַּיִם שֶׁאֵין קְבוּעִין, וְחוּטִין הַפְּנִימִיּוֹת שֶׁנִּפְגְּמוּ — אֲבָל לֹא שֶׁנֶּעֶקְרוּ, וּבַעַל גָּרָב, וּבַעַל יַבֶּלֶת, וּבַעַל חֲזָזִית, זָקֵן, וְחוֹלֶה, וּמְזוֹהָם, וְשֶׁנֶּעֶבְדָה בּוֹ עֲבֵירָה, וְשֶׁהֵמִית אָדָם — עַל פִּי עֵד אֶחָד אוֹ עַל פִּי הַבְּעָלִים.</p>
+      <p>וְטוּמְטוּם וְאַנְדְּרוֹגִינוֹס, לֹא בַּמִּקְדָּשׁ וְלֹא בַּמְּדִינָה. רַבִּי יִשְׁמָעֵאל אוֹמֵר: אֵין לְךָ מוּם גָּדוֹל מִזֶּה, וַחֲכָמִים אוֹמְרִים: אֵינוֹ בְּכוֹר, אֶלָּא נִגְזָז וְנֶעֱבָד.</p>
+      <p><strong><big>גְּמָ׳</big></strong> וְגָרָב לָא? וְהָכְתִיב ״גָּרָב״ בְּאוֹרָיְיתָא! וַחֲזָזִית לָא? וְהָכְתִיב ״יַלֶּפֶת״ בְּאוֹרָיְיתָא! וְתַנְיָא: ״גָּרָב״ — זֶה הַחֶרֶס, ״יַלֶּפֶת״ — זוֹ חֲזָזִית הַמִּצְרִית, וְאָמַר רֵישׁ לָקִישׁ: לָמָּה נִקְרָא שְׁמָהּ ״יַלֶּפֶת״? שֶׁמְּלַפֶּפֶת וְהוֹלֶכֶת עַד יוֹם הַמִּיתָה.</p>
+      <p>בִּשְׁלָמָא חֲזָזִית אַחֲזָזִית לָא קַשְׁיָא: כָּאן בַּחֲזָזִית הַמִּצְרִית, כָּאן בַּחֲזָזִית דְּעָלְמָא. אֶלָּא גָּרָב אַגָּרָב קַשְׁיָא! גָּרָב אַגָּרָב נָמֵי לָא קַשְׁיָא, הָא בְּלַח, הָא בְּיָבֵשׁ. לַח — אִיתַּסִּי, יָבֵשׁ — לָא מִיתַּסֵּי.</p>
+      <p>וְלַח מִיתַּסֵּי? וְהָכְתִיב: ״יַכְּכָה ה׳ בִּשְׁחִין מִצְרַיִם וְגוֹ׳״, וּמִדִּכְתִיב ״וּבְחֶרֶס״ הֲרֵי גָּרָב לַח אָמוּר, וְקָאָמַר: ״אֲשֶׁר לֹא תוּכַל לְהֵרָפֵא״!</p>
+      <p>אֶלָּא, תְּלָתָא הֲווֹ: דִּקְרָא — יָבֵשׁ בֵּין מִבִּפְנִים בֵּין מִבַּחוּץ, דְּמַתְנִיתִין — לַח מִבַּחוּץ וּמִבִּפְנִים, דְּמִצְרַיִם — יָבֵשׁ מִבִּפְנִים וְלַח מִבַּחוּץ, דִּכְתִיב ״וַיְהִי שְׁחִין פּוֹרֵחַ אֲבַעְבּוּעוֹת בָּאָדָם״.</p>
+      <p>וְהַזָּקֵן וְהַחוֹלֶה וְהַמְזוֹהָם. מְנָהָנֵי מִילֵּי? דְּתָנוּ רַבָּנַן: ״מִן הַצֹּאן וּמִן הַכְּשָׂבִים וּמִן הָעִזִּים״ — פְּרָט לַזָּקֵן וְלַחוֹלֶה וְלַמְזוֹהָם.</p>
+      <p>וּצְרִיכִי, דְּאִי כְּתַב רַחֲמָנָא לְמַעוֹטֵי זָקֵן, דְּלָא הָדַר בָּרֵיא, אֲבָל חוֹלֶה, דַּהֲדַר בָּרֵיא — אֵימָא לָא. וְאִי כְּתַב לְמַעוֹטֵי חוֹלֶה, דְּלָאו אוֹרְחֵיהּ, אֲבָל זָקֵן, דְּהַיְינוּ אוֹרְחֵיהּ — אֵימָא לָא.</p>
+      <p>וְאִי כְּתַב רַחֲמָנָא תְּרֵי, לְמַעוֹטֵי הָנֵי דִּכְחִישִׁי, אֲבָל מְזוֹהָם דְּלָא כְּחִישׁ — אֵימָא לָא, וְאִי נָמֵי לְמַעוֹטֵי מְזוֹהָם מִשּׁוּם דִּמְאִיס, אֲבָל הָנֵי דְּלָא מְאִיסִי — אֵימָא לָא, צְרִיכִי.</p>
+      <p>וְשֶׁנֶּעֶבְדָה בּוֹ עֲבֵירָה וְכוּ׳. מְנָא הָנֵי מִילֵּי?</p>
+      <p>דְּתָנוּ רַבָּנַן: ״מִן הַבְּהֵמָה״ — לְהוֹצִיא רוֹבֵעַ וְנִרְבָּע, ״מִן הַבָּקָר״ — לְהוֹצִיא אֶת הַנֶּעֱבָד, ״מִן הַצֹּאן״ — לְהוֹצִיא אֶת הַמּוּקְצֶה, ״וּמִן הַצֹּאן״ — לְהוֹצִיא אֶת הַנּוֹגֵחַ.</p>
+      <p>הָנֵי בְּנֵי קְטָלָא נִינְהוּ! עַל פִּי עֵד אֶחָד אוֹ עַל פִּי הַבְּעָלִים.</p>
+      <p>בִּשְׁלָמָא טוּמְטוּם, בַּמִּקְדָּשׁ לָא — דִּילְמָא נְקֵבָה הִיא, בַּמְּדִינָה לָא — דִּילְמָא זָכָר הוּא וְלֵית בֵּהּ מוּמָא.</p>
+      <p>אֶלָּא אַנְדְּרוֹגִינוֹס, בִּשְׁלָמָא בַּמִּקְדָּשׁ לָא, דִּלְמָא נְקֵבָה הִיא. אֶלָּא בַּמְּדִינָה נָמֵי, נְהִי דְּזָכָר הוּא — תֵּעָשֶׂה נַקְבוּת חָרִיץ, וְיִשְׁחוֹט עָלֶהָ!</p>
+      <p>אָמַר אַבָּיֵי: אָמַר קְרָא ״אוֹ חָרוּץ אוֹ שָׁבוּר״, חָרוּץ דּוּמְיָא דְּשָׁבוּר, מָה שָׁבוּר בִּמְקוֹם עֶצֶם, אַף חָרוּץ בִּמְקוֹם עֶצֶם.</p>
+      <p>רָבָא אָמַר: בְּלָא שָׁבוּר נָמֵי לָא מָצֵית אָמְרַתְּ חָרוּץ בִּמְקוֹם בָּשָׂר הָוֵי מוּמָא, דְּאִי סָלְקָא דַעְתָּךְ הָוֵי מוּמָא, כֵּיוָן דְּאָמַר ״גָּרָב״ זֶהוּ חֶרֶס, מִיחְרָץ חֲרִיץ, דִּכְתִיב: ״וּמַרְאֵהוּ עָמוֹק מִן הָעוֹר״, כְּמַרְאֵה חַמָּה הָעֲמוּקָּה מִן הַצֵּל.</p>
+      <p>וְלִיכְתֹּב רַחֲמָנָא ״חָרוּץ״ וְלָא בָּעֵי ״גָּרָב״, וְאָמֵינָא: ״חָרוּץ״ דְּלָא מְאִיס — הָוֵי מוּמָא, ״גָּרָב״ דִּמְאִיס — לֹא כׇּל שֶׁכֵּן? כְּתַב רַחֲמָנָא ״גָּרָב״ לְמֵימַר דְּחָרוּץ בִּמְקוֹם בָּשָׂר — לָא הָוֵי מוּמָא.</p>
+      <p>רַבִּי יִשְׁמָעֵאל אוֹמֵר: אֵין לְךָ מוּם גָּדוֹל מִזֶּה. כְּאַבָּיֵי לָא אָמַר, חָרוּץ דּוּמְיָא דְּשָׁבוּר לָא אָמְרִינַן.</p>
+      <p>כְּרָבָא נָמֵי לָא אָמַר, דִּילְמָא הֵיכָא דְּלָא מִינַּכְרָא, אֲבָל הֵיכָא דְּמִינְּכַר — ״מוּם רָע״ קָרֵינָא בֵּיהּ.</p>
+      <p>בָּעֵי רָבָא: מַאי טַעְמָא דְּרַבִּי יִשְׁמָעֵאל? מִיפְשָׁט פְּשִׁיטָא לֵיהּ אַנְדְּרוֹגִינוֹס בְּכוֹר הוּא וּמוּמוֹ עִמּוֹ, אוֹ דִילְמָא סַפּוֹקֵי מְסַפְּקָא לֵיהּ, וְ״אִם תִּימְצָא לוֹמַר״ קָאָמַר — אִם תִּימְצָא לוֹמַר בְּכוֹר הוּא, הֲרֵי מוּמוֹ עִמּוֹ!</p>
+      <p>לְמַאי נָפְקָא מִינַּהּ? לְמִילְקֵא עֲלֵיהּ מִשּׁוּם גִּיזָּה וַעֲבוֹדָה, אִי נָמֵי לְמִיתְּבֵהּ לְכֹהֵן.</p>
+      <p>תָּא שְׁמַע: רַבִּי אִילְעַאי אוֹמֵר מִשּׁוּם רַבִּי יִשְׁמָעֵאל: אַנְדְּרוֹגִינוֹס בְּכוֹר הוּא, וּמוּמוֹ עִמּוֹ. שְׁמַע מִינַּהּ מִיפְשָׁט פְּשִׁיטָא לֵיהּ! וְדִילְמָא ״אִם תִּימְצָא לוֹמַר״ קָאָמַר!</p>
+      <p>תָּא שְׁמַע: זָכָר — וְלֹא נְקֵבָה. כְּשֶׁהוּא אוֹמֵר לְמַטָּה ״זָכָר״, שֶׁאֵין תַּלְמוּד לוֹמַר, מָה תַּלְמוּד לוֹמַר? לְהוֹצִיא טוּמְטוּם וְאַנְדְּרוֹגִינוֹס.</p>
+      <p>מַנִּי? אִילֵּימָא תַּנָּא קַמָּא — סְפֵיקָא הוּא, וְאָתֵי קְרָא לְמַעוֹטֵי סְפֵיקָא?</p>
+      <p>אֶלָּא רַבָּנַן בָּתְרָאֵי מֵחַד קְרָא נָפְקִי, דְּהָא גַּבֵּי בְּכוֹר חַד ״זָכָר״ הוּא דִּכְתִיב, (קא) [וְקָא] מְמַעֲטִי כּוּלְּהוּ מִינַּיְיהוּ!</p>
+      <p>אֶלָּא, פְּשִׁיטָא רַבִּי יִשְׁמָעֵאל, וְאִי אָמְרַתְּ בִּשְׁלָמָא רַבִּי יִשְׁמָעֵאל מִיפְשָׁט פְּשִׁיטָא לֵיהּ — הַיְינוּ דְּאִיצְטְרִיךְ קְרָא לְמַעוֹטֵי, אֶלָּא אִי אָמְרַתְּ מְסַפְּקָא לֵיהּ — אִצְטְרִיךְ קְרָא לְמַעוֹטֵי סְפֵיקָא?</p>
+      <p>לְעוֹלָם רַבָּנַן בָּתְרָאֵי, וְגַבֵּי בְּכוֹר תַּרְתֵּי קְרָאֵי כְּתִיב: ״הַזָּכָר״ וְ״הַזְּכָרִים״.</p>
+      <p>וַחֲכָמִים אוֹמְרִים: אֵינוֹ בְּכוֹר כּוּ׳. אָמַר רַב חִסְדָּא: מַחְלוֹקֶת בְּאַנְדְּרוֹגִינוֹס, אֲבָל בְּטוּמְטוּם — דִּבְרֵי הַכֹּל סְפֵיקָא הוּא, וְקָדוֹשׁ מִסְּפֵיקָא.</p>
+      <p>אֲמַר לֵיהּ רָבָא: אֶלָּא מֵעַתָּה, בַּעֲרָכִין יֵעָרֵךְ?</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>L'articulation de la queue (41a).</b> À propos de la queue du veau qui n'atteint pas l'articulation, une baraïta enseigne : il s'agit de l'articulation haute, entre la cuisse et le tibia, et non de l'articulation basse. En face de l'articulation haute, chez le chameau il y a un os bien visible, mais chez le veau on ne le remarque pas de l'extérieur.</p>
+      <p><b>MICHNA (6:11).</b> Pour ces défauts énumérés dans les michnayot précédentes, on abat le premier-né, et les animaux consacrés devenus inaptes sont rachetés à cause d'eux.</p>
+      <p><b>Pourquoi répéter ?</b> La Guemara demande : pourquoi faut-il redire que l'on abat le premier-né, alors que le début du chapitre l'a déjà enseigné ? Elle répond que la seconde partie (le rachat) était nécessaire ; mais elle objecte aussitôt que c'est évident, puisque si l'on peut abattre, on peut a fortiori racheter. Elle conclut que la michna a ajouté Ila avec trois défauts supplémentaires, auxquels les Sages avaient répondu qu'ils ne les avaient pas reçus, puis elle a enseigné des avis individuels (Rabbi 'Hanina ben Gamliel, Rabbi 'Hanina ben Antigonos). Pour que l'on ne pense pas que la halakha ne les suit pas, la michna conclut par une règle sans nom d'auteur : on abat et on rachète pour tous ces défauts.</p>
+      <p><b>MICHNA (6:12).</b> Voici ceux pour lesquels on n'abat pas le premier-né, ni dans le Temple ni dans le reste du pays : les taches blanches de l'œil et les larmes non permanentes ; les dents intérieures ébréchées mais non arrachées ; la gale humide, la verrue et la teigne ; le vieux, le malade, l'animal à l'odeur fétide ; celui avec lequel on a commis une faute ; celui qui a tué un homme (sur un seul témoin ou le propriétaire). Le toumtoum et l'androguinos, ni dans le Temple ni dans le reste du pays. Rabbi Yishmaël dit : il n'y a pas de défaut plus grand ; les Sages disent : il n'est pas un premier-né, mais on peut le tondre et le faire travailler.</p>
+      <p><b>Gale et teigne.</b> La Guemara demande : la gale (<i>garav</i>) n'est-elle pas un défaut ? Elle est citée dans la Torah (Lévitique 22:22) ! Et la teigne (<i>'hazazit</i>) non plus ? La Torah dit <i>yalefet</i>, et une baraïta explique : <i>garav</i> est la gale dure comme de la poterie (<i>'hérès</i>), <i>yalefet</i> est la teigne d'Égypte. Resh Lakish dit : on l'appelle ainsi parce qu'elle s'attache à la personne jusqu'au jour de sa mort. La contradiction de la teigne se résout : la Torah parle de la teigne d'Égypte, la michna de la teigne ordinaire. Pour la gale, la michna parle de la gale humide, qui guérit, et la Torah de la gale sèche.</p>
+      <p>La Guemara objecte : la gale humide guérit-elle ? Il est écrit : « L'Éternel te frappera de l'ulcère d'Égypte, des hémorroïdes, de la gale (<i>garav</i>) et de la gale dure (<i>'hérès</i>), dont tu ne pourras guérir » (Deutéronome 28:27) : la gale humide y est donc incluse. La Guemara conclut qu'il y a trois sortes de gale : celle du verset sur les défauts, sèche à l'intérieur et à l'extérieur ; celle de la michna, humide à l'intérieur et à l'extérieur, qui guérit ; celle d'Égypte, sèche à l'intérieur donc incurable, mais humide à l'extérieur, comme le verset l'indique (« des pustules éclatant », Exode 9:10).</p>
+      <p><b>Vieux, malade, fétide.</b> D'où le sait-on ? Les Sages ont enseigné : « Si son offrande est du petit bétail, des brebis (<i>min ha-kesavim</i>) ou des chèvres (<i>min ha-izim</i>) » (Lévitique 1:10) : ces mots « de » (<i>min</i>) excluent le vieux, le malade et le fétide. La Guemara explique que les trois sont nécessaires : avec un seul « de », on aurait exclu le vieux (qui ne redevient pas sain) mais pas le malade, ou bien le malade (qui n'est pas dans l'ordre naturel) mais pas le vieux ; avec deux, on aurait exclu les faibles mais pas le fétide, qui n'est pas faible mais répugnant.</p>
+      <p><b>Faute commise, homicide.</b> D'où le sait-on ? Les Sages ont enseigné : « de la bête » exclut l'animal qui a eu un rapport avec un homme ou qui a été l'objet d'un rapport ; « du gros bétail » exclut l'animal adoré comme divinité ; « du petit bétail » exclut celui qui a été mis à part pour une idole ; « ou » exclut l'animal qui a encorné un homme et l'a tué (Lévitique 1:2). Objection : ces animaux sont passibles de lapidation, donc pourquoi un verset ? Réponse : on parle du cas où il n'y a qu'un témoin, ou un aveu du propriétaire ; l'animal n'est pas lapidé, mais il est interdit à l'autel.</p>
+      <p><b>Le toumtoum et l'androguinos.</b> La Guemara comprend l'interdit du toumtoum : peut-être une femelle, qu'on ne peut offrir ni abattre comme premier-né dans le Temple ; peut-être un mâle sans défaut, qu'on ne peut abattre dans le pays. Mais pour l'androguinos ? Dans le pays, qu'on le considère comme mâle, ses organes féminins comptent comme une fissure (<i>'haritz</i>), et on pourrait l'abattre à cause du défaut « fissuré » (<i>'haroutz</i>, Lévitique 22:22).</p>
+      <p>Abaye répond : le verset dit « ou fissuré ou brisé » : « fissuré » est comparé à « brisé », donc à un défaut qui touche l'os, pas la chair. Rava dit : même sans cette comparaison, on ne peut pas dire que ce soit un défaut dans la chair, car si « gale » désigne le dur comme la poterie, c'est une fissure de la peau ; et si « fissuré » suffisait pour la chair, la Torah n'aurait pas eu besoin d'écrire « gale ». Rabbi Yishmaël, lui, ne suit ni Abaye ni Rava : pour lui, « fissuré » n'est pas comparé à « brisé », et un défaut visible comme le sexe féminin est un « mauvais défaut » (Deutéronome 15:21).</p>
+      <p><b>Le doute de Rabbi Yishmaël.</b> Rava demande : quel est le sens de l'avis de Rabbi Yishmaël ? Est-il sûr que l'androguinos est un premier-né dont le défaut l'accompagne, ou doute-t-il et dit-il « si tu trouves que c'est un premier-né, son défaut est avec lui » ? La différence pratique concerne la flagellation pour tonte et travail, et le don au cohen : en cas de doute, on n'est pas flagellé, et le cohen ne peut pas exiger l'animal (le demandeur doit apporter la preuve). La Guemara cite une baraïta de Rabbi Ilaï au nom de Rabbi Yishmaël (« l'androguinos est un premier-né, et son défaut est avec lui ») et répond que cela peut aussi être dit sous la forme « si tu trouves que… ».</p>
+      <p><b>Les versets « mâle ».</b> Une autre baraïta : « mâle » (Lévitique 1:3) pour l'holocauste de gros bétail exclut la femelle ; « mâle » pour l'holocauste de petit bétail (Lévitique 1:10) exclut le toumtoum et l'androguinos. La Guemara cherche de quel avis il s'agit et conclut que cela suit les Sages de la fin de la michna, pour qui l'androguinos est une espèce à part ; pour le premier-né, elle explique que deux versets sont écrits (« les mâles », Deutéronome 15:19, et « mâle », Exode 13:12), l'un excluant la femelle, l'autre le toumtoum et l'androguinos.</p>
+      <p><b>L'avis de Rav 'Hisda.</b> Rav 'Hisda dit : la dispute porte sur l'androguinos, que les Sages considèrent comme une espèce à part. Pour le toumtoum, tout le monde reconnaît un doute, et il est consacré par doute : on ne peut l'abattre ni dans le Temple ni dans le pays. Rava objecte : s'il est certainement soit mâle soit femelle, alors pour l'estimation (<i>'arakhin</i>, Lévitique 27), il devrait être estimé soit comme un homme soit comme une femme. (La discussion se poursuit au daf suivant.)</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><strong>GEMARA:</strong> With regard to the case in the mishna of the tail of a calf that does not reach the leg joint, it is <b>taught</b> in a <i>baraita</i>: This leg joint is <b>the upper joint,</b> between the thighbone and the tibia, <b>and not the lower joint,</b> between the middle and lower bones. <b>And</b> with regard to this upper joint, <b>the corresponding</b> bone <b>in</b> the leg of <b>a camel is conspicuous,</b> but in a calf it is not noticeable from the outside.</p>
+      <p><strong>MISHNA:</strong> <b>For these blemishes</b> enumerated in the previous <i>mishnayot</i>, <b>one slaughters the firstborn</b> outside the Temple <b>and disqualified consecrated</b> animals <b>may be redeemed on their account.</b></p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>Why do I</b> need <b>this additional</b> statement that for these blemishes one slaughters the firstborn outside the Temple? It was already <b>taught</b> in <b>the first clause,</b> at the beginning of the chapter: <b>For these blemishes, one may slaughter the firstborn</b> animal outside the Temple. The Gemara answers that <b>the latter clause</b> of the mishna was <b>necessary: Disqualified consecrated</b> animals <b>may be redeemed due to</b> these blemishes. The Gemara asks: But <b>this too</b> is <b>obvious;</b> if <b>one may slaughter</b> a firstborn due to these blemishes, <b>is</b> it <b>necessary</b> to state that <b>one may redeem them?</b></p>
+      <p><b>Rather, since</b> a previous mishna <b>taught</b> that Ila <b>added three</b> additional blemishes, <b>and</b> the Sages <b>said to him: We did not hear</b> about <b>those, and</b> then the <i>tanna</i> of the mishna <b>proceeded to teach</b> <i>halakhot</i> in the name <b>of individual</b> opinions, those of Rabbi Ḥananya ben Gamliel and Rabbi Ḥanina ben Antigonus, one might have thought that the <i>halakha</i> is not in accordance with their rulings. Therefore, he states <b>an unattributed</b> ruling in this mishna <b>with regard to all their</b> statements: <b>For</b> all <b>these blemishes</b> enumerated in the previous <i>mishnayot</i>, <b>one slaughters the firstborn, and disqualified consecrated</b> animals <b>may be redeemed due to them.</b> This indicates that the <i>halakha</i> is in accordance with all of these individual opinions.</p>
+      <p><strong>MISHNA:</strong> <b>And these</b> are the blemishes <b>that one does not slaughter</b> the firstborn <b>due to them, neither in the Temple nor in</b> the rest of <b>the country: Pale spots</b> on the eye <b>and tears</b> streaming from the eye <b>that are not constant; and internal gums that were damaged but that were not extracted; and</b> an animal <b>with boils</b> that are moist inside and out <b>[<i>garav</i>]; and</b> an animal <b>with warts; and</b> an animal <b>with boils [<i>ḥazazit</i>];</b> and <b>an old or sick</b> animal, <b>or</b> one with <b>a foul odor; and</b> one <b>with which a transgression was performed,</b> e.g., it copulated with a person or was the object of bestiality; <b>and</b> one <b>that killed a person.</b> In these latter two cases, the act of bestiality or killing became known <b>on the basis</b> of the testimony <b>of one witness or on the basis of the owner.</b></p>
+      <p><b>And</b> one does not slaughter <b>a <i>tumtum</i>,</b> whose sexual organs are concealed, <b>and a hermaphrodite [<i>ve’anderoginos</i>],</b> which has both male and female sexual organs, <b>neither in the Temple nor in</b> the rest of <b>the country. Rabbi Shimon says: You have no blemish greater than that,</b> and it may be slaughtered. <b>And the Rabbis say:</b> The halakhic status of a hermaphrodite <b>is not</b> that of <b>a firstborn; rather,</b> its halakhic status is that of a non-sacred animal that may <b>be shorn and utilized for labor.</b></p>
+      <p><strong>GEMARA:</strong> The mishna teaches that the two types of boils: <i>Garav</i> and <i>ḥazazit</i>, are not considered full-fledged blemishes for which one may slaughter a firstborn outside the Temple. The Gemara asks: <b>And is <i>garav</i> not</b> considered a blemish? <b>But isn’t it written “<i>garav</i>” in the Torah,</b> in the list of blemishes (see Leviticus 22:22)? <b>And</b> furthermore, <b>is <i>ḥazazit</i> not</b> considered a blemish? <b>But isn’t it written “<i>yalefet</i>” in the Torah,</b> in the same verse, <b>and it is taught</b> in a <i>baraita</i>: <b>“<i>Garav</i>”; this is</b> referring to boils that are hard as <b>earthenware [<i>ḥeres</i>]; “<i>yalefet</i>”; this is the <i>ḥazazit</i></b> that affected <b>the Egyptians</b> (see Exodus 9:10). <b>And Reish Lakish says: Why is it called <i>yalefet</i>?</b> The reason is <b>that it grabs [<i>melapefet</i>] continuously</b> onto an invalid <b>until the day of death,</b> i.e., it cannot be healed.</p>
+      <p><b>Granted,</b> the contradiction <b>between</b> the status of <b>the <i>ḥazazit</i></b> mentioned in the Torah and that of <b>the <i>ḥazazit</i></b> in the mishna is <b>not difficult,</b> as <b>here</b> the Torah is referring <b>to an Egyptian <i>ḥazazit</i>,</b> and <b>there</b> the mishna is referring <b>to a regular <i>ḥazazit</i>. But</b> the contradiction <b>between</b> the status of <b>the <i>garav</i></b> listed in the Torah and <b>the <i>garav</i></b> of the mishna is <b>difficult.</b> The Gemara answers that the contradiction <b>between the <i>garav</i></b> in the Torah and <b>the <i>garav</i></b> in the mishna is <b>also not difficult: This</b> ruling of the mishna is referring <b>to moist</b> boils, whereas <b>that</b> <i>garav</i> of the Torah is referring <b>to dry</b> boils. <b>Moist</b> boils will <b>heal</b> and therefore are considered a temporary blemish for which one may not slaughter a firstborn; <b>dry</b> ones will <b>not heal.</b></p>
+      <p>The Gemara asks: <b>And</b> does <b>a moist</b> boil <b>heal? But isn’t it written: “The Lord will smite you with the boil of Egypt,</b> and with the hemorrhoids, and with <i>garav</i>, and with <i>ḥares</i>, from which you cannot be healed” (Deuteronomy 28:27). <b>And since it is written: “And with <i>ḥares</i>,”</b> which is referring to boils that are as hard as earthenware [<i>ḥeres</i>], <b>moist <i>garav</i> is</b> thereby <b>stated, and</b> with regard to both types that verse <b>states: “From which you cannot be healed.”</b></p>
+      <p><b>Rather, there are three</b> types of <i>garav</i>: First, the <i>garav</i> <b>of the verse</b> that deals with blemishes, which is <b>dry both on the inside and on the outside.</b> This cannot be healed, and it is called <i>ḥares</i> in Deuteronomy. The second is the <i>garav</i> <b>of the mishna,</b> which can be healed, and is <b>moist on the outside and inside.</b> Third, the <i>garav</i> <b>of Egypt,</b> mentioned in Deuteronomy as one of the types of boils of Egypt. This <i>garav</i> is <b>dry on the inside</b> and therefore cannot be healed, <b>but</b> it <b>is moist on the outside, as it is written</b> with regard to the plague of boils in Egypt: <b>“And it became a boil breaking forth with <i>avabu’ot</i> upon man</b> and upon animal” (Exodus 9:10). <i>Avabu’ot</i> is referring to a substance that pours out [<i>nove’a</i>] and is moist.</p>
+      <p>§ Among the conditions that are not considered full-fledged blemishes, but one may not sacrifice an animal with one such condition as an offering either, the mishna lists: <b>And an old</b> animal, <b>or a sick</b> animal, <b>or</b> one with <b>a foul odor.</b> The Gemara asks: <b>From where are these matters</b> derived? They are derived from a verse, <b>as the Sages taught:</b> The verse states: “And if his offering be <b>from [<i>min</i>] the flock, whether from the sheep or from the goats”</b> (Leviticus 1:10). These three instances of the word “from [<i>min</i>]” serve to <b>exclude the old, and the sick, and the</b> animal with <b>a foul odor,</b> which may not be sacrificed.</p>
+      <p>The Gemara notes: <b>And</b> all three exclusions <b>are necessary. As, had the Merciful One written</b> the word “from” once, one might have said that this serves <b>to exclude an old</b> animal, <b>which will not become healthy again,</b> as it will never get younger. <b>But</b> with regard to a <b>sick</b> animal, <b>which</b> might <b>become healthy again, say</b> that it is <b>not</b> disqualified. <b>And,</b> alternatively, <b>had</b> the Merciful One <b>written</b> only one term of exclusion, one might have said that it serves <b>to exclude a sick</b> animal, <b>as</b> it is <b>not the</b> natural <b>manner</b> of an animal to be sick. <b>But</b> with regard to <b>an old</b> animal, <b>as this is the</b> natural <b>manner</b> of all animals to grow old, <b>say</b> that it should <b>not</b> be disqualified from the altar.</p>
+      <p><b>And had the Merciful One written</b> only <b>two</b> terms of exclusion, one might have said that they serve <b>to exclude these weak</b> animals, the sick and the old, as one should sacrifice only a fat, healthy animal. <b>But</b> with regard to an animal with <b>a foul odor, which is not weak, say</b> that it should <b>not</b> be disqualified. <b>And alternatively,</b> had there been only one term of exclusion, one might have said that it serves <b>to exclude</b> an animal with <b>a foul odor, as</b> it is <b>repulsive. But</b> with regard to <b>these</b> other two cases of an old and a sick animal, <b>which are not repulsive, say</b> that they are <b>not</b> excluded. Therefore, all three exclusions <b>are necessary.</b></p>
+      <p>§ The mishna teaches: <b>And</b> an animal <b>with which a transgression was performed,</b> and one that killed a person that was known on the basis of the testimony of one witness or the owner, are disqualified from being sacrificed. The Gemara asks: <b>From where are these matters</b> derived?</p>
+      <p>They are derived from a verse, <b>as the Sages taught</b> in a <i>baraita</i> that when the verse states: “You shall bring your offering from the cattle, even from the herd or from the flock” (Leviticus 1:2), each mention of the word “from” is interpreted as a term of exclusion. The expression <b>“from the cattle”</b> serves <b>to exclude an animal that copulated with a person and an animal that was the object of bestiality.</b> The expression <b>“from the herd”</b> serves <b>to exclude</b> an animal <b>worshipped</b> as a deity, and <b>“from the flock”</b> serves <b>to exclude</b> an animal <b>set aside</b> for idol worship. Finally, the word “or” in the expression <b>“or from the flock”</b> serves <b>to exclude</b> an animal that <b>gored</b> and killed a person.</p>
+      <p>The Gemara challenges: In <b>these</b> cases of an animal that copulated with a person, an animal that was the subject of bestiality, and an animal that gored and killed a person, <b>they are liable to death</b> by stoning. Why, then, is a verse necessary to exclude them? The Gemara answers that this is referring to a case where the incident was known <b>on the basis</b> of the testimony <b>of one witness or on the basis of the owner.</b> Therefore, the animal is not killed, as there are not two witnesses to the event, but the testimony is sufficient to disqualify the animal as a sacrifice.</p>
+      <p>§ The mishna teaches that one does not slaughter a <i>tumtum</i> and a hermaphrodite, neither in the Temple nor in the rest of the country. The Gemara asks: <b>Granted,</b> one does not slaughter <b>a <i>tumtum</i>, neither in the Temple,</b> as <b>perhaps it is a female</b> and therefore does not have firstborn status and may not be sacrificed, <b>nor in</b> the rest of <b>the country,</b> as <b>perhaps it is a male and it does not have a blemish,</b> in which case he would be slaughtering a sacrificial animal.</p>
+      <p><b>But</b> in the case of <b>a hermaphrodite, granted</b> that one does <b>not</b> slaughter it <b>in the Temple,</b> as <b>perhaps it is a female. But with regard to</b> the rest of <b>the country, even let it be</b> considered <b>a male;</b> nevertheless, its <b>female</b> sex organ <b>should be considered</b> as <b>a crack [<i>ḥaritz</i>],</b> which is included in the blemish of “cracked” [<i>ḥarutz</i>] listed in the Torah (Leviticus 22:22), <b>and</b> let <b>one slaughter</b> it <b>due to</b> that blemish.</p>
+      <p><b>Abaye said</b> in response: <b>The verse states: “Or cracked or broken”</b> (Leviticus 22:22), which teaches that the blemish of being <b>cracked is similar to</b> that of being <b>broken: Just as</b> the blemish of being <b>broken</b> is relevant <b>in the location of a bone,</b> as there is no break where there is only flesh, <b>so too,</b> the term <b>cracked</b> is referring to a blemish found <b>in the location of a bone,</b> not in the location of the sex organs.</p>
+      <p><b>Rava said:</b> Even <b>without</b> the comparison to <b>“broken,” you cannot say that a crack in the location of flesh,</b> where there is no bone, <b>is a blemish. As, if</b> it would <b>enter your mind</b> that <b>it is a blemish, since</b> the <i>tanna</i> of the <i>baraita</i> cited above <b>said</b> with regard to <b>“<i>garav</i>”</b> that <b>this is</b> referring to boils that are hard as <b>earthenware [<i>ḥeres</i>],</b> evidently this blemish is <b>a crack</b> in the skin, <b>as it is written</b> with regard to the skin disease of leprosy: <b>“And its appearance is deeper than the skin”</b> (Leviticus 13:30), and the Sages explained: <b>It is similar to the appearance of</b> an area lit by the <b>sun that</b> seems <b>deeper than the shade,</b> which appears to cover it.</p>
+      <p><b>And</b> if so, <b>let the Merciful One write: Crack, and</b> it would <b>not need</b> to state <b><i>garav</i>, and I</b> would <b>say:</b> If being <b>cracked, which is not repulsive, is a blemish,</b> then with regard to <b><i>garav</i>, which is repulsive,</b> should it <b>not all the more so</b> be considered a blemish? Therefore, <b>the Merciful One writes <i>garav</i>, to say that a crack</b> found <b>in the location of flesh is not a blemish.</b> Consequently, one cannot say that the female sex organ of a hermaphrodite should be considered a blemish for which one may slaughter a firstborn outside the Temple.</p>
+      <p>In this connection, the Gemara cites the statement of the mishna with regard to a hermaphrodite: <b>Rabbi Yishmael says: You have no blemish greater than that,</b> and it may be slaughtered. Evidently, Rabbi Yishmael maintains that the female sex organ of a hermaphrodite is considered a blemish. The Gemara explains: Rabbi Yishmael does <b>not state</b> a ruling <b>like</b> that of <b>Abaye,</b> as he maintains that <b>we do not say</b> that the blemish of being <b>cracked is similar to</b> that of being <b>broken.</b> Rather, they are entirely different blemishes, and a crack found on flesh is considered a blemish.</p>
+      <p>Rabbi Yishmael <b>also</b> does <b>not state</b> a ruling <b>like</b> that of <b>Rava,</b> as <b>perhaps</b> his conclusion that a crack found where there is no bone is not a blemish applies only in a case <b>where it is not conspicuous. But</b> in a case <b>where it is conspicuous,</b> such as the female sex organ, <b>we call it “an ill blemish”</b> (Deuteronomy 15:21), and the animal is disqualified for use as an offering.</p>
+      <p><b>Rava raises a dilemma: What is the reason of Rabbi Yishmael</b> that a hermaphrodite is definitely blemished? Is it <b>obvious to him</b> that <b>a hermaphrodite</b> animal <b>is</b> a male that has <b>firstborn</b> status, <b>and</b> it comes <b>with its blemish,</b> i.e., the female sex organ, and therefore it is permitted to slaughter it outside the Temple? <b>Or perhaps</b> Rabbi Yishmael <b>is uncertain</b> whether or not a hermaphrodite is considered a male, <b>and he says</b> his ruling in the manner of: <b>If you say.</b> In other words, <b>if you say</b> that a hermaphrodite animal <b>is a firstborn,</b> it comes <b>with its blemish,</b> and it may be slaughtered outside the Temple.</p>
+      <p>The Gemara asks: <b>What is the</b> practical <b>difference</b> between the reasons? The Gemara answers that there is a difference with regard <b>to being flogged on account of</b> this animal <b>due to</b> violating the prohibition of <b>shearing and</b> utilizing a firstborn animal for <b>labor</b> (see Deuteronomy 15:19). If it is definitely a firstborn, then one would be flogged for violating the prohibition. But if one is uncertain whether it is a firstborn, although one may not shear it or perform labor with it, one is not liable to flogging for doing so. <b>Alternatively,</b> there is a difference with regard <b>to giving it to a priest.</b> If its status is uncertain, the priest cannot demand the animal from him, in accordance with the principle that the burden of proof rests upon the claimant.</p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear</b> a <i>baraita</i>: <b>Rabbi Ilai says in the name of Rabbi Yishmael: A hermaphrodite is a firstborn, and</b> it comes <b>with its blemish. Learn from</b> the <i>baraita</i> that it is <b>obvious to Rabbi Yishmael</b> that a hermaphrodite is a firstborn. The Gemara responds: <b>But perhaps he said</b> his ruling in the manner of: <b>If you say,</b> as explained earlier.</p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear</b> another <i>baraita</i>. It states with regard to a burnt offering from cattle: <b>“A male”</b> (Leviticus 1:3), from which it can be inferred: <b>But not a female. When it says below,</b> with regard to a burnt offering from sheep: <b>“A male”</b> (Leviticus 1:10), a second time, it is difficult to understand, <b>as</b> there is <b>no</b> need for <b>the verse to state</b> this. <b>Why</b> must <b>the verse state</b> “a male” again? This serves <b>to exclude a <i>tumtum</i> and a hermaphrodite,</b> which are disqualified from being sacrificed as burnt offerings.</p>
+      <p>The Gemara analyzes this <i>baraita</i>: <b>Whose</b> opinion is this? <b>If we say</b> it is the opinion of <b>the first <i>tanna</i></b> of the mishna, who maintains that a <i>tumtum</i> and a hermaphrodite may not be slaughtered in the Temple or in the rest of the country, then the status of a hermaphrodite <b>is uncertain,</b> as it is unknown whether it is male or female. <b>But</b> does <b>a verse come to exclude</b> a case of <b>uncertainty?</b></p>
+      <p><b>Rather,</b> perhaps this <i>baraita</i> is in accordance with the opinion of <b>the latter Rabbis</b> in the mishna, who hold that a hermaphrodite is definitely not a male, but a distinct entity. Therefore, it is necessary for a verse to exclude it. This, too, is difficult, as according to these Rabbis the exclusion of a female, a <i>tumtum</i>, and a hermaphrodite is <b>derived from one verse</b> alone. The Gemara elaborates: <b>As with regard to a firstborn, it is one “male” alone that is written,</b> from which the Rabbis <b>exclude all</b> of the three categories <b>from</b> firstborn status. By contrast, the <i>baraita</i> excludes a female from one mention of the word “male” and a <i>tumtum</i> and a hermaphrodite from another mention of the word “male.”</p>
+      <p><b>Rather,</b> it is <b>obvious</b> that the <i>baraita</i> is in accordance with the opinion of <b>Rabbi Yishmael. And</b> in that case, <b>granted, if you say</b> that it is <b>obvious to Rabbi Yishmael</b> that a hermaphrodite is a firstborn male, <b>that is</b> why <b>a verse was necessary to exclude</b> a hermaphrodite from being brought as a burnt offering. <b>But if you say</b> that Rabbi Yishmael <b>is uncertain</b> whether or not a hermaphrodite is considered a male, is it <b>necessary</b> for <b>the verse to exclude</b> a case of <b>uncertainty?</b></p>
+      <p>The Gemara responds: <b>Actually,</b> the <i>baraita</i> is in accordance with the opinion of <b>the latter Rabbis,</b> who maintain that a hermaphrodite is not a male, but a distinct entity. <b>And</b> as for the difficulty that in the case of a firstborn they excluded a female, a <i>tumtum</i>, and a hermaphrodite from a single verse, that is not so. <b>With regard to a firstborn</b> there are also <b>two verses written: “Males”</b> (Deuteronomy 15:19), and: <b>“That is a male”</b> (Exodus 13:12). As in the case of a burnt offering, one of these serves to exclude a female, while the other serves to exclude a <i>tumtum</i> and a hermaphrodite.</p>
+      <p>§ The mishna teaches: <b>And the Rabbis say:</b> A hermaphrodite <b>does not</b> have <b>firstborn</b> status; rather, its status is that of a non-sacred animal that may be shorn and utilized for labor. <b>Rav Ḥisda says:</b> This <b>dispute</b> applies <b>to a hermaphrodite,</b> which the Rabbis maintain is a distinct entity, as it has both male and female sex organs, and therefore it does not have firstborn status. <b>But with regard to a <i>tumtum</i>,</b> whose genitalia is covered by skin, <b>everyone agrees</b> that <b>it is an uncertain</b> case, as it is definitely either a male or a female, but there is uncertainty as to which it is. <b>And</b> consequently, it is <b>consecrated due to uncertainty,</b> and it may not be slaughtered either in the Temple or in the rest of the country.</p>
+      <p><b>Rava said to</b> Rav Ḥisda: <b>If that is so,</b> that a <i>tumtum</i> is certainly either a male or a female, <b>with regard to valuations,</b> when someone vows to give the valuation of a <i>tumtum</i>, <b>it should be valuated,</b> either in accordance with the valuation of a man or a woman.</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Ce daf commente les deux dernières michnayot du chapitre 6 de Bekhorot. Il se découpe en six mouvements : une précision sur l'articulation de la queue, la raison d'être de la phrase de conclusion, le cas de la gale et de la teigne, les interdits tirés de versets (vieux, malade, fétide, faute commise), puis la longue discussion sur le toumtoum et l'androguinos.</p>
+<h4>1. L'articulation de la queue</h4>
+<p>Une baraïta précise que l'articulation est la <b>haute</b> : celle qui joint la cuisse et le tibia. Chez le chameau, un os visible lui correspond ; chez le veau, rien ne se voit de l'extérieur. Rachi cite deux lectures : soit l'os en saillie du chameau (tradition reçue de son maître sur l'abattage profane), soit la queue du chameau qui atteint cet endroit.</p>
+<h4>2. Pourquoi la michna répète-t-elle l'abattage ?</h4>
+<p>La phrase « pour ces défauts, on abat le premier-né » semble inutile, puisque le début du chapitre le dit. On pourrait répondre : elle sert à ajouter le rachat des animaux consacrés. Mais cela aussi va de soi : qui peut abattre peut racheter. La Guemara trouve la vraie raison : la michna précédente a énuméré des défauts enseignés par des Sages isolés (Ila, Rabbi 'Hanina ben Gamliel, Rabbi 'Hanina ben Antigonos), et l'on aurait pu croire que la halakha ne les suit pas. La phrase finale, sans nom d'auteur, est une règle générale : elle montre que la halakha suit tous ces avis.</p>
+<h4>3. Gale et teigne : les contradictions apparentes</h4>
+<p>La michna dit que la gale et la teigne ne sont pas des défauts qui permettent l'abattage ; pourtant la Torah les cite (Lévitique 22:22). La Guemara distingue :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Type</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Source</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">État</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Guérison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Gale du verset sur les défauts</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Lévitique 22:22 (<i>garav</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sèche, à l'intérieur et à l'extérieur</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ne guérit pas : défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Gale de la michna</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Michna 6:12</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Humide, à l'intérieur et à l'extérieur</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Guérit : pas un défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Gale d'Égypte</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deutéronome 28:27, Exode 9:10</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sèche à l'intérieur, humide à l'extérieur</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ne guérit pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Teigne du verset</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Lévitique 22:22 (<i>yalefet</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Teigne d'Égypte</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Teigne de la michna</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Michna 6:12</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Teigne ordinaire</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pas un défaut</td></tr>
+</table>
+<p>La preuve que la gale humide est aussi dans le verset du Deutéronome conduit à la division en trois types, ce qui lève la contradiction.</p>
+<h4>4. Vieux, malade, fétide : pourquoi trois « de » ?</h4>
+<p>Le verset du Lévitique (1:10) contient trois fois la particule <i>min</i> (« de »). La Guemara montre que les trois sont nécessaires, car chacun sert un cas différent :</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Si la Torah n'avait écrit que…</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">On aurait exclu…</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Mais pas…</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un seul « de »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le vieux (qui ne redevient pas sain), ou le malade (contre l'ordre naturel)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'autre des deux</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Deux « de »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les faibles : le vieux et le malade</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le fétide, qui n'est pas faible mais répugnant</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Trois « de »</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les trois cas</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Aucun : les trois sont donc nécessaires</td></tr>
+</table>
+<h4>5. L'animal avec lequel une faute a été commise</h4>
+<p>Le verset du Lévitique (1:2) contient plusieurs mots d'exclusion (« de la bête », « du gros bétail », « du petit bétail », « ou »). Ils excluent, dans l'ordre, l'animal qui a eu un rapport avec un homme ou qui a été l'objet d'un rapport, l'animal adoré, l'animal mis à part pour une idole et l'animal qui a encorné un homme et l'a tué. Ces animaux sont normalement lapidés ; la michna parle donc du cas où il n'y a qu'un seul témoin ou un aveu du propriétaire : pas de lapidation, mais interdit à l'autel.</p>
+<h4>6. Le toumtoum et l'androguinos</h4>
+<p>La michna dit qu'on n'abat pas le toumtoum (sexe caché sous la peau) ni l'androguinos (qui a les deux sexes). La Guemara comprend que le toumtoum soit interdit : peut-être est-il femelle, donc non premier-né, peut-être est-il mâle sans défaut. Pour l'androguinos, l'argument est plus délicat : ses organes féminins ne pourraient-ils pas compter comme une fissure, défaut qui permet l'abattage ?</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Sage</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Position</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Raison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Abaye</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ce n'est pas un défaut</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Fissuré » est comparé à « brisé » : défaut de l'os, pas de la chair</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rava</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Ce n'est pas un défaut</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La Torah a écrit « gale » pour montrer qu'une fissure dans la chair n'est pas un défaut</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yishmaël</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">C'est un grand défaut</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il ne compare pas « fissuré » à « brisé » ; un défaut visible est un « mauvais défaut »</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Sages de la michna</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'androguinos n'est pas un premier-né</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Espèce à part : on peut le tondre et le faire travailler</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav 'Hisda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pour le toumtoum, tous reconnaissent un doute</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il est mâle ou femelle : consacré par doute, on ne l'abat ni dans le Temple ni dans le pays</td></tr>
+</table>
+<p>Rava demande ensuite : Rabbi Yishmaël est-il sûr que l'androguinos est un premier-né avec son défaut, ou doute-t-il et parle-t-il sous la forme « si tu trouves que… » ? La différence se voit en deux points : la flagellation pour tonte ou travail (on ne flagelle pas pour un doute) et le don au cohen (le cohen ne peut pas exiger un animal douteux, car celui qui réclame apporte la preuve). Deux baraïtot essaient de trancher, mais elles peuvent être lues dans les deux sens. La Guemara termine sur l'avis de Rav 'Hisda, puis sur l'objection de Rava tirée des estimations (<i>'arakhin</i>), qui se poursuit au daf suivant.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « l'articulation haute » : c'est le nœud qui relie le tibia à la cuisse, et non le nœud bas, près des sabots. Sur « en face, chez le chameau, c'est visible » : il y a chez le chameau un os saillant à cet endroit ; une autre version dit que la queue du chameau atteint cette articulation.</p>
+<p><b>Rachi</b> sur « il enseigne aussi des avis individuels » : la michna a d'abord rappelé qu'on ne les avait pas reçus à Yavné, puis elle enseigne des avis isolés ; c'est pourquoi la phrase finale est sans nom d'auteur, pour montrer que la halakha les suit.</p>
+<p><b>Rachi</b> sur « trois sortes de gale » : la gale du verset sur les défauts est dure comme la poterie, sèche à l'intérieur et à l'extérieur ; la gale d'Égypte, sèche à l'intérieur et humide à l'extérieur, ne guérit pas ; celle de la michna est humide des deux côtés.</p>
+<p><b>Tosafot</b> sur « gale = poterie » : on s'étonne qu'on ne cite pas la gale du Deutéronome 28, où il est écrit « de la gale et de la gale dure ». Ils répondent que la Guemara choisit ici « celle-ci, et même celle-ci » : la gale dure comme la poterie est un défaut, et même la teigne, humide à l'extérieur et sèche à l'intérieur. Au Deutéronome, l'expression se comprend comme : tu seras frappé de la gale, et même de la gale dure, qui est plus sévère.</p>
+<p><b>Tosafot</b> sur « trois sortes » : si les Égyptiens ont été guéris, il s'agirait d'un miracle ; ils se demandent aussi quelle est l'ulcère d'Égypte dans le verset des malédictions, par rapport à la gale et à la gale dure.</p>
+<p><b>Tosafot</b> sur « suivant l'avis du premier Sage, c'est un doute » : d'où sait-on que le premier Sage raisonne par doute ? De la parole de Rabbi Yishmaël dans la baraïta : « un premier-né, et son défaut est avec lui », donc le premier Sage ne le tient pas pour un premier-né certain. Ils comparent aussi avec d'autres passages où la Guemara demande « le verset vient-il exclure un doute ? » (Yoma, Keritot, 'Houlin), et distinguent le cas présent des autres.</p>
+<p><b>Tosafot</b> sur « les mâles » et « le mâle » : ils demandent pourquoi on ne pouvait pas exclure l'androguinos du seul mot « le mâle », comme plus bas pour les estimations ; ils répondent qu'il y a beaucoup de versets sur le premier-né, et tous sont nécessaires.</p>
+<p><b>Rachi</b> sur « l'avis de Rav 'Hisda » : la dispute des Sages porte sur l'androguinos, mais pour le toumtoum, tous reconnaissent un doute : il est interdit de tondre et il n'est abattu ni dans le Temple ni dans le pays. <b>Rachi</b> sur l'objection de Rava : s'il y a doute en matière d'estimation, on l'estime comme un homme ou comme une femme.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ce daf éclaire les lois du premier-né d'un animal pur, qui demeurent en vigueur aujourd'hui même sans Temple (<a href="../choulhan-aroukh/yd_306.html">Choulhan Aroukh, Yoré Dé'a 306</a>).</p>
+<h4>À retenir</h4>
+<ul>
+<li><b>Pas de tonte ni de travail.</b> Un premier-né d'animal pur est saint : on ne le tond pas et on ne le fait pas travailler, même s'il a un défaut (Bekhorot 41b ; Yoré Dé'a 306).</li>
+<li><b>Un défaut doit être reconnu par un expert.</b> Aujourd'hui, c'est un <i>moumhé</i> (expert reconnu) qui décide si le défaut permet l'abattage ; on ne le décide pas soi-même.</li>
+<li><b>Le doute.</b> Le toumtoum, doute entre mâle et femelle, est tenu pour consacré par doute, selon Rav 'Hisda : on ne l'abat ni dans le Temple ni dans le pays (Bekhorot 41b).</li>
+<li><b>Vieux, malade, fétide.</b> Ces cas sont déduits de trois « de » du Lévitique 1:10 ; ils rendent l'animal inapte à l'autel mais ne sont pas un défaut permanent qui permet d'abattre le premier-né.</li>
+<li><b>Pas de flagellation pour un doute.</b> On ne flagelle pas pour la tonte ou le travail d'un animal douteux, et le cohen ne peut pas exiger un animal douteux (Bekhorot 41b).</li>
+</ul>
+<p>Pour toute situation concrète (un premier-né né dans un troupeau, un défaut apparu, un animal douteux), il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.41" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
