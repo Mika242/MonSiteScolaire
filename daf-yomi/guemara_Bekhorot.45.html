@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 45 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 45</h1>
+    <p>Daf 45</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וּבַעַל הַפִּיקִים, הָעִיקֵּל. אֵיזֶהוּ הָעִיקֵּל? כׇּל שֶׁהוּא מַקִּיף פַּרְסוֹתָיו וְאֵין אַרְכֻּבּוֹתָיו נוֹקְשׁוֹת זוֹ לָזוֹ. פִּיקָּה יוֹצֵא מִגּוּדָּלוֹ, עֲקֵיבוֹ יוֹצֵא לַאֲחוֹרָיו, פַּרְסוֹתָיו רְחָבוֹת כְּשֶׁל אַוָּוז.</p>
+      <p>אֶצְבְּעוֹתָיו מוּרְכָּבוֹת זוֹ עַל זוֹ, אוֹ קְלוּטוֹת לְמַעְלָה עַד הַפֶּרֶק — כָּשֵׁר, לְמַטָּה מִן הַפֶּרֶק וַחֲתָכָהּ — כָּשֵׁר, הָיְתָה בָּהּ יְתֶרֶת וַחֲתָכָהּ, אִם יֵשׁ בָּהּ עֶצֶם — פָּסוּל, וְאִם לָאו — כָּשֵׁר.</p>
+      <p>יָתֵר בְּיָדָיו וּבְרַגְלָיו, שֵׁשׁ וָשֵׁשׁ — עֶשְׂרִים וְאַרְבַּע, רַבִּי יְהוּדָה מַכְשִׁיר וַחֲכָמִים פּוֹסְלִין. הַשּׁוֹלֵט בִּשְׁתֵּי יָדָיו — רַבִּי פּוֹסֵל וַחֲכָמִים מַכְשִׁירִין.</p>
+      <p><strong><big>גְּמָ׳</big></strong> תָּנוּ רַבָּנַן: שֶׁבֶר רָגֶל — אֵין לִי אֶלָּא שֶׁבֶר רֶגֶל, מִנַּיִן לְרַבּוֹת הַקִּישָׁן וְהָעִיקֵּל וְהַקִּילְבָּן? תַּלְמוּד לוֹמַר: ״אוֹ שֶׁבֶר רָגֶל״. תָּנָא: בַּעַל הַקִּיפִּין וְהַשּׁוּפְנָר. אָמַר רַבִּי חִיָּיא בַּר אַבָּא אָמַר רַבִּי יוֹחָנָן: בַּעַל הַפִּיקִּין — שֶׁיֵּשׁ לוֹ כְּסָתוֹת הַרְבֵּה, שׁוּפְנָר — שֶׁאֵין לוֹ כְּסָתוֹת כׇּל עִיקָּר.</p>
+      <p>פִּיקָּה יוֹצָא מִגּוּדָּלוֹ, וַעֲקֵיבוֹ יוֹצֵא לַאֲחוֹרָיו. אָמַר רַבִּי אֶלְעָזָר: שׁוֹקוֹ יוֹצֵא בָּאֶמְצַע רַגְלוֹ. פַּרְסוֹתָיו רְחָבוֹת כְּשֶׁל אַוָּוז. אָמַר רַב פָּפָּא: לָא תֵּימָא דִּטְרִיפָה וְלָא סְדִיקָא, אֶלָּא כֵּיוָן דִּטְרִיפָה, אַף עַל גַּב דִּסְדִיקָא.</p>
+      <p>אֶצְבְּעוֹתָיו מוּרְכָּבוֹת זוֹ עַל גַּב זוֹ, אוֹ קְלוּטוֹת. תָּנוּ רַבָּנַן: ״שֶׁבֶר יָד״ — אֵין לִי אֶלָּא שֶׁבֶר יָד.</p>
+      <p>אֶצְבָּעוֹת מוּרְכָּבוֹת לְמַעְלָה אוֹ קְלוּטוֹת לְמַעְלָה מִן הַפֶּרֶק, וְהָאָמְרַתְּ כָּשֵׁר! אֶלָּא וְלֹא חֲתָכָן, מִנַּיִן? תַּלְמוּד לוֹמַר: ״אוֹ שֶׁבֶר יָד״.</p>
+      <p>הָיְתָה בּוֹ יְתֶרֶת וַחֲתָכָהּ, אִם יֵשׁ בָּהּ עֶצֶם — פָּסוּל, וְאִם לָאו — כָּשֵׁר. אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: וְהוּא שֶׁנִּסְפֶּרֶת עַל גַּבֵּי הַיָּד.</p>
+      <p>תָּנוּ רַבָּנַן: יְתֵירָה שֶׁיֵּשׁ בָּהּ עֶצֶם, וְאֵין בָּהּ צִפּוֹרֶן — מְטַמָּא בְּמַגָּע וּבְמַשָּׂא, וּמְטַמָּא בְּאֹהֶל, וְעוֹלָה לְמִנְיַן מֵאָה וְעֶשְׂרִים וַחֲמִשָּׁה. אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: וּבְנִסְפֶּרֶת עַל גַּב הַיָּד.</p>
+      <p>אָמַר רַב חִסְדָּא: דָּבָר זֶה רַבֵּינוּ הַגָּדוֹל אֲמָרוֹ, הַמָּקוֹם יִהְיֶה בְּעֶזְרוֹ: יְתֶרֶת שֶׁיֵּשׁ בָּהּ עֶצֶם וְאֵין בָּהּ צִפּוֹרֶן — מְטַמָּא בְּמַגָּע וּבְמַשָּׂא, וְאֵין מְטַמָּא בְּאֹהֶל. אָמַר רַבָּה בַּר בַּר חָנָה אָמַר רַבִּי יוֹחָנָן: וּבְשֶׁאֵינָהּ נִסְפֶּרֶת עַל גַּב הַיָּד.</p>
+      <p>אָמַר רַבִּי יוֹחָנָן: עָשׂוּ דִּבְרֵיהֶם כְּדִבְרֵי נְבִיאוּת, מָה נַפְשָׁךְ? אִי אֵבֶר הוּא — בְּאֹהֶל נָמֵי תְּטַמֵּא, וְאִי לָאו אֵבֶר הוּא — בְּמַגָּע וּבְמַשָּׂא נָמֵי לָא לִיטַמֵּי!</p>
+      <p>אָמַר רַב הוּנָא בַּר מָנוֹחַ מִשְּׁמֵיהּ דְּרַב אַחָא בְּרֵיהּ דְּרַב אִיקָא: מִשּׁוּם עֶצֶם כִּשְׂעוֹרָה נָגְעוּ בָּהּ.</p>
+      <p>רַב פָּפָּא אָמַר: גְּזֵירָה שֶׁאֵינָהּ נִסְפֶּרֶת, אַטּוּ נִסְפֶּרֶת. אִי הָכִי, שֶׁאֵינָהּ נִסְפֶּרֶת בְּאֹהֶל נָמֵי תְּטַמֵּא!</p>
+      <p>עֲבַדוּ רַבָּנַן הֶיכֵּירָא, כִּי הֵיכִי דְּלָא לִישְׂרְפוּ עֲלַיְיהוּ תְּרוּמָה וְקָדָשִׁים.</p>
+      <p>תְּנַן הָתָם: רוֹב בִּנְיָנוֹ וְרוֹב מִנְיָנוֹ שֶׁל מֵת, אַף עַל פִּי שֶׁאֵין בּוֹ רוֹבַע — טְמֵאִין. תָּנוּ רַבָּנַן: אֵיזֶהוּ רוֹב בִּנְיָנוֹ? שְׁנֵי שׁוֹקַיִים וְיָרֵךְ אֶחָד, הוֹאִיל וְרוֹב גּוֹבְהוֹ בְּגָדוֹל. אֵיזֶהוּ רוֹב מִנְיָנוֹ? מֵאָה וְעֶשְׂרִים וַחֲמִשָּׁה.</p>
+      <p>אֲמַר לֵיהּ רָבִינָא לְרָבָא: תַּנָּא מִנְיָינָא אֲתָא לְאַשְׁמוֹעִינַן? קָא מַשְׁמַע לַן כִּדְתַנְיָא: חָסֵר, שֶׁאֵין בּוֹ אֶלָּא מָאתַיִם, וְיָתֵר, שֶׁיֵּשׁ בּוֹ מָאתַיִם וּשְׁמוֹנִים וְאֶחָד — כּוּלָּן עוֹלִין לְמִנְיַן מֵאָה וְעֶשְׂרִים וַחֲמִשָּׁה, זִיל בָּתַר רוּבָּא דְאִינָשֵׁי.</p>
+      <p>אָמַר רַבִּי יְהוּדָה אָמַר שְׁמוּאֵל: מַעֲשֶׂה בְּתַלְמִידָיו שֶׁל רַבִּי יִשְׁמָעֵאל שֶׁשָּׁלְקוּ זוֹנָה אַחַת שֶׁנִּתְחַיְּיבָה שְׂרֵיפָה לַמֶּלֶךְ, בָּדְקוּ וּמָצְאוּ בָּהּ מָאתַיִם וַחֲמִשִּׁים וּשְׁנַיִם, אָמַר לָהֶם: שֶׁמָּא בְּאִשָּׁה בְּדַקְתֶּם, שֶׁהוֹסִיף לָהּ הַכָּתוּב שְׁנֵי צִירִים וּשְׁנֵי דְּלָתוֹת.</p>
+      <p>תַּנְיָא, רַבִּי אֶלְעָזָר אוֹמֵר: כְּשֵׁם שֶׁצִּירִים לַבַּיִת — כָּךְ צִירִים לָאִשָּׁה, שֶׁנֶּאֱמַר: ״וַתִּכְרַע וַתֵּלֶד כִּי נֶהֶפְכוּ עָלֶיהָ צִרֶיהָ״. רַבִּי יְהוֹשֻׁעַ אוֹמֵר: כְּשֵׁם שֶׁדְּלָתוֹת לַבַּיִת — כָּךְ דְּלָתוֹת לָאִשָּׁה, שֶׁנֶּאֱמַר: ״כִּי לֹא סָגַר דַּלְתֵי בִטְנִי״.</p>
+      <p>רַבִּי עֲקִיבָא אוֹמֵר: כְּשֵׁם שֶׁמַּפְתֵּחַ לַבַּיִת, כָּךְ מַפְתֵּחַ לָאִשָּׁה, שֶׁנֶּאֱמַר: ״וַיִּפְתַּח אֶת רַחְמָהּ״. לְרַבִּי עֲקִיבָא קַשְׁיָא דְּתַלְמִידֵי רַבִּי יִשְׁמָעֵאל! דִּלְמָא אַיְּידֵי דְּזוּטַר אִתְּמוֹחֵי מִתְּמַח.</p>
+      <p>אָמַר רַב: וְכוּלָּן אֵין מְטַמְּאִין בְּאֹהֶל, שֶׁנֶּאֱמַר: ״זֹאת הַתּוֹרָה אָדָם כִּי יָמוּת בְּאֹהֶל״, דָּבָר הַשָּׁוֶה לְכׇל אָדָם.</p>
+      <p>אֲמַר לֵיהּ אַבָּיֵי: וּבְאִישׁ לֵיכָּא? וְהָכְתִיב: ״צִירִים אֲחָזוּנִי כְּצִירֵי יוֹלֵדָה״! צִירֵי בָשָׂר. וְהָכְתִיב: ״אֲדֹנִי בַּמַּרְאָה נֶהֶפְכוּ צִירַי״! הָכָא נָמֵי צִירֵי בָשָׂר. הָכִי נָמֵי מִסְתַּבְּרָא, דְּאִי לָא תֵּימָא הָכִי, מָאתַיִם וְאַרְבָּעִים וּשְׁמֹנֶה הֵיכִי מַשְׁכַּחַתְּ לַהּ? לָא בְּאִישׁ וְלָא בְּאִשָּׁה.</p>
+      <p>יָתֵר בְּיָדָיו וּבְרַגְלָיו. אָמַר רַבִּי יִצְחָק: וּשְׁנֵיהֶם מִקְרָא אֶחָד דָּרְשׁוּ, וַתְּהִי עוֹד מִלְחָמָה, וּכְתִיב: ״וַיְהִי אִישׁ מָדוֹן אֶצְבַּע יָדָיו וְאֶצְבַּע רַגְלָיו שֵׁשׁ וָשֵׁשׁ״, מָר סָבַר בִּגְנוּתֵיהּ מִשְׁתַּעֵי, וּמָר סָבַר בִּשְׁבָחֵיהּ מִשְׁתַּעֵי.</p>
+      <p>אָמַר רַבָּה: מָה לִי דִּכְתִיב ״שֵׁשׁ וָשֵׁשׁ עֶשְׂרִים וְאַרְבַּע מִסְפָּר״? צְרִיכִי, דְּאִי כְּתַב רַחֲמָנָא ״שֵׁשׁ וָשֵׁשׁ״ הֲוָה אָמֵינָא: שֵׁית דִּידֵיהּ וְשֵׁית דְּכַרְעֵיהּ, כְּתַב ״עֶשְׂרִים וְאַרְבַּע״. וְאִי כְּתַב ״עֶשְׂרִים וְאַרְבַּע״ הֲוָה אָמֵינָא: הוּא חֲמֵשׁ מֵהַאי גִּיסָא וּשְׁבַע מֵהַאי גִּיסָא, כְּתַב ״שֵׁשׁ וָשֵׁשׁ״. ״מִסְפָּר״ — בְּנִסְפֶּרֶת עַל גַּבֵּי הַיָּד.</p>
+      <p>תַּנְיָא, אָמַר רַבִּי יְהוּדָה: מַעֲשֶׂה בְּאָדָם אֶחָד שֶׁבָּא לִפְנֵי רַבִּי טַרְפוֹן, יָתֵר בְּיָדָיו וּבְרַגְלָיו שֵׁשׁ וָשֵׁשׁ עֶשְׂרִים וְאַרְבַּע. אָמַר לוֹ: כְּמוֹתְךָ יִרְבּוּ בְּיִשְׂרָאֵל! אָמַר לוֹ רַבִּי יוֹסֵי: מִשָּׁם רְאָיָה? כָּךְ אָמַר לוֹ: כְּמוֹתְךָ יִתְמַעֲטוּ מַמְזֵירֵי וּנְתִינֵי מִיִּשְׂרָאֵל!</p>
+      <p>הַשּׁוֹלֵט בִּשְׁתֵּי יָדָיו. תָּנוּ רַבָּנַן — אִיטֵּר, בֵּין בַּיָּד בֵּין בָּרֶגֶל — פָּסוּל. הַשּׁוֹלֵט בִּשְׁתֵּי יָדָיו — רַבִּי פּוֹסֵל וַחֲכָמִים מַכְשִׁירִין. מָר סָבַר — כְּחִישׁוּתָא אַתְחִלָא בְּיָמִין, וּמָר סָבַר — בְּרִיּוּתָא אַתְחִלָא בִּשְׂמֹאל.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> הַכּוּשִׁי, הַגִּיחוֹר, וְהַלַּבְקָן, וְהַקִּפֵּחַ, וְהַנַּנָּס, וְהַחֵרֵשׁ, וְהַשּׁוֹטֶה, וְהַשִּׁיכּוֹר, וּבַעֲלֵי נְגָעִים טְהוֹרִים — פְּסוּלִין בְּאָדָם וּכְשֵׁרִים בַּבְּהֵמָה. רַבָּן שִׁמְעוֹן בֶּן גַּמְלִיאֵל אוֹמֵר: שׁוֹטָה מִן הַבְּהֵמָה אֵינָהּ מִן הַמּוּבְחָר. רַבִּי אֶלְעָזָר אוֹמֵר: אַף בַּעֲלֵי הַדִּלְדּוּלִין פְּסוּלִין בָּאָדָם וּכְשֵׁרִין בַּבְּהֵמָה.</p>
+      <p><strong><big>גְּמָ׳</big></strong> כּוּשִׁי — אוּכָּמָא, גִּיחוֹר — חִיוָּורָא, לַבְקָן — סוּמָּקָא. אִינִי? וְהָא הָהוּא דַּאֲמַר לְהוּ ״מַאן בָּעֵי לוּקְיָאנֵי״, וְאִישְׁתְּכַח חִיוָּורָא! אֶלָּא: כּוּשִׁי — אוּכָּמָא, גִּיחוֹר — סוּמָּקָא, כִּדְאָמְרִי אִינָשֵׁי: ״סוּמָּקָא גִּיחְיָא״, לַבְקָן — חִיוָּורָא, כְּהָהוּא דַּאֲמַר לְהוּ ״מַאן בָּעֵי לוּקְיָאנֵי״, וְאִישְׁתְּכַח חִיוָּורֵי.</p>
+      <p>קִפֵּחַ. תָּנֵי רַב זְבִיד: גָּבוֹהַּ. אִינִי? וְהָתָנֵי רַבִּי אֲבָהוּ: מִנַּיִן שֶׁהַקָּדוֹשׁ בָּרוּךְ הוּא מִשְׁתַּבֵּחַ בְּבַעֲלֵי קוֹמָה, שֶׁנֶּאֱמַר: ״וְאָנֹכִי הִשְׁמַדְתִּי אֶת הָאֱמֹרִי מִפְּנֵיהֶם אֲשֶׁר כְּגֹבַהּ אֲרָזִים גׇּבְהוֹ״. אָמַר רַב פָּפָּא: בַּאֲרִיכָא שְׁמִיטָה סַנְיָא.</p>
+      <p>אָמַר רֵישׁ לָקִישׁ: גָּבוֹהַּ לֹא יִשָּׂא גְּבוֹהִית — שֶׁמָּא יֵצֵא מֵהֶן תּוֹרֶן, נַנָּס לֹא יִשָּׂא נַנֶּסֶת — שֶׁמָּא יֵצֵא מֵהֶם אֶצְבָּעִי, לָבָן לֹא יִשָּׂא לְבָנָה — שֶׁמָּא יֵצֵא מֵהֶם בּוֹהֵק, שָׁחוֹר לֹא יִשָּׂא שְׁחוֹרָה — שֶׁמָּא יֵצֵא מֵהֶן טָפוּחַ.</p>
+      <p>הַחֵרֵשׁ, הַשּׁוֹטֶה, וְהַשִּׁכּוֹר. שִׁכּוֹר מַחֵיל עֲבוֹדָה, בַּהֲדֵי מוּמֵי דְּמַחֲילִי עֲבוֹדָה בָּעֵי לְמִיחְשַׁב!</p>
+      <p>בִּשְׁאָר דְּבָרִים הַמְשַׁכְּרִים. וּדְלָא כְּרַבִּי יְהוּדָה, דְּתַנְיָא: אָכַל דְּבֵילָה קְעִילִית, וְשָׁתָה חָלָב אוֹ דְּבַשׁ, נִכְנַס לַמִּקְדָּשׁ — חַיָּיב.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> אֵלּוּ כְּשֵׁרִין בָּאָדָם וּפְסוּלִין בַּבְּהֵמָה: אוֹתוֹ וְאֶת בְּנוֹ, טְרֵיפָה, וְיוֹצֵא דּוֹפֶן, וְשֶׁנֶּעֶבְדָה בָּהֶן עֲבֵירָה, וְשֶׁהֵמִית אֶת הָאָדָם.</p>
+      <p>וְהַנּוֹשֵׂא נָשִׁים בַּעֲבֵירָה — פָּסוּל עַד שֶׁיַּדִּירֶנָּה הֲנָאָה, וְהַמִּטַּמֵּא לְמֵתִים — פָּסוּל עַד שֶׁיְּקַבֵּל עָלָיו שֶׁלֹּא יְהֵא מִטַּמֵּא לְמֵתִים.</p>
+      <p><strong><big>גְּמָ׳</big></strong> וְאֵלּוּ כְּשֵׁירִין בָּאָדָם, מַאי (באותו) [״אוֹתוֹ] וְאֶת בְּנוֹ״?</p>
+      <p>אִילֵּימָא אַהֲרֹן וּבָנָיו, דִּכְוָתֵיהּ תַּיִישׁ וּבְנוֹ, מִי נָהֵיג? וְהָתַנְיָא: ״אוֹתוֹ וְאֶת בְּנוֹ״ נוֹהֵג בִּנְקֵבוֹת, וְאֵינוֹ נוֹהֵג בִּזְכָרִים! אֶלָּא תְּיָישָׁה וּבְנָהּ, דִּכְוָותַהּ הָכָא כֹּהֶנֶת וּבְנָהּ, כֹּהֶנֶת בַּת עֲבוֹדָה הִיא?</p>
+      <p>לְעוֹלָם אַהֲרֹן וּבָנָיו, דִּכְוָותַהּ הָכָא תַּיִישׁ וּבְנוֹ. אָמְרִי בְּמַעְרְבָא מִשְּׁמֵיהּ דְּרַבִּי יוֹסֵי בַּר אָבִין: עֲדָא אָמְרָה חֲנַנְיָה הִיא, דְּתַנְיָא: ״אוֹתוֹ וְאֶת בְּנוֹ״ נוֹהֵג בִּנְקֵבוֹת וְאֵינוֹ נוֹהֵג בִּזְכָרִים, חֲנַנְיָה אוֹמֵר: נוֹהֵג בִּזְכָרִים וּבִנְקֵבוֹת.</p>
+      <p>וְהַנּוֹשֵׂא נָשִׁים כּוּ׳. תָּנָא: נוֹדֵר וְעוֹבֵד, יוֹרֵד וּמְגָרֵשׁ.</p>
+      <p>וְלֵיחוּשׁ דִּלְמָא אָזֵיל לְגַבֵּי חָכָם וְשָׁרֵי לֵיהּ! קָסָבַר: צָרִיךְ לְפָרֵט אֶת הַנֶּדֶר.</p>
+      <p>הָנִיחָא לְמַאן דְּאָמַר צָרִיךְ לְפָרֵט אֶת הַנֶּדֶר, אֶלָּא לְמַאן דְּאָמַר אֵין צָרִיךְ לְפָרֵט אֶת הַנֶּדֶר, מַאי אִיכָּא לְמֵימַר? דְּמַדְּרִינַן לֵיהּ בְּרַבִּים.</p>
+      <p>הָנִיחָא לְמַאן דְּאָמַר נֶדֶר שֶׁהוּדַּר בְּרַבִּים אֵין לוֹ הֲפָרָה, אֶלָּא לְמַאן דְּאָמַר יֵשׁ לוֹ הֲפָרָה, מַאי אִיכָּא לְמֵימַר? דְּמַדְּרִינַן</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Les jambes (michna 7:6).</b> Une baraïta : du verset « brisé de pied » (Lévitique 21:19), on ne sait que le pied brisé ; d'où apprend-on le <i>kishan</i>, l'<i>ikkel</i> et le <i>kilvan</i> ? « Ou brisé de pied » : le mot « ou » inclut tous les défauts de la jambe. Une autre baraïta : le <i>ba'al happikin</i> et le <i>shoufnar</i> sont invalides. Rabbi 'Hiya bar Abba au nom de Rabbi Yo'hanan : le <i>ba'al happikin</i> a beaucoup de protubérances, le <i>shoufnar</i> n'en a aucune.</p>
+      <p><b>Pied, talon, oie.</b> Rabbi Èlazar : « son talon sort vers l'arrière » signifie que le mollet sort au milieu du pied. Rav Papa : ne dis pas qu'il faut un pied entièrement comme celui d'une oie, sans doigts séparés ; dès que le pied est plat, c'est un défaut, même si les orteils sont séparés.</p>
+      <p><b>Doigts soudés ou superposés.</b> Une baraïta : « brisé de main » — on ne sait que la main brisée ; d'où le cas des doigts superposés ou soudés au-dessus de l'articulation et coupés ? La Guemara objecte : la michna dit que celui qui les a coupés est apte ; la baraïta parle donc de celui qui ne les a pas coupés : « ou brisé de main » l'invalide.</p>
+      <p><b>Le doigt surnuméraire.</b> Si un doigt supplémentaire est coupé et qu'il contient un os, le <i>cohen</i> est invalide, car il lui manque un membre ; sinon il est apte. Rabba bar bar 'Hana au nom de Rabbi Yo'hanan : cela vaut seulement quand le doigt est compté sur le dos de la main, aligné avec les autres.</p>
+      <p><b>L'impureté d'un doigt surnuméraire.</b> Une baraïta : un doigt supplémentaire d'un mort, avec un os mais sans ongle, rend impur par contact et par port, et dans une tente ; s'il n'a pas de chair autour de l'os, il compte parmi les cent vingt-cinq os. Rav 'Hisda au nom de Rav : s'il a un os et pas d'ongle, il rend impur par contact et par port mais pas dans une tente ; Rabba bar bar 'Hana : quand il n'est pas compté sur le dos de la main.</p>
+      <p><b>« Des paroles de prophétie ».</b> Rabbi Yo'hanan : les Sages ont fait de leurs paroles des paroles de prophétie, car de quelque côté qu'on le prenne : si c'est un membre, il devrait rendre impur dans une tente ; sinon, ni par contact ni par port. Rav Houna bar Mano'ah : ils ont touché à un os de la taille d'un grain d'orge. Rav Papa : c'est un décret, de peur qu'on ne confonde avec celui qui est compté. Réponse : ils ont établi une distinction afin que l'on sache que cette impureté est rabbinique, et que l'on ne brûle pas la <i>terouma</i> et les choses consacrées à cause d'elle.</p>
+      <p><b>Le nombre des os (Oholot 2:1).</b> La majorité du squelette (deux mollets et une cuisse) ou du nombre d'os (cent vingt-cinq) d'un mort rend impur, même sans un quart de <i>kav</i>. Ravina demande à Rava pourquoi la michna donne un chiffre, puisque avec deux cent quarante-huit membres, cent vingt-cinq est évidemment la majorité. Rava : pour enseigner que même un mort qui n'a que deux cents os, ou qui en a deux cent quatre-vingt-un, est jugé sur la majorité des gens.</p>
+      <p><b>La prostituée et les os de la femme.</b> Rabbi Yehouda au nom de Chmouel : les disciples de Rabbi Yichmaël firent bouillir une prostituée condamnée au feu par le roi, et trouvèrent deux cent cinquante-deux membres. Chmouel : peut-être avez-vous examiné une femme, à laquelle le verset a ajouté deux gonds et deux portes. Rabbi Èlazar : comme une maison a des gonds, la femme a des gonds (I Samuel 4:19) ; Rabbi Yehochoua : des portes (Job 3:10) ; Rabbi Akiva : une clef (Genèse 30:22). Contre Rabbi Akiva : les disciples n'en ont trouvé que quatre. Réponse : la clef, petite, a dissous dans l'eau. Rav : tous ces membres propres à la femme ne rendent pas impur dans une tente, car « voici la loi : un homme qui meurt dans une tente » désigne ce qui est égal pour tous. Abayé : n'y a-t-il pas de gonds chez l'homme (Isaïe 21:3 ; Daniel 10:16) ? Ce sont des gonds de chair.</p>
+      <p><b>Six et six (michna 7:6).</b> Rabbi Yits'hak : les deux avis tirent leur règle du même verset (II Samuel 21:20) : l'un pense qu'il parle de ses défauts, l'autre de ses qualités. Rabba : pourquoi « six et six, vingt-quatre » ? Si le verset avait dit seulement « six et six », on aurait compris six à une main et six à un pied ; s'il avait dit seulement « vingt-quatre », cinq d'un côté et sept de l'autre ; « nombre » indique qu'ils étaient comptés sur le dos de la main. Un homme vint devant Rabbi Tarfon : « Que ceux comme toi se multiplient en Israël ! » Rabbi Yossi : « Il voulait dire : que les <i>mamzerim</i> et les <i>netinim</i> soient aussi faibles que toi. »</p>
+      <p><b>Le gaucher.</b> Une baraïta : le gaucher, de la main ou du pied, est invalide ; celui qui se sert des deux mains : Rabbi l'invalide, les Sages l'acceptent. L'un pense que la faiblesse a commencé dans la droite, l'autre que la vigueur a commencé dans la gauche.</p>
+      <p><b>MICHNA (7:6, suite).</b> Le <i>kouchi</i>, le <i>guihor</i>, le <i>lavkan</i>, le <i>kipe'ah</i>, le nain, le sourd, l'insensé, l'ivre et ceux qui ont des marques pures : invalides chez l'homme, valables chez l'animal. Rabban Chimon ben Gamliel : l'insensé parmi les animaux n'est pas de choix. Rabbi Èlazar : même les excroissances pendantes.</p>
+      <p><b>Couleurs et taille.</b> <i>Kouchi</i> : très noir ; <i>guihor</i> : très rouge (« rouge guihya ») ; <i>lavkan</i> : très blanc. Le <i>kipe'ah</i> : Rav Zevid : très grand ; mais Rabbi Abahou : le Saint béni soit-Il se glorifie de ceux de haute taille (Amos 2:9) ; Rav Papa : il s'agit de celui qui est long, maigre et laid. Rich Lakich : un grand n'épousera pas une grande, un nain pas une naine, un pâle pas une pâle, un noir pas une noire, de peur qu'il n'en naisse un enfant extrême.</p>
+      <p><b>Le sourd, l'insensé, l'ivre.</b> L'ivresse profane le service ; pourquoi la michna la compte-t-elle ici ? Réponse : il s'agit d'ivresse par d'autres boissons que le vin, contrairement à Rabbi Yehouda, pour qui « celui qui a mangé des figues pressées de Kéïla ou bu du lait ou du miel et est entré au Sanctuaire est passible » (Lévitique 10:9).</p>
+      <p><b>MICHNA (7:7).</b> Valable chez l'homme et invalide chez l'animal : « lui et son petit », la <i>terefa</i>, le <i>yotseh dofen</i>, celui avec lequel on a commis une transgression et celui qui a tué un homme. Le <i>cohen</i> qui épouse des femmes par transgression est invalide jusqu'à ce qu'il fasse vœu de ne pas en profiter ; celui qui se rend impur aux morts, jusqu'à ce qu'il accepte de ne plus le faire.</p>
+      <p><b>« Lui et son petit » chez l'homme.</b> Quel est le cas chez l'homme ? Aharon et ses fils servant le même jour, et chez l'animal : un bouc et son petit ; mais l'interdit ne concerne que la femelle ! Réponse : la michna suit 'Hananya, qui l'applique aux mâles et aux femelles.</p>
+      <p><b>Celui qui épouse une femme interdite.</b> Une baraïta : il fait vœu et sert, puis descend et divorce. Pourquoi ne pas craindre qu'il demande à un sage de dissoudre le vœu ? Il faut préciser les circonstances du vœu ; ou le vœu est fait en public ; la Guemara continue sur les cas où un vœu public ne se dissout pas (suite sur le daf 46).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>and a <i>ba’al happikim</i>,</b> and <b>the <i>ikkel</i>. What is the <i>ikkel</i>?</b> It is <b>anyone who places his feet together and his knees do not knock into each other,</b> i.e., he is bowlegged. A priest with <b>a protuberance emerging</b> alongside <b>the thumb of his</b> hand or the big toe of his foot, or one <b>whose heel emerges</b> and protrudes <b>back</b> from <b>his</b> foot, or one <b>whose feet are wide like</b> those <b>of a goose</b> are all disqualified from performing the Temple service.</p>
+      <p>A priest <b>whose fingers</b> or toes <b>are configured one upon the other, or</b> one whose fingers or toes are <b>attached,</b> is likewise disqualified. But if they were attached from <b>above</b> the palm of the hand or the bottom of the foot only <b>until the</b> middle <b>joint,</b> he is <b>fit.</b> If they were attached <b>below the joint,</b> higher up on the finger or toe, <b>and he cut</b> to separate them, he is <b>fit.</b> In a case where <b>there was an extra</b> finger or toe <b>on</b> his hand or foot <b>and he cut it, if</b> that extra appendage <b>contains a bone,</b> the priest is <b>disqualified</b> even after it was cut, <b>and if</b> there is <b>no</b> bone the priest is <b>fit.</b></p>
+      <p>If there was <b>an extra</b> appendage <b>on his hands and on his feet, six on each</b> for a total of <b>twenty-four, Rabbi Yehuda deems</b> the priest <b>fit and the Rabbis deem</b> him <b>disqualified.</b> With regard to one <b>who</b> is ambidextrous and <b>has control of both of his hands, Rabbi</b> Yehuda HaNasi <b>deems</b> the priest <b>disqualified,</b> as his halakhic status is like that of one who is left-handed, <b>and the Rabbis deem</b> him <b>fit.</b></p>
+      <p><strong>GEMARA:</strong> <b>The Sages taught</b> in a <i>baraita</i>: From the verse that states: <b>“Broken-footed”</b> (Leviticus 21:19), <b>I have</b> derived <b>only</b> that <b>a broken leg</b> disqualifies a priest from performing the Temple service. <b>From where</b> do I derive <b>to include</b> that <b>the <i>kishan</i>,</b> i.e., one who knocks his ankles or his knees together; <b>the <i>ikkel</i>; and the <i>kilvan</i></b> are disqualified as well? <b>The</b> same <b>verse states: “Or broken-footed.”</b> The term “or” serves to include all blemishes of the leg. It was also <b>taught</b> in a <i>baraita</i>: <b>A <i>ba’al hakippin</i> and the <i>shufnar</i></b>  are blemished. <b>Rabbi Ḥiyya bar Abba says</b> that <b>Rabbi Yoḥanan says: A <i>ba’al happikin</i></b> is one <b>who has large protuberances</b> on his leg, while <b>a <i>shufnar</i></b> is one <b>who has no protuberances at all.</b></p>
+      <p>The mishna teaches that one with <b>a protuberance emerging</b> alongside <b>the thumb of his</b> hand or the big toe of his foot, <b>and</b> one <b>whose heel emerges</b> and protrudes <b>back</b> from <b>his</b> foot are disqualified. <b>Rabbi Elazar says:</b> The description: One whose heel emerges and protrudes back from his foot, means <b>his calf,</b> i.e., his lower leg, <b>emerges from the middle</b> of <b>his foot.</b> The mishna also teaches that one <b>whose feet are wide like</b> those <b>of a goose</b> is disqualified. <b>Rav Pappa says: Do not say that</b> this is referring only to one whose feet are entirely like those of a goose, i.e., his feet <b>are flat and</b> his toes <b>are not split. Rather, once</b> one’s feet <b>are flat</b> he is considered blemished, <b>even though</b> his toes <b>are split.</b></p>
+      <p>The mishna further teaches that a priest <b>whose fingers</b> or toes <b>are configured one upon the other, or</b> whose fingers or toes are <b>attached,</b> is likewise disqualified from performing the Temple service. But if they were attached from the hand or foot from above the palm of the hand or the bottom of the foot until the middle joint, or if they were attached below the joint, higher up on the finger or toe, and he cut to separate them, he is fit. <b>The Sages taught</b> in a <i>baraita</i>: The verse states: <b>“Broken-handed”</b> (Leviticus 21:19). <b>I have</b> derived <b>only</b> that <b>a broken hand</b> disqualifies a priest.</p>
+      <p>From where do I derive that if <b>his fingers</b> or toes <b>are configured</b> one <b>upon</b> the other, <b>or</b> if they are <b>attached</b> from the hand or foot <b>above the</b> middle <b>joint and he cut them</b> to separate them, that he is disqualified? The Gemara interrupts its citation of the <i>baraita</i> to ask: <b>But didn’t you say</b> in the mishna that if he separates his fingers he is <b>fit? Rather,</b> the <i>baraita</i> is referring to a priest whose fingers or toes are attached above the middle joint <b>and he did not cut them. From where</b> is it derived that he is disqualified? <b>The verse states: “Or broken-handed.”</b></p>
+      <p>§ The mishna teaches: In a case where <b>there was an extra</b> finger or toe <b>on</b> his hand or foot <b>and he cut it, if</b> that extra appendage <b>contains a bone,</b> the priest is <b>disqualified</b> even after it was cut, as he is considered to be missing a limb, <b>and if not,</b> the priest is <b>fit. Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: And this</b> is the <i>halakha</i> only in a case <b>where it can be counted along the back of the hand</b> or foot, i.e., the extra digit is situated in a row with his other fingers or toes. Only in such a situation is an additional appendage considered a distinct limb to the extent that if it contains a bone he is disqualified even after it has been cut away.</p>
+      <p>With regard to extra appendages <b>the Sages taught:</b> In the case of <b>an extra</b> appendage that was cut from a corpse, <b>which contains a bone,</b> then even if <b>it does not have a nail</b> it <b>imparts ritual impurity</b> both <b>through contact and by carrying</b> it, <b>and it imparts impurity in a tent,</b> as is the <i>halakha</i> with regard to the limb of a corpse. <b>And</b> if the extra appendage has no flesh surrounding the bone and therefore does not impart the impurity of a limb from a corpse, it is <b>included in the count of 125</b> bones, which constitute a majority of the number of bones in a human being. A majority of bones imparts impurity in a tent, even if there is no flesh on any of them. <b>Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: And</b> it is considered a limb only <b>when it can be counted along the back of the hand</b> or foot.</p>
+      <p><b>Rav Ḥisda says: This matter was stated by our great rabbi,</b> Rav, <b>may the Omnipresent</b> come <b>to his assistance. An extra</b> appendage <b>that contains a bone and does not have a nail imparts ritual impurity through contact and by carrying, but it does not impart impurity in a tent. Rabba bar bar Ḥana says</b> that <b>Rabbi Yoḥanan says: And</b> it does not impart impurity in a tent only <b>when it is not counted along the back of the hand</b> or foot.</p>
+      <p><b>Rabbi Yoḥanan says:</b> The Sages <b>rendered their statements</b> in this case <b>like statements of prophecy,</b> i.e., there is no rationale for this <i>halakha</i>, as <b>whichever way you</b> look at it there is a difficulty: <b>If</b> a digit that is not counted with the other digits <b>is</b> considered <b>a limb, it should impart impurity in a tent as well; and if it is not a limb, it also should not impart impurity through contact or by carrying.</b></p>
+      <p><b>Rav Huna bar Manoaḥ said in the name of Rav Aḥa, son of Rav Ika:</b> This appendage imparts impurity through contact and by carrying <b>because</b> the Sages <b>touched upon it,</b> i.e., issued a ruling concerning it, and determined that the <i>halakhot</i> of <b>a bone</b> the volume of <b>a barley grain</b> apply to it, i.e., it is considered a bone fragment and not a limb. Accordingly, it does not impart impurity in a tent.</p>
+      <p><b>Rav Pappa said:</b> It is a rabbinic <b>decree</b> that an appendage <b>that is not counted</b> with the other digits imparts impurity through contact and carrying, <b>due to</b> a case where the appendage is <b>counted</b> with the other digits, in which case it is considered a limb and imparts impurity in a tent. The Gemara raises a difficulty: <b>If so,</b> then an appendage <b>that is not counted should impart impurity in a tent as well.</b></p>
+      <p>The Gemara explains: <b>The Sages implemented a distinction</b> by decreeing this appendage imparts impurity only through contact and carrying, <b>in order that</b> people <b>will</b> know that this impurity applies by rabbinic law and not by Torah law. And therefore they will <b>not</b> come <b>to burn <i>teruma</i>,</b> i.e., the portion of produce designated for the priest, <b>or consecrated</b> items that have been rendered impure <b>on</b> account of this type of impurity, as by Torah law they are ritually pure and may not be burned.</p>
+      <p>§ With regard to impurity imparted by extra appendages, <b>we learned</b> in a mishna <b>there</b> (<i>Oholot</i> 2:1): <b>A majority of the</b> skeletal <b>structure or a majority of the number</b> of bones in the corpse of a <b>dead</b> person, <b>even when there is not a quarter</b> of a <i>kav</i> of bones among them, <b>are impure.</b> Concerning the ruling of this mishna, <b>the Sages taught</b> in a <i>baraita</i>: <b>What is</b> considered <b>a majority of the</b> skeletal <b>structure</b> of a corpse? It is <b>two calves and one thigh, since</b> this constitutes <b>a majority of the height of an adult. What is</b> considered <b>a majority of the number</b> of bones? <b>One hundred and twenty-five</b> bones.</p>
+      <p><b>Ravina said to Rava:</b> Is the <b><i>tanna</i> coming to teach us a number?</b> It is obvious that as there are 248 bones in the human body, 125 of them constitute a majority. Rava responded: The <i>tanna</i> <b>teaches us</b> that the <i>halakha</i> is <b>as it is taught</b> in a <i>baraita</i>: With regard to a corpse that <b>lacks</b> some bones and <b>has only 200</b> bones, <b>or</b> one that has <b>extra</b> and <b>has 281</b> bones, <b>all of them are included in the count of 125.</b> In other words, whether the number of 125 is in a majority or minority of that particular corpse, this number of bones imparts impurity, as one <b>follows the majority of people,</b> and most people have 248 bones.</p>
+      <p>With regard to the number of limbs or bones in the human body, <b>Rabbi Yehuda says</b> that <b>Shmuel says:</b> There was <b>an incident involving the students of Rabbi Yishmael, who boiled</b> the corpse of <b>a prostitute who was sentenced by the king to</b> death by <b>burning,</b> in order to separate her flesh from her bones. <b>They examined and found she</b> had <b>252</b> limbs. They were puzzled by their finding, as the Sages say that the human body has only 248 limbs. Shmuel <b>said to them: Perhaps you examined</b> the corpse of <b>a woman, as the verse added to her two hinges and two doors,</b> for a total of 252 limbs.</p>
+      <p>It <b>is taught</b> in a <i>baraita</i> that <b>Rabbi Elazar says: Just as a house has hinges [<i>tzirim</i>], so too, a woman has hinges, as it is stated: “And she bowed herself and brought forth, for her pains [<i>tzireha</i>] came suddenly upon her”</b> (I Samuel 4:19). <b>Rabbi Yehoshua says: Just as a house has doors, so too, a woman has doors, as it is stated: “Because it did not shut the doors of my womb”</b> (Job 3:10).</p>
+      <p><b>Rabbi Akiva says: Just as</b> there is <b>a key to a house, so too,</b> there is <b>a key to a woman, as it is stated: “And He opened her womb”</b> (Genesis 30:22). The Gemara challenges: The incident <b>involving the students of Rabbi Yishmael,</b> who found that the woman had only four additional limbs rather than five, i.e., there was no key, poses <b>a difficulty for Rabbi Akiva.</b> The Gemara responds: <b>Perhaps since</b> it is <b>small, it dissolved</b> in the water when they boiled the corpse.</p>
+      <p><b>Rav says: And all of them,</b> i.e., all the limbs found only in a woman, <b>do not impart impurity in a tent, as it is stated: “This is the law: When a person dies in a tent”</b> (Numbers 19:14), indicating that only <b>an item that is equal for all people,</b> male and female, imparts impurity in a tent.</p>
+      <p><b>Abaye said to him: And are there no</b> hinges <b>in a man? But isn’t it written: “Pangs [<i>tzirim</i>] have taken hold upon me, as the pangs of a woman in travail”</b> (Isaiah 21:3)? The Gemara responds: The verse is referring specifically to <b>hinges of flesh,</b> which are not considered limbs, as they contain no bones. The Gemara persists: <b>But isn’t it written: “My lord, by reason of the vision my pains [<i>tzirai</i>] come”</b> (Daniel 10:16)? The Gemara responds: <b>Here too,</b> the verse is referring to <b>hinges of flesh.</b> The Gemara notes: <b>So too, it is reasonable</b> that the hinges of a male are only of flesh, <b>as if you do not say so,</b> then as far as the <b>248</b> limbs that the Sages stated constitute a human body, <b>how can you find</b> them? <b>Neither in a man nor in a woman.</b></p>
+      <p>§ The mishna teaches that if one has <b>an extra</b> appendage <b>on his hands and on his feet,</b> six on each for a total of twenty-four, Rabbi Yehuda deems him fit while the Rabbis disqualify him. <b>Rabbi Yitzḥak says: And both derived</b> their opinions <b>from one verse,</b> as it is stated with regard to David’s war against the Philistines: <b>“And there was again war</b> at Gath” (II Samuel 21:20), <b>and it is</b> also <b>written</b> in that same verse: <b>“And there was a champion, who had on every hand six fingers, and on every foot six toes,</b> twenty-four in number.” One <b>Sage,</b> i.e., the Rabbis, <b>holds</b> that the verse <b>speaks of negative</b> qualities of the champion, and therefore it may be derived from here that extra appendages are blemishes; and one <b>Sage,</b> Rabbi Yehuda, <b>holds</b> that the verse <b>speaks in his praise,</b> which means that extra appendages are not blemishes at all.</p>
+      <p>With regard to that verse, <b>Rabba says: Why do I</b> need that <b>which is written</b> in the verse: “On every hand <b>six</b> fingers, <b>and</b> on every foot <b>six</b> toes, <b>twenty-four in number”?</b> Isn’t it obvious that one who has six appendages on each limb will have twenty-four in total? Rabba explains: All of these details <b>are necessary, as, had the Merciful One written</b> only <b>six and six, I would say</b> there were <b>six of his hand and six of his foot,</b> i.e., he had only twelve appendages. Therefore, the Merciful One <b>wrote “twenty-four.” And had</b> the Merciful One <b>written</b> only <b>“twenty-four,” I would say</b> he had <b>five</b> fingers <b>on this side and seven</b> fingers <b>on that side.</b> Therefore, the verse <b>wrote six and six.</b> The verse concludes with the term <b>“in number” to</b> indicate that these fingers <b>were counted</b> in a single row <b>on the back of the hand.</b></p>
+      <p>With regard to the dispute concerning whether or not extra appendages are a blemish, it <b>is taught</b> in a <i>baraita</i> that <b>Rabbi Yehuda says:</b> There was <b>an incident involving one man who came before Rabbi Tarfon,</b> and he had <b>extra</b> appendages <b>on his hands and on his feet, six and six,</b> for a total of <b>twenty-four</b> appendages. Rabbi Tarfon <b>said to him: There should increase among the Jewish people</b> those that are <b>like you,</b> i.e., strong men. Clearly, extra appendages are not a blemish but a praiseworthy condition. <b>Rabbi Yosei said to</b> Rabbi Yehuda: You seek to bring <b>a proof from there? This</b> is what Rabbi Tarfon actually <b>said to him:</b> All <b><i>mamzerim</i> and Gibeonites should be like you,</b> i.e., physically weak, so that <b>they should decrease from the Jewish people.</b></p>
+      <p>§ The mishna teaches that in the case of a priest <b>who has control of both of his hands,</b> i.e., he is ambidextrous, Rabbi Yehuda HaNasi deems him disqualified and the Rabbis deem him fit. With regard to this dispute <b>the Sages taught</b> in a <i>baraita</i>: One whose <b>left</b> side is dominant, <b>whether</b> his left <b>hand or</b> his left <b>foot,</b> is <b>disqualified</b> from performing the Temple service. Furthermore, in the case of <b>one who has control of both of his hands, Rabbi</b> Yehuda HaNasi <b>deems</b> him <b>disqualified and the Rabbis deem</b> him <b>fit.</b> The Gemara explains this dispute: One <b>Sage,</b> Rabbi Yehuda HaNasi, <b>holds</b> that he learned to control his left hand because <b>a weakness began in</b> his <b>right</b> hand. He is therefore disqualified, as his right hand is weak. <b>And</b> one <b>Sage,</b> i.e., the Rabbis, <b>holds</b> that <b>a strength began in</b> his <b>left</b> hand that allowed him to control both hands. Nevertheless, his right hand remains strong.</p>
+      <p><strong>MISHNA:</strong> Concerning <b>the <i>kushi</i>, the <i>giḥor</i>, the <i>lavkan</i>, the <i>kipe’aḥ</i>, the dwarf, the deaf-mute, the imbecile, the drunk, and</b> those <b>with ritually pure marks,</b> their conditions <b>disqualify a person</b> from performing the Temple service <b>and are valid,</b> i.e., they do not disqualify with regard to being sacrificed, <b>in</b> the case of <b>an animal. Rabban Shimon ben Gamliel says: An imbecile among animals is not optimal</b> for sacrifice. <b>Rabbi Elazar says: Even</b> with regard to those <b>with</b> flesh or skin that <b>hangs</b> from their body, that blemish <b>disqualifies in</b> the case of <b>a person and is valid in</b> the case of <b>an animal.</b></p>
+      <p><strong>GEMARA:</strong> The mishna teaches that a <i>kushi</i>, a <i>giḥor</i>, and a <i>lavkan</i> are disqualified. The Gemara explains: <b>A <i>kushi</i></b> is one whose skin is extremely <b>black, a <i>giḥor</i></b> is one whose skin is extremely <b>white,</b> and a <b><i>lavkan</i></b> is one whose skin is extremely <b>red.</b> The Gemara asks: <b>Is that so? But</b> there was <b>a certain</b> person <b>who said to</b> others: <b>Who wants a <i>lukiyani</i></b> lamb, <b>and</b> the lamb <b>was found</b> to be <b>white. Rather, a <i>kushi</i></b> is one whose skin is extremely <b>black; a <i>giḥor</i></b> is one whose skin is extremely <b>red, as people say</b> about one whose skin is extremely red: <b><i>Giḥia</i> red;</b> and <b>a <i>lavkan</i></b> is one whose skin is extremely <b>white, as</b> in the case of <b>that person who said: Who wants a <i>lukiyani</i>, and it was found</b> to be <b>white.</b></p>
+      <p>§ The mishna teaches that <b>a <i>kipe’aḥ</i></b> is disqualified. <b>Rav Zevid taught</b> that this is referring to one who is extremely <b>tall.</b> The Gemara asks: <b>Is that so,</b> that one who is tall is considered blemished? <b>But didn’t Rabbi Abbahu teach: From where</b> is it derived <b>that the Holy One, Blessed be He, is praised through</b> His destruction of <b>those of stature? As it is stated: “Yet I destroyed the Amorite before them, whose height was like the height of the cedars”</b> (Amos 2:9). <b>Rav Pappa said</b> in response: The mishna is not referring to one who is tall and has a healthy build, but to one who is <b>long, emaciated,</b> and <b>ugly.</b></p>
+      <p><b>Reish Lakish says:</b> A man who is <b>tall should not marry</b> a woman who is also <b>tall, lest</b> there <b>emerge from them</b> a child who is <b>extremely tall.</b> Similarly, a man who is <b>a dwarf should not marry</b> a woman who is also <b>a dwarf, lest</b> there <b>emerge from them</b> a child who is <b>exceptionally short.</b> A man whose skin is <b>pale should not marry</b> a woman whose skin is also <b>pale, lest</b> there <b>emerge from them</b> a child who is <b>extremely pale.</b> Likewise, a man whose skin is <b>dark should not marry</b> a woman whose skin is also <b>dark, lest</b> there <b>emerge from them</b> a child who is <b>extremely dark.</b></p>
+      <p>§ The mishna teaches that <b>the deaf-mute, the imbecile, and the drunk</b> are disqualified. The Gemara challenges: Since one who is <b>drunk profanes the</b> Temple <b>service,</b> the blemish of drunkenness <b>should have been counted</b> in the previous chapter <b>together with</b> those who have <b>blemishes that profane the service.</b> By contrast, those listed in this mishna are disqualified only because they are not equal among the seed of Aaron, and the <i>halakha</i> is that rites performed by priests with such blemishes are not profaned after the fact (see 43b).</p>
+      <p>The Gemara responds: The mishna is referring to a case where one became drunk <b>through other intoxicating agents,</b> not through wine. In such a case, the rites are not profaned. <b>And</b> this is <b>not in accordance with</b> the opinion of <b>Rabbi Yehuda,</b> who holds that even in such a case the rites are profaned, <b>as it is taught</b> in a <i>baraita</i>: Rabbi Yehuda says that a priest who <b>ate</b> pressed <b>figs from Ke’ila or drank milk or honey,</b> thereby becoming intoxicated, and <b>entered the Sanctuary</b> to serve, is <b>liable</b> to receive lashes. This is because he transgressed the prohibition: “Drink no wine nor strong drink, you, nor your sons with you, when you go into the Tent of Meeting” (Leviticus 10:9). He understands that “strong drink” means any intoxicating agent. The verse indicates that one who performs the Temple service while drunk profanes the service, as it states immediately afterward: “And that you may put difference between the holy and the common.”</p>
+      <p><strong>MISHNA:</strong> <b>These</b> flaws <b>do not disqualify a person</b> from performing the Temple service, <b>but</b> they do <b>disqualify an animal</b> from being sacrificed: An animal whose mother or offspring were slaughtered that day, as slaughtering it would violate the prohibition against slaughtering the animal <b>itself and its offspring</b> on the same day; <b>a <i>tereifa</i>;</b> one <b>born by caesarean section;</b> one <b>with which a transgression</b> of bestiality <b>was performed; and one that killed a person.</b></p>
+      <p><b>And</b> a priest <b>who marries women by a transgression,</b> e.g., a divorcée or a woman who underwent <i>ḥalitza</i>, is <b>disqualified</b> from performing the Temple service <b>until he vows</b> not to derive <b>benefit from her.</b> The vow ensures that he will divorce her promptly. <b>And</b> a priest <b>who becomes impure</b> through exposure <b>to corpses</b> is <b>disqualified</b> from performing the Temple service <b>until he accepts upon himself</b> a commitment <b>that he will no</b> longer <b>become impure</b> through exposure <b>to corpses.</b></p>
+      <p><strong>GEMARA:</strong> The mishna teaches about <b>these</b> flaws that <b>do not disqualify a person</b> from performing the Temple service but do disqualify an animal from being sacrificed, one of which is: Itself and its offspring. The Gemara asks: To <b>what</b> possible case involving people is the mishna referring when it differentiates between people and animals <b>with regard to</b> the flaw of: <b>Itself and its offspring?</b></p>
+      <p><b>If we say</b> this is referring to <b>Aaron and his sons,</b> and it means that they may serve in the Temple on the same day, then <b>in the corresponding</b> situation the mishna must be referring to a male <b>goat and its offspring.</b> And <b>does</b> such a prohibition <b>apply? But isn’t it taught</b> in a <i>baraita</i>: The prohibition against slaughtering an animal <b>itself and its offspring</b> on the same day <b>applies to female</b> animals, i.e., a mother and its offspring, <b>but it does not apply to males,</b> i.e., a father and its offspring. <b>Rather,</b> the mishna is referring to a female <b>goat and its offspring,</b> that they may not be slaughtered on the same day. If so, <b>in the corresponding</b> situation <b>here,</b> with regard to the priesthood, the mishna must be referring to <b>a female priest and her son.</b> But <b>is a female priest fit for</b> performing the Temple <b>service</b> at all? Clearly not.</p>
+      <p>The Gemara explains: <b>Actually,</b> the mishna is referring to <b>Aaron and his sons,</b> and <b>in the corresponding</b> situation <b>here,</b> it is referring to a male <b>goat and its offspring.</b> And as for the difficulty that the prohibition of: Itself and its offspring, applies only to the mother, <b>they said in the West,</b> Eretz Yisrael, <b>in the name of Rabbi Yosei bar Avin: That is to say,</b> the mishna <b>is</b> in accordance with the opinion of <b>Ḥananya, as it is taught</b> in a <i>baraita</i>: The prohibition against slaughtering an animal <b>itself and its offspring</b> on the same day <b>applies to female</b> animals <b>but it does not apply to male</b> animals. <b>Ḥananya says: It applies to</b> both <b>male and female</b> animals.</p>
+      <p>§ The mishna teaches that a priest <b>who marries women</b> by a transgression is disqualified from performing the Temple service until he vows not to derive benefit from her. It is <b>taught</b> in a <i>baraita</i>: If a priest was performing a sacrificial rite and it was discovered that he married a woman who was forbidden to him, he does not stop performing the rite. Rather, <b>he vows</b> not to derive benefit from her <b>and</b> then continues to <b>perform</b> the rite. Once he has finished, <b>he descends</b> from the altar <b>and divorces</b> his wife.</p>
+      <p>The Gemara asks: How can he be permitted to perform the Temple service before actually divorcing his wife? <b>But let us be concerned</b> that <b>perhaps he will go before a Sage</b> who will <b>dissolve his</b> vow. The Gemara responds: The <i>tanna</i> <b>holds</b> that when one seeks to dissolve a vow, he <b>must delineate</b> the conditions of <b>the vow</b> to the Sage. Accordingly, when the Sage hears that he uttered this vow because he married a woman who was forbidden to him, the Sage will not dissolve it.</p>
+      <p>The Gemara asks: <b>This works out well according to the one who says</b> one <b>must delineate</b> the conditions of <b>the vow. But according to the one who says</b> he does <b>not need to delineate</b> the conditions of <b>the vow, what can be said?</b> The Gemara responds <b>that we administer the vow</b> to the priest <b>in public.</b> Such a vow cannot be dissolved.</p>
+      <p>The Gemara persists: <b>This works out well according to the one who says</b> that <b>a vow that was taken in public has no</b> option of <b>nullification</b> by a halakhic authority, <b>but according to the one who says it has</b> the option of <b>nullification, what can be said?</b> The Gemara responds <b>that we administer the vow</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 45 clôt la michna 7:6 (jambes, doigts, couleur, taille) puis ouvre la michna 7:7, qui inverse les règles : certains défauts n'invalident que l'animal. Quatre mouvements : les pieds et les doigts, l'impureté des doigts surnuméraires, la taille et les couleurs, puis les engagements du <i>cohen</i>.</p>
+<h4>1. Pieds et doigts</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Règle</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Kishan</i>, <i>ikkel</i>, <i>kilvan</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Inclus par le mot « ou » dans « ou brisé de pied »</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Pied plat comme celui d'une oie</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Défaut même si les orteils sont séparés (Rav Papa)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Doigts soudés au-dessus de l'articulation, non coupés</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Invalide (« ou brisé de main »)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Doigt supplémentaire avec os, coupé</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Invalide s'il était compté sur le dos de la main</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Six et six</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Débat entre Rabbi Yehouda et les Sages, appuyé sur II Samuel 21:20</td></tr>
+</table>
+<h4>2. Le doigt surnuméraire et l'impureté</h4>
+<p>La Guemara compare la règle de pureté d'un membre surnuméraire d'un mort : avec os et sans ongle, il rend impur par contact et par port, mais pas dans une tente s'il n'est pas compté. Rabbi Yo'hanan y voit des « paroles de prophétie », sans logique évidente ; Rav Houna et Rav Papa proposent des explications.</p>
+<h4>3. Le nombre d'os et les membres de la femme</h4>
+<p>La majorité du squelette ou cent vingt-cinq os rend impur dans une tente. La femme a, selon les maîtres de la Guemara, quatre ou cinq membres de plus : gonds, portes et clef.</p>
+<h4>4. Couleurs, taille et ivresse</h4>
+<p>La Guemara précise les mots de la michna : <i>kouchi</i> très noir, <i>guihor</i> très rouge, <i>lavkan</i> très blanc, <i>kipe'ah</i> long et maigre. L'ivresse invalide le <i>cohen</i> sans profaner le service lorsqu'elle vient d'autres boissons que le vin.</p>
+<h4>5. Michna 7:7 : l'homme et l'animal</h4>
+<p>« Lui et son petit », la <i>terefa</i> et les autres cas sont invalides pour l'autel mais valables chez l'homme. Le <i>cohen</i> qui a épousé une femme interdite ou qui se rend impur aux morts doit s'engager, par vœu ou par acceptation, avant de reprendre le service.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « <i>ba'al happikin</i> » : le <i>shoufnar</i> n'a aucune excroissance ; <i>kistot</i> (coussins) : Rachi y voit une grosse enflure du pied (le terme vieux français est cité dans le texte) ; sur « <i>kishan</i> » : celui dont les chevilles s'entrechoquent ; sur « <i>kilvan</i> » : une protubérance à l'orteil. Sur « dans la rangée du dos de la main » : le doigt supplémentaire qui est aligné avec les autres est considéré comme un membre. Sur « paroles de prophétie » : les Sages n'ont pas besoin de donner la raison, car on les écoute sans raison.</p>
+<p><b>Rachi</b> sur le nombre d'os : un mort qui manque de deux doigts à chaque main et à chaque pied, soit huit doigts de six os chacun, perd quarante-huit os et en garde deux cents ; une femme en a deux cent cinquante-deux, car elle a des gonds et des portes en plus. Sur « la clef » : selon Rabbi Akiva, le total serait deux cent cinquante-trois ; elle s'est dissoute dans l'eau de la cuisson. Sur « gonds de chair » : sans os, ce ne sont pas des membres.</p>
+<p><b>Rachi</b> sur « six et six » : le verset parle d'une main et d'un pied ; sur « les <i>mamzerim</i> et les <i>netinim</i> » : que tous soient reconnaissables comme issus d'une semence défectueuse, pour que l'on ne s'attache pas à eux. Sur le gaucher : il lève d'abord le pied gauche en marchant, ce qui n'est pas la façon des hommes ; pour la main, on se réfère à « il trempera son doigt » (Lévitique 4:6), où le doigt est la droite.</p>
+<p><b>Rachi</b> sur « <i>guohya</i> » : on appelle ainsi le rouge ; <i>louqiyani</i> : des agneaux blancs ; <i>baarikha chemita sanya</i> : long et mince, il ne supporte pas sa taille et se courbe ; <i>bohak</i> : très blanc ; <i>tapou'ah</i> : noir comme une marmite. Sur l'ivre : il profane le service d'après « ne bois pas de vin ni de boisson forte » suivi de « pour distinguer entre le saint et le profane » ; selon Rabbi Yehouda, les autres boissons enivrantes font de même.</p>
+<p><b>Rachi</b> sur « lui et son petit » : invalide pour l'autel, car il manque l'âge requis ; sur « il fait vœu et sert » : bien qu'il n'ait pas encore divorcé, il peut servir après avoir fait vœu de ne pas en profiter. Sur « il faut préciser » : celui qui veut dissoudre un vœu doit préciser ses motifs, et le sage ne dissoudra pas un vœu fait parce que la femme lui est interdite.</p>
+<p><b>Tossafot</b> sur « <i>ba'al happikin</i> » : le Aroukh l'explique comme un pied haut avec beaucoup de chair vers le haut du pied et vers le talon, en forme de voûte ; le mot « coussins » indique de la chair, non de l'os. Sur « paroles de prophétie » : d'après la question qui suit, ce n'est pas un éloge. Sur « autres boissons enivrantes » : Rabbénou 'Haïm Cohen explique la baraïta de Zevahim 14b dans le sens de Rabbi Yehouda. Sur « il faut préciser » : discussion entre Rav Na'hman et Rav Papa dans Guitin 35b ; Tossafot penchent pour Rav Papa, qui est plus tardif. Sur « vœu fait en public » : débat de Guitin 46a.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Ces défauts concernent le service au Temple. Pour l'interdit « lui et son petit » (la bête et son petit le même jour), voir <a href="../choulhan-aroukh/yd_16.html">Yoré Dé'a 16</a>. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.45" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>

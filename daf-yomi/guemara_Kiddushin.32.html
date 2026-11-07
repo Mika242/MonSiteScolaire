@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 32 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Kiddushin · Guemara</div>
+    <h1>Guemara 32</h1>
+    <p>Daf 32</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>מִשֶּׁל מִי? רַב יְהוּדָה אָמַר: מִשֶּׁל בֵּן. רַב נָתָן בַּר אוֹשַׁעְיָא אָמַר: מִשֶּׁל אָב. אוֹרוֹ לֵיהּ רַבָּנַן לְרַב יִרְמְיָה, וְאָמְרִי לַהּ לִבְרֵיהּ דְּרַב יִרְמְיָה, כְּמַאן דְּאָמַר מִשֶּׁל אָב.</p>
+      <p>מֵיתִיבִי: נֶאֱמַר: ״כַּבֵּד אֶת אָבִיךָ וְאֶת אִמֶּךָ״, וְנֶאֱמַר: ״כַּבֵּד אֶת ה׳ מֵהוֹנֶךָ״. מָה לְהַלָּן בְּחֶסְרוֹן כִּיס, אַף כָּאן בְּחֶסְרוֹן כִּיס. וְאִי אָמְרַתְּ מִשֶּׁל אָב, מַאי נָפְקָא לֵיהּ מִינֵּיהּ? לְבִיטּוּל מְלָאכָה.</p>
+      <p>תָּא שְׁמַע: שְׁנֵי אַחִים, שְׁנֵי שׁוּתָּפִין הָאָב וּבְנוֹ, הָרַב וְתַלְמִידוֹ – פּוֹדִין זֶה לָזֶה מַעֲשֵׂר שֵׁנִי, וּמַאֲכִילִין זֶה לָזֶה מַעְשַׂר עָנִי.</p>
+      <p>וְאִי אָמְרַתְּ מִשֶּׁל בֵּן, נִמְצָא זֶה פּוֹרֵעַ חוֹבוֹ מִשֶּׁל עֲנִיִּים! – לָא צְרִיכָא, לְהַעְדָּפָה.</p>
+      <p>אִי הָכִי, הַיְינוּ דְּקָתָנֵי עֲלַהּ: אָמַר רַבִּי יְהוּדָה: תָּבֹא מְאֵירָה לְמִי שֶׁמַּאֲכִיל אֶת אָבִיו מַעְשַׂר עָנִי. וְאִי לְהַעְדָּפָה, מַאי נָפְקָא מִינַּהּ?! אֲפִילּוּ הָכִי זִילָא בֵּיהּ מִילְּתָא.</p>
+      <p>תָּא שְׁמַע: שָׁאֲלוּ אֶת רַבִּי אֱלִיעֶזֶר עַד הֵיכָן כִּיבּוּד אָב וָאֵם? אָמַר לָהֶם: כְּדֵי שֶׁיִּטּוֹל אַרְנָקִי וְיִזְרְקֶנּוּ לַיָּם בְּפָנָיו וְאֵינוֹ מַכְלִימוֹ. וְאִי אָמְרַתְּ מִשֶּׁל אָב, מַאי נָפְקָא לֵיהּ מִינֵּיהּ? בְּרָאוּי לְיוֹרְשׁוֹ.</p>
+      <p>וְכִי הָא דְּרַבָּה בַּר רַב הוּנָא. דְּרַב הוּנָא קְרַע שִׁירָאֵי בְּאַנְפֵּי רַבָּה בְּרֵיהּ. אָמַר: אֵיזִיל אִיחְזֵי אִי רָתַח אִי לָא רָתַח. וְדִלְמָא רָתַח וְקָעָבַר אַ״לִּפְנֵי עִוֵּר לֹא תִתֵּן מִכְשֹׁל״! דְּמָחֵיל לֵיהּ לִיקָרֵיהּ.</p>
+      <p>וְהָא קָעָבַר מִשּׁוּם ״בַּל תַּשְׁחִית״! דַּעֲבַד לֵיהּ בְּפוּמְבְּיָינֵי. וְדִילְמָא מִשּׁוּם הָכִי לָא רָתַח? דְּעָבֵד לֵיהּ בִּשְׁעַת רִיתְחֵיהּ.</p>
+      <p>מַתְנֵי לֵיהּ רַב יְחֶזְקֵאל לְרָמִי בְּרֵיהּ: הַנִּשְׂרָפִים בַּנִּסְקָלִים, רַבִּי שִׁמְעוֹן אוֹמֵר: יִדּוֹנוּ בִּסְקִילָה, שֶׁהַשְּׂרֵיפָה חֲמוּרָה.</p>
+      <p>אֲמַר לֵיהּ רַב יְהוּדָה בְּרֵיהּ: אַבָּא, לָא תַּיתְנְיֵיהּ הָכִי. מַאי אִירְיָא שְׂרֵיפָה חֲמוּרָה, תִּיפּוֹק לִי דְּרוּבָּא נִסְקָלִים נִינְהוּ! אֶלָּא הָכִי אַיתְנְיֵיהּ: הַנִּסְקָלִים בַּנִּשְׂרָפִים.</p>
+      <p>אֲמַר לֵיהּ: אִי הָכִי אֵימָא סֵיפָא: וַחֲכָמִים אוֹמְרִים יִדּוֹנוּ בִּשְׂרֵיפָה, שֶׁהַסְּקִילָה חֲמוּרָה. מַאי אִירְיָא דִּסְקִילָה חֲמוּרָה? תִּיפּוֹק לִי דְּרוּבָּא נִשְׂרָפִים נִינְהוּ!</p>
+      <p>אֲמַר לֵיהּ: הָתָם רַבָּנַן הוּא דְּקָאָמְרוּ לֵיהּ לְרַבִּי שִׁמְעוֹן: דְּקָאָמְרַתְּ שְׂרֵיפָה חֲמוּרָה – לָא, סְקִילָה חֲמוּרָה.</p>
+      <p>אֲמַר לֵיהּ שְׁמוּאֵל לְרַב יְהוּדָה: שִׁינָּנָא, לָא תֵּימָא לֵיהּ לַאֲבוּךְ הָכִי. דְּתַנְיָא: הֲרֵי שֶׁהָיָה אָבִיו עוֹבֵר עַל דִּבְרֵי תוֹרָה, אַל יֹאמַר לוֹ ״אַבָּא עָבַרְתָּ עַל דִּבְרֵי תוֹרָה״, אֶלָּא אוֹמֵר לוֹ: ״אַבָּא כָּךְ כָּתוּב בַּתּוֹרָה״. ״כָּךְ כָּתוּב בַּתּוֹרָה״ – צַעוֹרֵי קָא מְצַעַר לֵיהּ! אֶלָּא אוֹמֵר לוֹ: ״אַבָּא, מִקְרָא כָּתוּב בַּתּוֹרָה כָּךְ״.</p>
+      <p>אֶלְעָזָר בֶּן מַתְיָא אוֹמֵר: אַבָּא אוֹמֵר: ״הַשְׁקֵינִי מַיִם״, וּמִצְוָה לַעֲשׂוֹת – מַנִּיחַ אֲנִי כְּבוֹד אַבָּא, וְעוֹשֶׂה אֶת הַמִּצְוָה. שֶׁאֲנִי וְאַבָּא חַיָּיבִים בַּמִּצְוָה. אִיסִי בֶּן יְהוּדָה אוֹמֵר: אִם אֶפְשָׁר לַמִּצְוָה לֵיעָשׂוֹת עַל יְדֵי אֲחֵרִים – תֵּיעָשֶׂה עַל יְדֵי אֲחֵרִים, וְיֵלֵךְ הוּא בִּכְבוֹד אָבִיו. אָמַר רַב מַתְנָה: הֲלָכָה כְּאִיסִי בֶּן יְהוּדָה.</p>
+      <p>אָמַר רַב יִצְחָק בַּר שֵׁילָא אָמַר רַב מַתְנָה אָמַר רַב חִסְדָּא: הָאָב שֶׁמָּחַל עַל כְּבוֹדוֹ – כְּבוֹדוֹ מָחוּל. הָרַב שֶׁמָּחַל עַל כְּבוֹדוֹ – אֵין כְּבוֹדוֹ מָחוּל.</p>
+      <p>וְרַב יוֹסֵף אָמַר: אֲפִילּוּ הָרַב שֶׁמָּחַל עַל כְּבוֹדוֹ – כְּבוֹדוֹ מָחוּל. שֶׁנֶּאֱמַר: ״וַה׳ הֹלֵךְ לִפְנֵיהֶם יוֹמָם״. אָמַר רָבָא: הָכִי הַשְׁתָּא?! הָתָם, הַקָּדוֹשׁ בָּרוּךְ הוּא עָלְמָא דִּילֵיהּ הוּא, וְתוֹרָה דִּילֵיהּ הִיא – מָחֵיל לֵיהּ לִיקָרֵיהּ,</p>
+      <p>הָכָא תּוֹרָה דִּילֵיהּ הִיא?! הֲדַר אָמַר רָבָא: אִין, תּוֹרָה דִּילֵיהּ הִיא, דִּכְתִיב: ״וּבְתוֹרָתוֹ יֶהְגֶּה יוֹמָם וָלָיְלָה״.</p>
+      <p>אִינִי?! וְהָא רָבָא מַשְׁקֵי בֵּי הִלּוּלָא דִּבְרֵיהּ וְדַל לֵיהּ כָּסָא לְרַב פָּפָּא וּלְרַב הוּנָא בְּרֵיהּ דְּרַב יְהוֹשֻׁעַ, וְקָמוּ מִקַּמֵּיהּ. לְרַב מָרִי וּלְרַב פִּנְחָס בְּרֵיהּ דְּרַב חִסְדָּא, וְלָא קָמוּ מִקַּמֵּיהּ. אִיקְּפַד וַאֲמַר: הָנוּ רַבָּנַן רַבָּנַן, וְהָנוּ רַבָּנַן לָאו רַבָּנַן?</p>
+      <p>וְתוּ, רַב פָּפָּא הֲוָה מַשְׁקֵי בֵּי הִלּוּלָא דְּאַבָּא מָר בְּרֵיהּ וְדַלִּי לֵיהּ כָּסָא לְרַבִּי יִצְחָק בְּרֵיהּ דְּרַב יְהוּדָה וְלָא קָם מִקַּמֵּיהּ וְאִיקְּפַד! אֲפִילּוּ הָכִי – הִידּוּר מֶיעְבַּד לֵיהּ בָּעוּ.</p>
+      <p>אָמַר רַב אָשֵׁי: אֲפִילּוּ לְמַאן דְּאָמַר: הָרַב שֶׁמָּחַל עַל כְּבוֹדוֹ – כְּבוֹדוֹ מָחוּל, נָשִׂיא שֶׁמָּחַל עַל כְּבוֹדוֹ – אֵין כְּבוֹדוֹ מָחוּל. מֵיתִיבִי: מַעֲשֶׂה בְּרַבִּי אֱלִיעֶזֶר וְרַבִּי יְהוֹשֻׁעַ וְרַבִּי צָדוֹק שֶׁהָיוּ מְסוּבִּין בְּבֵית הַמִּשְׁתֶּה בְּנוֹ שֶׁל רַבָּן גַּמְלִיאֵל, וְהָיָה רַבָּן גַּמְלִיאֵל עוֹמֵד וּמַשְׁקֶה עֲלֵיהֶם. נָתַן הַכּוֹס לְרַבִּי אֱלִיעֶזֶר וְלֹא נְטָלוֹ, נְתָנוֹ לְרַבִּי יְהוֹשֻׁעַ וְקִיבְּלוֹ. אָמַר לוֹ רַבִּי אֱלִיעֶזֶר: מָה זֶה יְהוֹשֻׁעַ? אָנוּ יוֹשְׁבִין וְרַבָּן גַּמְלִיאֵל בְּרִיבִּי עוֹמֵד וּמַשְׁקֶה עָלֵינוּ?!</p>
+      <p>אֲמַר לֵיהּ: מָצִינוּ גָּדוֹל מִמֶּנּוּ שֶׁשִּׁמֵּשׁ, אַבְרָהָם גָּדוֹל מִמֶּנּוּ – וְשִׁמֵּשׁ. אַבְרָהָם גְּדוֹל הַדּוֹר הָיָה, וְכָתוּב בּוֹ: ״וְהוּא עֹמֵד עֲלֵיהֶם״. וְשֶׁמָּא תֹּאמְרוּ: כְּמַלְאֲכֵי הַשָּׁרֵת נִדְמוּ לוֹ – לֹא נִדְמוּ לוֹ אֶלָּא לְעַרְבִיִּים. וְאָנוּ, לֹא יְהֵא רַבָּן גַּמְלִיאֵל בְּרִיבִּי עוֹמֵד וּמַשְׁקֶה עָלֵינוּ?!</p>
+      <p>אָמַר לָהֶם רַבִּי צָדוֹק: עַד מָתַי אַתֶּם מַנִּיחִים כְּבוֹדוֹ שֶׁל מָקוֹם וְאַתֶּם עוֹסְקִים בִּכְבוֹד הַבְּרִיּוֹת? הַקָּדוֹשׁ בָּרוּךְ הוּא מֵשִׁיב רוּחוֹת, וּמַעֲלֶה נְשִׂיאִים, וּמוֹרִיד מָטָר, וּמַצְמִיחַ אֲדָמָה, וְעוֹרֵךְ שׁוּלְחָן לִפְנֵי כׇּל אֶחָד וְאֶחָד, וְאָנוּ לֹא יְהֵא רַבָּן גַּמְלִיאֵל בְּרִיבִּי עוֹמֵד וּמַשְׁקֶה עָלֵינוּ?</p>
+      <p>אֶלָּא אִי אִיתְּמַר הָכִי אִיתְּמַר, אָמַר רַב אָשֵׁי: אֲפִילּוּ לְמַאן דְּאָמַר: נָשִׂיא שֶׁמָּחַל עַל כְּבוֹדוֹ – כְּבוֹדוֹ מָחוּל, מֶלֶךְ שֶׁמָּחַל עַל כְּבוֹדוֹ – אֵין כְּבוֹדוֹ מָחוּל, שֶׁנֶּאֱמַר: ״שׂוֹם תָּשִׂים עָלֶיךָ מֶלֶךְ״ – שֶׁתְּהֵא אֵימָתוֹ עָלֶיךָ.</p>
+      <p>תָּנוּ רַבָּנַן: ״מִפְּנֵי שֵׂיבָה תָּקוּם״ – יָכוֹל אֲפִילּוּ מִפְּנֵי זָקֵן אַשְׁמַאי? תַּלְמוּד לוֹמַר: ״זָקֵן״, וְאֵין זָקֵן אֶלָּא חָכָם, שֶׁנֶּאֱמַר: ״אֶסְפָה לִּי שִׁבְעִים אִישׁ מִזִּקְנֵי יִשְׂרָאֵל״. רַבִּי יוֹסֵי הַגְּלִילִי אוֹמֵר: אֵין זָקֵן אֶלָּא מִי שֶׁקָּנָה חׇכְמָה, שֶׁנֶּאֱמַר: ״ה׳ קָנָנִי רֵאשִׁית דַּרְכּוֹ״.</p>
+      <p>יָכוֹל יַעֲמוֹד מִפָּנָיו מִמָּקוֹם רָחוֹק? תַּלְמוּד לוֹמַר: ״תָּקוּם וְהָדַרְתָּ״ – לֹא אָמַרְתִּי קִימָה אֶלָּא בִּמְקוֹם שֶׁיֵּשׁ הִידּוּר.</p>
+      <p>יָכוֹל יְהַדְּרֶנּוּ בְּמָמוֹן? תַּלְמוּד לוֹמַר: ״תָּקוּם וְהָדַרְתָּ״ – מָה קִימָה שֶׁאֵין בָּהּ חֶסְרוֹן כִּיס, אַף הִידּוּר שֶׁאֵין בּוֹ חֶסְרוֹן כִּיס. יָכוֹל יַעֲמוֹד מִפָּנָיו מִבֵּית הַכִּסֵּא וּמִבֵּית הַמֶּרְחָץ? תַּלְמוּד לוֹמַר: ״תָּקוּם וְהָדַרְתָּ״ – לֹא אָמַרְתִּי קִימָה אֶלָּא בִּמְקוֹם שֶׁיֵּשׁ הִידּוּר.</p>
+      <p>יָכוֹל יַעֲצִים עֵינָיו כְּמִי שֶׁלֹּא רָאָהוּ? תַּלְמוּד לוֹמַר: ״תָּקוּם... וְיָרֵאתָ״ – דָּבָר הַמָּסוּר לַלֵּב נֶאֱמַר בּוֹ: ״וְיָרֵאתָ מֵאֱלֹהֶיךָ״.</p>
+      <p>רַבִּי שִׁמְעוֹן בֶּן אֶלְעָזָר אוֹמֵר: מִנַּיִן לְזָקֵן שֶׁלֹּא יַטְרִיחַ? תַּלְמוּד לוֹמַר: ״זָקֵן וְיָרֵאתָ״. אִיסִי בֶּן יְהוּדָה אוֹמֵר: ״מִפְּנֵי שֵׂיבָה תָּקוּם״ – אֲפִילּוּ כׇּל שֵׂיבָה בַּמַּשְׁמָע.</p>
+      <p>רַבִּי יוֹסֵי הַגְּלִילִי הַיְינוּ תַּנָּא קַמָּא? אִיכָּא בֵּינַיְיהוּ יַנִּיק וְחַכִּים. תַּנָּא קַמָּא סָבַר: יַנִּיק וְחַכִּים – לָא, רַבִּי יוֹסֵי הַגְּלִילִי סָבַר: אֲפִילּוּ יַנִּיק וְחַכִּים.</p>
+      <p>מַאי טַעְמָא דְּרַבִּי יוֹסֵי הַגְּלִילִי? אָמַר לָךְ: אִי סָלְקָא דַעְתָּךְ כִּדְקָאָמַר תַּנָּא קַמָּא – אִם כֵּן נִכְתּוֹב רַחֲמָנָא: ״מִפְּנֵי שֵׂיבָה זָקֵן תָּקוּם וְהָדַרְתָּ״, מַאי שְׁנָא דְּפַלְגִינְהוּ רַחֲמָנָא – לְמֵימַר: דְּהַאי לָאו הַאי, וְהַאי לָאו הַאי. שְׁמַע מִינַּהּ אֲפִילּוּ יַנִּיק וְחַכִּים.</p>
+      <p>וְתַנָּא קַמָּא, מִשּׁוּם דְּבָעֵי לְמִיסְמַךְ ״זָקֵן״ ״וְיָרֵאתָ״. וְתַנָּא קַמָּא מַאי טַעְמָא? אִי סָלְקָא דַעְתָּךְ כִּדְקָאָמַר רַבִּי יוֹסֵי הַגְּלִילִי – אִם כֵּן נִכְתּוֹב רַחֲמָנָא:</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Aux frais de qui ?</b> De quel argent doit-on nourrir et abreuver son père ? Rav Yehouda : de l'argent du fils. Rav Natan bar Oshaya : de l'argent du père. On a enseigné à Rav Yirmeya (ou à son fils) la décision selon celui qui dit : de l'argent du père.</p>
+      <p><b>Objections.</b> Une baraïta : il est dit « Honore ton père et ta mère » (Exode 20:12) et « Honore l'Éternel de ta fortune » (Proverbes 3:9) : comme là-bas c'est avec perte d'argent, de même ici. Si l'on dit : de l'argent du père, quelle perte pour le fils ? Réponse : la perte de son travail, quand il est empêché de travailler à cause de son père. Autre baraïta : deux frères, deux associés, un père et son fils, un maître et son disciple peuvent racheter le deuxième dîme l'un pour l'autre sans ajouter un cinquième, et se nourrir l'un l'autre de la dîme du pauvre. Si le devoir est de l'argent du fils, il paierait sa dette avec le bien des pauvres. Réponse : la baraïta parle du surplus, quand le fils a déjà donné ce qu'il doit. Rabbi Yehouda : malheur à celui qui nourrit son père de la dîme du pauvre ; même pour un surplus, c'est une chose humiliante.</p>
+      <p><b>Jusqu'où va le respect.</b> On demanda à Rabbi Èliézer jusqu'où va le respect du père et de la mère. Il répondit : au point que le père prenne la bourse de son fils et la jette à la mer devant lui sans que le fils ne l'humilie. Si l'argent est celui du père, pourquoi cela concerne-t-il le fils ? La Guemara répond : il s'agit d'un fils qui lui a déjà donné tout ce qu'il lui devait. Histoire : Rav Houna déchira des vêtements de soie devant son fils Rabba pour voir s'il se mettrait en colère. Objections : cela fait trébucher le fils (« tu ne mettras pas d'obstacle devant l'aveugle ») ; et déchirer un vêtement viole « tu ne détruiras pas ». Réponses : il savait que son fils lui pardonnait, il a déchiré le long de la couture, et il l'a fait pendant que son fils était déjà en colère.</p>
+      <p><b>Un cas de respect dans l'étude.</b> Rav Yé'hezkel enseignait à son fils Rami la michna sur les condamnés à la crémation mêlés à ceux de la lapidation (Rabbi Chimon : tous à la lapidation, car la crémation est plus grave). Son fils Rav Yehouda lui dit que l'explication par la gravité n'est pas nécessaire, puisque la majorité est condamnée à la lapidation ; Rav Yé'hezkel lui oppose le cas inverse, et Rav Yehouda répond que les Sages répondent à Rabbi Chimon : c'est la lapidation qui est plus grave. Chmouel dit à Rav Yehouda : « À grandes dents, ne parle pas ainsi à ton père » : on ne dit pas à son père « tu as transgressé la Torah », mais « Père, c'est écrit ainsi dans la Torah ». Mieux : « Père, ce verset est écrit dans la Torah. »</p>
+      <p><b>Père et mitsva.</b> Èl'azar ben Matya : si mon père me dit « donne-moi de l'eau » et qu'une mitsva se présente, je mets de côté l'honneur de mon père et je fais la mitsva, car lui et moi y sommes tenus. Issi ben Yehouda : si la mitsva peut être faite par d'autres, qu'ils la fassent et que le fils s'occupe de son père, car l'honneur du père n'incombe qu'à lui. Rav Matana : la loi est selon Issi ben Yehouda.</p>
+      <p><b>Renoncer à son honneur.</b> Rav Yits'hak bar Chila au nom de Rav Matana, de Rav 'Hisda : le père qui renonce à son honneur, son honneur est abandonné ; le maître qui y renonce, son honneur ne l'est pas. Rav Yossef : même le maître : « L'Éternel marchait devant eux le jour » (Exode 13:21). Rava : là, le monde et la Torah sont à Lui ; ici, est-ce sa Torah ? Rava : oui, s'il l'a étudiée, c'est « sa Torah » (Psaumes 1:2). Objection : Rava versa à boire aux invités du mariage de son fils ; Rav Papa et Rav Houna fils de Rav Yehochoua se levèrent, mais Rav Mari et Rav Pin'has fils de Rav 'Hisda ne se levèrent pas, et Rava se fâcha. Rav Papa se fâcha aussi quand Rav Yits'hak fils de Rav Yehouda ne se leva pas. Réponse : le maître peut renoncer au plein honneur, mais les autres doivent quand même se lever un peu (<i>hidour</i>).</p>
+      <p><b>Le Nassi et le roi.</b> Rav Achi : même si le maître peut renoncer, le Nassi ne le peut pas. Objection : Rabban Gamliel servit à boire à Rabbi Èliézer, Rabbi Yehochoua et Rabbi Tsadok au mariage de son fils ; Rabbi Yehochoua : Avraham, plus grand que lui, servit ses invités (Genèse 18:8) ; Rabbi Tsadok : le Saint béni soit-Il fait souffler les vents, lève les nuages, fait pleuvoir et dresse une table pour chaque créature. Donc le Nassi peut renoncer. Rav Achi corrige : c'est le roi qui ne peut pas renoncer à son honneur, car « tu mettras sur toi un roi » (Deutéronome 17:15) : sa crainte doit être sur vous.</p>
+      <p><b>Devant les cheveux blancs (Lévitique 19:32).</b> Une baraïta : on pourrait croire qu'on doit se lever devant tout vieillard, même ignorant ; « vieillard » ne désigne que le sage (Nombres 11:16). Rabbi Yossi le Galiléen : « <i>zaken</i> » = <i>zeh kana</i>, celui qui a acquis la sagesse. Pas dès qu'on le voit de loin : « tu te lèveras et tu respecteras », là où il y a un honneur manifeste. Pas avec de l'argent : le lever n'a pas de coût. Pas dans les toilettes ni au bain. Pas de fermer les yeux : « et tu craindras ton D.ieu », car l'intention n'est connue que de D.ieu. Rabbi Chimon ben Èl'azar : le vieillard ne doit pas non plus faire de peine aux autres pour qu'ils se lèvent. Issi ben Yehouda : toute chevelure blanche, même celle d'un non-sage.</p>
+      <p><b>Désaccord entre le premier tanna et Rabbi Yossi le Galiléen.</b> La différence concerne celui qui est jeune et savant. Pour le premier tanna, il n'est pas « vieillard » ; pour Rabbi Yossi, on se lève même devant lui. Raison de Rabbi Yossi : si le verset avait voulu un seul sujet, il aurait écrit « devant les cheveux blancs du vieillard » ; en séparant les termes, il enseigne deux choses. Raison du premier tanna : le verset rapproche « vieillard » de « tu craindras » pour dire que le vieillard ne doit pas faire de peine.</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>From whose</b> funds must one give his father food and drink? <b>Rav Yehuda says: From</b> the money <b>of the son. Rav Natan bar Oshaya said: From</b> the money <b>of the father. The Sages gave</b> this following <b>ruling to Rav Yirmeya, and some say</b> they gave this following ruling <b>to the son of Rav Yirmeya:</b> The <i>halakha</i> is <b>like the one who says</b> it must be paid <b>from</b> the money <b>of the father.</b></p>
+      <p><b>The Gemara raises an objection</b> from the following <i>baraita</i>: <b>It is stated: “Honor your father and your mother”</b> (Exodus 20:11), <b>and it is stated: “Honor the Lord with your wealth”</b> (Proverbs 3:9), which teaches the following verbal analogy: <b>Just as there</b> one honors God “with your wealth,” i.e., <b>through monetary loss, so too here</b> one must honor his father <b>through monetary loss. And if you say</b> that one honors him <b>from</b> the money of <b>the father, what difference</b> does it make <b>to</b> the son, i.e., what monetary loss does he suffer? The Gemara answers: It makes a difference to him with regard <b>to</b> the <b>neglect of</b> his <b>work.</b> Although he is not required to spend his own money, the son must leave aside his work to honor his father, which will cause him some financial loss.</p>
+      <p>The Gemara suggests: <b>Come</b> and <b>hear</b> a proof from a <i>baraita</i>: <b>Two brothers,</b> or <b>two partners</b> in the ownership of produce, or <b>a father and son,</b> or <b>a rabbi and his student, may redeem</b> the <b>second tithe for each other</b> without adding one-fifth, as one who redeems the tithe of another, including these individuals, is not required to add one-fifth. <b>And they may feed each other</b> the <b>poor man’s tithe.</b> If one of them is poor, the other may give him the poor man’s tithe that he separated from his produce, and it is not considered as though the pauper ate the poor man’s tithe from his own produce.</p>
+      <p>The Gemara explains the proof from this <i>baraita</i>. <b>And if you say</b> that the obligation to honor one’s father is <b>from</b> the money <b>of the son,</b> one <b>finds</b> that <b>this</b> son <b>repays his obligation from</b> the produce <b>of the poor,</b> as he is taking care of his father with produce that should go to the poor. The Gemara rejects this proof: <b>No,</b> it is <b>necessary to</b> state this <i>halakha</i> in a case where he has covered all of his father’s basic needs with his own money. At this stage, if his father needs <b>surplus</b> money, he may give it to him from the poor man’s tithe.</p>
+      <p>The Gemara asks: <b>If so,</b> consider <b>that which is taught with regard to</b> this <i>baraita</i>. <b>Rabbi Yehuda says: May a curse come upon one who feeds his father</b> the <b>poor man’s tithe. And if</b> this <i>halakha</i>, that one may feed his father the poor man’s tithe, was said <b>with regard to a surplus, what difference is there?</b> Since the son has fulfilled his obligation and simply adds something so that his father will have more, why is this person cursed? The Gemara answers: <b>Even so, it is a disrespectful matter</b> for one to feed his father with money that has been designated as charity for the poor.</p>
+      <p>The Gemara further suggests: <b>Come</b> and <b>hear: They asked Rabbi Eliezer how far</b> one must go in <b>honoring</b> his <b>father and mother.</b> Rabbi Eliezer <b>said to them: Such that</b> the father <b>takes a purse and throw it into the sea in front of</b> his son, <b>and</b> the son <b>does not embarrass him. And if you say</b> that the son honors him <b>from</b> the money <b>of the father, what difference</b> does it make <b>to</b> the son? Why would the son care if his father throws away his own purse? The Gemara answers: This is referring <b>to</b> a son who is <b>fit to inherit</b> from <b>him.</b> Since the son thinks that the money will eventually belong to him, he has cause for anger.</p>
+      <p><b>And this is as</b> reflected in an incident involving <b>Rabba bar Rav Huna, when Rav Huna tore silk garments in front of his son Rabba.</b> Rav Huna had <b>said</b> to himself: <b>I will go</b> and <b>see if he becomes angry or does not become angry,</b> i.e., he wanted to test him and see whether his son Rabba would honor him. The Gemara asks: <b>But perhaps</b> his son <b>would become angry</b> and Rav Huna would thereby <b>violate</b> the prohibition of: <b>“Nor put a stumbling block before the blind”</b> (Leviticus 19:14), as by testing his son Rav Huna would have caused him to sin. The Gemara answers: It was a case <b>where</b> the father had <b>forgone his honor</b> from the outset. Consequently, even if the son grew angry with him, he would not have violated the mitzva.</p>
+      <p>The Gemara asks: <b>But</b> by tearing his clothes, <b>he violates the prohibition: Do not destroy</b> (see Deuteronomy 20:19). The Gemara answers <b>that</b> Rav Huna <b>made</b> a tear <b>at the seam,</b> so that the garment could be repaired. The Gemara asks: <b>Perhaps</b> it was <b>due to that</b> reason that <b>the son did not become angry,</b> because he saw that his father caused no actual damage? The Gemara answers: <b>He did this when</b> the son was already <b>angry</b> for some other reason, so that he would not notice this detail.</p>
+      <p>The Gemara cites another story involving the mitzva of honoring one’s father and mother. <b>Rav Yeḥezkel taught his son Rami:</b> If people sentenced to be <b>burned</b> became mingled <b>with</b> those sentenced to be <b>stoned Rabbi Shimon says:</b> All of them <b>are judged with</b> the punishment of <b>stoning, as the</b> punishment of <b>burning is more severe.</b> Since the death penalty of each is uncertain, all of them are treated leniently.</p>
+      <p><b>Rav Yehuda,</b> who was also Rav Yeḥezkel’s <b>son, said to him: Father, do not teach</b> the mishna <b>this way,</b> as, according to this version, <b>why</b> is this the <i>halakha</i> <b>specifically</b> because <b>burning is more severe</b> than stoning? <b>Let him derive</b> it from the fact <b>that the majority are</b> sentenced to be <b>stoned.</b> The wording of the <i>baraita</i>, which states that those who were supposed to be burned became mixed up with those who were to be stoned, indicates that the people sentenced to stoning are the majority. If so, one should simply follow the majority. <b>Rather, I will teach it this</b> way: If those <b>who are</b> sentenced to be <b>stoned</b> became mixed up <b>with</b> those <b>who are</b> sentenced to be <b>burned,</b> they are all judged with the punishment of stoning even though this is the minority, as they are all treated leniently.</p>
+      <p>Rav Yeḥezkel <b>said to him: If so, say the latter clause</b> of the mishna: <b>And the Rabbis say</b> that <b>they should be judged with</b> the punishment of <b>burning, as the</b> punishment of <b>stoning is more severe.</b> According to your version, <b>why</b> is this the <i>halakha</i> <b>specifically</b> because <b>stoning is more severe? Let him derive</b> it due to the fact <b>that the majority</b> of people <b>are</b> sentenced to be <b>burned,</b> and one follows the majority.</p>
+      <p>His son Rav Yehuda <b>said to him:</b> The statement of the Rabbis is not difficult, as <b>there the Rabbis are saying to Rabbi Shimon</b> as follows: <b>That which you said,</b> that <b>burning is more severe,</b> is <b>not</b> the case; rather, <b>stoning is more severe.</b> In other words, the Rabbis were specifically responding to Rabbi Shimon’s reasoning, and therefore they stated the opposite claim and ignored the issue of which group is in the majority.</p>
+      <p>Later, <b>Shmuel said to Rav Yehuda: Big-toothed</b> one, <b>do not speak to your father like that,</b> as it is disrespectful. <b>As it is taught</b> in a <i>baraita</i>: If <b>one’s father was transgressing a Torah matter, he should not say to him</b> explicitly: <b>Father, you transgressed a Torah matter. Rather, he should say to him: Father, so it is written in the Torah.</b> The Gemara asks: If he says to him directly: <b>This is</b> what is <b>written in the Torah, he will cause him suffering. Rather,</b> he should <b>say to him: Father, this verse is written in the Torah,</b> and he should proceed to quote the verse, from which his father will understand on his own that he has acted improperly.</p>
+      <p>§ <b>Elazar ben Matya says:</b> If my <b>father says: Give me water, and</b> there is <b>a mitzva</b> for me <b>to perform</b> at the same time, <b>I set aside the honor of my father and perform the mitzva, as my father and I are</b> both <b>obligated in the mitzva. Isi ben Yehuda says: If it is possible for</b> this <b>mitzva to be performed by others, let it be performed by others, and he should go</b> and attend <b>to the honor</b> due to <b>his father,</b> as the honor of his father is his obligation alone. <b>Rav Mattana says:</b> The <b><i>halakha</i></b> with regard to this matter <b>is in accordance with</b> the opinion of <b>Isi ben Yehuda.</b></p>
+      <p><b>Rav Yitzḥak bar Sheila says</b> that <b>Rav Mattana says</b> that <b>Rav Ḥisda says:</b> With regard to <b>a father who forgoes his honor, his honor is forgone,</b> and his son does not transgress if he does not treat him in the proper manner. By contrast, with regard to <b>a rabbi who forgoes his honor, his honor is not forgone.</b></p>
+      <p><b>And Rav Yosef says: Even</b> with regard to <b>a rabbi who forgoes his honor, his honor is forgone, as it is stated: “And the Lord went before them by day”</b> (Exodus 13:21). God Himself, the Teacher of the Jewish people, had forgone the honor due Him and took the trouble to guide the people. <b>Rava said: How can</b> these cases <b>be compared? There,</b> with regard to <b>the Holy One, Blessed be He, the world is His and the Torah is His,</b> and therefore He can <b>forgo His honor.</b></p>
+      <p>By contrast, <b>here, is it his Torah,</b> that the teacher can forgo its honor? <b>Rava then said: Yes,</b> if he studies, <b>it is his Torah, as it is written:</b> “For his delight is the Torah of the Lord, <b>and in his Torah he meditates day and night”</b> (Psalms 1:2). This indicates that at first it is “the Torah of the Lord,” but after he studies, it becomes “his Torah.”</p>
+      <p>The Gemara asks: <b>Is that so? But Rava served drinks</b> to the guests <b>at his son’s wedding celebration, and he poured a cup for Rav Pappa and Rav Huna, son of Rav Yehoshua, and they stood before him</b> when he approached them. When he poured a cup <b>for Rav Mari and</b> for <b>Rav Pineḥas, son of Rav Ḥisda, they did not stand before him.</b> Rava <b>became angry and said:</b> Are <b>these Sages,</b> i.e., Rav Mari and Rav Pineḥas, <b>Sages, and</b> are <b>those Sages,</b> who stood to honor me, <b>not Sages?</b> Do you think you are so great that you are not required to honor a Sage?</p>
+      <p><b>And furthermore,</b> it happened that <b>Rav Pappa was serving drinks</b> to the guests <b>at the wedding celebration [<i>hillula</i>] of Abba Mar, his son, and he poured a cup for Rav Yitzḥak, son of Rav Yehuda, and he did not stand before him, and</b> Rav Pappa <b>became angry.</b> These anecdotes indicate that even when a rabbi forgoes the honor due to him by serving drinks to his guests, his honor is not forgone. The Gemara answers: A rabbi can forgo the full measure of honor due to him, but <b>even so,</b> others are <b>required to perform</b> some act of <b>reverence,</b> such as preparing to stand before him.</p>
+      <p><b>Rav Ashi said: Even according to the one who says</b> that if <b>a rabbi forgoes</b> the <b>honor</b> due <b>him, his honor is forgone,</b> if <b>a <i>Nasi</i> forgoes</b> the <b>honor</b> due <b>him, his honor is not forgone. The Gemara raises an objection:</b> There was <b>an incident involving Rabbi Eliezer and Rabbi Yehoshua and Rabbi Tzadok, who were reclining at the wedding of Rabban Gamliel’s son. And Rabban Gamliel,</b> who was <i>Nasi</i> of the Sanhedrin at the time, <b>was standing over them and serving them drinks. He gave the cup to Rabbi Eliezer and he would not accept it; he gave it to Rabbi Yehoshua and he accepted it. Rabbi Eliezer said to him: What is this, Yehoshua? We sit and the esteemed Rabban Gamliel stands over us and serves us drinks?</b></p>
+      <p>Rabbi Yehoshua <b>said to him: We found</b> one <b>greater than him who served</b> his guests, as our forefather <b>Abraham</b> was <b>greater than him and he served</b> his guests. <b>Abraham was the greatest</b> man <b>of</b> his <b>generation and it is written about him: “And he stood over them</b> under the tree, and they ate” (Genesis 18:8). <b>And lest you say:</b> His guests <b>appeared to him as ministering angels,</b> and that is why he honored them, in fact <b>they appeared to him only as Arabs. And</b> if so, <b>should not the esteemed Rabban Gamliel stand over us and serve us drinks?</b></p>
+      <p><b>Rabbi Tzadok said to them: For how long will you ignore the honor</b> due <b>to the Omnipresent, and deal with the honor of people?</b> You could cite a proof from God Himself. After all, <b>the Holy One, Blessed be He, makes</b> the <b>winds blow, and raises</b> the <b>clouds, and brings</b> the <b>rain, and causes</b> the <b>earth to sprout, and sets a table before each and every</b> creature. <b>And should not the esteemed Rabban Gamliel stand over us and serve us drinks?</b> This discussion indicates that even a <i>Nasi</i> may forgo the honor due him.</p>
+      <p><b>Rather, if it was stated, it was stated as follows: Rav Ashi said: Even according to the one who says</b> that if <b>a <i>Nasi</i> forgoes</b> the <b>honor</b> due <b>him, his honor is forgone,</b> if <b>a king forgoes</b> the <b>honor</b> due <b>him, his honor is not forgone. As it is stated: “You shall set a king over you”</b> (Deuteronomy 17:15), which indicates <b>that his fear should be upon you.</b> The people are commanded to fear a king, and therefore it is not permitted for him to forgo the honor due to him.</p>
+      <p>§ <b>The Sages taught</b> with regard to the verse: <b>“Before the hoary head you shall stand</b> and you shall revere the face of an elder, and you shall fear your God” (Leviticus 19:32): One <b>might</b> have thought that it is obligatory to stand <b>before a simple [<i>ashmai</i>] elder.</b> Therefore, <b>the verse states: “elder,” and an “elder”</b> means <b>nothing other</b> than <b>a wise man, as it is stated: “Gather unto Me seventy men of the Elders of Israel,</b> whom you know to be the Elders of the people” (Numbers 11:16). <b>Rabbi Yosei HaGelili says: An “elder [<i>zaken</i>]”</b> means <b>nothing other</b> than <b>one who has acquired wisdom.</b> He interprets the word <i>zaken</i> as a contraction of the phrase <i>zeh kanna</i>, meaning: This one has acquired. Elsewhere the word <i>kanna</i> is used in reference to wisdom, <b>as it is stated</b> that wisdom says: <b>“The Lord acquired me [<i>kanani</i>] at the beginning of His way”</b> (Proverbs 8:22).</p>
+      <p>The <i>baraita</i> continues: One <b>might</b> have thought that <b>one must stand before</b> an elder as soon as he sees him, even <b>from a distance.</b> Therefore <b>the verse states: “You shall stand and you shall revere”</b> (Leviticus 19:32), which teaches: <b>I said</b> that one is obligated to <b>stand only in a place where there is reverence.</b> If he stands while the elder is still far away, it is not clear that he is doing so in his honor.</p>
+      <p>The <i>baraita</i> continues: One <b>might</b> have thought that <b>he should revere him through money,</b> i.e., that one is required to give an elder money in his honor. Therefore, <b>the verse states: “You shall stand and you shall revere.” Just as standing includes no monetary loss, so too, reverence</b> is referring to an action <b>that includes no monetary loss.</b> One <b>might</b> have thought that <b>one should</b> also <b>stand before him in the lavatory or in the bathhouse.</b> Therefore, <b>the verse states: “You shall stand and you shall revere,”</b> which indicates: <b>I said</b> the mitzva of <b>standing only in a place where there is reverence.</b> It is inappropriate to show respect for someone in places of this kind.</p>
+      <p>The <i>baraita</i> continues: One <b>might</b> have thought that <b>one may close his eyes like one who does not see</b> the elder. Therefore, <b>the verse states:</b> “Before the hoary head <b>you shall stand</b> and you shall revere the face of an elder, <b>and you shall fear</b> your God” (Leviticus 19:32). <b>With regard to</b> any <b>matter given over to the heart, it is stated: “And you shall fear your God.”</b> This phrase is referring to a situation where it is impossible to prove whether one purposefully made it appear as if he were not aware that he was obligated to perform a mitzva, as only that individual and God know the truth.</p>
+      <p>The <i>baraita</i> continues: <b>Rabbi Shimon ben Elazar says: From where</b> is it derived that <b>an elder should not trouble</b> others to honor him? <b>The verse states:</b> “And you shall revere the face of <b>an elder, and you shall fear</b> your God.” The phrase “an elder, and you shall fear,” read by itself, without the rest of the verse, indicates that an elder is also commanded to fear God, and not purposefully act in a manner to cause others to have to honor him. In conclusion, the <i>baraita</i> cites another opinion. <b>Isi ben Yehuda says</b> that the verse: <b>“Before the hoary head you shall stand,”</b> indicates that <b>even any</b> person of <b>hoary head is included</b> in this mitzva, not only a Sage.</p>
+      <p>The Gemara analyzes this <i>baraita</i>. Apparently the opinion of <b>Rabbi Yosei HaGelili is</b> the same as that of <b>the first <i>tanna</i>,</b> as they both say that an elder is a Torah scholar. What does Rabbi Yosei HaGelili add? The Gemara answers: <b>There is</b> a difference <b>between them</b> with regard to one who is <b>young and wise. The first <i>tanna</i> maintains:</b> One who is <b>young and wise</b> is <b>not</b> considered an elder, as the mitzva applies only to one who is both elderly and wise. <b>Rabbi Yosei HaGelili maintains:</b> It is <b>even</b> a mitzva to honor one who is <b>young and wise.</b> According to Rabbi Yosei HaGelili, the mitzva is not referring to old age at all, but only to wisdom.</p>
+      <p>The Gemara asks: <b>What is the reasoning of Rabbi Yosei HaGelili? He</b> could have <b>said to you</b> that <b>if it enters your mind</b> to explain <b>as the first <i>tanna</i> says,</b> that for the obligation to honor another to be in effect that person must be both elderly and wise, <b>if so, let the Merciful One write: Before the hoary head of an elder you shall stand and you shall revere. What is the difference</b> between the two terms “hoary head” and “elder,” <b>that the Merciful One separates them?</b> This serves <b>to say that this</b> term <b>is not</b> the same as <b>that</b> one, <b>and that</b> term <b>is not</b> the same as <b>this</b> one, i.e., an elder is not required to have a hoary head. <b>Learn from</b> the verse that <b>even</b> one who is <b>young and wise</b> is called an elder.</p>
+      <p><b>And the first <i>tanna</i></b> would say that the verse is written this way <b>because</b> the Torah <b>wants to juxtapose “elder”</b> with <b>“and you shall fear,”</b> in accordance with Rabbi Shimon ben Elazar’s statement above that an elder should not trouble others to honor him. The Gemara asks: <b>And what is the reasoning of the first <i>tanna</i>?</b> Why does he maintain that one is obligated to stand only before an elder, wise man? The Gemara answers: The first <i>tanna</i> maintains that <b>if it enters your mind</b> to explain <b>as Rabbi Yosei HaGelili says, let the Merciful One write:</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 32 de Kiddouchin enchaîne trois sujets autour de l'<b>honneur</b> : l'honneur du père (qui paie ? jusqu'où ?), l'honneur du maître (peut-il y renoncer ?) et l'honneur du vieillard et du sage (Lévitique 19:32).</p>
+<h4>1. Honorer son père : aux frais de qui ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Principe</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Yehouda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Nourrir et abreuver son père aux frais du fils</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Natan bar Oshaya</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Aux frais du père ; le fils fournit le service ; la décision suit cet avis</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Èliézer</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Jusqu'à jeter une bourse à la mer devant le fils sans l'humilier</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rav Houna et Rabba</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Déchirer des vêtements pour tester la patience du fils : permis car il avait pardonné</td></tr>
+</table>
+<h4>2. Le fils face à son père</h4>
+<p>Chmouel reprend Rav Yehouda, qui avait contesté son père avec des mots durs : on ne dit pas à son père « tu as transgressé la Torah », mais « c'est écrit ainsi dans la Torah ». En cas de conflit entre le service du père et une mitsva que d'autres ne peuvent accomplir, la loi suit Issi ben Yehouda : si d'autres peuvent faire la mitsva, le fils s'occupe de son père.</p>
+<h4>3. Renoncer à son honneur</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Personne</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Peut-elle renoncer à son honneur ?</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le père</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui : son honneur est abandonné</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le maître</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui, selon Rav Yossef (Exode 13:21) ; Rava précise qu'on se lève quand même un peu</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le Nassi</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Oui, selon la preuve de Rabban Gamliel et Rabbi Tsadok</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le roi</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Non : sa crainte doit être sur le peuple (Deutéronome 17:15)</td></tr>
+</table>
+<h4>4. Se lever devant le vieillard et le sage</h4>
+<p>La baraïta précise le verset « devant les cheveux blancs tu te lèveras » : seulement devant un sage, pas de loin, sans dépense d'argent, pas dans les lieux d'intimité, sans fermer les yeux. Rabbi Yossi le Galiléen y inclut le jeune savant ; Issi ben Yehouda, tout homme aux cheveux blancs.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « de l'argent de qui ? » : nourrir, abreuver et honorer ; sur « quelle perte pour lui ? » : quel manque d'argent y a-t-il pour le fils ? Sur « pour le surplus » : le fils doit donner une mesure moyenne ; si son père veut davantage, il peut le nourrir de la dîme du pauvre. Sur « <i>poumbayne</i> » : à la couture, là où le prix du vêtement n'est pas diminué, comme à l'ourlet.</p>
+<p><b>Rachi</b> sur « les brûlés parmi les lapidés » : un seul condamné à la crémation mêlé à beaucoup de lapidés ; la règle est que l'on juge tous par la peine la plus légère. Sur « Père, c'est écrit dans la Torah » : on ne lui dit pas qu'il s'est trompé brutalement ; on lui lit le verset et il comprend lui-même. Sur « Père m'a dit : donne-moi de l'eau » : et qu'une autre mitsva se présente, comme enterrer un mort ou accompagner.</p>
+<p><b>Rachi</b> sur « <i>hidour</i> » : remuer un peu comme pour se lever. Sur « <i>aravim</i> » : Avraham dit à ses hôtes « lavez vos pieds » parce que les Arabes se prosternent devant la poussière de leurs pieds (Baba Metsia 86b). Sur « <i>ben rabbi</i> » : grand homme. Sur « <i>zaken ashmai</i> » : même un vieillard ignorant (et les Tossafot objectent que l'on ne peut avoir de mitsva envers l'ignorant ; selon Rabbénou Tam, <i>ashmai</i> vient de « désert », un homme inculte). Sur « dans un endroit où il y a un honneur » : dans les quatre coudées qui montrent clairement qu'on se lève devant lui. Sur « fermer les yeux » : seul le cœur sait si l'on a vu.</p>
+<p><b>Tossafot</b> sur « de l'argent du fils » : Rabbénou Yits'hak se demande ce qu'il en est quand l'honneur du père s'oppose à la restitution d'un objet perdu d'autrui ; celle-ci passe avant (Baba Metsia 32a). Sur « il lui pardonne son honneur » : il faut le lui annoncer d'avance, sinon c'est comme celui qui voulait manger de la viande de porc et a mangé de l'agneau (Kiddouchin 81b). Sur « <i>zaken ashmai</i> » : discussion du sens, d'où la conclusion qu'il faut de la sagesse.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Pour le respect dû aux sages et aux vieillards et les circonstances où l'on se lève devant eux, voir <a href="../choulhan-aroukh/yd_244.html">Yoré Dé'a 244</a>. Le principe que le père peut renoncer à son honneur et que le fils ne peut pas lui parler durement (« c'est écrit ainsi dans la Torah ») fait partie des lois du respect des parents. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Kiddushin.32" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
