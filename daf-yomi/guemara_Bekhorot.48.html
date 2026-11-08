@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 48 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 48</h1>
+    <p>Daf 48</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p><strong><big>מַתְנִי׳</big></strong> מִי שֶׁלֹּא בִּכְּרָה אִשְׁתּוֹ וְיָלְדָה שְׁנֵי זְכָרִים — נוֹתֵן חָמֵשׁ סְלָעִים לְכֹהֵן. מֵת אֶחָד מֵהֶן בְּתוֹךְ שְׁלֹשִׁים יוֹם — הָאָב פָּטוּר.</p>
+      <p>מֵת הָאָב וְהַבָּנִים קַיָּימִים, רַבִּי מֵאִיר אוֹמֵר: אִם נָתְנוּ עַד שֶׁלֹּא חָלְקוּ — נָתָנוּ, וְאִם לָאו — פְּטוּרִין. רַבִּי יְהוּדָה אוֹמֵר: נִתְחַיְּיבוּ נְכָסִים. זָכָר וּנְקֵבָה — אֵין כָּאן לַכֹּהֵן כְּלוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> דְּמִית הָאָב אֵימַת? אִילֵּימָא דְּמִית לְאַחַר שְׁלֹשִׁים יוֹם — בְּהָא אָמַר רַבִּי מֵאִיר כִּי חָלְקוּ פְּטוּרִין? וְהָא אִשְׁתַּעְבַּדוּ לְהוּ (לנכסי) [נִכְסֵי]!</p>
+      <p>אֶלָּא, דְּמִית בְּתוֹךְ שְׁלֹשִׁים יוֹם, מַאי שְׁנָא כִּי חָלְקוּ — דְּאָזֵיל לְגַבֵּי הַאי וּמְדַחֵי לֵיהּ, דְּאָזֵיל לְגַבֵּי הַאי וּמְדַחֵי לֵיהּ; כִּי לֹא חָלְקוּ נָמֵי — לֵיזִיל לְגַבֵּי הַאי וְלִידַחֲיֵיהּ, וְלֵיזִיל לְגַבֵּי הַאי וְלִידַחֲיֵיהּ!</p>
+      <p>אָמַר רַבִּי יִרְמְיָה: זֹאת אוֹמֶרֶת, שְׁנֵי יוֹסֵף בֶּן שִׁמְעוֹן שֶׁהָיוּ בְּעִיר אַחַת, וְלָקְחוּ שָׂדֶה בְּשׁוּתָּפוּת — בַּעַל חוֹב גּוֹבֶה אוֹתָהּ מֵהֶם, דְּאָמַר לֵיהּ: אִי בְּדִידָךְ מַסֵּיקְנָא — מְנָתָא דִּידָךְ קָא שָׁקֵילְנָא, וְאִי בְּחַבְרָךְ מַסֵּיקְנָא — מְנָתָא דְּחַבְרָךְ קָא שָׁקֵילְנָא.</p>
+      <p>אָמַר רָבָא: מִכְּדֵי נִכְסֵי דְּבַר אִינִישׁ אִינּוּן עָרְבִין בֵּיהּ, מִי אִיכָּא מִידֵּי דִּלְדִידֵיהּ לָא מָצֵי תָּבַע לֵיהּ, וּלְעָרֵב מָצֵי תָּבַע לֵיהּ? וְהָתְנַן: הַמַּלְוֶה אֶת חֲבֵירוֹ עַל יְדֵי עָרֵב — לֹא יִפָּרַע מִן הֶעָרֵב, וְקַיְימָא לַן דְּלֹא יִתְבַּע מִן הֶעָרֵב תְּחִלָּה!</p>
+      <p>אֶלָּא אָמַר רָבָא: לְעוֹלָם שֶׁמֵּת לְאַחַר שְׁלֹשִׁים יוֹם, וְאִי דְּאִיכָּא נִכְסֵי טוּבָא — הָכִי נָמֵי דְּשָׁקֵיל, וְהָכָא בְּמַאי עָסְקִינַן? כְּגוֹן דְּלֵיכָּא אֶלָּא חָמֵשׁ סְלָעִים.</p>
+      <p>וּדְכוּלֵּי עָלְמָא אִית לְהוּ דְּרַב אַסִּי, דְּאָמַר רַב אַסִּי: הָאַחִין שֶׁחָלְקוּ — מֶחֱצָה יוֹרְשִׁין וּמֶחֱצָה לָקוֹחוֹת, וּדְכוּלֵּי עָלְמָא מִלְוֶה הַכְּתוּבָה בַּתּוֹרָה</p>
+      <p>לָאו כִּכְתוּבָה בִּשְׁטָר דָּמְיָא, וּדְכוּלֵּי עָלְמָא אִית לְהוּ דְּרַב פָּפָּא, דְּאָמַר רַב פָּפָּא: מִלְוָה עַל פֶּה גּוֹבֶה מִן הַיּוֹרְשִׁין וְאֵינוֹ גּוֹבֶה מִן הַלָּקוֹחוֹת.</p>
+      <p>וְהָכָא בְּחָמֵשׁ וְלֹא בַּחֲצִי חָמֵשׁ קָמִיפַּלְגִי, דְּרַבִּי מֵאִיר סָבַר: חָמֵשׁ וְלֹא חֲצִי חָמֵשׁ, וְרַבִּי יְהוּדָה סָבַר: חָמֵשׁ וַאֲפִילּוּ חֲצִי חָמֵשׁ.</p>
+      <p>אִי הָכִי, רַבִּי יְהוּדָה אוֹמֵר נִתְחַיְּיבוּ נְכָסִים, נִתְחַיֵּיב גַּבְרָא מִיבְּעֵי לֵיהּ! וְעוֹד, תַּנְיָא: רַבִּי יְהוּדָה אוֹמֵר: הָאַחִין שֶׁחָלְקוּ, אִם יֵשׁ עֲשָׂרָה זוּז לָזֶה וַעֲשָׂרָה זוּז לָזֶה — חַיָּיבִין, וְאִם לָאו — פְּטוּרִין.</p>
+      <p>מַאי עֲשָׂרָה זוּז לָזֶה וַעֲשָׂרָה זוּז לָזֶה? אִילֵּימָא בֵּין דִּירוּשָּׁה בֵּין דְּלָקוֹחוֹת, וְחָמֵשׁ וַאֲפִילּוּ חֲצִי חָמֵשׁ — אִי הָכִי, מַאי אִירְיָא עֲשָׂרָה? אֲפִילּוּ בְּצִיר מֵעֲשָׂרָה נָמֵי!</p>
+      <p>אֶלָּא פְּשִׁיטָא, עֲשָׂרָה זוּז דִּירוּשָּׁה לָזֶה, וַעֲשָׂרָה זוּז דִּירוּשָּׁה לָזֶה, אַלְמָא: חָמֵשׁ וְלֹא חֲצִי חָמֵשׁ סְבִירָא לֵיהּ!</p>
+      <p>אֶלָּא, דְּכוּלֵּי עָלְמָא חָמֵשׁ וְלֹא חֲצִי חָמֵשׁ, וְהָכָא בִּדְרַב אַסִּי וְרַב פָּפָּא קָמִיפַּלְגִי.</p>
+      <p>וְאִיכָּא דְּמַתְנֵי לֵיהּ אַסֵּיפָא, נִתְחַיְּיבוּ הַנְּכָסִים, דְּמִית הָאָב אֵימַת? אִילֵּימָא דְּמִית לְאַחַר שְׁלֹשִׁים, מִכְּלָל דְּרַבִּי מֵאִיר סָבַר כִּי חָלְקוּ פְּטוּרִין? הָא אִישְׁתַּעְבַּדוּ לְהוּ נִכְסֵי!</p>
+      <p>אֶלָּא בְּתוֹךְ שְׁלֹשִׁים, כִּי חָלְקוּ, אַמַּאי מְחַיֵּיב רַבִּי יְהוּדָה? לֵיזִיל לְגַבֵּי הַאי לִידַחֲיֵיהּ, וְגַבֵּי הַאי וְלִידְחֲיֵיהּ!</p>
+      <p>אָמַר רַבִּי יִרְמְיָה: זֹאת אוֹמֶרֶת, שְׁנֵי יוֹסֵף בֶּן שִׁמְעוֹן שֶׁהָיוּ בְּעִיר אַחַת, וְלָקַח אֶחָד מֵהֶם שָׂדֶה מֵחֲבֵירוֹ — בַּעַל חוֹב גּוֹבֶה מִמֶּנּוּ, דַּאֲמַר לֵיהּ: אִי בְּדִידָךְ מַסֵּיקְנָא — מְנָתָא דִּידָךְ קָא שָׁקֵילְנָא, וְאִי בְּחַבְרָךְ מַסֵּיקְנָא — מִשְׁתַּעְבְּדָא לִי מִקַּמֵּי דִּידָךְ.</p>
+      <p>אָמַר רָבָא: מִכְּדֵי נִכְסוֹהִי דְּבַר אִינִישׁ אִינּוּן עָרְבִין בֵּיהּ, וְכוּלַּהּ כְּלִישָּׁנָא קַמָּא.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> שְׁתֵּי נָשִׁים שֶׁלֹּא בִּכֵּרוּ וְיָלְדוּ שְׁנֵי זְכָרִים — נוֹתֵן עֲשָׂרָה סְלָעִים לַכֹּהֵן. מֵת אֶחָד מֵהֶן בְּתוֹךְ שְׁלֹשִׁים יוֹם, אִם לְכֹהֵן אֶחָד נָתַן — יַחֲזִיר לוֹ חָמֵשׁ סְלָעִים, וְאִם לִשְׁנֵי כֹּהֲנִים נָתַן — אֵינוֹ יָכוֹל לְהוֹצִיא מִיָּדָם.</p>
+      <p>זָכָר וּנְקֵבָה, אוֹ שְׁנֵי זְכָרִים וּנְקֵבָה — נוֹתֵן חָמֵשׁ סְלָעִים לַכֹּהֵן; שְׁתֵּי נְקֵבוֹת וְזָכָר, אוֹ שְׁנֵי זְכָרִים וּשְׁתֵּי נְקֵבוֹת — אֵין כָּאן לַכֹּהֵן כְּלוּם.</p>
+      <p>אַחַת בִּכֵּרָה וְאַחַת שֶׁלֹּא בִּכֵּרָה, וְיָלְדוּ שְׁנֵי זְכָרִים — נוֹתֵן חָמֵשׁ סְלָעִים לַכֹּהֵן, מֵת אֶחָד מֵהֶן בְּתוֹךְ שְׁלֹשִׁים יוֹם — הָאָב פָּטוּר.</p>
+      <p>מֵת הָאָב וְהַבָּנִים קַיָּימִים, רַבִּי מֵאִיר אוֹמֵר: אִם נָתְנוּ עַד שֶׁלֹּא חָלְקוּ נָתְנוּ, וְאִם לָאו פְּטוּרִין. רַבִּי יְהוּדָה אוֹמֵר: נִתְחַיְּיבוּ נְכָסִים, זָכָר וּנְקֵבָה אֵין לַכֹּהֵן כְּלוּם.</p>
+      <p>שְׁתֵּי נָשִׁים שֶׁל שְׁנֵי אֲנָשִׁים שֶׁלֹּא בִּכֵּרוּ, וְיָלְדוּ שְׁנֵי זְכָרִים — זֶה נוֹתֵן חָמֵשׁ סְלָעִים לַכֹּהֵן וְזֶה נוֹתֵן חָמֵשׁ סְלָעִים. מֵת אֶחָד מֵהֶם בְּתוֹךְ שְׁלֹשִׁים — אִם לַכֹּהֵן אֶחָד נָתָנוּ, יַחֲזִיר לָהֶם חָמֵשׁ סְלָעִים. אִם לִשְׁנֵי כֹּהֲנִים נָתָנוּ — אֵינָן יְכוֹלִין לְהוֹצִיא מִיָּדָם.</p>
+      <p>זָכָר וּנְקֵבָה — הָאָבוֹת פְּטוּרִין, וְהַבֵּן חַיָּיב לִפְדּוֹת אֶת עַצְמוֹ; שְׁתֵּי נְקֵבוֹת וְזָכָר, אוֹ שְׁתֵּי נְקֵבוֹת וּשְׁנֵי זְכָרִים — אֵין כָּאן לַכֹּהֵן כְּלוּם.</p>
+      <p>אַחַת בִּכֵּרָה וְאַחַת שֶׁלֹּא בִּכֵּרָה, שֶׁל שְׁנֵי אֲנָשִׁים, וְיָלְדוּ שְׁנֵי זְכָרִים — זֶה שֶׁלֹּא בִּכְּרָה אִשְׁתּוֹ נוֹתֵן חָמֵשׁ סְלָעִים לַכֹּהֵן; זָכָר וּנְקֵבָה — אֵין כָּאן לַכֹּהֵן כְּלוּם.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי שְׁנָא שְׁנֵי כֹּהֲנִים, דְּאָזֵיל לְגַבֵּי הַאי וּמְדַחֵי לֵיהּ, וְאָזֵיל לְגַבֵּי הַאי וּמְדַחֵי לֵיהּ?</p>
+      <p>כֹּהֵן אֶחָד נָמֵי לֵיזִיל לְגַבֵּי הַאי וְלִידַחֲיֵיהּ, וְלֵיזִיל לְגַבֵּי הַאי וְלִידַחֲיֵיהּ! אָמַר שְׁמוּאֵל:</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>MICHNA (8:3).</b> Jumeaux dont l'aîné est inconnu : cinq <i>sela'im</i> ; si l'un meurt dans les trente jours, le père est exempt ; si le père meurt, Rabbi Meïr et Rabbi Yehouda divergent ; un garçon et une fille : rien (voir la michna 8:3 ci-dessus).</p>
+      <p><b>GUEMARA : Quand le père est-il mort ?</b> Rabbi Meïr dit : s'ils ont partagé l'héritage, ils sont exempts. Si le père est mort après trente jours, les biens sont déjà grevés pour le rachat ! Il s'agit donc d'un père mort dans les trente jours : l'obligation pèse sur le premier-né lui-même, dont l'identité est inconnue, non sur les biens. Pourquoi alors le partage change-t-il quelque chose ? Parce que le <i>cohen</i> va chez l'un et celui-ci le repousse (« prouve que je suis l'aîné »), puis chez l'autre qui le repousse aussi. Mais ce serait pareil sans partage ! Rabbi Yirmeya déduit : deux Yossef ben Chimon dans une même ville qui ont acheté un champ en commun : un créancier de l'un d'eux peut saisir chez les deux, car il dit à chacun : « si c'est toi, je prends ta part ; si c'est l'autre, je prends sa part ». Rava : puisque les biens du débiteur sont la garantie du prêt, peut-on réclamer à un garant et pas au débiteur ? La Michna de Bava Batra (173a) dit qu'on ne réclame pas d'abord au garant.</p>
+      <p><b>Réponse de Rava : le père est mort après trente jours.</b> Les biens sont grevés ; s'il y a beaucoup de biens, le <i>cohen</i> prélève même après partage ; la michna parle du cas où l'héritage n'est que de cinq <i>sela'im</i>. Tous suivent Rav Assi : les frères qui ont partagé sont, pour une moitié, héritiers et, pour l'autre moitié, acheteurs l'un de l'autre ; et tous tiennent qu'une dette « écrite dans la Torah » (comme le rachat du premier-né) est comme un prêt oral ; selon Rav Papa, le créancier d'un prêt oral prélève chez les héritiers mais pas chez les acheteurs. Le <i>cohen</i> ne peut donc prendre que sur la moitié « héritage », soit deux <i>sela'im</i> et demi.</p>
+      <p><b>Le point de désaccord.</b> Rabbi Meïr et Rabbi Yehouda divergent sur « cinq, mais non la moitié de cinq » : Rabbi Meïr estime que la Torah exige cinq <i>sela'im</i> exactement, pas la moitié ni une partie : les frères sont donc exempts des deux <i>sela'im</i> et demi ; Rabbi Yehouda estime que la Torah exige cinq, et même la moitié ou une partie de cinq : le <i>cohen</i> prélève ces deux et demi.</p>
+      <p><b>Difficultés.</b> Si c'est ainsi, Rabbi Yehouda aurait dû dire « l'homme est tenu » et non « les biens sont grevés » ; et la baraïta de Rabbi Yehouda parle de dix <i>dinars</i> pour chacun, c'est-à-dire d'un total de cinq <i>sela'im</i>, ce qui montre qu'il exige cinq <i>sela'im</i> pleins et non la moitié. On conclut : la michna parle du cas où les biens valent cinq <i>sela'im</i> ; tous admettent que la Torah exige cinq et non la moitié ; le désaccord porte sur les paroles de Rav Assi et de Rav Papa : Rabbi Meïr les suit (l'héritage ne compte que deux et demi), Rabbi Yehouda non (les cinq <i>sela'im</i> sont disponibles).</p>
+      <p><b>Autre version.</b> Certains enseignent toute cette discussion à propos de la fin de la michna (« deux fils dont l'aîné est inconnu, père mort ») ; même raisonnement pour Rabbi Yehouda et même exemple de deux Yossef ben Chimon, dont l'un a acheté un champ à l'autre : un ancien créancier peut saisir ce champ.</p>
+      <p><b>MICHNA (8:4).</b> Deux femmes d'un même homme, ou de deux hommes, dont les nouveau-nés sont confondus : voir la michna 8:4 ci-dessus.</p>
+      <p><b>GUEMARA.</b> Pourquoi, si les pères ont donné à deux <i>cohanim</i> et que l'un des premiers-nés meurt, ne peuvent-ils rien réclamer ? Chaque <i>cohen</i> repousse le père : « j'ai pris le rachat pour le survivant ». Même s'ils ont donné à un seul <i>cohen</i> : le père va chez le <i>cohen</i> qui le repousse, disant que son fils est toujours vivant. Chmouel dit (suite au daf 49).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><strong>MISHNA:</strong> With regard to <b>one whose wife had not</b> previously <b>given birth and</b> then <b>gave birth</b> to <b>two males,</b> i.e., twin males, and it is unknown which is the firstborn, <b>he gives five <i>sela</i></b> coins <b>to the priest</b> after thirty days have passed. If <b>one of them dies within thirty days</b> of birth, before the obligation to redeem the firstborn takes effect, <b>the father is exempt</b> from the payment due to uncertainty, as perhaps it was the firstborn who died.</p>
+      <p>In a case where <b>the father died and the sons are alive, Rabbi Meir says: If they gave</b> the five <i>sela</i> coins to the priest <b>before they divided</b> their father’s property between them, <b>they gave</b> it, and it remains in the possession of the priest. <b>But if not,</b> they are <b>exempt</b> from giving the redemption money to the priest. <b>Rabbi Yehuda says: The obligation</b> to redeem the firstborn already <b>took effect on the property</b> of the father; therefore, in either case the sons, his heirs, are required to pay the priest. If the wife gave birth to <b>a male and a female</b> and it is not known which was born first, <b>the priest has nothing here,</b> as it is possible that the female was born first.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches that in a case where the father died and the sons are alive, Rabbi Meir says: If they gave the five <i>sela</i> coins to the priest before they divided their father’s property, they gave it; but if not, they are exempt from giving the redemption money. The Gemara asks: <b>When did the father die? If we say that he died after</b> the <b>thirty days</b> following the birth of his sons, does <b>Rabbi Meir say in this</b> case that <b>if they divided</b> their father’s property they are <b>exempt</b> from giving the redemption money to the priest? <b>But the property is</b> already <b>on lien</b> for the mitzva of redemption.</p>
+      <p><b>Rather,</b> it is referring to a case <b>where</b> the father <b>died within thirty days</b> of the birth of his sons, and the obligation of redemption applies to the firstborn himself, whose identity is unknown, but not to the father’s property. If so, <b>what is different</b> about a case <b>where they</b> already <b>divided</b> the property between them, that Rabbi Meir deems them exempt? The reason must be <b>that</b> the priest <b>will go to this</b> son, <b>and</b> the son <b>will reject him</b> by demanding that the priest prove he is the firstborn; and likewise <b>he will go to that</b> other son, <b>and he</b> too <b>will reject him</b> in the same manner. The Gemara challenges this explanation: The same should apply <b>even</b> in a case <b>where they did not divide</b> the property: <b>Let</b> the priest <b>go to this</b> son <b>and he will reject him, and let him go to that</b> son <b>and he</b> too <b>will reject him.</b></p>
+      <p><b>Rabbi Yirmeya says: That is to say,</b> i.e., it can be inferred from here, that in a case involving <b>two</b> people named <b>Yosef ben Shimon who were</b> residents <b>of one city, and they acquired a field in partnership, a creditor</b> of one of them <b>can collect</b> payment of his debt <b>from</b> either of <b>them,</b> despite the fact that he does not know which of them owes him the money. The reason is <b>that he can say to</b> each of them: <b>If I have a claim against you, I am taking the one hundred dinars</b> that is <b>your</b> share in the joint field, <b>and if I have a claim against the other</b> Yosef ben Shimon, <b>I am taking the one hundred dinars that</b> is his share in the field. This is similar to the case in the mishna, as the brothers who have yet to divide their father’s property are considered partners, and therefore the priest can claim his debt from that property.</p>
+      <p><b>Rava said</b> in response: <b>Now</b> consider the principle that <b>a person’s property is a guarantee for him,</b> i.e., it serves as a guarantee for the loan if the debtor does not repay it. <b>Is there any</b> case <b>where one cannot claim</b> repayment from the debtor <b>himself, and</b> yet <b>he can claim from a guarantor? But didn’t we learn</b> in a mishna (<i>Bava Batra</i> 173a): In the case of <b>one who lends</b> money <b>to another with</b> the assurance of <b>a guarantor,</b> he <b>cannot claim</b> payment of the debt <b>from the guarantor? And we maintain</b> in this regard <b>that</b> he <b>cannot claim</b> payment of the debt <b>from the guarantor at the outset,</b> before first claiming the debt from the debtor. How, then, may the priest not claim the redemption money from either brother, and yet he can take it from their property?</p>
+      <p><b>Rather, Rava says: Actually,</b> the mishna is referring to a case <b>where</b> the father <b>died after thirty days</b> following the birth of his sons and the property is already on lien for the mitzva of redemption. <b>And if</b> this is a case <b>where there is a lot of property, so too,</b> the <i>halakha</i> is <b>that</b> the priest <b>takes</b> the five <i>sela</i> coins from that property, even after the sons have divided it, as they are obligated to pay their father’s debt from their inheritance. <b>And what are we dealing with here?</b> With a case <b>where there is only</b> the <b>five <i>sela</i></b> coins received from their father. That was the entire estate.</p>
+      <p>Rava continues: <b>And everyone accepts</b> the opinion <b>of Rav Asi, as Rav Asi says:</b> In the case of <b>brothers who divided</b> property they received as an inheritance, with regard to <b>half</b> of it they are considered <b>heirs and</b> with regard to the other <b>half</b> they are considered <b>purchasers</b> from each other. <b>And</b> furthermore, <b>everyone</b> agrees that <b>a loan written in the Torah,</b> i.e., a financial obligation by Torah law, such as the redemption of the firstborn,</p>
+      <p><b>is not like</b> one <b>written in a document,</b> but like an oral loan. <b>And everyone accepts</b> the opinion <b>of Rav Pappa, as Rav Pappa says:</b> When a creditor gives <b>a loan by oral</b> agreement, he can <b>collect</b> the debt <b>from the heirs</b> of the debtor after his death <b>but he cannot collect</b> the debt <b>from the purchasers</b> of the debtor’s property. Consequently, the priest can collect the redemption money only from the half of the property with regard to which the sons are considered heirs, and since the entire property is worth only five <i>sela</i> coins he would be able to take only two and a half <i>sela</i> coins.</p>
+      <p><b>And here</b> Rabbi Meir and Rabbi Yehuda <b>disagree</b> with regard to the issue <b>of: Five, but not with half of five. As Rabbi Meir holds</b> that the Torah requires giving specifically <b>five</b> <i>sela</i> coins, <b>but not half</b> or part <b>of five;</b> therefore, the brothers are exempt from giving a priest those two and a half <i>sela</i> coins. <b>And Rabbi Yehuda maintains</b> that the Torah requires giving <b>five</b> <i>sela</i> coins, <b>and even half</b> or part <b>of five.</b> Therefore, he rules that the priest takes those two and a half <i>sela</i> coins from the property with regard to which the sons are considered heirs.</p>
+      <p>The Gemara asks: <b>If so,</b> when <b>Rabbi Yehuda says: The obligation</b> to redeem the firstborn already <b>took effect</b> on <b>the property</b> of the father, <b>he should</b> have said that <b>the obligation</b> to redeem the firstborn <b>took effect</b> on <b>the man,</b> i.e., the brothers who are obligated to pay the sum, as Rabbi Yehuda agrees that the priest forfeits the half of the obligation that applies to the property. <b>And furthermore, it is taught</b> in a <i>baraita</i> that <b>Rabbi Yehuda says:</b> In a case <b>where</b> the identity of the firstborn is unknown, and <b>the brothers divided</b> their father’s property, <b>if there are ten dinars,</b> which equals two and a half <i>sela</i> coins, <b>for this</b> brother, <b>and ten dinars for that</b> brother, <b>they are obligated</b> to pay the priest; <b>and if not, they are exempt.</b></p>
+      <p>The Gemara clarifies the difficulty by analyzing the <i>baraita</i>: <b>What</b> is the meaning of the clause: <b>Ten dinars for this</b> brother <b>and ten dinars for that</b> brother? <b>If we say</b> each has ten dinars from the father’s property, which is the total sum of <b>both</b> the half <b>of the inheritance</b> and the half <b>with regard to</b> which they are <b>purchasers</b> together, which equals two and a half <i>sela</i> coins, <b>and</b> Rabbi Yehuda says they are obligated to pay the priest because he maintains that there is a mitzva to give <b>five</b> <i>sela</i> coins <b>and even half</b> or part <b>of five,</b> this is difficult. <b>If so, why specifically</b> state that they are obligated only when there are <b>ten</b> dinars? The same <i>halakha</i> would apply <b>even</b> to <b>fewer than ten</b> dinars, as the priest is entitled to whatever is available.</p>
+      <p><b>Rather, it</b> is <b>obvious</b> that in this case there are <b>ten dinars of inheritance for this</b> brother <b>and ten dinars of inheritance for that</b> brother, which totals five <i>sela</i> coins. According to Rabbi Yehuda, it is only in this case that they are obligated to pay the priest. <b>Evidently,</b> Rabbi Yehuda <b>maintains</b> that there is a mitzva to give specifically <b>five</b> <i>sela</i> coins, <b>but not half</b> or part <b>of five,</b> which contradicts the suggested explanation of the dispute.</p>
+      <p><b>Rather,</b> the mishna is referring to a case where the father’s property is worth five <i>sela</i> coins, and <b>everyone,</b> both Rabbi Meir and Rabbi Yehuda, agree that the Torah requires giving <b>five</b> <i>sela</i> coins, <b>but not half of five. And here they disagree with regard to</b> the statements <b>of Rav Asi and Rav Pappa</b> that the portion of the inheritance includes only two and a half <i>sela</i>, which the priest is not entitled to collect. Rabbi Meir holds in accordance with their opinion, while Rabbi Yehuda disagrees and holds that all five <i>sela</i> coins are available for the redemption.</p>
+      <p>§ The Gemara notes: <b>And there are</b> those <b>who teach</b> this discussion <b>with regard to the latter clause</b> of the mishna: If one had two sons and it is unknown which is the firstborn, and the father died, Rabbi Yehuda says the <b>obligation</b> to redeem the firstborn already <b>took effect on the property</b> of the father. Therefore, even if the father’s property has been divided, the sons are required to pay the priest. The Gemara asks: <b>When did the father die? If we say that he died after thirty</b> days following the birth of his sons, should one conclude <b>by inference that Rabbi Meir maintains</b> that <b>if they divided</b> their father’s property they are <b>exempt</b> from giving the redemption payment to the priest? <b>But the property is</b> already <b>on lien</b> for the mitzva of redemption.</p>
+      <p><b>Rather,</b> it is referring to a case <b>where</b> the father <b>died within thirty</b> days of the birth of his sons and the obligation of redemption applies to the firstborn himself, though it is unknown which is the firstborn. If so, <b>why does Rabbi Yehuda obligate</b> them even <b>when</b> the brothers had already <b>divided</b> their father’s property between them? <b>Let</b> the priest <b>go to this</b> son, and <b>he will reject him,</b> by claiming that he is not the firstborn, <b>and</b> let him go <b>to that</b> son <b>and he</b> too <b>will reject him</b> on the same grounds.</p>
+      <p><b>Rabbi Yirmeya says: That is to say:</b> In a case involving <b>two</b> people named <b>Yosef ben Shimon, who were</b> residents <b>of one city, and one of them purchased a field from the other,</b> an earlier <b>creditor can collect</b> payment of his debt <b>from</b> that field. This is <b>because he can say</b> to the buyer: <b>If you are indebted to me I am taking the one hundred dinars</b> that is <b>your</b> share in the field, <b>and if the other</b> Yosef ben Shimon is <b>indebted to me,</b> then this field <b>was on lien to me before you</b> acquired it.</p>
+      <p><b>Rava said: Now</b> consider, <b>a person’s property is a guarantee for him,</b> so why can the creditor not claim his debt from the debtor himself but can claim it from the guarantor, i.e., his property? The Gemara comments: <b>And</b> from here onward, <b>all</b> the rest of the discussion is the same <b>as</b> in <b>the first version</b> of the passage, as cited earlier.</p>
+      <p><strong>MISHNA:</strong> With regard to <b>two wives</b> of one man, both of <b>whom had not</b> previously <b>given birth, and they gave birth</b> to <b>two males,</b> i.e., each bore one male, and the sons were intermingled, the father <b>gives ten <i>sela</i></b> coins <b>to the priest</b> even if it is unknown which son was born first, because it is certain that each is firstborn of his mother. In a case where <b>one of them dies within thirty days</b> of birth, <b>if he gave</b> all ten <i>sela</i> coins <b>to one priest,</b> the priest <b>must return five <i>sela</i> to him,</b> because the father was not obligated to redeem the son who then died. <b>And if he gave</b> the redemption payment <b>to two</b> different <b>priests, he cannot reclaim</b> the money <b>from the possession</b> of either priest, as each could claim that the money that he received was for the living child.</p>
+      <p>If one mother gave birth to <b>a male and</b> one gave birth to <b>a female,</b> or if between them they gave birth to <b>two males and</b> one <b>female,</b> and the children were intermingled, the father <b>gives five <i>sela</i></b> coins <b>to the priest:</b> In the first case because the male might have preceded the female and in the second case because one of the males is certainly firstborn. If the children were <b>two females and a male, or two males and two females, the priest has nothing here,</b> as it is possible the female was born first to each mother.</p>
+      <p>If <b>one</b> of his wives <b>had</b> previously <b>given birth and one had not</b> previously <b>given birth and</b> they <b>gave birth</b> to <b>two males</b> who became intermingled, the father <b>gives five <i>sela</i></b> coins <b>to the priest,</b> as it is certain that one of them was born to the mother who had not yet given birth. If <b>one of them dies within thirty days</b> of birth <b>the father is exempt</b> from that payment, as it is possible that the one who died was born to the mother who had not yet given birth.</p>
+      <p>In a case of intermingling where <b>the father died and the sons are alive, Rabbi Meir says: If they gave</b> the five <i>sela</i> coins to the priest <b>before they divided</b> their father’s property between them, <b>they gave</b> it, and it remains in the possession of the priest. <b>But if not,</b> they are <b>exempt</b> from giving the redemption payment to the priest. <b>Rabbi Yehuda says:</b> The <b>obligation</b> to redeem the firstborn already <b>took effect</b> on <b>the property</b> of the father. If the wives gave birth to <b>a male and a female the priest has nothing here,</b> as perhaps the female was born to the mother who had not yet given birth.</p>
+      <p>With regard to <b>two women who had not</b> previously <b>given birth,</b> who were married <b>to two</b> different <b>men, and they gave birth</b> to <b>two males</b> and the sons were intermingled, <b>this</b> father <b>gives five <i>sela</i></b> coins <b>to a priest and that</b> father <b>gives five <i>sela</i></b> coins to a priest, as each is certainly firstborn to his mother. In a case where <b>one of them dies within thirty</b> days of birth, <b>if</b> the fathers <b>gave</b> all ten <i>sela</i> coins <b>to one priest,</b> the priest <b>must return five <i>sela</i></b> coins <b>to them. But if they gave</b> the redemption payment <b>to two</b> different <b>priests they cannot reclaim</b> the money <b>from the possession of</b> either priest, as each could claim that the money that he received was for the living child.</p>
+      <p>If the women gave birth to <b>a male and a female</b> and the children became intermingled, <b>the fathers are exempt,</b> as each could claim that he is the father of the female, <b>but the son is obligated to redeem himself,</b> as he is certainly a firstborn. If <b>two females and a male</b> were born, <b>or two females and two males, the priest has nothing here,</b> as it is possible the female was born first to each mother.</p>
+      <p>If <b>one</b> woman <b>had</b> previously <b>given birth and one had not</b> previously <b>given birth,</b> and they were married <b>to two men and they gave birth to two males,</b> who then became intermingled, <b>this</b> one <b>whose wife had not</b> previously <b>given birth gives five <i>sela</i></b> coins <b>to the priest.</b> If the women gave birth to <b>a male and a female the priest has nothing here,</b> as it is possible the female was born to the mother who had not yet given birth.</p>
+      <p><strong>GEMARA:</strong> The mishna teaches with regard to two wives of two husbands whose firstborns were intermingled, that if the fathers gave their redemption money to two different priests and one of the firstborns died, they cannot reclaim the money from the possession of either priest. The Gemara asks: <b>What is different</b> about a case where the fathers gave the redemption money to <b>two</b> different <b>priests,</b> and one of the firstborns subsequently died, that they cannot reclaim the money? The reason is <b>that</b> one father <b>will go to this</b> priest <b>and he will reject him,</b> by claiming that he took the redemption money for the surviving firstborn, <b>and</b> likewise <b>he will go to that</b> other priest <b>and he</b> too <b>will reject him</b> in the same manner.</p>
+      <p>The same is <b>also</b> true in a case where they gave their redemption money to <b>one priest: This</b> father <b>will go to</b> the priest <b>and</b> the priest <b>will reject him,</b> by claiming that his son is still alive, <b>and that</b> father <b>will go to</b> the priest <b>and he will reject him</b> too, on the same grounds. <b>Shmuel says:</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 48 contient les michnayot 8:3 et 8:4 et leur Guemara. Deux sujets : <b>les héritiers du père décédé</b> (Rabbi Meïr et Rabbi Yehouda) et <b>les nouveau-nés confondus</b>.</p>
+<h4>1. Le père mort avant ou après trente jours</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Conséquence</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Père mort avant trente jours</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'obligation pèse sur le premier-né inconnu ; chaque fils repousse le <i>cohen</i></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Père mort après trente jours</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Biens déjà grevés ; le <i>cohen</i> peut prélever après partage s'il y a de la valeur</td></tr>
+</table>
+<h4>2. Héritiers et acheteurs</h4>
+<p>Selon Rav Assi, des frères qui ont partagé sont pour moitié héritiers et pour moitié acheteurs l'un de l'autre. Selon Rav Papa, un prêt oral se prélève chez les héritiers mais pas chez les acheteurs. Le <i>cohen</i> ne peut donc prélever que sur la moitié « héritage », soit deux <i>sela'im</i> et demi.</p>
+<h4>3. « Cinq mais non la moitié de cinq »</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Maître</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Position</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Meïr</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La Torah exige cinq, pas la moitié : les frères sont exempts des deux et demi</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yehouda</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Même la moitié de cinq est due : le <i>cohen</i> prélève deux et demi</td></tr>
+</table>
+<h4>4. Nouveau-nés confondus</h4>
+<p>Quand les pères ont donné à deux <i>cohanim</i>, on ne peut rien réclamer ; même avec un seul <i>cohen</i>, chaque père est repoussé : « ton fils est vivant ».</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « le père est exempt » : il peut dire que l'aîné est mort ; sur « ils sont obligés » : les biens du père sont dus au <i>cohen</i> comme dette. Sur « et il le repousse » : le fils dit « je ne suis pas l'aîné, c'est mon frère ». Sur « deux Yossef ben Chimon » : un créancier a un titre de dette sur l'un d'eux, et chacun prétend que c'est l'autre. Sur « moitié héritiers, moitié acheteurs » : Rav Assi hésite entre « il y a un choix rétroactif (<i>brera</i>) » et « il n'y en a pas ». Sur « dette écrite dans la Torah » : comme le rachat du premier-né, que la Torah a attribué au <i>cohen</i>. Sur « il a dit : deux <i>cohanim</i> » : chacun dit qu'il détient pour le vivant, et « celui qui réclame à son prochain a la charge de la preuve ».</p>
+<p><b>Tossafot</b> sur « leurs biens sont grevés » : la Guemara suppose d'abord que les frères sont héritiers et que le prêt oral se prélève chez les héritiers ; en conclusion, elle admet la thèse de Rav Assi ; sur « tous ont l'avis de Rav Assi » : les Tossafot s'étonnent car Rabbi Meïr n'admet pas la rétroactivité du choix (<i>brera</i>) dans d'autres cas (Bava Kama, Gitin) ; sur « dette de la Torah » : comme le rachat du fils, les évaluations (<i>arakhin</i>) ou les dommages ; sur « cinq et non la moitié de cinq » : ce n'est pas comme les cinq bovins du voleur, où l'on doit payer chaque fraction, car ici la mitsva est de donner cinq <i>sela'im</i> ; sur « s'il a donné à deux <i>cohanim</i> » : les Tossafot se demandent pourquoi, s'il n'est pas tenu au début, on ne peut pas reprendre ce qu'il a donné.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Pour les cas de doute sur l'aîné (jumeaux, naissances confondues), voir <a href="../choulhan-aroukh/yd_305.html">Yoré Dé'a 305</a>. Pour les héritiers et la dette, voir 'Hochen Michpat 107 et 277. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.48" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>

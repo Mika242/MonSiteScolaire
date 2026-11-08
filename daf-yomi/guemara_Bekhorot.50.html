@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 50 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 50</h1>
+    <p>Daf 50</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>רַבִּי יוֹחָנָן אוֹמֵר: דִּינָרָא הַדְרִיָּינָא טִרְיָינָא שְׁיָיפָא דִּמְזַבְּנָא בְּעֶשְׂרִים וְחַמְשָׁה זוּזֵי, דַּל מִינַּיְיהוּ שְׁתוּתָא וְהָנָךְ לְפִדְיוֹן הַבֵּן. הָנֵי עֶשְׂרִין וְחַד נְכֵי דַּנְקָא הָוֵי!</p>
+      <p>אֶלָּא, דַּל שְׁתוּתָא וְזוּזָא, וְהָנָךְ לְפִדְיוֹן הַבֵּן. אַכַּתִּי עֶשְׂרִין נְכֵי דַּנְקָא הָוֵי! אֶלָּא, דַּל זוּזָא וּשְׁתוּתָא, וְהָנָךְ לְפִדְיוֹן הַבֵּן, דְּהָוֵי לְהוּ עֶשְׂרִין מַתְקָלֵי בְּמַתְקָלֵי דִּינָרָא, דְּאִינּוּן עֶשְׂרִין וּתְמָנְיָא זוּזֵי וּפַלְגֵי וּפַלְגָא דַּנְקָא.</p>
+      <p>אָמַר רָבָא: סִילְעִים דְּאוֹרָיְיתָא תְּלָתָא וְתִילְתָּא הָוֵי, דִּכְתִיב: ״עֶשְׂרִים גֵּרָה הַשֶּׁקֶל״, וּמְתַרְגְּמִינַן: ״עֶשְׂרִין מָעִין״, וְתַנְיָא: שֵׁשׁ מָעָה כֶּסֶף דִּינָר.</p>
+      <p>מֵיתִיבִי: וַהֲלֹא סֶלַע שֶׁל קֹדֶשׁ אַרְבָּעִים וּשְׁמֹנֶה פּוּנְדְּיוֹנִין.</p>
+      <p>פּוּנְדְּיוֹן זֶה מָה טִיבוֹ? קִילְבּוֹן לַפְּרוֹטְרוֹט!</p>
+      <p>בָּתַר דְּאוֹסִיפוּ עִילָּוַיְיהוּ, דְּתַנְיָא: ״עֶשְׂרִים גֵּרָה הַשֶּׁקֶל״ — לָמַדְנוּ לַשֶּׁקֶל שֶׁהוּא עֶשְׂרִים גֵּרָה, וּמִנַּיִן שֶׁאִם רָצָה לְהוֹסִיף יוֹסִיף? תַּלְמוּד לוֹמַר: ״יִהְיֶה״, יָכוֹל יִפְחוֹת? תַּלְמוּד לוֹמַר: ״הוּא״.</p>
+      <p>רַב אָשֵׁי שַׁדַּר לֵיהּ שִׁבְסַר זוּזֵי לְרַב אַחָא בְּרֵיהּ דְּרָבִינָא בְּפִדְיוֹן הַבֵּן, שְׁלַח לֵיהּ: לִישַׁדַּר לִי מָר תִּלְתָּא יַתִּירְתָּא דְּאִיכָּא עִלָּוַיְיהוּ. שְׁלַח לֵיהּ: לְשַׁדַּר לִי מָר תְּלָתָא אַחֲרִינָא דְּאוֹסִיפוּ עִילָּוַיְיהוּ!</p>
+      <p>אָמַר רַבִּי חֲנִינָא: כׇּל כֶּסֶף הָאָמוּר בַּתּוֹרָה סְתָם — סֶלַע, דִּנְבִיאִים — לִיטְרִין, דִּכְתוּבִין — קִינְטְרִין, חוּץ מִן כַּסְפּוֹ שֶׁל עֶפְרוֹן, שֶׁאַף עַל פִּי שֶׁכָּתוּב בַּתּוֹרָה סְתָם — קִינְטָרִין, דִּכְתִיב ״אַרְבַּע מֵאוֹת שֶׁקֶל כֶּסֶף עוֹבֵר לַסֹּחֵר״, וְאִיכָּא דּוּכְתָּא דְּקָא קָרוּ לְקִינְטָרָא ״תִּיקְלָא״.</p>
+      <p>אָמַר רַבִּי אוֹשַׁעְיָא: בִּיקְּשׁוּ לִגְנוֹז כׇּל כֶּסֶף וְזָהָב שֶׁבָּעוֹלָם מִפְּנֵי כַּסְפָּהּ וּזְהָבָהּ שֶׁל יְרוּשָׁלַיִם, עַד שֶׁמָּצְאוּ לוֹ מִקְרָא מִן הַתּוֹרָה שֶׁהוּא מוּתָּר, שֶׁנֶּאֱמַר: ״וּבָאוּ בָהּ פָּרִיצִים וְחִלְּלוּהָ״.</p>
+      <p>וִירוּשָׁלַיִם הָוְיָא רוּבָּא דְּעָלְמָא? אֶלָּא אָמַר אַבָּיֵי: בִּקְּשׁוּ לִגְנוֹז דִּינָרָא הַדְרִיָּינָא טִירְיָיאנָא שְׁיָיאפָא, מִפְּנֵי טִבְעָהּ שֶׁל יְרוּשָׁלַיִם, עַד שֶׁמָּצְאוּ לָהּ מִקְרָא מִן הַתּוֹרָה שֶׁהוּא מוּתָּר, שֶׁנֶּאֱמַר: ״וּבָאוּ בָהּ פָּרִיצִים וְחִלְּלוּהָ״.</p>
+      <p>רַב יְהוּדָה אָמַר רַב אַסִּי: כׇּל ״כֶּסֶף״ הָאָמוּר בַּתּוֹרָה סְתָם — כֶּסֶף צוֹרִי, וְשֶׁל דִּבְרֵיהֶם — כֶּסֶף מְדִינָה.</p>
+      <p>וּכְלָלָא הוּא? וַהֲרֵי טַעֲנָה, דִּכְתִיב: ״כִּי יִתֵּן אִישׁ אֶל רֵעֵהוּ כֶּסֶף אוֹ כֵלִים לִשְׁמוֹר״,</p>
+      <p>וּתְנַן: שְׁבוּעַת הַדַּיָּינִין — הַטַּעֲנָה שְׁתֵּי כֶסֶף!</p>
+      <p>שָׁאנֵי הָתָם, דִּכְתִיב: ״כֶּסֶף אוֹ כֵלִים״, מָה כֵּלִים שְׁנַיִם — אַף כֶּסֶף שְׁנַיִם, וּמָה כֶּסֶף דָּבָר חָשׁוּב — אַף כֵּלִים דָּבָר חָשׁוּב.</p>
+      <p>וַהֲרֵי מַעֲשֵׂר, דִּכְתִיב: ״וְצַרְתָּ הַכֶּסֶף בְּיָדְךָ״, וּתְנַן: הַפּוֹרֵט סֶלַע בִּמְעוֹת מַעֲשֵׂר שֵׁנִי! ״כֶּסֶף״ ״כֶּסֶף״ רִיבָּה.</p>
+      <p>וַהֲרֵי הֶקְדֵּשׁ, דִּכְתִיב ״וְנָתַן הַכֶּסֶף וְקָם לוֹ״, וְאָמַר שְׁמוּאֵל: הֶקְדֵּשׁ שָׁוֶה מָנֶה שֶׁחִילְּלוֹ עַל שָׁוֶה פְּרוּטָה מְחוּלָּל! הֶקְדֵּשׁ נָמֵי יָלֵיף ״קֹדֶשׁ״ ״קֹדֶשׁ״ מִמַּעֲשֵׂר.</p>
+      <p>וַהֲרֵי קִידּוּשֵׁי אִשָּׁה, דִּכְתִיב: ״וְיָצְאָה חִנָּם אֵין כָּסֶף״, וּתְנַן: בֵּית שַׁמַּאי אוֹמְרִים: בְּדִינָר וּבְשָׁוֶה דִּינָר, וּבֵית הִלֵּל אוֹמְרִים: בִּפְרוּטָה וּבְשָׁוֶה פְּרוּטָה, לֵימָא רַב אַסִּי דְּאָמַר כְּבֵית שַׁמַּאי?</p>
+      <p>אֶלָּא, אִי אִיתְּמַר הָכִי אִיתְּמַר, אָמַר רַב יְהוּדָה אָמַר רַב אַסִּי: כׇּל כֶּסֶף קָצוּב הָאָמוּר בַּתּוֹרָה — כֶּסֶף צוֹרִי, וְשֶׁל דִּבְרֵיהֶם — כֶּסֶף מְדִינָה.</p>
+      <p>מַאי קָמַשְׁמַע לַן? תְּנֵינָא: חָמֵשׁ סְלָעִים שֶׁל בֵּן וְכוּ׳!</p>
+      <p>וְשֶׁל דִּבְרֵיהֶם כֶּסֶף מְדִינָה אִיצְטְרִיכָא לֵיהּ, דִּתְנַן: הַתּוֹקֵעַ לַחֲבֵירוֹ נוֹתֵן לוֹ סֶלַע, וְלָא תֵּימָא סֶלַע אַרְבַּע זוּזֵי, אֶלָּא פַּלְגָא דְּזוּזָא, דְּקָרוּ אִינָשֵׁי ״סֶלַע״ פַּלְגָא דְּזוּזָא.</p>
+      <p>חָנָן בִּישָׁא תְּקַע לֵיהּ לְהָהוּא גַּבְרָא, אֲתָא לְקַמֵּיהּ דְּרַב הוּנָא, אֲמַר לֵיהּ: הַב לֵיהּ פַּלְגָא דְּזוּזָא. הֲוָה אִיכָּא</p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Les dinars d'Hadrien et de Trajan.</b> Rabbi Yo'hanan : pour savoir combien donner pour le rachat du fils, prends les dinars d'or usés d'Hadrien et de Trajan, qui se vendent vingt-cinq (dinars d'argent), et retranches-en un sixième. Objection : il ne reste pas vingt dinars mais vingt et un moins un <i>danka</i> (un sixième de dinar). Autre calcul : ôte un sixième et un dinar ; mais il reste vingt moins un sixième. Finalement : ôte d'abord un dinar, puis un sixième des vingt-quatre restants : il reste vingt dinars, soit cinq <i>sela'im</i> (quatre dinars par <i>sela</i>). Ce sont vingt <i>matkalei</i> de petits dinars d'or, soit vingt-huit dinars arabes et demi, plus un demi-sixième.</p>
+      <p><b>Le <i>sela</i> de la Torah.</b> Rava : le <i>sela</i> de la Torah vaut trois dinars un tiers, non quatre : « le sicle vaut vingt <i>guéra</i> » (Exode 30:13) = vingt <i>ma'a</i> ; et une baraïta dit que six <i>ma'a</i> d'argent font un dinar : vingt <i>ma'a</i> = trois dinars un tiers. Objection : celui qui rachète un champ ancestral donne « un <i>sela</i> et un <i>pondyon</i> » par an (cinquante <i>sela'im</i> pour cinquante ans ; les Sages ajoutent un <i>pondyon</i> par an) ; or le <i>sela</i> du sanctuaire vaut quarante-huit <i>pondyon</i>, c'est-à-dire vingt-quatre <i>ma'a</i>. Réponse : c'est après que les Sages ont ajouté un sixième au <i>sela</i> (quatre <i>ma'a</i>). Une baraïta : « vingt <i>guéra</i> sera le sicle » (Lévitique 27:25) : le mot « sera » autorise à ajouter, mais « le même » (Nombres 18:16) interdit de réduire.</p>
+      <p><b>Rav Ashi et Rav Aha.</b> Rav Ashi envoya dix-sept dinars à Rav Aha, fils de Ravina, <i>cohen</i>, pour le rachat de son fils, en demandant le tiers de dinar en trop (cinq <i>sela'im</i> de la Torah valent seize dinars deux tiers). Rav Aha répondit : envoie-moi trois dinars de plus, car depuis que les Sages ont ajouté, cinq <i>sela'im</i> valent vingt dinars.</p>
+      <p><b>Les sicles non précisés.</b> Rabbi 'Hanina : tout « sicle d'argent » de la Torah non précisé est un <i>sela</i> ; dans les Prophètes, une <i>litra</i> (vingt-cinq <i>sela'im</i>) ; dans les Hagiographes, un <i>kintar</i> (cent <i>sela'im</i>) ; sauf l'argent d'Éphron (« quatre cents sicles d'argent, de cours chez le marchand », Genèse 23:16), où il s'agit de <i>kintarin</i>.</p>
+      <p><b>Les dinars usés d'Hadrien et de Trajan.</b> Rabbi Oshaya : les Sages voulaient mettre sous séquestre tout l'argent et l'or du monde à cause de ceux de Jérusalem (du trésor du Temple, pris par des non-juifs et mélangés), jusqu'à ce qu'ils trouvent « des brigands y entreront et la profaneront » (Ézéchiel 7:22). Mais Jérusalem est-elle la majorité du monde ? Abayé : ils voulaient séquestrer les dinars d'Hadrien et de Trajan, qui contenaient beaucoup de l'or et de l'argent de Jérusalem, jusqu'à trouver ce verset.</p>
+      <p><b>Argent « de Tyr » ou « de province ».</b> Rav Yehouda au nom de Rav Assi : toute somme d'argent de la Torah non précisée en sicles est en dinars d'argent de Tyr ; toute somme dans les paroles des Sages est en monnaie de province (un huitième). Objection : la Torah dit « argent » pour le dépôt nié en partie, qui entraîne le serment des juges ; la michna (Chevouot 38b) exige deux <i>ma'a</i> d'argent. Réponse : cela vient d'un rapprochement avec « vases » : comme « vases » indique au moins deux, « argent » indique au moins deux pièces ; et comme l'argent est une chose importante, les vases le sont aussi.</p>
+      <p><b>Autres objections.</b> Le second dîme : « tu lieras l'argent dans ta main » (Deutéronome 14:25), alors qu'on peut échanger des cuivres contre un <i>sela</i> : la répétition « argent, argent » est une extension à toute monnaie. Les biens consacrés : « il donnera l'argent » ; Chmouel : même avec une <i>peruta</i> : un rapprochement par « saint ». Le mariage : « sans argent » (Exode 21:11) alors que Beit Hillel mariait par une <i>peruta</i> : serait-ce selon Beit Chammaï ? On reformule : Rav Assi parle de toute somme fixée (cinquante pour le violeur) dans la Torah = Tyr ; toute somme fixée par les Sages = province. La michna disait déjà les sommes de la Torah ; Rav Assi vient enseigner celles des Sages : « celui qui frappe son prochain donne un <i>sela</i> » (Bava Kama 90a) : c'est un <i>sela</i> de province, demi-dinar.</p>
+      <p><b>'Hanan le méchant.</b> 'Hanan le méchant frappa quelqu'un ; Rav Houna lui dit : « Va lui donner un demi-dinar. » 'Hanan avait… (le récit se poursuit au daf 51).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>Rabbi Yoḥanan says:</b> If one wishes to know how much to give for the redemption of the firstborn son, take <b>the worn-out</b> gold <b>dinars of Hadrian</b> and <b>Trajan, which are sold at twenty-five dinars,</b> and <b>deduct from them one-sixth. And these</b> that remain are the five <i>sela</i> that one must give <b>for the redemption of the</b> firstborn <b>son,</b> i.e., twenty dinars, as there are four dinars in a <i>sela</i>. The Gemara challenges: After deducting one- sixth from twenty-five, one <b>is</b> not left with twenty dinars, but <b>twenty-one</b> dinars <b>less one-sixth [<i>danka</i>]</b> of a dinar.</p>
+      <p><b>Rather, deduct one-sixth and</b> another <b>dinar, and these</b> that are left are <b>for the redemption of the</b> firstborn <b>son.</b> The Gemara challenges: But the calculation is <b>still</b> inexact, as this sum is <b>twenty</b> dinars <b>less one-sixth</b> of a dinar. <b>Rather,</b> first <b>deduct</b> one <b>dinar, and</b> from the remainder, i.e., twenty-four dinars, deduct <b>one-sixth, and these</b> that are left are the five <i>sela</i> coins that one must give <b>for the redemption of the son.</b> The Gemara notes <b>that these are</b> a weight of <b>twenty <i>matkalei</i> of</b> the small golden <b>dinars</b> known as <b><i>matkalei</i>, which are</b> worth <b>twenty-eight and a half dinars, and half of a sixth</b> of a dinar, in Arabian silver dinars.</p>
+      <p>§ <b>Rava says: The biblical <i>sela</i></b> coins, i.e., the shekels that must be given for the redemption of the firstborn son, <b>are</b> each <b>three and one-third</b> dinars in weight, not four dinars. <b>As it is written: “The shekel is twenty <i>gera</i>”</b> (Exodus 30:13), <b>and we translate</b> “twenty <i>gera</i>” as <b>twenty <i>ma’a</i>. And it is taught</b> in a <i>baraita</i>: <b>Six silver <i>ma’a</i></b> equal <b>a dinar.</b> If so, twenty <i>ma’a</i>, which is equal to the <i>sela</i> of the Torah, is worth three and one-third dinars.</p>
+      <p>The Gemara <b>raises an objection</b> from a <i>baraita</i>, which discusses the <i>halakha</i> of one who redeems an ancestral field from the Temple treasury. The Torah states that one who consecrates his field in the Jubilee year gives as its redemption, for each of the upcoming forty-nine years, fifty <i>sela</i> for each area fit for the sowing of a <i>kor</i> of barley seed. In this regard, the Sages have said that one gives a <i>sela</i> and a <i>pundeyon</i>, which is half a <i>ma’a</i>, per year. The <i>baraita</i> notes a discrepancy here: <b>But</b> in <b>the <i>sela</i></b> coins <b>of the Sanctuary</b> there are <b>forty-eight <i>pundeyon</i>,</b> which means that according to the statement of the Sages, the redemption for forty-nine years amounts to forty-nine <i>sela</i> and forty-nine <i>pundeyon</i>, i.e., fifty <i>sela</i> and a <i>pundeyon</i>, one <i>pundeyon</i> more than the sum required by the Torah.</p>
+      <p>The <i>baraita</i> explains: <b>This <i>pundeyon</i>, what is its function?</b> It is <b>a premium [<i>kilbon</i>] for exchanging</b> the <i>sela</i> into <i>pundeyon</i>. In any case, this <i>baraita</i> teaches that there are forty-eight <i>pundeyon</i> in the <i>sela</i> of the Torah, which is twenty-four <i>ma’a</i>. This contradicts the statement of Rava, who said that the <i>sela</i> of the Torah is worth only twenty <i>ma’a</i>.</p>
+      <p>The Gemara answers that the <i>baraita</i> is referring to the period <b>after</b> the Sages <b>added</b> one-sixth <b>to</b> the coins, i.e., four <i>ma’a</i> to each <i>sela</i>. <b>As it is taught</b> in a <i>baraita</i>, with regard to the verse: <b>“Twenty <i>gera</i></b> shall be <b>the shekel”</b> (Leviticus 27:25): <b>We learn</b> from here <b>with regard to the shekel</b> mentioned in the Torah <b>that it is twenty <i>gera</i>. And from where</b> is it derived <b>that if one wants to add</b> to the number of <i>ma’a</i> in the shekel <b>he may add? The verse states:</b> “Twenty <i>gera</i> <b>shall be</b> the shekel,” whereby the term “shall be” denotes an increase. One <b>might</b> have thought that one <b>may reduce</b> the number of <i>ma’a</i> in the shekel to fewer than twenty. Therefore, <b>the verse states: “The same</b> is twenty <i>gera</i>” (Numbers 18:16), i.e., it may not be fewer than that.</p>
+      <p>The Gemara relates that <b>Rav Ashi sent seventeen dinars to Rav Aḥa, son of Ravina,</b> a priest, <b>for the redemption of the</b> firstborn <b>son.</b> Along with the money, Rav Ashi <b>sent him</b> the following message: <b>Let the Master send me</b> back <b>the extra one-third</b> of a dinar <b>that is</b> included <b>in</b> the sum. Since according to Rava the <i>sela</i> of the Torah is worth three and one-third dinars, five <i>sela</i> amount to sixteen dinars and two-thirds, which is one-third less than the seventeen dinars he sent. Rav Aḥa <b>sent him</b> in response: <b>Let the Master send me the other three</b> dinars <b>that</b> the Sages <b>added to them,</b> since after the Sages added to the <i>sela</i> of the Torah, five <i>sela</i> are equal to twenty dinars, three more than the seventeen Rav Ashi sent.</p>
+      <p>§ The Gemara continues to discuss the value of coins. <b>Rabbi Ḥanina says: Any silver</b> shekel <b>that is stated in the Torah</b> but which is <b>unspecified</b> is referring to one <b><i>sela</i>.</b> Additionally, any unspecified silver shekel mentioned <b>in the Prophets</b> is a silver <b><i>litra</i>,</b> weighing twenty-five <i>sela</i>, and any unspecified silver shekel mentioned <b>in the Writings</b> is in <b>centenaria [<i>kintarin</i>],</b> silver weighing one hundred <i>sela</i>. This is the case throughout the Bible <b>except for the silver of Ephron, where even though it is written in the Torah:</b> “Shekels of silver,” <b>without specification,</b> it is in <b>centenaria, as it is written: “Four hundred shekels of silver, current money with the merchant”</b> (Genesis 23:16). This means that the silver was acceptable as shekels everywhere, <b>and there is a place where they call a centenarius a shekel.</b></p>
+      <p>With regard to the worn-out dinars of Hadrian and Trajan mentioned earlier, <b>Rabbi Oshaya says:</b> The Sages <b>wished to sequester all the silver and gold in the world because of the silver and gold of Jerusalem,</b> i.e., that which was kept in the Temple treasury and was appropriated by gentiles and mixed with other silver and gold. They did not permit its use <b>until they found a verse in the Torah</b> indicating <b>that it is permitted, as it is stated: “And robbers shall enter into it, and profane it”</b> (Ezekiel 7:22). This verse teaches that once robbers plundered the silver and gold it is profaned and does not retain its sanctity.</p>
+      <p>The Gemara asks: <b>And is Jerusalem the majority of the world</b> such that that all of the silver and gold of the world should be prohibited due to a concern that it comes from Jerusalem? <b>Rather, Abaye said:</b> The Sages <b>wished to sequester all the worn-out dinars of Hadrian and Trajan because of the coins of Jerusalem,</b> as these coins contained a large quantity of the Temple treasury’s gold and silver, <b>until they found a verse in the Torah</b> indicating <b>that it is permitted, as it is stated: “And robbers shall enter into it, and profane it.”</b></p>
+      <p>§ <b>Rav Yehuda</b> says that <b>Rav Asi says: Every</b> sum of <b>money stated in the Torah without specifying</b> that it is in shekels is referring to silver dinars of <b>Tyrian coinage,</b> which have a high value. <b>And</b> every mention of coins in <b>statements of</b> the Sages is referring to <b>provincial coinage,</b> which was worth roughly one-eighth of Tyrian coinage.</p>
+      <p>The Gemara challenges: <b>And is</b> it an established <b>principle</b> that all money mentioned in the Torah is a silver dinar of Tyrian coinage? <b>But there is</b> the case of one who admits to part of <b>a claim that</b> he has not returned a deposit or loan, where <b>it is written: “If a man deliver to his neighbor money or vessels to guard</b> and it is stolen out of the man’s house…the cause of both parties shall come before the judges” (Exodus 22:6–8). This teaches that the case is brought to a court, where the defendant must take an oath.</p>
+      <p><b>And we learned</b> in a mishna with regard to one who admits to part of a claim (<i>Shevuot</i> 38b): <b>The oath</b> administered <b>by the judges</b> to one who admits to part of a claim is administered only when <b>the claim</b> is for at least <b>two silver</b> <i>ma’a</i>, and the defendant’s admission is to at least the value of one <i>peruta</i>. If every sum of money mentioned in the Torah is referring to Tyrian coinage, how did the Sages arrive at the amount of two <i>ma’a</i> in this case?</p>
+      <p>The Gemara explains: <b>There,</b> the <i>halakha</i> is derived from a juxtaposition, as the “money” mentioned in the verse is <b>similar to “vessels”: Just as</b> the word <b>“vessels”</b> indicates at least <b>two, so too, “money”</b> is referring to at least <b>two</b> coins. <b>And just as money is a significant item,</b> i.e., silver <i>ma’a</i>, <b>so too,</b> the <b>vessels</b> must be <b>a significant item.</b> Rav Asi, by contrast, is referring to a mention of money where there is no juxtaposition.</p>
+      <p>The Gemara challenges: <b>But there is</b> the case of the redemption of second <b>tithe, as it is written: “And bind up the money in your hand”</b> (Deuteronomy 14:25). <b>And</b> yet <b>we learned</b> in a mishna (<i>Ma’aser Sheni</i> 2:8): With regard to <b>one who exchanges</b> copper coins <b>of second-tithe money</b> for <b>a <i>sela</i>,</b> Beit Shammai say: He may exchange the copper coins for the entire silver <i>sela</i>. This mishna indicates that second-tithe money, mentioned in the Torah, can be in the form of copper coins, and is not required to be in the form of silver coins. The Gemara explains that the verse states: <b>“Money,” “money,”</b> using the term more than once. This <b>serves as an amplification.</b> In other words, this addition teaches that second-tithe money can be in any coinage, including copper coins.</p>
+      <p>The Gemara challenges: <b>But</b> there is the case of <b>consecrated</b> property, <b>as it is written: “And he will give the money and it will be assured to him”</b> (see Leviticus 27:19). <b>And Shmuel says:</b> With regard to <b>consecrated</b> property <b>worth one hundred dinars, which was redeemed for</b> an item <b>worth one <i>peruta</i>, it is redeemed.</b> Although the word “money” is stated in the Torah, a copper <i>peruta</i> may be used. The Gemara answers: <b>There too,</b> there is a reason for this unusual <i>halakha</i>, as <b>he derives</b> this ruling from a verbal analogy using the term <b>“holy”</b> mentioned here and <b>“holy” from</b> second <b>tithe</b> (see Leviticus 27:14, 30). Consequently, one may use any type of coin in this case as well.</p>
+      <p>The Gemara challenges: <b>But</b> there is the case of <b>the betrothal of a woman, as it is written: “Then shall she go out for nothing, without money”</b> (Exodus 21:11). <b>And</b> yet <b>we learned</b> in a mishna (<i>Kiddushin</i> 2a) that <b>Beit Shammai say that</b> one can betroth her <b>with one dinar or with</b> an item that is <b>worth one dinar, and Beit Hillel say</b> one can betroth a woman <b>with one <i>peruta</i> or with</b> any item that is <b>worth one <i>peruta</i>.</b> If so, <b>shall we say</b> that <b>Rav Asi,</b> who claims that all sums of money mentioned in the Torah are in Tyrian coinage, <b>stated</b> his opinion <b>in accordance with</b> the opinion of <b>Beit Shammai,</b> even though the <i>halakha</i> is in accordance with the opinion of Beit Hillel?</p>
+      <p>The Gemara suggests an alternative explanation: <b>Rather, if</b> this <b>was stated,</b> it <b>was stated like this: Rav Yehuda says</b> that <b>Rav Asi says: Every set</b> amount of <b>money stated in the Torah,</b> i.e., when a specific amount is mentioned, such as the fifty shekels paid by a rapist (Deuteronomy 22:29), is referring to <b>Tyrian coinage, and</b> any amount of money set <b>by rabbinic law</b> is in <b>provincial coinage.</b></p>
+      <p>The Gemara asks: If so, <b>what is</b> Rav Asi <b>teaching us? We</b> already <b>learn</b> all of these <i>halakhot</i> explicitly in the mishna: The payment of <b>five <i>sela</i> for</b> the redemption of a firstborn <b>son,</b> the thirty for a Canaanite slave killed by an ox, the fifty of a rapist and of a seducer, and the one hundred of the slanderer are all paid in the shekel of the Sanctuary, which is determined based on Tyrian coinage.</p>
+      <p>The Gemara answers: <b>It was necessary for</b> Rav Asi to clarify that payments mentioned in <b>statements of</b> the Sages are referring to <b>provincial coinage,</b> as that <i>halakha</i> was not taught in the mishna. <b>As we learned</b> in a mishna (<i>Bava Kamma</i> 90a): The Sages established that <b>one who strikes another</b> as an act of disrespect <b>must give him a <i>sela</i></b> as a fine for striking him. <b>And</b> Rav Asi teaches: <b>Do not say</b> that this <b><i>sela</i></b> is a Tyrian <i>sela</i> worth <b>four dinars. Rather,</b> it is the <i>sela</i> of provincial coinage, which is worth <b>one-half a dinar, as people</b> commonly <b>call a one-half dinar</b> by the name <b><i>sela</i>.</b></p>
+      <p>The Gemara relates that <b>Ḥanan the wicked struck a certain man. He came before Rav Huna</b> for judgment, and Rav Huna <b>said to him: Go give him half a dinar,</b> which is the fine imposed for such an action. Ḥanan <b>had</b></p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 50 n'a pas de nouvelle michna : il continue la Guemara de la michna 8:7 sur la <b>valeur des monnaies de la Torah</b>. Quatre sujets : le calcul du rachat en dinars, le <i>sela</i> de la Torah et celui du sanctuaire, le sens de « argent » dans la Torah et chez les Sages, et l'argent d'Hadrien et de Trajan.</p>
+<h4>1. Le calcul des cinq <i>sela'im</i></h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Étape</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Calcul</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yo'hanan</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Dinars d'or d'Hadrien et de Trajan vendus vingt-cinq : ôter un dinar, puis un sixième de vingt-quatre = vingt</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rava</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le <i>sela</i> de la Torah vaut trois dinars un tiers (vingt <i>ma'a</i>)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Sages ont ajouté</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un sixième : vingt-quatre <i>ma'a</i> par <i>sela</i>, soit quatre dinars</td></tr>
+</table>
+<h4>2. « Sicle » non précisé</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Lieu</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Valeur</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Torah</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un <i>sela</i></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Prophètes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Une <i>litra</i> (25 <i>sela'im</i>)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Hagiographes</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Un <i>kintar</i> (100 <i>sela'im</i>)</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Argent d'Éphron</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Kintarin</i> (cours chez le marchand)</td></tr>
+</table>
+<h4>3. Argent « de Tyr » ou « de province »</h4>
+<p>Rav Assi : une somme d'argent fixée par la Torah est en monnaie de Tyr ; celle des Sages, en monnaie de province. Les objections (serment des juges, second dîme, consacrés, mariage) sont repoussées par des rapprochements de versets ou des précisions.</p>
+<h4>4. Hadrien et Trajan</h4>
+<p>Les Sages ont voulu séquestrer l'or et l'argent de Jérusalem mélangé à d'autres ; ils ont permis l'usage à partir d'Ézéchiel 7:22 : l'argent pillé est profané.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « <i>dinara hadriana</i> » : dinar d'or frappé aux effigies d'Hadrien et de Trajan, empereurs ; sur « vingt-cinq » : des dinars d'argent de Tyr ; sur « <i>kilbon</i> » : un petit supplément de change, « une petite <i>ma'a</i> pour chacun » ; sur « après qu'ils ont ajouté » : les Sages ont ajouté un sixième au <i>sela</i> de la Torah pour en faire le <i>sela</i> de Tyr de vingt-quatre <i>ma'a</i> ; sur « <i>litrin</i> » : vingt-cinq <i>sela'im</i> ; sur « <i>kintarin</i> » : cent <i>sela'im</i> par sicle ; sur « argent de Tyr » : là où il est écrit « sicle », c'est le <i>sela</i> de Tyr (quatre dinars) ; là où il n'est écrit qu'« argent », c'est un dinar de Tyr ; sur « argent de province » : un huitième de l'argent de Tyr (l'<i>istera sousarita</i>).</p>
+<p><b>Tossafot</b> sur « dinar d'Hadrien » : c'est le dinar d'or de tout le Talmud, vendu vingt-cinq (Baba Metsia 44b) ; la formule « Hadrien, Trajan, <i>chaifa</i> » est discutée par Rabbénou Tam, car on a dit plus bas qu'on voulait les séquestrer à cause de Jérusalem. Sur « tout argent de la Torah est de Tyr » : Rachi à Kiddouchin 11a rapporte au nom de ses maîtres que le dinar était la plus petite monnaie de Tyr. Sur « comme les vases sont deux » : à Chevouot 39b, Rachi demande pourquoi Chmouel interprète « vases » et non « argent ». Sur « toute somme fixée de la Torah » : les Tossafot s'étonnent de la michna de Bava Kama (90a), où l'on parle du « <i>sela</i> » du coup.</p><div class="commentaires-sources">D'après Rashi, Tosafot</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Pour le rachat aujourd'hui (poids d'argent pur défini par les décisionnaires), voir <a href="../choulhan-aroukh/yd_305.html">Yoré Dé'a 305</a>. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.50" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>

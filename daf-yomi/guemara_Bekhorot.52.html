@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guemara 52 — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#0f766e; --primaire-clair:#f0fdfa; --texte-primaire:#134e4a;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#020617 0%,#0c1445 50%,#0f766e 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.halakha-bloc{background:var(--secondaire-clair);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.halakha-titre{font-weight:800;color:var(--secondaire);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.halakha-source{font-size:.82rem;color:var(--ink2);margin-top:12px;font-style:italic}
+
+.explication-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.explication-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.explication-bloc p:last-child{margin-bottom:0}
+.explication-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.explication-bloc b{color:var(--texte-primaire)}
+.explication-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.explication-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.explication-bloc table{font-family:'Plus Jakarta Sans',sans-serif}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner{display:block;max-width:900px;margin:18px auto 0;padding:0 16px;text-decoration:none}
+.ad-banner-inner{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:18px;padding:14px 18px;box-shadow:var(--shadow-card);transition:transform .15s}
+.ad-banner:hover .ad-banner-inner{transform:translateY(-2px)}
+.ad-banner-tag{flex-shrink:0;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:var(--surface2);border-radius:20px;padding:3px 10px}
+.ad-banner-icon{flex-shrink:0;width:46px;height:46px;object-fit:contain;background:var(--surface2);border-radius:12px;padding:4px}
+.ad-banner-text{flex:1;min-width:0}
+.ad-banner-title{font-size:.96rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ad-banner-sub{font-size:.83rem;color:var(--ink2);font-weight:500}
+.ad-banner-cta{flex-shrink:0;font-size:.8rem;font-weight:800;color:var(--ink);background:#ffd166;padding:8px 16px;border-radius:12px;white-space:nowrap}
+@media(max-width:560px){.ad-banner-sub{display:none}.ad-banner-tag{display:none}}
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour à l'accueil Daf Yomi">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Bekhorot · Guemara</div>
+    <h1>Guemara 52</h1>
+    <p>Daf 52</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button>
+    <button class="tab" id="tab-t2" onclick="showTab('t2')">💡 Explication</button>
+    <button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button>
+    <button class="tab" id="tab-t4" onclick="showTab('t4')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','src')">English</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וְלֹא הָאִשָּׁה בִּכְתוּבָּתָהּ, וְלֹא הַבָּנוֹת בִּמְזוֹנוֹתֵיהֶן, וְלֹא אֶת הַיָּבָם, וְכוּלָּם אֵין נוֹטְלִין בַּשֶּׁבַח וְלֹא בָּרָאוּי כְּבַמּוּחְזָק.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי טַעְמָא? אָמַר קְרָא: ״וְלוֹ מִשְׁפַּט הַבְּכוֹרָה״ — מִשְׁפַּט הַבְּכוֹרָה לָאִישׁ, וְאֵין מִשְׁפַּט הַבְּכוֹרָה לָאִשָּׁה.</p>
+      <p>וְאֵינוֹ נוֹטֵל בַּשֶּׁבַח. דִּכְתִיב: ״בְּכֹל אֲשֶׁר יִמָּצֵא לוֹ״, וְלֹא בָּרָאוּי כְּבַמּוּחְזָק, דִּכְתִיב: ״בְּכֹל אֲשֶׁר יִמָּצֵא לוֹ״.</p>
+      <p>וְלֹא הָאִשָּׁה בִּכְתוּבָּתָהּ. אִינִי? וְהָאָמַר שְׁמוּאֵל: בַּעַל חוֹב גּוֹבֶה אֶת הַשֶּׁבַח! אָמַר רַבִּי אַבָּא: מִקּוּלֵּי כְתוּבָּה שָׁנוּ כָּאן.</p>
+      <p>וְלֹא הַבָּנוֹת בִּמְזוֹנוֹתֵיהֶן. מַאי טַעְמָא? תְּנַאי כְּתוּבָּה כִּכְתוּבָּה דָּמֵי.</p>
+      <p>וְלֹא (אֶת) הַיָּבָם. מַאי טַעְמָא? ״בְּכוֹר״ קַרְיֵיהּ רַחֲמָנָא. אָמַר אַבָּיֵי: לֹא שָׁנוּ אֶלָּא בְּשֶׁבַח שֶׁשָּׁבְחוּ נְכָסִים בֵּין מִיתָה לְיִבּוּם, אֲבָל דְּבֵין יִבּוּם לַחֲלוּקָּה — שָׁקֵיל. מַאי טַעְמָא? ״יָקוּם עַל שֵׁם אָחִיו הַמֵּת״ אָמַר רַחֲמָנָא, וַהֲרֵי קָם.</p>
+      <p>רָבָא אָמַר: אֲפִילּוּ דְּבֵין יִבּוּם לַחֲלוּקָּה נָמֵי לָא שָׁקֵיל, מַאי טַעְמָא? כִּבְכוֹר, מָה בְּכוֹר אֵין לוֹ קוֹדֶם חֲלוּקָּה, אַף יָבָם נָמֵי אֵין לוֹ קוֹדֶם חֲלוּקָּה.</p>
+      <p>וְכוּלָּם אֵין נוֹטְלִין בַּשֶּׁבַח,</p>
+      <p>לְאֵיתוֹיֵי שְׁבָחָא דְּמִמֵּילָא: חֲפוּרָה וַהֲווֹ שׁוּבְלֵי, שַׁלְפּוּפֵי וַהֲווֹ תַּמְרֵי.</p>
+      <p>וְלֹא בָּרָאוּי כְּבַמּוּחְזָק, לְאֵיתוֹיֵי נִכְסֵי דַּאֲבִי אַבָּא.</p>
+      <p><strong><big>מַתְנִי׳</big></strong> וְאֵלּוּ שֶׁאֵין חוֹזְרִין בַּיּוֹבֵל — הַבְּכוֹרָה, וְהַיּוֹרֵשׁ אֶת אִשְׁתּוֹ, וְהַמְיַיבֵּם אֶת אֵשֶׁת אָחִיו.</p>
+      <p>וְהַמַּתָּנָה — דִּבְרֵי רַבִּי מֵאִיר, וַחֲכָמִים אוֹמְרִים: הַמַּתָּנָה כַּמֶּכֶר, רַבִּי אֶלְעָזָר אוֹמֵר: כּוּלָּם חוֹזְרִין בַּיּוֹבֵל, רַבִּי יוֹחָנָן בֶּן בְּרוֹקָה אוֹמֵר: אַף הַיּוֹרֵשׁ אֶת אִשְׁתּוֹ יַחְזִיר לִבְנֵי מִשְׁפָּחָה, וִינַכֶּה מֵהֶן אֶת הַדָּמִים.</p>
+      <p><strong><big>גְּמָ׳</big></strong> מַאי טַעְמָא דְּרַבִּי מֵאִיר? מֶכֶר הוּא דְּאָמַר רַחֲמָנָא לֶיהְדַּר בַּיּוֹבֵל, מַתָּנָה וִירוּשָּׁה לָא. וְהָנֵי מִיְּרוּשָּׁה — יְרוּשָּׁה, דְּמַתָּנָה — מַתָּנָה. בְּכוֹר — ״לָתֶת לוֹ פִּי שְׁנַיִם״, מַתָּנָה קַרְיֵיהּ רַחֲמָנָא.</p>
+      <p>וְהַיּוֹרֵשׁ אֶת אִשְׁתּוֹ, יְרוּשַּׁת הַבַּעַל דְּאוֹרָיְיתָא, וְהַמְיַיבֵּם אֶת אֵשֶׁת אָחִיו — ״בְּכוֹר״ קַרְיֵיהּ רַחֲמָנָא.</p>
+      <p>וַחֲכָמִים אוֹמְרִים: מַתָּנָה כְּמֶכֶר. מַאי טַעְמַיְיהוּ דְּרַבָּנַן? ״תָּשׁוּבוּ״ — לְרַבּוֹת אֶת הַמַּתָּנָה.</p>
+      <p>וְהָנֵי כּוּלְּהוּ יְרוּשָּׁה נִינְהוּ.</p>
+      <p>בְּכוֹר אָמַר קְרָא: ״לָתֶת לוֹ פִּי שְׁנַיִם״, מַקִּישׁ חֵלֶק בְּכוֹרָה לְחֵלֶק פָּשׁוּט — מָה חֵלֶק פָּשׁוּט יְרוּשָּׁה, אַף חֵלֶק בְּכוֹרָה יְרוּשָּׁה.</p>
+      <p>רַבִּי אֶלְעָזָר אוֹמֵר: כּוּלָּם חוֹזְרִים בַּיּוֹבֵל. סָבַר לַהּ כְּרַבָּנַן דְּאָמְרִי: ״תָּשׁוּבוּ״ לְרַבּוֹת אֶת הַמַּתָּנָה, וְהָנֵי כּוּלְּהוּ מַתָּנָה נִינְהוּ. בְּכוֹר — ״לָתֶת לוֹ פִּי שְׁנַיִם״, מַתָּנָה קַרְיֵיהּ רַחֲמָנָא.</p>
+      <p>וְהַיּוֹרֵשׁ אֶת אִשְׁתּוֹ — יְרוּשַּׁת הַבַּעַל דְּרַבָּנַן, וְהַמְיַיבֵּם אֶת אֵשֶׁת אָחִיו — ״בְּכוֹר״ קַרְיֵיהּ רַחֲמָנָא.</p>
+      <p>אָמַר רַבִּי אַסִּי אָמַר רַבִּי יוֹחָנָן: הָאַחִין שֶׁחָלְקוּ לָקוֹחוֹת הֵן, וּמַחְזִירִין זֶה לָזֶה בַּיּוֹבֵל. מוֹתֵיב רַב הוֹשַׁעְיָא: וְאֵלּוּ שֶׁאֵין חוֹזְרִין בַּיּוֹבֵל — הַבְּכוֹרָה!</p>
+      <p>אֲמַר לֵיהּ רַבִּי אֶלְעָזָר: מַאי ״אֵין חוֹזְרִין״ — אֵין חוֹזְרִין לְבַטָּלָה. מַתְקֵיף לַהּ רַב שֵׁשֶׁת: מִכְּלָל דְּמַאן דְּאָמַר ״חוֹזְרִין״ — חוֹזְרִין לְבַטָּלָה קָאָמַר?</p>
+      <p>קָרֵי רַב חָמָא עֲלֵיהּ דְּרַב שֵׁשֶׁת: ״טוֹבָה חׇכְמָה עִם נַחֲלָה״, וְלָא שְׁמִיעַ לְהוּ הָא דְּכִי אָתֵי רָבִין אָמַר רַבִּי יוֹחָנָן, וְאָמְרִי לַהּ רַבִּי אֶלְעָזָר אָמַר מִשּׁוּם רַבִּי אֶלְעָזָר בֶּן שַׁמּוּעַ: מַאי ״חוֹזְרִין״ — חוֹזְרִין לְבַטָּלָה.</p>
+      <p>רַבִּי יוֹחָנָן בֶּן בְּרוֹקָה אוֹמֵר: אַף הַיּוֹרֵשׁ אֶת אִשְׁתּוֹ יַחְזִיר לִבְנֵי וְכוּ׳. מַאי קָסָבַר? אִי קָסָבַר יְרוּשַּׁת הַבַּעַל דְּאוֹרָיְיתָא — אַמַּאי יַחְזִיר לִבְנֵי מִשְׁפָּחָה? וְאִי קָסָבַר יְרוּשַּׁת הַבַּעַל דְּרַבָּנַן — דָּמִים מַאי עֲבִידְתַּיְיהוּ?</p>
+      <p>לְעוֹלָם קָסָבַר יְרוּשַּׁת הַבַּעַל דְּאוֹרָיְיתָא, וְהָכָא בְּמַאי עָסְקִינַן? כְּגוֹן שֶׁהוֹרִישַׁתּוּ אִשְׁתּוֹ בֵּית הַקְּבָרוֹת, וּמִשּׁוּם פְּגַם מִשְׁפָּחָה אֲמוּר רַבָּנַן: לִשְׁקוֹל דְּמֵי וְלַיהְדַּר.</p>
+      <p>וְכִדְתַנְיָא: הַמּוֹכֵר קִבְרוֹ, וְדֶרֶךְ קִבְרוֹ, מְקוֹם מַעֲמָדוֹ, וּבֵית הֶסְפֵּדוֹ — בָּאִים בְּנֵי מִשְׁפָּחָה וְקוֹבְרִים אוֹתוֹ בְּעַל כׇּרְחוֹ, מִשּׁוּם פְּגַם מִשְׁפָּחָה. וּמַאי ״יְנַכֶּה לָהֶם מִן הַדָּמִים״? דְּמֵי קֶבֶר אִשְׁתּוֹ.</p>
+      <p><strong><big>הֲדַרַן עֲלָךְ יֵשׁ בְּכוֹר.</big></strong></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p><b>Suite de la michna 8:9.</b> « Ni la femme, ni les filles, ni le <i>yavam</i> ne prennent ces parts ».</p>
+      <p><b>Les biens de la mère.</b> Pourquoi le premier-né ne prend-il pas double part sur les biens de sa mère ? « La loi du premier-né est à lui » (Deutéronome 21:17) : un droit d'aînesse pour l'homme, non pour la femme.</p>
+      <p><b>La plus-value et ce qui est dû.</b> « Une double part de tout ce qu'il possède » (Deutéronome 21:17) : la plus-value n'était pas en sa possession à sa mort ; de même ce qui lui est dû.</p>
+      <p><b>La femme et la <i>ketouba</i>.</b> Pourquoi la femme ne prend-elle pas la plus-value pour sa <i>ketouba</i> ? Chmouel ne dit-il pas que le créancier prélève la plus-value du champ du débiteur ? Rabbi Abba : « les Sages ont enseigné ici l'un des allègements de la <i>ketouba</i> » : la femme ne prélève pas la plus-value.</p>
+      <p><b>Les filles.</b> La condition de la <i>ketouba</i> (les filles sont nourries des biens du père après sa mort) équivaut à la <i>ketouba</i> elle-même : elles ne réclament pas ce que la <i>ketouba</i> ne peut réclamer.</p>
+      <p><b>Le <i>yavam</i>.</b> « Le premier-né » (Deutéronome 25:6) : la Torah l'appelle « premier-né ». Abayé : cela vaut seulement pour la plus-value entre la mort du frère et le lévirat ; entre le lévirat et le partage, il la prend, car « il se lèvera au nom de son frère mort » et il s'est déjà levé. Rava : même pour cette période, il ne la prend pas : comme le premier-né, il n'a aucun droit avant le partage.</p>
+      <p><b>« Tous ».</b> La michna répète « tous » pour inclure la plus-value qui vient d'elle-même après la mort du père (par exemple, des herbes qui deviennent épis, des fleurs de dattier qui deviennent dattes). Et la répétition « ni ce qui est dû » inclut les biens du père du père, lorsque le père meurt avant son propre père : ce sont des biens à échoir, non possédés.</p>
+      <p><b>MICHNA (8:10).</b> Les terres qui ne retournent pas au Jubilé (voir la michna 8:10 ci-dessus).</p>
+      <p><b>GUEMARA : Rabbi Meïr.</b> La Torah fait retourner au Jubilé la terre <i>vendue</i> ; ni le don ni l'héritage ne retournent. Les cas de la michna se rattachent à l'héritage ou au don : pour le premier-né, « en lui donnant double part » : la Torah appelle sa part un don. L'époux hérite de sa femme de la Torah, donc ce n'est pas rendu. Le <i>yavam</i> est appelé « premier-né » et sa part ne retourne pas.</p>
+      <p><b>Les Sages.</b> « Vous retournerez » (Lévitique 25:13) est superflu après « et vous retournerez chacun à sa possession » (25:10) : il inclut le don. Les autres cas sont des héritages : l'héritage du mari est de la Torah ; le <i>yavam</i> est comme un premier-né ; pour le premier-né, ils lisent « double part » comme assimilée à la part ordinaire, qui est un héritage « le jour où il fait hériter ses fils ».</p>
+      <p><b>Rabbi Èlazar.</b> Il suit les Sages pour inclure le don et considère tous ces cas comme des dons : « en lui donnant » ; l'héritage du mari est rabbinique ; le <i>yavam</i> est un premier-né dont la part retourne.</p>
+      <p><b>Rabbi Assi au nom de Rabbi Yo'hanan.</b> Les frères qui ont partagé sont des acheteurs l'un de l'autre et doivent se restituer au Jubilé. Objection de Rav Hoshaya : la michna dit que le premier-né ne rend pas. Rabbi Èlazar : « ne retournent pas » veut dire « pas pour rien » (il retrouve sa double part au nouveau partage). Rav Chechet objecte : alors « retournent » voudrait dire « pour rien » ? Rav 'Hama lit sur Rav Chechet « la sagesse est bonne avec un héritage » (Ecclésiaste 7:11) : Ravin a rapporté de Terre d'Israël, au nom de Rabbi Yo'hanan ou de Rabbi Èlazar, que « retournent » signifie « pour rien » : ils perdent ce qu'ils ont reçu.</p>
+      <p><b>Rabbi Yo'hanan ben Beroka.</b> S'il tient que l'héritage du mari est de la Torah, pourquoi rendre ? S'il le tient pour rabbinique, pourquoi payer ? Réponse : il tient qu'il est de la Torah et la michna parle d'une femme qui lui a légué le tombeau de sa famille : pour éviter l'atteinte à la famille, les Sages ont dit qu'il prenne de l'argent et le rende. Baraïta : celui qui vend sa tombe, le chemin de sa tombe, le lieu où l'on console les endeuillés, le lieu de ses éloges : ses proches peuvent l'enterrer chez l'acheteur malgré lui. « Déduire la valeur » : il déduit de la valeur du champ celle de la tombe de sa femme, car le mari doit payer l'enterrement de sa femme (Ketoubot 47b).</p>
+      
+    </div>
+    <div class="texte-fr masque" id="txt-src">
+      <p><b>And neither does a woman</b> take these portions, i.e., any enhancement of the value of the property or the property due the husband, from her husband’s property <b>for</b> payment of <b>her marriage contract</b> upon her divorce or her husband’s death; <b>nor</b> do <b>the daughters</b> take this share of the property <b>for their sustenance,</b> to which they are entitled from their late father’s possessions. <b>Nor</b> does <b>a man whose married brother died childless [<i>yavam</i>]</b> receive these portions, even though he acquires his brother’s portion of their shared father’s inheritance after performing levirate marriage with his brother’s wife. The mishna summarizes: <b>And all of them do not take</b> a portion <b>in</b> any <b>enhancement</b> of the value of the property after the death of the owner, <b>nor</b> do they take a portion <b>in</b> property <b>due</b> the deceased, <b>as</b> they do in property <b>in</b> his <b>possession.</b></p>
+      <p><strong>GEMARA:</strong> The mishna teaches that the firstborn son does not receive a double portion when inheriting the property of his mother. The Gemara asks: <b>What is the reason?</b> The Gemara explains that <b>the verse states: “The law of primogeniture is his”</b> (Deuteronomy 21:17); this is understood to mean that there is <b>a law of primogeniture for a man,</b> i.e., a duty to bequeath a double portion to his firstborn son, <b>and there is no law of primogeniture for a woman.</b></p>
+      <p>The mishna teaches further: <b>And neither does he take</b> twice the portion <b>in</b> any <b>enhancement</b> of the value of the property after the death of his father. The Gemara explains that this is <b>because it is written:</b> “A double portion <b>of all that he has”</b> (Deuteronomy 21:17), and this enhancement was not in his father’s possession at the time of his death. The mishna also teaches: <b>Nor</b> does he take twice the portion in property <b>due</b> the father, <b>as</b> he does in the property <b>in possession</b> of the father. The Gemara explains that this too is <b>because it is written: “Of all that he has”</b> (Deuteronomy 21:17), and property due the father is not in his possession.</p>
+      <p>§ The mishna teaches: <b>And neither does a woman</b> take any enhancement of the value of the property or the property due the husband, from her husband’s property <b>for</b> payment of <b>her marriage contract.</b> The Gemara asks: <b>Is that so? But doesn’t Shmuel say a creditor collects</b> the value of <b>the enhancement</b> of the field of a borrower after the latter’s death? Since a wife’s marriage contract is like a promissory note, she is considered a creditor. <b>Rabbi Abba says:</b> The Sages <b>taught here</b> one <b>of the leniencies</b> for the husband that apply to <b>a marriage contract:</b> That a woman does not collect the value of the enhancement despite the fact that she is a creditor.</p>
+      <p>The mishna teaches: <b>Nor</b> do <b>the daughters</b> take this share of the property <b>for their sustenance,</b> to which they are entitled from their late father’s possessions. The Gemara asks: <b>What is the reason</b> for this? The Gemara explains that <b>a stipulation in the marriage contract,</b> such as that the daughters are entitled to sustenance from the father’s property after his death, <b>is comparable to the marriage contract</b> itself, and therefore they cannot claim that which cannot be claimed from a marriage contract, i.e., an enhancement to the father’s property.</p>
+      <p>The mishna teaches: <b>Nor</b> does <b>the <i>yavam</i></b> receive these portions. The Gemara asks: <b>What is the reason</b> for this? The Gemara answers that <b>the Merciful One calls</b> the <i>yavam</i> <b>a firstborn,</b> in the verse: “And it shall be, the firstborn” (Deuteronomy 25:6). <b>Abaye says:</b> The Sages <b>taught</b> this <i>halakha</i> <b>only with regard to an enhancement by</b> which <b>the property</b> was <b>enhanced between the death</b> of the brother <b>and the levirate marriage. But</b> concerning the enhancement <b>that</b> occurs <b>between the levirate marriage and the distribution</b> of the inheritance, <b>he does take</b> it. <b>What is the reason? The Merciful One states: “Shall succeed in the name of his brother who is dead”</b> (Deuteronomy 25:6), <b>and</b> by that stage <b>he has succeeded</b> him, and the enhancement occurred at that stage.</p>
+      <p><b>Rava says: Even with regard to</b> the enhancement that occurs <b>between the levirate marriage and the distribution</b> of the inheritance, the <i>yavam</i> <b>does not take</b> it. <b>What is the reason?</b> He is compared <b>to a firstborn: Just as a firstborn does not have</b> any special right to the inheritance <b>before</b> its <b>distribution, so too, a <i>yavam</i> does not have</b> any right to the inheritance <b>before</b> its <b>distribution.</b></p>
+      <p>The mishna teaches: <b>And all of them do not take</b> a portion <b>in</b> any <b>enhancement.</b></p>
+      <p>The Gemara explains that this <i>halakha</i> is repeated in order <b>to include an enhancement that</b> occurs <b>by itself</b> after the death of the father or husband, for instance in a case when <b>fodder [<i>ḥafura</i>],</b> i.e., produce that has grown stalks but is not yet ripe, <b>becomes full ears,</b> or when <b>date flowers [<i>shalpufei</i>] become</b> fully developed <b>dates.</b> Despite the fact that in such cases the property became enhanced by itself, without any effort on the part of the other brothers, the firstborn may not claim his double portion from that enhancement, and the same applies in the other cases mentioned in the mishna.</p>
+      <p>With regard to the repetition of the statement: <b>Nor</b> does he take twice the portion <b>in</b> property <b>due</b> the father <b>as</b> he does <b>in</b> property <b>in</b> his <b>possession,</b> this serves <b>to include property of the father’s father,</b> in a case where the father died before his own father. The firstborn does not receive his portion in such property, despite the fact that it will certainly come into the father’s possession, as this too is considered property that is due the father, not property in his possession. The same <i>halakha</i> applies also in the case of property due the wife, the daughters, or a <i>yavam</i>.</p>
+      <p><strong>MISHNA:</strong> <b>And these</b> are the people <b>whose</b> properties, unlike an ancestral field, <b>do not return</b> to their original owners <b>in the Jubilee</b> Year: The firstborn who inherited his father’s property by the right of <b>primogeniture</b> need not return the extra portion for redistribution among the brothers; <b>and one who inherits his wife’s</b> property need not return it to her family; <b>and one who consummates the levirate marriage with the wife of his brother</b> and gains the right to his brother’s property need not return it for redistribution among the brothers.</p>
+      <p><b>And</b> likewise, <b>a gift</b> of land need not be returned to the original owners in the Jubilee Year; this is <b>the statement of Rabbi Meir. And the Rabbis say:</b> The halakhic status of <b>a gift</b> is <b>like</b> that of <b>a sale,</b> and it must be returned. <b>Rabbi Elazar says: All these</b> lands <b>return in the Jubilee</b> Year. <b>Rabbi Yoḥanan ben Beroka says: Even one who inherits his wife’s</b> property <b>must return</b> the land <b>to the members of</b> her father’s <b>family and should deduct from them the monetary</b> value of the land, as the Gemara will explain.</p>
+      <p><strong>GEMARA:</strong> The Gemara asks: <b>What is the reason of Rabbi Meir,</b> who holds that none of these items return in the Jubilee Year? The Gemara answers: <b>It is</b> with regard to land acquired specifically by means of <b>a sale that the Merciful One states</b> that it <b>should be returned during the Jubilee</b> Year (see Leviticus 25:28), whereas <b>a gift and an inheritance</b> are <b>not</b> returned. <b>And these</b> cases listed in the mishna that are derived <b>from</b> the <i>halakha</i> of <b>an inheritance</b> have the status of <b>an inheritance, and those</b> that are derived <b>from a gift</b> have the status of <b>a gift.</b> The Gemara elaborates: With regard to <b>a firstborn,</b> it is stated: <b>“By giving him a double portion”</b> (Deuteronomy 21:17); here <b>the Merciful One calls</b> the portion of a firstborn <b>a gift,</b> an item that is given.</p>
+      <p><b>And one who inherits his wife’s</b> property need not return it to her family in the Jubilee Year, as Rabbi Meir maintains that <b>the inheritance of a husband</b> is <b>by Torah law,</b> not a rabbinic enactment, and land acquired through inheritance is not returned. <b>And</b> likewise, <b>one who consummates the levirate marriage with the wife of his brother</b> need not return the brother’s property for redistribution among the brothers. This is because <b>the Merciful One calls</b> the <i>yavam</i> <b>a firstborn,</b> in the verse: “And it shall be, the firstborn” (Deuteronomy 25:6), and Rabbi Meir holds that the portion of the firstborn is not returned in the Jubilee Year, as explained earlier.</p>
+      <p>The mishna further teaches: <b>And the Rabbis say:</b> The halakhic status of <b>a gift</b> is <b>like</b> that of <b>a sale,</b> and must be returned. The Gemara asks: <b>What is the reason of the Rabbis?</b> The Gemara answers that the term <b>“you shall return”</b> in the verse: “In the Jubilee Year you shall return every man to his possession” (Leviticus 25:13), is superfluous, as it is already stated: “It shall be a Jubilee for you, and you shall return every man to his possession” (Leviticus 25:10). Therefore, this term serves <b>to include a gift,</b> which is also returned in the Jubilee Year.</p>
+      <p><b>And these</b> other cases listed in the mishna <b>are all</b> considered as <b>an inheritance,</b> and consequently they are not returned in the Jubilee Year. With regard to the husband’s inheritance of his wife’s property, the Rabbis, like Rabbi Meir, maintain that it applies by Torah law, and they agree that the <i>yavam</i> is considered like a firstborn with respect to his portion.</p>
+      <p>As for <b>a firstborn, the verse states: “By giving him a double portion”</b> (Deuteronomy 21:17), and the Rabbis disagree with Rabbi Meir, who derives from this verse that the portion of the firstborn has the status of a gift. Rather, they maintain that the verse <b>juxtaposes the</b> extra <b>portion of the firstborn to the portion</b> he receives as <b>an ordinary</b> brother: <b>Just as the portion</b> of <b>an ordinary</b> brother is not redistributed among the brothers in the Jubilee Year, but rather is <b>an inheritance,</b> as it is stated: “On the day that he causes his sons to inherit” (Deuteronomy 21:16), <b>so too the portion of the firstborn</b> is <b>an inheritance,</b> and is not returned in the Jubilee Year.</p>
+      <p>The mishna further teaches that <b>Rabbi Elazar says: All these</b> lands <b>return in the Jubilee</b> Year. The Gemara explains that Rabbi Elazar <b>holds in accordance with</b> the opinion of <b>the Rabbis, who say</b> that the term <b>“you shall return”</b> serves <b>to include a gift, and</b> he further maintains that <b>these</b> cases listed in the mishna <b>are all</b> considered <b>gifts.</b> The Gemara elaborates: With regard to <b>a firstborn</b> it is stated: <b>“By giving him a double portion.”</b> Through the use of the term “giving,” <b>the Merciful One calls</b> his portion <b>a gift.</b></p>
+      <p><b>And</b> with regard to <b>one who inherits his wife’s</b> property, Rabbi Elazar maintains that <b>the inheritance of a husband</b> is <b>by rabbinic law,</b> and therefore it does not have the status of an inheritance that does not return in the Jubilee Year. <b>And</b> finally, <b>one who consummates the levirate marriage with the wife of his brother</b> returns the property for redistribution among the brothers, as <b>the Merciful One calls</b> him <b>a firstborn,</b> and Rabbi Elazar rules that the portion of the firstborn is returned in the Jubilee Year.</p>
+      <p>§ <b>Rabbi Asi says</b> that <b>Rabbi Yoḥanan says: Brothers who divided</b> property received as an inheritance <b>are</b> considered <b>purchasers</b> from each other, i.e., one does not say they each received the exact inheritance to which they were entitled. <b>And</b> as purchasers of land, <b>they must return</b> the portions <b>to each other in the Jubilee</b> Year, at which point they redistribute the property. <b>Rav Hoshaya raises an objection</b> from the mishna: <b>And these</b> are the people <b>whose</b> properties <b>do not return</b> to their original owners <b>in the Jubilee</b> Year: The firstborn who inherited his father’s property by <b>the</b> right of <b>primogeniture.</b></p>
+      <p><b>Rabbi Elazar said to</b> Rav Hoshaya: <b>What</b> is the meaning of the clause: <b>They do not return?</b> It means that <b>they do not return for naught,</b> i.e., the firstborn does not forfeit the double portion; rather, when they redistribute the property he again receives a double portion. <b>Rav Sheshet objects to this: By inference</b> from this answer, should one conclude <b>that the one who says</b> the portion of the firstborn <b>returns</b> in the Jubilee Year <b>is saying</b> that <b>it returns for naught?</b> Why should the firstborn lose his double portion?</p>
+      <p><b>Rav Ḥama read</b> the verse <b>about Rav Sheshet: “Wisdom is good with an inheritance”</b> (Ecclesiastes 7:11), i.e., it is not enough to inherit knowledge of <i>baraitot</i>, as does Rav Sheshet; rather, one must also be expert in the wisdom of <i>amora’im</i>. Rav Ḥama explained: <b>Didn’t</b> Rav Sheshet <b>hear this</b> matter, <b>that when Ravin came</b> from Eretz Yisrael to Babylonia, <b>he said</b> that <b>Rabbi Yoḥanan</b> says, <b>and some say</b> that <b>Rabbi Elazar said</b> it <b>in the name of Rabbi Elazar ben Shammua,</b> who is the <i>tanna</i> Rabbi Elazar in the mishna: <b>What</b> is the meaning of the clause: <b>They return</b> in the Jubilee Year? It means that <b>they return for naught,</b> and they forfeit that which they received.</p>
+      <p>§ The mishna teaches that <b>Rabbi Yoḥanan ben Beroka says: Even one who inherits his wife’s</b> property <b>must return</b> the land <b>to the members of</b> her father’s family and should deduct from them the monetary value of the land. The Gemara asks: <b>What does</b> Rabbi Yoḥanan ben Beroka <b>hold? If he holds</b> that <b>the inheritance of a husband</b> is <b>by Torah law, why must he return</b> the property <b>to the members of</b> his wife’s <b>family?</b> An inheritance by Torah law is not given back in the Jubilee Year. <b>And if he holds</b> that <b>the inheritance of a husband</b> is <b>by rabbinic law, what is the purpose of the money</b> he receives from his wife’s relatives? Since the property belongs to them, they should not have to pay him anything.</p>
+      <p>The Gemara answers: <b>Actually,</b> Rabbi Yoḥanan ben Beroka <b>holds</b> that <b>the inheritance of a husband</b> is <b>by Torah law, and what are we dealing with here?</b> We are dealing with a case <b>where his wife bequeathed to him</b> her family’s <b>graveyard. And due to</b> the need to avoid <b>a family flaw,</b> i.e., harm to the family name, if the wife’s family would be buried in plots belonging to others, <b>the Sages said he should take money</b> from them <b>and return</b> the graveyard.</p>
+      <p><b>And</b> this is <b>as it is taught</b> in a <i>baraita</i> discussing <i>halakhot</i> connected with burial that serve to uphold family honor: In the case of <b>one who sells his grave, or the path</b> to <b>his grave,</b> or <b>the place</b> where visitors would <b>stand</b> to comfort the mourners, <b>or the place of his eulogies, the members of</b> his <b>family may come and bury him</b> in his ancestral plot <b>against</b> the purchaser’s <b>wishes, due to</b> the need to avoid <b>a family flaw,</b> i.e., harm to the family name. <b>And what</b> is the meaning of the clause: <b>And deduct for them</b> part <b>of the monetary</b> value of the property? It means that he must deduct <b>the monetary</b> value <b>of his wife’s grave</b> from the value of the field, as a husband is obligated to pay for his wife’s burial (see <i>Ketubot</i> 47b).</p>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="explication-bloc"><p>Le daf 52 termine la Guemara de la michna 8:9 et traite la michna 8:10. Deux thèmes : <b>pourquoi la double part ne porte que sur ce que le père possédait</b>, puis <b>quelles terres retournent ou non au Jubilé</b>.</p>
+<h4>1. Michna 8:9 : pourquoi pas de double part ?</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Cas</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Raison</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Biens de la mère</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« La loi du premier-né est à lui » : pour l'homme, non pour la femme</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plus-value / créances</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« De tout ce qu'il possède » : ce n'était pas en sa possession</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Femme (<i>ketouba</i>)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Allègement de la <i>ketouba</i> : pas de plus-value</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Filles</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La condition de nourriture est assimilée à la <i>ketouba</i></td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);"><i>Yavam</i></td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Appelé « premier-né » : mêmes limites ; débat Abayé / Rava sur la période après le lévirat</td></tr>
+</table>
+<h4>2. Jubilé : héritage, don, vente</h4>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Avis</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Principe</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Meïr</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Seule la terre vendue retourne ; don et héritage ne retournent pas</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Les Sages</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Vous retournerez » inclut le don ; les autres cas sont des héritages</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Èlazar</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Tous ces cas sont des dons (ou rabbiniques) et retournent</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Yo'hanan ben Beroka</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Cas du tombeau de famille : rendu contre argent</td></tr>
+</table>
+<h4>3. « Retournent pour rien »</h4>
+<p>Selon Rabbi Èlazar (et Rabbi Yo'hanan), dans la michna, « retournent » signifie que le bénéficiaire perd ce qu'il a reçu ; « ne retournent pas » signifie qu'il ne le perd pas.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="explication-bloc"><p><b>Rachi</b> sur « ni la femme dans sa <i>ketouba</i> » : si les biens ne valaient pas le montant de la <i>ketouba</i> à la mort du mari et ont ensuite augmenté, elle ne prend que ce qu'ils valaient alors, et non l'à-échoir comme le possédé ; sur « ni les filles » : le mari s'était engagé à nourrir la fille de sa femme née d'un autre homme pendant cinq ans ; sur « <i>yavam</i> » : il prend double part de son frère mort, mais pas de la plus-value ni de l'à-échoir ; sur « <i>ko hou reshit ono</i> » : il s'applique à ses propres biens et non à ceux de sa femme ; sur « <i>hafoura</i> » : le blé était encore en herbe à sa mort et est devenu épis ; sur « <i>chelfouf</i> » : des dattes encore en boutons devenues grandes ; sur « <i>nikhsei avi avba</i> » : les biens du père de leur père, même s'il est certain qu'ils leur échoiront ; sur « la mishna : le <i>yavam</i> » : héritage complet, il ne rend pas au Jubilé ; sur « le don est comme la vente » : il sort au Jubilé ; sur « l'héritage du mari de la Torah » : « à son proche parent » (Nombres 27:11) : le mari hérite de sa femme (Bava Batra 111b).</p>
+<p><b>Tossafot</b> sur « ni la femme, ni les filles, ni le <i>yavam</i> » : Rav Papa a tranché à Bava Batra 125b que le mari ne prend pas l'à-échoir comme le possédé ; sur « Chmouel dit que le créancier prélève la plus-value » : ici il s'agit d'orphelins, comme pour la nourriture des filles ; sur « le premier-né, la Torah appelle sa part un don » : les Tossafot rappellent la difficulté de Yevamot 24b, où l'on explique à quoi sert l'appellation « premier-né » pour le <i>yavam</i> ; sur « Rabbi Assi : les frères qui ont partagé sont des acheteurs » : difficulté avec Rabbi Assi plus haut (48a : moitié héritiers, moitié acheteurs) ; sur « Rav 'Hama a lu sur Rav Chechet » : Rav Chechet était le spécialiste des baraïtot (Erouvin 67a) ; sur « les proches viennent l'enterrer malgré lui » : Sanhédrin 46b demande si l'enterrement vient de l'honneur ou de l'expiation.</p><div class="commentaires-sources">D'après Tosafot, Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="halakha-bloc">
+    <div class="halakha-titre">⚖️ Loi pratique</div>
+    <p>Le Jubilé n'est pas en vigueur aujourd'hui. Pour l'héritage du premier-né (double part), voir 'Hochen Michpat 277 ; pour la <i>ketouba</i> de la femme et les droits des filles, voir Even Ha'ezer 93 et 'Hochen Michpat 107 ; pour le <i>yavam</i>, voir Even Ha'ezer 163. Pour toute situation concrète, il faut consulter un rabbin compétent.</p>
+    
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits réservés<br>Sources : <a href="https://www.sefaria.org/Bekhorot.52" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
