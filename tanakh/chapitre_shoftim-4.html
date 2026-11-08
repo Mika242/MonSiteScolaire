@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Choftim 4 – Dvora, Barak et Yaël — Ton Coach Scolaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --primaire:#7c3aed; --primaire-clair:#f5f3ff; --texte-primaire:#4c1d95;
+  --secondaire:#b45309; --secondaire-clair:#fff7ed;
+  --ink:#0f172a; --ink2:#475569; --card:#fff; --surface2:#f8fafc;
+  --shadow-card:0 1px 3px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;background:#f8fafc;color:var(--ink)}
+header{background:linear-gradient(135deg,#1e1b3a 0%,#312e81 50%,#7c3aed 100%);padding:28px 16px;color:#fff}
+.hi{max-width:980px;margin:auto}
+.hi img{height:40px;margin-bottom:10px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.hi h1{margin:6px 0;font-size:1.6rem;font-weight:800}
+.hi p{margin:0;opacity:.85;font-size:.95rem}
+.ref-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;font-size:1.1rem;opacity:.9;margin-top:6px}
+
+.tw{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:10}
+.tabs{max-width:980px;margin:auto;display:flex;gap:4px;padding:8px 16px;overflow-x:auto}
+.tab{border:none;background:transparent;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink2);white-space:nowrap}
+.tab.active{background:var(--primaire-clair);color:var(--texte-primaire)}
+
+main{max-width:980px;margin:auto;padding:20px 16px 40px}
+.sec{display:none}
+.sec.active{display:block}
+
+.bloc-texte{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:16px}
+.bloc-hd{padding:14px 18px;background:var(--primaire-clair);color:var(--texte-primaire);font-weight:800;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.toggle-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.bloc-corps{padding:18px}
+.texte-heb{font-family:'Frank Ruhl Libre','Times New Roman',serif;direction:rtl;text-align:right;font-size:1.25rem;line-height:1.9;color:var(--ink)}
+.texte-heb p, .texte-fr p{margin:0 0 14px}
+.texte-heb p:last-child, .texte-fr p:last-child{margin-bottom:0}
+.texte-fr{font-size:1rem;line-height:1.75;color:var(--ink);margin-top:14px;padding-top:14px;border-top:1px dashed #e2e8f0}
+.texte-fr.masque, .texte-heb.masque{display:none}
+.langue-note{font-size:.72rem;color:var(--ink2);font-style:italic;margin-top:8px}
+.note-appel{color:var(--primaire);font-weight:700;cursor:default;font-size:.7em}
+.notes-bloc{margin-top:18px;padding-top:14px;border-top:1px solid #e2e8f0}
+.notes-titre{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);margin-bottom:8px}
+.notes-liste{margin:0;padding-left:20px;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.notes-liste li{margin-bottom:6px}
+.note-num{font-weight:700;color:var(--primaire)}
+.verset-num{display:inline-block;min-width:1.6em;font-size:.7em;font-weight:800;color:var(--primaire);vertical-align:super;margin-right:2px}
+
+.commentaire{background:var(--card);border-radius:14px;box-shadow:var(--shadow-card);padding:16px 18px;margin-bottom:14px;border-left:4px solid var(--secondaire)}
+.commentaire-auteur{font-weight:800;color:var(--secondaire);font-size:.85rem;margin-bottom:8px}
+
+.synthese-bloc{background:var(--card);border-radius:16px;box-shadow:var(--shadow-card);padding:20px}
+.synthese-bloc p{margin:0 0 14px;line-height:1.75;font-size:.98rem}
+.synthese-bloc p:last-child{margin-bottom:0}
+.synthese-bloc ul{margin:0 0 14px;padding-left:22px;line-height:1.7}
+.synthese-bloc b{color:var(--texte-primaire)}
+.synthese-bloc h4{font-size:.92rem;font-weight:800;color:var(--secondaire);margin:20px 0 10px;padding-top:14px;border-top:1px solid #e2e8f0}
+.synthese-bloc h4:first-child{margin-top:0;padding-top:0;border-top:none}
+.synthese-bloc table{font-family:'Plus Jakarta Sans',sans-serif;width:100%;border-collapse:collapse;margin:12px 0}
+.synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
+.synthese-bloc table th{background:var(--surface2)}
+.synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.synthese-bloc h4{clear:both}
+.synthese-bloc .fig-syn{margin:4px 0 12px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card);background:var(--surface2)}
+.synthese-bloc .fig-syn img{display:block;width:100%;height:auto}
+.synthese-bloc .fig-syn.flot{float:right;width:min(40%,330px);margin:4px 0 12px 20px}
+.synthese-bloc .fig-syn.haut{max-width:520px;margin:12px auto}
+.synthese-bloc .fig-syn figcaption{font-size:.72rem;color:var(--ink2);font-style:italic;padding:6px 10px;text-align:center}
+@media (max-width:640px){.synthese-bloc .fig-syn.flot{float:none;width:100%;max-width:420px;margin:10px auto}}
+.commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
+
+.vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
+
+footer{text-align:center;padding:24px 16px;font-size:.82rem;color:var(--ink2)}
+footer a{color:var(--primaire)}
+.fc{margin-top:10px;font-size:.75rem}
+
+@media(max-width:600px){.hi h1{font-size:1.3rem}.texte-heb{font-size:1.1rem}}
+
+.ad-banner { display: block; max-width: 900px; margin: 18px auto 0; padding: 0 16px; text-decoration: none; }
+.ad-banner-inner {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border-radius: 18px;
+  padding: 14px 18px; transition: transform .15s;
+  box-shadow: var(--shadow-card);
+}
+.ad-banner:hover .ad-banner-inner { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ad-banner-tag {
+  flex-shrink: 0; font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink2); background: var(--surface2);
+  border-radius: 20px; padding: 3px 10px;
+}
+.ad-banner-icon {
+  flex-shrink: 0; width: 46px; height: 46px; object-fit: contain;
+  background: var(--surface2); border-radius: 12px; padding: 4px;
+}
+.ad-banner-text { flex: 1; min-width: 0; }
+.ad-banner-title { font-size: .96rem; font-weight: 800; color: var(--ink); margin-bottom: 2px; }
+.ad-banner-sub { font-size: .83rem; color: var(--ink2); font-weight: 500; }
+.ad-banner-cta {
+  flex-shrink: 0; font-size: .8rem; font-weight: 800; color: var(--ink);
+  background: var(--secondaire); padding: 8px 16px; border-radius: 12px;
+  white-space: nowrap;
+}
+@media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+
+</style>
+<script>
+
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleLangue(blocId, langueAffichee){
+  const heb = document.getElementById(blocId+'-heb');
+  const fr = document.getElementById(blocId+'-fr');
+  const src = document.getElementById(blocId+'-src');
+  [heb, fr, src].forEach(el => { if(el) el.classList.add('masque'); });
+  if(langueAffichee==='heb'){ heb.classList.remove('masque'); }
+  else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
+  else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
+}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" style="display:inline-flex;" title="Retour a l'accueil Tanakh">
+      <img src="../TonCoachScolaire.png" alt="Ton Coach Scolaire" onerror="this.style.display='none'">
+    </a>
+    <div class="hbdg">Choftim · Chapitre</div>
+    <h1>Choftim 4 – Dvora, Barak et Yaël</h1>
+    <p>Nevi&#x27;im, Choftim, Chapitre 4</p>
+  </div>
+</header>
+
+<div id="pub-zone" style="min-height:0;"></div>
+<script>
+fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
+  document.getElementById('pub-zone').innerHTML = html;
+}).catch(() => {});
+</script>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab active" id="tab-t1" onclick="showTab('t1')">📜 Texte</button><button class="tab" id="tab-t2" onclick="showTab('t2')">🧭 Synthese</button><button class="tab" id="tab-t4" onclick="showTab('t4')">✡️ Midrash</button><button class="tab" id="tab-t3" onclick="showTab('t3')">💬 Commentaires</button><button class="tab" id="tab-t5" onclick="showTab('t5')">⚖️ Halakha</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>וַיֹּסִ֙פוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל לַעֲשׂ֥וֹת הָרַ֖ע בְּעֵינֵ֣י יְהֹוָ֑ה וְאֵה֖וּד מֵֽת׃</p>
+      <p>וַיִּמְכְּרֵ֣ם יְהֹוָ֗ה בְּיַד֙ יָבִ֣ין מֶלֶךְ־כְּנַ֔עַן אֲשֶׁ֥ר מָלַ֖ךְ בְּחָצ֑וֹר וְשַׂר־צְבָאוֹ֙ סִֽיסְרָ֔א וְה֥וּא יוֹשֵׁ֖ב בַּחֲרֹ֥שֶׁת הַגּוֹיִֽם׃</p>
+      <p>וַיִּצְעֲק֥וּ בְנֵֽי־יִשְׂרָאֵ֖ל אֶל־יְהֹוָ֑ה כִּ֠י תְּשַׁ֨ע מֵא֤וֹת רֶֽכֶב־בַּרְזֶל֙ ל֔וֹ וְ֠ה֠וּא לָחַ֞ץ אֶת־בְּנֵ֧י יִשְׂרָאֵ֛ל בְּחׇזְקָ֖ה עֶשְׂרִ֥ים שָׁנָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+      <p>וּדְבוֹרָה֙ אִשָּׁ֣ה נְבִיאָ֔ה אֵ֖שֶׁת לַפִּיד֑וֹת הִ֛יא שֹׁפְטָ֥ה אֶת־יִשְׂרָאֵ֖ל בָּעֵ֥ת הַהִֽיא׃</p>
+      <p>וְ֠הִ֠יא יוֹשֶׁ֨בֶת תַּחַת־תֹּ֜מֶר דְּבוֹרָ֗ה בֵּ֧ין הָרָמָ֛ה וּבֵ֥ין בֵּֽית־אֵ֖ל בְּהַ֣ר אֶפְרָ֑יִם וַיַּעֲל֥וּ אֵלֶ֛יהָ בְּנֵ֥י יִשְׂרָאֵ֖ל לַמִּשְׁפָּֽט׃</p>
+      <p>וַתִּשְׁלַ֗ח וַתִּקְרָא֙ לְבָרָ֣ק בֶּן־אֲבִינֹ֔עַם מִקֶּ֖דֶשׁ נַפְתָּלִ֑י וַתֹּ֨אמֶר אֵלָ֜יו הֲלֹ֥א צִוָּ֣ה&thinsp;<b>׀</b> יְהֹוָ֣ה אֱלֹהֵֽי־יִשְׂרָאֵ֗ל לֵ֤ךְ וּמָֽשַׁכְתָּ֙ בְּהַ֣ר תָּב֔וֹר וְלָקַחְתָּ֣ עִמְּךָ֗ עֲשֶׂ֤רֶת אֲלָפִים֙ אִ֔ישׁ מִבְּנֵ֥י נַפְתָּלִ֖י וּמִבְּנֵ֥י זְבֻלֽוּן׃</p>
+      <p>וּמָשַׁכְתִּ֨י אֵלֶ֜יךָ אֶל־נַ֣חַל קִישׁ֗וֹן אֶת־סִֽיסְרָא֙ שַׂר־צְבָ֣א יָבִ֔ין וְאֶת־רִכְבּ֖וֹ וְאֶת־הֲמוֹנ֑וֹ וּנְתַתִּ֖יהוּ בְּיָדֶֽךָ׃</p>
+      <p>וַיֹּ֤אמֶר אֵלֶ֙יהָ֙ בָּרָ֔ק אִם־תֵּלְכִ֥י עִמִּ֖י וְהָלָ֑כְתִּי וְאִם־לֹ֥א תֵֽלְכִ֛י עִמִּ֖י לֹ֥א אֵלֵֽךְ׃</p>
+      <p>וַתֹּ֜אמֶר הָלֹ֧ךְ אֵלֵ֣ךְ עִמָּ֗ךְ אֶ֚פֶס כִּי֩ לֹ֨א תִֽהְיֶ֜ה תִּֽפְאַרְתְּךָ֗ עַל־הַדֶּ֙רֶךְ֙ אֲשֶׁ֣ר אַתָּ֣ה הוֹלֵ֔ךְ כִּ֣י בְֽיַד־אִשָּׁ֔ה יִמְכֹּ֥ר יְהֹוָ֖ה אֶת־סִֽיסְרָ֑א וַתָּ֧קׇם דְּבוֹרָ֛ה וַתֵּ֥לֶךְ עִם־בָּרָ֖ק קֶֽדְשָׁה׃</p>
+      <p>וַיַּזְעֵ֨ק בָּרָ֜ק אֶת־זְבוּלֻ֤ן וְאֶת־נַפְתָּלִי֙ קֶ֔דְשָׁה וַיַּ֣עַל בְּרַגְלָ֔יו עֲשֶׂ֥רֶת אַלְפֵ֖י אִ֑ישׁ וַתַּ֥עַל עִמּ֖וֹ דְּבוֹרָֽה׃</p>
+      <p>וְחֶ֤בֶר הַקֵּינִי֙ נִפְרָ֣ד מִקַּ֔יִן מִבְּנֵ֥י חֹבָ֖ב חֹתֵ֣ן מֹשֶׁ֑ה וַיֵּ֣ט אׇֽהֳל֔וֹ עַד־אֵיל֥וֹן <span class="mam-kq"><span class="mam-kq-k">(בצענים)</span> <span class="mam-kq-q">[בְּצַעֲנַנִּ֖ים]</span></span> אֲשֶׁ֥ר אֶת־קֶֽדֶשׁ׃</p>
+      <p>וַיַּגִּ֖דוּ לְסִֽיסְרָ֑א כִּ֥י עָלָ֛ה בָּרָ֥ק בֶּן־אֲבִינֹ֖עַם הַר־תָּבֽוֹר׃</p>
+      <p>וַיַּזְעֵ֨ק סִֽיסְרָ֜א אֶת־כׇּל־רִכְבּ֗וֹ תְּשַׁ֤ע מֵאוֹת֙ רֶ֣כֶב בַּרְזֶ֔ל וְאֶת־כׇּל־הָעָ֖ם אֲשֶׁ֣ר אִתּ֑וֹ מֵחֲרֹ֥שֶׁת הַגּוֹיִ֖ם אֶל־נַ֥חַל קִישֽׁוֹן׃</p>
+      <p>וַתֹּ֩אמֶר֩ דְּבֹרָ֨ה אֶל־בָּרָ֜ק ק֗וּם כִּ֣י זֶ֤ה הַיּוֹם֙ אֲשֶׁר֩ נָתַ֨ן יְהֹוָ֤ה אֶת־סִֽיסְרָא֙ בְּיָדֶ֔ךָ הֲלֹ֥א יְהֹוָ֖ה יָצָ֣א לְפָנֶ֑יךָ וַיֵּ֤רֶד בָּרָק֙ מֵהַ֣ר תָּב֔וֹר וַעֲשֶׂ֧רֶת אֲלָפִ֛ים אִ֖ישׁ אַחֲרָֽיו׃</p>
+      <p>וַיָּ֣הׇם יְ֠הֹוָ֠ה אֶת־סִֽיסְרָ֨א וְאֶת־כׇּל־הָרֶ֧כֶב וְאֶת־כׇּל־הַֽמַּחֲנֶ֛ה לְפִי־חֶ֖רֶב לִפְנֵ֣י בָרָ֑ק וַיֵּ֧רֶד סִֽיסְרָ֛א מֵעַ֥ל הַמֶּרְכָּבָ֖ה וַיָּ֥נׇס בְּרַגְלָֽיו׃</p>
+      <p>וּבָרָ֗ק רָדַ֞ף אַחֲרֵ֤י הָרֶ֙כֶב֙ וְאַחֲרֵ֣י הַֽמַּחֲנֶ֔ה עַ֖ד חֲרֹ֣שֶׁת הַגּוֹיִ֑ם וַיִּפֹּ֞ל כׇּל־מַחֲנֵ֤ה סִֽיסְרָא֙ לְפִי־חֶ֔רֶב לֹ֥א נִשְׁאַ֖ר עַד־אֶחָֽד׃</p>
+      <p>וְסִֽיסְרָא֙ נָ֣ס בְּרַגְלָ֔יו אֶל־אֹ֣הֶל יָעֵ֔ל אֵ֖שֶׁת חֶ֣בֶר הַקֵּינִ֑י כִּ֣י שָׁל֗וֹם בֵּ֚ין יָבִ֣ין מֶלֶךְ־חָצ֔וֹר וּבֵ֕ין בֵּ֖ית חֶ֥בֶר הַקֵּינִֽי׃</p>
+      <p>וַתֵּצֵ֣א יָעֵל֮ לִקְרַ֣את סִֽיסְרָא֒ וַתֹּ֣אמֶר אֵלָ֗יו סוּרָ֧ה אֲדֹנִ֛י סוּרָ֥ה אֵלַ֖י אַל־תִּירָ֑א וַיָּ֤סַר אֵלֶ֙יהָ֙ הָאֹ֔הֱלָה וַתְּכַסֵּ֖הוּ בַּשְּׂמִיכָֽה׃</p>
+      <p>וַיֹּ֧אמֶר אֵלֶ֛יהָ הַשְׁקִינִי־נָ֥א מְעַט־מַ֖יִם כִּ֣י צָמֵ֑אתִי וַתִּפְתַּ֞ח אֶת־נֹ֧אוד הֶחָלָ֛ב וַתַּשְׁקֵ֖הוּ וַתְּכַסֵּֽהוּ׃</p>
+      <p>וַיֹּ֣אמֶר אֵלֶ֔יהָ עֲמֹ֖ד פֶּ֣תַח הָאֹ֑הֶל וְהָיָה֩ אִם־אִ֨ישׁ יָבֹ֜א וּשְׁאֵלֵ֗ךְ וְאָמַ֛ר הֲיֵֽשׁ־פֹּ֥ה אִ֖ישׁ וְאָמַ֥רְתְּ אָֽיִן׃</p>
+      <p>וַתִּקַּ֣ח יָעֵ֣ל אֵֽשֶׁת־חֶ֠בֶר אֶת־יְתַ֨ד הָאֹ֜הֶל וַתָּ֧שֶׂם אֶת־הַמַּקֶּ֣בֶת בְּיָדָ֗הּ וַתָּב֤וֹא אֵלָיו֙ בַּלָּ֔אט וַתִּתְקַ֤ע אֶת־הַיָּתֵד֙ בְּרַקָּת֔וֹ וַתִּצְנַ֖ח בָּאָ֑רֶץ וְהֽוּא־נִרְדָּ֥ם וַיָּ֖עַף וַיָּמֹֽת׃</p>
+      <p>וְהִנֵּ֣ה בָרָק֮ רֹדֵ֣ף אֶת־סִֽיסְרָא֒ וַתֵּצֵ֤א יָעֵל֙ לִקְרָאת֔וֹ וַתֹּ֣אמֶר ל֔וֹ לֵ֣ךְ וְאַרְאֶ֔ךָּ אֶת־הָאִ֖ישׁ אֲשֶׁר־אַתָּ֣ה מְבַקֵּ֑שׁ וַיָּבֹ֣א אֵלֶ֔יהָ וְהִנֵּ֤ה סִֽיסְרָא֙ נֹפֵ֣ל מֵ֔ת וְהַיָּתֵ֖ד בְּרַקָּתֽוֹ׃</p>
+      <p>וַיַּכְנַ֤ע אֱלֹהִים֙ בַּיּ֣וֹם הַה֔וּא אֵ֖ת יָבִ֣ין מֶֽלֶךְ־כְּנָ֑עַן לִפְנֵ֖י בְּנֵ֥י יִשְׂרָאֵֽל׃</p>
+      <p>וַתֵּ֜לֶךְ יַ֤ד בְּנֵֽי־יִשְׂרָאֵל֙ הָל֣וֹךְ וְקָשָׁ֔ה עַ֖ל יָבִ֣ין מֶלֶךְ־כְּנָ֑עַן עַ֚ד אֲשֶׁ֣ר הִכְרִ֔יתוּ אֵ֖ת יָבִ֥ין מֶלֶךְ־כְּנָֽעַן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+    </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>Les enfants d’Israël recommencèrent à mécontenter l’Éternel, après la mort d’Ahod;</p>
+      <p>et l’Éternel les livra au pouvoir de Jabin, roi cananéen qui régnait à Haçor, et qui avait pour général Sisara, résidant à Harochet Haggoyim.</p>
+      <p>Les enfants d’Israël implorèrent le Seigneur; car ce roi avait neuf cents chariots de guerre, et il molestait durement, pendant vingt ans, les enfants d’Israël.</p>
+      <p>Or Débora, une prophétesse, femme de Lappidoth, gouvernait Israël à cette époque.</p>
+      <p>Elle siégeait au pied du "Palmier de Débora", entre Rama et Béthel, dans la montagne d’Ephraïm; et c’est à elle que les Israélites s’adressaient pour obtenir justice.</p>
+      <p>Elle envoya quérir Barak, fils d’Abinoam, de Kédech-en-Nephtali, et lui dit: "Voici l’ordre de l’Éternel, Dieu d’Israël: Va déployer une armée sur le mont Thabor, après avoir pris, avec toi, dix mille hommes des tribus de Nephtali et de Zabulon;</p>
+      <p>moi, je ferai avancer de ton côté, vers le torrent de Kison, Sisara, commandant de l’armée de Jabin, avec ses chariots et sa multitude, et je le livrerai en ta main."</p>
+      <p>Barak lui répondit: "Si tu m’accompagnes, j’irai; sinon, je n’irai point."</p>
+      <p>Elle répliqua: "Certes, j’irai avec toi; seulement, ce n’est pas à toi que reviendra l’honneur de ton entreprise, puisque c’est à une femme que l’Éternel aura livré Sisara." Et là-dessus Débora s’en alla avec Barak à Kédech.</p>
+      <p>Barak convoqua Zabulon et Nephtali à Kédech, dix mille hommes montèrent à sa suite, et Débora monta avec lui.</p>
+      <p>(Or, Héber, le Kénéen, s’était séparé des Kénéens, des descendants de Hobab, beau-père de Moïse; et il avait dressé sa tente vers le Chêne de Çaanannîm, qui est près de Kédech.)</p>
+      <p>Sisara, ayant appris que Barak, fils d’Abinoam, s’était dirigé sur le mont Thabor,</p>
+      <p>réunit tous ses chariots, neuf cents chariots armés de fer, ainsi que toute la milice sous ses ordres, et les achemina de Harochet Haggoyim vers le torrent de Kison.</p>
+      <p>Alors Débora dit à Barak: "En avant! car c’est aujourd’hui que le Seigneur livre en tes mains Sisara; n’est-ce pas Dieu même qui marche devant toi?" Et Barak descendit du mont Thabor, suivi de dix mille hommes.</p>
+      <p>L’Éternel frappa de perturbation Sisara, tous ses attelages et toute son armée, qu’il livra au glaive de Barak; Sisara sauta à bas de son char et s’enfuit à pied.</p>
+      <p>Barak poursuivit attelages et armée jusqu’à Harochet Haggoyim; et toute l’armée de Sisara tomba sous le tranchant du glaive, pas un seul n’échappa.</p>
+      <p>Cependant Sisara fuyait à pied vers la tente de Jaël, femme de Héber le Kénéen; car il y avait paix entre Jabin, roi de Haçor, et la famille de Héber le Kénéen.</p>
+      <p>Jaël sortit à la rencontre de Sisara et lui dit: "Entre, seigneur, entre chez moi, ne crains rien!" Il la suivit dans la tente, et elle le cacha sous une couverture.</p>
+      <p>Il lui dit: "Donne-moi, je te prie, un peu d’eau à boire, j’ai soif!" Et elle ouvrit l’outre au lait, lui donna à boire et le recouvrit.</p>
+      <p>Il lui dit: "Tiens-toi à l’entrée de la tente, et si l’on vient te demander: Y a-t-il quelqu’un ici? tu répondras: Non.</p>
+      <p>Or Jaël, femme de Héber, prit une cheville de la tente, se saisit d’un marteau, se glissa près de lui sans bruit et enfonça dans sa tempe la cheville, qui resta fichée en terre; lui, fatigué, s’était endormi; il mourut.</p>
+      <p>Cependant Barak vint, poursuivant Sisara; Jaël s’avança à sa rencontre et lui dit: "Viens, je vais te faire voir l’homme que tu cherches." Il la suivit et vit Sisara étendu mort, la tempe traversée par la cheville.</p>
+      <p>Ce jour-là, Dieu abattit Jabin, roi de Canaan, devant les enfants d’Israël;</p>
+      <p>et la puissance des enfants d’Israël alla s’appesantissant sur Jabin, roi de Canaan, si bien qu’ils consommèrent sa ruine.</p>
+      
+      
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="sec" id="s-t2">
+  <div class="synthese-bloc"><p>Le chapitre 4 raconte la <b>victoire sur Yavin et Sisera</b>. Après la mort d'Ehoud, Israël retombe sous l'oppression de Yavin, roi de Hatsor, dont le chef d'armée est Sisera. <b>Dvora</b>, prophétesse et juge, convoque <b>Barak</b>, qui n'accepte de partir que si elle l'accompagne ; elle annonce que la gloire reviendra à une femme. Sisera est battu près du Qichon, puis tué par <b>Yaël</b>. Suite du <a href="chapitre_shoftim-3.html">chapitre 3</a>.</p>
+<h4>Plan</h4>
+
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Versets</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Sujet</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Contenu</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">4:1-3</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'oppression de Yavin</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Neuf cents chars de fer ; vingt ans d'oppression</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">4:4-10</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Dvora et Barak</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Appel à Barak ; Dvora l'accompagne ; dix mille hommes</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">4:11-16</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La bataille du Qichon</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">L'Éternel met en déroute Sisera et ses chars</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">4:17-22</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Yaël et Sisera</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sisera se réfugie sous la tente de Yaël et y est tué</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">4:23-24</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">La chute de Yavin</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Israël prévaut contre le roi de Canaan</td></tr>
+</table>
+<h4>L'oppression de Yavin (4:1-3)</h4>
+<p>Après la mort d'Ehoud, Israël refait le mal et D.ieu le livre à Yavin, roi de Canaan à Hatsor, dont le général Sisera habite Harochet-Hagoyim. Yavin dispose de neuf cents chars de fer et opprime durement Israël pendant vingt ans. Israël crie vers l'Éternel.</p>
+<h4>Dvora et Barak (4:4-10)</h4>
+<p>Dvora, prophétesse, épouse de Lapidot, juge Israël sous un palmier entre Rama et Beth-El. Elle appelle Barak, fils d'Avinoam, de Qédech-Naftali, et lui transmet l'ordre de D.ieu : il doit rassembler dix mille hommes de Naftali et de Zevouloun sur le mont Tavor ; D.ieu attirera Sisera au torrent de Qichon. Barak répond qu'il n'ira que si elle vient avec lui. Elle accepte, en annonçant que la gloire ne sera pas pour lui car D.ieu livrera Sisera aux mains d'une femme. Barak convoque Zevouloun et Naftali ; dix mille hommes montent à sa suite, avec Dvora.</p>
+<h4>La bataille (4:11-16)</h4>
+<p>'Hever le Qénite s'était séparé des Qénites, descendants de 'Hovav, beau-père de Moïse. Sisera apprend que Barak est monté au Tavor et réunit ses neuf cents chars de fer. Dvora dit à Barak : « Debout ! C'est aujourd'hui que l'Éternel livre Sisera ; l'Éternel n'est-Il pas sorti devant toi ? » L'Éternel jette la confusion sur Sisera, ses chars et son armée devant Barak. Sisera descend de son char et s'enfuit à pied ; Barak poursuit l'armée jusqu'à Harochet-Hagoyim et tous tombent par l'épée.</p>
+<h4>Yaël (4:17-22)</h4>
+<p>Sisera se réfugie sous la tente de Yaël, épouse de 'Hever, car il y avait paix entre Yavin et la maison de 'Hever. Yaël l'accueille, le cache sous une couverture, lui donne du lait quand il demande de l'eau, et se tient à l'entrée à sa demande. Quand il dort, épuisé, elle prend un piquet de tente et un marteau, et lui enfonce le piquet dans la tempe jusqu'au sol. Barak arrive ; Yaël lui montre l'homme qu'il cherche, mort.</p>
+<h4>La chute de Yavin (4:23-24)</h4>
+<p>Ce jour-là, D.ieu humilie Yavin, roi de Canaan, devant les fils d'Israël. La main d'Israël pèse de plus en plus sur Yavin jusqu'à l'anéantir.</p></div>
+</div>
+
+<div class="sec" id="s-t4">
+  <div class="synthese-bloc"><p>Rachi s'appuie sur le Targoum Yonatan, le Talmud et le Midrash pour éclairer le chapitre.</p>
+<h4>« 'Harochet-Hagoyim » (4:2)</h4>
+<p>Nom d'une ville, ainsi appelée parce qu'elle était une forteresse et un siège du pouvoir (selon le Targoum Yonatan).</p>
+<h4>« Il opprima durement » (4:3)</h4>
+<p>Rabbi Tan'houma : par la dérision, comme dans « vos paroles sont dures contre moi » (Malachie 3:13).</p>
+<h4>« Épouse de Lapidot » (4:4)</h4>
+<p>Elle fabriquait des mèches pour le Sanctuaire (Meguila 14a) ; Lapidot évoque le mot « flambeau ».</p>
+<h4>« Sous le palmier de Dvora » (4:5)</h4>
+<p>Elle possédait des palmiers à Yericho, des vignes à Rama, des oliviers dans la plaine de Beth-El et une terre blanche dans la montagne d'Éfraïm.</p>
+<h4>« L'Éternel n'a-t-Il pas ordonné ? » (4:6)</h4>
+<p>Il l'a ordonné par Moïse : « Tu les détruiras entièrement » (Deutéronome 20:17), selon la Mekhilta.</p>
+<h4>« À ses talons » (4:10)</h4>
+<p>Avec lui.</p>
+<h4>« Chêne de Tsaananim » (4:11)</h4>
+<p>Plaine marécageuse, selon le Targoum Yonatan ; en ancien français « mariscum », marais.</p>
+<h4>« De Harochet au torrent de Qichon » (4:13)</h4>
+<p>Sisera les fit marcher de Harochet-Hagoyim, où il se tenait, vers le torrent de Qichon.</p>
+<h4>« Une couverture » (4:18)</h4>
+<p>Le Targoum Yonatan traduit gounkha : un manteau ; Rav Haï y voit une couverture.</p>
+<h4>« L'outre de lait » (4:19)</h4>
+<p>Le lait provoque la somnolence puis le sommeil : il demandait de l'eau, elle lui donna du lait pour l'endormir.</p>
+<h4>« Tiens-toi à l'entrée » (4:20)</h4>
+<p>Sois vigilant ; certains lisent « pour te tenir ».</p>
+<h4>« Un piquet de la tente » (4:21)</h4>
+<p>Piquet planté dans le sol pour tendre le bas de la tente.</p>
+<h4>« À pas de loup » (4:21)</h4>
+<p>En cachette, en secret.</p>
+<h4>« Sa tempe » (4:22)</h4>
+<p>Elle lui traversa la tempe et le sol.</p></div>
+</div>
+
+<div class="sec" id="s-t3">
+  <div class="synthese-bloc"><p>Rachi commente plusieurs versets du chapitre 4.</p>
+<table style="width:100%; border-collapse:collapse; margin:12px 0;">
+<tr><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Verset</th><th style="background:var(--surface2, #eef3f9); padding:8px; border:1px solid var(--border,#e2e8f0);">Commentaire de Rachi</th></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« 'Harochet-Hagoyim » (4:2)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Nom d'une ville, ainsi appelée parce qu'elle était une forteresse et un siège du pouvoir (selon le Targoum Yonatan).</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Il opprima durement » (4:3)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Rabbi Tan'houma :</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Épouse de Lapidot » (4:4)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle fabriquait des mèches pour le Sanctuaire (Meguila 14a) ;</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Sous le palmier de Dvora » (4:5)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle possédait des palmiers à Yericho, des vignes à Rama, des oliviers dans la plaine de Beth-El et une terre blanche dans la montagne d'Éfraïm.</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« L'Éternel n'a-t-Il pas ordonné ? » (4:6)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Il l'a ordonné par Moïse :</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« À ses talons » (4:10)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Avec lui.</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Chêne de Tsaananim » (4:11)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Plaine marécageuse, selon le Targoum Yonatan ;</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« De Harochet au torrent de Qichon » (4:13)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sisera les fit marcher de Harochet-Hagoyim, où il se tenait, vers le torrent de Qichon.</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Une couverture » (4:18)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le Targoum Yonatan traduit gounkha :</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« L'outre de lait » (4:19)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Le lait provoque la somnolence puis le sommeil :</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Tiens-toi à l'entrée » (4:20)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Sois vigilant ;</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Un piquet de la tente » (4:21)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Piquet planté dans le sol pour tendre le bas de la tente.</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« À pas de loup » (4:21)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">En cachette, en secret.</td></tr>
+<tr><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">« Sa tempe » (4:22)</td><td style="padding:8px; border:1px solid var(--border,#e2e8f0);">Elle lui traversa la tempe et le sol.</td></tr>
+</table><div class="commentaires-sources">D'apres Rashi</div></div>
+</div>
+
+<div class="sec" id="s-t5">
+  <div class="synthese-bloc"><p>Le chapitre fonde ou illustre plusieurs principes de la tradition juive.</p>
+<ul>
+<li><b>Le rôle de la femme prophétesse.</b> Dvora juge et prophétise (4:4) : la femme peut recevoir la prophétie et enseigner la Torah ; la Guemara en parle à Meguila 14a.</li>
+<li><b>Ne pas se fier à la sécurité apparente.</b> Sisera se croit en paix chez 'Hever (4:17) ; l'alliance humaine ne protège pas de la justice divine.</li>
+<li><b>Gagner la guerre avec la confiance en D.ieu.</b> « L'Éternel n'est-Il pas sorti devant toi ? » (4:14) : l'issue ne dépend pas des chars de fer mais de D.ieu.</li>
+<li><b>Hospitalité et danger.</b> L'hospitalité de Yaël est un piège à l'ennemi d'Israël ; en temps de guerre, l'ennemi qui poursuit Israël est traité comme tel. Voir Choulhan Aroukh, 'Hochen Michpat 425 sur le sauvetage du poursuivi.</li>
+</ul>
+
+<p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
+</div>
+
+</main>
+
+<footer>
+  Fait avec soin pour bien etudier 📖
+  <div class="fc"><strong>© 2026 Ton Coach Scolaire</strong> — Tous droits reserves<br>Sources : <a href="https://www.sefaria.org/Judges.4" target="_blank">Sefaria</a></div>
+</footer>
+</body>
+</html>
