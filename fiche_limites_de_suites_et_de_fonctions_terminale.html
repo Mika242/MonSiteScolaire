@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Ton Coach Scolaire">
+<meta name="copyright" content="© 2025 Ton Coach Scolaire — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
+<title>Limites de suites et de fonctions — Terminale</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#F7F9FC;--card:#FFFFFF;--surface2:#EEF3F9;--border:#E2E8F0;
+  --ink:#1A2B3C;--ink2:#5B6B7D;--ink3:#94A3B3;
+  --brand:#58CC02;--brand-dark:#3D9401;--brand-light:#E8F9DA;
+  --accent:#FFC800;--accent-light:#FFF6D9;
+  --t1:#1CB0F6;--t2:#58CC02;--t3:#CE82FF;--t4:#FF9600;--t5:#FF4B4B;--t6:#1CB0F6;
+  --t1b:#E3F5FE;--t2b:#E8F9DA;--t3b:#F5E9FE;--t4b:#FFF1DE;--t5b:#FFE8E8;--t6b:#E3F5FE;
+  --texte-f1:#0B6BA8;--texte-f2:#3D9401;--texte-f3:#7B3FA0;--texte-f4:#B35F00;--texte-f5:#C82929;--texte-f6:#0B6BA8;
+  --tc1:#FF4B4B;--tc2:#1CB0F6;--ok:#3D9401;--bad:#EA2B2B;
+  --shadow-card:0 2px 8px rgba(26,43,60,.06);
+  --shadow-pop:0 4px 14px rgba(26,43,60,.1);
+  --shadow-pop-sm:0 2px 8px rgba(26,43,60,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:17px;line-height:1.65}
+header{background:var(--brand);padding:32px 24px 26px;position:relative;overflow:hidden}
+.hi{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.ht img{height:46px;border-radius:14px;margin-bottom:10px;display:block;background:rgba(255,255,255,.15);padding:4px}
+.hbdg{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:8px}
+header h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:5px}
+header h1 em{font-style:normal;color:#fff}
+header p{font-size:.86rem;color:rgba(255,255,255,.85);font-weight:500}
+.rb{background:rgba(255,255,255,.16);border-radius:16px;padding:14px 18px;text-align:center;min-width:148px;flex-shrink:0}
+.rbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px}
+.rs{font-size:1.25rem;letter-spacing:2px;margin-bottom:4px;display:block;color:var(--accent)}
+.rsc{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;line-height:1}
+.rst{font-size:.78rem;color:rgba(255,255,255,.65)}
+.rp{font-size:.72rem;color:rgba(255,255,255,.75);margin-top:2px;font-weight:600}
+.rbar{width:100%;height:6px;background:rgba(255,255,255,.2);border-radius:10px;margin-top:7px;overflow:hidden}
+.rbar-f{height:100%;border-radius:10px;background:var(--accent);width:0%;transition:width .5s}
+.cs{background:var(--ink);padding:9px 20px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.cs-t{font-size:.77rem;color:rgba(255,255,255,.85);font-weight:600}
+.cs-b{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:var(--ink);text-decoration:none;padding:5px 14px;border-radius:20px;font-size:.75rem;font-weight:800;transition:transform .15s}
+.cs-b:hover{transform:scale(1.04)}
+.tw{background:var(--card);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-card)}
+.tabs{display:flex;max-width:980px;margin:auto;padding:0 12px;overflow-x:auto;gap:2px}
+.tab{flex-shrink:0;padding:12px 14px;background:transparent;border:none;border-bottom:3px solid transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--ink3);transition:all .2s;white-space:nowrap;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink2);background:var(--surface2)}
+.tab.t1.active{color:var(--t1);border-bottom-color:var(--t1);background:var(--t1b)}
+.tab.t2.active{color:var(--t2);border-bottom-color:var(--t2);background:var(--t2b)}
+.tab.t3.active{color:var(--t3);border-bottom-color:var(--t3);background:var(--t3b)}
+.tab.t4.active{color:var(--t4);border-bottom-color:var(--t4);background:var(--t4b)}
+.tab.t5.active{color:var(--t5);border-bottom-color:var(--t5);background:var(--t5b)}
+.tab.t6.active{color:var(--t6);border-bottom-color:var(--t6);background:var(--t6b)}
+.tab.tp.active{color:var(--brand-dark);border-bottom-color:var(--brand);background:var(--brand-light)}
+.tab.tc1.active{color:var(--tc1);border-bottom-color:var(--tc1);background:var(--t5b)}
+.tab.tc2.active{color:var(--tc2);border-bottom-color:var(--tc2);background:var(--t1b)}
+main{max-width:980px;margin:auto;padding:28px 16px 80px}
+.sec{display:none}.sec.active{display:block}
+.si{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:18px;border-bottom:2px solid var(--border)}
+.sico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.si1{background:var(--t1b)}.si2{background:var(--t2b)}.si3{background:var(--t3b)}
+.si4{background:var(--t4b)}.si5{background:var(--t5b)}.si6{background:var(--t6b)}
+.sip{background:var(--brand-light);color:var(--brand-dark)}.sic1{background:var(--t5b);color:var(--tc1)}.sic2{background:var(--t1b);color:var(--tc2)}
+.st h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:800}
+.st p{color:var(--ink2);font-size:.85rem;margin-top:2px;font-weight:500}
+.cours{background:var(--card);border-radius:18px;padding:18px 22px;margin-bottom:14px;box-shadow:var(--shadow-card);border-left:5px solid}
+.c1{border-left-color:var(--t1)}.c2{border-left-color:var(--t2)}.c3{border-left-color:var(--t3)}
+.c4{border-left-color:var(--t4)}.c5{border-left-color:var(--t5)}.c6{border-left-color:var(--t6)}
+.clbl{font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:9px}
+.form{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;border-radius:12px;padding:10px 15px;font-size:.9rem;margin:6px 0;display:block;line-height:1.8}
+.f1{background:var(--t1b);color:var(--texte-f1)}
+.f2{background:var(--t2b);color:var(--texte-f2)}
+.f3{background:var(--t3b);color:var(--texte-f3)}
+.f4{background:var(--t4b);color:var(--texte-f4)}
+.f5{background:var(--t5b);color:var(--texte-f5)}
+.f6{background:var(--t6b);color:var(--texte-f6)}
+.mn{font-family:'Plus Jakarta Sans',monospace;font-size:.86rem;background:var(--surface2);padding:2px 7px;border-radius:6px;color:var(--ink);display:inline-block;font-weight:700}
+.tip{background:var(--accent-light);border-radius:12px;padding:11px 15px;font-size:.86rem;margin-top:9px;line-height:1.7}
+.tip b{display:block;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:#8A6D00;margin-bottom:3px}
+.ex{background:var(--surface2);border-radius:12px;padding:12px 16px;margin-top:9px;font-size:.86rem;line-height:1.85;white-space:pre-line}
+.ex b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);margin-bottom:0}
+.pt{background:var(--t2b);border-radius:12px;padding:11px 15px;margin-top:9px;font-size:.85rem;font-style:normal;color:var(--texte-f2);line-height:1.6}
+.pt::before{content:'✏️ Rédaction attendue : ';font-weight:700;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);display:block;margin-bottom:4px}
+.methode{background:var(--t3b);border-radius:14px;padding:14px 18px;margin:12px 0}
+.mlbl{font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--texte-f3);margin-bottom:9px}
+.steps{list-style:none;padding:0}
+.steps li{font-size:.88rem;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.08);line-height:1.75;font-weight:500}
+.steps li:last-child{border:none}
+.steps li::before{content:'▸ ';color:var(--texte-f3);font-weight:700}
+.lvl{font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:14px;margin-left:5px}
+.le{background:var(--t2b);color:var(--texte-f2)}
+.lm{background:var(--accent-light);color:#8A6D00}
+.lh{background:var(--t5b);color:var(--texte-f5)}
+.div{display:flex;align-items:center;gap:9px;margin:22px 0 13px;font-size:.66rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.div::before,.div::after{content:'';flex:1;height:2px;background:var(--border);border-radius:2px}
+.pr{display:flex;align-items:center;gap:10px;margin:16px 0 6px}
+.pb{flex:1;height:8px;background:var(--surface2);border-radius:10px;overflow:hidden}
+.pf{height:100%;border-radius:10px;width:0%;transition:width .4s}
+.pf1{background:var(--t1)}.pf2{background:var(--t2)}.pf3{background:var(--t3)}
+.pf4{background:var(--t4)}.pf5{background:var(--t5)}.pf6{background:var(--t6)}
+.pt2{font-size:.76rem;color:var(--ink2);font-weight:700;white-space:nowrap}
+.ctbl{width:100%;border-collapse:separate;border-spacing:0;font-size:.85rem;margin:10px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-card)}
+.ctbl th{padding:9px 12px;text-align:center;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;background:var(--brand);color:#fff}
+.ctbl td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-size:.84rem;background:var(--card)}
+.ctbl td.lab{font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:700;text-align:left;background:var(--surface2)}
+.ctbl tr:last-child td{border-bottom:none}
+.schema-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;box-shadow:var(--shadow-card)}
+.schema-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:12px}
+.schema-corps{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.schema-svg{flex-shrink:0;max-width:100%;background:var(--surface2);border-radius:12px;padding:10px;display:inline-block}
+.schema-svg svg{display:block;width:260px;max-width:100%;height:auto}
+.schema-legendes{flex:1;min-width:180px;display:flex;flex-direction:column;gap:8px}
+.schema-legende{display:flex;align-items:flex-start;gap:8px;font-size:.86rem;line-height:1.5}
+.schema-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--tc1);color:#fff;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+@media(max-width:520px){.schema-corps{flex-direction:column}.schema-svg{align-self:center}}
+.frise-bloc{background:var(--card);border-radius:16px;padding:18px 20px;margin:12px 0;overflow-x:auto;box-shadow:var(--shadow-card)}
+.frise-titre{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:22px}
+.frise-ligne{display:flex;align-items:flex-start;gap:0;min-width:min-content;position:relative;padding-top:8px}
+.frise-etape{flex:1;min-width:110px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding:0 8px}
+.frise-date{font-size:.7rem;font-weight:800;color:var(--brand-dark);margin-bottom:11px;white-space:nowrap;position:relative;z-index:1;background:var(--card);padding:0 4px}
+.frise-point-track{position:relative;width:100%;height:14px;display:flex;align-items:center;justify-content:center;margin-bottom:9px}
+.frise-point-track::before{content:'';position:absolute;left:0;right:50%;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-point-track::after{content:'';position:absolute;left:50%;right:0;top:50%;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px}
+.frise-etape:first-child .frise-point-track::before{display:none}
+.frise-etape:last-child .frise-point-track::after{display:none}
+.frise-point{width:16px;height:16px;border-radius:50%;background:var(--brand);position:relative;z-index:2;flex-shrink:0;box-shadow:0 0 0 4px var(--brand-light)}
+.frise-label{font-size:.78rem;color:var(--ink2);line-height:1.4;font-weight:500}
+.exo{background:var(--card);border-radius:16px;padding:17px 21px;margin-bottom:11px;box-shadow:var(--shadow-card);transition:box-shadow .15s}
+.exo:hover{box-shadow:var(--shadow-pop-sm)}
+.exo-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+.exo>p{font-size:.94rem;font-weight:700;line-height:1.6;margin-bottom:9px}
+.ctx{background:var(--surface2);border-radius:12px;padding:9px 13px;font-size:.86rem;color:var(--ink2);margin-bottom:10px;line-height:1.75;font-weight:500}
+.ctx b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);display:block;margin-bottom:3px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opts label{display:flex;align-items:flex-start;gap:9px;padding:11px 14px;background:var(--surface2);border:2px solid transparent;border-radius:14px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .14s;line-height:1.5}
+.opts label:hover{border-color:var(--brand);background:var(--brand-light)}
+.fi{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;font-weight:600;background:var(--surface2);color:var(--ink);outline:none;transition:border .14s;margin-top:6px}
+.fi:focus{border-color:var(--brand);background:var(--card)}
+.btn{padding:11px 22px;border-radius:14px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:.84rem;font-weight:800;cursor:pointer;transition:all .14s;margin-top:9px;margin-right:6px;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.b1{background:var(--t1);color:#fff}.b2{background:var(--t2);color:#fff}.b3{background:var(--t3);color:#fff}
+.b4{background:var(--t4);color:#fff}.b5{background:var(--t5);color:#fff}.b6{background:var(--t6);color:#fff}
+.bc1{background:var(--tc1);color:#fff}.bc2{background:var(--tc2);color:#fff}
+.bg{background:var(--surface2);border:none;color:var(--ink2);box-shadow:none}
+.bg:hover{background:var(--border);color:var(--ink)}
+.res{display:none;margin-top:9px;padding:11px 15px;border-radius:14px;font-size:.86rem;line-height:1.6;font-weight:600}
+.res.ok{background:var(--t2b)}.res.bad{background:var(--t5b)}
+.ok-l{color:var(--ok);font-weight:800}.bad-l{color:var(--bad);font-weight:800}
+.expl{margin-top:5px;color:var(--ink2);font-size:.83rem;line-height:1.9;font-weight:500}
+.corr{display:none;margin-top:9px;background:var(--surface2);border-radius:14px;padding:13px 17px;font-size:.86rem;line-height:2}
+.corr .s{color:var(--ink2);border-bottom:1px dashed var(--border);padding:4px 0;font-weight:500}
+.corr .s:last-child{border:none;color:var(--ink);font-weight:700}
+.corr .s::before{content:'▸ ';color:var(--ok)}
+.chdr{border-radius:18px;padding:19px 23px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--shadow-card)}
+.chdr1{background:var(--t5b)}
+.chdr2{background:var(--t1b)}
+.cbdg{color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:14px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.cbdg1{background:var(--tc1)}.cbdg2{background:var(--tc2)}
+.cinfo h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.cinfo p,.cinfo ul{font-size:.85rem;line-height:1.7;font-weight:500}
+.cinfo ul{padding-left:16px;margin-top:6px}
+.cexo{background:var(--card);border-radius:18px;padding:21px 23px;margin-bottom:15px;box-shadow:var(--shadow-card)}
+.cehd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;padding-bottom:11px;border-bottom:2px solid var(--border);flex-wrap:wrap;gap:8px}
+.cen{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:800}
+.cen1{color:var(--tc1)}.cen2{color:var(--tc2)}
+.cpts{border-radius:14px;padding:3px 11px;font-size:.76rem;font-weight:800}
+.cpts1{background:var(--t5b);color:var(--tc1)}
+.cpts2{background:var(--t1b);color:var(--tc2)}
+.csub{margin-top:11px;padding:11px 15px;background:var(--surface2);border-radius:12px;font-size:.9rem;line-height:1.9;font-weight:500}
+.csub b{font-family:'Plus Jakarta Sans',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink2);display:block;margin-bottom:4px}
+.ans{margin-top:9px;min-height:65px;background:var(--surface2);border-radius:12px;padding:6px 11px;font-size:.87rem;color:var(--ink3);font-style:italic}
+.ans.tall{min-height:105px}
+.ans.xt{min-height:145px}
+.cco{display:none;margin-top:12px;background:var(--t2b);border-radius:14px;padding:14px 18px}
+.ccoh{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ok);margin-bottom:10px}
+.ccob .l{display:block;border-bottom:1px dashed rgba(61,148,1,.25);padding:4px 0;color:var(--ink2);font-size:.84rem;font-weight:500}
+.ccob .l:last-child{border:none;color:var(--ink);font-weight:700}
+.ccob .l::before{content:'▸ ';color:var(--ok)}
+.ccob .hi{color:var(--ok);font-weight:700}
+.cta{background:var(--brand);border-radius:22px;padding:28px 24px;margin:32px 0 0;text-align:center;position:relative;overflow:hidden}
+.cta-inner{position:relative;z-index:1}
+.cta-icon{font-size:2rem;margin-bottom:10px;display:block}
+.cta-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-title em{font-style:normal;color:var(--accent)}
+.cta-sub{font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:18px;line-height:1.5;max-width:460px;margin-left:auto;margin-right:auto;font-weight:500}
+.cta-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cta-step{background:rgba(255,255,255,.18);border-radius:20px;padding:6px 14px;font-size:.75rem;color:#fff;font-weight:700}
+.cta-btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:var(--ink);text-decoration:none;padding:12px 28px;border-radius:16px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:800;transition:transform .2s;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.cta-btn:hover{transform:translateY(-2px)}
+footer{text-align:center;padding:26px;font-size:.78rem;color:var(--ink2);margin-top:24px;line-height:1.9}
+.fc{font-size:.7rem;color:var(--ink3);margin-top:6px}
+.fc strong{color:var(--ink2)}
+footer a{color:var(--brand-dark);text-decoration:none;font-weight:700}
+@media(max-width:600px){header h1{font-size:1.35rem}.hi{flex-direction:column;align-items:flex-start}.rb{align-self:stretch}main{padding:16px 10px 60px}}
+
+
+</style>
+<script>
+
+let ta=0,tc2=0;
+const sc={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},tot={t1:0,t2:0,t3:0,t4:0,t5:0,t6:0},ans={};
+function showTab(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function check(id,cor,ex,s){
+  const ch=document.getElementsByName(id);let sel=null;
+  for(let c of ch)if(c.checked)sel=c.value;
+  const r=document.getElementById(id+'-r');
+  if(!sel){r.innerHTML="<span class='bad-l'>&#9888; Choisis une reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(sel===cor){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function checkF(id,cor,ex,s){
+  const inp=document.getElementById(id+'-i'),r=document.getElementById(id+'-r');
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  const a=cor.split('|').map(v=>v.trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'));
+  if(!val){r.innerHTML="<span class='bad-l'>&#9888; Ecris ta reponse !</span>";r.className='res bad';r.style.display='block';return;}
+  if(ans[id])return;ans[id]=true;tot[s]++;ta++;
+  if(a.includes(val)){sc[s]++;tc2++;r.innerHTML="<span class='ok-l'>&#10004; Correct !</span><div class='expl'>"+ex+"</div>";r.className='res ok';}
+  else{r.innerHTML="<span class='bad-l'>&#10008; Incorrect. Consulte la correction ci-dessous.</span><div class='expl'>"+ex+"</div>";r.className='res bad';}
+  r.style.display='block';upP(s);upR();
+}
+function upP(s){
+  const p=tot[s]>0?Math.round(sc[s]/tot[s]*100):0;
+  const b=document.getElementById('pb-'+s),t=document.getElementById('pt-'+s);
+  if(b)b.style.width=p+'%';if(t)t.textContent=sc[s]+' / '+tot[s]+' . '+p+'%';
+}
+function upR(){
+  const p=ta>0?Math.round(tc2/ta*100):0;
+  document.getElementById('r-c').textContent=tc2;document.getElementById('r-t').textContent=ta;
+  document.getElementById('r-p').textContent=ta>0?p+'%':'-';document.getElementById('r-b').style.width=p+'%';
+  const s=p>=90?5:p>=75?4:p>=55?3:p>=35?2:p>=10?1:0;
+  document.getElementById('r-s').textContent='*'.repeat(s)+'.'.repeat(5-s);
+  const b=document.getElementById('r-b');
+  b.style.background=p>=75?'linear-gradient(90deg,#22c55e,#16a34a)':p>=50?'linear-gradient(90deg,#f59e0b,#ca8a04)':'linear-gradient(90deg,#93c5fd,#2563eb)';
+}
+function toggle(id){const e=document.getElementById(id);e.style.display=(e.style.display==='block')?'none':'block';}
+function showCorr(id){const e=document.getElementById(id);e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'nearest'});}
+window.onload=()=>showTab('t1');
+
+</script>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div class="ht">
+      <img src="TonCoachScolaire.png" alt="Ton Coach Scolaire">
+      <div class="hbdg">Mathématiques · Terminale</div>
+      <h1>Limites de suites et de fonctions</h1>
+      <p>Convergence, formes indéterminées, comparaison et exponentielle</p>
+    </div>
+    <div class="rb">
+      <div class="rbl">Mon score</div>
+      <span class="rs" id="r-s">SS</span>
+      <div class="rsc"><span id="r-c">0</span><span class="rst"> / <span id="r-t">0</span></span></div>
+      <div class="rp" id="r-p">-</div>
+      <div class="rbar"><div class="rbar-f" id="r-b"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="cs">
+  <span class="cs-t">📲 Nouvelles fiches en story — Abonne-toi &amp; active la 🔔</span>
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cs-b">◈ @toncoachscolaire</a>
+</div>
+
+<div class="tw">
+  <div class="tabs">
+    <button class="tab t1 active" id="tab-t1" onclick="showTab('t1')">🔢 S1 — Limites de suites</button>
+<button class="tab t2" id="tab-t2" onclick="showTab('t2')">📈 S2 — Limites de fonctions</button>
+<button class="tab t3" id="tab-t3" onclick="showTab('t3')">⚡ S3 — Exponentielle</button>
+<button class="tab tp" id="tab-tp" onclick="showTab('tp')">🧩 Problèmes</button>
+<button class="tab tc2" id="tab-tc2" onclick="showTab('tc2')">📋 Contrôle</button>
+  </div>
+</div>
+
+<main>
+
+<div class="sec active" id="s-t1">
+  <div class="si"><div class="sico si1">🔢</div>
+  <div class="st"><h2>Série 1 — Limites de suites</h2><p>Suites convergentes, divergentes, suites géométriques et opérations</p></div></div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Limite finie, limite infinie : définitions</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Une suite (uₙ) a pour limite un réel ℓ lorsque les termes uₙ se rapprochent autant qu on veut de ℓ dès que l indice n est assez grand. On dit alors que la suite converge vers ℓ. Une suite a pour limite +∞ lorsque les termes deviennent aussi grands que l on veut dès que n est assez grand ; on parle alors de limite infinie et la suite est dite divergente. Une suite qui n a pas de limite, comme uₙ = (−1)ⁿ, est aussi divergente.</p>
+    <span class="form f1">lim uₙ = ℓ  (n → +∞) : la suite converge vers ℓ</span>
+    <span class="form f1">lim uₙ = +∞ : les termes dépassent tout réel A à partir d un certain rang</span>
+    <span class="form f1">Si une suite converge, sa limite est unique</span>
+    <div class="ex"><b>Trois comportements différents</b>
+uₙ = 1/n : les termes 1 ; 0,5 ; 0,33 ; 0,25 ... se rapprochent de 0, donc lim uₙ = 0.
+vₙ = n² : les termes 1 ; 4 ; 9 ; 16 ... deviennent arbitrairement grands, donc lim vₙ = +∞.
+wₙ = (−1)ⁿ : les termes valent −1 ; 1 ; −1 ; 1 ... et n ont pas de limite.</div>
+    <div class="tip"><b>Convergente ne veut pas dire bornée par la limite</b>Une suite peut converger vers ℓ en oscillant autour de ℓ. Ce qui compte est que l écart |uₙ − ℓ| devienne aussi petit que l on veut, pas que la suite soit croissante ou décroissante.</div>
+    <div class="pt">"La suite (uₙ) converge vers ℓ car ses termes se rapprochent de ℓ lorsque n tend vers +∞."</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Limites de référence et suites géométriques</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Il faut connaître par cœur les limites des suites usuelles, car tous les calculs s y ramènent. Pour une suite géométrique de terme général qⁿ, tout dépend de la valeur de la raison q : si q est supérieur à 1 la suite explose vers +∞, si q est compris strictement entre −1 et 1 elle s écrase vers 0, et si q est inférieur ou égal à −1 elle oscille sans limite.</p>
+    <span class="form f1">lim 1/n = 0 ; lim 1/√n = 0 ; lim 1/n² = 0</span>
+    <span class="form f1">lim n = +∞ ; lim n² = +∞ ; lim √n = +∞</span>
+    <span class="form f1">q &gt; 1 : lim qⁿ = +∞</span>
+    <span class="form f1">−1 &lt; q &lt; 1 : lim qⁿ = 0</span>
+    <span class="form f1">q = 1 : qⁿ = 1 constante ; q ≤ −1 : qⁿ n a pas de limite</span>
+    <table class="ctbl">
+      <tr><th>Raison q</th><th>Comportement de qⁿ</th><th>Limite</th></tr>
+      <tr><td class="lab">q &gt; 1</td><td>croît sans borne</td><td>+∞</td></tr>
+      <tr><td class="lab">q = 1</td><td>constante égale à 1</td><td>1</td></tr>
+      <tr><td class="lab">−1 &lt; q &lt; 1</td><td>se rapproche de 0</td><td>0</td></tr>
+      <tr><td class="lab">q ≤ −1</td><td>oscille</td><td>pas de limite</td></tr>
+    </table>
+    <div class="ex"><b>Appliquer le critère sur q</b>
+(1,5)ⁿ : 1,5 &gt; 1 donc la limite est +∞.
+(2/3)ⁿ : 0 &lt; 2/3 &lt; 1 donc la limite est 0.
+(−0,9)ⁿ : −1 &lt; −0,9 &lt; 0 donc la limite est 0.
+(−3)ⁿ : −3 ≤ −1 donc la suite oscille et n a pas de limite.</div>
+    <div class="tip"><b>Ne pas confondre q et sa valeur absolue</b>(−2)ⁿ ne tend pas vers +∞ : il change de signe à chaque terme. Seule la condition q &gt; 1 (strictement positif) donne +∞.</div>
+    <div class="pt">"La raison q vérifie −1 &lt; q &lt; 1, donc la suite géométrique (qⁿ) converge vers 0."</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Opérations sur les limites et formes indéterminées</div>
+    <p style="font-size:.89rem;margin-bottom:8px">On peut additionner, multiplier et diviser des limites, mais certaines combinaisons ne permettent pas de conclure : on les appelle formes indéterminées. Dans ces cas, il faut transformer l expression (factoriser le terme dominant, simplifier) avant de passer à la limite. Les quatre formes indéterminées à connaître sont +∞ − ∞, 0 × ∞, ∞/∞ et 0/0.</p>
+    <span class="form f1">Quotient : si lim vₙ = ℓ' ≠ 0, alors lim uₙ/vₙ = ℓ/ℓ'</span>
+    <span class="form f1">ℓ/0⁺ = +∞ si ℓ &gt; 0 ; ℓ/0⁻ = −∞ si ℓ &gt; 0</span>
+    <span class="form f1">ℓ/±∞ = 0</span>
+    <span class="form f1">Formes indéterminées : +∞ − ∞ ; 0 × ∞ ; ∞/∞ ; 0/0</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Lever une forme indéterminée pour un polynôme ou une fraction</div>
+      <ul class="steps">
+        <li>Repérer le terme de plus haut degré (le terme dominant) au numérateur et au dénominateur.</li>
+        <li>Factoriser ce terme dominant dans chaque expression.</li>
+        <li>Simplifier la fraction, puis utiliser les limites de référence (1/n tend vers 0).</li>
+        <li>Conclure avec les opérations sur les limites.</li>
+      </ul>
+    </div>
+    <table class="ctbl">
+      <tr><th>lim uₙ</th><th>lim vₙ</th><th>lim (uₙ + vₙ)</th><th>lim (uₙ × vₙ)</th></tr>
+      <tr><td class="lab">ℓ</td><td>ℓ'</td><td>ℓ + ℓ'</td><td>ℓ × ℓ'</td></tr>
+      <tr><td class="lab">ℓ</td><td>+∞</td><td>+∞</td><td>+∞ si ℓ &gt; 0 ; −∞ si ℓ &lt; 0</td></tr>
+      <tr><td class="lab">+∞</td><td>+∞</td><td>+∞</td><td>+∞</td></tr>
+      <tr><td class="lab">+∞</td><td>−∞</td><td>forme indéterminée</td><td>−∞</td></tr>
+      <tr><td class="lab">0</td><td>±∞</td><td>±∞</td><td>forme indéterminée</td></tr>
+    </table>
+    <div class="ex"><b>uₙ = (3n² + 2n) / (n² + 1)</b>
+Numérateur et dénominateur tendent vers +∞ : forme indéterminée ∞/∞.
+On factorise n² : uₙ = n²(3 + 2/n) / [n²(1 + 1/n²)] = (3 + 2/n) / (1 + 1/n²).
+Or 2/n tend vers 0 et 1/n² tend vers 0, donc uₙ tend vers 3/1 = 3.</div>
+    <div class="tip"><b>Pour une fraction de polynômes, regarder les degrés</b>Si les degrés sont égaux, la limite est le quotient des coefficients dominants ; si le numérateur est de plus grand degré, la limite est infinie ; s il est de plus petit degré, la limite est 0.</div>
+    <div class="pt">"On est en présence d une forme indéterminée ∞/∞ ; on factorise le terme dominant au numérateur et au dénominateur avant de passer à la limite."</div>
+  </div>
+
+  <div class="cours c1">
+    <div class="clbl">📖 Théorèmes de comparaison et d encadrement</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Quand une suite est trop compliquée pour calculer sa limite directement, on la compare à une suite plus simple dont on connaît le comportement. Le théorème de comparaison permet de conclure à une limite infinie, le théorème d encadrement (dit des gendarmes) permet de conclure à une limite finie. Un dernier résultat, le théorème de convergence monotone, garantit la convergence d une suite croissante et majorée (ou décroissante et minorée).</p>
+    <span class="form f1">Minoration : si uₙ ≥ vₙ à partir d un certain rang et lim vₙ = +∞, alors lim uₙ = +∞</span>
+    <span class="form f1">Majoration : si uₙ ≤ vₙ à partir d un certain rang et lim vₙ = −∞, alors lim uₙ = −∞</span>
+    <span class="form f1">Gendarmes : si vₙ ≤ uₙ ≤ wₙ et lim vₙ = lim wₙ = ℓ, alors lim uₙ = ℓ</span>
+    <span class="form f1">Toute suite croissante et majorée converge ; toute suite décroissante et minorée converge</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Utiliser un théorème de comparaison</div>
+      <ul class="steps">
+        <li>Trouver un encadrement ou une minoration en partant de l expression de uₙ (par exemple −1 ≤ (−1)ⁿ ≤ 1).</li>
+        <li>Vérifier que la comparaison est valable pour tout n (ou à partir d un certain rang).</li>
+        <li>Calculer les limites des suites qui encadrent.</li>
+        <li>Citer le théorème utilisé et conclure.</li>
+      </ul>
+    </div>
+    <div class="ex"><b>uₙ = (−1)ⁿ / n</b>
+Pour tout n ≥ 1, on a −1 ≤ (−1)ⁿ ≤ 1.
+En divisant par n &gt; 0 : −1/n ≤ uₙ ≤ 1/n.
+Comme −1/n et 1/n tendent tous deux vers 0, le théorème des gendarmes donne lim uₙ = 0.</div>
+    <div class="tip"><b>Penser à (−1)ⁿ, cos n, sin n</b>Ces expressions oscillent mais restent comprises entre −1 et 1 : elles sont idéales pour construire un encadrement, à condition de les multiplier ou diviser par une quantité positive.</div>
+    <div class="pt">"Pour tout n, vₙ ≤ uₙ ≤ wₙ avec lim vₙ = lim wₙ = ℓ ; d après le théorème d encadrement, la suite (uₙ) converge vers ℓ."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf1" id="pb-t1"></div></div><div class="pt2" id="pt-t1">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q1 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de la suite uₙ = 1/n² lorsque n tend vers +∞ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q1" value="A"> 0</label>
+      <label><input type="radio" name="q1" value="B"> 1</label>
+      <label><input type="radio" name="q1" value="C"> +∞</label>
+    </div>
+    <button class="btn b1" onclick="check('q1','A','Le dénominateur n² tend vers +∞, donc son inverse tend vers 0. C est une limite de référence.','t1')">Vérifier</button>
+    <div class="res" id="q1-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q2 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de la suite géométrique de terme général (2/3)ⁿ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q2" value="A"> +∞</label>
+      <label><input type="radio" name="q2" value="B"> 0</label>
+      <label><input type="radio" name="q2" value="C"> 2/3</label>
+    </div>
+    <button class="btn b1" onclick="check('q2','B','La raison q = 2/3 vérifie −1 < q < 1, donc qⁿ tend vers 0.','t1')">Vérifier</button>
+    <div class="res" id="q2-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q3 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de la suite uₙ = 3 + 5/n lorsque n tend vers +∞ ? (donner un nombre)</p>
+    <input class="fi" id="q3-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q3','3','Comme 5/n tend vers 0, uₙ tend vers 3 + 0 = 3.','t1')">Vérifier</button>
+    <div class="res" id="q3-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q4 <span class="lvl lm">Intermédiaire</span></div>
+    <p>La suite uₙ = (−2)ⁿ :</p>
+    <div class="opts">
+      <label><input type="radio" name="q4" value="A"> tend vers +∞</label>
+      <label><input type="radio" name="q4" value="B"> tend vers −∞</label>
+      <label><input type="radio" name="q4" value="C"> n a pas de limite</label>
+    </div>
+    <button class="btn b1" onclick="check('q4','C','La raison est q = −2 ≤ −1 : les termes changent de signe et leur valeur absolue augmente, la suite oscille sans limite.','t1')">Vérifier</button>
+    <div class="res" id="q4-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q5 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Déterminer la limite de uₙ = (3n² + 2n) / (n² + 1) lorsque n tend vers +∞. (donner un nombre)</p>
+    <input class="fi" id="q5-i" placeholder="Ta réponse…">
+    <button class="btn b1" onclick="checkF('q5','3','On factorise n² au numérateur et au dénominateur : uₙ = (3 + 2/n) / (1 + 1/n²), qui tend vers 3.','t1')">Vérifier</button>
+    <div class="res" id="q5-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q6 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Déterminer la limite de la suite uₙ = n² − 5n.</p>
+    <button class="bg btn" onclick="toggle('q6')">📋 Correction</button>
+    <div class="corr" id="q6">
+      <div class="s">Pour n tendant vers +∞, n² tend vers +∞ et 5n tend aussi vers +∞ : on est en présence de la forme indéterminée +∞ − ∞, on ne peut donc pas conclure directement.</div>
+      <div class="s">On factorise le terme dominant : pour n ≥ 1, uₙ = n²(1 − 5/n).</div>
+      <div class="s">Comme 5/n tend vers 0, le facteur (1 − 5/n) tend vers 1, et n² tend vers +∞.</div>
+      <div class="s">Par produit des limites, <span class="hi">lim uₙ = +∞</span>.</div>
+    </div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q7 <span class="lvl lh">Avancé</span></div>
+    <p>Démontrer que la suite uₙ = n + (−1)ⁿ tend vers +∞.</p>
+    <button class="bg btn" onclick="toggle('q7')">📋 Correction</button>
+    <div class="corr" id="q7">
+      <div class="s">Pour tout entier n, on sait que (−1)ⁿ ≥ −1, donc uₙ = n + (−1)ⁿ ≥ n − 1.</div>
+      <div class="s">La suite de terme général n − 1 tend vers +∞.</div>
+      <div class="s">D après le théorème de comparaison (minoration par une suite de limite +∞), la suite (uₙ) tend aussi vers +∞. <span class="hi">lim uₙ = +∞</span></div>
+    </div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q8 <span class="lvl lh">Avancé</span></div>
+    <p>On considère la suite uₙ = (2ⁿ + 3ⁿ) / 3ⁿ. Déterminer sa limite.</p>
+    <button class="bg btn" onclick="toggle('q8')">📋 Correction</button>
+    <div class="corr" id="q8">
+      <div class="s">Le numérateur et le dénominateur tendent vers +∞ : forme indéterminée ∞/∞.</div>
+      <div class="s">On sépare la fraction : uₙ = 2ⁿ/3ⁿ + 3ⁿ/3ⁿ = (2/3)ⁿ + 1.</div>
+      <div class="s">La raison 2/3 est comprise entre −1 et 1, donc (2/3)ⁿ tend vers 0.</div>
+      <div class="s">Par somme, <span class="hi">lim uₙ = 0 + 1 = 1</span>.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-t2">
+  <div class="si"><div class="sico si2">📈</div>
+  <div class="st"><h2>Série 2 — Limites de fonctions</h2><p>Limites en ±∞, limites en un réel a, asymptotes et opérations</p></div></div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Limite finie ou infinie en l infini ; asymptote horizontale</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Pour une fonction f, la limite en +∞ décrit le comportement de f(x) lorsque x devient très grand. Si f(x) se rapproche d un réel ℓ, la droite d équation y = ℓ est une asymptote horizontale à la courbe de f. Si f(x) devient aussi grand que l on veut, la limite est +∞ et la courbe monte sans borne. Le même raisonnement vaut en −∞.</p>
+    <span class="form f2">lim f(x) = ℓ (x → +∞) : la droite y = ℓ est asymptote horizontale en +∞</span>
+    <span class="form f2">lim 1/x = 0 ; lim 1/x² = 0 ; lim 1/√x = 0 (x → +∞)</span>
+    <span class="form f2">lim x = +∞ ; lim x² = +∞ ; lim x³ = +∞ ; lim √x = +∞ (x → +∞)</span>
+    <span class="form f2">lim x² = +∞ et lim x³ = −∞ (x → −∞)</span>
+    <div class="ex"><b>f(x) = 2 + 1/x</b>
+Lorsque x tend vers +∞, 1/x tend vers 0.
+Donc f(x) tend vers 2 + 0 = 2.
+La droite d équation y = 2 est asymptote horizontale à la courbe en +∞ (et aussi en −∞).</div>
+    <div class="tip"><b>Attention au signe en −∞</b>Pour les puissances impaires, x³ tend vers −∞ quand x tend vers −∞, alors que x² tend vers +∞. Multiplier par un coefficient négatif inverse encore le signe.</div>
+    <div class="pt">"Comme f(x) tend vers ℓ quand x tend vers +∞, la droite d équation y = ℓ est asymptote horizontale à la courbe représentative de f."</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Limite infinie en un réel a ; asymptote verticale</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Une fonction peut tendre vers l infini lorsque x s approche d un réel a, en général à cause d un dénominateur qui s annule. On étudie alors séparément la limite à gauche (x &lt; a) et la limite à droite (x &gt; a), en déterminant le signe du dénominateur. Si la limite est infinie, la droite d équation x = a est une asymptote verticale.</p>
+    <span class="form f2">lim 1/x = +∞ quand x → 0 par valeurs supérieures (0⁺)</span>
+    <span class="form f2">lim 1/x = −∞ quand x → 0 par valeurs inférieures (0⁻)</span>
+    <span class="form f2">lim 1/x² = +∞ quand x → 0 (des deux côtés)</span>
+    <span class="form f2">Si lim f(x) = ±∞ quand x → a, la droite x = a est asymptote verticale</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Étudier une limite en une valeur interdite</div>
+      <ul class="steps">
+        <li>Calculer la limite du numérateur (un réel non nul) et déterminer le signe du dénominateur de chaque côté de a.</li>
+        <li>Écrire le dénominateur sous la forme 0⁺ ou 0⁻ selon le côté.</li>
+        <li>Appliquer la règle des signes pour le quotient.</li>
+        <li>Conclure en donnant la limite à gauche, la limite à droite et l asymptote verticale.</li>
+      </ul>
+    </div>
+    <div class="ex"><b>f(x) = (2x + 1) / (x − 3) en x = 3</b>
+Au voisinage de 3, le numérateur tend vers 2×3 + 1 = 7 &gt; 0.
+Pour x &gt; 3 (x tend vers 3 par valeurs supérieures), x − 3 est positif et tend vers 0⁺ : la limite est +∞.
+Pour x &lt; 3, x − 3 est négatif et tend vers 0⁻ : la limite est −∞.
+La droite x = 3 est asymptote verticale.</div>
+    <div class="tip"><b>Un tableau de signes évite les erreurs</b>Dès qu un dénominateur s annule, dresser le tableau de signes de x − a (ou du facteur qui s annule) permet de décider entre +∞ et −∞ de façon fiable.</div>
+    <div class="pt">"Le numérateur tend vers un réel positif et le dénominateur tend vers 0⁺, donc le quotient tend vers +∞ ; la droite x = a est asymptote verticale."</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Opérations, formes indéterminées et fractions rationnelles</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Les règles d opérations sont les mêmes que pour les suites. Pour une fonction polynôme, la limite en ±∞ est celle de son terme de plus haut degré. Pour une fonction rationnelle, c est le quotient des termes de plus haut degré du numérateur et du dénominateur. Pour les expressions avec racine carrée de type √(x+1) − √x, on multiplie par la quantité conjuguée pour lever la forme indéterminée +∞ − ∞.</p>
+    <span class="form f2">Polynôme : lim P(x) en ±∞ = lim du terme de plus haut degré</span>
+    <span class="form f2">Fraction rationnelle : lim P(x)/Q(x) en ±∞ = lim du quotient des termes dominants</span>
+    <span class="form f2">Quantité conjuguée : √a − √b = (a − b) / (√a + √b)</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Lever une forme indéterminée avec un radical</div>
+      <ul class="steps">
+        <li>Reconnaître la forme +∞ − ∞ avec des racines carrées.</li>
+        <li>Multiplier et diviser par la quantité conjuguée √a + √b.</li>
+        <li>Utiliser l identité (√a − √b)(√a + √b) = a − b pour obtenir une fraction.</li>
+        <li>Calculer la limite de la fraction obtenue.</li>
+      </ul>
+    </div>
+    <div class="ex"><b>Limite de √(x + 1) − √x en +∞</b>
+C est la forme indéterminée +∞ − ∞.
+On multiplie par la quantité conjuguée : √(x+1) − √x = [(x+1) − x] / [√(x+1) + √x] = 1 / [√(x+1) + √x].
+Le dénominateur tend vers +∞, donc la fraction tend vers 0. La limite est 0.</div>
+    <div class="tip"><b>Exemple de fraction rationnelle</b>lim (3x² + x) / (x² − 1) en +∞ : on garde les termes dominants 3x² / x² = 3. La limite vaut 3 et la droite y = 3 est asymptote horizontale.</div>
+    <div class="pt">"Pour lever cette forme indéterminée, on factorise le terme de plus haut degré (ou on multiplie par la quantité conjuguée) avant de passer à la limite."</div>
+  </div>
+
+  <div class="cours c2">
+    <div class="clbl">📖 Comparaison et encadrement pour les fonctions</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Les théorèmes de comparaison et d encadrement s énoncent comme pour les suites. Ils permettent de traiter des fonctions contenant sin x ou cos x, qui n ont pas de limite mais restent bornées entre −1 et 1.</p>
+    <span class="form f2">Si f(x) ≥ g(x) pour x grand et lim g = +∞ alors lim f = +∞</span>
+    <span class="form f2">Si g(x) ≤ f(x) ≤ h(x) et lim g = lim h = ℓ alors lim f = ℓ</span>
+    <span class="form f2">lim (sin x)/x = 0 quand x → +∞</span>
+    <div class="ex"><b>lim (sin x) / x en +∞</b>
+Pour tout x &gt; 0, −1 ≤ sin x ≤ 1, donc −1/x ≤ (sin x)/x ≤ 1/x.
+Comme −1/x et 1/x tendent vers 0 en +∞, le théorème d encadrement donne lim (sin x)/x = 0.</div>
+    <div class="tip"><b>Une fonction peut croître malgré les oscillations</b>f(x) = x + sin x vérifie f(x) ≥ x − 1, donc tend vers +∞ par comparaison, bien que sin x oscille.</div>
+    <div class="pt">"Pour tout x &gt; 0, g(x) ≤ f(x) ≤ h(x) ; comme g et h ont la même limite ℓ, f a aussi pour limite ℓ d après le théorème des gendarmes."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf2" id="pb-t2"></div></div><div class="pt2" id="pt-t2">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q9 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de f(x) = x² − 3x + 1 lorsque x tend vers +∞ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q9" value="A"> +∞</label>
+      <label><input type="radio" name="q9" value="B"> −∞</label>
+      <label><input type="radio" name="q9" value="C"> 1</label>
+    </div>
+    <button class="btn b2" onclick="check('q9','A','En +∞, un polynôme a la même limite que son terme de plus haut degré : x² tend vers +∞.','t2')">Vérifier</button>
+    <div class="res" id="q9-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q10 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de f(x) = −2x³ + x lorsque x tend vers −∞ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q10" value="A"> −∞</label>
+      <label><input type="radio" name="q10" value="B"> +∞</label>
+      <label><input type="radio" name="q10" value="C"> 0</label>
+    </div>
+    <button class="btn b2" onclick="check('q10','B','Le terme dominant est −2x³. Quand x tend vers −∞, x³ tend vers −∞, donc −2x³ tend vers +∞.','t2')">Vérifier</button>
+    <div class="res" id="q10-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q11 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Déterminer lim (3x² + x) / (x² − 1) lorsque x tend vers +∞. (donner un nombre)</p>
+    <input class="fi" id="q11-i" placeholder="Ta réponse…">
+    <button class="btn b2" onclick="checkF('q11','3','On garde les termes dominants : 3x² / x² = 3. La limite est 3.','t2')">Vérifier</button>
+    <div class="res" id="q11-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q12 <span class="lvl lm">Intermédiaire</span></div>
+    <p>La limite de f(x) = (2x + 1) / (x − 3) quand x tend vers 3 par valeurs supérieures est :</p>
+    <div class="opts">
+      <label><input type="radio" name="q12" value="A"> +∞</label>
+      <label><input type="radio" name="q12" value="B"> −∞</label>
+      <label><input type="radio" name="q12" value="C"> 2</label>
+    </div>
+    <button class="btn b2" onclick="check('q12','A','Le numérateur tend vers 7 > 0 et x − 3 tend vers 0⁺, donc le quotient tend vers +∞.','t2')">Vérifier</button>
+    <div class="res" id="q12-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q13 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Déterminer les limites de f(x) = (2x + 1) / (x − 3) en +∞, en −∞ et interpréter graphiquement.</p>
+    <button class="bg btn" onclick="toggle('q13')">📋 Correction</button>
+    <div class="corr" id="q13">
+      <div class="s">Pour x différent de 0, on factorise le terme dominant : f(x) = x(2 + 1/x) / [x(1 − 3/x)] = (2 + 1/x) / (1 − 3/x).</div>
+      <div class="s">Quand x tend vers +∞ comme quand x tend vers −∞, 1/x et 3/x tendent vers 0.</div>
+      <div class="s">Donc <span class="hi">lim f(x) = 2/1 = 2</span> en +∞ et en −∞.</div>
+      <div class="s">Graphiquement, la droite d équation y = 2 est asymptote horizontale à la courbe de f.</div>
+    </div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q14 <span class="lvl lh">Avancé</span></div>
+    <p>Déterminer la limite de f(x) = √(x + 1) − √x lorsque x tend vers +∞.</p>
+    <button class="bg btn" onclick="toggle('q14')">📋 Correction</button>
+    <div class="corr" id="q14">
+      <div class="s">On a une forme indéterminée +∞ − ∞.</div>
+      <div class="s">On multiplie et on divise par la quantité conjuguée √(x+1) + √x, qui est strictement positive.</div>
+      <div class="s">Il vient f(x) = [(x + 1) − x] / [√(x+1) + √x] = 1 / [√(x+1) + √x].</div>
+      <div class="s">Le dénominateur tend vers +∞, donc <span class="hi">lim f(x) = 0</span>.</div>
+    </div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q15 <span class="lvl lh">Avancé</span></div>
+    <p>Montrer que lim (x + sin x) = +∞ lorsque x tend vers +∞, puis déterminer lim (sin x) / x.</p>
+    <button class="bg btn" onclick="toggle('q15')">📋 Correction</button>
+    <div class="corr" id="q15">
+      <div class="s">Pour tout réel x, sin x ≥ −1 donc x + sin x ≥ x − 1.</div>
+      <div class="s">Comme x − 1 tend vers +∞, le théorème de comparaison donne <span class="hi">lim (x + sin x) = +∞</span>.</div>
+      <div class="s">Pour x > 0, −1 ≤ sin x ≤ 1 donne −1/x ≤ (sin x)/x ≤ 1/x.</div>
+      <div class="s">Les deux bornes tendent vers 0, donc par encadrement <span class="hi">lim (sin x)/x = 0</span>.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-t3">
+  <div class="si"><div class="sico si3">⚡</div>
+  <div class="st"><h2>Série 3 — Limites et fonction exponentielle</h2><p>Limites de eˣ, croissances comparées et taux d accroissement en 0</p></div></div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Limites de la fonction exponentielle</div>
+    <p style="font-size:.89rem;margin-bottom:8px">La fonction exponentielle x ↦ eˣ est strictement positive et croissante sur ℝ. Elle tend vers +∞ en +∞ et vers 0 en −∞ (sans jamais s annuler). La courbe de l exponentielle admet donc l axe des abscisses comme asymptote horizontale en −∞. On utilise aussi la limite en 0 liée au nombre dérivé de eˣ en 0.</p>
+    <span class="form f3">lim eˣ = +∞ (x → +∞)</span>
+    <span class="form f3">lim eˣ = 0 (x → −∞) : la droite y = 0 est asymptote en −∞</span>
+    <span class="form f3">lim (eˣ − 1)/x = 1 (x → 0)</span>
+    <span class="form f3">lim e⁻ˣ = 0 (x → +∞) car e⁻ˣ = 1/eˣ</span>
+    <div class="ex"><b>Quelques limites immédiates</b>
+lim (eˣ + 1) en +∞ : eˣ tend vers +∞, donc la limite est +∞.
+lim (3 − eˣ) en +∞ : 3 − (grand nombre positif) tend vers −∞.
+lim (2 + e⁻ˣ) en +∞ : e⁻ˣ tend vers 0 donc la limite est 2.
+lim (e²ˣ − 1)/x en 0 : (e²ˣ − 1)/x = 2 × (e²ˣ − 1)/(2x), qui tend vers 2 × 1 = 2.</div>
+    <div class="tip"><b>Reconnaître le taux d accroissement</b>La limite (eˣ − 1)/x quand x tend vers 0 est le nombre dérivé de eˣ en 0, qui vaut e⁰ = 1. Pour (e^{kx} − 1)/x, on pose X = kx pour se ramener à cette limite, ce qui donne k.</div>
+    <div class="pt">"La fonction exponentielle tend vers +∞ en +∞ et vers 0 en −∞ ; la droite y = 0 est donc asymptote horizontale à sa courbe en −∞."</div>
+  </div>
+
+  <div class="cours c3">
+    <div class="clbl">📖 Croissances comparées</div>
+    <p style="font-size:.89rem;margin-bottom:8px">Quand on croise une puissance de x avec eˣ, c est l exponentielle qui l emporte en +∞, et ce, quelle que soit la puissance. C est ce que l on appelle les croissances comparées. Elles permettent de lever les formes indéterminées du type ∞/∞ ou 0 × ∞ faisant intervenir eˣ.</p>
+    <span class="form f3">Pour tout entier n : lim eˣ / xⁿ = +∞ (x → +∞)</span>
+    <span class="form f3">Pour tout entier n : lim xⁿ e⁻ˣ = 0 (x → +∞)</span>
+    <span class="form f3">lim x eˣ = 0 (x → −∞)</span>
+    <div class="methode">
+      <div class="mlbl">🔢 Utiliser les croissances comparées</div>
+      <ul class="steps">
+        <li>Repérer le produit ou le quotient entre une puissance de x et eˣ.</li>
+        <li>Se ramener à l une des trois limites de cours (ou à son inverse).</li>
+        <li>Factoriser eˣ si besoin pour faire apparaître une forme connue.</li>
+        <li>Conclure par les opérations sur les limites.</li>
+      </ul>
+    </div>
+    <div class="ex"><b>lim (eˣ − x) en +∞</b>
+C est la forme indéterminée +∞ − ∞.
+On factorise eˣ : eˣ − x = eˣ (1 − x/eˣ).
+Par croissances comparées, x/eˣ tend vers 0, donc 1 − x/eˣ tend vers 1.
+Comme eˣ tend vers +∞, le produit tend vers +∞.</div>
+    <div class="tip"><b>L exponentielle gagne toujours</b>En +∞, eˣ est plus grand que n importe quelle puissance de x. En −∞, au contraire, c est l exponentielle qui est écrasée vers 0, et x eˣ tend vers 0.</div>
+    <div class="pt">"Par croissances comparées, la fonction exponentielle l emporte sur toute puissance de x en +∞, donc xⁿ e⁻ˣ tend vers 0."</div>
+  </div>
+
+  <div class="pr"><div class="pb"><div class="pf pf3" id="pb-t3"></div></div><div class="pt2" id="pt-t3">0 / 0</div></div>
+  <div class="div">⭐ Facile</div>
+<div class="exo">
+    <div class="exo-hd">Q16 <span class="lvl le">Facile</span></div>
+    <p>Quelle est la limite de eˣ lorsque x tend vers −∞ ?</p>
+    <div class="opts">
+      <label><input type="radio" name="q16" value="A"> 0</label>
+      <label><input type="radio" name="q16" value="B"> −∞</label>
+      <label><input type="radio" name="q16" value="C"> 1</label>
+    </div>
+    <button class="btn b3" onclick="check('q16','A','L exponentielle est positive et tend vers 0 en −∞, jamais négative.','t3')">Vérifier</button>
+    <div class="res" id="q16-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q17 <span class="lvl le">Facile</span></div>
+    <p>Déterminer lim (2 + e⁻ˣ) lorsque x tend vers +∞. (donner un nombre)</p>
+    <input class="fi" id="q17-i" placeholder="Ta réponse…">
+    <button class="btn b3" onclick="checkF('q17','2','e⁻ˣ = 1/eˣ tend vers 0 en +∞, donc la limite est 2 + 0 = 2.','t3')">Vérifier</button>
+    <div class="res" id="q17-r"></div>
+  </div>
+<div class="div">⭐⭐ Intermédiaire</div>
+<div class="exo">
+    <div class="exo-hd">Q18 <span class="lvl lm">Intermédiaire</span></div>
+    <p>La limite de x e⁻ˣ lorsque x tend vers +∞ vaut :</p>
+    <div class="opts">
+      <label><input type="radio" name="q18" value="A"> 0</label>
+      <label><input type="radio" name="q18" value="B"> +∞</label>
+      <label><input type="radio" name="q18" value="C"> 1</label>
+    </div>
+    <button class="btn b3" onclick="check('q18','A','On écrit x e⁻ˣ = x / eˣ, qui tend vers 0 par croissances comparées.','t3')">Vérifier</button>
+    <div class="res" id="q18-r"></div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q19 <span class="lvl lm">Intermédiaire</span></div>
+    <p>Déterminer lim (e²ˣ − 1) / x lorsque x tend vers 0. (donner un nombre)</p>
+    <input class="fi" id="q19-i" placeholder="Ta réponse…">
+    <button class="btn b3" onclick="checkF('q19','2','On écrit (e²ˣ − 1)/x = 2 × (e²ˣ − 1)/(2x). Avec X = 2x, la limite de (eX − 1)/X en 0 vaut 1, donc le résultat est 2.','t3')">Vérifier</button>
+    <div class="res" id="q19-r"></div>
+  </div>
+<div class="div">⭐⭐⭐ Avancé</div>
+<div class="exo">
+    <div class="exo-hd">Q20 <span class="lvl lh">Avancé</span></div>
+    <p>Déterminer la limite de f(x) = (eˣ + 1) / (eˣ − 1) lorsque x tend vers +∞.</p>
+    <button class="bg btn" onclick="toggle('q20')">📋 Correction</button>
+    <div class="corr" id="q20">
+      <div class="s">Numérateur et dénominateur tendent vers +∞ : forme indéterminée ∞/∞.</div>
+      <div class="s">On factorise eˣ au numérateur et au dénominateur : f(x) = eˣ(1 + e⁻ˣ) / [eˣ(1 − e⁻ˣ)] = (1 + e⁻ˣ) / (1 − e⁻ˣ).</div>
+      <div class="s">Comme e⁻ˣ tend vers 0 en +∞, le numérateur tend vers 1 et le dénominateur tend vers 1.</div>
+      <div class="s">Donc <span class="hi">lim f(x) = 1</span>.</div>
+    </div>
+  </div>
+<div class="exo">
+    <div class="exo-hd">Q21 <span class="lvl lh">Avancé</span></div>
+    <p>Déterminer lim x² e⁻ˣ en +∞, puis lim x eˣ en −∞.</p>
+    <button class="bg btn" onclick="toggle('q21')">📋 Correction</button>
+    <div class="corr" id="q21">
+      <div class="s">Pour la première limite, on écrit x² e⁻ˣ = x² / eˣ. Par croissances comparées (n = 2), <span class="hi">lim x² e⁻ˣ = 0</span>.</div>
+      <div class="s">Pour la seconde, on pose X = −x. Quand x tend vers −∞, X tend vers +∞ et x eˣ = −X e⁻ˣ = −X / eˣ.</div>
+      <div class="s">Par croissances comparées, X e⁻ˣ tend vers 0, donc <span class="hi">lim x eˣ = 0</span> en −∞.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tp">
+  <div class="si"><div class="sico sip">🧩</div>
+  <div class="st"><h2>Problèmes — Contextes variés</h2><p>Appliquer les limites à des situations concrètes</p></div></div>
+
+  <div class="div">Problème 1 — Dose de médicament dans le sang</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lm">Intermédiaire</span></div>
+    <p>Un patient reçoit chaque jour une injection qui apporte 2 mg de médicament. Chaque jour, l organisme élimine la moitié de la quantité présente avant l injection. On note dₙ la quantité (en mg) présente après n jours, avec d₀ = 0 et dₙ₊₁ = 0,5 dₙ + 2. On admet que dₙ = 4 − 4 × (0,5)ⁿ. Calculer d₁ et d₂, puis déterminer la limite de dₙ et interpréter le résultat.</p>
+    <button class="bg btn" onclick="toggle('pb1')">📋 Correction</button>
+    <div class="corr" id="pb1">
+      <div class="s">On calcule directement avec la relation de récurrence : d₁ = 0,5 × 0 + 2 = 2 mg, puis d₂ = 0,5 × 2 + 2 = 3 mg. On vérifie avec la formule : d₂ = 4 − 4 × 0,25 = 3, ce qui est cohérent.</div>
+      <div class="s">La suite (0,5)ⁿ est géométrique de raison 0,5, comprise entre −1 et 1, donc elle converge vers 0.</div>
+      <div class="s">Par produit et somme de limites, 4 × (0,5)ⁿ tend vers 0 et dₙ tend vers 4 − 0 = 4.</div>
+      <div class="s">Interprétation : <span class="hi">la quantité de médicament se stabilise vers 4 mg</span>, la dose reste donc sous un seuil de sécurité d environ 4 mg quel que soit le nombre de jours.</div>
+    </div>
+  </div>
+<div class="div">Problème 2 — Placer de l argent</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lm">Intermédiaire</span></div>
+    <p>On place 1000 euros à intérêts composés au taux de 3 % par an. On note uₙ le capital au bout de n années. Exprimer uₙ en fonction de n, déterminer la limite de uₙ puis trouver au bout de combien d années le capital aura doublé (on pourra utiliser la calculatrice).</p>
+    <button class="bg btn" onclick="toggle('pb2')">📋 Correction</button>
+    <div class="corr" id="pb2">
+      <div class="s">Chaque année le capital est multiplié par 1,03 : (uₙ) est donc géométrique de premier terme u₀ = 1000 et de raison 1,03. Ainsi uₙ = 1000 × 1,03ⁿ.</div>
+      <div class="s">Comme 1,03 est strictement supérieur à 1, 1,03ⁿ tend vers +∞ et donc <span class="hi">lim uₙ = +∞</span> : en théorie, le capital croît sans borne.</div>
+      <div class="s">Le capital doublé correspond à uₙ ≥ 2000, c est-à-dire 1,03ⁿ ≥ 2. Avec la calculatrice, 1,03²³ ≈ 1,974 (insuffisant) et 1,03²⁴ ≈ 2,033 (suffisant).</div>
+      <div class="s">Le capital aura donc doublé au bout de <span class="hi">24 ans</span>.</div>
+    </div>
+  </div>
+<div class="div">Problème 3 — Coût moyen de fabrication</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lm">Intermédiaire</span></div>
+    <p>Une entreprise fabrique x objets (x > 0). Ses coûts fixes sont de 200 euros et chaque objet coûte 5 euros à produire. Exprimer le coût moyen C(x) par objet, puis étudier sa limite quand x tend vers +∞ et quand x tend vers 0 par valeurs supérieures. Interpréter.</p>
+    <button class="bg btn" onclick="toggle('pb3')">📋 Correction</button>
+    <div class="corr" id="pb3">
+      <div class="s">Le coût total pour x objets est 5x + 200, donc le coût moyen est C(x) = (5x + 200) / x = 5 + 200/x.</div>
+      <div class="s">Quand x tend vers +∞, 200/x tend vers 0, donc <span class="hi">lim C(x) = 5</span> : le coût moyen se rapproche de 5 euros, qui est le coût de production d un objet sans les coûts fixes.</div>
+      <div class="s">Quand x tend vers 0 par valeurs supérieures, 200/x tend vers +∞ donc <span class="hi">lim C(x) = +∞</span> : avec très peu d objets, les coûts fixes pèsent énormément sur chaque objet.</div>
+      <div class="s">La courbe de C admet la droite y = 5 comme asymptote horizontale et l axe des ordonnées x = 0 comme asymptote verticale.</div>
+    </div>
+  </div>
+<div class="div">Problème 4 — Refroidissement d une boisson</div>
+<div class="exo">
+    <div class="exo-hd"> <span class="lvl lh">Avancé</span></div>
+    <p>La température (en degrés Celsius) d une boisson posée dans une pièce à 20 degrés est donnée au bout de t minutes par T(t) = 20 + 60 e^(−0,1 t). Calculer T(0), la limite de T quand t tend vers +∞, et une valeur approchée de T(30). Interpréter ces résultats.</p>
+    <button class="bg btn" onclick="toggle('pb4')">📋 Correction</button>
+    <div class="corr" id="pb4">
+      <div class="s">À l instant initial, T(0) = 20 + 60 e⁰ = 20 + 60 = 80 degrés : la boisson est chaude au départ.</div>
+      <div class="s">Quand t tend vers +∞, −0,1 t tend vers −∞ donc e^(−0,1 t) tend vers 0. Par suite <span class="hi">lim T(t) = 20</span> degrés.</div>
+      <div class="s">Pour t = 30 : T(30) = 20 + 60 e⁻³. Comme e⁻³ ≈ 0,0498, on obtient T(30) ≈ 20 + 2,99 = <span class="hi">environ 23 degrés</span>.</div>
+      <div class="s">Interprétation : la boisson refroidit et sa température se rapproche de celle de la pièce sans jamais descendre en dessous, ce qui se lit sur le graphique par l asymptote horizontale d équation y = 20.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sec" id="s-tc2">
+  <div class="si"><div class="sico sic2">📋</div>
+  <div class="st"><h2>Contrôle — Limites de suites et de fonctions</h2><p>Suites, fonctions, exponentielle</p></div></div>
+
+  <div class="chdr chdr2">
+    <div class="cbdg cbdg2">📋 Contrôle complet</div>
+    <div class="cinfo">
+      <h3>Contrôle sur les limites (Terminale)</h3>
+      <p>Quatre exercices progressifs sur les limites de suites, la comparaison, les fonctions rationnelles et l exponentielle.</p>
+      <ul>
+        <li>Durée : 55 min · Calculatrice autorisée</li>
+        <li>Montre tous tes calculs · Rédige des phrases pour les interprétations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 1 — Limites de suites</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b> — 2,5 pts</b>Déterminer la limite de la suite uₙ = (4n² − n + 3) / (2n² + 5) en justifiant.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc1')">📋 Correction </button>
+    <div class="cco" id="cc1"><div class="ccoh">✔ Correction — Barème : 1 pt pour la forme indéterminée reconnue, 1 pt pour la factorisation, 0,5 pt pour la conclusion</div><div class="ccob">
+      <span class="l">Le numérateur et le dénominateur tendent vers +∞ : forme indéterminée ∞/∞.</span>
+      <span class="l">On factorise n² : uₙ = n²(4 − 1/n + 3/n²) / [n²(2 + 5/n²)] = (4 − 1/n + 3/n²) / (2 + 5/n²).</span>
+      <span class="l">Comme 1/n, 3/n² et 5/n² tendent vers 0, le numérateur tend vers 4 et le dénominateur vers 2.</span>
+      <span class="l"><span class="hi">lim uₙ = 4/2 = 2</span>.</span>
+    </div></div>
+
+    <div class="csub">
+      <b> — 2,5 pts</b>Déterminer la limite de la suite vₙ = 5 × (0,8)ⁿ − 2 puis celle de wₙ = 3ⁿ − 2ⁿ.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc2')">📋 Correction </button>
+    <div class="cco" id="cc2"><div class="ccoh">✔ Correction — Barème : 1 pt pour vₙ, 1,5 pt pour wₙ</div><div class="ccob">
+      <span class="l">Pour vₙ : la raison 0,8 est comprise entre −1 et 1, donc (0,8)ⁿ tend vers 0 ; ainsi <span class="hi">lim vₙ = 5 × 0 − 2 = −2</span>.</span>
+      <span class="l">Pour wₙ : on a la forme indéterminée +∞ − ∞. On factorise 3ⁿ : wₙ = 3ⁿ(1 − (2/3)ⁿ).</span>
+      <span class="l">Comme (2/3)ⁿ tend vers 0, le facteur (1 − (2/3)ⁿ) tend vers 1 ; 3ⁿ tend vers +∞.</span>
+      <span class="l">Par produit, <span class="hi">lim wₙ = +∞</span>.</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 2 — Comparaison et encadrement</div><div class="cpts cpts2">4 pts</div></div>
+    
+    <div class="csub">
+      <b> — 2 pts</b>Montrer que la suite uₙ = (cos n) / n converge et préciser sa limite.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc3')">📋 Correction </button>
+    <div class="cco" id="cc3"><div class="ccoh">✔ Correction — Barème : 1 pt pour l encadrement, 1 pt pour le théorème des gendarmes</div><div class="ccob">
+      <span class="l">Pour tout entier n ≥ 1, −1 ≤ cos n ≤ 1. En divisant par n > 0, on obtient −1/n ≤ uₙ ≤ 1/n.</span>
+      <span class="l">Les suites −1/n et 1/n convergent toutes deux vers 0.</span>
+      <span class="l">D après le théorème d encadrement, <span class="hi">(uₙ) converge vers 0</span>.</span>
+    </div></div>
+
+    <div class="csub">
+      <b> — 2 pts</b>Montrer que la suite vₙ = n² + (−1)ⁿ n diverge vers +∞.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc4')">📋 Correction </button>
+    <div class="cco" id="cc4"><div class="ccoh">✔ Correction — Barème : 1 pt pour la minoration, 1 pt pour le théorème de comparaison</div><div class="ccob">
+      <span class="l">Pour tout n, (−1)ⁿ ≥ −1 donc (−1)ⁿ n ≥ −n et vₙ ≥ n² − n = n(n − 1).</span>
+      <span class="l">La suite n(n − 1) tend vers +∞ (produit de deux suites qui tendent vers +∞).</span>
+      <span class="l">Par le théorème de comparaison, <span class="hi">lim vₙ = +∞</span>.</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 3 — Fonction rationnelle et asymptotes</div><div class="cpts cpts2">6 pts</div></div>
+    
+    <div class="csub">
+      <b> — 3 pts</b>Soit f(x) = (3x − 2) / (x + 1) définie sur ]−1 ; +∞[. Déterminer les limites de f en +∞ et en −1 (par valeurs supérieures).
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc5')">📋 Correction </button>
+    <div class="cco" id="cc5"><div class="ccoh">✔ Correction — Barème : 1,5 pt par limite correctement justifiée</div><div class="ccob">
+      <span class="l">Limite en +∞ : f(x) = x(3 − 2/x) / [x(1 + 1/x)] = (3 − 2/x) / (1 + 1/x), qui tend vers 3. Donc <span class="hi">lim f(x) = 3</span>.</span>
+      <span class="l">Limite en −1⁺ : le numérateur tend vers 3×(−1) − 2 = −5, négatif ; le dénominateur x + 1 tend vers 0⁺.</span>
+      <span class="l">Un quotient d un nombre négatif par 0⁺ tend vers −∞ : <span class="hi">lim f(x) = −∞</span> en −1⁺.</span>
+    </div></div>
+
+    <div class="csub">
+      <b> — 3 pts</b>Interpréter graphiquement les deux résultats précédents, puis déterminer lim (√(x² + 1) − x) en +∞.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc6')">📋 Correction </button>
+    <div class="cco" id="cc6"><div class="ccoh">✔ Correction — Barème : 1 pt pour les asymptotes, 2 pts pour le radical</div><div class="ccob">
+      <span class="l">La droite y = 3 est asymptote horizontale à la courbe en +∞, et la droite x = −1 est asymptote verticale.</span>
+      <span class="l">Pour le radical, forme indéterminée +∞ − ∞ : on multiplie par la quantité conjuguée √(x²+1) + x.</span>
+      <span class="l">√(x²+1) − x = [(x²+1) − x²] / [√(x²+1) + x] = 1 / [√(x²+1) + x].</span>
+      <span class="l">Le dénominateur tend vers +∞, donc <span class="hi">lim = 0</span>.</span>
+    </div></div>
+  </div>
+
+  <div class="cexo">
+    <div class="cehd"><div class="cen cen2">Exercice 4 — Exponentielle</div><div class="cpts cpts2">5 pts</div></div>
+    
+    <div class="csub">
+      <b> — 2,5 pts</b>Déterminer la limite de eˣ − x² lorsque x tend vers +∞.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc7')">📋 Correction </button>
+    <div class="cco" id="cc7"><div class="ccoh">✔ Correction — Barème : 1 pt pour la forme indéterminée, 1,5 pt pour la factorisation et les croissances comparées</div><div class="ccob">
+      <span class="l">C est la forme indéterminée +∞ − ∞.</span>
+      <span class="l">On factorise eˣ : eˣ − x² = eˣ (1 − x²/eˣ).</span>
+      <span class="l">Par croissances comparées, x²/eˣ tend vers 0, donc le facteur tend vers 1.</span>
+      <span class="l">Comme eˣ tend vers +∞, <span class="hi">lim (eˣ − x²) = +∞</span>.</span>
+    </div></div>
+
+    <div class="csub">
+      <b> — 2,5 pts</b>Déterminer lim (e³ˣ − 1)/x en 0, puis lim x eˣ en −∞.
+      <div class="ans tall">Calculs…</div>
+    </div>
+    <button class="btn bc1" onclick="showCorr('cc8')">📋 Correction </button>
+    <div class="cco" id="cc8"><div class="ccoh">✔ Correction — Barème : 1,5 pt pour la première, 1 pt pour la seconde</div><div class="ccob">
+      <span class="l">En posant X = 3x : (e³ˣ − 1)/x = 3 × (eX − 1)/X. Comme (eX − 1)/X tend vers 1 quand X tend vers 0, <span class="hi">la limite vaut 3</span>.</span>
+      <span class="l">Pour x qui tend vers −∞, on pose X = −x qui tend vers +∞ : x eˣ = −X / eX.</span>
+      <span class="l">Par croissances comparées, X/eX tend vers 0, donc <span class="hi">lim x eˣ = 0</span>.</span>
+    </div></div>
+  </div>
+</div>
+
+</main>
+
+
+<div style="max-width:980px;margin:auto;padding:0 16px">
+  <div class="cta">
+    <div class="cta-inner">
+      <span class="cta-icon">📲</span>
+      <div class="cta-title">Tu veux être le premier à recevoir les <em>prochaines fiches</em> ?</div>
+      <p class="cta-sub">Abonne-toi et active les notifications 🔔 — nouvelles fiches en story</p>
+      <div class="cta-steps"><span class="cta-step">1️⃣ Clique</span><span class="cta-step">2️⃣ Abonne-toi</span><span class="cta-step">3️⃣ Active la 🔔</span></div>
+      <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank" class="cta-btn">◈ Suivre @toncoachscolaire</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Fait avec soin pour bien réviser ✏️ ·
+  <a href="https://www.youtube.com/@TonCoachScolaire" target="_blank">YouTube</a> ·
+  <a href="https://www.instagram.com/toncoachscolaire?igsh=bHo0em05OHk3bDVt&utm_source=qr" target="_blank">Instagram</a>
+  <div class="fc">
+    <strong>© 2025 Ton Coach Scolaire</strong> — Tous droits réservés · Reproduction interdite · L.111-1 CPI<br>Sources : <a href="https://eduscol.education.fr" target="_blank">Programme officiel de mathématiques de Terminale (Éduscol)</a>
+  </div>
+</footer>
+</body>
+</html>
