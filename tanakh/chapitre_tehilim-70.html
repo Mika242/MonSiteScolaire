@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 70 – Hâte-Toi de me délivrer, D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 70</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-69.html">← Tehilim 69</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-70.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-71.html">Tehilim 71 →</a></div>
   </div>
 </header>
 
@@ -161,35 +202,42 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַ֝מְנַצֵּ֗חַ לְדָוִ֥ד לְהַזְכִּֽיר׃</p>
-      <p>אֱלֹהִ֥ים לְהַצִּילֵ֑נִי יְ֝הֹוָ֗ה לְעֶזְרָ֥תִי חֽוּשָׁה׃</p>
-      <p>יֵבֹ֣שׁוּ וְיַחְפְּרוּ֮ מְבַקְשֵׁ֢י נַ֫פְשִׁ֥י יִסֹּ֣גוּ אָ֭חוֹר וְיִכָּלְמ֑וּ חֲ֝פֵצֵ֗י רָעָתִֽי׃</p>
-      <p>יָ֭שׁוּבוּ עַל־עֵ֣קֶב בׇּשְׁתָּ֑ם הָ֝אֹמְרִ֗ים הֶ֘אָ֥ח&thinsp;<small>׀</small>&thinsp;הֶאָֽח׃</p>
-      <p>יָ֘שִׂ֤ישׂוּ וְיִשְׂמְח֨וּ&thinsp;<b>׀</b> בְּךָ֗ כׇּֽל־מְבַ֫קְשֶׁ֥יךָ וְיֹאמְר֣וּ תָ֭מִיד יִגְדַּ֣ל אֱלֹהִ֑ים אֹ֝הֲבֵ֗י יְשׁוּעָתֶֽךָ׃</p>
-      <p>וַאֲנִ֤י&thinsp;<b>׀</b> עָנִ֣י וְאֶבְיוֹן֮ אֱלֹהִ֢ים ח֫וּשָׁה־לִּ֥י עֶזְרִ֣י וּמְפַלְטִ֣י אַ֑תָּה יְ֝הֹוָ֗ה אַל־תְּאַחַֽר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַ֝מְנַצֵּ֗חַ לְדָוִ֥ד לְהַזְכִּֽיר׃</p></div><div class="heb-s"><p>למנצח לדוד להזכיר׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. De David. Pour la Commémoration.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֥ים לְהַצִּילֵ֑נִי יְ֝הֹוָ֗ה לְעֶזְרָ֥תִי חֽוּשָׁה׃</p></div><div class="heb-s"><p>אלהים להצילני יהוה לעזרתי חושה׃</p></div></div>
+      <div class="texte-fr"><p>[Consens], ô Dieu, à me sauver; Éternel, hâte-toi de me porter secours.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵבֹ֣שׁוּ וְיַחְפְּרוּ֮ מְבַקְשֵׁ֢י נַ֫פְשִׁ֥י יִסֹּ֣גוּ אָ֭חוֹר וְיִכָּלְמ֑וּ חֲ֝פֵצֵ֗י רָעָתִֽי׃</p></div><div class="heb-s"><p>יבשו ויחפרו מבקשי נפשי יסגו אחור ויכלמו חפצי רעתי׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils soient confondus et couverts de honte, ceux qui attentent à ma vie: qu’ils lâchent pied et reculent, en rougissant, ceux qui souhaitent mon malheur!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָ֭שׁוּבוּ עַל־עֵ֣קֶב בׇּשְׁתָּ֑ם הָ֝אֹמְרִ֗ים הֶ֘אָ֥ח&thinsp;<small>׀</small>&thinsp;הֶאָֽח׃</p></div><div class="heb-s"><p>ישובו על־עקב בשתם האמרים האח&thinsp;<small>׀</small>&thinsp;האח׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils s’en retournent, punis par leur honte, ceux qui disent de moi: "Ha! Ha!"</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָ֘שִׂ֤ישׂוּ וְיִשְׂמְח֨וּ&thinsp;<b>׀</b> בְּךָ֗ כׇּֽל־מְבַ֫קְשֶׁ֥יךָ וְיֹאמְר֣וּ תָ֭מִיד יִגְדַּ֣ל אֱלֹהִ֑ים אֹ֝הֲבֵ֗י יְשׁוּעָתֶֽךָ׃</p></div><div class="heb-s"><p>ישישו וישמחו&thinsp;<b>׀</b> בך כל־מבקשיך ויאמרו תמיד יגדל אלהים אהבי ישועתך׃</p></div></div>
+      <div class="texte-fr"><p>Mais qu’ils jubilent et se réjouissent en toi, tous ceux qui te recherchent! Qu’ils disent constamment: "Dieu est grand", ceux qui aiment ta protection!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֤י&thinsp;<b>׀</b> עָנִ֣י וְאֶבְיוֹן֮ אֱלֹהִ֢ים ח֫וּשָׁה־לִּ֥י עֶזְרִ֣י וּמְפַלְטִ֣י אַ֑תָּה יְ֝הֹוָ֗ה אַל־תְּאַחַֽר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואני&thinsp;<b>׀</b> עני ואביון אלהים חושה־לי עזרי ומפלטי אתה יהוה אל־תאחר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Quant à moi, pauvre et malheureux, ô Dieu, hâte-toi en ma faveur; tu es mon aide et ma sauvegarde: Éternel, n’attends pas trop longtemps.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. De David. Pour la Commémoration.</p>
-      <p>[Consens], ô Dieu, à me sauver; Éternel, hâte-toi de me porter secours.</p>
-      <p>Qu’ils soient confondus et couverts de honte, ceux qui attentent à ma vie: qu’ils lâchent pied et reculent, en rougissant, ceux qui souhaitent mon malheur!</p>
-      <p>Qu’ils s’en retournent, punis par leur honte, ceux qui disent de moi: "Ha! Ha!"</p>
-      <p>Mais qu’ils jubilent et se réjouissent en toi, tous ceux qui te recherchent! Qu’ils disent constamment: "Dieu est grand", ceux qui aiment ta protection!</p>
-      <p>Quant à moi, pauvre et malheureux, ô Dieu, hâte-toi en ma faveur; tu es mon aide et ma sauvegarde: Éternel, n’attends pas trop longtemps.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -241,6 +289,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-69.html">← Tehilim 69</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-70.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-71.html">Tehilim 71 →</a></div>
 </main>
 
 <footer>

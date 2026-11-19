@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 18 – Le cantique de David après la délivrance</h1>
     <p>Ketouvim, Tehilim, Chapitre 18</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-17.html">← Tehilim 17</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-18.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-19.html">Tehilim 19 →</a></div>
   </div>
 </header>
 
@@ -161,125 +202,222 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֤חַ&thinsp;<b>׀</b> לְעֶ֥בֶד יְהֹוָ֗ה לְדָ֫וִ֥ד אֲשֶׁ֤ר דִּבֶּ֨ר&thinsp;<b>׀</b> לַיהֹוָ֗ה אֶת־דִּ֭בְרֵי הַשִּׁירָ֣ה הַזֹּ֑את בְּי֤וֹם הִֽצִּיל־יְהֹוָ֘ה<span class="mam-implicit-maqaf">־</span>אוֹת֥וֹ מִכַּ֥ף כׇּל־אֹ֝יְבָ֗יו וּמִיַּ֥ד שָׁאֽוּל׃</p>
-      <p>וַיֹּאמַ֡ר אֶרְחׇמְךָ֖ יְהֹוָ֣ה חִזְקִֽי׃</p>
-      <p>יְהֹוָ֤ה&thinsp;<b>׀</b> סַ֥לְעִ֥י וּמְצוּדָתִ֗י וּמְפַ֫לְטִ֥י אֵלִ֣י צ֭וּרִי אֶֽחֱסֶה־בּ֑וֹ מָֽגִנִּ֥י וְקֶֽרֶן־יִ֝שְׁעִ֗י מִשְׂגַּבִּֽי׃</p>
-      <p>מְ֭הֻלָּל אֶקְרָ֣א יְהֹוָ֑ה וּמִן־אֹ֝יְבַ֗י אִוָּשֵֽׁעַ׃</p>
-      <p>אֲפָפ֥וּנִי חֶבְלֵי־מָ֑וֶת וְֽנַחֲלֵ֖י בְלִיַּ֣עַל יְבַֽעֲתֽוּנִי׃</p>
-      <p>חֶבְלֵ֣י שְׁא֣וֹל סְבָב֑וּנִי קִ֝דְּמ֗וּנִי מ֣וֹקְשֵׁי מָֽוֶת׃</p>
-      <p>בַּצַּר־לִ֤י&thinsp;<b>׀</b> אֶ֥קְרָ֣א יְהֹוָה֮ וְאֶל־אֱלֹהַ֢י אֲשַׁ֫וֵּ֥עַ יִשְׁמַ֣ע מֵהֵיכָל֣וֹ קוֹלִ֑י וְ֝שַׁוְעָתִ֗י לְפָנָ֤יו&thinsp;<b>׀</b> תָּב֬וֹא בְאׇזְנָֽיו׃</p>
-      <p>וַתִּגְעַ֬שׁ וַתִּרְעַ֨שׁ&thinsp;<b>׀</b> הָאָ֗רֶץ וּמוֹסְדֵ֣י הָרִ֣ים יִרְגָּ֑זוּ וַ֝יִּתְגָּֽעֲשׁ֗וּ כִּי־חָ֥רָה לֽוֹ׃</p>
-      <p>עָ֘לָ֤ה עָשָׁ֨ן&thinsp;<b>׀</b> בְּאַפּ֗וֹ וְאֵשׁ־מִפִּ֥יו תֹּאכֵ֑ל גֶּ֝חָלִ֗ים בָּעֲר֥וּ מִמֶּֽנּוּ׃</p>
-      <p>וַיֵּ֣ט שָׁ֭מַיִם וַיֵּרַ֑ד וַ֝עֲרָפֶ֗ל תַּ֣חַת רַגְלָֽיו׃</p>
-      <p>וַיִּרְכַּ֣ב עַל־כְּ֭רוּב וַיָּעֹ֑ף וַ֝יֵּ֗דֶא עַל־כַּנְפֵי־רֽוּחַ׃</p>
-      <p>יָ֤שֶׁת<span class="mam-implicit-maqaf">־</span>חֹ֨שֶׁךְ&thinsp;<b>׀</b> סִתְר֗וֹ סְבִֽיבוֹתָ֥יו סֻכָּת֑וֹ חֶשְׁכַת־מַ֝֗יִם עָבֵ֥י שְׁחָקִֽים׃</p>
-      <p>מִנֹּ֗גַהּ נֶ֫גְדּ֥וֹ עָבָ֥יו עָבְר֑וּ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃</p>
-      <p>וַיַּרְעֵ֬ם בַּשָּׁמַ֨יִם&thinsp;<b>׀</b> יְֽהֹוָ֗ה וְ֭עֶלְיוֹן יִתֵּ֣ן קֹל֑וֹ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃</p>
-      <p>וַיִּשְׁלַ֣ח חִ֭צָּיו וַיְפִיצֵ֑ם וּבְרָקִ֥ים רָ֝֗ב וַיְהֻמֵּֽם׃</p>
-      <p>וַיֵּ֤רָא֨וּ&thinsp;<b>׀</b> אֲפִ֥יקֵי מַ֗יִם וַֽיִּגָּלוּ֮ מוֹסְד֢וֹת תֵּ֫בֵ֥ל מִגַּעֲרָ֣תְךָ֣ יְהֹוָ֑ה מִ֝נִּשְׁמַ֗ת ר֣וּחַ אַפֶּֽךָ׃</p>
-      <p>יִשְׁלַ֣ח מִ֭מָּרוֹם יִקָּחֵ֑נִי יַֽ֝מְשֵׁ֗נִי מִמַּ֥יִם רַבִּֽים׃</p>
-      <p>יַצִּילֵ֗נִי מֵאֹיְבִ֥י עָ֑ז וּ֝מִשֹּׂנְאַ֗י כִּֽי־אָמְצ֥וּ מִמֶּֽנִּי׃</p>
-      <p>יְקַדְּמ֥וּנִי בְיוֹם־אֵידִ֑י וַֽיְהִי־יְהֹוָ֖ה לְמִשְׁעָ֣ן לִֽי׃</p>
-      <p>וַיּוֹצִיאֵ֥נִי לַמֶּרְחָ֑ב יְ֝חַלְּצֵ֗נִי כִּ֘י<span class="mam-implicit-maqaf">־</span>חָ֥פֵֽץ<span class="mam-implicit-maqaf">־</span>בִּֽי׃</p>
-      <p>יִגְמְלֵ֣נִי יְהֹוָ֣ה כְּצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י יָשִׁ֥יב לִֽי׃</p>
-      <p>כִּֽי־שָׁ֭מַרְתִּי דַּרְכֵ֣י יְהֹוָ֑ה וְלֹֽא־רָ֝שַׁ֗עְתִּי מֵאֱלֹהָֽי׃</p>
-      <p>כִּ֣י כׇל־מִשְׁפָּטָ֣יו לְנֶגְדִּ֑י וְ֝חֻקֹּתָ֗יו לֹא־אָסִ֥יר מֶֽנִּי׃</p>
-      <p>וָאֱהִ֣י תָמִ֣ים עִמּ֑וֹ וָ֝אֶשְׁתַּמֵּ֗ר מֵעֲוֺנִֽי׃</p>
-      <p>וַיָּֽשֶׁב־יְהֹוָ֣ה לִ֣י כְצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י לְנֶ֣גֶד עֵינָֽיו׃</p>
-      <p>עִם־חָסִ֥יד תִּתְחַסָּ֑ד עִם־גְּבַ֥ר תָּ֝מִ֗ים תִּתַּמָּֽם׃</p>
-      <p>עִם־נָבָ֥ר תִּתְבָּרָ֑ר וְעִם־עִ֝קֵּ֗שׁ תִּתְפַּתָּֽל׃</p>
-      <p>כִּֽי־אַ֭תָּה עַם־עָנִ֣י תוֹשִׁ֑יעַ וְעֵינַ֖יִם רָמ֣וֹת תַּשְׁפִּֽיל׃</p>
-      <p>כִּֽי־אַ֭תָּה תָּאִ֣יר נֵרִ֑י יְהֹוָ֥ה אֱ֝לֹהַ֗י יַגִּ֥יהַּ חׇשְׁכִּֽי׃</p>
-      <p>כִּֽי־בְ֭ךָ אָרֻ֣ץ גְּד֑וּד וּ֝בֵֽאלֹהַ֗י אֲדַלֶּג־שֽׁוּר׃</p>
-      <p>הָאֵל֮ תָּמִ֢ים דַּ֫רְכּ֥וֹ אִמְרַֽת־יְהֹוָ֥ה צְרוּפָ֑ה מָגֵ֥ן ה֝֗וּא לְכֹ֤ל&thinsp;<b>׀</b> הַחֹסִ֬ים בּֽוֹ׃</p>
-      <p>כִּ֤י מִ֣י אֱ֭לוֹהַּ מִבַּלְעֲדֵ֣י יְהֹוָ֑ה וּמִ֥י צ֝֗וּר זוּלָתִ֥י אֱלֹהֵֽינוּ׃</p>
-      <p>הָ֭אֵל הַמְאַזְּרֵ֣נִי חָ֑יִל וַיִּתֵּ֖ן תָּמִ֣ים דַּרְכִּֽי׃</p>
-      <p>מְשַׁוֶּ֣ה רַ֭גְלַי כָּאַיָּל֑וֹת וְעַ֥ל בָּ֝מֹתַ֗י יַעֲמִידֵֽנִי׃</p>
-      <p>מְלַמֵּ֣ד יָ֭דַי לַמִּלְחָמָ֑ה וְֽנִחֲתָ֥ה קֶֽשֶׁת־נְ֝חוּשָׁ֗ה זְרוֹעֹתָֽי׃</p>
-      <p>וַתִּתֶּן־לִי֮ מָגֵ֢ן יִ֫שְׁעֶ֥ךָ וִֽימִינְךָ֥ תִסְעָדֵ֑נִי וְֽעַנְוַתְךָ֥ תַרְבֵּֽנִי׃</p>
-      <p>תַּרְחִ֣יב צַעֲדִ֣י תַחְתָּ֑י וְלֹ֥א מָ֝עֲד֗וּ קַרְסֻלָּֽי׃</p>
-      <p>אֶרְדּ֣וֹף א֭וֹיְבַי וְאַשִּׂיגֵ֑ם וְלֹֽא־אָ֝שׁ֗וּב עַד־כַּלּוֹתָֽם׃</p>
-      <p>אֶ֭מְחָצֵם וְלֹא־יֻ֣כְלוּ ק֑וּם יִ֝פְּל֗וּ תַּ֣חַת רַגְלָֽי׃</p>
-      <p>וַתְּאַזְּרֵ֣נִי חַ֭יִל לַמִּלְחָמָ֑ה תַּכְרִ֖יעַ קָמַ֣י תַּחְתָּֽי׃</p>
-      <p>וְֽאֹיְבַ֗י נָתַ֣תָּה לִּ֣י עֹ֑רֶף וּ֝מְשַׂנְאַ֗י אַצְמִיתֵֽם׃</p>
-      <p>יְשַׁוְּע֥וּ וְאֵין־מוֹשִׁ֑יעַ עַל־יְ֝הֹוָ֗ה וְלֹ֣א עָנָֽם׃</p>
-      <p>וְֽאֶשְׁחָקֵ֗ם כְּעָפָ֥ר עַל־פְּנֵי־ר֑וּחַ כְּטִ֖יט חוּצ֣וֹת אֲרִיקֵֽם׃</p>
-      <p>תְּפַלְּטֵנִי֮ מֵרִ֢יבֵ֫י עָ֥ם תְּ֭שִׂימֵנִי לְרֹ֣אשׁ גּוֹיִ֑ם עַ֖ם לֹא־יָדַ֣עְתִּי יַֽעַבְדֽוּנִי׃</p>
-      <p>לְשֵׁ֣מַֽע אֹ֭זֶן יִשָּׁ֣מְעוּ לִ֑י בְּנֵֽי־נֵ֝כָ֗ר יְכַחֲשׁוּ־לִֽי׃</p>
-      <p>בְּנֵי־נֵכָ֥ר יִבֹּ֑לוּ וְ֝יַחְרְג֗וּ מִֽמִּסְגְּרֽוֹתֵיהֶֽם׃</p>
-      <p>חַי־יְ֭הֹוָה וּבָר֣וּךְ צוּרִ֑י וְ֝יָר֗וּם אֱלוֹהֵ֥י יִשְׁעִֽי׃</p>
-      <p>הָאֵ֗ל הַנּוֹתֵ֣ן נְקָמ֣וֹת לִ֑י וַיַּדְבֵּ֖ר עַמִּ֣ים תַּחְתָּֽי׃</p>
-      <p>מְפַלְּטִ֗י מֵאֹ֫יְבָ֥י אַ֣ף מִן־קָ֭מַי תְּרוֹמְמֵ֑נִי מֵאִ֥ישׁ חָ֝מָ֗ס תַּצִּילֵֽנִי׃</p>
-      <p>עַל־כֵּ֤ן&thinsp;<b>׀</b> אוֹדְךָ֖ בַגּוֹיִ֥ם&thinsp;<small>׀</small>&thinsp;יְהֹוָ֑ה וּלְשִׁמְךָ֥ אֲזַמֵּֽרָה׃</p>
-      <p><span class="mam-kq-trivial">מַגְדִּל֮</span> יְשׁוּע֢וֹת מַ֫לְכּ֥וֹ וְעֹ֤שֶׂה חֶ֨סֶד&thinsp;<b>׀</b> לִמְשִׁיח֗וֹ לְדָוִ֥ד וּלְזַרְע֗וֹ עַד־עוֹלָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a><a href="#v-40">40</a><a href="#v-50">50</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֤חַ&thinsp;<b>׀</b> לְעֶ֥בֶד יְהֹוָ֗ה לְדָ֫וִ֥ד אֲשֶׁ֤ר דִּבֶּ֨ר&thinsp;<b>׀</b> לַיהֹוָ֗ה אֶת־דִּ֭בְרֵי הַשִּׁירָ֣ה הַזֹּ֑את בְּי֤וֹם הִֽצִּיל־יְהֹוָ֘ה<span class="mam-implicit-maqaf">־</span>אוֹת֥וֹ מִכַּ֥ף כׇּל־אֹ֝יְבָ֗יו וּמִיַּ֥ד שָׁאֽוּל׃</p></div><div class="heb-s"><p>למנצח&thinsp;<b>׀</b> לעבד יהוה לדוד אשר דבר&thinsp;<b>׀</b> ליהוה את־דברי השירה הזאת ביום הציל־יהוה<span class="mam-implicit-maqaf">־</span>אותו מכף כל־איביו ומיד שאול׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Par le serviteur de l’Éternel, David, qui prononça en l’honneur du Seigneur les paroles de ce cantique, lorsque l’Éternel l’eut délivré de la main de tous ses ennemis et de la main de Saül.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמַ֡ר אֶרְחׇמְךָ֖ יְהֹוָ֣ה חִזְקִֽי׃</p></div><div class="heb-s"><p>ויאמר ארחמך יהוה חזקי׃</p></div></div>
+      <div class="texte-fr"><p>Il dit: Je t’aime, ô Éternel, qui es ma force!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֤ה&thinsp;<b>׀</b> סַ֥לְעִ֥י וּמְצוּדָתִ֗י וּמְפַ֫לְטִ֥י אֵלִ֣י צ֭וּרִי אֶֽחֱסֶה־בּ֑וֹ מָֽגִנִּ֥י וְקֶֽרֶן־יִ֝שְׁעִ֗י מִשְׂגַּבִּֽי׃</p></div><div class="heb-s"><p>יהוה&thinsp;<b>׀</b> סלעי ומצודתי ומפלטי אלי צורי אחסה־בו מגני וקרן־ישעי משגבי׃</p></div></div>
+      <div class="texte-fr"><p>Seigneur, tu es mon rocher et ma forteresse, un libérateur pour moi; mon Dieu tutélaire en qui je m’abrite, mon bouclier, mon puissant sauveur, mon rempart!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְ֭הֻלָּל אֶקְרָ֣א יְהֹוָ֑ה וּמִן־אֹ֝יְבַ֗י אִוָּשֵֽׁעַ׃</p></div><div class="heb-s"><p>מהלל אקרא יהוה ומן־איבי אושע׃</p></div></div>
+      <div class="texte-fr"><p>Gloire, m’écrié-je, à l’Éternel, et je suis délivré de mes ennemis!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲפָפ֥וּנִי חֶבְלֵי־מָ֑וֶת וְֽנַחֲלֵ֖י בְלִיַּ֣עַל יְבַֽעֲתֽוּנִי׃</p></div><div class="heb-s"><p>אפפוני חבלי־מות ונחלי בליעל יבעתוני׃</p></div></div>
+      <div class="texte-fr"><p>Déjà m’enveloppaient les liens de la mort, les torrents de la perdition me faisaient frémir;</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֶבְלֵ֣י שְׁא֣וֹל סְבָב֑וּנִי קִ֝דְּמ֗וּנִי מ֣וֹקְשֵׁי מָֽוֶת׃</p></div><div class="heb-s"><p>חבלי שאול סבבוני קדמוני מוקשי מות׃</p></div></div>
+      <div class="texte-fr"><p>j’étais enlacé dans les réseaux de la tombe, surpris dans les filets de la mort.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּצַּר־לִ֤י&thinsp;<b>׀</b> אֶ֥קְרָ֣א יְהֹוָה֮ וְאֶל־אֱלֹהַ֢י אֲשַׁ֫וֵּ֥עַ יִשְׁמַ֣ע מֵהֵיכָל֣וֹ קוֹלִ֑י וְ֝שַׁוְעָתִ֗י לְפָנָ֤יו&thinsp;<b>׀</b> תָּב֬וֹא בְאׇזְנָֽיו׃</p></div><div class="heb-s"><p>בצר־לי&thinsp;<b>׀</b> אקרא יהוה ואל־אלהי אשוע ישמע מהיכלו קולי ושועתי לפניו&thinsp;<b>׀</b> תבוא באזניו׃</p></div></div>
+      <div class="texte-fr"><p>Dans ma détresse, j’invoque le Seigneur, je fais appel à mon Dieu; de son sanctuaire il entend ma voix, mon cri est monté à ses oreilles.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּגְעַ֬שׁ וַתִּרְעַ֨שׁ&thinsp;<b>׀</b> הָאָ֗רֶץ וּמוֹסְדֵ֣י הָרִ֣ים יִרְגָּ֑זוּ וַ֝יִּתְגָּֽעֲשׁ֗וּ כִּי־חָ֥רָה לֽוֹ׃</p></div><div class="heb-s"><p>ותגעש ותרעש&thinsp;<b>׀</b> הארץ ומוסדי הרים ירגזו ויתגעשו כי־חרה לו׃</p></div></div>
+      <div class="texte-fr"><p>Soudain la terre oscille et tremble, les fondements des montagnes sont ébranlés, secoués par la colère de Dieu.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>עָ֘לָ֤ה עָשָׁ֨ן&thinsp;<b>׀</b> בְּאַפּ֗וֹ וְאֵשׁ־מִפִּ֥יו תֹּאכֵ֑ל גֶּ֝חָלִ֗ים בָּעֲר֥וּ מִמֶּֽנּוּ׃</p></div><div class="heb-s"><p>עלה עשן&thinsp;<b>׀</b> באפו ואש־מפיו תאכל גחלים בערו ממנו׃</p></div></div>
+      <div class="texte-fr"><p>Des vapeurs s’exhalent, signe de son courroux; de sa bouche sort un feu dévorant, jaillissent de brûlantes étincelles.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֣ט שָׁ֭מַיִם וַיֵּרַ֑ד וַ֝עֲרָפֶ֗ל תַּ֣חַת רַגְלָֽיו׃</p></div><div class="heb-s"><p>ויט שמים וירד וערפל תחת רגליו׃</p></div></div>
+      <div class="texte-fr"><p>Il incline les cieux et descend; sous ses pieds une brume épaisse.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְכַּ֣ב עַל־כְּ֭רוּב וַיָּעֹ֑ף וַ֝יֵּ֗דֶא עַל־כַּנְפֵי־רֽוּחַ׃</p></div><div class="heb-s"><p>וירכב על־כרוב ויעף וידא על־כנפי־רוח׃</p></div></div>
+      <div class="texte-fr"><p>Porté sur les chérubins, il vole, il plane sur les ailes du vent.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָ֤שֶׁת<span class="mam-implicit-maqaf">־</span>חֹ֨שֶׁךְ&thinsp;<b>׀</b> סִתְר֗וֹ סְבִֽיבוֹתָ֥יו סֻכָּת֑וֹ חֶשְׁכַת־מַ֝֗יִם עָבֵ֥י שְׁחָקִֽים׃</p></div><div class="heb-s"><p>ישת<span class="mam-implicit-maqaf">־</span>חשך&thinsp;<b>׀</b> סתרו סביבותיו סכתו חשכת־מים עבי שחקים׃</p></div></div>
+      <div class="texte-fr"><p>Des ténèbres il se fait une mystérieuse retraite, il s’enveloppe, comme d’un pavillon, des eaux obscures, d’opaques nuages.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִנֹּ֗גַהּ נֶ֫גְדּ֥וֹ עָבָ֥יו עָבְר֑וּ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃</p></div><div class="heb-s"><p>מנגה נגדו עביו עברו ברד וגחלי־אש׃</p></div></div>
+      <div class="texte-fr"><p>De l’éclat qui l’entoure s’élancent ses nuées, la grêle et des flammes ardentes.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּרְעֵ֬ם בַּשָּׁמַ֨יִם&thinsp;<b>׀</b> יְֽהֹוָ֗ה וְ֭עֶלְיוֹן יִתֵּ֣ן קֹל֑וֹ בָּ֝רָ֗ד וְגַֽחֲלֵי־אֵֽשׁ׃</p></div><div class="heb-s"><p>וירעם בשמים&thinsp;<b>׀</b> יהוה ועליון יתן קלו ברד וגחלי־אש׃</p></div></div>
+      <div class="texte-fr"><p>Il tonne dans les cieux, l’Éternel, le Dieu suprême fait entendre sa voix, la grêle et les flammes ardentes.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֣ח חִ֭צָּיו וַיְפִיצֵ֑ם וּבְרָקִ֥ים רָ֝֗ב וַיְהֻמֵּֽם׃</p></div><div class="heb-s"><p>וישלח חציו ויפיצם וברקים רב ויהמם׃</p></div></div>
+      <div class="texte-fr"><p>Il décoche ses flèches et il les disperse, il lance des éclairs et les frappe de stupeur.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֤רָא֨וּ&thinsp;<b>׀</b> אֲפִ֥יקֵי מַ֗יִם וַֽיִּגָּלוּ֮ מוֹסְד֢וֹת תֵּ֫בֵ֥ל מִגַּעֲרָ֣תְךָ֣ יְהֹוָ֑ה מִ֝נִּשְׁמַ֗ת ר֣וּחַ אַפֶּֽךָ׃</p></div><div class="heb-s"><p>ויראו&thinsp;<b>׀</b> אפיקי מים ויגלו מוסדות תבל מגערתך יהוה מנשמת רוח אפך׃</p></div></div>
+      <div class="texte-fr"><p>Le lit des fleuves s’est découvert, les fondements de la terre ont été mis à nu, à ta voix impérieuse, ô Éternel, au souffle du vent de ta colère.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׁלַ֣ח מִ֭מָּרוֹם יִקָּחֵ֑נִי יַֽ֝מְשֵׁ֗נִי מִמַּ֥יִם רַבִּֽים׃</p></div><div class="heb-s"><p>ישלח ממרום יקחני ימשני ממים רבים׃</p></div></div>
+      <div class="texte-fr"><p>Il étend d’en haut sa main, me saisit, me retire du sein des grandes eaux;</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַצִּילֵ֗נִי מֵאֹיְבִ֥י עָ֑ז וּ֝מִשֹּׂנְאַ֗י כִּֽי־אָמְצ֥וּ מִמֶּֽנִּי׃</p></div><div class="heb-s"><p>יצילני מאיבי עז ומשנאי כי־אמצו ממני׃</p></div></div>
+      <div class="texte-fr"><p>il me délivre de mon puissant ennemi, de mes adversaires trop forts pour moi.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְקַדְּמ֥וּנִי בְיוֹם־אֵידִ֑י וַֽיְהִי־יְהֹוָ֖ה לְמִשְׁעָ֣ן לִֽי׃</p></div><div class="heb-s"><p>יקדמוני ביום־אידי ויהי־יהוה למשען לי׃</p></div></div>
+      <div class="texte-fr"><p>Ils étaient à l’affût de mes malheurs, mais l’Éternel a été mon appui.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּוֹצִיאֵ֥נִי לַמֶּרְחָ֑ב יְ֝חַלְּצֵ֗נִי כִּ֘י<span class="mam-implicit-maqaf">־</span>חָ֥פֵֽץ<span class="mam-implicit-maqaf">־</span>בִּֽי׃</p></div><div class="heb-s"><p>ויוציאני למרחב יחלצני כי<span class="mam-implicit-maqaf">־</span>חפץ<span class="mam-implicit-maqaf">־</span>בי׃</p></div></div>
+      <div class="texte-fr"><p>Il m’a mis au large, m’a sauvé parce qu’il m’aime.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִגְמְלֵ֣נִי יְהֹוָ֣ה כְּצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י יָשִׁ֥יב לִֽי׃</p></div><div class="heb-s"><p>יגמלני יהוה כצדקי כבר ידי ישיב לי׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur me traite selon ma droiture, il récompense la pureté de mes mains.</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־שָׁ֭מַרְתִּי דַּרְכֵ֣י יְהֹוָ֑ה וְלֹֽא־רָ֝שַׁ֗עְתִּי מֵאֱלֹהָֽי׃</p></div><div class="heb-s"><p>כי־שמרתי דרכי יהוה ולא־רשעתי מאלהי׃</p></div></div>
+      <div class="texte-fr"><p>C’est que je suis fidèle aux voies du Seigneur, jamais je n’ai trahi mon Dieu.</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י כׇל־מִשְׁפָּטָ֣יו לְנֶגְדִּ֑י וְ֝חֻקֹּתָ֗יו לֹא־אָסִ֥יר מֶֽנִּי׃</p></div><div class="heb-s"><p>כי כל־משפטיו לנגדי וחקתיו לא־אסיר מני׃</p></div></div>
+      <div class="texte-fr"><p>Toutes ses lois me sont présentes, ses statuts, je ne m’en écarte point.</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וָאֱהִ֣י תָמִ֣ים עִמּ֑וֹ וָ֝אֶשְׁתַּמֵּ֗ר מֵעֲוֺנִֽי׃</p></div><div class="heb-s"><p>ואהי תמים עמו ואשתמר מעוני׃</p></div></div>
+      <div class="texte-fr"><p>Attaché à lui sans réserve, je me suis tenu en garde contre mes fautes.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּֽשֶׁב־יְהֹוָ֣ה לִ֣י כְצִדְקִ֑י כְּבֹ֥ר יָ֝דַ֗י לְנֶ֣גֶד עֵינָֽיו׃</p></div><div class="heb-s"><p>וישב־יהוה לי כצדקי כבר ידי לנגד עיניו׃</p></div></div>
+      <div class="texte-fr"><p>Oui, le Seigneur m’a rémunéré selon ma droiture, selon la pureté de mes mains, dont ses yeux sont témoins.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>עִם־חָסִ֥יד תִּתְחַסָּ֑ד עִם־גְּבַ֥ר תָּ֝מִ֗ים תִּתַּמָּֽם׃</p></div><div class="heb-s"><p>עם־חסיד תתחסד עם־גבר תמים תתמם׃</p></div></div>
+      <div class="texte-fr"><p>Tu te montres aimant pour qui t’aime, loyal envers l’homme loyal,</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>עִם־נָבָ֥ר תִּתְבָּרָ֑ר וְעִם־עִ֝קֵּ֗שׁ תִּתְפַּתָּֽל׃</p></div><div class="heb-s"><p>עם־נבר תתברר ועם־עקש תתפתל׃</p></div></div>
+      <div class="texte-fr"><p>sincère avec les cœurs purs, mais artificieux avec les pervers!</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־אַ֭תָּה עַם־עָנִ֣י תוֹשִׁ֑יעַ וְעֵינַ֖יִם רָמ֣וֹת תַּשְׁפִּֽיל׃</p></div><div class="heb-s"><p>כי־אתה עם־עני תושיע ועינים רמות תשפיל׃</p></div></div>
+      <div class="texte-fr"><p>Oui, tu viens en aide à un peuple humilié, et tu abaisses les yeux hautains.</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־אַ֭תָּה תָּאִ֣יר נֵרִ֑י יְהֹוָ֥ה אֱ֝לֹהַ֗י יַגִּ֥יהַּ חׇשְׁכִּֽי׃</p></div><div class="heb-s"><p>כי־אתה תאיר נרי יהוה אלהי יגיה חשכי׃</p></div></div>
+      <div class="texte-fr"><p>Oui, tu fais briller ma lumière! L’Éternel, mon Dieu, illumine mes ténèbres.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־בְ֭ךָ אָרֻ֣ץ גְּד֑וּד וּ֝בֵֽאלֹהַ֗י אֲדַלֶּג־שֽׁוּר׃</p></div><div class="heb-s"><p>כי־בך ארץ גדוד ובאלהי אדלג־שור׃</p></div></div>
+      <div class="texte-fr"><p>Soutenu par lui, j’attaque un bataillon; grâce à mon Dieu, j’escalade un rempart.</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָאֵל֮ תָּמִ֢ים דַּ֫רְכּ֥וֹ אִמְרַֽת־יְהֹוָ֥ה צְרוּפָ֑ה מָגֵ֥ן ה֝֗וּא לְכֹ֤ל&thinsp;<b>׀</b> הַחֹסִ֬ים בּֽוֹ׃</p></div><div class="heb-s"><p>האל תמים דרכו אמרת־יהוה צרופה מגן הוא לכל&thinsp;<b>׀</b> החסים בו׃</p></div></div>
+      <div class="texte-fr"><p>Dieu puissant! parfaite est sa voie; la parole du Seigneur est infaillible, il est le bouclier de quiconque espère en lui.</p></div>
+    </div><div class="seif" id="v-32">
+      <span class="seif-num">Verset 32</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י מִ֣י אֱ֭לוֹהַּ מִבַּלְעֲדֵ֣י יְהֹוָ֑ה וּמִ֥י צ֝֗וּר זוּלָתִ֥י אֱלֹהֵֽינוּ׃</p></div><div class="heb-s"><p>כי מי אלוה מבלעדי יהוה ומי צור זולתי אלהינו׃</p></div></div>
+      <div class="texte-fr"><p>Qui est Dieu, hormis l’Éternel? Qui un rocher tutélaire, si ce n’est notre Dieu?</p></div>
+    </div><div class="seif" id="v-33">
+      <span class="seif-num">Verset 33</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָ֭אֵל הַמְאַזְּרֵ֣נִי חָ֑יִל וַיִּתֵּ֖ן תָּמִ֣ים דַּרְכִּֽי׃</p></div><div class="heb-s"><p>האל המאזרני חיל ויתן תמים דרכי׃</p></div></div>
+      <div class="texte-fr"><p>Ce Dieu me ceint de force, et me fait suivre une voie parfaite.</p></div>
+    </div><div class="seif" id="v-34">
+      <span class="seif-num">Verset 34</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְשַׁוֶּ֣ה רַ֭גְלַי כָּאַיָּל֑וֹת וְעַ֥ל בָּ֝מֹתַ֗י יַעֲמִידֵֽנִי׃</p></div><div class="heb-s"><p>משוה רגלי כאילות ועל במתי יעמידני׃</p></div></div>
+      <div class="texte-fr"><p>Il rend mes pieds agiles comme ceux des biches, et m’installe sur mes hauteurs.</p></div>
+    </div><div class="seif" id="v-35">
+      <span class="seif-num">Verset 35</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְלַמֵּ֣ד יָ֭דַי לַמִּלְחָמָ֑ה וְֽנִחֲתָ֥ה קֶֽשֶׁת־נְ֝חוּשָׁ֗ה זְרוֹעֹתָֽי׃</p></div><div class="heb-s"><p>מלמד ידי למלחמה ונחתה קשת־נחושה זרועתי׃</p></div></div>
+      <div class="texte-fr"><p>Il instruit mes mains aux combats, mes bras à manier l’arc d’airain.</p></div>
+    </div><div class="seif" id="v-36">
+      <span class="seif-num">Verset 36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּתֶּן־לִי֮ מָגֵ֢ן יִ֫שְׁעֶ֥ךָ וִֽימִינְךָ֥ תִסְעָדֵ֑נִי וְֽעַנְוַתְךָ֥ תַרְבֵּֽנִי׃</p></div><div class="heb-s"><p>ותתן־לי מגן ישעך וימינך תסעדני וענותך תרבני׃</p></div></div>
+      <div class="texte-fr"><p>Tu me prêtes le bouclier de ton secours, ta droite est mon appui, ta bienveillance fait ma supériorité.</p></div>
+    </div><div class="seif" id="v-37">
+      <span class="seif-num">Verset 37</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּרְחִ֣יב צַעֲדִ֣י תַחְתָּ֑י וְלֹ֥א מָ֝עֲד֗וּ קַרְסֻלָּֽי׃</p></div><div class="heb-s"><p>תרחיב צעדי תחתי ולא מעדו קרסלי׃</p></div></div>
+      <div class="texte-fr"><p>Tu donnes de l’aisance à mes pas, et empêches mes talons de chanceler.</p></div>
+    </div><div class="seif" id="v-38">
+      <span class="seif-num">Verset 38</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶרְדּ֣וֹף א֭וֹיְבַי וְאַשִּׂיגֵ֑ם וְלֹֽא־אָ֝שׁ֗וּב עַד־כַּלּוֹתָֽם׃</p></div><div class="heb-s"><p>ארדוף אויבי ואשיגם ולא־אשוב עד־כלותם׃</p></div></div>
+      <div class="texte-fr"><p>Je poursuis mes ennemis, je les atteins; point de relâche que je ne les aie détruits.</p></div>
+    </div><div class="seif" id="v-39">
+      <span class="seif-num">Verset 39</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֭מְחָצֵם וְלֹא־יֻ֣כְלוּ ק֑וּם יִ֝פְּל֗וּ תַּ֣חַת רַגְלָֽי׃</p></div><div class="heb-s"><p>אמחצם ולא־יכלו קום יפלו תחת רגלי׃</p></div></div>
+      <div class="texte-fr"><p>Je les abats, ils ne pourront plus se relever, ils gisent désormais à mes pieds.</p></div>
+    </div><div class="seif" id="v-40">
+      <span class="seif-num">Verset 40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתְּאַזְּרֵ֣נִי חַ֭יִל לַמִּלְחָמָ֑ה תַּכְרִ֖יעַ קָמַ֣י תַּחְתָּֽי׃</p></div><div class="heb-s"><p>ותאזרני חיל למלחמה תכריע קמי תחתי׃</p></div></div>
+      <div class="texte-fr"><p>C’est toi qui m’as armé de vaillance pour la guerre, qui fais plier sous moi mes agresseurs;</p></div>
+    </div><div class="seif" id="v-41">
+      <span class="seif-num">Verset 41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽאֹיְבַ֗י נָתַ֣תָּה לִּ֣י עֹ֑רֶף וּ֝מְשַׂנְאַ֗י אַצְמִיתֵֽם׃</p></div><div class="heb-s"><p>ואיבי נתתה לי ערף ומשנאי אצמיתם׃</p></div></div>
+      <div class="texte-fr"><p>mes ennemis, tu les fais fuir devant moi, et mes adversaires, j’en fais justice.</p></div>
+    </div><div class="seif" id="v-42">
+      <span class="seif-num">Verset 42</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְשַׁוְּע֥וּ וְאֵין־מוֹשִׁ֑יעַ עַל־יְ֝הֹוָ֗ה וְלֹ֣א עָנָֽם׃</p></div><div class="heb-s"><p>ישועו ואין־מושיע על־יהוה ולא ענם׃</p></div></div>
+      <div class="texte-fr"><p>Ils s’adressent, à bout de ressources, à l’Éternel…: point de réponse!</p></div>
+    </div><div class="seif" id="v-43">
+      <span class="seif-num">Verset 43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽאֶשְׁחָקֵ֗ם כְּעָפָ֥ר עַל־פְּנֵי־ר֑וּחַ כְּטִ֖יט חוּצ֣וֹת אֲרִיקֵֽם׃</p></div><div class="heb-s"><p>ואשחקם כעפר על־פני־רוח כטיט חוצות אריקם׃</p></div></div>
+      <div class="texte-fr"><p>Je les écrase comme la poussière qu’emporte le vent, comme la fange des rues, je les pulvérise.</p></div>
+    </div><div class="seif" id="v-44">
+      <span class="seif-num">Verset 44</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּפַלְּטֵנִי֮ מֵרִ֢יבֵ֫י עָ֥ם תְּ֭שִׂימֵנִי לְרֹ֣אשׁ גּוֹיִ֑ם עַ֖ם לֹא־יָדַ֣עְתִּי יַֽעַבְדֽוּנִי׃</p></div><div class="heb-s"><p>תפלטני מריבי עם תשימני לראש גוים עם לא־ידעתי יעבדוני׃</p></div></div>
+      <div class="texte-fr"><p>Tu me fais triompher des factions du peuple, tu me places à la tête des nations; des peuplades inconnues deviennent mes tributaires.</p></div>
+    </div><div class="seif" id="v-45">
+      <span class="seif-num">Verset 45</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְשֵׁ֣מַֽע אֹ֭זֶן יִשָּׁ֣מְעוּ לִ֑י בְּנֵֽי־נֵ֝כָ֗ר יְכַחֲשׁוּ־לִֽי׃</p></div><div class="heb-s"><p>לשמע אזן ישמעו לי בני־נכר יכחשו־לי׃</p></div></div>
+      <div class="texte-fr"><p>Au seul bruit de mon nom, ils se soumettent à moi, les fils d’un sol étranger me rendent hommage.</p></div>
+    </div><div class="seif" id="v-46">
+      <span class="seif-num">Verset 46</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּנֵי־נֵכָ֥ר יִבֹּ֑לוּ וְ֝יַחְרְג֗וּ מִֽמִּסְגְּרֽוֹתֵיהֶֽם׃</p></div><div class="heb-s"><p>בני־נכר יבלו ויחרגו ממסגרותיהם׃</p></div></div>
+      <div class="texte-fr"><p>Les fils de l’étranger perdent courage, ils tremblent au fond de leurs retraites.</p></div>
+    </div><div class="seif" id="v-47">
+      <span class="seif-num">Verset 47</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַי־יְ֭הֹוָה וּבָר֣וּךְ צוּרִ֑י וְ֝יָר֗וּם אֱלוֹהֵ֥י יִשְׁעִֽי׃</p></div><div class="heb-s"><p>חי־יהוה וברוך צורי וירום אלוהי ישעי׃</p></div></div>
+      <div class="texte-fr"><p>Vivant est le Seigneur, et béni mon rocher! Glorifié le Dieu qui me protège!</p></div>
+    </div><div class="seif" id="v-48">
+      <span class="seif-num">Verset 48</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָאֵ֗ל הַנּוֹתֵ֣ן נְקָמ֣וֹת לִ֑י וַיַּדְבֵּ֖ר עַמִּ֣ים תַּחְתָּֽי׃</p></div><div class="heb-s"><p>האל הנותן נקמות לי וידבר עמים תחתי׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, c’est toi qui me procures vengeance, qui fais tomber des peuples à mes pieds;</p></div>
+    </div><div class="seif" id="v-49">
+      <span class="seif-num">Verset 49</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְפַלְּטִ֗י מֵאֹ֫יְבָ֥י אַ֣ף מִן־קָ֭מַי תְּרוֹמְמֵ֑נִי מֵאִ֥ישׁ חָ֝מָ֗ס תַּצִּילֵֽנִי׃</p></div><div class="heb-s"><p>מפלטי מאיבי אף מן־קמי תרוממני מאיש חמס תצילני׃</p></div></div>
+      <div class="texte-fr"><p>qui m’arraches à mes ennemis, me fais triompher de mes agresseurs, et échapper aux hommes de violence.</p></div>
+    </div><div class="seif" id="v-50">
+      <span class="seif-num">Verset 50</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֤ן&thinsp;<b>׀</b> אוֹדְךָ֖ בַגּוֹיִ֥ם&thinsp;<small>׀</small>&thinsp;יְהֹוָ֑ה וּלְשִׁמְךָ֥ אֲזַמֵּֽרָה׃</p></div><div class="heb-s"><p>על־כן&thinsp;<b>׀</b> אודך בגוים&thinsp;<small>׀</small>&thinsp;יהוה ולשמך אזמרה׃</p></div></div>
+      <div class="texte-fr"><p>Je te rends donc grâce, Seigneur, à la face des peuples, et je chante ta gloire,</p></div>
+    </div><div class="seif" id="v-51">
+      <span class="seif-num">Verset 51</span>
+      <div class="texte-heb"><div class="heb-n"><p><span class="mam-kq-trivial">מַגְדִּל֮</span> יְשׁוּע֢וֹת מַ֫לְכּ֥וֹ וְעֹ֤שֶׂה חֶ֨סֶד&thinsp;<b>׀</b> לִמְשִׁיח֗וֹ לְדָוִ֥ד וּלְזַרְע֗וֹ עַד־עוֹלָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p><span class="mam-kq-trivial">מגדל</span> ישועות מלכו ועשה חסד&thinsp;<b>׀</b> למשיחו לדוד ולזרעו עד־עולם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>ô toi qui assures de grandes victoires à ton roi, qui combles de bienfaits ton oint David et sa postérité à jamais!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Par le serviteur de l’Éternel, David, qui prononça en l’honneur du Seigneur les paroles de ce cantique, lorsque l’Éternel l’eut délivré de la main de tous ses ennemis et de la main de Saül.</p>
-      <p>Il dit: Je t’aime, ô Éternel, qui es ma force!</p>
-      <p>Seigneur, tu es mon rocher et ma forteresse, un libérateur pour moi; mon Dieu tutélaire en qui je m’abrite, mon bouclier, mon puissant sauveur, mon rempart!</p>
-      <p>Gloire, m’écrié-je, à l’Éternel, et je suis délivré de mes ennemis!</p>
-      <p>Déjà m’enveloppaient les liens de la mort, les torrents de la perdition me faisaient frémir;</p>
-      <p>j’étais enlacé dans les réseaux de la tombe, surpris dans les filets de la mort.</p>
-      <p>Dans ma détresse, j’invoque le Seigneur, je fais appel à mon Dieu; de son sanctuaire il entend ma voix, mon cri est monté à ses oreilles.</p>
-      <p>Soudain la terre oscille et tremble, les fondements des montagnes sont ébranlés, secoués par la colère de Dieu.</p>
-      <p>Des vapeurs s’exhalent, signe de son courroux; de sa bouche sort un feu dévorant, jaillissent de brûlantes étincelles.</p>
-      <p>Il incline les cieux et descend; sous ses pieds une brume épaisse.</p>
-      <p>Porté sur les chérubins, il vole, il plane sur les ailes du vent.</p>
-      <p>Des ténèbres il se fait une mystérieuse retraite, il s’enveloppe, comme d’un pavillon, des eaux obscures, d’opaques nuages.</p>
-      <p>De l’éclat qui l’entoure s’élancent ses nuées, la grêle et des flammes ardentes.</p>
-      <p>Il tonne dans les cieux, l’Éternel, le Dieu suprême fait entendre sa voix, la grêle et les flammes ardentes.</p>
-      <p>Il décoche ses flèches et il les disperse, il lance des éclairs et les frappe de stupeur.</p>
-      <p>Le lit des fleuves s’est découvert, les fondements de la terre ont été mis à nu, à ta voix impérieuse, ô Éternel, au souffle du vent de ta colère.</p>
-      <p>Il étend d’en haut sa main, me saisit, me retire du sein des grandes eaux;</p>
-      <p>il me délivre de mon puissant ennemi, de mes adversaires trop forts pour moi.</p>
-      <p>Ils étaient à l’affût de mes malheurs, mais l’Éternel a été mon appui.</p>
-      <p>Il m’a mis au large, m’a sauvé parce qu’il m’aime.</p>
-      <p>Le Seigneur me traite selon ma droiture, il récompense la pureté de mes mains.</p>
-      <p>C’est que je suis fidèle aux voies du Seigneur, jamais je n’ai trahi mon Dieu.</p>
-      <p>Toutes ses lois me sont présentes, ses statuts, je ne m’en écarte point.</p>
-      <p>Attaché à lui sans réserve, je me suis tenu en garde contre mes fautes.</p>
-      <p>Oui, le Seigneur m’a rémunéré selon ma droiture, selon la pureté de mes mains, dont ses yeux sont témoins.</p>
-      <p>Tu te montres aimant pour qui t’aime, loyal envers l’homme loyal,</p>
-      <p>sincère avec les cœurs purs, mais artificieux avec les pervers!</p>
-      <p>Oui, tu viens en aide à un peuple humilié, et tu abaisses les yeux hautains.</p>
-      <p>Oui, tu fais briller ma lumière! L’Éternel, mon Dieu, illumine mes ténèbres.</p>
-      <p>Soutenu par lui, j’attaque un bataillon; grâce à mon Dieu, j’escalade un rempart.</p>
-      <p>Dieu puissant! parfaite est sa voie; la parole du Seigneur est infaillible, il est le bouclier de quiconque espère en lui.</p>
-      <p>Qui est Dieu, hormis l’Éternel? Qui un rocher tutélaire, si ce n’est notre Dieu?</p>
-      <p>Ce Dieu me ceint de force, et me fait suivre une voie parfaite.</p>
-      <p>Il rend mes pieds agiles comme ceux des biches, et m’installe sur mes hauteurs.</p>
-      <p>Il instruit mes mains aux combats, mes bras à manier l’arc d’airain.</p>
-      <p>Tu me prêtes le bouclier de ton secours, ta droite est mon appui, ta bienveillance fait ma supériorité.</p>
-      <p>Tu donnes de l’aisance à mes pas, et empêches mes talons de chanceler.</p>
-      <p>Je poursuis mes ennemis, je les atteins; point de relâche que je ne les aie détruits.</p>
-      <p>Je les abats, ils ne pourront plus se relever, ils gisent désormais à mes pieds.</p>
-      <p>C’est toi qui m’as armé de vaillance pour la guerre, qui fais plier sous moi mes agresseurs;</p>
-      <p>mes ennemis, tu les fais fuir devant moi, et mes adversaires, j’en fais justice.</p>
-      <p>Ils s’adressent, à bout de ressources, à l’Éternel…: point de réponse!</p>
-      <p>Je les écrase comme la poussière qu’emporte le vent, comme la fange des rues, je les pulvérise.</p>
-      <p>Tu me fais triompher des factions du peuple, tu me places à la tête des nations; des peuplades inconnues deviennent mes tributaires.</p>
-      <p>Au seul bruit de mon nom, ils se soumettent à moi, les fils d’un sol étranger me rendent hommage.</p>
-      <p>Les fils de l’étranger perdent courage, ils tremblent au fond de leurs retraites.</p>
-      <p>Vivant est le Seigneur, et béni mon rocher! Glorifié le Dieu qui me protège!</p>
-      <p>O Dieu, c’est toi qui me procures vengeance, qui fais tomber des peuples à mes pieds;</p>
-      <p>qui m’arraches à mes ennemis, me fais triompher de mes agresseurs, et échapper aux hommes de violence.</p>
-      <p>Je te rends donc grâce, Seigneur, à la face des peuples, et je chante ta gloire,</p>
-      <p>ô toi qui assures de grandes victoires à ton roi, qui combles de bienfaits ton oint David et sa postérité à jamais!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -337,6 +475,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-17.html">← Tehilim 17</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-18.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-19.html">Tehilim 19 →</a></div>
 </main>
 
 <footer>

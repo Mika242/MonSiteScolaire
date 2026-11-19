@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 15 – Qui séjournera dans ta tente ?</h1>
     <p>Ketouvim, Tehilim, Chapitre 15</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-14.html">← Tehilim 14</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-15.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-16.html">Tehilim 16 →</a></div>
   </div>
 </header>
 
@@ -161,33 +202,38 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>מִזְמ֗וֹר לְדָ֫וִ֥ד יְ֭הֹוָה מִי־יָג֣וּר בְּאׇהֳלֶ֑ךָ מִֽי־יִ֝שְׁכֹּ֗ן בְּהַ֣ר קׇדְשֶֽׁךָ׃</p>
-      <p>הוֹלֵ֣ךְ תָּ֭מִים וּפֹעֵ֥ל צֶ֑דֶק וְדֹבֵ֥ר אֱ֝מֶ֗ת בִּלְבָבֽוֹ׃</p>
-      <p>לֹֽא־רָגַ֨ל&thinsp;<b>׀</b> עַל־לְשֹׁנ֗וֹ לֹא־עָשָׂ֣ה לְרֵעֵ֣הוּ רָעָ֑ה וְ֝חֶרְפָּ֗ה לֹא־נָשָׂ֥א עַל־קְרֹבֽוֹ׃</p>
-      <p>נִבְזֶ֤ה&thinsp;<b>׀</b> בְּֽעֵ֘ינָ֤יו נִמְאָ֗ס וְאֶת־יִרְאֵ֣י יְהֹוָ֣ה יְכַבֵּ֑ד נִשְׁבַּ֥ע לְ֝הָרַ֗ע וְלֹ֣א יָמִֽר׃</p>
-      <p>כַּסְפּ֤וֹ&thinsp;<b>׀</b> לֹא־נָתַ֣ן בְּנֶשֶׁךְ֮ וְשֹׁ֥חַד עַל־נָקִ֗י לֹ֥א<span class="mam-implicit-maqaf">־</span>לָ֫קָ֥ח עֹֽשֵׂה־אֵ֑לֶּה לֹ֖א יִמּ֣וֹט לְעוֹלָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִזְמ֗וֹר לְדָ֫וִ֥ד יְ֭הֹוָה מִי־יָג֣וּר בְּאׇהֳלֶ֑ךָ מִֽי־יִ֝שְׁכֹּ֗ן בְּהַ֣ר קׇדְשֶֽׁךָ׃</p></div><div class="heb-s"><p>מזמור לדוד יהוה מי־יגור באהלך מי־ישכן בהר קדשך׃</p></div></div>
+      <div class="texte-fr"><p>Psaume de David. Éternel, qui séjournera sous ta tente? Qui habitera sur ta montagne sainte?</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹלֵ֣ךְ תָּ֭מִים וּפֹעֵ֥ל צֶ֑דֶק וְדֹבֵ֥ר אֱ֝מֶ֗ת בִּלְבָבֽוֹ׃</p></div><div class="heb-s"><p>הולך תמים ופעל צדק ודבר אמת בלבבו׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui marche intègre, pratique la justice et dit la vérité de tout son cœur;</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־רָגַ֨ל&thinsp;<b>׀</b> עַל־לְשֹׁנ֗וֹ לֹא־עָשָׂ֣ה לְרֵעֵ֣הוּ רָעָ֑ה וְ֝חֶרְפָּ֗ה לֹא־נָשָׂ֥א עַל־קְרֹבֽוֹ׃</p></div><div class="heb-s"><p>לא־רגל&thinsp;<b>׀</b> על־לשנו לא־עשה לרעהו רעה וחרפה לא־נשא על־קרבו׃</p></div></div>
+      <div class="texte-fr"><p>qui n’a pas de calomnie sur la langue, ne fait aucun mal à son semblable, et ne profère point d’outrage contre son prochain;</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִבְזֶ֤ה&thinsp;<b>׀</b> בְּֽעֵ֘ינָ֤יו נִמְאָ֗ס וְאֶת־יִרְאֵ֣י יְהֹוָ֣ה יְכַבֵּ֑ד נִשְׁבַּ֥ע לְ֝הָרַ֗ע וְלֹ֣א יָמִֽר׃</p></div><div class="heb-s"><p>נבזה&thinsp;<b>׀</b> בעיניו נמאס ואת־יראי יהוה יכבד נשבע להרע ולא ימר׃</p></div></div>
+      <div class="texte-fr"><p>qui tient pour méprisable quiconque mérite le mépris, mais honore ceux qui craignent l’Éternel; qui, ayant juré à son détriment, ne se rétracte point;</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּסְפּ֤וֹ&thinsp;<b>׀</b> לֹא־נָתַ֣ן בְּנֶשֶׁךְ֮ וְשֹׁ֥חַד עַל־נָקִ֗י לֹ֥א<span class="mam-implicit-maqaf">־</span>לָ֫קָ֥ח עֹֽשֵׂה־אֵ֑לֶּה לֹ֖א יִמּ֣וֹט לְעוֹלָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כספו&thinsp;<b>׀</b> לא־נתן בנשך ושחד על־נקי לא<span class="mam-implicit-maqaf">־</span>לקח עשה־אלה לא ימוט לעולם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>qui ne place pas son argent à intérêt, et n’accepte pas de présent aux dépens de l’innocent. Celui qui agit de la sorte ne chancellera jamais.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Psaume de David. Éternel, qui séjournera sous ta tente? Qui habitera sur ta montagne sainte?</p>
-      <p>Celui qui marche intègre, pratique la justice et dit la vérité de tout son cœur;</p>
-      <p>qui n’a pas de calomnie sur la langue, ne fait aucun mal à son semblable, et ne profère point d’outrage contre son prochain;</p>
-      <p>qui tient pour méprisable quiconque mérite le mépris, mais honore ceux qui craignent l’Éternel; qui, ayant juré à son détriment, ne se rétracte point;</p>
-      <p>qui ne place pas son argent à intérêt, et n’accepte pas de présent aux dépens de l’innocent. Celui qui agit de la sorte ne chancellera jamais.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -239,6 +285,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-14.html">← Tehilim 14</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-15.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-16.html">Tehilim 16 →</a></div>
 </main>
 
 <footer>

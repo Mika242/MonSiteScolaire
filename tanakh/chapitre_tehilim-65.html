@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 65 – À Toi la louange est silence, en Sion</h1>
     <p>Ketouvim, Tehilim, Chapitre 65</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-64.html">← Tehilim 64</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-65.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-66.html">Tehilim 66 →</a></div>
   </div>
 </header>
 
@@ -161,51 +202,74 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ מִזְמ֗וֹר לְדָוִ֥ד שִֽׁיר׃</p>
-      <p>לְךָ֤ דֻֽמִיָּ֬ה תְהִלָּ֓ה אֱלֹ֘הִ֥ים בְּצִיּ֑וֹן וּ֝לְךָ֗ יְשֻׁלַּם־נֶֽדֶר׃</p>
-      <p>שֹׁמֵ֥עַ תְּפִלָּ֑ה עָ֝דֶ֗יךָ כׇּל־בָּשָׂ֥ר יָבֹֽאוּ׃</p>
-      <p>דִּבְרֵ֣י עֲ֭וֺנֹת גָּ֣בְרוּ מֶ֑נִּי פְּ֝שָׁעֵ֗ינוּ אַתָּ֥ה תְכַפְּרֵֽם׃</p>
-      <p>אַשְׁרֵ֤י&thinsp;<b>׀</b> תִּ֥בְחַ֣ר וּתְקָרֵב֮ יִשְׁכֹּ֢ן חֲצֵ֫רֶ֥יךָ נִ֭שְׂבְּעָה בְּט֣וּב בֵּיתֶ֑ךָ קְ֝דֹ֗שׁ הֵיכָלֶֽךָ׃</p>
-      <p>נ֤וֹרָא֨וֹת&thinsp;<b>׀</b> בְּצֶ֣דֶק תַּ֭עֲנֵנוּ אֱלֹהֵ֣י יִשְׁעֵ֑נוּ מִבְטָ֥ח כׇּל־קַצְוֵי־אֶ֝֗רֶץ וְיָ֣ם רְחֹקִֽים׃</p>
-      <p>מֵכִ֣ין הָרִ֣ים בְּכֹח֑וֹ נֶ֝אְזָ֗ר בִּגְבוּרָֽה׃</p>
-      <p>מַשְׁבִּ֤יחַ&thinsp;<b>׀</b> שְׁא֣וֹן יַ֭מִּים שְׁא֥וֹן גַּלֵּיהֶ֗ם וַהֲמ֥וֹן לְאֻמִּֽים׃</p>
-      <p>וַיִּ֤ירְא֨וּ&thinsp;<b>׀</b> יֹשְׁבֵ֣י קְ֭צָוֺת מֵאוֹתֹתֶ֑יךָ מ֤וֹצָֽאֵי<span class="mam-implicit-maqaf">־</span>בֹ֖קֶר וָעֶ֣רֶב תַּרְנִֽין׃</p>
-      <p>פָּ֤קַֽדְתָּ<span class="mam-implicit-maqaf">־</span>הָאָ֨רֶץ וַתְּשֹׁ֪קְקֶ֡הָ רַבַּ֬ת תַּעְשְׁרֶ֗נָּה פֶּ֣לֶג אֱ֭לֹהִים מָ֣לֵא מָ֑יִם תָּכִ֥ין דְּ֝גָנָ֗ם כִּי־כֵ֥ן תְּכִינֶֽהָ׃</p>
-      <p>תְּלָמֶ֣יהָ רַ֭וֵּה נַחֵ֣ת גְּדוּדֶ֑הָ בִּרְבִיבִ֥ים תְּ֝מֹגְגֶ֗נָּה צִמְחָ֥הּ תְּבָרֵֽךְ׃</p>
-      <p>עִ֭טַּרְתָּ שְׁנַ֣ת טוֹבָתֶ֑ךָ וּ֝מַעְגָּלֶ֗יךָ יִרְעֲפ֥וּן דָּֽשֶׁן׃</p>
-      <p>יִ֭רְעֲפוּ נְא֣וֹת מִדְבָּ֑ר וְ֝גִ֗יל גְּבָע֥וֹת תַּחְגֹּֽרְנָה׃</p>
-      <p>לָבְשׁ֬וּ כָרִ֨ים&thinsp;<b>׀</b> הַצֹּ֗אן וַעֲמָקִ֥ים יַֽעַטְפוּ־בָ֑ר יִ֝תְרוֹעֲע֗וּ אַף־יָשִֽׁירוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ מִזְמ֗וֹר לְדָוִ֥ד שִֽׁיר׃</p></div><div class="heb-s"><p>למנצח מזמור לדוד שיר׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Psaume de David. Cantique.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְךָ֤ דֻֽמִיָּ֬ה תְהִלָּ֓ה אֱלֹ֘הִ֥ים בְּצִיּ֑וֹן וּ֝לְךָ֗ יְשֻׁלַּם־נֶֽדֶר׃</p></div><div class="heb-s"><p>לך דמיה תהלה אלהים בציון ולך ישלם־נדר׃</p></div></div>
+      <div class="texte-fr"><p>A toi, ô Dieu, qui résides dans Sion, l’attente confiante, la louange! Envers toi, on s’acquitte de ses vœux.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֹׁמֵ֥עַ תְּפִלָּ֑ה עָ֝דֶ֗יךָ כׇּל־בָּשָׂ֥ר יָבֹֽאוּ׃</p></div><div class="heb-s"><p>שמע תפלה עדיך כל־בשר יבאו׃</p></div></div>
+      <div class="texte-fr"><p>Tu entends les prières: toute créature se présente devant toi.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>דִּבְרֵ֣י עֲ֭וֺנֹת גָּ֣בְרוּ מֶ֑נִּי פְּ֝שָׁעֵ֗ינוּ אַתָּ֥ה תְכַפְּרֵֽם׃</p></div><div class="heb-s"><p>דברי עונת גברו מני פשעינו אתה תכפרם׃</p></div></div>
+      <div class="texte-fr"><p>Des actes criminels avaient pris le dessus sur moi: nos fautes, c’est toi qui les effaces.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׁרֵ֤י&thinsp;<b>׀</b> תִּ֥בְחַ֣ר וּתְקָרֵב֮ יִשְׁכֹּ֢ן חֲצֵ֫רֶ֥יךָ נִ֭שְׂבְּעָה בְּט֣וּב בֵּיתֶ֑ךָ קְ֝דֹ֗שׁ הֵיכָלֶֽךָ׃</p></div><div class="heb-s"><p>אשרי&thinsp;<b>׀</b> תבחר ותקרב ישכן חצריך נשבעה בטוב ביתך קדש היכלך׃</p></div></div>
+      <div class="texte-fr"><p>Heureux celui que tu choisis et admets en ta présence, pour qu’il habite dans tes parvis! Puissions-nous nous délecter de la beauté de ta maison, de la sainteté de ton palais!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>נ֤וֹרָא֨וֹת&thinsp;<b>׀</b> בְּצֶ֣דֶק תַּ֭עֲנֵנוּ אֱלֹהֵ֣י יִשְׁעֵ֑נוּ מִבְטָ֥ח כׇּל־קַצְוֵי־אֶ֝֗רֶץ וְיָ֣ם רְחֹקִֽים׃</p></div><div class="heb-s"><p>נוראות&thinsp;<b>׀</b> בצדק תעננו אלהי ישענו מבטח כל־קצוי־ארץ וים רחקים׃</p></div></div>
+      <div class="texte-fr"><p>De façon merveilleuse tu nous exauces dans ton équité, Dieu de notre salut, espoir des limites les plus reculées de la terre et de l’Océan;</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵכִ֣ין הָרִ֣ים בְּכֹח֑וֹ נֶ֝אְזָ֗ר בִּגְבוּרָֽה׃</p></div><div class="heb-s"><p>מכין הרים בכחו נאזר בגבורה׃</p></div></div>
+      <div class="texte-fr"><p>qui consolides les montagnes par ta force, qui es ceint de puissance;</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַשְׁבִּ֤יחַ&thinsp;<b>׀</b> שְׁא֣וֹן יַ֭מִּים שְׁא֥וֹן גַּלֵּיהֶ֗ם וַהֲמ֥וֹן לְאֻמִּֽים׃</p></div><div class="heb-s"><p>משביח&thinsp;<b>׀</b> שאון ימים שאון גליהם והמון לאמים׃</p></div></div>
+      <div class="texte-fr"><p>qui apaises le tumulte des mers, le tumulte de leurs flots et l’agitation des peuples.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּ֤ירְא֨וּ&thinsp;<b>׀</b> יֹשְׁבֵ֣י קְ֭צָוֺת מֵאוֹתֹתֶ֑יךָ מ֤וֹצָֽאֵי<span class="mam-implicit-maqaf">־</span>בֹ֖קֶר וָעֶ֣רֶב תַּרְנִֽין׃</p></div><div class="heb-s"><p>וייראו&thinsp;<b>׀</b> ישבי קצות מאותתיך מוצאי<span class="mam-implicit-maqaf">־</span>בקר וערב תרנין׃</p></div></div>
+      <div class="texte-fr"><p>Les habitants des rives lointaines sont pris de crainte devant tes prodiges; tu fais résonner de chants les régions où naissent matin et soir.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>פָּ֤קַֽדְתָּ<span class="mam-implicit-maqaf">־</span>הָאָ֨רֶץ וַתְּשֹׁ֪קְקֶ֡הָ רַבַּ֬ת תַּעְשְׁרֶ֗נָּה פֶּ֣לֶג אֱ֭לֹהִים מָ֣לֵא מָ֑יִם תָּכִ֥ין דְּ֝גָנָ֗ם כִּי־כֵ֥ן תְּכִינֶֽהָ׃</p></div><div class="heb-s"><p>פקדת<span class="mam-implicit-maqaf">־</span>הארץ ותשקקה רבת תעשרנה פלג אלהים מלא מים תכין דגנם כי־כן תכינה׃</p></div></div>
+      <div class="texte-fr"><p>Tu veilles sur la terre et tu l’abreuves, tu la combles de richesses; car le fleuve de Dieu déborde d’eau: tu leur assures leur blé. C’est dans ce but que tu la prépares.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּלָמֶ֣יהָ רַ֭וֵּה נַחֵ֣ת גְּדוּדֶ֑הָ בִּרְבִיבִ֥ים תְּ֝מֹגְגֶ֗נָּה צִמְחָ֥הּ תְּבָרֵֽךְ׃</p></div><div class="heb-s"><p>תלמיה רוה נחת גדודה ברביבים תמגגנה צמחה תברך׃</p></div></div>
+      <div class="texte-fr"><p>Tu en inondes les sillons, en écrases les glèbes, par les ondées tu la détrempes, tu en bénis les plantes.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>עִ֭טַּרְתָּ שְׁנַ֣ת טוֹבָתֶ֑ךָ וּ֝מַעְגָּלֶ֗יךָ יִרְעֲפ֥וּן דָּֽשֶׁן׃</p></div><div class="heb-s"><p>עטרת שנת טובתך ומעגליך ירעפון דשן׃</p></div></div>
+      <div class="texte-fr"><p>Tu couronnes l’année de tes bienfaits; les sentiers que tu foules ruissellent de délices.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִ֭רְעֲפוּ נְא֣וֹת מִדְבָּ֑ר וְ֝גִ֗יל גְּבָע֥וֹת תַּחְגֹּֽרְנָה׃</p></div><div class="heb-s"><p>ירעפו נאות מדבר וגיל גבעות תחגרנה׃</p></div></div>
+      <div class="texte-fr"><p>Ruissellent aussi les pâturages du désert; les collines se ceignent d’allégresse.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָבְשׁ֬וּ כָרִ֨ים&thinsp;<b>׀</b> הַצֹּ֗אן וַעֲמָקִ֥ים יַֽעַטְפוּ־בָ֑ר יִ֝תְרוֹעֲע֗וּ אַף־יָשִֽׁירוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לבשו כרים&thinsp;<b>׀</b> הצאן ועמקים יעטפו־בר יתרועעו אף־ישירו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Les prairies sont revêtues de troupeaux, les vallées se couvrent de blé comme d’un manteau. Partout des clameurs de joie et des chants!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Psaume de David. Cantique.</p>
-      <p>A toi, ô Dieu, qui résides dans Sion, l’attente confiante, la louange! Envers toi, on s’acquitte de ses vœux.</p>
-      <p>Tu entends les prières: toute créature se présente devant toi.</p>
-      <p>Des actes criminels avaient pris le dessus sur moi: nos fautes, c’est toi qui les effaces.</p>
-      <p>Heureux celui que tu choisis et admets en ta présence, pour qu’il habite dans tes parvis! Puissions-nous nous délecter de la beauté de ta maison, de la sainteté de ton palais!</p>
-      <p>De façon merveilleuse tu nous exauces dans ton équité, Dieu de notre salut, espoir des limites les plus reculées de la terre et de l’Océan;</p>
-      <p>qui consolides les montagnes par ta force, qui es ceint de puissance;</p>
-      <p>qui apaises le tumulte des mers, le tumulte de leurs flots et l’agitation des peuples.</p>
-      <p>Les habitants des rives lointaines sont pris de crainte devant tes prodiges; tu fais résonner de chants les régions où naissent matin et soir.</p>
-      <p>Tu veilles sur la terre et tu l’abreuves, tu la combles de richesses; car le fleuve de Dieu déborde d’eau: tu leur assures leur blé. C’est dans ce but que tu la prépares.</p>
-      <p>Tu en inondes les sillons, en écrases les glèbes, par les ondées tu la détrempes, tu en bénis les plantes.</p>
-      <p>Tu couronnes l’année de tes bienfaits; les sentiers que tu foules ruissellent de délices.</p>
-      <p>Ruissellent aussi les pâturages du désert; les collines se ceignent d’allégresse.</p>
-      <p>Les prairies sont revêtues de troupeaux, les vallées se couvrent de blé comme d’un manteau. Partout des clameurs de joie et des chants!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -260,6 +324,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-64.html">← Tehilim 64</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-65.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-66.html">Tehilim 66 →</a></div>
 </main>
 
 <footer>

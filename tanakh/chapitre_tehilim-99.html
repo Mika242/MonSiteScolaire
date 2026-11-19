@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 99 – D.ieu règne : Il siège sur les chérubins</h1>
     <p>Ketouvim, Tehilim, Chapitre 99</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-98.html">← Tehilim 98</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-99.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-100.html">Tehilim 100 →</a></div>
   </div>
 </header>
 
@@ -161,41 +202,54 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>יְהֹוָ֣ה מָ֭לָךְ יִרְגְּז֣וּ עַמִּ֑ים יֹשֵׁ֥ב כְּ֝רוּבִ֗ים תָּנ֥וּט הָאָֽרֶץ׃</p>
-      <p>יְ֭הֹוָה בְּצִיּ֣וֹן גָּד֑וֹל וְרָ֥ם ה֝֗וּא עַל־כׇּל־הָעַמִּֽים׃</p>
-      <p>יוֹד֣וּ שִׁ֭מְךָ גָּד֥וֹל וְנוֹרָ֗א קָד֥וֹשׁ הֽוּא׃</p>
-      <p>וְעֹ֥ז מֶלֶךְ֮ מִשְׁפָּ֢ט אָ֫הֵ֥ב אַ֭תָּה כּוֹנַ֣נְתָּ מֵישָׁרִ֑ים מִשְׁפָּ֥ט וּ֝צְדָקָ֗ה בְּיַעֲקֹ֤ב&thinsp;<b>׀</b> אַתָּ֬ה עָשִֽׂיתָ׃</p>
-      <p>רוֹמְמ֡וּ יְ֘הֹוָ֤ה אֱלֹהֵ֗ינוּ וְֽ֭הִשְׁתַּחֲווּ לַהֲדֹ֥ם רַגְלָ֗יו קָד֥וֹשׁ הֽוּא׃</p>
-      <p>מֹ֘שֶׁ֤ה וְאַהֲרֹ֨ן&thinsp;<b>׀</b> בְּֽכֹהֲנָ֗יו וּ֭שְׁמוּאֵל בְּקֹרְאֵ֣י שְׁמ֑וֹ קֹרִ֥אים אֶל־יְ֝הֹוָ֗ה וְה֣וּא יַעֲנֵֽם׃</p>
-      <p>בְּעַמּ֣וּד עָ֭נָן יְדַבֵּ֣ר אֲלֵיהֶ֑ם שָׁמְר֥וּ עֵ֝דֹתָ֗יו וְחֹ֣ק נָֽתַן־לָֽמוֹ׃</p>
-      <p>יְהֹוָ֣ה אֱלֹהֵינוּ֮ אַתָּ֢ה עֲנִ֫יתָ֥ם אֵ֣ל נֹ֭שֵׂא הָיִ֣יתָ לָהֶ֑ם וְ֝נֹקֵ֗ם עַל־עֲלִילוֹתָֽם׃</p>
-      <p>רוֹמְמ֡וּ יְ֘הֹוָ֤ה אֱלֹהֵ֗ינוּ וְֽ֭הִשְׁתַּחֲווּ לְהַ֣ר קׇדְשׁ֑וֹ כִּי־קָ֝ד֗וֹשׁ יְהֹוָ֥ה אֱלֹהֵֽינוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה מָ֭לָךְ יִרְגְּז֣וּ עַמִּ֑ים יֹשֵׁ֥ב כְּ֝רוּבִ֗ים תָּנ֥וּט הָאָֽרֶץ׃</p></div><div class="heb-s"><p>יהוה מלך ירגזו עמים ישב כרובים תנוט הארץ׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel règne: les nations tremblent; il siège sur les Chérubins: la terre vacille.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְ֭הֹוָה בְּצִיּ֣וֹן גָּד֑וֹל וְרָ֥ם ה֝֗וּא עַל־כׇּל־הָעַמִּֽים׃</p></div><div class="heb-s"><p>יהוה בציון גדול ורם הוא על־כל־העמים׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel est grand dans Sion, élevé bien au-dessus de toutes les nations.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹד֣וּ שִׁ֭מְךָ גָּד֥וֹל וְנוֹרָ֗א קָד֥וֹשׁ הֽוּא׃</p></div><div class="heb-s"><p>יודו שמך גדול ונורא קדוש הוא׃</p></div></div>
+      <div class="texte-fr"><p>Qu’on rende hommage à ton nom grand et redoutable: il est saint!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעֹ֥ז מֶלֶךְ֮ מִשְׁפָּ֢ט אָ֫הֵ֥ב אַ֭תָּה כּוֹנַ֣נְתָּ מֵישָׁרִ֑ים מִשְׁפָּ֥ט וּ֝צְדָקָ֗ה בְּיַעֲקֹ֤ב&thinsp;<b>׀</b> אַתָּ֬ה עָשִֽׂיתָ׃</p></div><div class="heb-s"><p>ועז מלך משפט אהב אתה כוננת מישרים משפט וצדקה ביעקב&thinsp;<b>׀</b> אתה עשית׃</p></div></div>
+      <div class="texte-fr"><p>La force du roi, c’est l’amour de la justice. C’est toi qui as fondé solidement l’équité, exercé le droit et la justice dans Jacob.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>רוֹמְמ֡וּ יְ֘הֹוָ֤ה אֱלֹהֵ֗ינוּ וְֽ֭הִשְׁתַּחֲווּ לַהֲדֹ֥ם רַגְלָ֗יו קָד֥וֹשׁ הֽוּא׃</p></div><div class="heb-s"><p>רוממו יהוה אלהינו והשתחוו להדם רגליו קדוש הוא׃</p></div></div>
+      <div class="texte-fr"><p>Exaltez l’Éternel, notre Dieu, prosternez-vous devant l’escabeau de ses pieds: il est saint!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֹ֘שֶׁ֤ה וְאַהֲרֹ֨ן&thinsp;<b>׀</b> בְּֽכֹהֲנָ֗יו וּ֭שְׁמוּאֵל בְּקֹרְאֵ֣י שְׁמ֑וֹ קֹרִ֥אים אֶל־יְ֝הֹוָ֗ה וְה֣וּא יַעֲנֵֽם׃</p></div><div class="heb-s"><p>משה ואהרן&thinsp;<b>׀</b> בכהניו ושמואל בקראי שמו קראים אל־יהוה והוא יענם׃</p></div></div>
+      <div class="texte-fr"><p>Moïse et Aaron étaient parmi ses prêtres, Samuel parmi ceux qui invoquaient son nom: ils criaient vers l’Éternel et il leur répondait.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּעַמּ֣וּד עָ֭נָן יְדַבֵּ֣ר אֲלֵיהֶ֑ם שָׁמְר֥וּ עֵ֝דֹתָ֗יו וְחֹ֣ק נָֽתַן־לָֽמוֹ׃</p></div><div class="heb-s"><p>בעמוד ענן ידבר אליהם שמרו עדתיו וחק נתן־למו׃</p></div></div>
+      <div class="texte-fr"><p>Dans une colonne de nuée il leur parlait; ils demeuraient fidèles à ses statuts, aux lois qu’il leur avait données.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה אֱלֹהֵינוּ֮ אַתָּ֢ה עֲנִ֫יתָ֥ם אֵ֣ל נֹ֭שֵׂא הָיִ֣יתָ לָהֶ֑ם וְ֝נֹקֵ֗ם עַל־עֲלִילוֹתָֽם׃</p></div><div class="heb-s"><p>יהוה אלהינו אתה עניתם אל נשא היית להם ונקם על־עלילותם׃</p></div></div>
+      <div class="texte-fr"><p>Éternel, notre Dieu, tu les exauçais; tu étais pour eux un Dieu enclin au pardon, mais exerçant des représailles pour leurs fautes.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>רוֹמְמ֡וּ יְ֘הֹוָ֤ה אֱלֹהֵ֗ינוּ וְֽ֭הִשְׁתַּחֲווּ לְהַ֣ר קׇדְשׁ֑וֹ כִּי־קָ֝ד֗וֹשׁ יְהֹוָ֥ה אֱלֹהֵֽינוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>רוממו יהוה אלהינו והשתחוו להר קדשו כי־קדוש יהוה אלהינו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Exaltez l’Éternel, notre Dieu, prosternez-vous sur sa montagne sainte, car il est saint, l’Éternel, notre Dieu.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel règne: les nations tremblent; il siège sur les Chérubins: la terre vacille.</p>
-      <p>L’Éternel est grand dans Sion, élevé bien au-dessus de toutes les nations.</p>
-      <p>Qu’on rende hommage à ton nom grand et redoutable: il est saint!</p>
-      <p>La force du roi, c’est l’amour de la justice. C’est toi qui as fondé solidement l’équité, exercé le droit et la justice dans Jacob.</p>
-      <p>Exaltez l’Éternel, notre Dieu, prosternez-vous devant l’escabeau de ses pieds: il est saint!</p>
-      <p>Moïse et Aaron étaient parmi ses prêtres, Samuel parmi ceux qui invoquaient son nom: ils criaient vers l’Éternel et il leur répondait.</p>
-      <p>Dans une colonne de nuée il leur parlait; ils demeuraient fidèles à ses statuts, aux lois qu’il leur avait données.</p>
-      <p>Éternel, notre Dieu, tu les exauçais; tu étais pour eux un Dieu enclin au pardon, mais exerçant des représailles pour leurs fautes.</p>
-      <p>Exaltez l’Éternel, notre Dieu, prosternez-vous sur sa montagne sainte, car il est saint, l’Éternel, notre Dieu.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -250,6 +304,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-98.html">← Tehilim 98</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-99.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-100.html">Tehilim 100 →</a></div>
 </main>
 
 <footer>

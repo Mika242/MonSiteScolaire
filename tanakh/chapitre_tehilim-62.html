@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 62 – Mon âme se tait seulement devant D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 62</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-61.html">← Tehilim 61</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-62.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-63.html">Tehilim 63 →</a></div>
   </div>
 </header>
 
@@ -161,49 +202,70 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ עַֽל־יְדוּת֗וּן מִזְמ֥וֹר לְדָוִֽד׃</p>
-      <p>אַ֣ךְ אֶל־אֱ֭לֹהִים דּֽוּמִיָּ֣ה נַפְשִׁ֑י מִ֝מֶּ֗נּוּ יְשׁוּעָתִֽי׃</p>
-      <p>אַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹא־אֶמּ֥וֹט רַבָּֽה׃</p>
-      <p>עַד־אָ֤נָה&thinsp;<b>׀</b> תְּה֥וֹתְת֣וּ עַל־אִישׁ֮ תְּרָצְּח֢וּ כֻ֫לְּכֶ֥ם כְּקִ֥יר נָט֑וּי גָּ֝דֵ֗ר הַדְּחוּיָֽה׃</p>
-      <p>אַ֤ךְ מִשְּׂאֵת֨וֹ&thinsp;<b>׀</b> יָ֥עֲצ֣וּ לְהַדִּיחַ֮ יִרְצ֢וּ כָ֫זָ֥ב בְּפִ֥יו יְבָרֵ֑כוּ וּ֝בְקִרְבָּ֗ם יְקַֽלְלוּ־סֶֽלָה׃</p>
-      <p>אַ֣ךְ לֵ֭אלֹהִים דּ֣וֹמִּי נַפְשִׁ֑י כִּֽי־מִ֝מֶּ֗נּוּ תִּקְוָתִֽי׃</p>
-      <p>אַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹ֣א אֶמּֽוֹט׃</p>
-      <p>עַל־אֱ֭לֹהִים יִשְׁעִ֣י וּכְבוֹדִ֑י צוּר־עֻזִּ֥י מַ֝חְסִ֗י בֵּאלֹהִֽים׃</p>
-      <p>בִּטְח֘וּ<span class="mam-implicit-maqaf">־</span>ב֤וֹ בְכׇל־עֵ֨ת&thinsp;<b>׀</b> עָ֗ם שִׁפְכֽוּ־לְפָנָ֥יו לְבַבְכֶ֑ם אֱלֹהִ֖ים מַחֲסֶה־לָּ֣נוּ סֶֽלָה׃</p>
-      <p>אַ֤ךְ&thinsp;<b>׀</b> הֶ֥בֶל בְּנֵֽי־אָדָם֮ כָּזָ֢ב בְּנֵ֫י<span class="mam-implicit-maqaf">־</span>אִ֥ישׁ בְּמֹאזְנַ֥יִם לַעֲל֑וֹת הֵ֝֗מָּה מֵהֶ֥בֶל יָֽחַד׃</p>
-      <p>אַל־תִּבְטְח֣וּ בְעֹשֶׁק֮ וּבְגָזֵ֢ל אַל־תֶּ֫הְבָּ֥לוּ חַ֤יִל&thinsp;<b>׀</b> כִּֽי־יָנ֑וּב אַל־תָּשִׁ֥יתוּ לֵֽב׃</p>
-      <p>אַחַ֤ת&thinsp;<b>׀</b> דִּבֶּ֬ר אֱלֹהִ֗ים שְׁתַּֽיִם־ז֥וּ שָׁמָ֑עְתִּי כִּ֥י עֹ֝֗ז לֵֽאלֹהִֽים׃</p>
-      <p>וּלְךָֽ־אֲדֹנָ֥י חָ֑סֶד כִּֽי־אַתָּ֨ה תְשַׁלֵּ֖ם לְאִ֣ישׁ כְּֽמַעֲשֵֽׂהוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ עַֽל־יְדוּת֗וּן מִזְמ֥וֹר לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח על־ידותון מזמור לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Sur ledouthoun. Psaume de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ אֶל־אֱ֭לֹהִים דּֽוּמִיָּ֣ה נַפְשִׁ֑י מִ֝מֶּ֗נּוּ יְשׁוּעָתִֽי׃</p></div><div class="heb-s"><p>אך אל־אלהים דומיה נפשי ממנו ישועתי׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme, mets toute ton attente en Dieu, de lui vient mon salut.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹא־אֶמּ֥וֹט רַבָּֽה׃</p></div><div class="heb-s"><p>אך־הוא צורי וישועתי משגבי לא־אמוט רבה׃</p></div></div>
+      <div class="texte-fr"><p>Lui seul est mon rocher, mon soutien, mon boulevard: je ne trébucherai pas sérieusement.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַד־אָ֤נָה&thinsp;<b>׀</b> תְּה֥וֹתְת֣וּ עַל־אִישׁ֮ תְּרָצְּח֢וּ כֻ֫לְּכֶ֥ם כְּקִ֥יר נָט֑וּי גָּ֝דֵ֗ר הַדְּחוּיָֽה׃</p></div><div class="heb-s"><p>עד־אנה&thinsp;<b>׀</b> תהותתו על־איש תרצחו כלכם כקיר נטוי גדר הדחויה׃</p></div></div>
+      <div class="texte-fr"><p>Jusqu'à quand vous ruerez-vous contre un homme, lui porterez-vous tous des coups mortels, tels un mur penché, une cloison qui s'écroule?</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֤ךְ מִשְּׂאֵת֨וֹ&thinsp;<b>׀</b> יָ֥עֲצ֣וּ לְהַדִּיחַ֮ יִרְצ֢וּ כָ֫זָ֥ב בְּפִ֥יו יְבָרֵ֑כוּ וּ֝בְקִרְבָּ֗ם יְקַֽלְלוּ־סֶֽלָה׃</p></div><div class="heb-s"><p>אך משאתו&thinsp;<b>׀</b> יעצו להדיח ירצו כזב בפיו יברכו ובקרבם יקללו־סלה׃</p></div></div>
+      <div class="texte-fr"><p>Oui, ils projettent 'de le précipiter de sa hauteur, ils se complaisent dans le mensonge; avec leur bouche ils bénissent, et dans leur cœur ils maudissent. Sélah!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ לֵ֭אלֹהִים דּ֣וֹמִּי נַפְשִׁ֑י כִּֽי־מִ֝מֶּ֗נּוּ תִּקְוָתִֽי׃</p></div><div class="heb-s"><p>אך לאלהים דומי נפשי כי־ממנו תקותי׃</p></div></div>
+      <div class="texte-fr"><p>En Dieu seul mets ton attente, ô mon âme; car en lul est mon espoir.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־ה֣וּא צ֭וּרִי וִישׁוּעָתִ֑י מִ֝שְׂגַּבִּ֗י לֹ֣א אֶמּֽוֹט׃</p></div><div class="heb-s"><p>אך־הוא צורי וישועתי משגבי לא אמוט׃</p></div></div>
+      <div class="texte-fr"><p>Lui seul est mon rocher, mon soutien, mon boulevard; je ne trébucherai point.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־אֱ֭לֹהִים יִשְׁעִ֣י וּכְבוֹדִ֑י צוּר־עֻזִּ֥י מַ֝חְסִ֗י בֵּאלֹהִֽים׃</p></div><div class="heb-s"><p>על־אלהים ישעי וכבודי צור־עזי מחסי באלהים׃</p></div></div>
+      <div class="texte-fr"><p>Sur Dieu reposent mon salut, mon bonheur; il est mon puissant rocher, mon abri est en Dieu.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּטְח֘וּ<span class="mam-implicit-maqaf">־</span>ב֤וֹ בְכׇל־עֵ֨ת&thinsp;<b>׀</b> עָ֗ם שִׁפְכֽוּ־לְפָנָ֥יו לְבַבְכֶ֑ם אֱלֹהִ֖ים מַחֲסֶה־לָּ֣נוּ סֶֽלָה׃</p></div><div class="heb-s"><p>בטחו<span class="mam-implicit-maqaf">־</span>בו בכל־עת&thinsp;<b>׀</b> עם שפכו־לפניו לבבכם אלהים מחסה־לנו סלה׃</p></div></div>
+      <div class="texte-fr"><p>Fiez-vous en lui en tout temps, ô peuples! Epanchez votre cœur devant lui: Dieu est un refuge pour nous. Sélah!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֤ךְ&thinsp;<b>׀</b> הֶ֥בֶל בְּנֵֽי־אָדָם֮ כָּזָ֢ב בְּנֵ֫י<span class="mam-implicit-maqaf">־</span>אִ֥ישׁ בְּמֹאזְנַ֥יִם לַעֲל֑וֹת הֵ֝֗מָּה מֵהֶ֥בֶל יָֽחַד׃</p></div><div class="heb-s"><p>אך&thinsp;<b>׀</b> הבל בני־אדם כזב בני<span class="mam-implicit-maqaf">־</span>איש במאזנים לעלות המה מהבל יחד׃</p></div></div>
+      <div class="texte-fr"><p>Certes, les fils d'Adam ne sont qu'une ombre vaine, les fils de l'homme qu'une déception. Qu'on les mette sur la balance: ensemble ils pèsent autant qu'un souffle!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תִּבְטְח֣וּ בְעֹשֶׁק֮ וּבְגָזֵ֢ל אַל־תֶּ֫הְבָּ֥לוּ חַ֤יִל&thinsp;<b>׀</b> כִּֽי־יָנ֑וּב אַל־תָּשִׁ֥יתוּ לֵֽב׃</p></div><div class="heb-s"><p>אל־תבטחו בעשק ובגזל אל־תהבלו חיל&thinsp;<b>׀</b> כי־ינוב אל־תשיתו לב׃</p></div></div>
+      <div class="texte-fr"><p>Ne mettez pas votre confiance dans la concussion, et dans! a rapine ne placez pas un vain espoir. Dût la richesse couler à pleins bords, n'y attachez pas trop d'importance.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַחַ֤ת&thinsp;<b>׀</b> דִּבֶּ֬ר אֱלֹהִ֗ים שְׁתַּֽיִם־ז֥וּ שָׁמָ֑עְתִּי כִּ֥י עֹ֝֗ז לֵֽאלֹהִֽים׃</p></div><div class="heb-s"><p>אחת&thinsp;<b>׀</b> דבר אלהים שתים־זו שמעתי כי עז לאלהים׃</p></div></div>
+      <div class="texte-fr"><p>Une fois Dieu l'a énoncé, deux fois je l'ai entendu: que la puissance appartient à Dieu.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְךָֽ־אֲדֹנָ֥י חָ֑סֶד כִּֽי־אַתָּ֨ה תְשַׁלֵּ֖ם לְאִ֣ישׁ כְּֽמַעֲשֵֽׂהוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ולך־אדני חסד כי־אתה תשלם לאיש כמעשהו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Oui, Seigneur, tienne est la bonté, car tu rémunères chacun selon son œuvre.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Sur ledouthoun. Psaume de David.</p>
-      <p>Mon âme, mets toute ton attente en Dieu, de lui vient mon salut.</p>
-      <p>Lui seul est mon rocher, mon soutien, mon boulevard: je ne trébucherai pas sérieusement.</p>
-      <p>Jusqu'à quand vous ruerez-vous contre un homme, lui porterez-vous tous des coups mortels, tels un mur penché, une cloison qui s'écroule?</p>
-      <p>Oui, ils projettent 'de le précipiter de sa hauteur, ils se complaisent dans le mensonge; avec leur bouche ils bénissent, et dans leur cœur ils maudissent. Sélah!</p>
-      <p>En Dieu seul mets ton attente, ô mon âme; car en lul est mon espoir.</p>
-      <p>Lui seul est mon rocher, mon soutien, mon boulevard; je ne trébucherai point.</p>
-      <p>Sur Dieu reposent mon salut, mon bonheur; il est mon puissant rocher, mon abri est en Dieu.</p>
-      <p>Fiez-vous en lui en tout temps, ô peuples! Epanchez votre cœur devant lui: Dieu est un refuge pour nous. Sélah!</p>
-      <p>Certes, les fils d'Adam ne sont qu'une ombre vaine, les fils de l'homme qu'une déception. Qu'on les mette sur la balance: ensemble ils pèsent autant qu'un souffle!</p>
-      <p>Ne mettez pas votre confiance dans la concussion, et dans! a rapine ne placez pas un vain espoir. Dût la richesse couler à pleins bords, n'y attachez pas trop d'importance.</p>
-      <p>Une fois Dieu l'a énoncé, deux fois je l'ai entendu: que la puissance appartient à Dieu.</p>
-      <p>Oui, Seigneur, tienne est la bonté, car tu rémunères chacun selon son œuvre.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -258,6 +320,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-61.html">← Tehilim 61</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-62.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-63.html">Tehilim 63 →</a></div>
 </main>
 
 <footer>

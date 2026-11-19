@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 24 – À D.ieu la terre et sa plénitude</h1>
     <p>Ketouvim, Tehilim, Chapitre 24</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-23.html">← Tehilim 23</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-24.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-25.html">Tehilim 25 →</a></div>
   </div>
 </header>
 
@@ -161,43 +202,58 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְדָוִ֗ד מִ֫זְמ֥וֹר לַֽ֭יהֹוָה הָאָ֣רֶץ וּמְלוֹאָ֑הּ תֵּ֝בֵ֗ל וְיֹ֣שְׁבֵי בָֽהּ׃</p>
-      <p>כִּי־ה֭וּא עַל־יַמִּ֣ים יְסָדָ֑הּ וְעַל־נְ֝הָר֗וֹת יְכוֹנְנֶֽהָ׃</p>
-      <p>מִֽי־יַעֲלֶ֥ה בְהַר־יְהֹוָ֑ה וּמִי־יָ֝ק֗וּם בִּמְק֥וֹם קׇדְשֽׁוֹ׃</p>
-      <p>נְקִ֥י כַפַּ֗יִם וּֽבַר־לֵ֫בָ֥ב אֲשֶׁ֤ר&thinsp;<b>׀</b> לֹא־נָשָׂ֣א לַשָּׁ֣וְא נַפְשִׁ֑י וְלֹ֖א נִשְׁבַּ֣ע לְמִרְמָֽה׃</p>
-      <p>יִשָּׂ֣א בְ֭רָכָה מֵאֵ֣ת יְהֹוָ֑ה וּ֝צְדָקָ֗ה מֵאֱלֹהֵ֥י יִשְׁעֽוֹ׃</p>
-      <p>זֶ֭ה דּ֣וֹר דֹּרְשָׁ֑ו מְבַקְשֵׁ֨י פָנֶ֖יךָ יַעֲקֹ֣ב סֶֽלָה׃</p>
-      <p>שְׂא֤וּ שְׁעָרִ֨ים&thinsp;<b>׀</b> רָֽאשֵׁיכֶ֗ם וְֽ֭הִנָּשְׂאוּ פִּתְחֵ֣י עוֹלָ֑ם וְ֝יָב֗וֹא מֶ֣לֶךְ הַכָּבֽוֹד׃</p>
-      <p>מִ֥י זֶה֮ מֶ֤לֶךְ הַכָּ֫ב֥וֹד יְ֭הֹוָה עִזּ֣וּז וְגִבּ֑וֹר יְ֝הֹוָ֗ה גִּבּ֥וֹר מִלְחָמָֽה׃</p>
-      <p>שְׂא֤וּ שְׁעָרִ֨ים&thinsp;<b>׀</b> רָֽאשֵׁיכֶ֗ם וּ֭שְׂאוּ פִּתְחֵ֣י עוֹלָ֑ם וְ֝יָבֹ֗א מֶ֣לֶךְ הַכָּבֽוֹד׃</p>
-      <p>מִ֤י<span class="mam-implicit-maqaf">־</span>ה֣וּא זֶה֮ מֶ֤לֶךְ הַכָּ֫ב֥וֹד יְהֹוָ֥ה צְבָא֑וֹת ה֤וּא מֶ֖לֶךְ הַכָּב֣וֹד סֶֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדָוִ֗ד מִ֫זְמ֥וֹר לַֽ֭יהֹוָה הָאָ֣רֶץ וּמְלוֹאָ֑הּ תֵּ֝בֵ֗ל וְיֹ֣שְׁבֵי בָֽהּ׃</p></div><div class="heb-s"><p>לדוד מזמור ליהוה הארץ ומלואה תבל וישבי בה׃</p></div></div>
+      <div class="texte-fr"><p>De David. Psaume. A l'Éternel appartient la terre et ce qu'elle renferme, le globe et ceux qui l'habitent.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־ה֭וּא עַל־יַמִּ֣ים יְסָדָ֑הּ וְעַל־נְ֝הָר֗וֹת יְכוֹנְנֶֽהָ׃</p></div><div class="heb-s"><p>כי־הוא על־ימים יסדה ועל־נהרות יכוננה׃</p></div></div>
+      <div class="texte-fr"><p>Car c'est lui qui l'a fondée sur les mers et affermie sur les flots.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִֽי־יַעֲלֶ֥ה בְהַר־יְהֹוָ֑ה וּמִי־יָ֝ק֗וּם בִּמְק֥וֹם קׇדְשֽׁוֹ׃</p></div><div class="heb-s"><p>מי־יעלה בהר־יהוה ומי־יקום במקום קדשו׃</p></div></div>
+      <div class="texte-fr"><p>Qui s'élèvera sur la montagne du Seigneur? Qui se tiendra dans sa sainte résidence?</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְקִ֥י כַפַּ֗יִם וּֽבַר־לֵ֫בָ֥ב אֲשֶׁ֤ר&thinsp;<b>׀</b> לֹא־נָשָׂ֣א לַשָּׁ֣וְא נַפְשִׁ֑י וְלֹ֖א נִשְׁבַּ֣ע לְמִרְמָֽה׃</p></div><div class="heb-s"><p>נקי כפים ובר־לבב אשר&thinsp;<b>׀</b> לא־נשא לשוא נפשי ולא נשבע למרמה׃</p></div></div>
+      <div class="texte-fr"><p>Celui dont les mains sont sans tache, le cœur pur, qui n'atteste pas ma personne pour la fausseté, et ne prête pas de serment frauduleux:</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשָּׂ֣א בְ֭רָכָה מֵאֵ֣ת יְהֹוָ֑ה וּ֝צְדָקָ֗ה מֵאֱלֹהֵ֥י יִשְׁעֽוֹ׃</p></div><div class="heb-s"><p>ישא ברכה מאת יהוה וצדקה מאלהי ישעו׃</p></div></div>
+      <div class="texte-fr"><p>celui-là obtiendra la bénédiction de l'Éternel, la bienveillance du Dieu de son salut.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֶ֭ה דּ֣וֹר דֹּרְשָׁ֑ו מְבַקְשֵׁ֨י פָנֶ֖יךָ יַעֲקֹ֣ב סֶֽלָה׃</p></div><div class="heb-s"><p>זה דור דרשו מבקשי פניך יעקב סלה׃</p></div></div>
+      <div class="texte-fr"><p>Tel est le sort de ses adorateurs, de ceux qui recherchent ta face, de Jacob. Sélah!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׂא֤וּ שְׁעָרִ֨ים&thinsp;<b>׀</b> רָֽאשֵׁיכֶ֗ם וְֽ֭הִנָּשְׂאוּ פִּתְחֵ֣י עוֹלָ֑ם וְ֝יָב֗וֹא מֶ֣לֶךְ הַכָּבֽוֹד׃</p></div><div class="heb-s"><p>שאו שערים&thinsp;<b>׀</b> ראשיכם והנשאו פתחי עולם ויבוא מלך הכבוד׃</p></div></div>
+      <div class="texte-fr"><p>Exhaussez, ô portes, vos frontons, relevez-vous, portails antiques, pour qu'il entre, le roi de gloire!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֥י זֶה֮ מֶ֤לֶךְ הַכָּ֫ב֥וֹד יְ֭הֹוָה עִזּ֣וּז וְגִבּ֑וֹר יְ֝הֹוָ֗ה גִּבּ֥וֹר מִלְחָמָֽה׃</p></div><div class="heb-s"><p>מי זה מלך הכבוד יהוה עזוז וגבור יהוה גבור מלחמה׃</p></div></div>
+      <div class="texte-fr"><p>Qui donc est ce roi de gloire?" L'Éternel fort et puissant, l'Éternel, héros dans la guerre.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׂא֤וּ שְׁעָרִ֨ים&thinsp;<b>׀</b> רָֽאשֵׁיכֶ֗ם וּ֭שְׂאוּ פִּתְחֵ֣י עוֹלָ֑ם וְ֝יָבֹ֗א מֶ֣לֶךְ הַכָּבֽוֹד׃</p></div><div class="heb-s"><p>שאו שערים&thinsp;<b>׀</b> ראשיכם ושאו פתחי עולם ויבא מלך הכבוד׃</p></div></div>
+      <div class="texte-fr"><p>Exhaussez, ô portes, vos frontons, relevez-vous, portails antiques, pour qu'il entre, le roi de gloire!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֤י<span class="mam-implicit-maqaf">־</span>ה֣וּא זֶה֮ מֶ֤לֶךְ הַכָּ֫ב֥וֹד יְהֹוָ֥ה צְבָא֑וֹת ה֤וּא מֶ֖לֶךְ הַכָּב֣וֹד סֶֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>מי<span class="mam-implicit-maqaf">־</span>הוא זה מלך הכבוד יהוה צבאות הוא מלך הכבוד סלה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>"Qui donc est ce roi de gloire?" L'Éternel-Cebaot, c'est lui qui est le roi de gloire! Sélah!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>De David. Psaume. A l'Éternel appartient la terre et ce qu'elle renferme, le globe et ceux qui l'habitent.</p>
-      <p>Car c'est lui qui l'a fondée sur les mers et affermie sur les flots.</p>
-      <p>Qui s'élèvera sur la montagne du Seigneur? Qui se tiendra dans sa sainte résidence?</p>
-      <p>Celui dont les mains sont sans tache, le cœur pur, qui n'atteste pas ma personne pour la fausseté, et ne prête pas de serment frauduleux:</p>
-      <p>celui-là obtiendra la bénédiction de l'Éternel, la bienveillance du Dieu de son salut.</p>
-      <p>Tel est le sort de ses adorateurs, de ceux qui recherchent ta face, de Jacob. Sélah!</p>
-      <p>Exhaussez, ô portes, vos frontons, relevez-vous, portails antiques, pour qu'il entre, le roi de gloire!</p>
-      <p>Qui donc est ce roi de gloire?" L'Éternel fort et puissant, l'Éternel, héros dans la guerre.</p>
-      <p>Exhaussez, ô portes, vos frontons, relevez-vous, portails antiques, pour qu'il entre, le roi de gloire!</p>
-      <p>"Qui donc est ce roi de gloire?" L'Éternel-Cebaot, c'est lui qui est le roi de gloire! Sélah!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -252,6 +308,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-23.html">← Tehilim 23</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-24.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-25.html">Tehilim 25 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 119 – Heureux ceux dont la voie est intègre : l&#x27;éloge de la Torah</h1>
     <p>Ketouvim, Tehilim, Chapitre 119</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-118.html">← Tehilim 118</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-119.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-120.html">Tehilim 120 →</a></div>
   </div>
 </header>
 
@@ -161,375 +202,722 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>אַשְׁרֵ֥י תְמִֽימֵי־דָ֑רֶךְ הַ֝הֹלְכִ֗ים בְּתוֹרַ֥ת יְהֹוָֽה׃</p>
-      <p>אַ֭שְׁרֵי נֹצְרֵ֥י עֵדֹתָ֗יו בְּכׇל־לֵ֥ב יִדְרְשֽׁוּהוּ׃</p>
-      <p>אַ֭ף לֹא־פָעֲל֣וּ עַוְלָ֑ה בִּדְרָכָ֥יו הָלָֽכוּ׃</p>
-      <p>אַ֭תָּה צִוִּ֥יתָה פִקֻּדֶ֗יךָ לִשְׁמֹ֥ר מְאֹֽד׃</p>
-      <p>אַ֭חֲלַי יִכֹּ֥נוּ דְרָכָ֗י לִשְׁמֹ֥ר חֻקֶּֽיךָ׃</p>
-      <p>אָ֥ז לֹא־אֵב֑וֹשׁ בְּ֝הַבִּיטִ֗י אֶל־כׇּל־מִצְוֺתֶֽיךָ׃</p>
-      <p>א֭וֹדְךָ בְּיֹ֣שֶׁר לֵבָ֑ב בְּ֝לׇמְדִ֗י מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p>
-      <p>אֶת־חֻקֶּ֥יךָ אֶשְׁמֹ֑ר אַֽל־תַּעַזְבֵ֥נִי עַד־מְאֹֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>בַּמֶּ֣ה יְזַכֶּה־נַּ֭עַר אֶת־אׇרְח֑וֹ לִ֝שְׁמֹ֗ר כִּדְבָרֶֽךָ׃</p>
-      <p>בְּכׇל־לִבִּ֥י דְרַשְׁתִּ֑יךָ אַל־תַּ֝שְׁגֵּ֗נִי מִמִּצְוֺתֶֽיךָ׃</p>
-      <p>בְּ֭לִבִּי צָפַ֣נְתִּי אִמְרָתֶ֑ךָ לְ֝מַ֗עַן לֹ֣א אֶחֱטָא־לָֽךְ׃</p>
-      <p>בָּר֖וּךְ אַתָּ֥ה יְהֹוָ֗ה לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p>
-      <p>בִּשְׂפָתַ֥י סִפַּ֑רְתִּי כֹּ֝֗ל מִשְׁפְּטֵי־פִֽיךָ׃</p>
-      <p>בְּדֶ֖רֶךְ עֵדְוֺתֶ֥יךָ שַּׂ֗שְׂתִּי כְּעַ֣ל כׇּל־הֽוֹן׃</p>
-      <p>בְּפִקּוּדֶ֥יךָ אָשִׂ֑יחָה וְ֝אַבִּ֗יטָה אֹֽרְחֹתֶֽיךָ׃</p>
-      <p>בְּחֻקֹּתֶ֥יךָ אֶֽשְׁתַּעֲשָׁ֑ע לֹ֖א אֶשְׁכַּ֣ח דְּבָרֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>גְּמֹ֖ל עַל־עַבְדְּךָ֥ אֶחְיֶ֗ה וְאֶשְׁמְרָ֥ה דְבָרֶֽךָ׃</p>
-      <p>גַּל־עֵינַ֥י וְאַבִּ֑יטָה נִ֝פְלָא֗וֹת מִתּוֹרָתֶֽךָ׃</p>
-      <p>גֵּ֣ר אָנֹכִ֣י בָאָ֑רֶץ אַל־תַּסְתֵּ֥ר מִ֝מֶּ֗נִּי מִצְוֺתֶֽיךָ׃</p>
-      <p>גָּרְסָ֣ה נַפְשִׁ֣י לְתַאֲבָ֑ה אֶֽל־מִשְׁפָּטֶ֥יךָ בְכׇל־עֵֽת׃</p>
-      <p>גָּ֭עַרְתָּ זֵדִ֣ים אֲרוּרִ֑ים הַ֝שֹּׁגִ֗ים מִמִּצְוֺתֶֽיךָ׃</p>
-      <p>גַּ֣ל מֵ֭עָלַי חֶרְפָּ֣ה וָב֑וּז כִּ֖י עֵדֹתֶ֣יךָ נָצָֽרְתִּי׃</p>
-      <p>גַּ֤ם יָשְׁב֣וּ שָׂ֭רִים בִּ֣י נִדְבָּ֑רוּ עַ֝בְדְּךָ֗ יָשִׂ֥יחַ בְּחֻקֶּֽיךָ׃</p>
-      <p>גַּֽם־עֵ֭דֹתֶיךָ שַׁעֲשֻׁעָ֗י אַנְשֵׁ֥י עֲצָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>דָּבְקָ֣ה לֶעָפָ֣ר נַפְשִׁ֑י חַ֝יֵּ֗נִי כִּדְבָרֶֽךָ׃</p>
-      <p>דְּרָכַ֣י סִ֭פַּרְתִּי וַֽתַּעֲנֵ֗נִי לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p>
-      <p>דֶּרֶךְ־פִּקּוּדֶ֥יךָ הֲבִינֵ֑נִי וְ֝אָשִׂ֗יחָה בְּנִפְלְאוֹתֶֽיךָ׃</p>
-      <p>דָּלְפָ֣ה נַ֭פְשִׁי מִתּוּגָ֑ה קַ֝יְּמֵ֗נִי כִּדְבָרֶֽךָ׃</p>
-      <p>דֶּֽרֶךְ־שֶׁ֭קֶר הָסֵ֣ר מִמֶּ֑נִּי וְֽתוֹרָתְךָ֥ חׇנֵּֽנִי׃</p>
-      <p>דֶּֽרֶךְ־אֱמוּנָ֥ה בָחָ֑רְתִּי מִשְׁפָּטֶ֥יךָ שִׁוִּֽיתִי׃</p>
-      <p>דָּבַ֥קְתִּי בְעֵדְוֺתֶ֑יךָ יְ֝הֹוָ֗ה אַל־תְּבִישֵֽׁנִי׃</p>
-      <p>דֶּֽרֶךְ־מִצְוֺתֶ֥יךָ אָר֑וּץ כִּ֖י תַרְחִ֣יב לִבִּֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>הוֹרֵ֣נִי יְ֭הֹוָה דֶּ֥רֶךְ חֻקֶּ֗יךָ וְאֶצְּרֶ֥נָּה עֵֽקֶב׃</p>
-      <p>הֲ֭בִינֵנִי וְאֶצְּרָ֥ה תוֹרָתֶ֗ךָ וְאֶשְׁמְרֶ֥נָּה בְכׇל־לֵֽב׃</p>
-      <p>הַ֭דְרִיכֵנִי בִּנְתִ֣יב מִצְוֺתֶ֑יךָ כִּי־ב֥וֹ חָפָֽצְתִּי׃</p>
-      <p>הַט־לִ֭בִּי אֶל־עֵדְוֺתֶ֗יךָ וְאַ֣ל אֶל־בָּֽצַע׃</p>
-      <p>הַעֲבֵ֣ר עֵ֭ינַי מֵרְא֣וֹת שָׁ֑וְא בִּדְרָכֶ֥ךָ חַיֵּֽנִי׃</p>
-      <p>הָקֵ֣ם לְ֭עַבְדְּךָ אִמְרָתֶ֑ךָ אֲ֝שֶׁ֗ר לְיִרְאָתֶֽךָ׃</p>
-      <p>הַעֲבֵ֣ר חֶ֭רְפָּתִי אֲשֶׁ֣ר יָגֹ֑רְתִּי כִּ֖י מִשְׁפָּטֶ֣יךָ טוֹבִֽים׃</p>
-      <p>הִ֭נֵּה תָּאַ֣בְתִּי לְפִקֻּדֶ֑יךָ בְּצִדְקָתְךָ֥ חַיֵּֽנִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>וִיבֹאֻ֣נִי חֲסָדֶ֣ךָ יְהֹוָ֑ה תְּ֝שׁ֥וּעָתְךָ֗ כְּאִמְרָתֶֽךָ׃</p>
-      <p>וְאֶעֱנֶ֣ה חֹרְפִ֣י דָבָ֑ר כִּֽי־בָ֝טַ֗חְתִּי בִּדְבָרֶֽךָ׃</p>
-      <p>וְֽאַל־תַּצֵּ֬ל מִפִּ֣י דְבַר־אֱמֶ֣ת עַד־מְאֹ֑ד כִּ֖י לְמִשְׁפָּטֶ֣ךָ יִחָֽלְתִּי׃</p>
-      <p>וְאֶשְׁמְרָ֖ה תוֹרָתְךָ֥ תָמִ֗יד לְעוֹלָ֥ם וָעֶֽד׃</p>
-      <p>וְאֶתְהַלְּכָ֥ה בָרְחָבָ֑ה כִּ֖י פִקֻּדֶ֣יךָ דָרָֽשְׁתִּי׃</p>
-      <p>וַאֲדַבְּרָ֣ה בְ֭עֵדֹתֶיךָ נֶ֥גֶד מְלָכִ֗ים וְלֹ֣א אֵבֽוֹשׁ׃</p>
-      <p>וְאֶשְׁתַּעֲשַׁ֥ע בְּמִצְוֺתֶ֗יךָ אֲשֶׁ֣ר אָהָֽבְתִּי׃</p>
-      <p>וְאֶשָּֽׂא־כַפַּ֗י אֶֽל־מִ֭צְוֺתֶיךָ אֲשֶׁ֥ר אָהָ֗בְתִּי וְאָשִׂ֥יחָה בְחֻקֶּֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>זְכֹר־דָּבָ֥ר לְעַבְדֶּ֑ךָ עַ֝֗ל אֲשֶׁ֣ר יִחַלְתָּֽנִי׃</p>
-      <p>זֹ֣את נֶחָמָתִ֣י בְעׇנְיִ֑י כִּ֖י אִמְרָתְךָ֣ חִיָּֽתְנִי׃</p>
-      <p>זֵ֭דִים הֱלִיצֻ֣נִי עַד־מְאֹ֑ד מִ֝תּ֥וֹרָתְךָ֗ לֹ֣א נָטִֽיתִי׃</p>
-      <p>זָ֘כַ֤רְתִּי מִשְׁפָּטֶ֖יךָ מֵעוֹלָ֥ם&thinsp;<small>׀</small>&thinsp;יְהֹוָ֗ה וָאֶתְנֶחָֽם׃</p>
-      <p>זַלְעָפָ֣ה אֲ֭חָזַתְנִי מֵרְשָׁעִ֑ים עֹ֝זְבֵ֗י תּוֹרָתֶֽךָ׃</p>
-      <p>זְ֭מִרוֹת הָיוּ־לִ֥י חֻקֶּ֗יךָ בְּבֵ֣ית מְגוּרָֽי׃</p>
-      <p>זָ֘כַ֤רְתִּי בַלַּ֣יְלָה שִׁמְךָ֣ יְהֹוָ֑ה וָ֝אֶשְׁמְרָ֗ה תּוֹרָתֶֽךָ׃</p>
-      <p>זֹ֥את הָיְתָה־לִּ֑י כִּ֖י פִקֻּדֶ֣יךָ נָצָֽרְתִּי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>חֶלְקִ֖י יְהֹוָ֥ה אָמַ֗רְתִּי לִשְׁמֹ֥ר דְּבָרֶֽיךָ׃</p>
-      <p>חִלִּ֣יתִי פָנֶ֣יךָ בְכׇל־לֵ֑ב חׇ֝נֵּ֗נִי כְּאִמְרָתֶֽךָ׃</p>
-      <p>חִשַּׁ֥בְתִּי דְרָכָ֑י וָאָשִׁ֥יבָה רַ֝גְלַ֗י אֶל־עֵדֹתֶֽיךָ׃</p>
-      <p>חַ֭שְׁתִּי וְלֹ֣א הִתְמַהְמָ֑הְתִּי לִ֝שְׁמֹ֗ר מִצְוֺתֶֽיךָ׃</p>
-      <p>חֶבְלֵ֣י רְשָׁעִ֣ים עִוְּדֻ֑נִי תּ֥֝וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p>
-      <p>חֲצֽוֹת־לַ֗יְלָה אָ֭קוּם לְהוֹד֣וֹת לָ֑ךְ עַ֝֗ל מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p>
-      <p>חָבֵ֣ר אָ֭נִי לְכׇל־אֲשֶׁ֣ר יְרֵא֑וּךָ וּ֝לְשֹׁמְרֵ֗י פִּקּוּדֶֽיךָ׃</p>
-      <p>חַסְדְּךָ֣ יְ֭הֹוָה מָלְאָ֥ה הָאָ֗רֶץ חֻקֶּ֥יךָ לַמְּדֵֽנִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>ט֭וֹב עָשִׂ֣יתָ עִֽם־עַבְדְּךָ֑ יְ֝הֹוָ֗ה כִּדְבָרֶֽךָ׃</p>
-      <p>ט֤וּב טַ֣עַם וָדַ֣עַת לַמְּדֵ֑נִי כִּ֖י בְמִצְוֺתֶ֣יךָ הֶאֱמָֽנְתִּי׃</p>
-      <p>טֶ֣רֶם אֶ֭עֱנֶה אֲנִ֣י שֹׁגֵ֑ג וְ֝עַתָּ֗ה אִמְרָתְךָ֥ שָׁמָֽרְתִּי׃</p>
-      <p>טוֹב־אַתָּ֥ה וּמֵטִ֗יב לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p>
-      <p>טָפְל֬וּ עָלַ֣י שֶׁ֣קֶר זֵדִ֑ים אֲ֝נִ֗י בְּכׇל־לֵ֤ב&thinsp;<b>׀</b> אֶצֹּ֬ר פִּקּוּדֶֽיךָ׃</p>
-      <p>טָפַ֣שׁ כַּחֵ֣לֶב לִבָּ֑ם אֲ֝נִ֗י תּוֹרָתְךָ֥ שִׁעֲשָֽׁעְתִּי׃</p>
-      <p>טֽוֹב־לִ֥י כִי־עֻנֵּ֑יתִי לְ֝מַ֗עַן אֶלְמַ֥ד חֻקֶּֽיךָ׃</p>
-      <p>טֽוֹב־לִ֥י תוֹרַת־פִּ֑יךָ מֵ֝אַלְפֵ֗י זָהָ֥ב וָכָֽסֶף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>יָדֶ֣יךָ עָ֭שׂוּנִי וַֽיְכוֹנְנ֑וּנִי הֲ֝בִינֵ֗נִי וְאֶלְמְדָ֥ה מִצְוֺתֶֽיךָ׃</p>
-      <p>יְ֭רֵאֶיךָ יִרְא֣וּנִי וְיִשְׂמָ֑חוּ כִּ֖י לִדְבָרְךָ֣ יִחָֽלְתִּי׃</p>
-      <p>יָדַ֣עְתִּי יְ֭הֹוָה כִּי־צֶ֣דֶק מִשְׁפָּטֶ֑יךָ וֶ֝אֱמוּנָ֗ה עִנִּיתָֽנִי׃</p>
-      <p>יְהִי־נָ֣א חַסְדְּךָ֣ לְנַחֲמֵ֑נִי כְּאִמְרָתְךָ֥ לְעַבְדֶּֽךָ׃</p>
-      <p>יְבֹא֣וּנִי רַחֲמֶ֣יךָ וְאֶחְיֶ֑ה כִּי־ת֥֝וֹרָתְךָ֗ שַׁעֲשֻׁעָֽי׃</p>
-      <p>יֵבֹ֣שׁוּ זֵ֭דִים כִּי־שֶׁ֣קֶר עִוְּת֑וּנִי אֲ֝נִ֗י אָשִׂ֥יחַ בְּפִקּוּדֶֽיךָ׃</p>
-      <p>יָשׁ֣וּבוּ לִ֣י יְרֵאֶ֑יךָ <span class="mam-kq"><span class="mam-kq-k">(וידעו)</span> <span class="mam-kq-q">[וְ֝יֹדְעֵ֗י]</span></span> עֵדֹתֶֽיךָ׃</p>
-      <p>יְהִי־לִבִּ֣י תָמִ֣ים בְּחֻקֶּ֑יךָ לְ֝מַ֗עַן לֹ֣א אֵבֽוֹשׁ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>כָּלְתָ֣ה לִתְשׁוּעָתְךָ֣ נַפְשִׁ֑י לִדְבָרְךָ֥ יִחָֽלְתִּי׃</p>
-      <p>כָּל֣וּ עֵ֭ינַי לְאִמְרָתֶ֑ךָ לֵ֝אמֹ֗ר מָתַ֥י תְּֽנַחֲמֵֽנִי׃</p>
-      <p>כִּֽי־הָ֭יִיתִי כְּנֹ֣אד בְּקִיט֑וֹר חֻ֝קֶּ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃</p>
-      <p>כַּמָּ֥ה יְמֵֽי־עַבְדֶּ֑ךָ מָתַ֬י תַּעֲשֶׂ֖ה בְרֹדְפַ֣י מִשְׁפָּֽט׃</p>
-      <p>כָּרוּ־לִ֣י זֵדִ֣ים שִׁיח֑וֹת אֲ֝שֶׁ֗ר לֹ֣א כְתוֹרָתֶֽךָ׃</p>
-      <p>כׇּל־מִצְוֺתֶ֥יךָ אֱמוּנָ֑ה שֶׁ֖קֶר רְדָפ֣וּנִי עׇזְרֵֽנִי׃</p>
-      <p>כִּ֭מְעַט כִּלּ֣וּנִי בָאָ֑רֶץ וַ֝אֲנִ֗י לֹא־עָזַ֥בְתִּי פִקֻּדֶֽיךָ׃</p>
-      <p>כְּחַסְדְּךָ֥ חַיֵּ֑נִי וְ֝אֶשְׁמְרָ֗ה עֵד֥וּת פִּֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>לְעוֹלָ֥ם יְהֹוָ֑ה דְּ֝בָרְךָ֗ נִצָּ֥ב בַּשָּׁמָֽיִם׃</p>
-      <p>לְדֹ֣ר וָ֭דֹר אֱמוּנָתֶ֑ךָ כּוֹנַ֥נְתָּֽ אֶ֝֗רֶץ וַֽתַּעֲמֹֽד׃</p>
-      <p>לְֽ֭מִשְׁפָּטֶיךָ עָמְד֣וּ הַיּ֑וֹם כִּ֖י הַכֹּ֣ל עֲבָדֶֽיךָ׃</p>
-      <p>לוּלֵ֣י ת֭וֹרָתְךָ שַׁעֲשֻׁעָ֑י אָ֝֗ז אָבַ֥דְתִּי בְעׇנְיִֽי׃</p>
-      <p>לְ֭עוֹלָם לֹא־אֶשְׁכַּ֣ח פִּקּוּדֶ֑יךָ כִּ֥י בָ֝֗ם חִיִּיתָֽנִי׃</p>
-      <p>לְֽךָ־אֲ֭נִי הוֹשִׁיעֵ֑נִי כִּ֖י פִקּוּדֶ֣יךָ דָרָֽשְׁתִּי׃</p>
-      <p>לִ֤י קִוּ֣וּ רְשָׁעִ֣ים לְאַבְּדֵ֑נִי עֵ֝דֹתֶ֗יךָ אֶתְבּוֹנָֽן׃</p>
-      <p>לְֽכׇל־תִּ֭כְלָה רָאִ֣יתִי קֵ֑ץ רְחָבָ֖ה מִצְוָתְךָ֣ מְאֹֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>מָה־אָהַ֥בְתִּי תוֹרָתֶ֑ךָ כׇּל־הַ֝יּ֗וֹם הִ֣יא שִׂיחָתִֽי׃</p>
-      <p>מֵֽ֭אֹיְבַי תְּחַכְּמֵ֣נִי מִצְוֺתֶ֑ךָ כִּ֖י לְעוֹלָ֣ם הִיא־לִֽי׃</p>
-      <p>מִכׇּל־מְלַמְּדַ֥י הִשְׂכַּ֑לְתִּי כִּ֥י עֵ֝דְוֺתֶ֗יךָ שִׂ֣יחָה לִֽי׃</p>
-      <p>מִזְּקֵנִ֥ים אֶתְבּוֹנָ֑ן כִּ֖י פִקּוּדֶ֣יךָ נָצָֽרְתִּי׃</p>
-      <p>מִכׇּל־אֹ֣רַח רָ֭ע כָּלִ֣אתִי רַגְלָ֑י לְ֝מַ֗עַן אֶשְׁמֹ֥ר דְּבָרֶֽךָ׃</p>
-      <p>מִמִּשְׁפָּטֶ֥יךָ לֹא־סָ֑רְתִּי כִּי־אַ֝תָּ֗ה הוֹרֵתָֽנִי׃</p>
-      <p>מַה־נִּמְלְצ֣וּ לְ֭חִכִּי אִמְרָתֶ֗ךָ מִדְּבַ֥שׁ לְפִֽי׃</p>
-      <p>מִפִּקּוּדֶ֥יךָ אֶתְבּוֹנָ֑ן עַל־כֵּ֝֗ן שָׂנֵ֤אתִי&thinsp;<b>׀</b> כׇּל־אֹ֬רַח שָֽׁקֶר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>נֵר־לְרַגְלִ֥י דְבָרֶ֑ךָ וְ֝א֗וֹר לִנְתִיבָתִֽי׃</p>
-      <p>נִשְׁבַּ֥עְתִּי וָאֲקַיֵּ֑מָה לִ֝שְׁמֹ֗ר מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p>
-      <p>נַעֲנֵ֥יתִי עַד־מְאֹ֑ד יְ֝הֹוָ֗ה חַיֵּ֥נִי כִדְבָרֶֽךָ׃</p>
-      <p>נִדְב֣וֹת פִּ֭י רְצֵה־נָ֣א יְהֹוָ֑ה וּֽמִשְׁפָּטֶ֥יךָ לַמְּדֵֽנִי׃</p>
-      <p>נַפְשִׁ֣י בְכַפִּ֣י תָמִ֑יד וְ֝ת֥וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p>
-      <p>נָתְנ֬וּ רְשָׁעִ֣ים פַּ֣ח לִ֑י וּ֝מִפִּקּוּדֶ֗יךָ לֹ֣א תָעִֽיתִי׃</p>
-      <p>נָחַ֣לְתִּי עֵדְוֺתֶ֣יךָ לְעוֹלָ֑ם כִּֽי־שְׂשׂ֖וֹן לִבִּ֣י הֵֽמָּה׃</p>
-      <p>נָטִ֣יתִי לִ֭בִּי לַעֲשׂ֥וֹת חֻקֶּ֗יךָ לְעוֹלָ֥ם עֵֽקֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>סֵעֲפִ֥ים שָׂנֵ֑אתִי וְֽתוֹרָתְךָ֥ אָהָֽבְתִּי׃</p>
-      <p>סִתְרִ֣י וּמָגִנִּ֣י אָ֑תָּה לִדְבָרְךָ֥ יִחָֽלְתִּי׃</p>
-      <p>סוּרוּ־מִמֶּ֥נִּי מְרֵעִ֑ים וְ֝אֶצְּרָ֗ה מִצְוֺ֥ת אֱלֹהָֽי׃</p>
-      <p>סׇמְכֵ֣נִי כְאִמְרָתְךָ֣ וְאֶחְיֶ֑ה וְאַל־תְּ֝בִישֵׁ֗נִי מִשִּׂבְרִֽי׃</p>
-      <p>סְעָדֵ֥נִי וְאִוָּשֵׁ֑עָה וְאֶשְׁעָ֖ה בְחֻקֶּ֣יךָ תָמִֽיד׃</p>
-      <p>סָ֭לִיתָ כׇּל־שׁוֹגִ֣ים מֵחֻקֶּ֑יךָ כִּי־שֶׁ֝֗קֶר תַּרְמִיתָֽם׃</p>
-      <p>סִגִ֗ים הִשְׁבַּ֥תָּ כׇל־רִשְׁעֵי־אָ֑רֶץ לָ֝כֵ֗ן אָהַ֥בְתִּי עֵדֹתֶֽיךָ׃</p>
-      <p>סָמַ֣ר מִפַּחְדְּךָ֣ בְשָׂרִ֑י וּֽמִמִּשְׁפָּטֶ֥יךָ יָרֵֽאתִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>עָ֭שִׂיתִי מִשְׁפָּ֣ט וָצֶ֑דֶק בַּל־תַּ֝נִּיחֵ֗נִי לְעֹשְׁקָֽי׃</p>
-      <p>עֲרֹ֣ב עַבְדְּךָ֣ לְט֑וֹב אַֽל־יַעַשְׁקֻ֥נִי זֵדִֽים׃</p>
-      <p>עֵ֭ינַי כָּל֣וּ לִישׁוּעָתֶ֑ךָ וּלְאִמְרַ֥ת צִדְקֶֽךָ׃</p>
-      <p>עֲשֵׂ֖ה עִם־עַבְדְּךָ֥ כְחַסְדֶּ֗ךָ וְחֻקֶּ֥יךָ לַמְּדֵֽנִי׃</p>
-      <p>עַבְדְּךָ־אָ֥נִי הֲבִינֵ֑נִי וְ֝אֵדְעָ֗ה עֵדֹתֶֽיךָ׃</p>
-      <p>עֵ֭ת לַעֲשׂ֣וֹת לַיהֹוָ֑ה הֵ֝פֵ֗רוּ תּוֹרָתֶֽךָ׃</p>
-      <p>עַל־כֵּ֭ן אָהַ֣בְתִּי מִצְוֺתֶ֑יךָ מִזָּהָ֥ב וּמִפָּֽז׃</p>
-      <p>עַל־כֵּ֤ן&thinsp;<b>׀</b> כׇּל־פִּקּ֣וּדֵי כֹ֣ל יִשָּׁ֑רְתִּי כׇּל־אֹ֖רַח שֶׁ֣קֶר שָׂנֵֽאתִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>פְּלָא֥וֹת עֵדְוֺתֶ֑יךָ עַל־כֵּ֝֗ן נְצָרָ֥תַם נַפְשִֽׁי׃</p>
-      <p>פֵּ֖תַח דְּבָרֶ֥יךָ יָאִ֗יר מֵבִ֥ין פְּתָיִֽים׃</p>
-      <p>פִּֽי־פָ֭עַרְתִּי וָאֶשְׁאָ֑פָה כִּ֖י לְמִצְוֺתֶ֣יךָ יָאָֽבְתִּי׃</p>
-      <p>פְּנֵה־אֵלַ֥י וְחׇנֵּ֑נִי כְּ֝מִשְׁפָּ֗ט לְאֹהֲבֵ֥י שְׁמֶֽךָ׃</p>
-      <p>פְּ֭עָמַי הָכֵ֣ן בְּאִמְרָתֶ֑ךָ וְֽאַל־תַּשְׁלֶט־בִּ֥י כׇל־אָֽוֶן׃</p>
-      <p>פְּ֭דֵנִי מֵעֹ֣שֶׁק אָדָ֑ם וְ֝אֶשְׁמְרָ֗ה פִּקּוּדֶֽיךָ׃</p>
-      <p>פָּ֭נֶיךָ הָאֵ֣ר בְּעַבְדֶּ֑ךָ וְ֝לַמְּדֵ֗נִי אֶת־חֻקֶּֽיךָ׃</p>
-      <p>פַּלְגֵי־מַ֭יִם יָרְד֣וּ עֵינָ֑י עַ֝֗ל לֹא־שָׁמְר֥וּ תוֹרָתֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>צַדִּ֣יק אַתָּ֣ה יְהֹוָ֑ה וְ֝יָשָׁ֗ר מִשְׁפָּטֶֽיךָ׃</p>
-      <p>צִ֭וִּיתָ צֶ֣דֶק עֵדֹתֶ֑יךָ וֶאֱמוּנָ֥ה מְאֹֽד׃</p>
-      <p>צִמְּתַ֥תְנִי קִנְאָתִ֑י כִּֽי־שָׁכְח֖וּ דְבָרֶ֣יךָ צָרָֽי׃</p>
-      <p>צְרוּפָ֖ה אִמְרָתְךָ֥ מְאֹ֗ד וְֽעַבְדְּךָ֥ אֲהֵבָֽהּ׃</p>
-      <p>צָעִ֣יר אָנֹכִ֣י וְנִבְזֶ֑ה פִּ֝קֻּדֶ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃</p>
-      <p>צִדְקָתְךָ֣ צֶ֣דֶק לְעוֹלָ֑ם וְֽתוֹרָתְךָ֥ אֱמֶֽת׃</p>
-      <p>צַר־וּמָצ֥וֹק מְצָא֑וּנִי מִ֝צְוֺתֶ֗יךָ שַׁעֲשֻׁעָֽי׃</p>
-      <p>צֶ֖דֶק עֵדְוֺתֶ֥יךָ לְעוֹלָ֗ם הֲבִינֵ֥נִי וְאֶחְיֶֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>קָרָ֣אתִי בְכׇל־לֵ֭ב עֲנֵ֥נִי יְהֹוָ֗ה חֻקֶּ֥יךָ אֶצֹּֽרָה׃</p>
-      <p>קְרָאתִ֥יךָ הוֹשִׁיעֵ֑נִי וְ֝אֶשְׁמְרָ֗ה עֵדֹתֶֽיךָ׃</p>
-      <p>קִדַּ֣מְתִּי בַ֭נֶּשֶׁף וָאֲשַׁוֵּ֑עָה <span class="mam-kq"><span class="mam-kq-k">(לדבריך)</span> <span class="mam-kq-q">[לִדְבָרְךָ֥]</span></span> יִחָֽלְתִּי׃</p>
-      <p>קִדְּמ֣וּ עֵ֭ינַי אַשְׁמֻר֑וֹת לָ֝שִׂ֗יחַ בְּאִמְרָתֶֽךָ׃</p>
-      <p>ק֭וֹלִי שִׁמְעָ֣ה כְחַסְדֶּ֑ךָ יְ֝הֹוָ֗ה כְּֽמִשְׁפָּטֶ֥ךָ חַיֵּֽנִי׃</p>
-      <p>קָ֭רְבוּ רֹדְפֵ֣י זִמָּ֑ה מִתּוֹרָתְךָ֥ רָחָֽקוּ׃</p>
-      <p>קָר֣וֹב אַתָּ֣ה יְהֹוָ֑ה וְֽכׇל־מִצְוֺתֶ֥יךָ אֱמֶֽת׃</p>
-      <p>קֶ֣דֶם יָ֭דַעְתִּי מֵעֵדֹתֶ֑יךָ כִּ֖י לְעוֹלָ֣ם יְסַדְתָּֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>רְאֵה־עׇנְיִ֥י וְחַלְּצֵ֑נִי כִּי־ת֥֝וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p>
-      <p>רִיבָ֣ה רִ֭יבִי וּגְאָלֵ֑נִי לְאִמְרָתְךָ֥ חַיֵּֽנִי׃</p>
-      <p>רָח֣וֹק מֵרְשָׁעִ֣ים יְשׁוּעָ֑ה כִּי־חֻ֝קֶּ֗יךָ לֹ֣א דָרָֽשׁוּ׃</p>
-      <p>רַחֲמֶ֖יךָ רַבִּ֥ים&thinsp;<small>׀</small>&thinsp;יְהֹוָ֑ה כְּֽמִשְׁפָּטֶ֥יךָ חַיֵּֽנִי׃</p>
-      <p>רַ֭בִּים רֹדְפַ֣י וְצָרָ֑י מֵ֝עֵדְוֺתֶ֗יךָ לֹ֣א נָטִֽיתִי׃</p>
-      <p>רָאִ֣יתִי בֹ֭גְדִים וָאֶתְקוֹטָ֑טָה אֲשֶׁ֥ר אִ֝מְרָתְךָ֗ לֹ֣א שָׁמָֽרוּ׃</p>
-      <p>רְ֭אֵה כִּי־פִקּוּדֶ֣יךָ אָהָ֑בְתִּי יְ֝הֹוָ֗ה כְּֽחַסְדְּךָ֥ חַיֵּֽנִי׃</p>
-      <p>רֹאשׁ־דְּבָרְךָ֥ אֱמֶ֑ת וּ֝לְעוֹלָ֗ם כׇּל־מִשְׁפַּ֥ט צִדְקֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>שָׂ֭רִים רְדָפ֣וּנִי חִנָּ֑ם <span class="mam-kq"><span class="mam-kq-k">(ומדבריך)</span> <span class="mam-kq-q">[וּ֝מִדְּבָרְךָ֗]</span></span> פָּחַ֥ד לִבִּֽי׃</p>
-      <p>שָׂ֣שׂ אָ֭נֹכִי עַל־אִמְרָתֶ֑ךָ כְּ֝מוֹצֵ֗א שָׁלָ֥ל רָֽב׃</p>
-      <p>שֶׁ֣קֶר שָׂ֭נֵאתִי וַאֲתַעֵ֑בָה תּוֹרָתְךָ֥ אָהָֽבְתִּי׃</p>
-      <p>שֶׁ֣בַע בַּ֭יּוֹם הִלַּלְתִּ֑יךָ עַ֝֗ל מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p>
-      <p>שָׁל֣וֹם רָ֭ב לְאֹהֲבֵ֣י תוֹרָתֶ֑ךָ וְאֵֽין־לָ֥מוֹ מִכְשֽׁוֹל׃</p>
-      <p>שִׂבַּ֣רְתִּי לִישׁוּעָתְךָ֣ יְהֹוָ֑ה וּֽמִצְוֺתֶ֥יךָ עָשִֽׂיתִי׃</p>
-      <p>שָֽׁמְרָ֣ה נַ֭פְשִׁי עֵדֹתֶ֑יךָ וָאֹהֲבֵ֥ם מְאֹֽד׃</p>
-      <p>שָׁמַ֣רְתִּי פִ֭קּוּדֶיךָ וְעֵדֹתֶ֑יךָ כִּ֖י כׇל־דְּרָכַ֣י נֶגְדֶּֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>תִּקְרַ֤ב רִנָּתִ֣י לְפָנֶ֣יךָ יְהֹוָ֑ה כִּדְבָרְךָ֥ הֲבִינֵֽנִי׃</p>
-      <p>תָּב֣וֹא תְחִנָּתִ֣י לְפָנֶ֑יךָ כְּ֝אִמְרָתְךָ֗ הַצִּילֵֽנִי׃</p>
-      <p>תַּבַּ֣עְנָה שְׂפָתַ֣י תְּהִלָּ֑ה כִּ֖י תְלַמְּדֵ֣נִי חֻקֶּֽיךָ׃</p>
-      <p>תַּ֣עַן לְ֭שׁוֹנִי אִמְרָתֶ֑ךָ כִּ֖י כׇל־מִצְוֺתֶ֣יךָ צֶּֽדֶק׃</p>
-      <p>תְּהִי־יָדְךָ֥ לְעׇזְרֵ֑נִי כִּ֖י פִקּוּדֶ֣יךָ בָחָֽרְתִּי׃</p>
-      <p>תָּאַ֣בְתִּי לִישׁוּעָתְךָ֣ יְהֹוָ֑ה וְ֝ת֥וֹרָתְךָ֗ שַׁעֲשֻׁעָֽי׃</p>
-      <p>תְּֽחִי־נַ֭פְשִׁי וּֽתְהַלְלֶ֑ךָּ וּֽמִשְׁפָּטֶ֥ךָ יַעְזְרֻֽנִי׃</p>
-      <p>תָּעִ֗יתִי כְּשֶׂ֣ה אֹ֭בֵד בַּקֵּ֣שׁ עַבְדֶּ֑ךָ כִּ֥י מִ֝צְוֺתֶ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a><a href="#v-40">40</a><a href="#v-50">50</a><a href="#v-60">60</a><a href="#v-70">70</a><a href="#v-80">80</a><a href="#v-90">90</a><a href="#v-100">100</a><a href="#v-110">110</a><a href="#v-120">120</a><a href="#v-130">130</a><a href="#v-140">140</a><a href="#v-150">150</a><a href="#v-160">160</a><a href="#v-170">170</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׁרֵ֥י תְמִֽימֵי־דָ֑רֶךְ הַ֝הֹלְכִ֗ים בְּתוֹרַ֥ת יְהֹוָֽה׃</p></div><div class="heb-s"><p>אשרי תמימי־דרך ההלכים בתורת יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Heureux ceux dont la voie est intègre, qui suivent la Loi de l’Éternel!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֭שְׁרֵי נֹצְרֵ֥י עֵדֹתָ֗יו בְּכׇל־לֵ֥ב יִדְרְשֽׁוּהוּ׃</p></div><div class="heb-s"><p>אשרי נצרי עדתיו בכל־לב ידרשוהו׃</p></div></div>
+      <div class="texte-fr"><p>Heureux ceux qui respectent ses statuts, le recherchent de tout leur cœur,</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֭ף לֹא־פָעֲל֣וּ עַוְלָ֑ה בִּדְרָכָ֥יו הָלָֽכוּ׃</p></div><div class="heb-s"><p>אף לא־פעלו עולה בדרכיו הלכו׃</p></div></div>
+      <div class="texte-fr"><p>qui, se gardant bien de commettre aucune injustice, marchent dans ses voies!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֭תָּה צִוִּ֥יתָה פִקֻּדֶ֗יךָ לִשְׁמֹ֥ר מְאֹֽד׃</p></div><div class="heb-s"><p>אתה צויתה פקדיך לשמר מאד׃</p></div></div>
+      <div class="texte-fr"><p>Tu as promulgué tes ordonnances, pour qu’on les observe strictement.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֭חֲלַי יִכֹּ֥נוּ דְרָכָ֗י לִשְׁמֹ֥ר חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>אחלי יכנו דרכי לשמר חקיך׃</p></div></div>
+      <div class="texte-fr"><p>Ah! puissent mes pas être fermes, pour que j’observe tes préceptes!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֥ז לֹא־אֵב֑וֹשׁ בְּ֝הַבִּיטִ֗י אֶל־כׇּל־מִצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>אז לא־אבוש בהביטי אל־כל־מצותיך׃</p></div></div>
+      <div class="texte-fr"><p>Alors, je ne serai point déçu, en portant mes regards sur tous tes commandements.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֭וֹדְךָ בְּיֹ֣שֶׁר לֵבָ֑ב בְּ֝לׇמְדִ֗י מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p></div><div class="heb-s"><p>אודך בישר לבב בלמדי משפטי צדקך׃</p></div></div>
+      <div class="texte-fr"><p>Je te rendrai grâce en toute droiture de cœur, en m’instruisant des règles de ta justice.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־חֻקֶּ֥יךָ אֶשְׁמֹ֑ר אַֽל־תַּעַזְבֵ֥נִי עַד־מְאֹֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>את־חקיך אשמר אל־תעזבני עד־מאד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Tes statuts, je les observerai: ne m’abandonne en aucun temps.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּמֶּ֣ה יְזַכֶּה־נַּ֭עַר אֶת־אׇרְח֑וֹ לִ֝שְׁמֹ֗ר כִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>במה יזכה־נער את־ארחו לשמר כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Comment le jeune homme rendra-t-il pure sa conduite? En se conformant à tes paroles.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּכׇל־לִבִּ֥י דְרַשְׁתִּ֑יךָ אַל־תַּ֝שְׁגֵּ֗נִי מִמִּצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>בכל־לבי דרשתיך אל־תשגני ממצותיך׃</p></div></div>
+      <div class="texte-fr"><p>De tout mon cœur je m’enquiers de toi, ne me laisse pas dévier de tes prescriptions.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּ֭לִבִּי צָפַ֣נְתִּי אִמְרָתֶ֑ךָ לְ֝מַ֗עַן לֹ֣א אֶחֱטָא־לָֽךְ׃</p></div><div class="heb-s"><p>בלבי צפנתי אמרתך למען לא אחטא־לך׃</p></div></div>
+      <div class="texte-fr"><p>En mon sein j’ai déposé tes instructions, pour ne pas faillir à ton égard.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>בָּר֖וּךְ אַתָּ֥ה יְהֹוָ֗ה לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>ברוך אתה יהוה למדני חקיך׃</p></div></div>
+      <div class="texte-fr"><p>Béni sois-tu, ô Éternel! Enseigne-moi tes préceptes.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּשְׂפָתַ֥י סִפַּ֑רְתִּי כֹּ֝֗ל מִשְׁפְּטֵי־פִֽיךָ׃</p></div><div class="heb-s"><p>בשפתי ספרתי כל משפטי־פיך׃</p></div></div>
+      <div class="texte-fr"><p>De mes lèvres je proclame toutes les règles sorties de ta bouche.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּדֶ֖רֶךְ עֵדְוֺתֶ֥יךָ שַּׂ֗שְׂתִּי כְּעַ֣ל כׇּל־הֽוֹן׃</p></div><div class="heb-s"><p>בדרך עדותיך ששתי כעל כל־הון׃</p></div></div>
+      <div class="texte-fr"><p>Dans le chemin tracé par tes témoignages je trouve ma joie, comme si c’était le comble de la richesse.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּפִקּוּדֶ֥יךָ אָשִׂ֑יחָה וְ֝אַבִּ֗יטָה אֹֽרְחֹתֶֽיךָ׃</p></div><div class="heb-s"><p>בפקודיך אשיחה ואביטה ארחתיך׃</p></div></div>
+      <div class="texte-fr"><p>Je m’entretiens de tes commandements, et je contemple tes voies.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּחֻקֹּתֶ֥יךָ אֶֽשְׁתַּעֲשָׁ֑ע לֹ֖א אֶשְׁכַּ֣ח דְּבָרֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>בחקתיך אשתעשע לא אשכח דברך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je me délecte de tes préceptes, et n’oublie point tes paroles.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>גְּמֹ֖ל עַל־עַבְדְּךָ֥ אֶחְיֶ֗ה וְאֶשְׁמְרָ֥ה דְבָרֶֽךָ׃</p></div><div class="heb-s"><p>גמל על־עבדך אחיה ואשמרה דברך׃</p></div></div>
+      <div class="texte-fr"><p>Accorde tes bienfaits à ton serviteur, pour que je vive et observe tes paroles.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּל־עֵינַ֥י וְאַבִּ֑יטָה נִ֝פְלָא֗וֹת מִתּוֹרָתֶֽךָ׃</p></div><div class="heb-s"><p>גל־עיני ואביטה נפלאות מתורתך׃</p></div></div>
+      <div class="texte-fr"><p>Dessille-moi les yeux, pour que je puisse contempler les merveilles issues de ta Loi.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>גֵּ֣ר אָנֹכִ֣י בָאָ֑רֶץ אַל־תַּסְתֵּ֥ר מִ֝מֶּ֗נִּי מִצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>גר אנכי בארץ אל־תסתר ממני מצותיך׃</p></div></div>
+      <div class="texte-fr"><p>Je suis un simple étranger sur la terre, ne me tiens pas cachés tes commandements.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּרְסָ֣ה נַפְשִׁ֣י לְתַאֲבָ֑ה אֶֽל־מִשְׁפָּטֶ֥יךָ בְכׇל־עֵֽת׃</p></div><div class="heb-s"><p>גרסה נפשי לתאבה אל־משפטיך בכל־עת׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme est travaillée du désir de tes règlements, à toute époque.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּ֭עַרְתָּ זֵדִ֣ים אֲרוּרִ֑ים הַ֝שֹּׁגִ֗ים מִמִּצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>גערת זדים ארורים השגים ממצותיך׃</p></div></div>
+      <div class="texte-fr"><p>Toi, tu réprouves les arrogants maudits, qui se fourvoient loin de tes commandements.</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּ֣ל מֵ֭עָלַי חֶרְפָּ֣ה וָב֑וּז כִּ֖י עֵדֹתֶ֣יךָ נָצָֽרְתִּי׃</p></div><div class="heb-s"><p>גל מעלי חרפה ובוז כי עדתיך נצרתי׃</p></div></div>
+      <div class="texte-fr"><p>Affranchis-moi de la honte et du mépris, car je respecte tes témoignages.</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּ֤ם יָשְׁב֣וּ שָׂ֭רִים בִּ֣י נִדְבָּ֑רוּ עַ֝בְדְּךָ֗ יָשִׂ֥יחַ בְּחֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>גם ישבו שרים בי נדברו עבדך ישיח בחקיך׃</p></div></div>
+      <div class="texte-fr"><p>Dussent même les grands prendre siège et déblatérer contre moi, ton serviteur méditera tes lois.</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּֽם־עֵ֭דֹתֶיךָ שַׁעֲשֻׁעָ֗י אַנְשֵׁ֥י עֲצָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>גם־עדתיך שעשעי אנשי עצתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Oui, tes témoignages sont mes délices, mes meilleurs conseillers.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>דָּבְקָ֣ה לֶעָפָ֣ר נַפְשִׁ֑י חַ֝יֵּ֗נִי כִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>דבקה לעפר נפשי חיני כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme est collée à la poussière, conserve-moi en vie, suivant ta parole.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>דְּרָכַ֣י סִ֭פַּרְתִּי וַֽתַּעֲנֵ֗נִי לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>דרכי ספרתי ותענני למדני חקיך׃</p></div></div>
+      <div class="texte-fr"><p>J’ai exposé ma conduite, et tu m’as répondu; enseigne-moi tes lois.</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>דֶּרֶךְ־פִּקּוּדֶ֥יךָ הֲבִינֵ֑נִי וְ֝אָשִׂ֗יחָה בְּנִפְלְאוֹתֶֽיךָ׃</p></div><div class="heb-s"><p>דרך־פקודיך הבינני ואשיחה בנפלאותיך׃</p></div></div>
+      <div class="texte-fr"><p>Laisse-moi comprendre le chemin de tes préceptes, et je réfléchirai à tes merveilles.</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>דָּלְפָ֣ה נַ֭פְשִׁי מִתּוּגָ֑ה קַ֝יְּמֵ֗נִי כִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>דלפה נפשי מתוגה קימני כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme, de chagrin, se fond en larmes, redresse-moi, selon ta parole.</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>דֶּֽרֶךְ־שֶׁ֭קֶר הָסֵ֣ר מִמֶּ֑נִּי וְֽתוֹרָתְךָ֥ חׇנֵּֽנִי׃</p></div><div class="heb-s"><p>דרך־שקר הסר ממני ותורתך חנני׃</p></div></div>
+      <div class="texte-fr"><p>Eloigne de moi le chemin du mensonge, gratifie-moi de ta Loi.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>דֶּֽרֶךְ־אֱמוּנָ֥ה בָחָ֑רְתִּי מִשְׁפָּטֶ֥יךָ שִׁוִּֽיתִי׃</p></div><div class="heb-s"><p>דרך־אמונה בחרתי משפטיך שויתי׃</p></div></div>
+      <div class="texte-fr"><p>J’ai choisi la voie de la fidélité, placé tes règles sous mes regards.</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>דָּבַ֥קְתִּי בְעֵדְוֺתֶ֑יךָ יְ֝הֹוָ֗ה אַל־תְּבִישֵֽׁנִי׃</p></div><div class="heb-s"><p>דבקתי בעדותיך יהוה אל־תבישני׃</p></div></div>
+      <div class="texte-fr"><p>Je suis attaché à tes statuts, Seigneur, ne m’inflige aucune déception.</p></div>
+    </div><div class="seif" id="v-32">
+      <span class="seif-num">Verset 32</span>
+      <div class="texte-heb"><div class="heb-n"><p>דֶּֽרֶךְ־מִצְוֺתֶ֥יךָ אָר֑וּץ כִּ֖י תַרְחִ֣יב לִבִּֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>דרך־מצותיך ארוץ כי תרחיב לבי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je suivrai avec empressement le chemin de tes préceptes, car tu élargis mon cœur.</p></div>
+    </div><div class="seif" id="v-33">
+      <span class="seif-num">Verset 33</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹרֵ֣נִי יְ֭הֹוָה דֶּ֥רֶךְ חֻקֶּ֗יךָ וְאֶצְּרֶ֥נָּה עֵֽקֶב׃</p></div><div class="heb-s"><p>הורני יהוה דרך חקיך ואצרנה עקב׃</p></div></div>
+      <div class="texte-fr"><p>Enseigne-moi le chemin de tes préceptes, je veux en suivre les traces.</p></div>
+    </div><div class="seif" id="v-34">
+      <span class="seif-num">Verset 34</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲ֭בִינֵנִי וְאֶצְּרָ֥ה תוֹרָתֶ֗ךָ וְאֶשְׁמְרֶ֥נָּה בְכׇל־לֵֽב׃</p></div><div class="heb-s"><p>הבינני ואצרה תורתך ואשמרנה בכל־לב׃</p></div></div>
+      <div class="texte-fr"><p>Donne-moi l’intelligence pour que je garde ta loi et l’observe de tout mon cœur.</p></div>
+    </div><div class="seif" id="v-35">
+      <span class="seif-num">Verset 35</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֭דְרִיכֵנִי בִּנְתִ֣יב מִצְוֺתֶ֑יךָ כִּי־ב֥וֹ חָפָֽצְתִּי׃</p></div><div class="heb-s"><p>הדריכני בנתיב מצותיך כי־בו חפצתי׃</p></div></div>
+      <div class="texte-fr"><p>Dirige-moi dans le sentier de tes commandements, car j’y trouve ma satisfaction.</p></div>
+    </div><div class="seif" id="v-36">
+      <span class="seif-num">Verset 36</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַט־לִ֭בִּי אֶל־עֵדְוֺתֶ֗יךָ וְאַ֣ל אֶל־בָּֽצַע׃</p></div><div class="heb-s"><p>הט־לבי אל־עדותיך ואל אל־בצע׃</p></div></div>
+      <div class="texte-fr"><p>Incline mon cœur vers tes vérités, et non vers un vain lucre.</p></div>
+    </div><div class="seif" id="v-37">
+      <span class="seif-num">Verset 37</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַעֲבֵ֣ר עֵ֭ינַי מֵרְא֣וֹת שָׁ֑וְא בִּדְרָכֶ֥ךָ חַיֵּֽנִי׃</p></div><div class="heb-s"><p>העבר עיני מראות שוא בדרכך חיני׃</p></div></div>
+      <div class="texte-fr"><p>Détourne mes yeux de la vue des choses frivoles, fais-moi vivre dans tes voies.</p></div>
+    </div><div class="seif" id="v-38">
+      <span class="seif-num">Verset 38</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָקֵ֣ם לְ֭עַבְדְּךָ אִמְרָתֶ֑ךָ אֲ֝שֶׁ֗ר לְיִרְאָתֶֽךָ׃</p></div><div class="heb-s"><p>הקם לעבדך אמרתך אשר ליראתך׃</p></div></div>
+      <div class="texte-fr"><p>Accomplis ton dire en faveur de ton serviteur, car [il amène] à te révérer.</p></div>
+    </div><div class="seif" id="v-39">
+      <span class="seif-num">Verset 39</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַעֲבֵ֣ר חֶ֭רְפָּתִי אֲשֶׁ֣ר יָגֹ֑רְתִּי כִּ֖י מִשְׁפָּטֶ֣יךָ טוֹבִֽים׃</p></div><div class="heb-s"><p>העבר חרפתי אשר יגרתי כי משפטיך טובים׃</p></div></div>
+      <div class="texte-fr"><p>Ecarte de moi la honte que je redoute, car tes jugements sont précieux.</p></div>
+    </div><div class="seif" id="v-40">
+      <span class="seif-num">Verset 40</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִ֭נֵּה תָּאַ֣בְתִּי לְפִקֻּדֶ֑יךָ בְּצִדְקָתְךָ֥ חַיֵּֽנִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>הנה תאבתי לפקדיך בצדקתך חיני׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Voici, j’ai la passion de tes préceptes, fais-moi vivre par ta justice.</p></div>
+    </div><div class="seif" id="v-41">
+      <span class="seif-num">Verset 41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וִיבֹאֻ֣נִי חֲסָדֶ֣ךָ יְהֹוָ֑ה תְּ֝שׁ֥וּעָתְךָ֗ כְּאִמְרָתֶֽךָ׃</p></div><div class="heb-s"><p>ויבאני חסדך יהוה תשועתך כאמרתך׃</p></div></div>
+      <div class="texte-fr"><p>Que tes bontés descendent sur moi, Éternel, ton salut, tel que tu l’as promis.</p></div>
+    </div><div class="seif" id="v-42">
+      <span class="seif-num">Verset 42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶעֱנֶ֣ה חֹרְפִ֣י דָבָ֑ר כִּֽי־בָ֝טַ֗חְתִּי בִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>ואענה חרפי דבר כי־בטחתי בדברך׃</p></div></div>
+      <div class="texte-fr"><p>Je pourrai ainsi répliquer à qui m’outrage, car j’ai confiance en ta parole.</p></div>
+    </div><div class="seif" id="v-43">
+      <span class="seif-num">Verset 43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽאַל־תַּצֵּ֬ל מִפִּ֣י דְבַר־אֱמֶ֣ת עַד־מְאֹ֑ד כִּ֖י לְמִשְׁפָּטֶ֣ךָ יִחָֽלְתִּי׃</p></div><div class="heb-s"><p>ואל־תצל מפי דבר־אמת עד־מאד כי למשפטך יחלתי׃</p></div></div>
+      <div class="texte-fr"><p>Ne supprime jamais une parole de vérité de ma bouche, car je mets mon attente en tes jugements.</p></div>
+    </div><div class="seif" id="v-44">
+      <span class="seif-num">Verset 44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶשְׁמְרָ֖ה תוֹרָתְךָ֥ תָמִ֗יד לְעוֹלָ֥ם וָעֶֽד׃</p></div><div class="heb-s"><p>ואשמרה תורתך תמיד לעולם ועד׃</p></div></div>
+      <div class="texte-fr"><p>Je veux observer ta Loi constamment, à tout jamais.</p></div>
+    </div><div class="seif" id="v-45">
+      <span class="seif-num">Verset 45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶתְהַלְּכָ֥ה בָרְחָבָ֑ה כִּ֖י פִקֻּדֶ֣יךָ דָרָֽשְׁתִּי׃</p></div><div class="heb-s"><p>ואתהלכה ברחבה כי פקדיך דרשתי׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi je circulerai bien au large, car j’aurai eu le souci de tes préceptes.</p></div>
+    </div><div class="seif" id="v-46">
+      <span class="seif-num">Verset 46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲדַבְּרָ֣ה בְ֭עֵדֹתֶיךָ נֶ֥גֶד מְלָכִ֗ים וְלֹ֣א אֵבֽוֹשׁ׃</p></div><div class="heb-s"><p>ואדברה בעדתיך נגד מלכים ולא אבוש׃</p></div></div>
+      <div class="texte-fr"><p>Je ferai de tes vérités l’objet de mes discours, en face des rois, sans aucune fausse honte.</p></div>
+    </div><div class="seif" id="v-47">
+      <span class="seif-num">Verset 47</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶשְׁתַּעֲשַׁ֥ע בְּמִצְוֺתֶ֗יךָ אֲשֶׁ֣ר אָהָֽבְתִּי׃</p></div><div class="heb-s"><p>ואשתעשע במצותיך אשר אהבתי׃</p></div></div>
+      <div class="texte-fr"><p>Et je ferai mes délices de tes commandements, qui me sont bien chers.</p></div>
+    </div><div class="seif" id="v-48">
+      <span class="seif-num">Verset 48</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶשָּֽׂא־כַפַּ֗י אֶֽל־מִ֭צְוֺתֶיךָ אֲשֶׁ֥ר אָהָ֗בְתִּי וְאָשִׂ֥יחָה בְחֻקֶּֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואשא־כפי אל־מצותיך אשר אהבתי ואשיחה בחקיך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je tendrai mes mains vers tes commandements, que j’aime, et consacrerai mes méditations à tes préceptes.</p></div>
+    </div><div class="seif" id="v-49">
+      <span class="seif-num">Verset 49</span>
+      <div class="texte-heb"><div class="heb-n"><p>זְכֹר־דָּבָ֥ר לְעַבְדֶּ֑ךָ עַ֝֗ל אֲשֶׁ֣ר יִחַלְתָּֽנִי׃</p></div><div class="heb-s"><p>זכר־דבר לעבדך על אשר יחלתני׃</p></div></div>
+      <div class="texte-fr"><p>Rappelle-toi, en faveur de ton serviteur, la promesse où tu as voulu que je mette mon attente.</p></div>
+    </div><div class="seif" id="v-50">
+      <span class="seif-num">Verset 50</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֣את נֶחָמָתִ֣י בְעׇנְיִ֑י כִּ֖י אִמְרָתְךָ֣ חִיָּֽתְנִי׃</p></div><div class="heb-s"><p>זאת נחמתי בעניי כי אמרתך חיתני׃</p></div></div>
+      <div class="texte-fr"><p>C’est là ma consolation dans la misère, que ta parole me rende la vie.</p></div>
+    </div><div class="seif" id="v-51">
+      <span class="seif-num">Verset 51</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֵ֭דִים הֱלִיצֻ֣נִי עַד־מְאֹ֑ד מִ֝תּ֥וֹרָתְךָ֗ לֹ֣א נָטִֽיתִי׃</p></div><div class="heb-s"><p>זדים הליצני עד־מאד מתורתך לא נטיתי׃</p></div></div>
+      <div class="texte-fr"><p>Des arrogants m’ont raillé au possible: je n’ai point dévié de ta Loi.</p></div>
+    </div><div class="seif" id="v-52">
+      <span class="seif-num">Verset 52</span>
+      <div class="texte-heb"><div class="heb-n"><p>זָ֘כַ֤רְתִּי מִשְׁפָּטֶ֖יךָ מֵעוֹלָ֥ם&thinsp;<small>׀</small>&thinsp;יְהֹוָ֗ה וָאֶתְנֶחָֽם׃</p></div><div class="heb-s"><p>זכרתי משפטיך מעולם&thinsp;<small>׀</small>&thinsp;יהוה ואתנחם׃</p></div></div>
+      <div class="texte-fr"><p>Je me remémore tes jugements de jadis, ô Éternel, et j’y trouve du réconfort.</p></div>
+    </div><div class="seif" id="v-53">
+      <span class="seif-num">Verset 53</span>
+      <div class="texte-heb"><div class="heb-n"><p>זַלְעָפָ֣ה אֲ֭חָזַתְנִי מֵרְשָׁעִ֑ים עֹ֝זְבֵ֗י תּוֹרָתֶֽךָ׃</p></div><div class="heb-s"><p>זלעפה אחזתני מרשעים עזבי תורתך׃</p></div></div>
+      <div class="texte-fr"><p>Un violent frisson m’avait saisi à cause des méchants, qui abandonnent ta Loi.</p></div>
+    </div><div class="seif" id="v-54">
+      <span class="seif-num">Verset 54</span>
+      <div class="texte-heb"><div class="heb-n"><p>זְ֭מִרוֹת הָיוּ־לִ֥י חֻקֶּ֗יךָ בְּבֵ֣ית מְגוּרָֽי׃</p></div><div class="heb-s"><p>זמרות היו־לי חקיך בבית מגורי׃</p></div></div>
+      <div class="texte-fr"><p>[Mais] tes préceptes sont devenus pour moi un sujet de cantiques dans ma demeure passagère.</p></div>
+    </div><div class="seif" id="v-55">
+      <span class="seif-num">Verset 55</span>
+      <div class="texte-heb"><div class="heb-n"><p>זָ֘כַ֤רְתִּי בַלַּ֣יְלָה שִׁמְךָ֣ יְהֹוָ֑ה וָ֝אֶשְׁמְרָ֗ה תּוֹרָתֶֽךָ׃</p></div><div class="heb-s"><p>זכרתי בלילה שמך יהוה ואשמרה תורתך׃</p></div></div>
+      <div class="texte-fr"><p>Je me souviens de ton nom pendant la nuit, Seigneur, et j’observe ta Loi.</p></div>
+    </div><div class="seif" id="v-56">
+      <span class="seif-num">Verset 56</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֥את הָיְתָה־לִּ֑י כִּ֖י פִקֻּדֶ֣יךָ נָצָֽרְתִּי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>זאת היתה־לי כי פקדיך נצרתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>C’est là mon bonheur à moi, de m’attacher à tes préceptes.</p></div>
+    </div><div class="seif" id="v-57">
+      <span class="seif-num">Verset 57</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֶלְקִ֖י יְהֹוָ֥ה אָמַ֗רְתִּי לִשְׁמֹ֥ר דְּבָרֶֽיךָ׃</p></div><div class="heb-s"><p>חלקי יהוה אמרתי לשמר דבריך׃</p></div></div>
+      <div class="texte-fr"><p>"C’est mon lot à moi, ô Éternel, me suis-je dit, d’observer tes paroles."</p></div>
+    </div><div class="seif" id="v-58">
+      <span class="seif-num">Verset 58</span>
+      <div class="texte-heb"><div class="heb-n"><p>חִלִּ֣יתִי פָנֶ֣יךָ בְכׇל־לֵ֑ב חׇ֝נֵּ֗נִי כְּאִמְרָתֶֽךָ׃</p></div><div class="heb-s"><p>חליתי פניך בכל־לב חנני כאמרתך׃</p></div></div>
+      <div class="texte-fr"><p>Je t’implore de tout mon cœur, sois-moi propice, selon ta promesse.</p></div>
+    </div><div class="seif" id="v-59">
+      <span class="seif-num">Verset 59</span>
+      <div class="texte-heb"><div class="heb-n"><p>חִשַּׁ֥בְתִּי דְרָכָ֑י וָאָשִׁ֥יבָה רַ֝גְלַ֗י אֶל־עֵדֹתֶֽיךָ׃</p></div><div class="heb-s"><p>חשבתי דרכי ואשיבה רגלי אל־עדתיך׃</p></div></div>
+      <div class="texte-fr"><p>J’ai médité sur mes voies, et ramené mes pas vers tes statuts.</p></div>
+    </div><div class="seif" id="v-60">
+      <span class="seif-num">Verset 60</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַ֭שְׁתִּי וְלֹ֣א הִתְמַהְמָ֑הְתִּי לִ֝שְׁמֹ֗ר מִצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>חשתי ולא התמהמהתי לשמר מצותיך׃</p></div></div>
+      <div class="texte-fr"><p>Je me suis empressé, sans perdre un moment, d’observer tes commandements.</p></div>
+    </div><div class="seif" id="v-61">
+      <span class="seif-num">Verset 61</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֶבְלֵ֣י רְשָׁעִ֣ים עִוְּדֻ֑נִי תּ֥֝וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p></div><div class="heb-s"><p>חבלי רשעים עודני תורתך לא שכחתי׃</p></div></div>
+      <div class="texte-fr"><p>Les liens des méchants m’avaient enserré: je n’ai point oublié ta Loi.</p></div>
+    </div><div class="seif" id="v-62">
+      <span class="seif-num">Verset 62</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֲצֽוֹת־לַ֗יְלָה אָ֭קוּם לְהוֹד֣וֹת לָ֑ךְ עַ֝֗ל מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p></div><div class="heb-s"><p>חצות־לילה אקום להודות לך על משפטי צדקך׃</p></div></div>
+      <div class="texte-fr"><p>Au milieu de la nuit je me lève pour te rendre grâce, à cause de tes équitables jugements.</p></div>
+    </div><div class="seif" id="v-63">
+      <span class="seif-num">Verset 63</span>
+      <div class="texte-heb"><div class="heb-n"><p>חָבֵ֣ר אָ֭נִי לְכׇל־אֲשֶׁ֣ר יְרֵא֑וּךָ וּ֝לְשֹׁמְרֵ֗י פִּקּוּדֶֽיךָ׃</p></div><div class="heb-s"><p>חבר אני לכל־אשר יראוך ולשמרי פקודיך׃</p></div></div>
+      <div class="texte-fr"><p>Je suis l’allié de tous ceux qui te révèrent et qui pratiquent tes lois.</p></div>
+    </div><div class="seif" id="v-64">
+      <span class="seif-num">Verset 64</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַסְדְּךָ֣ יְ֭הֹוָה מָלְאָ֥ה הָאָ֗רֶץ חֻקֶּ֥יךָ לַמְּדֵֽנִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>חסדך יהוה מלאה הארץ חקיך למדני׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>De ta grâce, Éternel, la terre est remplie: enseigne-moi tes préceptes.</p></div>
+    </div><div class="seif" id="v-65">
+      <span class="seif-num">Verset 65</span>
+      <div class="texte-heb"><div class="heb-n"><p>ט֭וֹב עָשִׂ֣יתָ עִֽם־עַבְדְּךָ֑ יְ֝הֹוָ֗ה כִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>טוב עשית עם־עבדך יהוה כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Tu as traité avec bienveillance ton serviteur, ô Éternel, conformément à ta parole.</p></div>
+    </div><div class="seif" id="v-66">
+      <span class="seif-num">Verset 66</span>
+      <div class="texte-heb"><div class="heb-n"><p>ט֤וּב טַ֣עַם וָדַ֣עַת לַמְּדֵ֑נִי כִּ֖י בְמִצְוֺתֶ֣יךָ הֶאֱמָֽנְתִּי׃</p></div><div class="heb-s"><p>טוב טעם ודעת למדני כי במצותיך האמנתי׃</p></div></div>
+      <div class="texte-fr"><p>Enseigne-moi ces choses précieuses: le jugement et la science, car j’ai foi en tes commandements.</p></div>
+    </div><div class="seif" id="v-67">
+      <span class="seif-num">Verset 67</span>
+      <div class="texte-heb"><div class="heb-n"><p>טֶ֣רֶם אֶ֭עֱנֶה אֲנִ֣י שֹׁגֵ֑ג וְ֝עַתָּ֗ה אִמְרָתְךָ֥ שָׁמָֽרְתִּי׃</p></div><div class="heb-s"><p>טרם אענה אני שגג ועתה אמרתך שמרתי׃</p></div></div>
+      <div class="texte-fr"><p>Avant que je fusse humilié, je m’égarais; maintenant, je suis attentif à tes discours.</p></div>
+    </div><div class="seif" id="v-68">
+      <span class="seif-num">Verset 68</span>
+      <div class="texte-heb"><div class="heb-n"><p>טוֹב־אַתָּ֥ה וּמֵטִ֗יב לַמְּדֵ֥נִי חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>טוב־אתה ומטיב למדני חקיך׃</p></div></div>
+      <div class="texte-fr"><p>Tu es bon et tu exerces le bien, instruis-moi dans tes préceptes.</p></div>
+    </div><div class="seif" id="v-69">
+      <span class="seif-num">Verset 69</span>
+      <div class="texte-heb"><div class="heb-n"><p>טָפְל֬וּ עָלַ֣י שֶׁ֣קֶר זֵדִ֑ים אֲ֝נִ֗י בְּכׇל־לֵ֤ב&thinsp;<b>׀</b> אֶצֹּ֬ר פִּקּוּדֶֽיךָ׃</p></div><div class="heb-s"><p>טפלו עלי שקר זדים אני בכל־לב&thinsp;<b>׀</b> אצר פקודיך׃</p></div></div>
+      <div class="texte-fr"><p>Des orgueilleux inventent des mensonges contre moi, et moi, de tout cœur, j’observe tes ordonnances.</p></div>
+    </div><div class="seif" id="v-70">
+      <span class="seif-num">Verset 70</span>
+      <div class="texte-heb"><div class="heb-n"><p>טָפַ֣שׁ כַּחֵ֣לֶב לִבָּ֑ם אֲ֝נִ֗י תּוֹרָתְךָ֥ שִׁעֲשָֽׁעְתִּי׃</p></div><div class="heb-s"><p>טפש כחלב לבם אני תורתך שעשעתי׃</p></div></div>
+      <div class="texte-fr"><p>Leur cœur est bouché comme par la graisse: moi, je fais mes délices de ta Loi.</p></div>
+    </div><div class="seif" id="v-71">
+      <span class="seif-num">Verset 71</span>
+      <div class="texte-heb"><div class="heb-n"><p>טֽוֹב־לִ֥י כִי־עֻנֵּ֑יתִי לְ֝מַ֗עַן אֶלְמַ֥ד חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>טוב־לי כי־עניתי למען אלמד חקיך׃</p></div></div>
+      <div class="texte-fr"><p>C’est un avantage pour moi d’avoir connu la misère, pour mieux apprendre tes préceptes.</p></div>
+    </div><div class="seif" id="v-72">
+      <span class="seif-num">Verset 72</span>
+      <div class="texte-heb"><div class="heb-n"><p>טֽוֹב־לִ֥י תוֹרַת־פִּ֑יךָ מֵ֝אַלְפֵ֗י זָהָ֥ב וָכָֽסֶף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>טוב־לי תורת־פיך מאלפי זהב וכסף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Plus précieux est pour moi l’enseignement de ta bouche que des monceaux de pièces d’or et d’argent.</p></div>
+    </div><div class="seif" id="v-73">
+      <span class="seif-num">Verset 73</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָדֶ֣יךָ עָ֭שׂוּנִי וַֽיְכוֹנְנ֑וּנִי הֲ֝בִינֵ֗נִי וְאֶלְמְדָ֥ה מִצְוֺתֶֽיךָ׃</p></div><div class="heb-s"><p>ידיך עשוני ויכוננוני הבינני ואלמדה מצותיך׃</p></div></div>
+      <div class="texte-fr"><p>Ce sont tes mains qui m’ont formé et organisé, donne-moi l’intelligence pour que j’apprenne à connaître tes commandements.</p></div>
+    </div><div class="seif" id="v-74">
+      <span class="seif-num">Verset 74</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְ֭רֵאֶיךָ יִרְא֣וּנִי וְיִשְׂמָ֑חוּ כִּ֖י לִדְבָרְךָ֣ יִחָֽלְתִּי׃</p></div><div class="heb-s"><p>יראיך יראוני וישמחו כי לדברך יחלתי׃</p></div></div>
+      <div class="texte-fr"><p>Ceux qui te craignent, en me voyant, seront dans la joie, car j’espère en ta parole.</p></div>
+    </div><div class="seif" id="v-75">
+      <span class="seif-num">Verset 75</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָדַ֣עְתִּי יְ֭הֹוָה כִּי־צֶ֣דֶק מִשְׁפָּטֶ֑יךָ וֶ֝אֱמוּנָ֗ה עִנִּיתָֽנִי׃</p></div><div class="heb-s"><p>ידעתי יהוה כי־צדק משפטיך ואמונה עניתני׃</p></div></div>
+      <div class="texte-fr"><p>Je sais, ô Seigneur, que tes arrêts sont toute justice, et que c’est en équité que tu m’as humilié.</p></div>
+    </div><div class="seif" id="v-76">
+      <span class="seif-num">Verset 76</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִי־נָ֣א חַסְדְּךָ֣ לְנַחֲמֵ֑נִי כְּאִמְרָתְךָ֥ לְעַבְדֶּֽךָ׃</p></div><div class="heb-s"><p>יהי־נא חסדך לנחמני כאמרתך לעבדך׃</p></div></div>
+      <div class="texte-fr"><p>Que ta grâce s’applique donc à me consoler, comme tu l’avais promis à ton serviteur.</p></div>
+    </div><div class="seif" id="v-77">
+      <span class="seif-num">Verset 77</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְבֹא֣וּנִי רַחֲמֶ֣יךָ וְאֶחְיֶ֑ה כִּי־ת֥֝וֹרָתְךָ֗ שַׁעֲשֻׁעָֽי׃</p></div><div class="heb-s"><p>יבאוני רחמיך ואחיה כי־תורתך שעשעי׃</p></div></div>
+      <div class="texte-fr"><p>Que ta miséricorde s’étende sur moi et que je vive, puisque ta Loi fait mes délices.</p></div>
+    </div><div class="seif" id="v-78">
+      <span class="seif-num">Verset 78</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵבֹ֣שׁוּ זֵ֭דִים כִּי־שֶׁ֣קֶר עִוְּת֑וּנִי אֲ֝נִ֗י אָשִׂ֥יחַ בְּפִקּוּדֶֽיךָ׃</p></div><div class="heb-s"><p>יבשו זדים כי־שקר עותוני אני אשיח בפקודיך׃</p></div></div>
+      <div class="texte-fr"><p>Que les orgueilleux soient déçus, pour m’avoir maltraité gratuitement; moi, je méditerai tes préceptes.</p></div>
+    </div><div class="seif" id="v-79">
+      <span class="seif-num">Verset 79</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָשׁ֣וּבוּ לִ֣י יְרֵאֶ֑יךָ <span class="mam-kq"><span class="mam-kq-k">(וידעו)</span> <span class="mam-kq-q">[וְ֝יֹדְעֵ֗י]</span></span> עֵדֹתֶֽיךָ׃</p></div><div class="heb-s"><p>ישובו לי יראיך <span class="mam-kq"><span class="mam-kq-k">(וידעו)</span> <span class="mam-kq-q">[וידעי]</span></span> עדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Que tes adorateurs reviennent à moi, et ceux qui connaissent tes vérités.</p></div>
+    </div><div class="seif" id="v-80">
+      <span class="seif-num">Verset 80</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִי־לִבִּ֣י תָמִ֣ים בְּחֻקֶּ֑יךָ לְ֝מַ֗עַן לֹ֣א אֵבֽוֹשׁ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יהי־לבי תמים בחקיך למען לא אבוש׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Que mon cœur soit sincèrement attaché à tes lois, afin que je n’aie point à rougir.</p></div>
+    </div><div class="seif" id="v-81">
+      <span class="seif-num">Verset 81</span>
+      <div class="texte-heb"><div class="heb-n"><p>כָּלְתָ֣ה לִתְשׁוּעָתְךָ֣ נַפְשִׁ֑י לִדְבָרְךָ֥ יִחָֽלְתִּי׃</p></div><div class="heb-s"><p>כלתה לתשועתך נפשי לדברך יחלתי׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme languit après ton secours, c’est en ta parole que je mets mon espoir.</p></div>
+    </div><div class="seif" id="v-82">
+      <span class="seif-num">Verset 82</span>
+      <div class="texte-heb"><div class="heb-n"><p>כָּל֣וּ עֵ֭ינַי לְאִמְרָתֶ֑ךָ לֵ֝אמֹ֗ר מָתַ֥י תְּֽנַחֲמֵֽנִי׃</p></div><div class="heb-s"><p>כלו עיני לאמרתך לאמר מתי תנחמני׃</p></div></div>
+      <div class="texte-fr"><p>Mes yeux se consument dans l’attente de ta parole, tandis que je dis: "Quand me consoleras-tu?"</p></div>
+    </div><div class="seif" id="v-83">
+      <span class="seif-num">Verset 83</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הָ֭יִיתִי כְּנֹ֣אד בְּקִיט֑וֹר חֻ֝קֶּ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃</p></div><div class="heb-s"><p>כי־הייתי כנאד בקיטור חקיך לא שכחתי׃</p></div></div>
+      <div class="texte-fr"><p>Car je suis comme une outre dans des flots de fumée: tes préceptes, je ne les ai point oubliés.</p></div>
+    </div><div class="seif" id="v-84">
+      <span class="seif-num">Verset 84</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּמָּ֥ה יְמֵֽי־עַבְדֶּ֑ךָ מָתַ֬י תַּעֲשֶׂ֖ה בְרֹדְפַ֣י מִשְׁפָּֽט׃</p></div><div class="heb-s"><p>כמה ימי־עבדך מתי תעשה ברדפי משפט׃</p></div></div>
+      <div class="texte-fr"><p>Que dureront les jours de ton serviteur? Quand feras-tu justice de mes persécuteurs?</p></div>
+    </div><div class="seif" id="v-85">
+      <span class="seif-num">Verset 85</span>
+      <div class="texte-heb"><div class="heb-n"><p>כָּרוּ־לִ֣י זֵדִ֣ים שִׁיח֑וֹת אֲ֝שֶׁ֗ר לֹ֣א כְתוֹרָתֶֽךָ׃</p></div><div class="heb-s"><p>כרו־לי זדים שיחות אשר לא כתורתך׃</p></div></div>
+      <div class="texte-fr"><p>Des pervers m’ont creusé des fosses, au mépris de ta Loi.</p></div>
+    </div><div class="seif" id="v-86">
+      <span class="seif-num">Verset 86</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־מִצְוֺתֶ֥יךָ אֱמוּנָ֑ה שֶׁ֖קֶר רְדָפ֣וּנִי עׇזְרֵֽנִי׃</p></div><div class="heb-s"><p>כל־מצותיך אמונה שקר רדפוני עזרני׃</p></div></div>
+      <div class="texte-fr"><p>Tous tes commandements sont loyauté parfaite, eux me pourchassent sans motif: viens à mon aide.</p></div>
+    </div><div class="seif" id="v-87">
+      <span class="seif-num">Verset 87</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֭מְעַט כִּלּ֣וּנִי בָאָ֑רֶץ וַ֝אֲנִ֗י לֹא־עָזַ֥בְתִּי פִקֻּדֶֽיךָ׃</p></div><div class="heb-s"><p>כמעט כלוני בארץ ואני לא־עזבתי פקדיך׃</p></div></div>
+      <div class="texte-fr"><p>Peu s’en faut qu’ils ne m’aient anéanti sur terre, alors que moi, je n’ai point délaissé tes préceptes.</p></div>
+    </div><div class="seif" id="v-88">
+      <span class="seif-num">Verset 88</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּחַסְדְּךָ֥ חַיֵּ֑נִי וְ֝אֶשְׁמְרָ֗ה עֵד֥וּת פִּֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כחסדך חיני ואשמרה עדות פיך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Fidèle à ta bonté, conserve-moi en vie, et je respecterai le témoignage de ta bouche.</p></div>
+    </div><div class="seif" id="v-89">
+      <span class="seif-num">Verset 89</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְעוֹלָ֥ם יְהֹוָ֑ה דְּ֝בָרְךָ֗ נִצָּ֥ב בַּשָּׁמָֽיִם׃</p></div><div class="heb-s"><p>לעולם יהוה דברך נצב בשמים׃</p></div></div>
+      <div class="texte-fr"><p>Pour l’éternité, Seigneur, ta parole demeure immuable dans les cieux.</p></div>
+    </div><div class="seif" id="v-90">
+      <span class="seif-num">Verset 90</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדֹ֣ר וָ֭דֹר אֱמוּנָתֶ֑ךָ כּוֹנַ֥נְתָּֽ אֶ֝֗רֶץ וַֽתַּעֲמֹֽד׃</p></div><div class="heb-s"><p>לדר ודר אמונתך כוננת ארץ ותעמד׃</p></div></div>
+      <div class="texte-fr"><p>D’âge en âge dure ta fidélité: tu as affermi la terre, et elle est inébranlable.</p></div>
+    </div><div class="seif" id="v-91">
+      <span class="seif-num">Verset 91</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְֽ֭מִשְׁפָּטֶיךָ עָמְד֣וּ הַיּ֑וֹם כִּ֖י הַכֹּ֣ל עֲבָדֶֽיךָ׃</p></div><div class="heb-s"><p>למשפטיך עמדו היום כי הכל עבדיך׃</p></div></div>
+      <div class="texte-fr"><p>Selon tes lois, les êtres subsistent aujourd’hui, car ils sont tous tes serviteurs.</p></div>
+    </div><div class="seif" id="v-92">
+      <span class="seif-num">Verset 92</span>
+      <div class="texte-heb"><div class="heb-n"><p>לוּלֵ֣י ת֭וֹרָתְךָ שַׁעֲשֻׁעָ֑י אָ֝֗ז אָבַ֥דְתִּי בְעׇנְיִֽי׃</p></div><div class="heb-s"><p>לולי תורתך שעשעי אז אבדתי בעניי׃</p></div></div>
+      <div class="texte-fr"><p>Si ta Loi n’avait fait mes délices, j’aurais succombé dans ma misère.</p></div>
+    </div><div class="seif" id="v-93">
+      <span class="seif-num">Verset 93</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭עוֹלָם לֹא־אֶשְׁכַּ֣ח פִּקּוּדֶ֑יךָ כִּ֥י בָ֝֗ם חִיִּיתָֽנִי׃</p></div><div class="heb-s"><p>לעולם לא־אשכח פקודיך כי בם חייתני׃</p></div></div>
+      <div class="texte-fr"><p>Jamais je n’oublierai tes préceptes, car par eux tu m’assures la vie.</p></div>
+    </div><div class="seif" id="v-94">
+      <span class="seif-num">Verset 94</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְֽךָ־אֲ֭נִי הוֹשִׁיעֵ֑נִי כִּ֖י פִקּוּדֶ֣יךָ דָרָֽשְׁתִּי׃</p></div><div class="heb-s"><p>לך־אני הושיעני כי פקודיך דרשתי׃</p></div></div>
+      <div class="texte-fr"><p>Je suis à toi, prête-moi secours, car je m’enquiers de tes ordres.</p></div>
+    </div><div class="seif" id="v-95">
+      <span class="seif-num">Verset 95</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִ֤י קִוּ֣וּ רְשָׁעִ֣ים לְאַבְּדֵ֑נִי עֵ֝דֹתֶ֗יךָ אֶתְבּוֹנָֽן׃</p></div><div class="heb-s"><p>לי קוו רשעים לאבדני עדתיך אתבונן׃</p></div></div>
+      <div class="texte-fr"><p>Des méchants me guettent pour me perdre: je cherche à pénétrer le sens de tes prescriptions.</p></div>
+    </div><div class="seif" id="v-96">
+      <span class="seif-num">Verset 96</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְֽכׇל־תִּ֭כְלָה רָאִ֣יתִי קֵ֑ץ רְחָבָ֖ה מִצְוָתְךָ֣ מְאֹֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לכל־תכלה ראיתי קץ רחבה מצותך מאד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>A tout bien j’ai vu des limites: ta Loi est infiniment vaste.</p></div>
+    </div><div class="seif" id="v-97">
+      <span class="seif-num">Verset 97</span>
+      <div class="texte-heb"><div class="heb-n"><p>מָה־אָהַ֥בְתִּי תוֹרָתֶ֑ךָ כׇּל־הַ֝יּ֗וֹם הִ֣יא שִׂיחָתִֽי׃</p></div><div class="heb-s"><p>מה־אהבתי תורתך כל־היום היא שיחתי׃</p></div></div>
+      <div class="texte-fr"><p>Combien j’aime ta Loi! Tout le temps elle est l’objet de mes méditations.</p></div>
+    </div><div class="seif" id="v-98">
+      <span class="seif-num">Verset 98</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵֽ֭אֹיְבַי תְּחַכְּמֵ֣נִי מִצְוֺתֶ֑ךָ כִּ֖י לְעוֹלָ֣ם הִיא־לִֽי׃</p></div><div class="heb-s"><p>מאיבי תחכמני מצותך כי לעולם היא־לי׃</p></div></div>
+      <div class="texte-fr"><p>Tes commandements me rendent plus sage que mes ennemis, car ils sont pour moi un bien inépuisable.</p></div>
+    </div><div class="seif" id="v-99">
+      <span class="seif-num">Verset 99</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִכׇּל־מְלַמְּדַ֥י הִשְׂכַּ֑לְתִּי כִּ֥י עֵ֝דְוֺתֶ֗יךָ שִׂ֣יחָה לִֽי׃</p></div><div class="heb-s"><p>מכל־מלמדי השכלתי כי עדותיך שיחה לי׃</p></div></div>
+      <div class="texte-fr"><p>Je suis plus avisé que tous mes précepteurs, car tes vérités sont le thème de mes réflexions.</p></div>
+    </div><div class="seif" id="v-100">
+      <span class="seif-num">Verset 100</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִזְּקֵנִ֥ים אֶתְבּוֹנָ֑ן כִּ֖י פִקּוּדֶ֣יךָ נָצָֽרְתִּי׃</p></div><div class="heb-s"><p>מזקנים אתבונן כי פקודיך נצרתי׃</p></div></div>
+      <div class="texte-fr"><p>J’ai plus d’expérience que les vieillards, car je respecte tes préceptes.</p></div>
+    </div><div class="seif" id="v-101">
+      <span class="seif-num">Verset 101</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִכׇּל־אֹ֣רַח רָ֭ע כָּלִ֣אתִי רַגְלָ֑י לְ֝מַ֗עַן אֶשְׁמֹ֥ר דְּבָרֶֽךָ׃</p></div><div class="heb-s"><p>מכל־ארח רע כלאתי רגלי למען אשמר דברך׃</p></div></div>
+      <div class="texte-fr"><p>J’ai tenu mes pas éloignés de tout mauvais chemin, en vue d’observer tes paroles.</p></div>
+    </div><div class="seif" id="v-102">
+      <span class="seif-num">Verset 102</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִמִּשְׁפָּטֶ֥יךָ לֹא־סָ֑רְתִּי כִּי־אַ֝תָּ֗ה הוֹרֵתָֽנִי׃</p></div><div class="heb-s"><p>ממשפטיך לא־סרתי כי־אתה הורתני׃</p></div></div>
+      <div class="texte-fr"><p>Je n’ai point dévié de tes règles, car c’est toi qui m’as instruit.</p></div>
+    </div><div class="seif" id="v-103">
+      <span class="seif-num">Verset 103</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־נִּמְלְצ֣וּ לְ֭חִכִּי אִמְרָתֶ֗ךָ מִדְּבַ֥שׁ לְפִֽי׃</p></div><div class="heb-s"><p>מה־נמלצו לחכי אמרתך מדבש לפי׃</p></div></div>
+      <div class="texte-fr"><p>Que tes paroles sont douces à mon palais! Le miel l’est moins à ma bouche.</p></div>
+    </div><div class="seif" id="v-104">
+      <span class="seif-num">Verset 104</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִפִּקּוּדֶ֥יךָ אֶתְבּוֹנָ֑ן עַל־כֵּ֝֗ן שָׂנֵ֤אתִי&thinsp;<b>׀</b> כׇּל־אֹ֬רַח שָֽׁקֶר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>מפקודיך אתבונן על־כן שנאתי&thinsp;<b>׀</b> כל־ארח שקר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>J’ai puisé mon savoir dans tes préceptes, c’est pourquoi je hais toute voie mensongère.</p></div>
+    </div><div class="seif" id="v-105">
+      <span class="seif-num">Verset 105</span>
+      <div class="texte-heb"><div class="heb-n"><p>נֵר־לְרַגְלִ֥י דְבָרֶ֑ךָ וְ֝א֗וֹר לִנְתִיבָתִֽי׃</p></div><div class="heb-s"><p>נר־לרגלי דברך ואור לנתיבתי׃</p></div></div>
+      <div class="texte-fr"><p>Ta parole est un flambeau qui éclaire mes pas, une lumière qui rayonne sur ma route.</p></div>
+    </div><div class="seif" id="v-106">
+      <span class="seif-num">Verset 106</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִשְׁבַּ֥עְתִּי וָאֲקַיֵּ֑מָה לִ֝שְׁמֹ֗ר מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p></div><div class="heb-s"><p>נשבעתי ואקימה לשמר משפטי צדקך׃</p></div></div>
+      <div class="texte-fr"><p>J’ai fait le serment, et je le tiendrai, d’observer les règles de ta justice.</p></div>
+    </div><div class="seif" id="v-107">
+      <span class="seif-num">Verset 107</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַעֲנֵ֥יתִי עַד־מְאֹ֑ד יְ֝הֹוָ֗ה חַיֵּ֥נִי כִדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>נעניתי עד־מאד יהוה חיני כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Je suis extrêmement accablé, Éternel, conserve-moi en vie selon ta parole.</p></div>
+    </div><div class="seif" id="v-108">
+      <span class="seif-num">Verset 108</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִדְב֣וֹת פִּ֭י רְצֵה־נָ֣א יְהֹוָ֑ה וּֽמִשְׁפָּטֶ֥יךָ לַמְּדֵֽנִי׃</p></div><div class="heb-s"><p>נדבות פי רצה־נא יהוה ומשפטיך למדני׃</p></div></div>
+      <div class="texte-fr"><p>Agrée de grâce, Seigneur, les vœux de ma bouche, et enseigne-moi tes lois.</p></div>
+    </div><div class="seif" id="v-109">
+      <span class="seif-num">Verset 109</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַפְשִׁ֣י בְכַפִּ֣י תָמִ֑יד וְ֝ת֥וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p></div><div class="heb-s"><p>נפשי בכפי תמיד ותורתך לא שכחתי׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme court sans cesse des dangers, et je n’ai point oublié ta loi.</p></div>
+    </div><div class="seif" id="v-110">
+      <span class="seif-num">Verset 110</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָתְנ֬וּ רְשָׁעִ֣ים פַּ֣ח לִ֑י וּ֝מִפִּקּוּדֶ֗יךָ לֹ֣א תָעִֽיתִי׃</p></div><div class="heb-s"><p>נתנו רשעים פח לי ומפקודיך לא תעיתי׃</p></div></div>
+      <div class="texte-fr"><p>Des méchants me dressent des pièges, pourtant je ne dévie point de tes préceptes.</p></div>
+    </div><div class="seif" id="v-111">
+      <span class="seif-num">Verset 111</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָחַ֣לְתִּי עֵדְוֺתֶ֣יךָ לְעוֹלָ֑ם כִּֽי־שְׂשׂ֖וֹן לִבִּ֣י הֵֽמָּה׃</p></div><div class="heb-s"><p>נחלתי עדותיך לעולם כי־ששון לבי המה׃</p></div></div>
+      <div class="texte-fr"><p>Je reste pour toujours en possession de tes vérités, car elles sont la joie de mon cœur.</p></div>
+    </div><div class="seif" id="v-112">
+      <span class="seif-num">Verset 112</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָטִ֣יתִי לִ֭בִּי לַעֲשׂ֥וֹת חֻקֶּ֗יךָ לְעוֹלָ֥ם עֵֽקֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>נטיתי לבי לעשות חקיך לעולם עקב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>J’ai incliné mon cœur à accomplir tes lois à tout jamais, jusqu’à la fin dernière.</p></div>
+    </div><div class="seif" id="v-113">
+      <span class="seif-num">Verset 113</span>
+      <div class="texte-heb"><div class="heb-n"><p>סֵעֲפִ֥ים שָׂנֵ֑אתִי וְֽתוֹרָתְךָ֥ אָהָֽבְתִּי׃</p></div><div class="heb-s"><p>סעפים שנאתי ותורתך אהבתי׃</p></div></div>
+      <div class="texte-fr"><p>Je hais les gens à double face, mais ta Loi, je l’aime.</p></div>
+    </div><div class="seif" id="v-114">
+      <span class="seif-num">Verset 114</span>
+      <div class="texte-heb"><div class="heb-n"><p>סִתְרִ֣י וּמָגִנִּ֣י אָ֑תָּה לִדְבָרְךָ֥ יִחָֽלְתִּי׃</p></div><div class="heb-s"><p>סתרי ומגני אתה לדברך יחלתי׃</p></div></div>
+      <div class="texte-fr"><p>Tu es mon abri et mon bouclier, j’espère en ta parole.</p></div>
+    </div><div class="seif" id="v-115">
+      <span class="seif-num">Verset 115</span>
+      <div class="texte-heb"><div class="heb-n"><p>סוּרוּ־מִמֶּ֥נִּי מְרֵעִ֑ים וְ֝אֶצְּרָ֗ה מִצְוֺ֥ת אֱלֹהָֽי׃</p></div><div class="heb-s"><p>סורו־ממני מרעים ואצרה מצות אלהי׃</p></div></div>
+      <div class="texte-fr"><p>Loin de moi, ô malfaiteurs! Je veux observer les commandements de mon Dieu.</p></div>
+    </div><div class="seif" id="v-116">
+      <span class="seif-num">Verset 116</span>
+      <div class="texte-heb"><div class="heb-n"><p>סׇמְכֵ֣נִי כְאִמְרָתְךָ֣ וְאֶחְיֶ֑ה וְאַל־תְּ֝בִישֵׁ֗נִי מִשִּׂבְרִֽי׃</p></div><div class="heb-s"><p>סמכני כאמרתך ואחיה ואל־תבישני משברי׃</p></div></div>
+      <div class="texte-fr"><p>Soutiens-moi selon ta promesse pour que je vive, et ne laisse pas mon espoir se changer en déception.</p></div>
+    </div><div class="seif" id="v-117">
+      <span class="seif-num">Verset 117</span>
+      <div class="texte-heb"><div class="heb-n"><p>סְעָדֵ֥נִי וְאִוָּשֵׁ֑עָה וְאֶשְׁעָ֖ה בְחֻקֶּ֣יךָ תָמִֽיד׃</p></div><div class="heb-s"><p>סעדני ואושעה ואשעה בחקיך תמיד׃</p></div></div>
+      <div class="texte-fr"><p>Accorde-moi ton appui pour que je sois sauvé, je me tournerai sans cesse vers tes lois.</p></div>
+    </div><div class="seif" id="v-118">
+      <span class="seif-num">Verset 118</span>
+      <div class="texte-heb"><div class="heb-n"><p>סָ֭לִיתָ כׇּל־שׁוֹגִ֣ים מֵחֻקֶּ֑יךָ כִּי־שֶׁ֝֗קֶר תַּרְמִיתָֽם׃</p></div><div class="heb-s"><p>סלית כל־שוגים מחקיך כי־שקר תרמיתם׃</p></div></div>
+      <div class="texte-fr"><p>Tu foules aux pieds ceux qui errent loin de tes préceptes, car leurs ruses habiles ne sont que mensonge.</p></div>
+    </div><div class="seif" id="v-119">
+      <span class="seif-num">Verset 119</span>
+      <div class="texte-heb"><div class="heb-n"><p>סִגִ֗ים הִשְׁבַּ֥תָּ כׇל־רִשְׁעֵי־אָ֑רֶץ לָ֝כֵ֗ן אָהַ֥בְתִּי עֵדֹתֶֽיךָ׃</p></div><div class="heb-s"><p>סגים השבת כל־רשעי־ארץ לכן אהבתי עדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Comme des scories, tu élimines tous les méchants sur terre, c’est pourquoi j’aime tes vérités.</p></div>
+    </div><div class="seif" id="v-120">
+      <span class="seif-num">Verset 120</span>
+      <div class="texte-heb"><div class="heb-n"><p>סָמַ֣ר מִפַּחְדְּךָ֣ בְשָׂרִ֑י וּֽמִמִּשְׁפָּטֶ֥יךָ יָרֵֽאתִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>סמר מפחדך בשרי וממשפטיך יראתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ma chair frissonne de la terreur que tu inspires, et je redoute tes jugements.</p></div>
+    </div><div class="seif" id="v-121">
+      <span class="seif-num">Verset 121</span>
+      <div class="texte-heb"><div class="heb-n"><p>עָ֭שִׂיתִי מִשְׁפָּ֣ט וָצֶ֑דֶק בַּל־תַּ֝נִּיחֵ֗נִי לְעֹשְׁקָֽי׃</p></div><div class="heb-s"><p>עשיתי משפט וצדק בל־תניחני לעשקי׃</p></div></div>
+      <div class="texte-fr"><p>J’ai pratiqué la justice et l’équité, ne m’abandonne pas à mes oppresseurs.</p></div>
+    </div><div class="seif" id="v-122">
+      <span class="seif-num">Verset 122</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲרֹ֣ב עַבְדְּךָ֣ לְט֑וֹב אַֽל־יַעַשְׁקֻ֥נִי זֵדִֽים׃</p></div><div class="heb-s"><p>ערב עבדך לטוב אל־יעשקני זדים׃</p></div></div>
+      <div class="texte-fr"><p>Interviens pour le bonheur de ton serviteur, que des arrogants ne m’accablent point.</p></div>
+    </div><div class="seif" id="v-123">
+      <span class="seif-num">Verset 123</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֵ֭ינַי כָּל֣וּ לִישׁוּעָתֶ֑ךָ וּלְאִמְרַ֥ת צִדְקֶֽךָ׃</p></div><div class="heb-s"><p>עיני כלו לישועתך ולאמרת צדקך׃</p></div></div>
+      <div class="texte-fr"><p>Mes yeux languissent après ton secours, et après ta parole de salut.</p></div>
+    </div><div class="seif" id="v-124">
+      <span class="seif-num">Verset 124</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲשֵׂ֖ה עִם־עַבְדְּךָ֥ כְחַסְדֶּ֗ךָ וְחֻקֶּ֥יךָ לַמְּדֵֽנִי׃</p></div><div class="heb-s"><p>עשה עם־עבדך כחסדך וחקיך למדני׃</p></div></div>
+      <div class="texte-fr"><p>Traite ton serviteur selon ta grâce, et enseigne-moi tes préceptes.</p></div>
+    </div><div class="seif" id="v-125">
+      <span class="seif-num">Verset 125</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַבְדְּךָ־אָ֥נִי הֲבִינֵ֑נִי וְ֝אֵדְעָ֗ה עֵדֹתֶֽיךָ׃</p></div><div class="heb-s"><p>עבדך־אני הבינני ואדעה עדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Je suis ton serviteur, donne-moi la sagacité, pour que je comprenne tes vérités.</p></div>
+    </div><div class="seif" id="v-126">
+      <span class="seif-num">Verset 126</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֵ֭ת לַעֲשׂ֣וֹת לַיהֹוָ֑ה הֵ֝פֵ֗רוּ תּוֹרָתֶֽךָ׃</p></div><div class="heb-s"><p>עת לעשות ליהוה הפרו תורתך׃</p></div></div>
+      <div class="texte-fr"><p>Le temps est venu d’agir pour l’Éternel: on a violé ta Loi.</p></div>
+    </div><div class="seif" id="v-127">
+      <span class="seif-num">Verset 127</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֭ן אָהַ֣בְתִּי מִצְוֺתֶ֑יךָ מִזָּהָ֥ב וּמִפָּֽז׃</p></div><div class="heb-s"><p>על־כן אהבתי מצותיך מזהב ומפז׃</p></div></div>
+      <div class="texte-fr"><p>C’est pourquoi j’aime tes commandements, plus que l’or et le métal fin.</p></div>
+    </div><div class="seif" id="v-128">
+      <span class="seif-num">Verset 128</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֤ן&thinsp;<b>׀</b> כׇּל־פִּקּ֣וּדֵי כֹ֣ל יִשָּׁ֑רְתִּי כׇּל־אֹ֖רַח שֶׁ֣קֶר שָׂנֵֽאתִי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>על־כן&thinsp;<b>׀</b> כל־פקודי כל ישרתי כל־ארח שקר שנאתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>C’est pourquoi je reconnais la parfaite droiture de tous [tes] préceptes, et déteste toute voie mensongère.</p></div>
+    </div><div class="seif" id="v-129">
+      <span class="seif-num">Verset 129</span>
+      <div class="texte-heb"><div class="heb-n"><p>פְּלָא֥וֹת עֵדְוֺתֶ֑יךָ עַל־כֵּ֝֗ן נְצָרָ֥תַם נַפְשִֽׁי׃</p></div><div class="heb-s"><p>פלאות עדותיך על־כן נצרתם נפשי׃</p></div></div>
+      <div class="texte-fr"><p>Merveilleux sont tes statuts, aussi mon âme les garde-t-elle avec soin.</p></div>
+    </div><div class="seif" id="v-130">
+      <span class="seif-num">Verset 130</span>
+      <div class="texte-heb"><div class="heb-n"><p>פֵּ֖תַח דְּבָרֶ֥יךָ יָאִ֗יר מֵבִ֥ין פְּתָיִֽים׃</p></div><div class="heb-s"><p>פתח דבריך יאיר מבין פתיים׃</p></div></div>
+      <div class="texte-fr"><p>La révélation de tes paroles projette de la lumière, donne de l’intelligence aux simples.</p></div>
+    </div><div class="seif" id="v-131">
+      <span class="seif-num">Verset 131</span>
+      <div class="texte-heb"><div class="heb-n"><p>פִּֽי־פָ֭עַרְתִּי וָאֶשְׁאָ֑פָה כִּ֖י לְמִצְוֺתֶ֣יךָ יָאָֽבְתִּי׃</p></div><div class="heb-s"><p>פי־פערתי ואשאפה כי למצותיך יאבתי׃</p></div></div>
+      <div class="texte-fr"><p>J’ouvre largement la bouche pour aspirer, car j’ai la passion de tes commandements.</p></div>
+    </div><div class="seif" id="v-132">
+      <span class="seif-num">Verset 132</span>
+      <div class="texte-heb"><div class="heb-n"><p>פְּנֵה־אֵלַ֥י וְחׇנֵּ֑נִי כְּ֝מִשְׁפָּ֗ט לְאֹהֲבֵ֥י שְׁמֶֽךָ׃</p></div><div class="heb-s"><p>פנה־אלי וחנני כמשפט לאהבי שמך׃</p></div></div>
+      <div class="texte-fr"><p>Tourne-toi vers moi et sois-moi propice, comme tu le fais pour ceux qui aiment ton nom.</p></div>
+    </div><div class="seif" id="v-133">
+      <span class="seif-num">Verset 133</span>
+      <div class="texte-heb"><div class="heb-n"><p>פְּ֭עָמַי הָכֵ֣ן בְּאִמְרָתֶ֑ךָ וְֽאַל־תַּשְׁלֶט־בִּ֥י כׇל־אָֽוֶן׃</p></div><div class="heb-s"><p>פעמי הכן באמרתך ואל־תשלט־בי כל־און׃</p></div></div>
+      <div class="texte-fr"><p>Affermis mes pas par tes discours, qu’aucune mauvaise passion ne prenne le dessus sur moi.</p></div>
+    </div><div class="seif" id="v-134">
+      <span class="seif-num">Verset 134</span>
+      <div class="texte-heb"><div class="heb-n"><p>פְּ֭דֵנִי מֵעֹ֣שֶׁק אָדָ֑ם וְ֝אֶשְׁמְרָ֗ה פִּקּוּדֶֽיךָ׃</p></div><div class="heb-s"><p>פדני מעשק אדם ואשמרה פקודיך׃</p></div></div>
+      <div class="texte-fr"><p>Délivre-moi de l’oppression des hommes, pour que je puisse observer tes préceptes.</p></div>
+    </div><div class="seif" id="v-135">
+      <span class="seif-num">Verset 135</span>
+      <div class="texte-heb"><div class="heb-n"><p>פָּ֭נֶיךָ הָאֵ֣ר בְּעַבְדֶּ֑ךָ וְ֝לַמְּדֵ֗נִי אֶת־חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>פניך האר בעבדך ולמדני את־חקיך׃</p></div></div>
+      <div class="texte-fr"><p>Fais luire ta face sur ton serviteur, et enseigne-moi tes préceptes.</p></div>
+    </div><div class="seif" id="v-136">
+      <span class="seif-num">Verset 136</span>
+      <div class="texte-heb"><div class="heb-n"><p>פַּלְגֵי־מַ֭יִם יָרְד֣וּ עֵינָ֑י עַ֝֗ל לֹא־שָׁמְר֥וּ תוֹרָתֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>פלגי־מים ירדו עיני על לא־שמרו תורתך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Mes yeux ont versé des torrents de larmes, parce qu’on n’observe pas ta Loi.</p></div>
+    </div><div class="seif" id="v-137">
+      <span class="seif-num">Verset 137</span>
+      <div class="texte-heb"><div class="heb-n"><p>צַדִּ֣יק אַתָּ֣ה יְהֹוָ֑ה וְ֝יָשָׁ֗ר מִשְׁפָּטֶֽיךָ׃</p></div><div class="heb-s"><p>צדיק אתה יהוה וישר משפטיך׃</p></div></div>
+      <div class="texte-fr"><p>Tu es juste, ô Seigneur, et équitables sont tes jugements.</p></div>
+    </div><div class="seif" id="v-138">
+      <span class="seif-num">Verset 138</span>
+      <div class="texte-heb"><div class="heb-n"><p>צִ֭וִּיתָ צֶ֣דֶק עֵדֹתֶ֑יךָ וֶאֱמוּנָ֥ה מְאֹֽד׃</p></div><div class="heb-s"><p>צוית צדק עדתיך ואמונה מאד׃</p></div></div>
+      <div class="texte-fr"><p>Tu as imposé tes justes ordonnances: elles sont tout à fait infaillibles.</p></div>
+    </div><div class="seif" id="v-139">
+      <span class="seif-num">Verset 139</span>
+      <div class="texte-heb"><div class="heb-n"><p>צִמְּתַ֥תְנִי קִנְאָתִ֑י כִּֽי־שָׁכְח֖וּ דְבָרֶ֣יךָ צָרָֽי׃</p></div><div class="heb-s"><p>צמתתני קנאתי כי־שכחו דבריך צרי׃</p></div></div>
+      <div class="texte-fr"><p>Je suis consumé par mon zèle jaloux, car mes adversaires oublient tes paroles.</p></div>
+    </div><div class="seif" id="v-140">
+      <span class="seif-num">Verset 140</span>
+      <div class="texte-heb"><div class="heb-n"><p>צְרוּפָ֖ה אִמְרָתְךָ֥ מְאֹ֗ד וְֽעַבְדְּךָ֥ אֲהֵבָֽהּ׃</p></div><div class="heb-s"><p>צרופה אמרתך מאד ועבדך אהבה׃</p></div></div>
+      <div class="texte-fr"><p>Ta parole est infiniment épurée, elle est chère à ton serviteur.</p></div>
+    </div><div class="seif" id="v-141">
+      <span class="seif-num">Verset 141</span>
+      <div class="texte-heb"><div class="heb-n"><p>צָעִ֣יר אָנֹכִ֣י וְנִבְזֶ֑ה פִּ֝קֻּדֶ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃</p></div><div class="heb-s"><p>צעיר אנכי ונבזה פקדיך לא שכחתי׃</p></div></div>
+      <div class="texte-fr"><p>Je suis chétif et méprisé: tes préceptes, je ne les ai point oubliés.</p></div>
+    </div><div class="seif" id="v-142">
+      <span class="seif-num">Verset 142</span>
+      <div class="texte-heb"><div class="heb-n"><p>צִדְקָתְךָ֣ צֶ֣דֶק לְעוֹלָ֑ם וְֽתוֹרָתְךָ֥ אֱמֶֽת׃</p></div><div class="heb-s"><p>צדקתך צדק לעולם ותורתך אמת׃</p></div></div>
+      <div class="texte-fr"><p>Ta justice est éternellement équitable, et ta Loi est vérité.</p></div>
+    </div><div class="seif" id="v-143">
+      <span class="seif-num">Verset 143</span>
+      <div class="texte-heb"><div class="heb-n"><p>צַר־וּמָצ֥וֹק מְצָא֑וּנִי מִ֝צְוֺתֶ֗יךָ שַׁעֲשֻׁעָֽי׃</p></div><div class="heb-s"><p>צר־ומצוק מצאוני מצותיך שעשעי׃</p></div></div>
+      <div class="texte-fr"><p>La détresse et l’angoisse m’ont atteint: tes commandements sont mes délices.</p></div>
+    </div><div class="seif" id="v-144">
+      <span class="seif-num">Verset 144</span>
+      <div class="texte-heb"><div class="heb-n"><p>צֶ֖דֶק עֵדְוֺתֶ֥יךָ לְעוֹלָ֗ם הֲבִינֵ֥נִי וְאֶחְיֶֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>צדק עדותיך לעולם הבינני ואחיה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Tes statuts sont à jamais équitables, permets-moi de les comprendre, pour que je vive.</p></div>
+    </div><div class="seif" id="v-145">
+      <span class="seif-num">Verset 145</span>
+      <div class="texte-heb"><div class="heb-n"><p>קָרָ֣אתִי בְכׇל־לֵ֭ב עֲנֵ֥נִי יְהֹוָ֗ה חֻקֶּ֥יךָ אֶצֹּֽרָה׃</p></div><div class="heb-s"><p>קראתי בכל־לב ענני יהוה חקיך אצרה׃</p></div></div>
+      <div class="texte-fr"><p>Je t’invoque de tout cœur, exauce-moi, Seigneur! Je veux observer tes préceptes.</p></div>
+    </div><div class="seif" id="v-146">
+      <span class="seif-num">Verset 146</span>
+      <div class="texte-heb"><div class="heb-n"><p>קְרָאתִ֥יךָ הוֹשִׁיעֵ֑נִי וְ֝אֶשְׁמְרָ֗ה עֵדֹתֶֽיךָ׃</p></div><div class="heb-s"><p>קראתיך הושיעני ואשמרה עדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Je t’appelle, viens à mon secours, et je garderai tes statuts.</p></div>
+    </div><div class="seif" id="v-147">
+      <span class="seif-num">Verset 147</span>
+      <div class="texte-heb"><div class="heb-n"><p>קִדַּ֣מְתִּי בַ֭נֶּשֶׁף וָאֲשַׁוֵּ֑עָה <span class="mam-kq"><span class="mam-kq-k">(לדבריך)</span> <span class="mam-kq-q">[לִדְבָרְךָ֥]</span></span> יִחָֽלְתִּי׃</p></div><div class="heb-s"><p>קדמתי בנשף ואשועה <span class="mam-kq"><span class="mam-kq-k">(לדבריך)</span> <span class="mam-kq-q">[לדברך]</span></span> יחלתי׃</p></div></div>
+      <div class="texte-fr"><p>Dès l’aurore je m’empresse d’implorer, j’espère en ta parole.</p></div>
+    </div><div class="seif" id="v-148">
+      <span class="seif-num">Verset 148</span>
+      <div class="texte-heb"><div class="heb-n"><p>קִדְּמ֣וּ עֵ֭ינַי אַשְׁמֻר֑וֹת לָ֝שִׂ֗יחַ בְּאִמְרָתֶֽךָ׃</p></div><div class="heb-s"><p>קדמו עיני אשמרות לשיח באמרתך׃</p></div></div>
+      <div class="texte-fr"><p>Mes yeux devancent les veilles [de la nuit], pour méditer ta parole.</p></div>
+    </div><div class="seif" id="v-149">
+      <span class="seif-num">Verset 149</span>
+      <div class="texte-heb"><div class="heb-n"><p>ק֭וֹלִי שִׁמְעָ֣ה כְחַסְדֶּ֑ךָ יְ֝הֹוָ֗ה כְּֽמִשְׁפָּטֶ֥ךָ חַיֵּֽנִי׃</p></div><div class="heb-s"><p>קולי שמעה כחסדך יהוה כמשפטך חיני׃</p></div></div>
+      <div class="texte-fr"><p>Daigne écouter ma voix, selon ta bonté, Éternel; fais-moi vivre selon l’arrêt de ta justice.</p></div>
+    </div><div class="seif" id="v-150">
+      <span class="seif-num">Verset 150</span>
+      <div class="texte-heb"><div class="heb-n"><p>קָ֭רְבוּ רֹדְפֵ֣י זִמָּ֑ה מִתּוֹרָתְךָ֥ רָחָֽקוּ׃</p></div><div class="heb-s"><p>קרבו רדפי זמה מתורתך רחקו׃</p></div></div>
+      <div class="texte-fr"><p>Ils m’approchent, ceux qui courent après l’infamie, il s’éloignent de ta Loi.</p></div>
+    </div><div class="seif" id="v-151">
+      <span class="seif-num">Verset 151</span>
+      <div class="texte-heb"><div class="heb-n"><p>קָר֣וֹב אַתָּ֣ה יְהֹוָ֑ה וְֽכׇל־מִצְוֺתֶ֥יךָ אֱמֶֽת׃</p></div><div class="heb-s"><p>קרוב אתה יהוה וכל־מצותיך אמת׃</p></div></div>
+      <div class="texte-fr"><p>Toi, Seigneur, tu es près [de moi], tous tes commandements sont vérité.</p></div>
+    </div><div class="seif" id="v-152">
+      <span class="seif-num">Verset 152</span>
+      <div class="texte-heb"><div class="heb-n"><p>קֶ֣דֶם יָ֭דַעְתִּי מֵעֵדֹתֶ֑יךָ כִּ֖י לְעוֹלָ֣ם יְסַדְתָּֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>קדם ידעתי מעדתיך כי לעולם יסדתם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Dès longtemps j’avais connaissance de tes statuts, car tu les as établis pour l’éternité.</p></div>
+    </div><div class="seif" id="v-153">
+      <span class="seif-num">Verset 153</span>
+      <div class="texte-heb"><div class="heb-n"><p>רְאֵה־עׇנְיִ֥י וְחַלְּצֵ֑נִי כִּי־ת֥֝וֹרָתְךָ֗ לֹ֣א שָׁכָֽחְתִּי׃</p></div><div class="heb-s"><p>ראה־עניי וחלצני כי־תורתך לא שכחתי׃</p></div></div>
+      <div class="texte-fr"><p>Vois ma misère et tire-moi du danger, car je n’ai pas oublié ta Loi.</p></div>
+    </div><div class="seif" id="v-154">
+      <span class="seif-num">Verset 154</span>
+      <div class="texte-heb"><div class="heb-n"><p>רִיבָ֣ה רִ֭יבִי וּגְאָלֵ֑נִי לְאִמְרָתְךָ֥ חַיֵּֽנִי׃</p></div><div class="heb-s"><p>ריבה ריבי וגאלני לאמרתך חיני׃</p></div></div>
+      <div class="texte-fr"><p>Prends en main ma cause et délivre-moi, fais-moi vivre pour me consacrer à ta parole.</p></div>
+    </div><div class="seif" id="v-155">
+      <span class="seif-num">Verset 155</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָח֣וֹק מֵרְשָׁעִ֣ים יְשׁוּעָ֑ה כִּי־חֻ֝קֶּ֗יךָ לֹ֣א דָרָֽשׁוּ׃</p></div><div class="heb-s"><p>רחוק מרשעים ישועה כי־חקיך לא דרשו׃</p></div></div>
+      <div class="texte-fr"><p>Le salut est loin des méchants, car ils ne se soucient pas de tes préceptes.</p></div>
+    </div><div class="seif" id="v-156">
+      <span class="seif-num">Verset 156</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַחֲמֶ֖יךָ רַבִּ֥ים&thinsp;<small>׀</small>&thinsp;יְהֹוָ֑ה כְּֽמִשְׁפָּטֶ֥יךָ חַיֵּֽנִי׃</p></div><div class="heb-s"><p>רחמיך רבים&thinsp;<small>׀</small>&thinsp;יהוה כמשפטיך חיני׃</p></div></div>
+      <div class="texte-fr"><p>Grande est ta miséricorde, Éternel, fais-moi vivre selon l’arrêt de ta justice.</p></div>
+    </div><div class="seif" id="v-157">
+      <span class="seif-num">Verset 157</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֭בִּים רֹדְפַ֣י וְצָרָ֑י מֵ֝עֵדְוֺתֶ֗יךָ לֹ֣א נָטִֽיתִי׃</p></div><div class="heb-s"><p>רבים רדפי וצרי מעדותיך לא נטיתי׃</p></div></div>
+      <div class="texte-fr"><p>Nombreux sont mes persécuteurs et mes ennemis; je n’ai point dévié de tes statuts.</p></div>
+    </div><div class="seif" id="v-158">
+      <span class="seif-num">Verset 158</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָאִ֣יתִי בֹ֭גְדִים וָאֶתְקוֹטָ֑טָה אֲשֶׁ֥ר אִ֝מְרָתְךָ֗ לֹ֣א שָׁמָֽרוּ׃</p></div><div class="heb-s"><p>ראיתי בגדים ואתקוטטה אשר אמרתך לא שמרו׃</p></div></div>
+      <div class="texte-fr"><p>J’ai observé les traîtres et j’en ai été écœuré, car ils ne respectent pas ta parole.</p></div>
+    </div><div class="seif" id="v-159">
+      <span class="seif-num">Verset 159</span>
+      <div class="texte-heb"><div class="heb-n"><p>רְ֭אֵה כִּי־פִקּוּדֶ֣יךָ אָהָ֑בְתִּי יְ֝הֹוָ֗ה כְּֽחַסְדְּךָ֥ חַיֵּֽנִי׃</p></div><div class="heb-s"><p>ראה כי־פקודיך אהבתי יהוה כחסדך חיני׃</p></div></div>
+      <div class="texte-fr"><p>Vois comme j’aime tes prescriptions, Seigneur, selon ta bonté, fais-moi vivre.</p></div>
+    </div><div class="seif" id="v-160">
+      <span class="seif-num">Verset 160</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֹאשׁ־דְּבָרְךָ֥ אֱמֶ֑ת וּ֝לְעוֹלָ֗ם כׇּל־מִשְׁפַּ֥ט צִדְקֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ראש־דברך אמת ולעולם כל־משפט צדקך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>L’ensemble de tes paroles est vérité, éternels sont tous les arrêts de ta justice.</p></div>
+    </div><div class="seif" id="v-161">
+      <span class="seif-num">Verset 161</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂ֭רִים רְדָפ֣וּנִי חִנָּ֑ם <span class="mam-kq"><span class="mam-kq-k">(ומדבריך)</span> <span class="mam-kq-q">[וּ֝מִדְּבָרְךָ֗]</span></span> פָּחַ֥ד לִבִּֽי׃</p></div><div class="heb-s"><p>שרים רדפוני חנם <span class="mam-kq"><span class="mam-kq-k">(ומדבריך)</span> <span class="mam-kq-q">[ומדברך]</span></span> פחד לבי׃</p></div></div>
+      <div class="texte-fr"><p>Des grands me persécutent gratuitement, et mon cœur tremble devant ta parole.</p></div>
+    </div><div class="seif" id="v-162">
+      <span class="seif-num">Verset 162</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂ֣שׂ אָ֭נֹכִי עַל־אִמְרָתֶ֑ךָ כְּ֝מוֹצֵ֗א שָׁלָ֥ל רָֽב׃</p></div><div class="heb-s"><p>שש אנכי על־אמרתך כמוצא שלל רב׃</p></div></div>
+      <div class="texte-fr"><p>Je me réjouis de tes promesses, comme quelqu’un qui a trouvé un riche butin.</p></div>
+    </div><div class="seif" id="v-163">
+      <span class="seif-num">Verset 163</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֶׁ֣קֶר שָׂ֭נֵאתִי וַאֲתַעֵ֑בָה תּוֹרָתְךָ֥ אָהָֽבְתִּי׃</p></div><div class="heb-s"><p>שקר שנאתי ואתעבה תורתך אהבתי׃</p></div></div>
+      <div class="texte-fr"><p>Je hais le mensonge, je l’ai en horreur, c’est ta Loi que j’aime.</p></div>
+    </div><div class="seif" id="v-164">
+      <span class="seif-num">Verset 164</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֶׁ֣בַע בַּ֭יּוֹם הִלַּלְתִּ֑יךָ עַ֝֗ל מִשְׁפְּטֵ֥י צִדְקֶֽךָ׃</p></div><div class="heb-s"><p>שבע ביום הללתיך על משפטי צדקך׃</p></div></div>
+      <div class="texte-fr"><p>Sept fois par jour je célèbre tes louanges, en raison de tes justes arrêts.</p></div>
+    </div><div class="seif" id="v-165">
+      <span class="seif-num">Verset 165</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁל֣וֹם רָ֭ב לְאֹהֲבֵ֣י תוֹרָתֶ֑ךָ וְאֵֽין־לָ֥מוֹ מִכְשֽׁוֹל׃</p></div><div class="heb-s"><p>שלום רב לאהבי תורתך ואין־למו מכשול׃</p></div></div>
+      <div class="texte-fr"><p>Un grand bonheur attend ceux qui aiment ta Loi: pour eux point de cause de chute.</p></div>
+    </div><div class="seif" id="v-166">
+      <span class="seif-num">Verset 166</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׂבַּ֣רְתִּי לִישׁוּעָתְךָ֣ יְהֹוָ֑ה וּֽמִצְוֺתֶ֥יךָ עָשִֽׂיתִי׃</p></div><div class="heb-s"><p>שברתי לישועתך יהוה ומצותיך עשיתי׃</p></div></div>
+      <div class="texte-fr"><p>J’ai pleine confiance en ton secours, Seigneur, et j’accomplis tes commandements.</p></div>
+    </div><div class="seif" id="v-167">
+      <span class="seif-num">Verset 167</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָֽׁמְרָ֣ה נַ֭פְשִׁי עֵדֹתֶ֑יךָ וָאֹהֲבֵ֥ם מְאֹֽד׃</p></div><div class="heb-s"><p>שמרה נפשי עדתיך ואהבם מאד׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme observe tes témoignages, je les aime infiniment.</p></div>
+    </div><div class="seif" id="v-168">
+      <span class="seif-num">Verset 168</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁמַ֣רְתִּי פִ֭קּוּדֶיךָ וְעֵדֹתֶ֑יךָ כִּ֖י כׇל־דְּרָכַ֣י נֶגְדֶּֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>שמרתי פקודיך ועדתיך כי כל־דרכי נגדך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>J’observe tes prescriptions et tes statuts, car toutes mes voies sont sous tes regards.</p></div>
+    </div><div class="seif" id="v-169">
+      <span class="seif-num">Verset 169</span>
+      <div class="texte-heb"><div class="heb-n"><p>תִּקְרַ֤ב רִנָּתִ֣י לְפָנֶ֣יךָ יְהֹוָ֑ה כִּדְבָרְךָ֥ הֲבִינֵֽנִי׃</p></div><div class="heb-s"><p>תקרב רנתי לפניך יהוה כדברך הבינני׃</p></div></div>
+      <div class="texte-fr"><p>Que mon hymne arrive jusqu’à toi, Éternel, fais-moi comprendre le sens de ta parole.</p></div>
+    </div><div class="seif" id="v-170">
+      <span class="seif-num">Verset 170</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּב֣וֹא תְחִנָּתִ֣י לְפָנֶ֑יךָ כְּ֝אִמְרָתְךָ֗ הַצִּילֵֽנִי׃</p></div><div class="heb-s"><p>תבוא תחנתי לפניך כאמרתך הצילני׃</p></div></div>
+      <div class="texte-fr"><p>Que ma supplication vienne devant toi, sauve-moi selon ta promesse.</p></div>
+    </div><div class="seif" id="v-171">
+      <span class="seif-num">Verset 171</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּבַּ֣עְנָה שְׂפָתַ֣י תְּהִלָּ֑ה כִּ֖י תְלַמְּדֵ֣נִי חֻקֶּֽיךָ׃</p></div><div class="heb-s"><p>תבענה שפתי תהלה כי תלמדני חקיך׃</p></div></div>
+      <div class="texte-fr"><p>Mes lèvres laisseront s’échapper tes louanges, car tu m’enseignes tes préceptes.</p></div>
+    </div><div class="seif" id="v-172">
+      <span class="seif-num">Verset 172</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּ֣עַן לְ֭שׁוֹנִי אִמְרָתֶ֑ךָ כִּ֖י כׇל־מִצְוֺתֶ֣יךָ צֶּֽדֶק׃</p></div><div class="heb-s"><p>תען לשוני אמרתך כי כל־מצותיך צדק׃</p></div></div>
+      <div class="texte-fr"><p>Ma langue chantera ta parole, car tous tes commandements sont équité.</p></div>
+    </div><div class="seif" id="v-173">
+      <span class="seif-num">Verset 173</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּהִי־יָדְךָ֥ לְעׇזְרֵ֑נִי כִּ֖י פִקּוּדֶ֣יךָ בָחָֽרְתִּי׃</p></div><div class="heb-s"><p>תהי־ידך לעזרני כי פקודיך בחרתי׃</p></div></div>
+      <div class="texte-fr"><p>Puisse ta main s’appliquer à me secourir, puisque j’ai fait choix de tes prescriptions!</p></div>
+    </div><div class="seif" id="v-174">
+      <span class="seif-num">Verset 174</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּאַ֣בְתִּי לִישׁוּעָתְךָ֣ יְהֹוָ֑ה וְ֝ת֥וֹרָתְךָ֗ שַׁעֲשֻׁעָֽי׃</p></div><div class="heb-s"><p>תאבתי לישועתך יהוה ותורתך שעשעי׃</p></div></div>
+      <div class="texte-fr"><p>J’aspire à ton secours, Éternel, et ta Loi fait mes délices.</p></div>
+    </div><div class="seif" id="v-175">
+      <span class="seif-num">Verset 175</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּֽחִי־נַ֭פְשִׁי וּֽתְהַלְלֶ֑ךָּ וּֽמִשְׁפָּטֶ֥ךָ יַעְזְרֻֽנִי׃</p></div><div class="heb-s"><p>תחי־נפשי ותהללך ומשפטך יעזרני׃</p></div></div>
+      <div class="texte-fr"><p>Que mon âme vive pour te louer, que tes jugements soient mon soutien.</p></div>
+    </div><div class="seif" id="v-176">
+      <span class="seif-num">Verset 176</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּעִ֗יתִי כְּשֶׂ֣ה אֹ֭בֵד בַּקֵּ֣שׁ עַבְדֶּ֑ךָ כִּ֥י מִ֝צְוֺתֶ֗יךָ לֹ֣א שָׁכָֽחְתִּי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>תעיתי כשה אבד בקש עבדך כי מצותיך לא שכחתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>J’erre comme une brebis égarée; mets-toi à la recherche de ton serviteur! Car je n’ai pas oublié tes commandements.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Heureux ceux dont la voie est intègre, qui suivent la Loi de l’Éternel!</p>
-      <p>Heureux ceux qui respectent ses statuts, le recherchent de tout leur cœur,</p>
-      <p>qui, se gardant bien de commettre aucune injustice, marchent dans ses voies!</p>
-      <p>Tu as promulgué tes ordonnances, pour qu’on les observe strictement.</p>
-      <p>Ah! puissent mes pas être fermes, pour que j’observe tes préceptes!</p>
-      <p>Alors, je ne serai point déçu, en portant mes regards sur tous tes commandements.</p>
-      <p>Je te rendrai grâce en toute droiture de cœur, en m’instruisant des règles de ta justice.</p>
-      <p>Tes statuts, je les observerai: ne m’abandonne en aucun temps.</p>
-      <p>Comment le jeune homme rendra-t-il pure sa conduite? En se conformant à tes paroles.</p>
-      <p>De tout mon cœur je m’enquiers de toi, ne me laisse pas dévier de tes prescriptions.</p>
-      <p>En mon sein j’ai déposé tes instructions, pour ne pas faillir à ton égard.</p>
-      <p>Béni sois-tu, ô Éternel! Enseigne-moi tes préceptes.</p>
-      <p>De mes lèvres je proclame toutes les règles sorties de ta bouche.</p>
-      <p>Dans le chemin tracé par tes témoignages je trouve ma joie, comme si c’était le comble de la richesse.</p>
-      <p>Je m’entretiens de tes commandements, et je contemple tes voies.</p>
-      <p>Je me délecte de tes préceptes, et n’oublie point tes paroles.</p>
-      <p>Accorde tes bienfaits à ton serviteur, pour que je vive et observe tes paroles.</p>
-      <p>Dessille-moi les yeux, pour que je puisse contempler les merveilles issues de ta Loi.</p>
-      <p>Je suis un simple étranger sur la terre, ne me tiens pas cachés tes commandements.</p>
-      <p>Mon âme est travaillée du désir de tes règlements, à toute époque.</p>
-      <p>Toi, tu réprouves les arrogants maudits, qui se fourvoient loin de tes commandements.</p>
-      <p>Affranchis-moi de la honte et du mépris, car je respecte tes témoignages.</p>
-      <p>Dussent même les grands prendre siège et déblatérer contre moi, ton serviteur méditera tes lois.</p>
-      <p>Oui, tes témoignages sont mes délices, mes meilleurs conseillers.</p>
-      <p>Mon âme est collée à la poussière, conserve-moi en vie, suivant ta parole.</p>
-      <p>J’ai exposé ma conduite, et tu m’as répondu; enseigne-moi tes lois.</p>
-      <p>Laisse-moi comprendre le chemin de tes préceptes, et je réfléchirai à tes merveilles.</p>
-      <p>Mon âme, de chagrin, se fond en larmes, redresse-moi, selon ta parole.</p>
-      <p>Eloigne de moi le chemin du mensonge, gratifie-moi de ta Loi.</p>
-      <p>J’ai choisi la voie de la fidélité, placé tes règles sous mes regards.</p>
-      <p>Je suis attaché à tes statuts, Seigneur, ne m’inflige aucune déception.</p>
-      <p>Je suivrai avec empressement le chemin de tes préceptes, car tu élargis mon cœur.</p>
-      <p>Enseigne-moi le chemin de tes préceptes, je veux en suivre les traces.</p>
-      <p>Donne-moi l’intelligence pour que je garde ta loi et l’observe de tout mon cœur.</p>
-      <p>Dirige-moi dans le sentier de tes commandements, car j’y trouve ma satisfaction.</p>
-      <p>Incline mon cœur vers tes vérités, et non vers un vain lucre.</p>
-      <p>Détourne mes yeux de la vue des choses frivoles, fais-moi vivre dans tes voies.</p>
-      <p>Accomplis ton dire en faveur de ton serviteur, car [il amène] à te révérer.</p>
-      <p>Ecarte de moi la honte que je redoute, car tes jugements sont précieux.</p>
-      <p>Voici, j’ai la passion de tes préceptes, fais-moi vivre par ta justice.</p>
-      <p>Que tes bontés descendent sur moi, Éternel, ton salut, tel que tu l’as promis.</p>
-      <p>Je pourrai ainsi répliquer à qui m’outrage, car j’ai confiance en ta parole.</p>
-      <p>Ne supprime jamais une parole de vérité de ma bouche, car je mets mon attente en tes jugements.</p>
-      <p>Je veux observer ta Loi constamment, à tout jamais.</p>
-      <p>Ainsi je circulerai bien au large, car j’aurai eu le souci de tes préceptes.</p>
-      <p>Je ferai de tes vérités l’objet de mes discours, en face des rois, sans aucune fausse honte.</p>
-      <p>Et je ferai mes délices de tes commandements, qui me sont bien chers.</p>
-      <p>Je tendrai mes mains vers tes commandements, que j’aime, et consacrerai mes méditations à tes préceptes.</p>
-      <p>Rappelle-toi, en faveur de ton serviteur, la promesse où tu as voulu que je mette mon attente.</p>
-      <p>C’est là ma consolation dans la misère, que ta parole me rende la vie.</p>
-      <p>Des arrogants m’ont raillé au possible: je n’ai point dévié de ta Loi.</p>
-      <p>Je me remémore tes jugements de jadis, ô Éternel, et j’y trouve du réconfort.</p>
-      <p>Un violent frisson m’avait saisi à cause des méchants, qui abandonnent ta Loi.</p>
-      <p>[Mais] tes préceptes sont devenus pour moi un sujet de cantiques dans ma demeure passagère.</p>
-      <p>Je me souviens de ton nom pendant la nuit, Seigneur, et j’observe ta Loi.</p>
-      <p>C’est là mon bonheur à moi, de m’attacher à tes préceptes.</p>
-      <p>"C’est mon lot à moi, ô Éternel, me suis-je dit, d’observer tes paroles."</p>
-      <p>Je t’implore de tout mon cœur, sois-moi propice, selon ta promesse.</p>
-      <p>J’ai médité sur mes voies, et ramené mes pas vers tes statuts.</p>
-      <p>Je me suis empressé, sans perdre un moment, d’observer tes commandements.</p>
-      <p>Les liens des méchants m’avaient enserré: je n’ai point oublié ta Loi.</p>
-      <p>Au milieu de la nuit je me lève pour te rendre grâce, à cause de tes équitables jugements.</p>
-      <p>Je suis l’allié de tous ceux qui te révèrent et qui pratiquent tes lois.</p>
-      <p>De ta grâce, Éternel, la terre est remplie: enseigne-moi tes préceptes.</p>
-      <p>Tu as traité avec bienveillance ton serviteur, ô Éternel, conformément à ta parole.</p>
-      <p>Enseigne-moi ces choses précieuses: le jugement et la science, car j’ai foi en tes commandements.</p>
-      <p>Avant que je fusse humilié, je m’égarais; maintenant, je suis attentif à tes discours.</p>
-      <p>Tu es bon et tu exerces le bien, instruis-moi dans tes préceptes.</p>
-      <p>Des orgueilleux inventent des mensonges contre moi, et moi, de tout cœur, j’observe tes ordonnances.</p>
-      <p>Leur cœur est bouché comme par la graisse: moi, je fais mes délices de ta Loi.</p>
-      <p>C’est un avantage pour moi d’avoir connu la misère, pour mieux apprendre tes préceptes.</p>
-      <p>Plus précieux est pour moi l’enseignement de ta bouche que des monceaux de pièces d’or et d’argent.</p>
-      <p>Ce sont tes mains qui m’ont formé et organisé, donne-moi l’intelligence pour que j’apprenne à connaître tes commandements.</p>
-      <p>Ceux qui te craignent, en me voyant, seront dans la joie, car j’espère en ta parole.</p>
-      <p>Je sais, ô Seigneur, que tes arrêts sont toute justice, et que c’est en équité que tu m’as humilié.</p>
-      <p>Que ta grâce s’applique donc à me consoler, comme tu l’avais promis à ton serviteur.</p>
-      <p>Que ta miséricorde s’étende sur moi et que je vive, puisque ta Loi fait mes délices.</p>
-      <p>Que les orgueilleux soient déçus, pour m’avoir maltraité gratuitement; moi, je méditerai tes préceptes.</p>
-      <p>Que tes adorateurs reviennent à moi, et ceux qui connaissent tes vérités.</p>
-      <p>Que mon cœur soit sincèrement attaché à tes lois, afin que je n’aie point à rougir.</p>
-      <p>Mon âme languit après ton secours, c’est en ta parole que je mets mon espoir.</p>
-      <p>Mes yeux se consument dans l’attente de ta parole, tandis que je dis: "Quand me consoleras-tu?"</p>
-      <p>Car je suis comme une outre dans des flots de fumée: tes préceptes, je ne les ai point oubliés.</p>
-      <p>Que dureront les jours de ton serviteur? Quand feras-tu justice de mes persécuteurs?</p>
-      <p>Des pervers m’ont creusé des fosses, au mépris de ta Loi.</p>
-      <p>Tous tes commandements sont loyauté parfaite, eux me pourchassent sans motif: viens à mon aide.</p>
-      <p>Peu s’en faut qu’ils ne m’aient anéanti sur terre, alors que moi, je n’ai point délaissé tes préceptes.</p>
-      <p>Fidèle à ta bonté, conserve-moi en vie, et je respecterai le témoignage de ta bouche.</p>
-      <p>Pour l’éternité, Seigneur, ta parole demeure immuable dans les cieux.</p>
-      <p>D’âge en âge dure ta fidélité: tu as affermi la terre, et elle est inébranlable.</p>
-      <p>Selon tes lois, les êtres subsistent aujourd’hui, car ils sont tous tes serviteurs.</p>
-      <p>Si ta Loi n’avait fait mes délices, j’aurais succombé dans ma misère.</p>
-      <p>Jamais je n’oublierai tes préceptes, car par eux tu m’assures la vie.</p>
-      <p>Je suis à toi, prête-moi secours, car je m’enquiers de tes ordres.</p>
-      <p>Des méchants me guettent pour me perdre: je cherche à pénétrer le sens de tes prescriptions.</p>
-      <p>A tout bien j’ai vu des limites: ta Loi est infiniment vaste.</p>
-      <p>Combien j’aime ta Loi! Tout le temps elle est l’objet de mes méditations.</p>
-      <p>Tes commandements me rendent plus sage que mes ennemis, car ils sont pour moi un bien inépuisable.</p>
-      <p>Je suis plus avisé que tous mes précepteurs, car tes vérités sont le thème de mes réflexions.</p>
-      <p>J’ai plus d’expérience que les vieillards, car je respecte tes préceptes.</p>
-      <p>J’ai tenu mes pas éloignés de tout mauvais chemin, en vue d’observer tes paroles.</p>
-      <p>Je n’ai point dévié de tes règles, car c’est toi qui m’as instruit.</p>
-      <p>Que tes paroles sont douces à mon palais! Le miel l’est moins à ma bouche.</p>
-      <p>J’ai puisé mon savoir dans tes préceptes, c’est pourquoi je hais toute voie mensongère.</p>
-      <p>Ta parole est un flambeau qui éclaire mes pas, une lumière qui rayonne sur ma route.</p>
-      <p>J’ai fait le serment, et je le tiendrai, d’observer les règles de ta justice.</p>
-      <p>Je suis extrêmement accablé, Éternel, conserve-moi en vie selon ta parole.</p>
-      <p>Agrée de grâce, Seigneur, les vœux de ma bouche, et enseigne-moi tes lois.</p>
-      <p>Mon âme court sans cesse des dangers, et je n’ai point oublié ta loi.</p>
-      <p>Des méchants me dressent des pièges, pourtant je ne dévie point de tes préceptes.</p>
-      <p>Je reste pour toujours en possession de tes vérités, car elles sont la joie de mon cœur.</p>
-      <p>J’ai incliné mon cœur à accomplir tes lois à tout jamais, jusqu’à la fin dernière.</p>
-      <p>Je hais les gens à double face, mais ta Loi, je l’aime.</p>
-      <p>Tu es mon abri et mon bouclier, j’espère en ta parole.</p>
-      <p>Loin de moi, ô malfaiteurs! Je veux observer les commandements de mon Dieu.</p>
-      <p>Soutiens-moi selon ta promesse pour que je vive, et ne laisse pas mon espoir se changer en déception.</p>
-      <p>Accorde-moi ton appui pour que je sois sauvé, je me tournerai sans cesse vers tes lois.</p>
-      <p>Tu foules aux pieds ceux qui errent loin de tes préceptes, car leurs ruses habiles ne sont que mensonge.</p>
-      <p>Comme des scories, tu élimines tous les méchants sur terre, c’est pourquoi j’aime tes vérités.</p>
-      <p>Ma chair frissonne de la terreur que tu inspires, et je redoute tes jugements.</p>
-      <p>J’ai pratiqué la justice et l’équité, ne m’abandonne pas à mes oppresseurs.</p>
-      <p>Interviens pour le bonheur de ton serviteur, que des arrogants ne m’accablent point.</p>
-      <p>Mes yeux languissent après ton secours, et après ta parole de salut.</p>
-      <p>Traite ton serviteur selon ta grâce, et enseigne-moi tes préceptes.</p>
-      <p>Je suis ton serviteur, donne-moi la sagacité, pour que je comprenne tes vérités.</p>
-      <p>Le temps est venu d’agir pour l’Éternel: on a violé ta Loi.</p>
-      <p>C’est pourquoi j’aime tes commandements, plus que l’or et le métal fin.</p>
-      <p>C’est pourquoi je reconnais la parfaite droiture de tous [tes] préceptes, et déteste toute voie mensongère.</p>
-      <p>Merveilleux sont tes statuts, aussi mon âme les garde-t-elle avec soin.</p>
-      <p>La révélation de tes paroles projette de la lumière, donne de l’intelligence aux simples.</p>
-      <p>J’ouvre largement la bouche pour aspirer, car j’ai la passion de tes commandements.</p>
-      <p>Tourne-toi vers moi et sois-moi propice, comme tu le fais pour ceux qui aiment ton nom.</p>
-      <p>Affermis mes pas par tes discours, qu’aucune mauvaise passion ne prenne le dessus sur moi.</p>
-      <p>Délivre-moi de l’oppression des hommes, pour que je puisse observer tes préceptes.</p>
-      <p>Fais luire ta face sur ton serviteur, et enseigne-moi tes préceptes.</p>
-      <p>Mes yeux ont versé des torrents de larmes, parce qu’on n’observe pas ta Loi.</p>
-      <p>Tu es juste, ô Seigneur, et équitables sont tes jugements.</p>
-      <p>Tu as imposé tes justes ordonnances: elles sont tout à fait infaillibles.</p>
-      <p>Je suis consumé par mon zèle jaloux, car mes adversaires oublient tes paroles.</p>
-      <p>Ta parole est infiniment épurée, elle est chère à ton serviteur.</p>
-      <p>Je suis chétif et méprisé: tes préceptes, je ne les ai point oubliés.</p>
-      <p>Ta justice est éternellement équitable, et ta Loi est vérité.</p>
-      <p>La détresse et l’angoisse m’ont atteint: tes commandements sont mes délices.</p>
-      <p>Tes statuts sont à jamais équitables, permets-moi de les comprendre, pour que je vive.</p>
-      <p>Je t’invoque de tout cœur, exauce-moi, Seigneur! Je veux observer tes préceptes.</p>
-      <p>Je t’appelle, viens à mon secours, et je garderai tes statuts.</p>
-      <p>Dès l’aurore je m’empresse d’implorer, j’espère en ta parole.</p>
-      <p>Mes yeux devancent les veilles [de la nuit], pour méditer ta parole.</p>
-      <p>Daigne écouter ma voix, selon ta bonté, Éternel; fais-moi vivre selon l’arrêt de ta justice.</p>
-      <p>Ils m’approchent, ceux qui courent après l’infamie, il s’éloignent de ta Loi.</p>
-      <p>Toi, Seigneur, tu es près [de moi], tous tes commandements sont vérité.</p>
-      <p>Dès longtemps j’avais connaissance de tes statuts, car tu les as établis pour l’éternité.</p>
-      <p>Vois ma misère et tire-moi du danger, car je n’ai pas oublié ta Loi.</p>
-      <p>Prends en main ma cause et délivre-moi, fais-moi vivre pour me consacrer à ta parole.</p>
-      <p>Le salut est loin des méchants, car ils ne se soucient pas de tes préceptes.</p>
-      <p>Grande est ta miséricorde, Éternel, fais-moi vivre selon l’arrêt de ta justice.</p>
-      <p>Nombreux sont mes persécuteurs et mes ennemis; je n’ai point dévié de tes statuts.</p>
-      <p>J’ai observé les traîtres et j’en ai été écœuré, car ils ne respectent pas ta parole.</p>
-      <p>Vois comme j’aime tes prescriptions, Seigneur, selon ta bonté, fais-moi vivre.</p>
-      <p>L’ensemble de tes paroles est vérité, éternels sont tous les arrêts de ta justice.</p>
-      <p>Des grands me persécutent gratuitement, et mon cœur tremble devant ta parole.</p>
-      <p>Je me réjouis de tes promesses, comme quelqu’un qui a trouvé un riche butin.</p>
-      <p>Je hais le mensonge, je l’ai en horreur, c’est ta Loi que j’aime.</p>
-      <p>Sept fois par jour je célèbre tes louanges, en raison de tes justes arrêts.</p>
-      <p>Un grand bonheur attend ceux qui aiment ta Loi: pour eux point de cause de chute.</p>
-      <p>J’ai pleine confiance en ton secours, Seigneur, et j’accomplis tes commandements.</p>
-      <p>Mon âme observe tes témoignages, je les aime infiniment.</p>
-      <p>J’observe tes prescriptions et tes statuts, car toutes mes voies sont sous tes regards.</p>
-      <p>Que mon hymne arrive jusqu’à toi, Éternel, fais-moi comprendre le sens de ta parole.</p>
-      <p>Que ma supplication vienne devant toi, sauve-moi selon ta promesse.</p>
-      <p>Mes lèvres laisseront s’échapper tes louanges, car tu m’enseignes tes préceptes.</p>
-      <p>Ma langue chantera ta parole, car tous tes commandements sont équité.</p>
-      <p>Puisse ta main s’appliquer à me secourir, puisque j’ai fait choix de tes prescriptions!</p>
-      <p>J’aspire à ton secours, Éternel, et ta Loi fait mes délices.</p>
-      <p>Que mon âme vive pour te louer, que tes jugements soient mon soutien.</p>
-      <p>J’erre comme une brebis égarée; mets-toi à la recherche de ton serviteur! Car je n’ai pas oublié tes commandements.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -587,6 +975,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-118.html">← Tehilim 118</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-119.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-120.html">Tehilim 120 →</a></div>
 </main>
 
 <footer>

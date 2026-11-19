@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 49 – Écoutez ceci, peuples tous</h1>
     <p>Ketouvim, Tehilim, Chapitre 49</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-48.html">← Tehilim 48</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-49.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-50.html">Tehilim 50 →</a></div>
   </div>
 </header>
 
@@ -161,65 +202,102 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֬חַ&thinsp;<small>׀</small>&thinsp;לִבְנֵי־קֹ֬רַח מִזְמֽוֹר׃</p>
-      <p>שִׁמְעוּ־זֹ֭את כׇּל־הָעַמִּ֑ים הַ֝אֲזִ֗ינוּ כׇּל־יֹ֥שְׁבֵי חָֽלֶד׃</p>
-      <p>גַּם־בְּנֵ֣י אָ֭דָם גַּם־בְּנֵי־אִ֑ישׁ יַ֝֗חַד עָשִׁ֥יר וְאֶבְיֽוֹן׃</p>
-      <p>פִּ֭י יְדַבֵּ֣ר חׇכְמ֑וֹת וְהָג֖וּת לִבִּ֣י תְבוּנֽוֹת׃</p>
-      <p>אַטֶּ֣ה לְמָשָׁ֣ל אׇזְנִ֑י אֶפְתַּ֥ח בְּ֝כִנּ֗וֹר חִידָתִֽי׃</p>
-      <p>לָ֣מָּה אִ֭ירָא בִּ֣ימֵי רָ֑ע עֲוֺ֖ן עֲקֵבַ֣י יְסוּבֵּֽנִי׃</p>
-      <p>הַבֹּטְחִ֥ים עַל־חֵילָ֑ם וּבְרֹ֥ב עׇ֝שְׁרָ֗ם יִתְהַלָּֽלוּ׃</p>
-      <p>אָ֗ח לֹא־פָדֹ֣ה יִפְדֶּ֣ה אִ֑ישׁ לֹא־יִתֵּ֖ן לֵאלֹהִ֣ים כׇּפְרֽוֹ׃</p>
-      <p>וְ֭יֵקַר פִּדְי֥וֹן נַפְשָׁ֗ם וְחָדַ֥ל לְעוֹלָֽם׃</p>
-      <p>וִיחִי־ע֥וֹד לָנֶ֑צַח לֹ֖א יִרְאֶ֣ה הַשָּֽׁחַת׃</p>
-      <p>כִּ֤י יִרְאֶ֨ה&thinsp;<b>׀</b> חֲכָ֘מִ֤ים יָמ֗וּתוּ יַ֤חַד כְּסִ֣יל וָבַ֣עַר יֹאבֵ֑דוּ וְעָזְב֖וּ לַאֲחֵרִ֣ים חֵילָֽם׃</p>
-      <p>קִרְבָּ֤ם בָּתֵּ֨ימוֹ&thinsp;<b>׀</b> לְֽעוֹלָ֗ם מִ֭שְׁכְּנֹתָם לְד֣וֹר וָדֹ֑ר קָרְא֥וּ בִ֝שְׁמוֹתָ֗ם עֲלֵ֣י אֲדָמֽוֹת׃</p>
-      <p>וְאָדָ֣ם בִּ֭יקָר בַּל־יָלִ֑ין נִמְשַׁ֖ל כַּבְּהֵמ֣וֹת נִדְמֽוּ׃</p>
-      <p>זֶ֣ה דַ֭רְכָּם כֵּ֣סֶל לָ֑מוֹ וְאַחֲרֵיהֶ֓ם&thinsp;<b>׀</b> בְּפִיהֶ֖ם יִרְצ֣וּ סֶֽלָה׃</p>
-      <p>כַּצֹּ֤אן&thinsp;<b>׀</b> לִ֥שְׁא֣וֹל שַׁתּוּ֮ מָ֤וֶת יִ֫רְעֵ֥ם וַיִּרְדּ֘וּ<span class="mam-implicit-maqaf">־</span>בָ֤ם יְשָׁרִ֨ים&thinsp;<b>׀</b> לַבֹּ֗קֶר <span class="mam-kq"><span class="mam-kq-k">(וצירם)</span> <span class="mam-kq-q">[וְ֭צוּרָם]</span></span> לְבַלּ֥וֹת שְׁא֗וֹל מִזְּבֻ֥ל לֽוֹ׃</p>
-      <p>אַךְ־אֱלֹהִ֗ים יִפְדֶּ֣ה נַ֭פְשִׁי מִֽיַּד־שְׁא֑וֹל כִּ֖י יִקָּחֵ֣נִי סֶֽלָה׃</p>
-      <p>אַל־תִּ֭ירָא כִּֽי־יַעֲשִׁ֣ר אִ֑ישׁ כִּי־יִ֝רְבֶּ֗ה כְּב֣וֹד בֵּיתֽוֹ׃</p>
-      <p>כִּ֤י לֹ֣א בְ֭מוֹתוֹ יִקַּ֣ח הַכֹּ֑ל לֹֽא־יֵרֵ֖ד אַחֲרָ֣יו כְּבוֹדֽוֹ׃</p>
-      <p>כִּֽי־נַ֭פְשׁוֹ בְּחַיָּ֣יו יְבָרֵ֑ךְ וְ֝יוֹדֻ֗ךָ כִּי־תֵיטִ֥יב לָֽךְ׃</p>
-      <p>תָּ֭בוֹא עַד־דּ֣וֹר אֲבוֹתָ֑יו עַד־נֵ֝֗צַח לֹ֣א יִרְאוּ־אֽוֹר׃</p>
-      <p>אָדָ֣ם בִּ֭יקָר וְלֹ֣א יָבִ֑ין נִמְשַׁ֖ל כַּבְּהֵמ֣וֹת נִדְמֽוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a><a href="#v-21">21</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֬חַ&thinsp;<small>׀</small>&thinsp;לִבְנֵי־קֹ֬רַח מִזְמֽוֹר׃</p></div><div class="heb-s"><p>למנצח&thinsp;<small>׀</small>&thinsp;לבני־קרח מזמור׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Par les fils de Coré. Psaume.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁמְעוּ־זֹ֭את כׇּל־הָעַמִּ֑ים הַ֝אֲזִ֗ינוּ כׇּל־יֹ֥שְׁבֵי חָֽלֶד׃</p></div><div class="heb-s"><p>שמעו־זאת כל־העמים האזינו כל־ישבי חלד׃</p></div></div>
+      <div class="texte-fr"><p>Écoutez ceci, vous toutes, ô nations, soyez attentifs, vous tous, habitants du globe,</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּם־בְּנֵ֣י אָ֭דָם גַּם־בְּנֵי־אִ֑ישׁ יַ֝֗חַד עָשִׁ֥יר וְאֶבְיֽוֹן׃</p></div><div class="heb-s"><p>גם־בני אדם גם־בני־איש יחד עשיר ואביון׃</p></div></div>
+      <div class="texte-fr"><p>les hommes d’humble condition comme les grands personnages, ensemble les riches et les pauvres!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>פִּ֭י יְדַבֵּ֣ר חׇכְמ֑וֹת וְהָג֖וּת לִבִּ֣י תְבוּנֽוֹת׃</p></div><div class="heb-s"><p>פי ידבר חכמות והגות לבי תבונות׃</p></div></div>
+      <div class="texte-fr"><p>Ma bouche prêche la sagesse, et la raison inspire les pensées de mon cœur.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַטֶּ֣ה לְמָשָׁ֣ל אׇזְנִ֑י אֶפְתַּ֥ח בְּ֝כִנּ֗וֹר חִידָתִֽי׃</p></div><div class="heb-s"><p>אטה למשל אזני אפתח בכנור חידתי׃</p></div></div>
+      <div class="texte-fr"><p>Je prête l’oreille aux sentences poétiques, et prélude avec la harpe aux piquants aphorismes.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָ֣מָּה אִ֭ירָא בִּ֣ימֵי רָ֑ע עֲוֺ֖ן עֲקֵבַ֣י יְסוּבֵּֽנִי׃</p></div><div class="heb-s"><p>למה אירא בימי רע עון עקבי יסובני׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi m’exposerais-je à avoir peur aux jours de l’adversité? à me voir enveloppé par le péché qui s’attacherait à mes talons?</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַבֹּטְחִ֥ים עַל־חֵילָ֑ם וּבְרֹ֥ב עׇ֝שְׁרָ֗ם יִתְהַלָּֽלוּ׃</p></div><div class="heb-s"><p>הבטחים על־חילם וברב עשרם יתהללו׃</p></div></div>
+      <div class="texte-fr"><p>De ceux qui se fient à leurs biens, et se glorifient de l’abondance de leurs richesses,</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֗ח לֹא־פָדֹ֣ה יִפְדֶּ֣ה אִ֑ישׁ לֹא־יִתֵּ֖ן לֵאלֹהִ֣ים כׇּפְרֽוֹ׃</p></div><div class="heb-s"><p>אח לא־פדה יפדה איש לא־יתן לאלהים כפרו׃</p></div></div>
+      <div class="texte-fr"><p>pas un ne saurait racheter son frère, ni donner à Dieu le coût de sa rançon.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֭יֵקַר פִּדְי֥וֹן נַפְשָׁ֗ם וְחָדַ֥ל לְעוֹלָֽם׃</p></div><div class="heb-s"><p>ויקר פדיון נפשם וחדל לעולם׃</p></div></div>
+      <div class="texte-fr"><p>Le rachat de leur âme est à trop haut prix, il faut y renoncer à jamais.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וִיחִי־ע֥וֹד לָנֶ֑צַח לֹ֖א יִרְאֶ֣ה הַשָּֽׁחַת׃</p></div><div class="heb-s"><p>ויחי־עוד לנצח לא יראה השחת׃</p></div></div>
+      <div class="texte-fr"><p>Pensent-ils donc vivre toujours, ne pas voir la tombe?</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י יִרְאֶ֨ה&thinsp;<b>׀</b> חֲכָ֘מִ֤ים יָמ֗וּתוּ יַ֤חַד כְּסִ֣יל וָבַ֣עַר יֹאבֵ֑דוּ וְעָזְב֖וּ לַאֲחֵרִ֣ים חֵילָֽם׃</p></div><div class="heb-s"><p>כי יראה&thinsp;<b>׀</b> חכמים ימותו יחד כסיל ובער יאבדו ועזבו לאחרים חילם׃</p></div></div>
+      <div class="texte-fr"><p>Ils remarquent pourtant que les sages meurent, tout comme périssent le fou et le sot, en laissant leurs biens à d’autres.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>קִרְבָּ֤ם בָּתֵּ֨ימוֹ&thinsp;<b>׀</b> לְֽעוֹלָ֗ם מִ֭שְׁכְּנֹתָם לְד֣וֹר וָדֹ֑ר קָרְא֥וּ בִ֝שְׁמוֹתָ֗ם עֲלֵ֣י אֲדָמֽוֹת׃</p></div><div class="heb-s"><p>קרבם בתימו&thinsp;<b>׀</b> לעולם משכנתם לדור ודר קראו בשמותם עלי אדמות׃</p></div></div>
+      <div class="texte-fr"><p>Ils s’imaginent que leurs maisons vont durer éternellement, leurs demeures de génération en génération, qu’ils attacheront leurs noms à leurs domaines.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָדָ֣ם בִּ֭יקָר בַּל־יָלִ֑ין נִמְשַׁ֖ל כַּבְּהֵמ֣וֹת נִדְמֽוּ׃</p></div><div class="heb-s"><p>ואדם ביקר בל־ילין נמשל כבהמות נדמו׃</p></div></div>
+      <div class="texte-fr"><p>Or les hommes ne se perpétuent pas dans leur splendeur; semblables aux animaux, ils ont une fin.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֶ֣ה דַ֭רְכָּם כֵּ֣סֶל לָ֑מוֹ וְאַחֲרֵיהֶ֓ם&thinsp;<b>׀</b> בְּפִיהֶ֖ם יִרְצ֣וּ סֶֽלָה׃</p></div><div class="heb-s"><p>זה דרכם כסל למו ואחריהם&thinsp;<b>׀</b> בפיהם ירצו סלה׃</p></div></div>
+      <div class="texte-fr"><p>Cette attitude chez eux est pure folie: qu’ils puissent, de leur bouche, se déclarer satisfaits de l’avenir. Sélah!</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּצֹּ֤אן&thinsp;<b>׀</b> לִ֥שְׁא֣וֹל שַׁתּוּ֮ מָ֤וֶת יִ֫רְעֵ֥ם וַיִּרְדּ֘וּ<span class="mam-implicit-maqaf">־</span>בָ֤ם יְשָׁרִ֨ים&thinsp;<b>׀</b> לַבֹּ֗קֶר <span class="mam-kq"><span class="mam-kq-k">(וצירם)</span> <span class="mam-kq-q">[וְ֭צוּרָם]</span></span> לְבַלּ֥וֹת שְׁא֗וֹל מִזְּבֻ֥ל לֽוֹ׃</p></div><div class="heb-s"><p>כצאן&thinsp;<b>׀</b> לשאול שתו מות ירעם וירדו<span class="mam-implicit-maqaf">־</span>בם ישרים&thinsp;<b>׀</b> לבקר <span class="mam-kq"><span class="mam-kq-k">(וצירם)</span> <span class="mam-kq-q">[וצורם]</span></span> לבלות שאול מזבל לו׃</p></div></div>
+      <div class="texte-fr"><p>Comme un troupeau ils s’avancent vers le Cheol; le matin venu, les hommes droits auront raison d’eux; le Cheol consume jusqu’à leur forme, ne leur servant [pas longtemps] de demeure.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־אֱלֹהִ֗ים יִפְדֶּ֣ה נַ֭פְשִׁי מִֽיַּד־שְׁא֑וֹל כִּ֖י יִקָּחֵ֣נִי סֶֽלָה׃</p></div><div class="heb-s"><p>אך־אלהים יפדה נפשי מיד־שאול כי יקחני סלה׃</p></div></div>
+      <div class="texte-fr"><p>Toutefois Dieu délivrera mon âme du Cheol, quand il lui plaira de me retirer. Sélah!</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תִּ֭ירָא כִּֽי־יַעֲשִׁ֣ר אִ֑ישׁ כִּי־יִ֝רְבֶּ֗ה כְּב֣וֹד בֵּיתֽוֹ׃</p></div><div class="heb-s"><p>אל־תירא כי־יעשר איש כי־ירבה כבוד ביתו׃</p></div></div>
+      <div class="texte-fr"><p>Ne sois pas alarmé si quelqu’un s’enrichit, et voit s’accroître le luxe de sa maison!</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י לֹ֣א בְ֭מוֹתוֹ יִקַּ֣ח הַכֹּ֑ל לֹֽא־יֵרֵ֖ד אַחֲרָ֣יו כְּבוֹדֽוֹ׃</p></div><div class="heb-s"><p>כי לא במותו יקח הכל לא־ירד אחריו כבודו׃</p></div></div>
+      <div class="texte-fr"><p>Car, quand il mourra, il n’emportera rien; son luxe ne le suivra point [dans la tombe].</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־נַ֭פְשׁוֹ בְּחַיָּ֣יו יְבָרֵ֑ךְ וְ֝יוֹדֻ֗ךָ כִּי־תֵיטִ֥יב לָֽךְ׃</p></div><div class="heb-s"><p>כי־נפשו בחייו יברך ויודך כי־תיטיב לך׃</p></div></div>
+      <div class="texte-fr"><p>Il a beau se dire heureux durant sa vie, s’attirer des hommages par son bien-être:</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּ֭בוֹא עַד־דּ֣וֹר אֲבוֹתָ֑יו עַד־נֵ֝֗צַח לֹ֣א יִרְאוּ־אֽוֹר׃</p></div><div class="heb-s"><p>תבוא עד־דור אבותיו עד־נצח לא יראו־אור׃</p></div></div>
+      <div class="texte-fr"><p>il ira rejoindre la génération de ses pères, qui plus jamais ne verront la lumière.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָדָ֣ם בִּ֭יקָר וְלֹ֣א יָבִ֑ין נִמְשַׁ֖ל כַּבְּהֵמ֣וֹת נִדְמֽוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אדם ביקר ולא יבין נמשל כבהמות נדמו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>L’homme, au sein du luxe, s’il manque de raison, est pareil aux animaux: sa fin est certaine.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Par les fils de Coré. Psaume.</p>
-      <p>Écoutez ceci, vous toutes, ô nations, soyez attentifs, vous tous, habitants du globe,</p>
-      <p>les hommes d’humble condition comme les grands personnages, ensemble les riches et les pauvres!</p>
-      <p>Ma bouche prêche la sagesse, et la raison inspire les pensées de mon cœur.</p>
-      <p>Je prête l’oreille aux sentences poétiques, et prélude avec la harpe aux piquants aphorismes.</p>
-      <p>Pourquoi m’exposerais-je à avoir peur aux jours de l’adversité? à me voir enveloppé par le péché qui s’attacherait à mes talons?</p>
-      <p>De ceux qui se fient à leurs biens, et se glorifient de l’abondance de leurs richesses,</p>
-      <p>pas un ne saurait racheter son frère, ni donner à Dieu le coût de sa rançon.</p>
-      <p>Le rachat de leur âme est à trop haut prix, il faut y renoncer à jamais.</p>
-      <p>Pensent-ils donc vivre toujours, ne pas voir la tombe?</p>
-      <p>Ils remarquent pourtant que les sages meurent, tout comme périssent le fou et le sot, en laissant leurs biens à d’autres.</p>
-      <p>Ils s’imaginent que leurs maisons vont durer éternellement, leurs demeures de génération en génération, qu’ils attacheront leurs noms à leurs domaines.</p>
-      <p>Or les hommes ne se perpétuent pas dans leur splendeur; semblables aux animaux, ils ont une fin.</p>
-      <p>Cette attitude chez eux est pure folie: qu’ils puissent, de leur bouche, se déclarer satisfaits de l’avenir. Sélah!</p>
-      <p>Comme un troupeau ils s’avancent vers le Cheol; le matin venu, les hommes droits auront raison d’eux; le Cheol consume jusqu’à leur forme, ne leur servant [pas longtemps] de demeure.</p>
-      <p>Toutefois Dieu délivrera mon âme du Cheol, quand il lui plaira de me retirer. Sélah!</p>
-      <p>Ne sois pas alarmé si quelqu’un s’enrichit, et voit s’accroître le luxe de sa maison!</p>
-      <p>Car, quand il mourra, il n’emportera rien; son luxe ne le suivra point [dans la tombe].</p>
-      <p>Il a beau se dire heureux durant sa vie, s’attirer des hommages par son bien-être:</p>
-      <p>il ira rejoindre la génération de ses pères, qui plus jamais ne verront la lumière.</p>
-      <p>L’homme, au sein du luxe, s’il manque de raison, est pareil aux animaux: sa fin est certaine.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -274,6 +352,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-48.html">← Tehilim 48</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-49.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-50.html">Tehilim 50 →</a></div>
 </main>
 
 <footer>

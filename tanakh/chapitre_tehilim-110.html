@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 110 – L&#x27;Éternel a dit à mon seigneur : assieds-toi à ma droite</h1>
     <p>Ketouvim, Tehilim, Chapitre 110</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-109.html">← Tehilim 109</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-110.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-111.html">Tehilim 111 →</a></div>
   </div>
 </header>
 
@@ -161,37 +202,46 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְדָוִ֗ד מִ֫זְמ֥וֹר נְאֻ֤ם יְהֹוָ֨ה&thinsp;<b>׀</b> לַֽאדֹנִ֗י שֵׁ֥ב לִֽימִינִ֑י עַד־אָשִׁ֥ית אֹ֝יְבֶ֗יךָ הֲדֹ֣ם לְרַגְלֶֽיךָ׃</p>
-      <p>מַטֵּֽה־עֻזְּךָ֗ יִשְׁלַ֣ח יְ֭הֹוָה מִצִּיּ֑וֹן רְ֝דֵ֗ה בְּקֶ֣רֶב אֹיְבֶֽיךָ׃</p>
-      <p>עַמְּךָ֣ נְדָבֹת֮ בְּי֢וֹם חֵ֫ילֶ֥ךָ בְּֽהַדְרֵי־קֹ֭דֶשׁ מֵרֶ֣חֶם מִשְׁחָ֑ר לְ֝ךָ֗ טַ֣ל יַלְדֻתֶֽיךָ׃</p>
-      <p>נִשְׁבַּ֤ע יְהֹוָ֨ה&thinsp;<b>׀</b> וְלֹ֥א יִנָּחֵ֗ם אַתָּֽה־כֹהֵ֥ן לְעוֹלָ֑ם עַל־דִּ֝בְרָתִ֗י מַלְכִּי־צֶֽדֶק׃</p>
-      <p>אֲדֹנָ֥י עַל־יְמִֽינְךָ֑ מָחַ֖ץ בְּיוֹם־אַפּ֣וֹ מְלָכִֽים׃</p>
-      <p>יָדִ֣ין בַּ֭גּוֹיִם מָלֵ֣א גְוִיּ֑וֹת מָ֥חַץ רֹ֝֗אשׁ עַל־אֶ֥רֶץ רַבָּֽה׃</p>
-      <p>מִ֭נַּחַל בַּדֶּ֣רֶךְ יִשְׁתֶּ֑ה עַל־כֵּ֝֗ן יָרִ֥ים רֹֽאשׁ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדָוִ֗ד מִ֫זְמ֥וֹר נְאֻ֤ם יְהֹוָ֨ה&thinsp;<b>׀</b> לַֽאדֹנִ֗י שֵׁ֥ב לִֽימִינִ֑י עַד־אָשִׁ֥ית אֹ֝יְבֶ֗יךָ הֲדֹ֣ם לְרַגְלֶֽיךָ׃</p></div><div class="heb-s"><p>לדוד מזמור נאם יהוה&thinsp;<b>׀</b> לאדני שב לימיני עד־אשית איביך הדם לרגליך׃</p></div></div>
+      <div class="texte-fr"><p>De David. Psaume. L’Éternel a dit à mon maître: "Assieds-toi à ma droite, jusqu’à ce que j’aie fait de tes ennemis un escabeau pour tes pieds."</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַטֵּֽה־עֻזְּךָ֗ יִשְׁלַ֣ח יְ֭הֹוָה מִצִּיּ֑וֹן רְ֝דֵ֗ה בְּקֶ֣רֶב אֹיְבֶֽיךָ׃</p></div><div class="heb-s"><p>מטה־עזך ישלח יהוה מציון רדה בקרב איביך׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel étendra de Sion le sceptre de ta puissance: domine au milieu de tes ennemis.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַמְּךָ֣ נְדָבֹת֮ בְּי֢וֹם חֵ֫ילֶ֥ךָ בְּֽהַדְרֵי־קֹ֭דֶשׁ מֵרֶ֣חֶם מִשְׁחָ֑ר לְ֝ךָ֗ טַ֣ל יַלְדֻתֶֽיךָ׃</p></div><div class="heb-s"><p>עמך נדבת ביום חילך בהדרי־קדש מרחם משחר לך טל ילדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Ton peuple se montre plein de dévouement, le jour où tu déploies tes forces dans un saint appareil. Du sein de l’aurore t’arrive la rosée qui vivifie ta jeunesse.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִשְׁבַּ֤ע יְהֹוָ֨ה&thinsp;<b>׀</b> וְלֹ֥א יִנָּחֵ֗ם אַתָּֽה־כֹהֵ֥ן לְעוֹלָ֑ם עַל־דִּ֝בְרָתִ֗י מַלְכִּי־צֶֽדֶק׃</p></div><div class="heb-s"><p>נשבע יהוה&thinsp;<b>׀</b> ולא ינחם אתה־כהן לעולם על־דברתי מלכי־צדק׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel en a fait le serment qu’il ne révoquera point: "Tu es prêtre pour l’éternité à la façon de Melchisédech."</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲדֹנָ֥י עַל־יְמִֽינְךָ֑ מָחַ֖ץ בְּיוֹם־אַפּ֣וֹ מְלָכִֽים׃</p></div><div class="heb-s"><p>אדני על־ימינך מחץ ביום־אפו מלכים׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur est à ta droite, au jour de sa colère il brise des rois.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָדִ֣ין בַּ֭גּוֹיִם מָלֵ֣א גְוִיּ֑וֹת מָ֥חַץ רֹ֝֗אשׁ עַל־אֶ֥רֶץ רַבָּֽה׃</p></div><div class="heb-s"><p>ידין בגוים מלא גויות מחץ ראש על־ארץ רבה׃</p></div></div>
+      <div class="texte-fr"><p>Parmi les peuples il exerce la justice, accumule les cadavres; sur une étendue immense il fracasse des têtes.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֭נַּחַל בַּדֶּ֣רֶךְ יִשְׁתֶּ֑ה עַל־כֵּ֝֗ן יָרִ֥ים רֹֽאשׁ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>מנחל בדרך ישתה על־כן ירים ראש׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Il boira sur la route de l’eau du torrent: aussi portera-t-il haut la tête.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>De David. Psaume. L’Éternel a dit à mon maître: "Assieds-toi à ma droite, jusqu’à ce que j’aie fait de tes ennemis un escabeau pour tes pieds."</p>
-      <p>L’Éternel étendra de Sion le sceptre de ta puissance: domine au milieu de tes ennemis.</p>
-      <p>Ton peuple se montre plein de dévouement, le jour où tu déploies tes forces dans un saint appareil. Du sein de l’aurore t’arrive la rosée qui vivifie ta jeunesse.</p>
-      <p>L’Éternel en a fait le serment qu’il ne révoquera point: "Tu es prêtre pour l’éternité à la façon de Melchisédech."</p>
-      <p>Le Seigneur est à ta droite, au jour de sa colère il brise des rois.</p>
-      <p>Parmi les peuples il exerce la justice, accumule les cadavres; sur une étendue immense il fracasse des têtes.</p>
-      <p>Il boira sur la route de l’eau du torrent: aussi portera-t-il haut la tête.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -243,6 +293,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-109.html">← Tehilim 109</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-110.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-111.html">Tehilim 111 →</a></div>
 </main>
 
 <footer>

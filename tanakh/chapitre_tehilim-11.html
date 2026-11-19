@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 11 – Au Seigneur je me réfugie</h1>
     <p>Ketouvim, Tehilim, Chapitre 11</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-10.html">← Tehilim 10</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-11.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-12.html">Tehilim 12 →</a></div>
   </div>
 </header>
 
@@ -161,37 +202,46 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֗חַ לְדָ֫וִ֥ד בַּֽיהֹוָ֨ה&thinsp;<b>׀</b> חָסִ֗יתִי אֵ֭יךְ תֹּאמְר֣וּ לְנַפְשִׁ֑י <span class="mam-kq"><span class="mam-kq-k">(נודו)</span> <span class="mam-kq-q">[נ֝֗וּדִי]</span></span> הַרְכֶ֥ם צִפּֽוֹר׃</p>
-      <p>כִּ֤י הִנֵּ֪ה הָרְשָׁעִ֡ים יִדְרְכ֬וּן קֶ֗שֶׁת כּוֹנְנ֣וּ חִצָּ֣ם עַל־יֶ֑תֶר לִיר֥וֹת בְּמוֹ־אֹ֝֗פֶל לְיִשְׁרֵי־לֵֽב׃</p>
-      <p>כִּ֣י הַ֭שָּׁתוֹת יֵהָרֵס֑וּן צַ֝דִּ֗יק מַה־פָּעָֽל׃</p>
-      <p>יְהֹוָ֤ה&thinsp;<b>׀</b> בְּֽהֵ֘יכַ֤ל קׇדְשׁ֗וֹ יְהֹוָה֮ בַּשָּׁמַ֢יִם כִּ֫סְא֥וֹ עֵינָ֥יו יֶחֱז֑וּ עַפְעַפָּ֥יו יִ֝בְחֲנ֗וּ בְּנֵ֣י אָדָֽם׃</p>
-      <p>יְהֹוָה֮ צַדִּ֢יק יִ֫בְחָ֥ן וְ֭רָשָׁע וְאֹהֵ֣ב חָמָ֑ס שָֽׂנְאָ֥ה נַפְשֽׁוֹ׃</p>
-      <p>יַמְטֵ֥ר עַל־רְשָׁעִ֗ים פַּ֫חִ֥ים אֵ֣שׁ וְ֭גׇפְרִית וְר֥וּחַ זִלְעָפ֗וֹת מְנָ֣ת כּוֹסָֽם׃</p>
-      <p>כִּֽי־צַדִּ֣יק יְ֭הֹוָה צְדָק֣וֹת אָהֵ֑ב יָ֝שָׁ֗ר יֶחֱז֥וּ פָנֵֽימוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֗חַ לְדָ֫וִ֥ד בַּֽיהֹוָ֨ה&thinsp;<b>׀</b> חָסִ֗יתִי אֵ֭יךְ תֹּאמְר֣וּ לְנַפְשִׁ֑י <span class="mam-kq"><span class="mam-kq-k">(נודו)</span> <span class="mam-kq-q">[נ֝֗וּדִי]</span></span> הַרְכֶ֥ם צִפּֽוֹר׃</p></div><div class="heb-s"><p>למנצח לדוד ביהוה&thinsp;<b>׀</b> חסיתי איך תאמרו לנפשי <span class="mam-kq"><span class="mam-kq-k">(נודו)</span> <span class="mam-kq-q">[נודי]</span></span> הרכם צפור׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres; de David. L’Éternel est mon abri: comment me dites-vous: "Fuis vers la montagne comme un oiseau?</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י הִנֵּ֪ה הָרְשָׁעִ֡ים יִדְרְכ֬וּן קֶ֗שֶׁת כּוֹנְנ֣וּ חִצָּ֣ם עַל־יֶ֑תֶר לִיר֥וֹת בְּמוֹ־אֹ֝֗פֶל לְיִשְׁרֵי־לֵֽב׃</p></div><div class="heb-s"><p>כי הנה הרשעים ידרכון קשת כוננו חצם על־יתר לירות במו־אפל לישרי־לב׃</p></div></div>
+      <div class="texte-fr"><p>Car voici que les méchants bandent leur arc, fixent leur flèche sur la corde,</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י הַ֭שָּׁתוֹת יֵהָרֵס֑וּן צַ֝דִּ֗יק מַה־פָּעָֽל׃</p></div><div class="heb-s"><p>כי השתות יהרסון צדיק מה־פעל׃</p></div></div>
+      <div class="texte-fr"><p>pour la lancer, dans les ténèbres, contre les cœurs droits. Si les fondements sont renversés, que peut faire le juste?"</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֤ה&thinsp;<b>׀</b> בְּֽהֵ֘יכַ֤ל קׇדְשׁ֗וֹ יְהֹוָה֮ בַּשָּׁמַ֢יִם כִּ֫סְא֥וֹ עֵינָ֥יו יֶחֱז֑וּ עַפְעַפָּ֥יו יִ֝בְחֲנ֗וּ בְּנֵ֣י אָדָֽם׃</p></div><div class="heb-s"><p>יהוה&thinsp;<b>׀</b> בהיכל קדשו יהוה בשמים כסאו עיניו יחזו עפעפיו יבחנו בני אדם׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel, dans son saint palais, l’Éternel, dont le trône est aux cieux, ses yeux regardent, ses paupières distinguent les fils d’Adam.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָה֮ צַדִּ֢יק יִ֫בְחָ֥ן וְ֭רָשָׁע וְאֹהֵ֣ב חָמָ֑ס שָֽׂנְאָ֥ה נַפְשֽׁוֹ׃</p></div><div class="heb-s"><p>יהוה צדיק יבחן ורשע ואהב חמס שנאה נפשו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel éprouve le juste, mais le méchant et le partisan de la violence, il les hait de toute son âme.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַמְטֵ֥ר עַל־רְשָׁעִ֗ים פַּ֫חִ֥ים אֵ֣שׁ וְ֭גׇפְרִית וְר֥וּחַ זִלְעָפ֗וֹת מְנָ֣ת כּוֹסָֽם׃</p></div><div class="heb-s"><p>ימטר על־רשעים פחים אש וגפרית ורוח זלעפות מנת כוסם׃</p></div></div>
+      <div class="texte-fr"><p>Il fait pleuvoir sur les impies des charbons ardents: le feu, le soufre et un vent brûlant sont le lot qui leur échoit en partage.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־צַדִּ֣יק יְ֭הֹוָה צְדָק֣וֹת אָהֵ֑ב יָ֝שָׁ֗ר יֶחֱז֥וּ פָנֵֽימוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי־צדיק יהוה צדקות אהב ישר יחזו פנימו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Car l’Éternel est juste, il aime ce qui est juste: quiconque est droit contemplera sa face.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres; de David. L’Éternel est mon abri: comment me dites-vous: "Fuis vers la montagne comme un oiseau?</p>
-      <p>Car voici que les méchants bandent leur arc, fixent leur flèche sur la corde,</p>
-      <p>pour la lancer, dans les ténèbres, contre les cœurs droits. Si les fondements sont renversés, que peut faire le juste?"</p>
-      <p>L’Éternel, dans son saint palais, l’Éternel, dont le trône est aux cieux, ses yeux regardent, ses paupières distinguent les fils d’Adam.</p>
-      <p>L’Éternel éprouve le juste, mais le méchant et le partisan de la violence, il les hait de toute son âme.</p>
-      <p>Il fait pleuvoir sur les impies des charbons ardents: le feu, le soufre et un vent brûlant sont le lot qui leur échoit en partage.</p>
-      <p>Car l’Éternel est juste, il aime ce qui est juste: quiconque est droit contemplera sa face.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -243,6 +293,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-10.html">← Tehilim 10</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-11.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-12.html">Tehilim 12 →</a></div>
 </main>
 
 <footer>

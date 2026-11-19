@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 9 – Je te louerai de tout mon cœur</h1>
     <p>Ketouvim, Tehilim, Chapitre 9</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-8.html">← Tehilim 8</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-9.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-10.html">Tehilim 10 →</a></div>
   </div>
 </header>
 
@@ -161,65 +202,102 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַ֭מְנַצֵּחַ עַל־מ֥וּת לַבֵּ֗ן מִזְמ֥וֹר לְדָוִֽד׃</p>
-      <p>אוֹדֶ֣ה יְ֭הֹוָה בְּכׇל־לִבִּ֑י אֲ֝סַפְּרָ֗ה כׇּל־נִפְלְאוֹתֶֽיךָ׃</p>
-      <p>אֶשְׂמְחָ֣ה וְאֶעֶלְצָ֣ה בָ֑ךְ אֲזַמְּרָ֖ה שִׁמְךָ֣ עֶלְיֽוֹן׃</p>
-      <p>בְּשׁוּב־אוֹיְבַ֥י אָח֑וֹר יִכָּשְׁל֥וּ וְ֝יֹאבְד֗וּ מִפָּנֶֽיךָ׃</p>
-      <p>כִּֽי־עָ֭שִׂיתָ מִשְׁפָּטִ֣י וְדִינִ֑י יָשַׁ֥בְתָּ לְ֝כִסֵּ֗א שׁוֹפֵ֥ט צֶֽדֶק׃</p>
-      <p>גָּעַ֣רְתָּ ג֭וֹיִם אִבַּ֣דְתָּ רָשָׁ֑ע שְׁמָ֥ם מָ֝חִ֗יתָ לְעוֹלָ֥ם וָעֶֽד׃</p>
-      <p>הָֽאוֹיֵ֨ב&thinsp;<b>׀</b> תַּ֥מּוּ חֳרָב֗וֹת לָ֫נֶ֥צַח וְעָרִ֥ים נָתַ֑שְׁתָּ אָבַ֖ד זִכְרָ֣ם הֵֽמָּה׃</p>
-      <p>וַֽ֭יהֹוָה לְעוֹלָ֣ם יֵשֵׁ֑ב כּוֹנֵ֖ן לַמִּשְׁפָּ֣ט כִּסְאֽוֹ׃</p>
-      <p>וְה֗וּא יִשְׁפֹּֽט־תֵּבֵ֥ל בְּצֶ֑דֶק יָדִ֥ין לְ֝אֻמִּ֗ים בְּמֵישָׁרִֽים׃</p>
-      <p>וִ֘יהִ֤י יְהֹוָ֣ה מִשְׂגָּ֣ב לַדָּ֑ךְ מִ֝שְׂגָּ֗ב לְעִתּ֥וֹת בַּצָּרָֽה׃</p>
-      <p>וְיִבְטְח֣וּ בְ֭ךָ יוֹדְעֵ֣י שְׁמֶ֑ךָ כִּ֤י לֹֽא־עָזַ֖בְתָּ דֹרְשֶׁ֣יךָ יְהֹוָֽה׃</p>
-      <p>זַמְּר֗וּ לַ֭יהֹוָה יֹשֵׁ֣ב צִיּ֑וֹן הַגִּ֥ידוּ בָ֝עַמִּ֗ים עֲלִֽילוֹתָֽיו׃</p>
-      <p>כִּֽי־דֹרֵ֣שׁ דָּ֭מִים אוֹתָ֣ם זָכָ֑ר לֹֽא־שָׁ֝כַ֗ח צַעֲקַ֥ת <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[עֲנָוִֽים]</span></span>׃</p>
-      <p>חָֽנְנֵ֬נִי יְהֹוָ֗ה רְאֵ֣ה עׇ֭נְיִי מִשֹּׂנְאָ֑י מְ֝רוֹמְמִ֗י מִשַּׁ֥עֲרֵי מָֽוֶת׃</p>
-      <p>לְמַ֥עַן אֲסַפְּרָ֗ה כׇּֽל־תְּהִלָּ֫תֶ֥יךָ בְּשַׁעֲרֵ֥י בַת־צִיּ֑וֹן אָ֝גִ֗ילָה בִּישׁוּעָתֶֽךָ׃</p>
-      <p>טָבְע֣וּ ג֭וֹיִם בְּשַׁ֣חַת עָשׂ֑וּ בְּרֶֽשֶׁת־ז֥וּ טָ֝מָ֗נוּ נִלְכְּדָ֥ה רַגְלָֽם׃</p>
-      <p>נ֤וֹדַ֨ע&thinsp;<b>׀</b> יְהֹוָה֮ מִשְׁפָּ֢ט עָ֫שָׂ֥ה בְּפֹ֣עַל כַּ֭פָּיו נוֹקֵ֣שׁ רָשָׁ֑ע הִגָּי֥וֹן סֶֽלָה׃</p>
-      <p>יָשׁ֣וּבוּ רְשָׁעִ֣ים לִשְׁא֑וֹלָה כׇּל־גּ֝וֹיִ֗ם שְׁכֵחֵ֥י אֱלֹהִֽים׃</p>
-      <p>כִּ֤י לֹ֣א לָ֭נֶצַח יִשָּׁכַ֣ח אֶבְי֑וֹן תִּקְוַ֥ת <span class="mam-kq"><span class="mam-kq-k">(ענוים)</span> <span class="mam-kq-q">[עֲ֝נִיִּ֗ים]</span></span> תֹּאבַ֥ד לָעַֽד׃</p>
-      <p>קוּמָ֣ה יְ֭הֹוָה אַל־יָעֹ֣ז אֱנ֑וֹשׁ יִשָּׁפְט֥וּ ג֝וֹיִ֗ם עַל־פָּנֶֽיךָ׃</p>
-      <p>שִׁ֘יתָ֤ה יְהֹוָ֨ה&thinsp;<b>׀</b> מוֹרָ֗ה לָ֫הֶ֥ם יֵדְע֥וּ גוֹיִ֑ם אֱנ֖וֹשׁ הֵ֣מָּה סֶּֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a><a href="#v-21">21</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַ֭מְנַצֵּחַ עַל־מ֥וּת לַבֵּ֗ן מִזְמ֥וֹר לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח על־מות לבן מזמור לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Sur Mout-Labbén. Psaume de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹדֶ֣ה יְ֭הֹוָה בְּכׇל־לִבִּ֑י אֲ֝סַפְּרָ֗ה כׇּל־נִפְלְאוֹתֶֽיךָ׃</p></div><div class="heb-s"><p>אודה יהוה בכל־לבי אספרה כל־נפלאותיך׃</p></div></div>
+      <div class="texte-fr"><p>Je rends grâce à l’Éternel de tout mon cœur, je veux proclamer toutes tes merveilles,</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶשְׂמְחָ֣ה וְאֶעֶלְצָ֣ה בָ֑ךְ אֲזַמְּרָ֖ה שִׁמְךָ֣ עֶלְיֽוֹן׃</p></div><div class="heb-s"><p>אשמחה ואעלצה בך אזמרה שמך עליון׃</p></div></div>
+      <div class="texte-fr"><p>je veux me réjouir et exulter en toi, chanter ton nom, Dieu suprême,</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּשׁוּב־אוֹיְבַ֥י אָח֑וֹר יִכָּשְׁל֥וּ וְ֝יֹאבְד֗וּ מִפָּנֶֽיךָ׃</p></div><div class="heb-s"><p>בשוב־אויבי אחור יכשלו ויאבדו מפניך׃</p></div></div>
+      <div class="texte-fr"><p>alors que mes ennemis lâchent pied et reculent, qu’ils trébuchent et périssent sous tes coups.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־עָ֭שִׂיתָ מִשְׁפָּטִ֣י וְדִינִ֑י יָשַׁ֥בְתָּ לְ֝כִסֵּ֗א שׁוֹפֵ֥ט צֶֽדֶק׃</p></div><div class="heb-s"><p>כי־עשית משפטי ודיני ישבת לכסא שופט צדק׃</p></div></div>
+      <div class="texte-fr"><p>Oui, tu as fait triompher mon droit, ma cause, pris place sur ton trône en juge équitable.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּעַ֣רְתָּ ג֭וֹיִם אִבַּ֣דְתָּ רָשָׁ֑ע שְׁמָ֥ם מָ֝חִ֗יתָ לְעוֹלָ֥ם וָעֶֽד׃</p></div><div class="heb-s"><p>גערת גוים אבדת רשע שמם מחית לעולם ועד׃</p></div></div>
+      <div class="texte-fr"><p>Tu as réprimandé les peuples, perdu l’impie: leur nom, tu l’as effacé à tout jamais.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָֽאוֹיֵ֨ב&thinsp;<b>׀</b> תַּ֥מּוּ חֳרָב֗וֹת לָ֫נֶ֥צַח וְעָרִ֥ים נָתַ֑שְׁתָּ אָבַ֖ד זִכְרָ֣ם הֵֽמָּה׃</p></div><div class="heb-s"><p>האויב&thinsp;<b>׀</b> תמו חרבות לנצח וערים נתשת אבד זכרם המה׃</p></div></div>
+      <div class="texte-fr"><p>O l’ennemi! C’en est fini pour toujours des ruines; plus de villes démolies par toi! C’est leur souvenir à eux qui disparaît.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽ֭יהֹוָה לְעוֹלָ֣ם יֵשֵׁ֑ב כּוֹנֵ֖ן לַמִּשְׁפָּ֣ט כִּסְאֽוֹ׃</p></div><div class="heb-s"><p>ויהוה לעולם ישב כונן למשפט כסאו׃</p></div></div>
+      <div class="texte-fr"><p>Mais le Seigneur demeure éternellement, il a établi son trône pour la justice.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְה֗וּא יִשְׁפֹּֽט־תֵּבֵ֥ל בְּצֶ֑דֶק יָדִ֥ין לְ֝אֻמִּ֗ים בְּמֵישָׁרִֽים׃</p></div><div class="heb-s"><p>והוא ישפט־תבל בצדק ידין לאמים במישרים׃</p></div></div>
+      <div class="texte-fr"><p>Oui, c’est lui qui juge le monde avec équité, il prononce sur les nations avec droiture.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וִ֘יהִ֤י יְהֹוָ֣ה מִשְׂגָּ֣ב לַדָּ֑ךְ מִ֝שְׂגָּ֗ב לְעִתּ֥וֹת בַּצָּרָֽה׃</p></div><div class="heb-s"><p>ויהי יהוה משגב לדך משגב לעתות בצרה׃</p></div></div>
+      <div class="texte-fr"><p>Que l’Éternel soit donc un abri pour l’opprimé, un abri dans les temps de détresse!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִבְטְח֣וּ בְ֭ךָ יוֹדְעֵ֣י שְׁמֶ֑ךָ כִּ֤י לֹֽא־עָזַ֖בְתָּ דֹרְשֶׁ֣יךָ יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויבטחו בך יודעי שמך כי לא־עזבת דרשיך יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi se confient en toi ceux qui connaissent ton nom; car tu ne délaisses point, ô Seigneur, ceux qui te recherchent.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>זַמְּר֗וּ לַ֭יהֹוָה יֹשֵׁ֣ב צִיּ֑וֹן הַגִּ֥ידוּ בָ֝עַמִּ֗ים עֲלִֽילוֹתָֽיו׃</p></div><div class="heb-s"><p>זמרו ליהוה ישב ציון הגידו בעמים עלילותיו׃</p></div></div>
+      <div class="texte-fr"><p>Célébrez l’Éternel qui siège à Sion; proclamez parmi les peuples ses hauts faits.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־דֹרֵ֣שׁ דָּ֭מִים אוֹתָ֣ם זָכָ֑ר לֹֽא־שָׁ֝כַ֗ח צַעֲקַ֥ת <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[עֲנָוִֽים]</span></span>׃</p></div><div class="heb-s"><p>כי־דרש דמים אותם זכר לא־שכח צעקת <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[ענוים]</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Car il demande compte du sang [versé], il en conserve le souvenir, il n’oublie point le cri des humbles.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>חָֽנְנֵ֬נִי יְהֹוָ֗ה רְאֵ֣ה עׇ֭נְיִי מִשֹּׂנְאָ֑י מְ֝רוֹמְמִ֗י מִשַּׁ֥עֲרֵי מָֽוֶת׃</p></div><div class="heb-s"><p>חננני יהוה ראה עניי משנאי מרוממי משערי מות׃</p></div></div>
+      <div class="texte-fr"><p>Sois-moi propice, Seigneur! Vois quelle est ma misère du fait de mes ennemis, toi qui me retires des portes de la mort;</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֥עַן אֲסַפְּרָ֗ה כׇּֽל־תְּהִלָּ֫תֶ֥יךָ בְּשַׁעֲרֵ֥י בַת־צִיּ֑וֹן אָ֝גִ֗ילָה בִּישׁוּעָתֶֽךָ׃</p></div><div class="heb-s"><p>למען אספרה כל־תהלתיך בשערי בת־ציון אגילה בישועתך׃</p></div></div>
+      <div class="texte-fr"><p>afin que je puisse proclamer tes louanges aux portes de la fille de Sion et me réjouir de ton secours.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>טָבְע֣וּ ג֭וֹיִם בְּשַׁ֣חַת עָשׂ֑וּ בְּרֶֽשֶׁת־ז֥וּ טָ֝מָ֗נוּ נִלְכְּדָ֥ה רַגְלָֽם׃</p></div><div class="heb-s"><p>טבעו גוים בשחת עשו ברשת־זו טמנו נלכדה רגלם׃</p></div></div>
+      <div class="texte-fr"><p>Que les peuples s’enfoncent dans la fosse qu’ils ont creusée, que leur pied s’embarrasse dans le filet qu’ils ont dissimulé!</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>נ֤וֹדַ֨ע&thinsp;<b>׀</b> יְהֹוָה֮ מִשְׁפָּ֢ט עָ֫שָׂ֥ה בְּפֹ֣עַל כַּ֭פָּיו נוֹקֵ֣שׁ רָשָׁ֑ע הִגָּי֥וֹן סֶֽלָה׃</p></div><div class="heb-s"><p>נודע&thinsp;<b>׀</b> יהוה משפט עשה בפעל כפיו נוקש רשע הגיון סלה׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel s’est manifesté, il a exercé la justice; le méchant est pris au piège par ses propres œuvres. Higayon, Sélah!</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָשׁ֣וּבוּ רְשָׁעִ֣ים לִשְׁא֑וֹלָה כׇּל־גּ֝וֹיִ֗ם שְׁכֵחֵ֥י אֱלֹהִֽים׃</p></div><div class="heb-s"><p>ישובו רשעים לשאולה כל־גוים שכחי אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils rentrent dans le Cheol, les impies! Tous les peuples oublieux de Dieu!</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י לֹ֣א לָ֭נֶצַח יִשָּׁכַ֣ח אֶבְי֑וֹן תִּקְוַ֥ת <span class="mam-kq"><span class="mam-kq-k">(ענוים)</span> <span class="mam-kq-q">[עֲ֝נִיִּ֗ים]</span></span> תֹּאבַ֥ד לָעַֽד׃</p></div><div class="heb-s"><p>כי לא לנצח ישכח אביון תקות <span class="mam-kq"><span class="mam-kq-k">(ענוים)</span> <span class="mam-kq-q">[עניים]</span></span> תאבד לעד׃</p></div></div>
+      <div class="texte-fr"><p>Car le pauvre n’est pas oublié sans retour, l’espoir des humbles n’est pas perdu à jamais.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>קוּמָ֣ה יְ֭הֹוָה אַל־יָעֹ֣ז אֱנ֑וֹשׁ יִשָּׁפְט֥וּ ג֝וֹיִ֗ם עַל־פָּנֶֽיךָ׃</p></div><div class="heb-s"><p>קומה יהוה אל־יעז אנוש ישפטו גוים על־פניך׃</p></div></div>
+      <div class="texte-fr"><p>Lève-toi, Seigneur! Que le mortel ne triomphe pas! Que les peuples soient appelés en jugement devant toi!</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֘יתָ֤ה יְהֹוָ֨ה&thinsp;<b>׀</b> מוֹרָ֗ה לָ֫הֶ֥ם יֵדְע֥וּ גוֹיִ֑ם אֱנ֖וֹשׁ הֵ֣מָּה סֶּֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>שיתה יהוה&thinsp;<b>׀</b> מורה להם ידעו גוים אנוש המה סלה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Inspire-leur, ô Éternel, la terreur: que les peuples sachent qu’ils sont de [faibles] mortels! Sélah!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Sur Mout-Labbén. Psaume de David.</p>
-      <p>Je rends grâce à l’Éternel de tout mon cœur, je veux proclamer toutes tes merveilles,</p>
-      <p>je veux me réjouir et exulter en toi, chanter ton nom, Dieu suprême,</p>
-      <p>alors que mes ennemis lâchent pied et reculent, qu’ils trébuchent et périssent sous tes coups.</p>
-      <p>Oui, tu as fait triompher mon droit, ma cause, pris place sur ton trône en juge équitable.</p>
-      <p>Tu as réprimandé les peuples, perdu l’impie: leur nom, tu l’as effacé à tout jamais.</p>
-      <p>O l’ennemi! C’en est fini pour toujours des ruines; plus de villes démolies par toi! C’est leur souvenir à eux qui disparaît.</p>
-      <p>Mais le Seigneur demeure éternellement, il a établi son trône pour la justice.</p>
-      <p>Oui, c’est lui qui juge le monde avec équité, il prononce sur les nations avec droiture.</p>
-      <p>Que l’Éternel soit donc un abri pour l’opprimé, un abri dans les temps de détresse!</p>
-      <p>Ainsi se confient en toi ceux qui connaissent ton nom; car tu ne délaisses point, ô Seigneur, ceux qui te recherchent.</p>
-      <p>Célébrez l’Éternel qui siège à Sion; proclamez parmi les peuples ses hauts faits.</p>
-      <p>Car il demande compte du sang [versé], il en conserve le souvenir, il n’oublie point le cri des humbles.</p>
-      <p>Sois-moi propice, Seigneur! Vois quelle est ma misère du fait de mes ennemis, toi qui me retires des portes de la mort;</p>
-      <p>afin que je puisse proclamer tes louanges aux portes de la fille de Sion et me réjouir de ton secours.</p>
-      <p>Que les peuples s’enfoncent dans la fosse qu’ils ont creusée, que leur pied s’embarrasse dans le filet qu’ils ont dissimulé!</p>
-      <p>L’Éternel s’est manifesté, il a exercé la justice; le méchant est pris au piège par ses propres œuvres. Higayon, Sélah!</p>
-      <p>Qu’ils rentrent dans le Cheol, les impies! Tous les peuples oublieux de Dieu!</p>
-      <p>Car le pauvre n’est pas oublié sans retour, l’espoir des humbles n’est pas perdu à jamais.</p>
-      <p>Lève-toi, Seigneur! Que le mortel ne triomphe pas! Que les peuples soient appelés en jugement devant toi!</p>
-      <p>Inspire-leur, ô Éternel, la terreur: que les peuples sachent qu’ils sont de [faibles] mortels! Sélah!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -274,6 +352,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-8.html">← Tehilim 8</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-9.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-10.html">Tehilim 10 →</a></div>
 </main>
 
 <footer>

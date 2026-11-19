@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 41 – Heureux celui qui s&#x27;occupe du pauvre</h1>
     <p>Ketouvim, Tehilim, Chapitre 41</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-40.html">← Tehilim 40</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-41.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-42.html">Tehilim 42 →</a></div>
   </div>
 </header>
 
@@ -161,51 +202,74 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃</p>
-      <p>אַ֭שְׁרֵי מַשְׂכִּ֣יל אֶל־דָּ֑ל בְּי֥וֹם רָ֝עָ֗ה יְֽמַלְּטֵ֥הוּ יְהֹוָֽה׃</p>
-      <p>יְהֹוָ֤ה&thinsp;<b>׀</b> יִשְׁמְרֵ֣הוּ וִ֭יחַיֵּהוּ <span class="mam-kq"><span class="mam-kq-k">(יאשר)</span> <span class="mam-kq-q">[וְאֻשַּׁ֣ר]</span></span> בָּאָ֑רֶץ וְאַֽל־תִּ֝תְּנֵ֗הוּ בְּנֶ֣פֶשׁ אֹיְבָֽיו׃</p>
-      <p>יְֽהֹוָ֗ה יִ֭סְעָדֶנּוּ עַל־עֶ֣רֶשׂ דְּוָ֑י כׇּל־מִ֝שְׁכָּב֗וֹ הָפַ֥כְתָּ בְחׇלְיֽוֹ׃</p>
-      <p>אֲֽנִי־אָ֭מַרְתִּי יְהֹוָ֣ה חׇנֵּ֑נִי רְפָאָ֥ה נַ֝פְשִׁ֗י כִּי־חָטָ֥אתִי לָֽךְ׃</p>
-      <p>אוֹיְבַ֗י יֹאמְר֣וּ רַ֣ע לִ֑י מָתַ֥י יָ֝מ֗וּת וְאָבַ֥ד שְׁמֽוֹ׃</p>
-      <p>וְאִם־בָּ֤א לִרְא֨וֹת&thinsp;<b>׀</b> שָׁ֤וְא יְדַבֵּ֗ר לִבּ֗וֹ יִקְבׇּץ־אָ֥וֶן ל֑וֹ יֵצֵ֖א לַח֣וּץ יְדַבֵּֽר׃</p>
-      <p>יַ֗חַד עָלַ֣י יִ֭תְלַחֲשׁוּ כׇּל־שֹׂנְאָ֑י עָלַ֓י&thinsp;<b>׀</b> יַחְשְׁב֖וּ רָעָ֣ה לִֽי׃</p>
-      <p>דְּֽבַר־בְּ֭לִיַּעַל יָצ֣וּק בּ֑וֹ וַאֲשֶׁ֥ר שָׁ֝כַ֗ב לֹא־יוֹסִ֥יף לָקֽוּם׃</p>
-      <p>גַּם־אִ֤ישׁ שְׁלוֹמִ֨י&thinsp;<b>׀</b> אֲשֶׁר־בָּטַ֣חְתִּי ב֭וֹ אוֹכֵ֣ל לַחְמִ֑י הִגְדִּ֖יל עָלַ֣י עָקֵֽב׃</p>
-      <p>וְאַתָּ֤ה יְהֹוָ֗ה חׇנֵּ֥נִי וַהֲקִימֵ֑נִי וַאֲשַׁלְּמָ֥ה לָהֶֽם׃</p>
-      <p>בְּזֹ֣את יָ֭דַעְתִּי כִּֽי־חָפַ֣צְתָּ בִּ֑י כִּ֤י לֹֽא־יָרִ֖יעַ אֹיְבִ֣י עָלָֽי׃</p>
-      <p>וַאֲנִ֗י בְּ֭תֻמִּי תָּמַ֣כְתָּ בִּ֑י וַתַּצִּיבֵ֖נִי לְפָנֶ֣יךָ לְעוֹלָֽם׃</p>
-      <p>בָּ֘ר֤וּךְ יְהֹוָ֨ה&thinsp;<b>׀</b> אֱלֹ֘הֵ֤י יִשְׂרָאֵ֗ל מֵֽ֭הָעוֹלָם וְעַ֥ד הָעוֹלָ֗ם אָ֘מֵ֥ן&thinsp;<small>׀</small>&thinsp;וְאָמֵֽן׃</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח מזמור לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Psaume de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֭שְׁרֵי מַשְׂכִּ֣יל אֶל־דָּ֑ל בְּי֥וֹם רָ֝עָ֗ה יְֽמַלְּטֵ֥הוּ יְהֹוָֽה׃</p></div><div class="heb-s"><p>אשרי משכיל אל־דל ביום רעה ימלטהו יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Heureux celui qui s’intéresse au pauvre! Au jour de la calamité, l’Éternel le sauvera.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֤ה&thinsp;<b>׀</b> יִשְׁמְרֵ֣הוּ וִ֭יחַיֵּהוּ <span class="mam-kq"><span class="mam-kq-k">(יאשר)</span> <span class="mam-kq-q">[וְאֻשַּׁ֣ר]</span></span> בָּאָ֑רֶץ וְאַֽל־תִּ֝תְּנֵ֗הוּ בְּנֶ֣פֶשׁ אֹיְבָֽיו׃</p></div><div class="heb-s"><p>יהוה&thinsp;<b>׀</b> ישמרהו ויחיהו <span class="mam-kq"><span class="mam-kq-k">(יאשר)</span> <span class="mam-kq-q">[ואשר]</span></span> בארץ ואל־תתנהו בנפש איביו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel le protégera, lui conservera la vie, et il jouira du bonheur sur la terre: tu ne le livreras pas à la fureur de ses ennemis.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְֽהֹוָ֗ה יִ֭סְעָדֶנּוּ עַל־עֶ֣רֶשׂ דְּוָ֑י כׇּל־מִ֝שְׁכָּב֗וֹ הָפַ֥כְתָּ בְחׇלְיֽוֹ׃</p></div><div class="heb-s"><p>יהוה יסעדנו על־ערש דוי כל־משכבו הפכת בחליו׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur le soutiendra sur le lit de douleur; sa couche, tu la retournes entièrement dans sa maladie.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲֽנִי־אָ֭מַרְתִּי יְהֹוָ֣ה חׇנֵּ֑נִי רְפָאָ֥ה נַ֝פְשִׁ֗י כִּי־חָטָ֥אתִי לָֽךְ׃</p></div><div class="heb-s"><p>אני־אמרתי יהוה חנני רפאה נפשי כי־חטאתי לך׃</p></div></div>
+      <div class="texte-fr"><p>Je dis donc, moi: "Éternel, sois-moi propice! Guéris mon âme, car j’ai péché contre toi."</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹיְבַ֗י יֹאמְר֣וּ רַ֣ע לִ֑י מָתַ֥י יָ֝מ֗וּת וְאָבַ֥ד שְׁמֽוֹ׃</p></div><div class="heb-s"><p>אויבי יאמרו רע לי מתי ימות ואבד שמו׃</p></div></div>
+      <div class="texte-fr"><p>Mes ennemis tiennent de méchants propos à mon sujet: "Quand mourra-t-il pour que son nom périsse?"</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בָּ֤א לִרְא֨וֹת&thinsp;<b>׀</b> שָׁ֤וְא יְדַבֵּ֗ר לִבּ֗וֹ יִקְבׇּץ־אָ֥וֶן ל֑וֹ יֵצֵ֖א לַח֣וּץ יְדַבֵּֽר׃</p></div><div class="heb-s"><p>ואם־בא לראות&thinsp;<b>׀</b> שוא ידבר לבו יקבץ־און לו יצא לחוץ ידבר׃</p></div></div>
+      <div class="texte-fr"><p>Que si l’un d’eux vient [me] voir, son cœur exprime des faussetés et fait une provision de méchanceté: il me quitte pour sortir et la débiter.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַ֗חַד עָלַ֣י יִ֭תְלַחֲשׁוּ כׇּל־שֹׂנְאָ֑י עָלַ֓י&thinsp;<b>׀</b> יַחְשְׁב֖וּ רָעָ֣ה לִֽי׃</p></div><div class="heb-s"><p>יחד עלי יתלחשו כל־שנאי עלי&thinsp;<b>׀</b> יחשבו רעה לי׃</p></div></div>
+      <div class="texte-fr"><p>Ensemble, tous mes adversaires chuchotent contre moi; contre moi, ils imaginent de funestes pensées:</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>דְּֽבַר־בְּ֭לִיַּעַל יָצ֣וּק בּ֑וֹ וַאֲשֶׁ֥ר שָׁ֝כַ֗ב לֹא־יוֹסִ֥יף לָקֽוּם׃</p></div><div class="heb-s"><p>דבר־בליעל יצוק בו ואשר שכב לא־יוסיף לקום׃</p></div></div>
+      <div class="texte-fr"><p>"Un mauvais sort s’acharne après lui; dès lors qu’il est couché, il ne se relèvera plus!"</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּם־אִ֤ישׁ שְׁלוֹמִ֨י&thinsp;<b>׀</b> אֲשֶׁר־בָּטַ֣חְתִּי ב֭וֹ אוֹכֵ֣ל לַחְמִ֑י הִגְדִּ֖יל עָלַ֣י עָקֵֽב׃</p></div><div class="heb-s"><p>גם־איש שלומי&thinsp;<b>׀</b> אשר־בטחתי בו אוכל לחמי הגדיל עלי עקב׃</p></div></div>
+      <div class="texte-fr"><p>Même mon ami intime, en qui j’avais confiance, et qui mangeait mon pain, a levé le talon contre moi.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתָּ֤ה יְהֹוָ֗ה חׇנֵּ֥נִי וַהֲקִימֵ֑נִי וַאֲשַׁלְּמָ֥ה לָהֶֽם׃</p></div><div class="heb-s"><p>ואתה יהוה חנני והקימני ואשלמה להם׃</p></div></div>
+      <div class="texte-fr"><p>Or donc, Éternel, prends-moi en pitié et relève-moi, pour que je puisse leur rendre la pareille.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּזֹ֣את יָ֭דַעְתִּי כִּֽי־חָפַ֣צְתָּ בִּ֑י כִּ֤י לֹֽא־יָרִ֖יעַ אֹיְבִ֣י עָלָֽי׃</p></div><div class="heb-s"><p>בזאת ידעתי כי־חפצת בי כי לא־יריע איבי עלי׃</p></div></div>
+      <div class="texte-fr"><p>A cela je reconnaîtrai que tu m’as pris en affection: que mon ennemi ne triomphe pas de moi!</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֗י בְּ֭תֻמִּי תָּמַ֣כְתָּ בִּ֑י וַתַּצִּיבֵ֖נִי לְפָנֶ֣יךָ לְעוֹלָֽם׃</p></div><div class="heb-s"><p>ואני בתמי תמכת בי ותציבני לפניך לעולם׃</p></div></div>
+      <div class="texte-fr"><p>En raison de mon intégrité, tu me soutiens et m’admets en ta présence pour toujours.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>בָּ֘ר֤וּךְ יְהֹוָ֨ה&thinsp;<b>׀</b> אֱלֹ֘הֵ֤י יִשְׂרָאֵ֗ל מֵֽ֭הָעוֹלָם וְעַ֥ד הָעוֹלָ֗ם אָ֘מֵ֥ן&thinsp;<small>׀</small>&thinsp;וְאָמֵֽן׃</p></div><div class="heb-s"><p>ברוך יהוה&thinsp;<b>׀</b> אלהי ישראל מהעולם ועד העולם אמן&thinsp;<small>׀</small>&thinsp;ואמן׃</p></div></div>
+      <div class="texte-fr"><p>Loué soit l’Éternel, Dieu d’Israël, d’éternité en éternité! Amen et Amen!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Psaume de David.</p>
-      <p>Heureux celui qui s’intéresse au pauvre! Au jour de la calamité, l’Éternel le sauvera.</p>
-      <p>L’Éternel le protégera, lui conservera la vie, et il jouira du bonheur sur la terre: tu ne le livreras pas à la fureur de ses ennemis.</p>
-      <p>Le Seigneur le soutiendra sur le lit de douleur; sa couche, tu la retournes entièrement dans sa maladie.</p>
-      <p>Je dis donc, moi: "Éternel, sois-moi propice! Guéris mon âme, car j’ai péché contre toi."</p>
-      <p>Mes ennemis tiennent de méchants propos à mon sujet: "Quand mourra-t-il pour que son nom périsse?"</p>
-      <p>Que si l’un d’eux vient [me] voir, son cœur exprime des faussetés et fait une provision de méchanceté: il me quitte pour sortir et la débiter.</p>
-      <p>Ensemble, tous mes adversaires chuchotent contre moi; contre moi, ils imaginent de funestes pensées:</p>
-      <p>"Un mauvais sort s’acharne après lui; dès lors qu’il est couché, il ne se relèvera plus!"</p>
-      <p>Même mon ami intime, en qui j’avais confiance, et qui mangeait mon pain, a levé le talon contre moi.</p>
-      <p>Or donc, Éternel, prends-moi en pitié et relève-moi, pour que je puisse leur rendre la pareille.</p>
-      <p>A cela je reconnaîtrai que tu m’as pris en affection: que mon ennemi ne triomphe pas de moi!</p>
-      <p>En raison de mon intégrité, tu me soutiens et m’admets en ta présence pour toujours.</p>
-      <p>Loué soit l’Éternel, Dieu d’Israël, d’éternité en éternité! Amen et Amen!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -260,6 +324,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-40.html">← Tehilim 40</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-41.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-42.html">Tehilim 42 →</a></div>
 </main>
 
 <footer>

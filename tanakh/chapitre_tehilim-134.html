@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 134 – Bénissez D.ieu, serviteurs de D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 134</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-133.html">← Tehilim 133</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-134.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-135.html">Tehilim 135 →</a></div>
   </div>
 </header>
 
@@ -161,29 +202,30 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>שִׁ֗יר הַֽמַּ֫עֲל֥וֹת הִנֵּ֤ה&thinsp;<b>׀</b> בָּרְכ֣וּ אֶת־יְ֭הֹוָה כׇּל־עַבְדֵ֣י יְהֹוָ֑ה הָעֹמְדִ֥ים בְּבֵית־יְ֝הֹוָ֗ה בַּלֵּילֽוֹת׃</p>
-      <p>שְׂאֽוּ־יְדֵכֶ֥ם קֹ֑דֶשׁ וּ֝בָרְכ֗וּ אֶת־יְהֹוָֽה׃</p>
-      <p>יְבָרֶכְךָ֣ יְ֭הֹוָה מִצִּיּ֑וֹן עֹ֝שֵׂ֗ה שָׁמַ֥יִם וָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֗יר הַֽמַּ֫עֲל֥וֹת הִנֵּ֤ה&thinsp;<b>׀</b> בָּרְכ֣וּ אֶת־יְ֭הֹוָה כׇּל־עַבְדֵ֣י יְהֹוָ֑ה הָעֹמְדִ֥ים בְּבֵית־יְ֝הֹוָ֗ה בַּלֵּילֽוֹת׃</p></div><div class="heb-s"><p>שיר המעלות הנה&thinsp;<b>׀</b> ברכו את־יהוה כל־עבדי יהוה העמדים בבית־יהוה בלילות׃</p></div></div>
+      <div class="texte-fr"><p>Cantique des degrés. Allons! bénissez l’Éternel, vous tous, serviteurs de l’Éternel, qui vous tenez dans la maison du Seigneur durant les nuits.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׂאֽוּ־יְדֵכֶ֥ם קֹ֑דֶשׁ וּ֝בָרְכ֗וּ אֶת־יְהֹוָֽה׃</p></div><div class="heb-s"><p>שאו־ידכם קדש וברכו את־יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Elevez vos mains vers le sanctuaire et bénissez le Seigneur.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְבָרֶכְךָ֣ יְ֭הֹוָה מִצִּיּ֑וֹן עֹ֝שֵׂ֗ה שָׁמַ֥יִם וָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יברכך יהוה מציון עשה שמים וארץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Qu’il te bénisse de Sion, l’Éternel qui a fait le ciel et la terre!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Cantique des degrés. Allons! bénissez l’Éternel, vous tous, serviteurs de l’Éternel, qui vous tenez dans la maison du Seigneur durant les nuits.</p>
-      <p>Elevez vos mains vers le sanctuaire et bénissez le Seigneur.</p>
-      <p>Qu’il te bénisse de Sion, l’Éternel qui a fait le ciel et la terre!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -232,6 +274,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-133.html">← Tehilim 133</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-134.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-135.html">Tehilim 135 →</a></div>
 </main>
 
 <footer>

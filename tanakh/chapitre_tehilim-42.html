@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 42 – Comme la biche soupire après les eaux</h1>
     <p>Ketouvim, Tehilim, Chapitre 42</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-41.html">← Tehilim 41</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-42.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-43.html">Tehilim 43 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֗חַ מַשְׂכִּ֥יל לִבְנֵי־קֹֽרַח׃</p>
-      <p>כְּאַיָּ֗ל תַּעֲרֹ֥ג עַל־אֲפִֽיקֵי־מָ֑יִם כֵּ֤ן נַפְשִׁ֨י תַעֲרֹ֖ג אֵלֶ֣יךָ אֱלֹהִֽים׃</p>
-      <p>צָמְאָ֬ה נַפְשִׁ֨י&thinsp;<b>׀</b> לֵאלֹהִים֮ לְאֵ֢ל חָ֥֫י מָתַ֥י אָב֑וֹא וְ֝אֵרָאֶ֗ה פְּנֵ֣י אֱלֹהִֽים׃</p>
-      <p>הָֽיְתָה־לִּ֬י דִמְעָתִ֣י לֶ֭חֶם יוֹמָ֣ם וָלָ֑יְלָה בֶּאֱמֹ֥ר אֵלַ֥י כׇּל־הַ֝יּ֗וֹם אַיֵּ֥ה אֱלֹהֶֽיךָ׃</p>
-      <p>אֵ֤לֶּה אֶזְכְּרָ֨ה&thinsp;<b>׀</b> וְאֶשְׁפְּכָ֬ה עָלַ֨י&thinsp;<b>׀</b> נַפְשִׁ֗י כִּ֤י אֶעֱבֹ֨ר&thinsp;<b>׀</b> בַּסָּךְ֮ אֶדַּדֵּ֗ם עַד־בֵּ֥ית<span class="mam-implicit-maqaf">־</span>אֱלֹ֫הִ֥ים בְּקוֹל־רִנָּ֥ה וְתוֹדָ֗ה הָמ֥וֹן חוֹגֵֽג׃</p>
-      <p>מַה־תִּשְׁתּ֬וֹחֲחִ֨י&thinsp;<b>׀</b> נַפְשִׁי֮ וַתֶּהֱמִ֢י עָ֫לָ֥י הוֹחִ֣לִי לֵ֭אלֹהִים כִּי־ע֥וֹד אוֹדֶ֗נּוּ יְשׁוּע֥וֹת פָּנָֽיו׃</p>
-      <p>אֱֽלֹהַ֗י עָלַי֮ נַפְשִׁ֢י תִשְׁתּ֫וֹחָ֥ח עַל־כֵּ֗ן אֶ֭זְכׇּרְךָ מֵאֶ֣רֶץ יַרְדֵּ֑ן וְ֝חֶרְמוֹנִ֗ים מֵהַ֥ר מִצְעָֽר׃</p>
-      <p>תְּהוֹם־אֶל־תְּה֣וֹם ק֭וֹרֵא לְק֣וֹל צִנּוֹרֶ֑יךָ כׇּֽל־מִשְׁבָּרֶ֥יךָ וְ֝גַלֶּ֗יךָ עָלַ֥י עָבָֽרוּ׃</p>
-      <p>יוֹמָ֤ם&thinsp;<b>׀</b> יְצַוֶּ֬ה יְהֹוָ֨ה&thinsp;<b>׀</b> חַסְדּ֗וֹ וּ֭בַלַּיְלָה שִׁירֹ֣ה עִמִּ֑י תְּ֝פִלָּ֗ה לְאֵ֣ל חַיָּֽי׃</p>
-      <p>אוֹמְרָ֤ה&thinsp;<b>׀</b> לְאֵ֥ל סַלְעִי֮ לָמָ֢ה שְׁכַ֫חְתָּ֥נִי לָֽמָּה־קֹדֵ֥ר אֵלֵ֗ךְ בְּלַ֣חַץ אוֹיֵֽב׃</p>
-      <p>בְּרֶ֤צַח&thinsp;<b>׀</b> בְּֽעַצְמוֹתַ֗י חֵרְפ֥וּנִי צוֹרְרָ֑י בְּאׇמְרָ֥ם אֵלַ֥י כׇּל־הַ֝יּ֗וֹם אַיֵּ֥ה אֱלֹהֶֽיךָ׃</p>
-      <p>מַה־תִּשְׁתּ֬וֹחֲחִ֨י&thinsp;<b>׀</b> נַפְשִׁי֮ וּֽמַה־תֶּהֱמִ֢י עָ֫לָ֥י הוֹחִ֣ילִי לֵ֭אלֹהִים כִּי־ע֣וֹד אוֹדֶ֑נּוּ יְשׁוּעֹ֥ת פָּ֝נַ֗י וֵאלֹהָֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֗חַ מַשְׂכִּ֥יל לִבְנֵי־קֹֽרַח׃</p></div><div class="heb-s"><p>למנצח משכיל לבני־קרח׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Maskîl. Par les fils de Coré.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּאַיָּ֗ל תַּעֲרֹ֥ג עַל־אֲפִֽיקֵי־מָ֑יִם כֵּ֤ן נַפְשִׁ֨י תַעֲרֹ֖ג אֵלֶ֣יךָ אֱלֹהִֽים׃</p></div><div class="heb-s"><p>כאיל תערג על־אפיקי־מים כן נפשי תערג אליך אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Comme la biche aspire aux cours d’eau, ainsi mon âme aspire à toi, ô Dieu!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>צָמְאָ֬ה נַפְשִׁ֨י&thinsp;<b>׀</b> לֵאלֹהִים֮ לְאֵ֢ל חָ֥֫י מָתַ֥י אָב֑וֹא וְ֝אֵרָאֶ֗ה פְּנֵ֣י אֱלֹהִֽים׃</p></div><div class="heb-s"><p>צמאה נפשי&thinsp;<b>׀</b> לאלהים לאל חי מתי אבוא ואראה פני אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme a soif de Dieu, du Dieu vivant; quand reviendrai-je pour paraître en présence de Dieu?</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָֽיְתָה־לִּ֬י דִמְעָתִ֣י לֶ֭חֶם יוֹמָ֣ם וָלָ֑יְלָה בֶּאֱמֹ֥ר אֵלַ֥י כׇּל־הַ֝יּ֗וֹם אַיֵּ֥ה אֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>היתה־לי דמעתי לחם יומם ולילה באמר אלי כל־היום איה אלהיך׃</p></div></div>
+      <div class="texte-fr"><p>Mes larmes sont ma nourriture de jour et de nuit, depuis qu’on me dit sans cesse: "Où est ton Dieu?"</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֤לֶּה אֶזְכְּרָ֨ה&thinsp;<b>׀</b> וְאֶשְׁפְּכָ֬ה עָלַ֨י&thinsp;<b>׀</b> נַפְשִׁ֗י כִּ֤י אֶעֱבֹ֨ר&thinsp;<b>׀</b> בַּסָּךְ֮ אֶדַּדֵּ֗ם עַד־בֵּ֥ית<span class="mam-implicit-maqaf">־</span>אֱלֹ֫הִ֥ים בְּקוֹל־רִנָּ֥ה וְתוֹדָ֗ה הָמ֥וֹן חוֹגֵֽג׃</p></div><div class="heb-s"><p>אלה אזכרה&thinsp;<b>׀</b> ואשפכה עלי&thinsp;<b>׀</b> נפשי כי אעבר&thinsp;<b>׀</b> בסך אדדם עד־בית<span class="mam-implicit-maqaf">־</span>אלהים בקול־רנה ותודה המון חוגג׃</p></div></div>
+      <div class="texte-fr"><p>Mon âme se fond au dedans de moi, quand je me rappelle le temps où je m’avançais au milieu de rangs pressés, marchant en procession avec eux vers la maison de Dieu, au bruit des chants et des actions de grâce d’une foule en fête.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־תִּשְׁתּ֬וֹחֲחִ֨י&thinsp;<b>׀</b> נַפְשִׁי֮ וַתֶּהֱמִ֢י עָ֫לָ֥י הוֹחִ֣לִי לֵ֭אלֹהִים כִּי־ע֥וֹד אוֹדֶ֗נּוּ יְשׁוּע֥וֹת פָּנָֽיו׃</p></div><div class="heb-s"><p>מה־תשתוחחי&thinsp;<b>׀</b> נפשי ותהמי עלי הוחלי לאלהים כי־עוד אודנו ישועות פניו׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi es-tu affaissée, mon âme? Pourquoi t’agites-tu dans mon sein? Mets ton espoir en Dieu, car j’aurai encore à le louer: sa face apporte le salut.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהַ֗י עָלַי֮ נַפְשִׁ֢י תִשְׁתּ֫וֹחָ֥ח עַל־כֵּ֗ן אֶ֭זְכׇּרְךָ מֵאֶ֣רֶץ יַרְדֵּ֑ן וְ֝חֶרְמוֹנִ֗ים מֵהַ֥ר מִצְעָֽר׃</p></div><div class="heb-s"><p>אלהי עלי נפשי תשתוחח על־כן אזכרך מארץ ירדן וחרמונים מהר מצער׃</p></div></div>
+      <div class="texte-fr"><p>Mon Dieu, oui, mon âme est affaissée en moi; parce que je pense à toi de la région du Jourdain, des monts du Hermon, de la plus infime montagne.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּהוֹם־אֶל־תְּה֣וֹם ק֭וֹרֵא לְק֣וֹל צִנּוֹרֶ֑יךָ כׇּֽל־מִשְׁבָּרֶ֥יךָ וְ֝גַלֶּ֗יךָ עָלַ֥י עָבָֽרוּ׃</p></div><div class="heb-s"><p>תהום־אל־תהום קורא לקול צנוריך כל־משבריך וגליך עלי עברו׃</p></div></div>
+      <div class="texte-fr"><p>Le gouffre appelle le gouffre, au bruit de tes cascades; toutes tes vagues et tes ondes ont passé sur moi.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹמָ֤ם&thinsp;<b>׀</b> יְצַוֶּ֬ה יְהֹוָ֨ה&thinsp;<b>׀</b> חַסְדּ֗וֹ וּ֭בַלַּיְלָה שִׁירֹ֣ה עִמִּ֑י תְּ֝פִלָּ֗ה לְאֵ֣ל חַיָּֽי׃</p></div><div class="heb-s"><p>יומם&thinsp;<b>׀</b> יצוה יהוה&thinsp;<b>׀</b> חסדו ובלילה שירה עמי תפלה לאל חיי׃</p></div></div>
+      <div class="texte-fr"><p>Puisse l’Éternel chaque jour mettre sa grâce en œuvre! que la nuit un cantique en son honneur soit sur mes lèvres, ma prière au Dieu vivant!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹמְרָ֤ה&thinsp;<b>׀</b> לְאֵ֥ל סַלְעִי֮ לָמָ֢ה שְׁכַ֫חְתָּ֥נִי לָֽמָּה־קֹדֵ֥ר אֵלֵ֗ךְ בְּלַ֣חַץ אוֹיֵֽב׃</p></div><div class="heb-s"><p>אומרה&thinsp;<b>׀</b> לאל סלעי למה שכחתני למה־קדר אלך בלחץ אויב׃</p></div></div>
+      <div class="texte-fr"><p>Je dis à Dieu, qui est mon rocher: "Pourquoi m’as-tu oublié? Pourquoi marché-je, voilé de tristesse, sous l’oppression de l’ennemi?"</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּרֶ֤צַח&thinsp;<b>׀</b> בְּֽעַצְמוֹתַ֗י חֵרְפ֥וּנִי צוֹרְרָ֑י בְּאׇמְרָ֥ם אֵלַ֥י כׇּל־הַ֝יּ֗וֹם אַיֵּ֥ה אֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>ברצח&thinsp;<b>׀</b> בעצמותי חרפוני צוררי באמרם אלי כל־היום איה אלהיך׃</p></div></div>
+      <div class="texte-fr"><p>C’est comme s’ils me broyaient les os, lorsque mes adversaires me couvrent d’insultes, me disant tout le temps: "Où est ton Dieu?"</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־תִּשְׁתּ֬וֹחֲחִ֨י&thinsp;<b>׀</b> נַפְשִׁי֮ וּֽמַה־תֶּהֱמִ֢י עָ֫לָ֥י הוֹחִ֣ילִי לֵ֭אלֹהִים כִּי־ע֣וֹד אוֹדֶ֑נּוּ יְשׁוּעֹ֥ת פָּ֝נַ֗י וֵאלֹהָֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>מה־תשתוחחי&thinsp;<b>׀</b> נפשי ומה־תהמי עלי הוחילי לאלהים כי־עוד אודנו ישועת פני ואלהי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Pourquoi es-tu affaissée, mon âme? Pourquoi t’agites-tu dans mon sein? Mets ton espoir en Dieu, car j’aurai encore à le louer, lui, mon sauveur et mon Dieu!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Maskîl. Par les fils de Coré.</p>
-      <p>Comme la biche aspire aux cours d’eau, ainsi mon âme aspire à toi, ô Dieu!</p>
-      <p>Mon âme a soif de Dieu, du Dieu vivant; quand reviendrai-je pour paraître en présence de Dieu?</p>
-      <p>Mes larmes sont ma nourriture de jour et de nuit, depuis qu’on me dit sans cesse: "Où est ton Dieu?"</p>
-      <p>Mon âme se fond au dedans de moi, quand je me rappelle le temps où je m’avançais au milieu de rangs pressés, marchant en procession avec eux vers la maison de Dieu, au bruit des chants et des actions de grâce d’une foule en fête.</p>
-      <p>Pourquoi es-tu affaissée, mon âme? Pourquoi t’agites-tu dans mon sein? Mets ton espoir en Dieu, car j’aurai encore à le louer: sa face apporte le salut.</p>
-      <p>Mon Dieu, oui, mon âme est affaissée en moi; parce que je pense à toi de la région du Jourdain, des monts du Hermon, de la plus infime montagne.</p>
-      <p>Le gouffre appelle le gouffre, au bruit de tes cascades; toutes tes vagues et tes ondes ont passé sur moi.</p>
-      <p>Puisse l’Éternel chaque jour mettre sa grâce en œuvre! que la nuit un cantique en son honneur soit sur mes lèvres, ma prière au Dieu vivant!</p>
-      <p>Je dis à Dieu, qui est mon rocher: "Pourquoi m’as-tu oublié? Pourquoi marché-je, voilé de tristesse, sous l’oppression de l’ennemi?"</p>
-      <p>C’est comme s’ils me broyaient les os, lorsque mes adversaires me couvrent d’insultes, me disant tout le temps: "Où est ton Dieu?"</p>
-      <p>Pourquoi es-tu affaissée, mon âme? Pourquoi t’agites-tu dans mon sein? Mets ton espoir en Dieu, car j’aurai encore à le louer, lui, mon sauveur et mon Dieu!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -253,6 +313,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-41.html">← Tehilim 41</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-42.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-43.html">Tehilim 43 →</a></div>
 </main>
 
 <footer>

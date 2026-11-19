@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 51 – Aie pitié de moi, D.ieu : le psaume du repentir</h1>
     <p>Ketouvim, Tehilim, Chapitre 51</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-50.html">← Tehilim 50</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-51.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-52.html">Tehilim 52 →</a></div>
   </div>
 </header>
 
@@ -161,65 +202,102 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃</p>
-      <p>בְּֽבוֹא־אֵ֭לָיו נָתָ֣ן הַנָּבִ֑יא כַּאֲשֶׁר־בָּ֝֗א אֶל־בַּת־שָֽׁבַע׃</p>
-      <p>חׇנֵּ֣נִי אֱלֹהִ֣ים כְּחַסְדֶּ֑ךָ כְּרֹ֥ב רַ֝חֲמֶ֗יךָ מְחֵ֣ה פְשָׁעָֽי׃</p>
-      <p><span class="mam-kq"><span class="mam-kq-k">(הרבה)</span> <span class="mam-kq-q">[הֶ֭רֶב]</span></span> כַּבְּסֵ֣נִי מֵעֲוֺנִ֑י וּֽמֵחַטָּאתִ֥י טַהֲרֵֽנִי׃</p>
-      <p>כִּֽי־פְ֭שָׁעַי אֲנִ֣י אֵדָ֑ע וְחַטָּאתִ֖י נֶגְדִּ֣י תָמִֽיד׃</p>
-      <p>לְךָ֤ לְבַדְּךָ֨&thinsp;<b>׀</b> חָטָאתִי֮ וְהָרַ֥ע בְּעֵינֶ֗יךָ עָ֫שִׂ֥יתִי לְ֭מַעַן תִּצְדַּ֥ק בְּדׇבְרֶ֗ךָ תִּזְכֶּ֥ה בְשׇׁפְטֶֽךָ׃</p>
-      <p>הֵן־בְּעָו֥וֹן חוֹלָ֑לְתִּי וּ֝בְחֵ֗טְא יֶחֱמַ֥תְנִי אִמִּֽי׃</p>
-      <p>הֵן־אֱ֭מֶת חָפַ֣צְתָּ בַטֻּח֑וֹת וּ֝בְסָתֻ֗ם חׇכְמָ֥ה תוֹדִיעֵֽנִי׃</p>
-      <p>תְּחַטְּאֵ֣נִי בְאֵז֣וֹב וְאֶטְהָ֑ר תְּ֝כַבְּסֵ֗נִי וּמִשֶּׁ֥לֶג אַלְבִּֽין׃</p>
-      <p>תַּ֭שְׁמִיעֵנִי שָׂשׂ֣וֹן וְשִׂמְחָ֑ה תָּ֝גֵ֗לְנָה עֲצָמ֥וֹת דִּכִּֽיתָ׃</p>
-      <p>הַסְתֵּ֣ר פָּ֭נֶיךָ מֵחֲטָאָ֑י וְֽכׇל־עֲוֺ֖נֹתַ֣י מְחֵֽה׃</p>
-      <p>לֵ֣ב טָ֭הוֹר בְּרָא־לִ֣י אֱלֹהִ֑ים וְר֥וּחַ נָ֝כ֗וֹן חַדֵּ֥שׁ בְּקִרְבִּֽי׃</p>
-      <p>אַל־תַּשְׁלִיכֵ֥נִי מִלְּפָנֶ֑יךָ וְר֥וּחַ קׇ֝דְשְׁךָ֗ אַל־תִּקַּ֥ח מִמֶּֽנִּי׃</p>
-      <p>הָשִׁ֣יבָה לִּ֭י שְׂשׂ֣וֹן יִשְׁעֶ֑ךָ וְר֖וּחַ נְדִיבָ֣ה תִסְמְכֵֽנִי׃</p>
-      <p>אֲלַמְּדָ֣ה פֹשְׁעִ֣ים דְּרָכֶ֑יךָ וְ֝חַטָּאִ֗ים אֵלֶ֥יךָ יָשֽׁוּבוּ׃</p>
-      <p>הַצִּ֘ילֵ֤נִי מִדָּמִ֨ים&thinsp;<b>׀</b> אֱֽלֹהִ֗ים אֱלֹהֵ֥י תְשׁוּעָתִ֑י תְּרַנֵּ֥ן לְ֝שׁוֹנִ֗י צִדְקָתֶֽךָ׃</p>
-      <p>אֲ֭דֹנָי שְׂפָתַ֣י תִּפְתָּ֑ח וּ֝פִ֗י יַגִּ֥יד תְּהִלָּתֶֽךָ׃</p>
-      <p>כִּ֤י&thinsp;<b>׀</b> לֹא־תַחְפֹּ֣ץ זֶ֣בַח וְאֶתֵּ֑נָה ע֝וֹלָ֗ה לֹ֣א תִרְצֶֽה׃</p>
-      <p>זִ֥בְחֵ֣י אֱלֹהִים֮ ר֤וּחַ נִשְׁבָּ֫רָ֥ה לֵב־נִשְׁבָּ֥ר וְנִדְכֶּ֑ה אֱ֝לֹהִ֗ים לֹ֣א תִבְזֶֽה׃</p>
-      <p>הֵיטִ֣יבָה בִ֭רְצוֹנְךָ אֶת־צִיּ֑וֹן תִּ֝בְנֶ֗ה חוֹמ֥וֹת יְרוּשָׁלָֽ͏ִם׃</p>
-      <p>אָ֤ז תַּחְפֹּ֣ץ זִבְחֵי־צֶ֭דֶק עוֹלָ֣ה וְכָלִ֑יל אָ֤ז יַעֲל֖וּ עַל־מִזְבַּחֲךָ֣ פָרִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a><a href="#v-21">21</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֗חַ מִזְמ֥וֹר לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח מזמור לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Psaume de David</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּֽבוֹא־אֵ֭לָיו נָתָ֣ן הַנָּבִ֑יא כַּאֲשֶׁר־בָּ֝֗א אֶל־בַּת־שָֽׁבַע׃</p></div><div class="heb-s"><p>בבוא־אליו נתן הנביא כאשר־בא אל־בת־שבע׃</p></div></div>
+      <div class="texte-fr"><p>lorsque le prophète Nathan fut venu le trouver, à la suite de ses relations avec Bethsabée.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>חׇנֵּ֣נִי אֱלֹהִ֣ים כְּחַסְדֶּ֑ךָ כְּרֹ֥ב רַ֝חֲמֶ֗יךָ מְחֵ֣ה פְשָׁעָֽי׃</p></div><div class="heb-s"><p>חנני אלהים כחסדך כרב רחמיך מחה פשעי׃</p></div></div>
+      <div class="texte-fr"><p>Prends-moi en pitié, ô Dieu, dans la mesure de ta bonté; selon la grandeur de ta clémence, efface mes fautes.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p><span class="mam-kq"><span class="mam-kq-k">(הרבה)</span> <span class="mam-kq-q">[הֶ֭רֶב]</span></span> כַּבְּסֵ֣נִי מֵעֲוֺנִ֑י וּֽמֵחַטָּאתִ֥י טַהֲרֵֽנִי׃</p></div><div class="heb-s"><p><span class="mam-kq"><span class="mam-kq-k">(הרבה)</span> <span class="mam-kq-q">[הרב]</span></span> כבסני מעוני ומחטאתי טהרני׃</p></div></div>
+      <div class="texte-fr"><p>Lave-moi à grandes eaux de mon iniquité, purifie-moi de mon péché.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־פְ֭שָׁעַי אֲנִ֣י אֵדָ֑ע וְחַטָּאתִ֖י נֶגְדִּ֣י תָמִֽיד׃</p></div><div class="heb-s"><p>כי־פשעי אני אדע וחטאתי נגדי תמיד׃</p></div></div>
+      <div class="texte-fr"><p>Car je reconnais mes fautes, et mon péché est sans cesse sous mes regards.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְךָ֤ לְבַדְּךָ֨&thinsp;<b>׀</b> חָטָאתִי֮ וְהָרַ֥ע בְּעֵינֶ֗יךָ עָ֫שִׂ֥יתִי לְ֭מַעַן תִּצְדַּ֥ק בְּדׇבְרֶ֗ךָ תִּזְכֶּ֥ה בְשׇׁפְטֶֽךָ׃</p></div><div class="heb-s"><p>לך לבדך&thinsp;<b>׀</b> חטאתי והרע בעיניך עשיתי למען תצדק בדברך תזכה בשפטך׃</p></div></div>
+      <div class="texte-fr"><p>Contre toi seul j’ai failli, j’ai fait ce qui est mal à tes yeux; ainsi tu serais équitable dans ton arrêt, tu aurais le droit pour toi en me condamnant.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵן־בְּעָו֥וֹן חוֹלָ֑לְתִּי וּ֝בְחֵ֗טְא יֶחֱמַ֥תְנִי אִמִּֽי׃</p></div><div class="heb-s"><p>הן־בעוון חוללתי ובחטא יחמתני אמי׃</p></div></div>
+      <div class="texte-fr"><p>Mais, en vérité, j’ai été enfanté dans l’iniquité, et c’est dans le péché que ma mère m’a conçu.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵן־אֱ֭מֶת חָפַ֣צְתָּ בַטֻּח֑וֹת וּ֝בְסָתֻ֗ם חׇכְמָ֥ה תוֹדִיעֵֽנִי׃</p></div><div class="heb-s"><p>הן־אמת חפצת בטחות ובסתם חכמה תודיעני׃</p></div></div>
+      <div class="texte-fr"><p>Or, toi tu exiges la vérité dans le secret des cœurs, dans mon for intime tu m’enseignes la sagesse.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּחַטְּאֵ֣נִי בְאֵז֣וֹב וְאֶטְהָ֑ר תְּ֝כַבְּסֵ֗נִי וּמִשֶּׁ֥לֶג אַלְבִּֽין׃</p></div><div class="heb-s"><p>תחטאני באזוב ואטהר תכבסני ומשלג אלבין׃</p></div></div>
+      <div class="texte-fr"><p>Puisses-tu me purifier avec l’hysope, pour que je sois pur! Puisses-tu me laver, pour que je sois plus blanc que neige!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּ֭שְׁמִיעֵנִי שָׂשׂ֣וֹן וְשִׂמְחָ֑ה תָּ֝גֵ֗לְנָה עֲצָמ֥וֹת דִּכִּֽיתָ׃</p></div><div class="heb-s"><p>תשמיעני ששון ושמחה תגלנה עצמות דכית׃</p></div></div>
+      <div class="texte-fr"><p>Puisses-tu me faire entendre des accents d’allégresse et de joie, afin que ces membres que tu as broyés retrouvent leur joyeux entrain!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַסְתֵּ֣ר פָּ֭נֶיךָ מֵחֲטָאָ֑י וְֽכׇל־עֲוֺ֖נֹתַ֣י מְחֵֽה׃</p></div><div class="heb-s"><p>הסתר פניך מחטאי וכל־עונתי מחה׃</p></div></div>
+      <div class="texte-fr"><p>Détourne ton visage de mes péchés, efface toutes mes iniquités.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֵ֣ב טָ֭הוֹר בְּרָא־לִ֣י אֱלֹהִ֑ים וְר֥וּחַ נָ֝כ֗וֹן חַדֵּ֥שׁ בְּקִרְבִּֽי׃</p></div><div class="heb-s"><p>לב טהור ברא־לי אלהים ורוח נכון חדש בקרבי׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, crée en moi un cœur pur, et fais renaître dans mon sein un esprit droit.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תַּשְׁלִיכֵ֥נִי מִלְּפָנֶ֑יךָ וְר֥וּחַ קׇ֝דְשְׁךָ֗ אַל־תִּקַּ֥ח מִמֶּֽנִּי׃</p></div><div class="heb-s"><p>אל־תשליכני מלפניך ורוח קדשך אל־תקח ממני׃</p></div></div>
+      <div class="texte-fr"><p>Ne me rejette pas de devant ta face, ne me retire pas ta sainte inspiration.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָשִׁ֣יבָה לִּ֭י שְׂשׂ֣וֹן יִשְׁעֶ֑ךָ וְר֖וּחַ נְדִיבָ֣ה תִסְמְכֵֽנִי׃</p></div><div class="heb-s"><p>השיבה לי ששון ישעך ורוח נדיבה תסמכני׃</p></div></div>
+      <div class="texte-fr"><p>Rends-moi la pleine joie de ton secours, et soutiens-moi avec ton esprit magnanime.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲלַמְּדָ֣ה פֹשְׁעִ֣ים דְּרָכֶ֑יךָ וְ֝חַטָּאִ֗ים אֵלֶ֥יךָ יָשֽׁוּבוּ׃</p></div><div class="heb-s"><p>אלמדה פשעים דרכיך וחטאים אליך ישובו׃</p></div></div>
+      <div class="texte-fr"><p>Je voudrais enseigner tes voies aux pécheurs, afin que les coupables reviennent à toi.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַצִּ֘ילֵ֤נִי מִדָּמִ֨ים&thinsp;<b>׀</b> אֱֽלֹהִ֗ים אֱלֹהֵ֥י תְשׁוּעָתִ֑י תְּרַנֵּ֥ן לְ֝שׁוֹנִ֗י צִדְקָתֶֽךָ׃</p></div><div class="heb-s"><p>הצילני מדמים&thinsp;<b>׀</b> אלהים אלהי תשועתי תרנן לשוני צדקתך׃</p></div></div>
+      <div class="texte-fr"><p>Préserve-moi, ô Dieu, Dieu de mon salut, d’un arrêt sanglant: ma langue célébrera ton équité.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲ֭דֹנָי שְׂפָתַ֣י תִּפְתָּ֑ח וּ֝פִ֗י יַגִּ֥יד תְּהִלָּתֶֽךָ׃</p></div><div class="heb-s"><p>אדני שפתי תפתח ופי יגיד תהלתך׃</p></div></div>
+      <div class="texte-fr"><p>Seigneur, puisses-tu m’ouvrir les lèvres, pour que ma bouche proclame tes louanges!</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י&thinsp;<b>׀</b> לֹא־תַחְפֹּ֣ץ זֶ֣בַח וְאֶתֵּ֑נָה ע֝וֹלָ֗ה לֹ֣א תִרְצֶֽה׃</p></div><div class="heb-s"><p>כי&thinsp;<b>׀</b> לא־תחפץ זבח ואתנה עולה לא תרצה׃</p></div></div>
+      <div class="texte-fr"><p>Car tu ne souhaites pas de sacrifices, je les offrirais volontiers tu ne prends point plaisir aux holocaustes:</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>זִ֥בְחֵ֣י אֱלֹהִים֮ ר֤וּחַ נִשְׁבָּ֫רָ֥ה לֵב־נִשְׁבָּ֥ר וְנִדְכֶּ֑ה אֱ֝לֹהִ֗ים לֹ֣א תִבְזֶֽה׃</p></div><div class="heb-s"><p>זבחי אלהים רוח נשברה לב־נשבר ונדכה אלהים לא תבזה׃</p></div></div>
+      <div class="texte-fr"><p>les sacrifices [agréables] à Dieu, c’est un esprit contrit; un cœur brisé et abattu, ô Dieu, tu ne le dédaignes point.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵיטִ֣יבָה בִ֭רְצוֹנְךָ אֶת־צִיּ֑וֹן תִּ֝בְנֶ֗ה חוֹמ֥וֹת יְרוּשָׁלָֽ͏ִם׃</p></div><div class="heb-s"><p>היטיבה ברצונך את־ציון תבנה חומות ירושל͏ם׃</p></div></div>
+      <div class="texte-fr"><p>Ah! dans ta bienveillance, daigne restaurer Sion, rebâtir les murailles de Jérusalem.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֤ז תַּחְפֹּ֣ץ זִבְחֵי־צֶ֭דֶק עוֹלָ֣ה וְכָלִ֑יל אָ֤ז יַעֲל֖וּ עַל־מִזְבַּחֲךָ֣ פָרִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אז תחפץ זבחי־צדק עולה וכליל אז יעלו על־מזבחך פרים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Alors tu agréeras des sacrifices pieux, holocaustes et victimes parfaites alors on présentera des taureaux sur ton autel.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Psaume de David</p>
-      <p>lorsque le prophète Nathan fut venu le trouver, à la suite de ses relations avec Bethsabée.</p>
-      <p>Prends-moi en pitié, ô Dieu, dans la mesure de ta bonté; selon la grandeur de ta clémence, efface mes fautes.</p>
-      <p>Lave-moi à grandes eaux de mon iniquité, purifie-moi de mon péché.</p>
-      <p>Car je reconnais mes fautes, et mon péché est sans cesse sous mes regards.</p>
-      <p>Contre toi seul j’ai failli, j’ai fait ce qui est mal à tes yeux; ainsi tu serais équitable dans ton arrêt, tu aurais le droit pour toi en me condamnant.</p>
-      <p>Mais, en vérité, j’ai été enfanté dans l’iniquité, et c’est dans le péché que ma mère m’a conçu.</p>
-      <p>Or, toi tu exiges la vérité dans le secret des cœurs, dans mon for intime tu m’enseignes la sagesse.</p>
-      <p>Puisses-tu me purifier avec l’hysope, pour que je sois pur! Puisses-tu me laver, pour que je sois plus blanc que neige!</p>
-      <p>Puisses-tu me faire entendre des accents d’allégresse et de joie, afin que ces membres que tu as broyés retrouvent leur joyeux entrain!</p>
-      <p>Détourne ton visage de mes péchés, efface toutes mes iniquités.</p>
-      <p>O Dieu, crée en moi un cœur pur, et fais renaître dans mon sein un esprit droit.</p>
-      <p>Ne me rejette pas de devant ta face, ne me retire pas ta sainte inspiration.</p>
-      <p>Rends-moi la pleine joie de ton secours, et soutiens-moi avec ton esprit magnanime.</p>
-      <p>Je voudrais enseigner tes voies aux pécheurs, afin que les coupables reviennent à toi.</p>
-      <p>Préserve-moi, ô Dieu, Dieu de mon salut, d’un arrêt sanglant: ma langue célébrera ton équité.</p>
-      <p>Seigneur, puisses-tu m’ouvrir les lèvres, pour que ma bouche proclame tes louanges!</p>
-      <p>Car tu ne souhaites pas de sacrifices, je les offrirais volontiers tu ne prends point plaisir aux holocaustes:</p>
-      <p>les sacrifices [agréables] à Dieu, c’est un esprit contrit; un cœur brisé et abattu, ô Dieu, tu ne le dédaignes point.</p>
-      <p>Ah! dans ta bienveillance, daigne restaurer Sion, rebâtir les murailles de Jérusalem.</p>
-      <p>Alors tu agréeras des sacrifices pieux, holocaustes et victimes parfaites alors on présentera des taureaux sur ton autel.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -274,6 +352,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-50.html">← Tehilim 50</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-51.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-52.html">Tehilim 52 →</a></div>
 </main>
 
 <footer>

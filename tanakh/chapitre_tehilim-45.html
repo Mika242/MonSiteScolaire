@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 45 – Cantique d&#x27;amour pour le roi</h1>
     <p>Ketouvim, Tehilim, Chapitre 45</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-44.html">← Tehilim 44</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-45.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-46.html">Tehilim 46 →</a></div>
   </div>
 </header>
 
@@ -161,59 +202,90 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֣חַ עַל־שֹׁ֭שַׁנִּים לִבְנֵי־קֹ֑רַח מַ֝שְׂכִּ֗יל שִׁ֣יר יְדִידֹֽת׃</p>
-      <p>רָ֘חַ֤שׁ לִבִּ֨י&thinsp;<b>׀</b> דָּ֘בָ֤ר ט֗וֹב אֹמֵ֣ר אָ֭נִי מַעֲשַׂ֣י לְמֶ֑לֶךְ לְ֝שׁוֹנִ֗י עֵ֤ט&thinsp;<b>׀</b> סוֹפֵ֬ר מָהִֽיר׃</p>
-      <p>יׇפְיָפִ֡יתָ מִבְּנֵ֬י אָדָ֗ם ה֣וּצַק חֵ֭ן בְּשִׂפְתוֹתֶ֑יךָ עַל־כֵּ֤ן בֵּרַכְךָ֖ אֱלֹהִ֣ים לְעוֹלָֽם׃</p>
-      <p>חֲגֽוֹר־חַרְבְּךָ֣ עַל־יָרֵ֣ךְ גִּבּ֑וֹר ה֝וֹדְךָ֗ וַהֲדָרֶֽךָ׃</p>
-      <p>וַהֲדָ֬רְךָ֨&thinsp;<b>׀</b> צְלַ֬ח רְכַ֗ב עַֽל־דְּבַר־אֱ֭מֶת וְעַנְוָה־צֶ֑דֶק וְתוֹרְךָ֖ נוֹרָא֣וֹת יְמִינֶֽךָ׃</p>
-      <p>חִצֶּ֗יךָ שְׁנ֫וּנִ֥ים עַ֭מִּים תַּחְתֶּ֣יךָ יִפְּל֑וּ בְּ֝לֵ֗ב אוֹיְבֵ֥י הַמֶּֽלֶךְ׃</p>
-      <p>כִּסְאֲךָ֣ אֱ֭לֹהִים עוֹלָ֣ם וָעֶ֑ד שֵׁ֥בֶט מִ֝ישֹׁ֗ר שֵׁ֣בֶט מַלְכוּתֶֽךָ׃</p>
-      <p>אָהַ֣בְתָּ צֶּדֶק֮ וַתִּשְׂנָ֫א<span class="mam-implicit-maqaf">־</span>רֶ֥שַׁע עַל־כֵּ֤ן&thinsp;<b>׀</b> מְשָׁחֲךָ֡ אֱלֹהִ֣ים אֱ֭לֹהֶיךָ שֶׁ֥מֶן שָׂשׂ֗וֹן מֵחֲבֵרֶֽךָ׃</p>
-      <p>מֹר־וַאֲהָל֣וֹת קְ֭צִיעוֹת כׇּל־בִּגְדֹתֶ֑יךָ מִֽן־הֵ֥יכְלֵי שֵׁ֝֗ן מִנִּ֥י שִׂמְּחֽוּךָ׃</p>
-      <p>בְּנ֣וֹת מְ֭לָכִים בְּיִקְּרוֹתֶ֑יךָ נִצְּבָ֥ה שֵׁגַ֥ל לִ֝ימִינְךָ֗ בְּכֶ֣תֶם אוֹפִֽיר׃</p>
-      <p>שִׁמְעִי־בַ֣ת וּ֭רְאִי וְהַטִּ֣י אׇזְנֵ֑ךְ וְשִׁכְחִ֥י עַ֝מֵּ֗ךְ וּבֵ֥ית אָבִֽיךְ׃</p>
-      <p>וְיִתְאָ֣ו הַמֶּ֣לֶךְ יׇפְיֵ֑ךְ כִּי־ה֥וּא אֲ֝דֹנַ֗יִךְ וְהִשְׁתַּֽחֲוִי־לֽוֹ׃</p>
-      <p>וּבַֽת־צֹ֨ר&thinsp;<b>׀</b> בְּ֭מִנְחָה פָּנַ֥יִךְ יְחַלּ֗וּ עֲשִׁ֣ירֵי עָֽם׃</p>
-      <p>כׇּל־כְּבוּדָּ֣ה בַת־מֶ֣לֶךְ פְּנִ֑ימָה מִֽמִּשְׁבְּצ֖וֹת זָהָ֣ב לְבוּשָֽׁהּ׃</p>
-      <p>לִרְקָמוֹת֮ תּוּבַ֢ל לַ֫מֶּ֥לֶךְ בְּתוּל֣וֹת אַ֭חֲרֶיהָ רֵעוֹתֶ֑יהָ מ֖וּבָא֣וֹת לָֽךְ׃</p>
-      <p>תּ֭וּבַלְנָה בִּשְׂמָחֹ֣ת וָגִ֑יל תְּ֝בֹאֶ֗ינָה בְּהֵ֣יכַל מֶֽלֶךְ׃</p>
-      <p>תַּ֣חַת אֲ֭בֹתֶיךָ יִהְי֣וּ בָנֶ֑יךָ תְּשִׁיתֵ֥מוֹ לְ֝שָׂרִ֗ים בְּכׇל־הָאָֽרֶץ׃</p>
-      <p>אַזְכִּ֣ירָה שִׁ֭מְךָ בְּכׇל־דֹּ֣ר וָדֹ֑ר עַל־כֵּ֥ן עַמִּ֥ים יְ֝הוֹד֗וּךָ לְעֹלָ֥ם וָעֶֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֣חַ עַל־שֹׁ֭שַׁנִּים לִבְנֵי־קֹ֑רַח מַ֝שְׂכִּ֗יל שִׁ֣יר יְדִידֹֽת׃</p></div><div class="heb-s"><p>למנצח על־ששנים לבני־קרח משכיל שיר ידידת׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Sur les Chochanim. Par les fils de Coré. Maskîl. Chant d’amour.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָ֘חַ֤שׁ לִבִּ֨י&thinsp;<b>׀</b> דָּ֘בָ֤ר ט֗וֹב אֹמֵ֣ר אָ֭נִי מַעֲשַׂ֣י לְמֶ֑לֶךְ לְ֝שׁוֹנִ֗י עֵ֤ט&thinsp;<b>׀</b> סוֹפֵ֬ר מָהִֽיר׃</p></div><div class="heb-s"><p>רחש לבי&thinsp;<b>׀</b> דבר טוב אמר אני מעשי למלך לשוני עט&thinsp;<b>׀</b> סופר מהיר׃</p></div></div>
+      <div class="texte-fr"><p>Mon cœur agite un beau dessein; je veux consacrer mon poème au roi! Ma langue est le burin d’un scribe expert.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יׇפְיָפִ֡יתָ מִבְּנֵ֬י אָדָ֗ם ה֣וּצַק חֵ֭ן בְּשִׂפְתוֹתֶ֑יךָ עַל־כֵּ֤ן בֵּרַכְךָ֖ אֱלֹהִ֣ים לְעוֹלָֽם׃</p></div><div class="heb-s"><p>יפיפית מבני אדם הוצק חן בשפתותיך על־כן ברכך אלהים לעולם׃</p></div></div>
+      <div class="texte-fr"><p>Tu es beau entre tous les fils de l’homme, la grâce est répandue sur tes lèvres; aussi Dieu t’a-t-il béni pour toujours.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֲגֽוֹר־חַרְבְּךָ֣ עַל־יָרֵ֣ךְ גִּבּ֑וֹר ה֝וֹדְךָ֗ וַהֲדָרֶֽךָ׃</p></div><div class="heb-s"><p>חגור־חרבך על־ירך גבור הודך והדרך׃</p></div></div>
+      <div class="texte-fr"><p>Ceins ton glaive sur ton flanc, ô héros, c’est ta parure et ton honneur;</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַהֲדָ֬רְךָ֨&thinsp;<b>׀</b> צְלַ֬ח רְכַ֗ב עַֽל־דְּבַר־אֱ֭מֶת וְעַנְוָה־צֶ֑דֶק וְתוֹרְךָ֖ נוֹרָא֣וֹת יְמִינֶֽךָ׃</p></div><div class="heb-s"><p>והדרך&thinsp;<b>׀</b> צלח רכב על־דבר־אמת וענוה־צדק ותורך נוראות ימינך׃</p></div></div>
+      <div class="texte-fr"><p>oui, ton honneur! Bon courage et en selle, pour défendre la vérité, la modestie, la justice! Que ta droite t’enseigne de beaux exploits!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>חִצֶּ֗יךָ שְׁנ֫וּנִ֥ים עַ֭מִּים תַּחְתֶּ֣יךָ יִפְּל֑וּ בְּ֝לֵ֗ב אוֹיְבֵ֥י הַמֶּֽלֶךְ׃</p></div><div class="heb-s"><p>חציך שנונים עמים תחתיך יפלו בלב אויבי המלך׃</p></div></div>
+      <div class="texte-fr"><p>Tes flèches sont aiguës, des peuples succombent sous tes coups elles percent le cœur des ennemis du roi.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּסְאֲךָ֣ אֱ֭לֹהִים עוֹלָ֣ם וָעֶ֑ד שֵׁ֥בֶט מִ֝ישֹׁ֗ר שֵׁ֣בֶט מַלְכוּתֶֽךָ׃</p></div><div class="heb-s"><p>כסאך אלהים עולם ועד שבט מישר שבט מלכותך׃</p></div></div>
+      <div class="texte-fr"><p>Ton trône, [fondé par] Dieu, durera à jamais; le sceptre de ta royauté est un sceptre de droiture.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָהַ֣בְתָּ צֶּדֶק֮ וַתִּשְׂנָ֫א<span class="mam-implicit-maqaf">־</span>רֶ֥שַׁע עַל־כֵּ֤ן&thinsp;<b>׀</b> מְשָׁחֲךָ֡ אֱלֹהִ֣ים אֱ֭לֹהֶיךָ שֶׁ֥מֶן שָׂשׂ֗וֹן מֵחֲבֵרֶֽךָ׃</p></div><div class="heb-s"><p>אהבת צדק ותשנא<span class="mam-implicit-maqaf">־</span>רשע על־כן&thinsp;<b>׀</b> משחך אלהים אלהיך שמן ששון מחברך׃</p></div></div>
+      <div class="texte-fr"><p>Tu aimes la justice, tu hais l’iniquité; voilà pourquoi Dieu ton Dieu t’a consacré par une huile d’allégresse, de préférence à tes compagnons.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֹר־וַאֲהָל֣וֹת קְ֭צִיעוֹת כׇּל־בִּגְדֹתֶ֑יךָ מִֽן־הֵ֥יכְלֵי שֵׁ֝֗ן מִנִּ֥י שִׂמְּחֽוּךָ׃</p></div><div class="heb-s"><p>מר־ואהלות קציעות כל־בגדתיך מן־היכלי שן מני שמחוך׃</p></div></div>
+      <div class="texte-fr"><p>Myrrhe, aloès et casse parfument tes vêtements; du fond des palais d’ivoire les concerts te ravissent.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּנ֣וֹת מְ֭לָכִים בְּיִקְּרוֹתֶ֑יךָ נִצְּבָ֥ה שֵׁגַ֥ל לִ֝ימִינְךָ֗ בְּכֶ֣תֶם אוֹפִֽיר׃</p></div><div class="heb-s"><p>בנות מלכים ביקרותיך נצבה שגל לימינך בכתם אופיר׃</p></div></div>
+      <div class="texte-fr"><p>Des filles de rois figurent parmi tes favorites; la reine se tient à ta droite, parée de l’or d’Ophir.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁמְעִי־בַ֣ת וּ֭רְאִי וְהַטִּ֣י אׇזְנֵ֑ךְ וְשִׁכְחִ֥י עַ֝מֵּ֗ךְ וּבֵ֥ית אָבִֽיךְ׃</p></div><div class="heb-s"><p>שמעי־בת וראי והטי אזנך ושכחי עמך ובית אביך׃</p></div></div>
+      <div class="texte-fr"><p>Écoute ma fille, ouvre les yeux, tends l’oreille: oublie ton peuple et la maison de ton père!</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִתְאָ֣ו הַמֶּ֣לֶךְ יׇפְיֵ֑ךְ כִּי־ה֥וּא אֲ֝דֹנַ֗יִךְ וְהִשְׁתַּֽחֲוִי־לֽוֹ׃</p></div><div class="heb-s"><p>ויתאו המלך יפיך כי־הוא אדניך והשתחוי־לו׃</p></div></div>
+      <div class="texte-fr"><p>Que le roi s’éprenne de ta beauté, car il est ton maître incline-toi devant lui.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַֽת־צֹ֨ר&thinsp;<b>׀</b> בְּ֭מִנְחָה פָּנַ֥יִךְ יְחַלּ֗וּ עֲשִׁ֣ירֵי עָֽם׃</p></div><div class="heb-s"><p>ובת־צר&thinsp;<b>׀</b> במנחה פניך יחלו עשירי עם׃</p></div></div>
+      <div class="texte-fr"><p>La fille de Tyr… Chargés de présents, les gens les plus opulents recherchent ta bienveillance.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־כְּבוּדָּ֣ה בַת־מֶ֣לֶךְ פְּנִ֑ימָה מִֽמִּשְׁבְּצ֖וֹת זָהָ֣ב לְבוּשָֽׁהּ׃</p></div><div class="heb-s"><p>כל־כבודה בת־מלך פנימה ממשבצות זהב לבושה׃</p></div></div>
+      <div class="texte-fr"><p>Toute resplendissante est la fille du roi dans son intérieur, sa robe est faite d’un tissu d’or.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִרְקָמוֹת֮ תּוּבַ֢ל לַ֫מֶּ֥לֶךְ בְּתוּל֣וֹת אַ֭חֲרֶיהָ רֵעוֹתֶ֑יהָ מ֖וּבָא֣וֹת לָֽךְ׃</p></div><div class="heb-s"><p>לרקמות תובל למלך בתולות אחריה רעותיה מובאות לך׃</p></div></div>
+      <div class="texte-fr"><p>Couverte de broderies, elle est introduite auprès du roi, suivie d’un cortège de jeunes filles, ses compagnes, qui sont amenées pour toi;</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>תּ֭וּבַלְנָה בִּשְׂמָחֹ֣ת וָגִ֑יל תְּ֝בֹאֶ֗ינָה בְּהֵ֣יכַל מֶֽלֶךְ׃</p></div><div class="heb-s"><p>תובלנה בשמחת וגיל תבאינה בהיכל מלך׃</p></div></div>
+      <div class="texte-fr"><p>amenées avec des cris de joie et d’allégresse, elles pénètrent dans le palais du roi.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּ֣חַת אֲ֭בֹתֶיךָ יִהְי֣וּ בָנֶ֑יךָ תְּשִׁיתֵ֥מוֹ לְ֝שָׂרִ֗ים בְּכׇל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>תחת אבתיך יהיו בניך תשיתמו לשרים בכל־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Que la place de tes pères soit occupée par tes fils! Puisses-tu les établir comme princes sur tout le pays!</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַזְכִּ֣ירָה שִׁ֭מְךָ בְּכׇל־דֹּ֣ר וָדֹ֑ר עַל־כֵּ֥ן עַמִּ֥ים יְ֝הוֹד֗וּךָ לְעֹלָ֥ם וָעֶֽד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אזכירה שמך בכל־דר ודר על־כן עמים יהודוך לעלם ועד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je ferai en sorte que ton nom vive de siècle en siècle; aussi les nations te rendront-elles hommage à tout jamais!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Sur les Chochanim. Par les fils de Coré. Maskîl. Chant d’amour.</p>
-      <p>Mon cœur agite un beau dessein; je veux consacrer mon poème au roi! Ma langue est le burin d’un scribe expert.</p>
-      <p>Tu es beau entre tous les fils de l’homme, la grâce est répandue sur tes lèvres; aussi Dieu t’a-t-il béni pour toujours.</p>
-      <p>Ceins ton glaive sur ton flanc, ô héros, c’est ta parure et ton honneur;</p>
-      <p>oui, ton honneur! Bon courage et en selle, pour défendre la vérité, la modestie, la justice! Que ta droite t’enseigne de beaux exploits!</p>
-      <p>Tes flèches sont aiguës, des peuples succombent sous tes coups elles percent le cœur des ennemis du roi.</p>
-      <p>Ton trône, [fondé par] Dieu, durera à jamais; le sceptre de ta royauté est un sceptre de droiture.</p>
-      <p>Tu aimes la justice, tu hais l’iniquité; voilà pourquoi Dieu ton Dieu t’a consacré par une huile d’allégresse, de préférence à tes compagnons.</p>
-      <p>Myrrhe, aloès et casse parfument tes vêtements; du fond des palais d’ivoire les concerts te ravissent.</p>
-      <p>Des filles de rois figurent parmi tes favorites; la reine se tient à ta droite, parée de l’or d’Ophir.</p>
-      <p>Écoute ma fille, ouvre les yeux, tends l’oreille: oublie ton peuple et la maison de ton père!</p>
-      <p>Que le roi s’éprenne de ta beauté, car il est ton maître incline-toi devant lui.</p>
-      <p>La fille de Tyr… Chargés de présents, les gens les plus opulents recherchent ta bienveillance.</p>
-      <p>Toute resplendissante est la fille du roi dans son intérieur, sa robe est faite d’un tissu d’or.</p>
-      <p>Couverte de broderies, elle est introduite auprès du roi, suivie d’un cortège de jeunes filles, ses compagnes, qui sont amenées pour toi;</p>
-      <p>amenées avec des cris de joie et d’allégresse, elles pénètrent dans le palais du roi.</p>
-      <p>Que la place de tes pères soit occupée par tes fils! Puisses-tu les établir comme princes sur tout le pays!</p>
-      <p>Je ferai en sorte que ton nom vive de siècle en siècle; aussi les nations te rendront-elles hommage à tout jamais!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -265,6 +337,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-44.html">← Tehilim 44</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-45.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-46.html">Tehilim 46 →</a></div>
 </main>
 
 <footer>

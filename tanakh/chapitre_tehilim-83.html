@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 83 – Ne reste pas silencieux, D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 83</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-82.html">← Tehilim 82</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-83.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-84.html">Tehilim 84 →</a></div>
   </div>
 </header>
 
@@ -161,61 +202,94 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>שִׁ֖יר מִזְמ֣וֹר לְאָסָֽף׃</p>
-      <p>אֱלֹהִ֥ים אַל־דֳּמִי־לָ֑ךְ אַל־תֶּחֱרַ֖שׁ וְאַל־תִּשְׁקֹ֣ט אֵֽל׃</p>
-      <p>כִּֽי־הִנֵּ֣ה א֭וֹיְבֶיךָ יֶהֱמָי֑וּן וּ֝מְשַׂנְאֶ֗יךָ נָ֣שְׂאוּ רֹֽאשׁ׃</p>
-      <p>עַֽל־עַ֭מְּךָ יַעֲרִ֣ימוּ ס֑וֹד וְ֝יִתְיָעֲצ֗וּ עַל־צְפוּנֶֽיךָ׃</p>
-      <p>אָמְר֗וּ לְ֭כוּ וְנַכְחִידֵ֣ם מִגּ֑וֹי וְלֹֽא־יִזָּכֵ֖ר שֵֽׁם־יִשְׂרָאֵ֣ל עֽוֹד׃</p>
-      <p>כִּ֤י נוֹעֲצ֣וּ לֵ֣ב יַחְדָּ֑ו עָ֝לֶ֗יךָ בְּרִ֣ית יִכְרֹֽתוּ׃</p>
-      <p>אׇהֳלֵ֣י אֱ֭דוֹם וְיִשְׁמְעֵאלִ֗ים מוֹאָ֥ב וְהַגְרִֽים׃</p>
-      <p>גְּבָ֣ל וְ֭עַמּוֹן וַעֲמָלֵ֑ק פְּ֝לֶ֗שֶׁת עִם־יֹ֥שְׁבֵי צֽוֹר׃</p>
-      <p>גַּם־אַ֭שּׁוּר נִלְוָ֣ה עִמָּ֑ם הָ֤יֽוּ<span class="mam-implicit-maqaf">־</span>זְר֖וֹעַ לִבְנֵי־ל֣וֹט סֶֽלָה׃</p>
-      <p>עֲשֵֽׂה־לָהֶ֥ם כְּמִדְיָ֑ן כְּֽסִיסְרָ֥א כְ֝יָבִ֗ין בְּנַ֣חַל קִישֽׁוֹן׃</p>
-      <p>נִשְׁמְד֥וּ בְֽעֵין־דֹּ֑אר הָ֥יוּ דֹ֝֗מֶן לָאֲדָמָֽה׃</p>
-      <p>שִׁיתֵ֣מוֹ נְ֭דִיבֵימוֹ כְּעֹרֵ֣ב וְכִזְאֵ֑ב וּֽכְזֶ֥בַח וּ֝כְצַלְמֻנָּ֗ע כׇּל־נְסִיכֵֽימוֹ׃</p>
-      <p>אֲשֶׁ֣ר אָ֭מְרוּ נִ֣ירְשָׁה לָּ֑נוּ אֵ֝֗ת נְא֣וֹת אֱלֹהִֽים׃</p>
-      <p>אֱֽלֹהַ֗י שִׁיתֵ֥מוֹ כַגַּלְגַּ֑ל כְּ֝קַ֗שׁ לִפְנֵי־רֽוּחַ׃</p>
-      <p>כְּאֵ֥שׁ תִּבְעַר־יָ֑עַר וּ֝כְלֶהָבָ֗ה תְּלַהֵ֥ט הָרִֽים׃</p>
-      <p>כֵּ֭ן תִּרְדְּפֵ֣ם בְּסַעֲרֶ֑ךָ וּבְסוּפָתְךָ֥ תְבַהֲלֵֽם׃</p>
-      <p>מַלֵּ֣א פְנֵיהֶ֣ם קָל֑וֹן וִיבַקְשׁ֖וּ שִׁמְךָ֣ יְהֹוָֽה׃</p>
-      <p>יֵבֹ֖שׁוּ וְיִבָּהֲל֥וּ עֲדֵי־עַ֗ד וְֽיַחְפְּר֥וּ וְיֹאבֵֽדוּ׃</p>
-      <p>וְֽיֵדְע֗וּ כִּי־אַתָּ֬ה שִׁמְךָ֣ יְהֹוָ֣ה לְבַדֶּ֑ךָ עֶ֝לְי֗וֹן עַל־כׇּל־הָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֖יר מִזְמ֣וֹר לְאָסָֽף׃</p></div><div class="heb-s"><p>שיר מזמור לאסף׃</p></div></div>
+      <div class="texte-fr"><p>Cantique. Psaume d’Assaph.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֥ים אַל־דֳּמִי־לָ֑ךְ אַל־תֶּחֱרַ֖שׁ וְאַל־תִּשְׁקֹ֣ט אֵֽל׃</p></div><div class="heb-s"><p>אלהים אל־דמי־לך אל־תחרש ואל־תשקט אל׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, n’arrête plus ton action, ne garde pas le silence, ne reste pas en repos, ô Tout-Puissant!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הִנֵּ֣ה א֭וֹיְבֶיךָ יֶהֱמָי֑וּן וּ֝מְשַׂנְאֶ֗יךָ נָ֣שְׂאוּ רֹֽאשׁ׃</p></div><div class="heb-s"><p>כי־הנה אויביך יהמיון ומשנאיך נשאו ראש׃</p></div></div>
+      <div class="texte-fr"><p>Car voilà tes ennemis qui s’agitent en tumulte, et tes adversaires qui lèvent la tête.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַֽל־עַ֭מְּךָ יַעֲרִ֣ימוּ ס֑וֹד וְ֝יִתְיָעֲצ֗וּ עַל־צְפוּנֶֽיךָ׃</p></div><div class="heb-s"><p>על־עמך יערימו סוד ויתיעצו על־צפוניך׃</p></div></div>
+      <div class="texte-fr"><p>Contre ton peuple ils ourdissent des complots; ils se concertent contre ceux que tu protèges.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָמְר֗וּ לְ֭כוּ וְנַכְחִידֵ֣ם מִגּ֑וֹי וְלֹֽא־יִזָּכֵ֖ר שֵֽׁם־יִשְׂרָאֵ֣ל עֽוֹד׃</p></div><div class="heb-s"><p>אמרו לכו ונכחידם מגוי ולא־יזכר שם־ישראל עוד׃</p></div></div>
+      <div class="texte-fr"><p>Ils disent: "Allons, rayons-les du nombre des nations; que le nom d’Israël ne soit plus mentionné!"</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י נוֹעֲצ֣וּ לֵ֣ב יַחְדָּ֑ו עָ֝לֶ֗יךָ בְּרִ֣ית יִכְרֹֽתוּ׃</p></div><div class="heb-s"><p>כי נועצו לב יחדו עליך ברית יכרתו׃</p></div></div>
+      <div class="texte-fr"><p>Car, d’un commun accord, ils prennent des résolutions, contre toi ils font un pacte:</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אׇהֳלֵ֣י אֱ֭דוֹם וְיִשְׁמְעֵאלִ֗ים מוֹאָ֥ב וְהַגְרִֽים׃</p></div><div class="heb-s"><p>אהלי אדום וישמעאלים מואב והגרים׃</p></div></div>
+      <div class="texte-fr"><p>les tentes d’Edom et les Ismaélites, Moabites et Hagrites,</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>גְּבָ֣ל וְ֭עַמּוֹן וַעֲמָלֵ֑ק פְּ֝לֶ֗שֶׁת עִם־יֹ֥שְׁבֵי צֽוֹר׃</p></div><div class="heb-s"><p>גבל ועמון ועמלק פלשת עם־ישבי צור׃</p></div></div>
+      <div class="texte-fr"><p>Ghebal, Ammon et Amalec, les Philistins ainsi que les habitants de Tyr;</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּם־אַ֭שּׁוּר נִלְוָ֣ה עִמָּ֑ם הָ֤יֽוּ<span class="mam-implicit-maqaf">־</span>זְר֖וֹעַ לִבְנֵי־ל֣וֹט סֶֽלָה׃</p></div><div class="heb-s"><p>גם־אשור נלוה עמם היו<span class="mam-implicit-maqaf">־</span>זרוע לבני־לוט סלה׃</p></div></div>
+      <div class="texte-fr"><p>Achour aussi se joint à eux; ils prêtent main-forte aux fils de Loth. Sélah!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲשֵֽׂה־לָהֶ֥ם כְּמִדְיָ֑ן כְּֽסִיסְרָ֥א כְ֝יָבִ֗ין בְּנַ֣חַל קִישֽׁוֹן׃</p></div><div class="heb-s"><p>עשה־להם כמדין כסיסרא כיבין בנחל קישון׃</p></div></div>
+      <div class="texte-fr"><p>Traite-les comme tu as traité Madian, Sisara et Jabin près du torrent de Kison,</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִשְׁמְד֥וּ בְֽעֵין־דֹּ֑אר הָ֥יוּ דֹ֝֗מֶן לָאֲדָמָֽה׃</p></div><div class="heb-s"><p>נשמדו בעין־דאר היו דמן לאדמה׃</p></div></div>
+      <div class="texte-fr"><p>qui furent anéantis à Endor, couchés sur le sol comme du fumier.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁיתֵ֣מוֹ נְ֭דִיבֵימוֹ כְּעֹרֵ֣ב וְכִזְאֵ֑ב וּֽכְזֶ֥בַח וּ֝כְצַלְמֻנָּ֗ע כׇּל־נְסִיכֵֽימוֹ׃</p></div><div class="heb-s"><p>שיתמו נדיבימו כערב וכזאב וכזבח וכצלמנע כל־נסיכימו׃</p></div></div>
+      <div class="texte-fr"><p>Rends leur noble pareille à Oreb et à Zeêb, et tous leurs princes, pareils à Zébah et Çalmouna,</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר אָ֭מְרוּ נִ֣ירְשָׁה לָּ֑נוּ אֵ֝֗ת נְא֣וֹת אֱלֹהִֽים׃</p></div><div class="heb-s"><p>אשר אמרו נירשה לנו את נאות אלהים׃</p></div></div>
+      <div class="texte-fr"><p>car ils ont dit: "Emparons-nous des demeures de Dieu."</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהַ֗י שִׁיתֵ֥מוֹ כַגַּלְגַּ֑ל כְּ֝קַ֗שׁ לִפְנֵי־רֽוּחַ׃</p></div><div class="heb-s"><p>אלהי שיתמו כגלגל כקש לפני־רוח׃</p></div></div>
+      <div class="texte-fr"><p>Mon Dieu, fais d’eux comme un tourbillon de poussière, comme du chaume emporté par le vent.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּאֵ֥שׁ תִּבְעַר־יָ֑עַר וּ֝כְלֶהָבָ֗ה תְּלַהֵ֥ט הָרִֽים׃</p></div><div class="heb-s"><p>כאש תבער־יער וכלהבה תלהט הרים׃</p></div></div>
+      <div class="texte-fr"><p>De même que le feu dévore les forêts, que la flamme embrase les montagnes,</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֵּ֭ן תִּרְדְּפֵ֣ם בְּסַעֲרֶ֑ךָ וּבְסוּפָתְךָ֥ תְבַהֲלֵֽם׃</p></div><div class="heb-s"><p>כן תרדפם בסערך ובסופתך תבהלם׃</p></div></div>
+      <div class="texte-fr"><p>ainsi pourchasse-les par ta tempête, jette-les dans une fuite éperdue par ton ouragan.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַלֵּ֣א פְנֵיהֶ֣ם קָל֑וֹן וִיבַקְשׁ֖וּ שִׁמְךָ֣ יְהֹוָֽה׃</p></div><div class="heb-s"><p>מלא פניהם קלון ויבקשו שמך יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Couvre leur visage d’opprobre, pour qu’ils recherchent ton nom, ô Éternel.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵבֹ֖שׁוּ וְיִבָּהֲל֥וּ עֲדֵי־עַ֗ד וְֽיַחְפְּר֥וּ וְיֹאבֵֽדוּ׃</p></div><div class="heb-s"><p>יבשו ויבהלו עדי־עד ויחפרו ויאבדו׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils soient confondus, terrifiés à jamais, saisis de honte et perdus.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽיֵדְע֗וּ כִּי־אַתָּ֬ה שִׁמְךָ֣ יְהֹוָ֣ה לְבַדֶּ֑ךָ עֶ֝לְי֗וֹן עַל־כׇּל־הָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וידעו כי־אתה שמך יהוה לבדך עליון על־כל־הארץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Qu’ils reconnaissent ainsi que toi seul as nom Éternel, que tu es le Maître suprême de toute la terre.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Cantique. Psaume d’Assaph.</p>
-      <p>O Dieu, n’arrête plus ton action, ne garde pas le silence, ne reste pas en repos, ô Tout-Puissant!</p>
-      <p>Car voilà tes ennemis qui s’agitent en tumulte, et tes adversaires qui lèvent la tête.</p>
-      <p>Contre ton peuple ils ourdissent des complots; ils se concertent contre ceux que tu protèges.</p>
-      <p>Ils disent: "Allons, rayons-les du nombre des nations; que le nom d’Israël ne soit plus mentionné!"</p>
-      <p>Car, d’un commun accord, ils prennent des résolutions, contre toi ils font un pacte:</p>
-      <p>les tentes d’Edom et les Ismaélites, Moabites et Hagrites,</p>
-      <p>Ghebal, Ammon et Amalec, les Philistins ainsi que les habitants de Tyr;</p>
-      <p>Achour aussi se joint à eux; ils prêtent main-forte aux fils de Loth. Sélah!</p>
-      <p>Traite-les comme tu as traité Madian, Sisara et Jabin près du torrent de Kison,</p>
-      <p>qui furent anéantis à Endor, couchés sur le sol comme du fumier.</p>
-      <p>Rends leur noble pareille à Oreb et à Zeêb, et tous leurs princes, pareils à Zébah et Çalmouna,</p>
-      <p>car ils ont dit: "Emparons-nous des demeures de Dieu."</p>
-      <p>Mon Dieu, fais d’eux comme un tourbillon de poussière, comme du chaume emporté par le vent.</p>
-      <p>De même que le feu dévore les forêts, que la flamme embrase les montagnes,</p>
-      <p>ainsi pourchasse-les par ta tempête, jette-les dans une fuite éperdue par ton ouragan.</p>
-      <p>Couvre leur visage d’opprobre, pour qu’ils recherchent ton nom, ô Éternel.</p>
-      <p>Qu’ils soient confondus, terrifiés à jamais, saisis de honte et perdus.</p>
-      <p>Qu’ils reconnaissent ainsi que toi seul as nom Éternel, que tu es le Maître suprême de toute la terre.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -267,6 +341,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-82.html">← Tehilim 82</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-83.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-84.html">Tehilim 84 →</a></div>
 </main>
 
 <footer>

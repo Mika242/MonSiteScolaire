@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 33 – Chantez avec joie à D.ieu, justes</h1>
     <p>Ketouvim, Tehilim, Chapitre 33</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-32.html">← Tehilim 32</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-33.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-34.html">Tehilim 34 →</a></div>
   </div>
 </header>
 
@@ -161,67 +202,106 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>רַנְּנ֣וּ צַ֭דִּיקִים בַּֽיהֹוָ֑ה לַ֝יְשָׁרִ֗ים נָאוָ֥ה תְהִלָּֽה׃</p>
-      <p>הוֹד֣וּ לַיהֹוָ֣ה בְּכִנּ֑וֹר בְּנֵ֥בֶל עָ֝שׂ֗וֹר זַמְּרוּ־לֽוֹ׃</p>
-      <p>שִֽׁירוּ־ל֭וֹ שִׁ֣יר חָדָ֑שׁ הֵיטִ֥יבוּ נַ֝גֵּ֗ן בִּתְרוּעָֽה׃</p>
-      <p>כִּֽי־יָשָׁ֥ר דְּבַר־יְהֹוָ֑ה וְכׇל־מַ֝עֲשֵׂ֗הוּ בֶּאֱמוּנָֽה׃</p>
-      <p>אֹ֭הֵב צְדָקָ֣ה וּמִשְׁפָּ֑ט חֶ֥סֶד יְ֝הֹוָ֗ה מָלְאָ֥ה הָאָֽרֶץ׃</p>
-      <p>בִּדְבַ֣ר יְ֭הֹוָה שָׁמַ֣יִם נַעֲשׂ֑וּ וּבְר֥וּחַ פִּ֝֗יו כׇּל־צְבָאָֽם׃</p>
-      <p>כֹּנֵ֣ס כַּ֭נֵּד מֵ֣י הַיָּ֑ם נֹתֵ֖ן בְּאוֹצָר֣וֹת תְּהוֹמֽוֹת׃</p>
-      <p>יִֽירְא֣וּ מֵ֭יְהֹוָה כׇּל־הָאָ֑רֶץ מִמֶּ֥נּוּ יָ֝ג֗וּרוּ כׇּל־יֹשְׁבֵ֥י תֵבֵֽל׃</p>
-      <p>כִּ֤י ה֣וּא אָמַ֣ר וַיֶּ֑הִי הֽוּא־צִ֝וָּ֗ה וַֽיַּעֲמֹֽד׃</p>
-      <p>יְֽהֹוָ֗ה הֵפִ֥יר עֲצַת־גּוֹיִ֑ם הֵ֝נִ֗יא מַחְשְׁב֥וֹת עַמִּֽים׃</p>
-      <p>עֲצַ֣ת יְ֭הֹוָה לְעוֹלָ֣ם תַּעֲמֹ֑ד מַחְשְׁב֥וֹת לִ֝בּ֗וֹ לְדֹ֣ר וָדֹֽר׃</p>
-      <p>אַשְׁרֵ֣י הַ֭גּוֹי אֲשֶׁר־יְהֹוָ֣ה אֱלֹהָ֑יו הָעָ֓ם&thinsp;<b>׀</b> בָּחַ֖ר לְנַחֲלָ֣ה לֽוֹ׃</p>
-      <p>מִ֭שָּׁמַיִם הִבִּ֣יט יְהֹוָ֑ה רָ֝אָ֗ה אֶֽת־כׇּל־בְּנֵ֥י הָאָדָֽם׃</p>
-      <p>מִֽמְּכוֹן־שִׁבְתּ֥וֹ הִשְׁגִּ֑יחַ אֶ֖ל כׇּל־יֹשְׁבֵ֣י הָאָֽרֶץ׃</p>
-      <p>הַיֹּצֵ֣ר יַ֣חַד לִבָּ֑ם הַ֝מֵּבִ֗ין אֶל־כׇּל־מַעֲשֵׂיהֶֽם׃</p>
-      <p>אֵֽין־הַ֭מֶּלֶךְ נוֹשָׁ֣ע בְּרׇב־חָ֑יִל גִּ֝בּ֗וֹר לֹא־יִנָּצֵ֥ל בְּרׇב־כֹּֽחַ׃</p>
-      <p>שֶׁ֣קֶר הַ֭סּוּס לִתְשׁוּעָ֑ה וּבְרֹ֥ב חֵ֝יל֗וֹ לֹ֣א יְמַלֵּֽט׃</p>
-      <p>הִנֵּ֤ה עֵ֣ין יְ֭הֹוָה אֶל־יְרֵאָ֑יו לַֽמְיַחֲלִ֥ים לְחַסְדּֽוֹ׃</p>
-      <p>לְהַצִּ֣יל מִמָּ֣וֶת נַפְשָׁ֑ם וּ֝לְחַיּוֹתָ֗ם בָּרָעָֽב׃</p>
-      <p>נַ֭פְשֵׁנוּ חִכְּתָ֣ה לַֽיהֹוָ֑ה עֶזְרֵ֖נוּ וּמָגִנֵּ֣נוּ הֽוּא׃</p>
-      <p>כִּי־ב֭וֹ יִשְׂמַ֣ח לִבֵּ֑נוּ כִּ֤י בְשֵׁ֖ם קׇדְשׁ֣וֹ בָטָֽחְנוּ׃</p>
-      <p>יְהִי־חַסְדְּךָ֣ יְהֹוָ֣ה עָלֵ֑ינוּ כַּ֝אֲשֶׁ֗ר יִחַ֥לְנוּ לָֽךְ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a><a href="#v-21">21</a><a href="#v-22">22</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַנְּנ֣וּ צַ֭דִּיקִים בַּֽיהֹוָ֑ה לַ֝יְשָׁרִ֗ים נָאוָ֥ה תְהִלָּֽה׃</p></div><div class="heb-s"><p>רננו צדיקים ביהוה לישרים נאוה תהלה׃</p></div></div>
+      <div class="texte-fr"><p>Entonnez, justes, des chants en l’honneur de l’Éternel: aux hommes droits il sied de louer [Dieu]!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹד֣וּ לַיהֹוָ֣ה בְּכִנּ֑וֹר בְּנֵ֥בֶל עָ֝שׂ֗וֹר זַמְּרוּ־לֽוֹ׃</p></div><div class="heb-s"><p>הודו ליהוה בכנור בנבל עשור זמרו־לו׃</p></div></div>
+      <div class="texte-fr"><p>Rendez hommage à l’Éternel avec la harpe, célébrez-le par le luth à dix cordes.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִֽׁירוּ־ל֭וֹ שִׁ֣יר חָדָ֑שׁ הֵיטִ֥יבוּ נַ֝גֵּ֗ן בִּתְרוּעָֽה׃</p></div><div class="heb-s"><p>שירו־לו שיר חדש היטיבו נגן בתרועה׃</p></div></div>
+      <div class="texte-fr"><p>Chantez-lui un cantique nouveau, faites résonner avec art vos instruments avec vos acclamations.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יָשָׁ֥ר דְּבַר־יְהֹוָ֑ה וְכׇל־מַ֝עֲשֵׂ֗הוּ בֶּאֱמוּנָֽה׃</p></div><div class="heb-s"><p>כי־ישר דבר־יהוה וכל־מעשהו באמונה׃</p></div></div>
+      <div class="texte-fr"><p>Car droite est la parole de l’Éternel, toute son œuvre est marquée de loyauté.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֹ֭הֵב צְדָקָ֣ה וּמִשְׁפָּ֑ט חֶ֥סֶד יְ֝הֹוָ֗ה מָלְאָ֥ה הָאָֽרֶץ׃</p></div><div class="heb-s"><p>אהב צדקה ומשפט חסד יהוה מלאה הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Il aime la justice et le bon droit; la terre est remplie de la bonté de l’Éternel.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּדְבַ֣ר יְ֭הֹוָה שָׁמַ֣יִם נַעֲשׂ֑וּ וּבְר֥וּחַ פִּ֝֗יו כׇּל־צְבָאָֽם׃</p></div><div class="heb-s"><p>בדבר יהוה שמים נעשו וברוח פיו כל־צבאם׃</p></div></div>
+      <div class="texte-fr"><p>Par la parole de l’Éternel les cieux se sont formés, par le souffle de sa bouche, toutes leurs milices.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּנֵ֣ס כַּ֭נֵּד מֵ֣י הַיָּ֑ם נֹתֵ֖ן בְּאוֹצָר֣וֹת תְּהוֹמֽוֹת׃</p></div><div class="heb-s"><p>כנס כנד מי הים נתן באוצרות תהומות׃</p></div></div>
+      <div class="texte-fr"><p>Il amoncelle comme une digue les eaux de la mer, il renferme dans des réservoirs les flots profonds.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִֽירְא֣וּ מֵ֭יְהֹוָה כׇּל־הָאָ֑רֶץ מִמֶּ֥נּוּ יָ֝ג֗וּרוּ כׇּל־יֹשְׁבֵ֥י תֵבֵֽל׃</p></div><div class="heb-s"><p>ייראו מיהוה כל־הארץ ממנו יגורו כל־ישבי תבל׃</p></div></div>
+      <div class="texte-fr"><p>Que toute la terre craigne l’Éternel! Que tous les habitants du globe tremblent devant lui!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י ה֣וּא אָמַ֣ר וַיֶּ֑הִי הֽוּא־צִ֝וָּ֗ה וַֽיַּעֲמֹֽד׃</p></div><div class="heb-s"><p>כי הוא אמר ויהי הוא־צוה ויעמד׃</p></div></div>
+      <div class="texte-fr"><p>Car il a parlé, et [tout] naquit; il a ordonné, et [tout] fut là.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְֽהֹוָ֗ה הֵפִ֥יר עֲצַת־גּוֹיִ֑ם הֵ֝נִ֗יא מַחְשְׁב֥וֹת עַמִּֽים׃</p></div><div class="heb-s"><p>יהוה הפיר עצת־גוים הניא מחשבות עמים׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel renverse les projets des peuples, il fait échouer les desseins des nations.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲצַ֣ת יְ֭הֹוָה לְעוֹלָ֣ם תַּעֲמֹ֑ד מַחְשְׁב֥וֹת לִ֝בּ֗וֹ לְדֹ֣ר וָדֹֽר׃</p></div><div class="heb-s"><p>עצת יהוה לעולם תעמד מחשבות לבו לדר ודר׃</p></div></div>
+      <div class="texte-fr"><p>Mais les décrets de l’Éternel subsistent à jamais, les résolutions de son cœur, de siècle en siècle.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׁרֵ֣י הַ֭גּוֹי אֲשֶׁר־יְהֹוָ֣ה אֱלֹהָ֑יו הָעָ֓ם&thinsp;<b>׀</b> בָּחַ֖ר לְנַחֲלָ֣ה לֽוֹ׃</p></div><div class="heb-s"><p>אשרי הגוי אשר־יהוה אלהיו העם&thinsp;<b>׀</b> בחר לנחלה לו׃</p></div></div>
+      <div class="texte-fr"><p>Heureux le peuple qui reconnaît l’Éternel comme Dieu, la nation qu’il s’est choisie comme son héritage!</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֭שָּׁמַיִם הִבִּ֣יט יְהֹוָ֑ה רָ֝אָ֗ה אֶֽת־כׇּל־בְּנֵ֥י הָאָדָֽם׃</p></div><div class="heb-s"><p>משמים הביט יהוה ראה את־כל־בני האדם׃</p></div></div>
+      <div class="texte-fr"><p>Du haut des cieux, l’Éternel promène ses regards; il voit tous les fils de l’homme.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִֽמְּכוֹן־שִׁבְתּ֥וֹ הִשְׁגִּ֑יחַ אֶ֖ל כׇּל־יֹשְׁבֵ֣י הָאָֽרֶץ׃</p></div><div class="heb-s"><p>ממכון־שבתו השגיח אל כל־ישבי הארץ׃</p></div></div>
+      <div class="texte-fr"><p>De la résidence qu’il s’est réservée, il dirige son attention sur tous les habitants de la terre.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַיֹּצֵ֣ר יַ֣חַד לִבָּ֑ם הַ֝מֵּבִ֗ין אֶל־כׇּל־מַעֲשֵׂיהֶֽם׃</p></div><div class="heb-s"><p>היצר יחד לבם המבין אל־כל־מעשיהם׃</p></div></div>
+      <div class="texte-fr"><p>Il a formé leur cœur à tous, et il observe tous leurs actes.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵֽין־הַ֭מֶּלֶךְ נוֹשָׁ֣ע בְּרׇב־חָ֑יִל גִּ֝בּ֗וֹר לֹא־יִנָּצֵ֥ל בְּרׇב־כֹּֽחַ׃</p></div><div class="heb-s"><p>אין־המלך נושע ברב־חיל גבור לא־ינצל ברב־כח׃</p></div></div>
+      <div class="texte-fr"><p>Ce n’est pas avec une puissante armée que le roi remporte la victoire; ce n’est pas à sa grande force que le héros doit son salut.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֶׁ֣קֶר הַ֭סּוּס לִתְשׁוּעָ֑ה וּבְרֹ֥ב חֵ֝יל֗וֹ לֹ֣א יְמַלֵּֽט׃</p></div><div class="heb-s"><p>שקר הסוס לתשועה וברב חילו לא ימלט׃</p></div></div>
+      <div class="texte-fr"><p>Le coursier est d’un vain secours pour triompher, et sa grande vigueur n’assure pas le salut.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּ֤ה עֵ֣ין יְ֭הֹוָה אֶל־יְרֵאָ֑יו לַֽמְיַחֲלִ֥ים לְחַסְדּֽוֹ׃</p></div><div class="heb-s"><p>הנה עין יהוה אל־יראיו למיחלים לחסדו׃</p></div></div>
+      <div class="texte-fr"><p>Voici, les yeux du Seigneur sont ouverts sur ses adorateurs, sur ceux qui ont foi en sa bonté,</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְהַצִּ֣יל מִמָּ֣וֶת נַפְשָׁ֑ם וּ֝לְחַיּוֹתָ֗ם בָּרָעָֽב׃</p></div><div class="heb-s"><p>להציל ממות נפשם ולחיותם ברעב׃</p></div></div>
+      <div class="texte-fr"><p>afin de sauver leur âme du trépas, et de les conserver en vie pendant la famine.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַ֭פְשֵׁנוּ חִכְּתָ֣ה לַֽיהֹוָ֑ה עֶזְרֵ֖נוּ וּמָגִנֵּ֣נוּ הֽוּא׃</p></div><div class="heb-s"><p>נפשנו חכתה ליהוה עזרנו ומגננו הוא׃</p></div></div>
+      <div class="texte-fr"><p>Notre âme met son attente en l’Éternel: il est notre aide et notre bouclier.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־ב֭וֹ יִשְׂמַ֣ח לִבֵּ֑נוּ כִּ֤י בְשֵׁ֖ם קׇדְשׁ֣וֹ בָטָֽחְנוּ׃</p></div><div class="heb-s"><p>כי־בו ישמח לבנו כי בשם קדשו בטחנו׃</p></div></div>
+      <div class="texte-fr"><p>Oui, notre cœur se réjouit en lui, oui, nous avons confiance en son saint nom.</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִי־חַסְדְּךָ֣ יְהֹוָ֣ה עָלֵ֑ינוּ כַּ֝אֲשֶׁ֗ר יִחַ֥לְנוּ לָֽךְ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יהי־חסדך יהוה עלינו כאשר יחלנו לך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Que ta bonté, Éternel, s’étende sur nous, comme nous y comptons de ta part!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Entonnez, justes, des chants en l’honneur de l’Éternel: aux hommes droits il sied de louer [Dieu]!</p>
-      <p>Rendez hommage à l’Éternel avec la harpe, célébrez-le par le luth à dix cordes.</p>
-      <p>Chantez-lui un cantique nouveau, faites résonner avec art vos instruments avec vos acclamations.</p>
-      <p>Car droite est la parole de l’Éternel, toute son œuvre est marquée de loyauté.</p>
-      <p>Il aime la justice et le bon droit; la terre est remplie de la bonté de l’Éternel.</p>
-      <p>Par la parole de l’Éternel les cieux se sont formés, par le souffle de sa bouche, toutes leurs milices.</p>
-      <p>Il amoncelle comme une digue les eaux de la mer, il renferme dans des réservoirs les flots profonds.</p>
-      <p>Que toute la terre craigne l’Éternel! Que tous les habitants du globe tremblent devant lui!</p>
-      <p>Car il a parlé, et [tout] naquit; il a ordonné, et [tout] fut là.</p>
-      <p>L’Éternel renverse les projets des peuples, il fait échouer les desseins des nations.</p>
-      <p>Mais les décrets de l’Éternel subsistent à jamais, les résolutions de son cœur, de siècle en siècle.</p>
-      <p>Heureux le peuple qui reconnaît l’Éternel comme Dieu, la nation qu’il s’est choisie comme son héritage!</p>
-      <p>Du haut des cieux, l’Éternel promène ses regards; il voit tous les fils de l’homme.</p>
-      <p>De la résidence qu’il s’est réservée, il dirige son attention sur tous les habitants de la terre.</p>
-      <p>Il a formé leur cœur à tous, et il observe tous leurs actes.</p>
-      <p>Ce n’est pas avec une puissante armée que le roi remporte la victoire; ce n’est pas à sa grande force que le héros doit son salut.</p>
-      <p>Le coursier est d’un vain secours pour triompher, et sa grande vigueur n’assure pas le salut.</p>
-      <p>Voici, les yeux du Seigneur sont ouverts sur ses adorateurs, sur ceux qui ont foi en sa bonté,</p>
-      <p>afin de sauver leur âme du trépas, et de les conserver en vie pendant la famine.</p>
-      <p>Notre âme met son attente en l’Éternel: il est notre aide et notre bouclier.</p>
-      <p>Oui, notre cœur se réjouit en lui, oui, nous avons confiance en son saint nom.</p>
-      <p>Que ta bonté, Éternel, s’étende sur nous, comme nous y comptons de ta part!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -276,6 +356,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-32.html">← Tehilim 32</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-33.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-34.html">Tehilim 34 →</a></div>
 </main>
 
 <footer>

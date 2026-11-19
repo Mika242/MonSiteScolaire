@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 104 – Bénis, mon âme, D.ieu : hymne de la création</h1>
     <p>Ketouvim, Tehilim, Chapitre 104</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-103.html">← Tehilim 103</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-104.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-105.html">Tehilim 105 →</a></div>
   </div>
 </header>
 
@@ -161,93 +202,158 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>בָּרְכִ֥י נַפְשִׁ֗י אֶת־יְ֫הֹוָ֥ה יְהֹוָ֣ה אֱ֭לֹהַי גָּדַ֣לְתָּ מְּאֹ֑ד ה֖וֹד וְהָדָ֣ר לָבָֽשְׁתָּ׃</p>
-      <p>עֹֽטֶה־א֭וֹר כַּשַּׂלְמָ֑ה נוֹטֶ֥ה שָׁ֝מַ֗יִם כַּיְרִיעָֽה׃</p>
-      <p>הַ֥מְקָרֶ֥ה בַמַּ֗יִם עֲֽלִיּ֫וֹתָ֥יו הַשָּׂם־עָבִ֥ים רְכוּב֑וֹ הַֽ֝מְהַלֵּ֗ךְ עַל־כַּנְפֵי־רֽוּחַ׃</p>
-      <p>עֹשֶׂ֣ה מַלְאָכָ֣יו רוּח֑וֹת מְ֝שָׁרְתָ֗יו אֵ֣שׁ לֹהֵֽט׃</p>
-      <p>יָֽסַד־אֶ֭רֶץ עַל־מְכוֹנֶ֑יהָ בַּל־תִּ֝מּ֗וֹט עוֹלָ֥ם וָעֶֽד׃</p>
-      <p>תְּ֭הוֹם כַּלְּב֣וּשׁ כִּסִּית֑וֹ עַל־הָ֝רִ֗ים יַ֖עַמְדוּ<span class="mam-implicit-maqaf">־</span>מָֽיִם׃</p>
-      <p>מִן־גַּעֲרָ֣תְךָ֣ יְנוּס֑וּן מִן־ק֥וֹל רַ֝עַמְךָ֗ יֵחָפֵזֽוּן׃</p>
-      <p>יַעֲל֣וּ הָ֭רִים יֵרְד֣וּ בְקָע֑וֹת אֶל־מְ֝ק֗וֹם זֶ֤ה&thinsp;<b>׀</b> יָסַ֬דְתָּ לָהֶֽם׃</p>
-      <p>גְּֽבוּל־שַׂ֭מְתָּ בַּל־יַעֲבֹר֑וּן בַּל־יְ֝שֻׁב֗וּן לְכַסּ֥וֹת הָאָֽרֶץ׃</p>
-      <p>הַֽמְשַׁלֵּ֣חַ מַ֭עְיָנִים בַּנְּחָלִ֑ים בֵּ֥ין הָ֝רִ֗ים יְהַלֵּכֽוּן׃</p>
-      <p>יַ֭שְׁקוּ כׇּל־חַיְת֣וֹ שָׂדָ֑י יִשְׁבְּר֖וּ פְרָאִ֣ים צְמָאָֽם׃</p>
-      <p>עֲ֭לֵיהֶם עוֹף־הַשָּׁמַ֣יִם יִשְׁכּ֑וֹן מִבֵּ֥ין עֳ֝פָאיִ֗ם יִתְּנוּ־קֽוֹל׃</p>
-      <p>מַשְׁקֶ֣ה הָ֭רִים מֵעֲלִיּוֹתָ֑יו מִפְּרִ֥י מַ֝עֲשֶׂ֗יךָ תִּשְׂבַּ֥ע הָאָֽרֶץ׃</p>
-      <p>מַצְמִ֤יחַ חָצִ֨יר&thinsp;<b>׀</b> לַבְּהֵמָ֗ה וְ֭עֵשֶׂב לַעֲבֹדַ֣ת הָאָדָ֑ם לְה֥וֹצִיא לֶ֝֗חֶם מִן־הָאָֽרֶץ׃</p>
-      <p>וְיַ֤יִן&thinsp;<b>׀</b> יְשַׂמַּ֬ח לְֽבַב־אֱנ֗וֹשׁ לְהַצְהִ֣יל פָּנִ֣ים מִשָּׁ֑מֶן וְ֝לֶ֗חֶם לְֽבַב־אֱנ֥וֹשׁ יִסְעָֽד׃</p>
-      <p>יִ֭שְׂבְּעוּ עֲצֵ֣י יְהֹוָ֑ה אַֽרְזֵ֥י לְ֝בָנ֗וֹן אֲשֶׁ֣ר נָטָֽע׃</p>
-      <p>אֲשֶׁר־שָׁ֭ם צִפֳּרִ֣ים יְקַנֵּ֑נוּ חֲ֝סִידָ֗ה בְּרוֹשִׁ֥ים בֵּיתָֽהּ׃</p>
-      <p>הָרִ֣ים הַ֭גְּבֹהִים לַיְּעֵלִ֑ים סְ֝לָעִ֗ים מַחְסֶ֥ה לַֽשְׁפַנִּֽים׃</p>
-      <p>עָשָׂ֣ה יָ֭רֵחַ לְמוֹעֲדִ֑ים שֶׁ֝֗מֶשׁ יָדַ֥ע מְבוֹאֽוֹ׃</p>
-      <p>תָּֽשֶׁת־חֹ֭שֶׁךְ וִ֣יהִי לָ֑יְלָה בּוֹ־תִ֝רְמֹ֗שׂ כׇּל־חַיְתוֹ־יָֽעַר׃</p>
-      <p>הַ֭כְּפִירִים שֹׁאֲגִ֣ים לַטָּ֑רֶף וּלְבַקֵּ֖שׁ מֵאֵ֣ל אׇכְלָֽם׃</p>
-      <p>תִּזְרַ֣ח הַ֭שֶּׁמֶשׁ יֵאָסֵפ֑וּן וְאֶל־מְ֝עוֹנֹתָ֗ם יִרְבָּצֽוּן׃</p>
-      <p>יֵצֵ֣א אָדָ֣ם לְפׇעֳל֑וֹ וְֽלַעֲבֹ֖דָת֣וֹ עֲדֵי־עָֽרֶב׃</p>
-      <p>מָה־רַבּ֬וּ מַעֲשֶׂ֨יךָ&thinsp;<b>׀</b> יְֽהֹוָ֗ה כֻּ֭לָּם בְּחׇכְמָ֣ה עָשִׂ֑יתָ מָלְאָ֥ה הָ֝אָ֗רֶץ קִנְיָנֶֽךָ׃</p>
-      <p>זֶ֤ה&thinsp;<b>׀</b> הַיָּ֥ם גָּדוֹל֮ וּרְחַ֢ב יָ֫דָ֥יִם שָֽׁם־רֶ֭מֶשׂ וְאֵ֣ין מִסְפָּ֑ר חַיּ֥וֹת קְ֝טַנּ֗וֹת עִם־גְּדֹלֽוֹת׃</p>
-      <p>שָׁ֭ם אֳנִיּ֣וֹת יְהַלֵּכ֑וּן לִ֝וְיָתָ֗ן זֶֽה־יָצַ֥רְתָּ לְשַֽׂחֶק־בּֽוֹ׃</p>
-      <p>כֻּ֭לָּם אֵלֶ֣יךָ יְשַׂבֵּר֑וּן לָתֵ֖ת אׇכְלָ֣ם בְּעִתּֽוֹ׃</p>
-      <p>תִּתֵּ֣ן לָ֭הֶם יִלְקֹט֑וּן תִּפְתַּ֥ח יָ֝דְךָ֗ יִשְׂבְּע֥וּן טֽוֹב׃</p>
-      <p>תַּסְתִּ֥יר פָּנֶיךָ֮ יִֽבָּהֵ֫ל֥וּן תֹּסֵ֣ף ר֭וּחָם יִגְוָע֑וּן וְֽאֶל־עֲפָרָ֥ם יְשׁוּבֽוּן׃</p>
-      <p>תְּשַׁלַּ֣ח ר֭וּחֲךָ יִבָּרֵא֑וּן וּ֝תְחַדֵּ֗שׁ פְּנֵ֣י אֲדָמָֽה׃</p>
-      <p>יְהִ֤י כְב֣וֹד יְהֹוָ֣ה לְעוֹלָ֑ם יִשְׂמַ֖ח יְהֹוָ֣ה בְּמַעֲשָֽׂיו׃</p>
-      <p>הַמַּבִּ֣יט לָ֭אָרֶץ וַתִּרְעָ֑ד יִגַּ֖ע בֶּהָרִ֣ים וְֽיֶעֱשָֽׁנוּ׃</p>
-      <p>אָשִׁ֣ירָה לַיהֹוָ֣ה בְּחַיָּ֑י אֲזַמְּרָ֖ה לֵאלֹהַ֣י בְּעוֹדִֽי׃</p>
-      <p>יֶעֱרַ֣ב עָלָ֣יו שִׂיחִ֑י אָ֝נֹכִ֗י אֶשְׂמַ֥ח בַּיהֹוָֽה׃</p>
-      <p>יִתַּ֤מּוּ חַטָּאִ֨ים&thinsp;<b>׀</b> מִן־הָאָ֡רֶץ וּרְשָׁעִ֤ים&thinsp;<b>׀</b> ע֤וֹד אֵינָ֗ם בָּרְכִ֣י נַ֭פְשִׁי אֶת־יְהֹוָ֗ה הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>בָּרְכִ֥י נַפְשִׁ֗י אֶת־יְ֫הֹוָ֥ה יְהֹוָ֣ה אֱ֭לֹהַי גָּדַ֣לְתָּ מְּאֹ֑ד ה֖וֹד וְהָדָ֣ר לָבָֽשְׁתָּ׃</p></div><div class="heb-s"><p>ברכי נפשי את־יהוה יהוה אלהי גדלת מאד הוד והדר לבשת׃</p></div></div>
+      <div class="texte-fr"><p>Bénis, mon âme, l’Éternel! Éternel, mon Dieu, tu es infiniment grand; tu es vêtu de splendeur et de majesté.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֹֽטֶה־א֭וֹר כַּשַּׂלְמָ֑ה נוֹטֶ֥ה שָׁ֝מַ֗יִם כַּיְרִיעָֽה׃</p></div><div class="heb-s"><p>עטה־אור כשלמה נוטה שמים כיריעה׃</p></div></div>
+      <div class="texte-fr"><p>Tu t’enveloppes de lumière comme d’un manteau, tu déploies les cieux comme une tenture.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֥מְקָרֶ֥ה בַמַּ֗יִם עֲֽלִיּ֫וֹתָ֥יו הַשָּׂם־עָבִ֥ים רְכוּב֑וֹ הַֽ֝מְהַלֵּ֗ךְ עַל־כַּנְפֵי־רֽוּחַ׃</p></div><div class="heb-s"><p>המקרה במים עליותיו השם־עבים רכובו המהלך על־כנפי־רוח׃</p></div></div>
+      <div class="texte-fr"><p>Sur les eaux tu as posé les voûtes de ta demeure sublime, les nuages te servent de char, tu t’avances sur les ailes du vent.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֹשֶׂ֣ה מַלְאָכָ֣יו רוּח֑וֹת מְ֝שָׁרְתָ֗יו אֵ֣שׁ לֹהֵֽט׃</p></div><div class="heb-s"><p>עשה מלאכיו רוחות משרתיו אש להט׃</p></div></div>
+      <div class="texte-fr"><p>Des vents tu fais tes messagers; des flammes ardentes, tes ministres.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָֽסַד־אֶ֭רֶץ עַל־מְכוֹנֶ֑יהָ בַּל־תִּ֝מּ֗וֹט עוֹלָ֥ם וָעֶֽד׃</p></div><div class="heb-s"><p>יסד־ארץ על־מכוניה בל־תמוט עולם ועד׃</p></div></div>
+      <div class="texte-fr"><p>Tu as fondé la terre sur ses colonnes d’appui, pour qu’elle ne chancelle jamais.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּ֭הוֹם כַּלְּב֣וּשׁ כִּסִּית֑וֹ עַל־הָ֝רִ֗ים יַ֖עַמְדוּ<span class="mam-implicit-maqaf">־</span>מָֽיִם׃</p></div><div class="heb-s"><p>תהום כלבוש כסיתו על־הרים יעמדו<span class="mam-implicit-maqaf">־</span>מים׃</p></div></div>
+      <div class="texte-fr"><p>Tu l’as couverte de flots comme d’un vêtement; sur les montagnes les eaux s’étaient arrêtées.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִן־גַּעֲרָ֣תְךָ֣ יְנוּס֑וּן מִן־ק֥וֹל רַ֝עַמְךָ֗ יֵחָפֵזֽוּן׃</p></div><div class="heb-s"><p>מן־גערתך ינוסון מן־קול רעמך יחפזון׃</p></div></div>
+      <div class="texte-fr"><p>A ton injonction elles s’enfuirent; au bruit de ton tonnerre, elles s’élancèrent éperdues.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַעֲל֣וּ הָ֭רִים יֵרְד֣וּ בְקָע֑וֹת אֶל־מְ֝ק֗וֹם זֶ֤ה&thinsp;<b>׀</b> יָסַ֬דְתָּ לָהֶֽם׃</p></div><div class="heb-s"><p>יעלו הרים ירדו בקעות אל־מקום זה&thinsp;<b>׀</b> יסדת להם׃</p></div></div>
+      <div class="texte-fr"><p>Des montagnes s’élevèrent, des vallées s’abaissèrent, occupant la place que tu leur avais assignée.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>גְּֽבוּל־שַׂ֭מְתָּ בַּל־יַעֲבֹר֑וּן בַּל־יְ֝שֻׁב֗וּן לְכַסּ֥וֹת הָאָֽרֶץ׃</p></div><div class="heb-s"><p>גבול־שמת בל־יעברון בל־ישבון לכסות הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Tu leur as fixé des barrières infranchissables, pour les empêcher de submerger à nouveau la terre.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַֽמְשַׁלֵּ֣חַ מַ֭עְיָנִים בַּנְּחָלִ֑ים בֵּ֥ין הָ֝רִ֗ים יְהַלֵּכֽוּן׃</p></div><div class="heb-s"><p>המשלח מעינים בנחלים בין הרים יהלכון׃</p></div></div>
+      <div class="texte-fr"><p>Tu fais jaillir des sources dans les vallées, elles poursuivent leur course entre les montagnes.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַ֭שְׁקוּ כׇּל־חַיְת֣וֹ שָׂדָ֑י יִשְׁבְּר֖וּ פְרָאִ֣ים צְמָאָֽם׃</p></div><div class="heb-s"><p>ישקו כל־חיתו שדי ישברו פראים צמאם׃</p></div></div>
+      <div class="texte-fr"><p>Elles abreuvent toutes les bêtes des champs, les onagres y étanchent leur soif.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲ֭לֵיהֶם עוֹף־הַשָּׁמַ֣יִם יִשְׁכּ֑וֹן מִבֵּ֥ין עֳ֝פָאיִ֗ם יִתְּנוּ־קֽוֹל׃</p></div><div class="heb-s"><p>עליהם עוף־השמים ישכון מבין עפאים יתנו־קול׃</p></div></div>
+      <div class="texte-fr"><p>Sur leurs bords, les oiseaux du ciel font leur demeure; d’entre la feuillée, ils élèvent leur ramage.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַשְׁקֶ֣ה הָ֭רִים מֵעֲלִיּוֹתָ֑יו מִפְּרִ֥י מַ֝עֲשֶׂ֗יךָ תִּשְׂבַּ֥ע הָאָֽרֶץ׃</p></div><div class="heb-s"><p>משקה הרים מעליותיו מפרי מעשיך תשבע הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Du haut de ta résidence tu arroses les montagnes, la terre est nourrie du fruit de tes œuvres.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַצְמִ֤יחַ חָצִ֨יר&thinsp;<b>׀</b> לַבְּהֵמָ֗ה וְ֭עֵשֶׂב לַעֲבֹדַ֣ת הָאָדָ֑ם לְה֥וֹצִיא לֶ֝֗חֶם מִן־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>מצמיח חציר&thinsp;<b>׀</b> לבהמה ועשב לעבדת האדם להוציא לחם מן־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Tu fais croître l’herbe pour les animaux domestiques, des plantes pour l’usage de l’homme, en tirant sa nourriture du sein de la terre:</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיַ֤יִן&thinsp;<b>׀</b> יְשַׂמַּ֬ח לְֽבַב־אֱנ֗וֹשׁ לְהַצְהִ֣יל פָּנִ֣ים מִשָּׁ֑מֶן וְ֝לֶ֗חֶם לְֽבַב־אֱנ֥וֹשׁ יִסְעָֽד׃</p></div><div class="heb-s"><p>ויין&thinsp;<b>׀</b> ישמח לבב־אנוש להצהיל פנים משמן ולחם לבב־אנוש יסעד׃</p></div></div>
+      <div class="texte-fr"><p>le vin qui réjouit le cœur des mortels, l’huile qui fait resplendir les visages, le pain enfin qui fortifie le cœur de l’homme.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִ֭שְׂבְּעוּ עֲצֵ֣י יְהֹוָ֑ה אַֽרְזֵ֥י לְ֝בָנ֗וֹן אֲשֶׁ֣ר נָטָֽע׃</p></div><div class="heb-s"><p>ישבעו עצי יהוה ארזי לבנון אשר נטע׃</p></div></div>
+      <div class="texte-fr"><p>Les arbres de l’Éternel sont abondamment pourvus, les cèdres du Liban que sa main a plantés.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁר־שָׁ֭ם צִפֳּרִ֣ים יְקַנֵּ֑נוּ חֲ֝סִידָ֗ה בְּרוֹשִׁ֥ים בֵּיתָֽהּ׃</p></div><div class="heb-s"><p>אשר־שם צפרים יקננו חסידה ברושים ביתה׃</p></div></div>
+      <div class="texte-fr"><p>Là les oiseaux bâtissent leurs nids, la cigogne fait des cyprès sa demeure.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָרִ֣ים הַ֭גְּבֹהִים לַיְּעֵלִ֑ים סְ֝לָעִ֗ים מַחְסֶ֥ה לַֽשְׁפַנִּֽים׃</p></div><div class="heb-s"><p>הרים הגבהים ליעלים סלעים מחסה לשפנים׃</p></div></div>
+      <div class="texte-fr"><p>Les montagnes escarpées servent de retraite aux chamois, les rochers de refuge aux gerboises.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>עָשָׂ֣ה יָ֭רֵחַ לְמוֹעֲדִ֑ים שֶׁ֝֗מֶשׁ יָדַ֥ע מְבוֹאֽוֹ׃</p></div><div class="heb-s"><p>עשה ירח למועדים שמש ידע מבואו׃</p></div></div>
+      <div class="texte-fr"><p>Il a fait la lune pour marquer les temps, le soleil connaît le terme de sa course.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּֽשֶׁת־חֹ֭שֶׁךְ וִ֣יהִי לָ֑יְלָה בּוֹ־תִ֝רְמֹ֗שׂ כׇּל־חַיְתוֹ־יָֽעַר׃</p></div><div class="heb-s"><p>תשת־חשך ויהי לילה בו־תרמש כל־חיתו־יער׃</p></div></div>
+      <div class="texte-fr"><p>Tu amènes les ténèbres, et c’est la nuit, la nuit, où circulent tous les hôtes de la forêt.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֭כְּפִירִים שֹׁאֲגִ֣ים לַטָּ֑רֶף וּלְבַקֵּ֖שׁ מֵאֵ֣ל אׇכְלָֽם׃</p></div><div class="heb-s"><p>הכפירים שאגים לטרף ולבקש מאל אכלם׃</p></div></div>
+      <div class="texte-fr"><p>Les lionceaux rugissent après la proie, demandant à Dieu leur pâture.</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>תִּזְרַ֣ח הַ֭שֶּׁמֶשׁ יֵאָסֵפ֑וּן וְאֶל־מְ֝עוֹנֹתָ֗ם יִרְבָּצֽוּן׃</p></div><div class="heb-s"><p>תזרח השמש יאספון ואל־מעונתם ירבצון׃</p></div></div>
+      <div class="texte-fr"><p>Le soleil commence à poindre, ils se retirent, et vont se blottir dans leurs tanières;</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵצֵ֣א אָדָ֣ם לְפׇעֳל֑וֹ וְֽלַעֲבֹ֖דָת֣וֹ עֲדֵי־עָֽרֶב׃</p></div><div class="heb-s"><p>יצא אדם לפעלו ולעבדתו עדי־ערב׃</p></div></div>
+      <div class="texte-fr"><p>l’homme se rend à son labeur, accomplit sa besogne jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>מָה־רַבּ֬וּ מַעֲשֶׂ֨יךָ&thinsp;<b>׀</b> יְֽהֹוָ֗ה כֻּ֭לָּם בְּחׇכְמָ֣ה עָשִׂ֑יתָ מָלְאָ֥ה הָ֝אָ֗רֶץ קִנְיָנֶֽךָ׃</p></div><div class="heb-s"><p>מה־רבו מעשיך&thinsp;<b>׀</b> יהוה כלם בחכמה עשית מלאה הארץ קנינך׃</p></div></div>
+      <div class="texte-fr"><p>Que tes œuvres sont grandes, ô Seigneur! Toutes, tu les as faites avec sagesse; la terre est remplie de tes créations.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֶ֤ה&thinsp;<b>׀</b> הַיָּ֥ם גָּדוֹל֮ וּרְחַ֢ב יָ֫דָ֥יִם שָֽׁם־רֶ֭מֶשׂ וְאֵ֣ין מִסְפָּ֑ר חַיּ֥וֹת קְ֝טַנּ֗וֹת עִם־גְּדֹלֽוֹת׃</p></div><div class="heb-s"><p>זה&thinsp;<b>׀</b> הים גדול ורחב ידים שם־רמש ואין מספר חיות קטנות עם־גדלות׃</p></div></div>
+      <div class="texte-fr"><p>Voici le grand océan, aux étendues immenses! Là fourmillent des êtres sans nombre, des bêtes petites et grandes.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֭ם אֳנִיּ֣וֹת יְהַלֵּכ֑וּן לִ֝וְיָתָ֗ן זֶֽה־יָצַ֥רְתָּ לְשַֽׂחֶק־בּֽוֹ׃</p></div><div class="heb-s"><p>שם אניות יהלכון לויתן זה־יצרת לשחק־בו׃</p></div></div>
+      <div class="texte-fr"><p>Là cheminent des navires, ce Léviathan que tu as formé pour s’y ébattre.</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֻּ֭לָּם אֵלֶ֣יךָ יְשַׂבֵּר֑וּן לָתֵ֖ת אׇכְלָ֣ם בְּעִתּֽוֹ׃</p></div><div class="heb-s"><p>כלם אליך ישברון לתת אכלם בעתו׃</p></div></div>
+      <div class="texte-fr"><p>Tous mettent en toi leur attente, assurés que tu leur donneras leur nourriture en temps voulu.</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>תִּתֵּ֣ן לָ֭הֶם יִלְקֹט֑וּן תִּפְתַּ֥ח יָ֝דְךָ֗ יִשְׂבְּע֥וּן טֽוֹב׃</p></div><div class="heb-s"><p>תתן להם ילקטון תפתח ידך ישבעון טוב׃</p></div></div>
+      <div class="texte-fr"><p>Tu la leur donnes, ils la recueillent; tu ouvres la main, ils sont comblés de biens.</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּסְתִּ֥יר פָּנֶיךָ֮ יִֽבָּהֵ֫ל֥וּן תֹּסֵ֣ף ר֭וּחָם יִגְוָע֑וּן וְֽאֶל־עֲפָרָ֥ם יְשׁוּבֽוּן׃</p></div><div class="heb-s"><p>תסתיר פניך יבהלון תסף רוחם יגועון ואל־עפרם ישובון׃</p></div></div>
+      <div class="texte-fr"><p>Tu dérobes ta face, ils sont dans l’épouvante; tu leur retires le souffle, ils expirent et retombent dans leur poussière.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּשַׁלַּ֣ח ר֭וּחֲךָ יִבָּרֵא֑וּן וּ֝תְחַדֵּ֗שׁ פְּנֵ֣י אֲדָמָֽה׃</p></div><div class="heb-s"><p>תשלח רוחך יבראון ותחדש פני אדמה׃</p></div></div>
+      <div class="texte-fr"><p>Tu renvoies ton souffle, ils renaissent, et tu renouvelles la face de la terre!</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִ֤י כְב֣וֹד יְהֹוָ֣ה לְעוֹלָ֑ם יִשְׂמַ֖ח יְהֹוָ֣ה בְּמַעֲשָֽׂיו׃</p></div><div class="heb-s"><p>יהי כבוד יהוה לעולם ישמח יהוה במעשיו׃</p></div></div>
+      <div class="texte-fr"><p>Que la gloire de l’Éternel dure à jamais! Que le Seigneur se réjouisse de ses œuvres!</p></div>
+    </div><div class="seif" id="v-32">
+      <span class="seif-num">Verset 32</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַמַּבִּ֣יט לָ֭אָרֶץ וַתִּרְעָ֑ד יִגַּ֖ע בֶּהָרִ֣ים וְֽיֶעֱשָֽׁנוּ׃</p></div><div class="heb-s"><p>המביט לארץ ותרעד יגע בהרים ויעשנו׃</p></div></div>
+      <div class="texte-fr"><p>Il regarde la terre, et elle vacille, il effleure les montagnes, et elles fument.</p></div>
+    </div><div class="seif" id="v-33">
+      <span class="seif-num">Verset 33</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָשִׁ֣ירָה לַיהֹוָ֣ה בְּחַיָּ֑י אֲזַמְּרָ֖ה לֵאלֹהַ֣י בְּעוֹדִֽי׃</p></div><div class="heb-s"><p>אשירה ליהוה בחיי אזמרה לאלהי בעודי׃</p></div></div>
+      <div class="texte-fr"><p>Je veux chanter l’Éternel ma vie durant, célébrer mon Dieu tant que j’existerai.</p></div>
+    </div><div class="seif" id="v-34">
+      <span class="seif-num">Verset 34</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֶעֱרַ֣ב עָלָ֣יו שִׂיחִ֑י אָ֝נֹכִ֗י אֶשְׂמַ֥ח בַּיהֹוָֽה׃</p></div><div class="heb-s"><p>יערב עליו שיחי אנכי אשמח ביהוה׃</p></div></div>
+      <div class="texte-fr"><p>Puisse mon cantique lui être agréable! Moi, je me délecte en l’Éternel.</p></div>
+    </div><div class="seif" id="v-35">
+      <span class="seif-num">Verset 35</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִתַּ֤מּוּ חַטָּאִ֨ים&thinsp;<b>׀</b> מִן־הָאָ֡רֶץ וּרְשָׁעִ֤ים&thinsp;<b>׀</b> ע֤וֹד אֵינָ֗ם בָּרְכִ֣י נַ֭פְשִׁי אֶת־יְהֹוָ֗ה הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יתמו חטאים&thinsp;<b>׀</b> מן־הארץ ורשעים&thinsp;<b>׀</b> עוד אינם ברכי נפשי את־יהוה הללו־יה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Que les pécheurs disparaissent de la terre, que les méchants ne soient plus! Mon âme, bénis l’Éternel, Alléluia!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Bénis, mon âme, l’Éternel! Éternel, mon Dieu, tu es infiniment grand; tu es vêtu de splendeur et de majesté.</p>
-      <p>Tu t’enveloppes de lumière comme d’un manteau, tu déploies les cieux comme une tenture.</p>
-      <p>Sur les eaux tu as posé les voûtes de ta demeure sublime, les nuages te servent de char, tu t’avances sur les ailes du vent.</p>
-      <p>Des vents tu fais tes messagers; des flammes ardentes, tes ministres.</p>
-      <p>Tu as fondé la terre sur ses colonnes d’appui, pour qu’elle ne chancelle jamais.</p>
-      <p>Tu l’as couverte de flots comme d’un vêtement; sur les montagnes les eaux s’étaient arrêtées.</p>
-      <p>A ton injonction elles s’enfuirent; au bruit de ton tonnerre, elles s’élancèrent éperdues.</p>
-      <p>Des montagnes s’élevèrent, des vallées s’abaissèrent, occupant la place que tu leur avais assignée.</p>
-      <p>Tu leur as fixé des barrières infranchissables, pour les empêcher de submerger à nouveau la terre.</p>
-      <p>Tu fais jaillir des sources dans les vallées, elles poursuivent leur course entre les montagnes.</p>
-      <p>Elles abreuvent toutes les bêtes des champs, les onagres y étanchent leur soif.</p>
-      <p>Sur leurs bords, les oiseaux du ciel font leur demeure; d’entre la feuillée, ils élèvent leur ramage.</p>
-      <p>Du haut de ta résidence tu arroses les montagnes, la terre est nourrie du fruit de tes œuvres.</p>
-      <p>Tu fais croître l’herbe pour les animaux domestiques, des plantes pour l’usage de l’homme, en tirant sa nourriture du sein de la terre:</p>
-      <p>le vin qui réjouit le cœur des mortels, l’huile qui fait resplendir les visages, le pain enfin qui fortifie le cœur de l’homme.</p>
-      <p>Les arbres de l’Éternel sont abondamment pourvus, les cèdres du Liban que sa main a plantés.</p>
-      <p>Là les oiseaux bâtissent leurs nids, la cigogne fait des cyprès sa demeure.</p>
-      <p>Les montagnes escarpées servent de retraite aux chamois, les rochers de refuge aux gerboises.</p>
-      <p>Il a fait la lune pour marquer les temps, le soleil connaît le terme de sa course.</p>
-      <p>Tu amènes les ténèbres, et c’est la nuit, la nuit, où circulent tous les hôtes de la forêt.</p>
-      <p>Les lionceaux rugissent après la proie, demandant à Dieu leur pâture.</p>
-      <p>Le soleil commence à poindre, ils se retirent, et vont se blottir dans leurs tanières;</p>
-      <p>l’homme se rend à son labeur, accomplit sa besogne jusqu’au soir.</p>
-      <p>Que tes œuvres sont grandes, ô Seigneur! Toutes, tu les as faites avec sagesse; la terre est remplie de tes créations.</p>
-      <p>Voici le grand océan, aux étendues immenses! Là fourmillent des êtres sans nombre, des bêtes petites et grandes.</p>
-      <p>Là cheminent des navires, ce Léviathan que tu as formé pour s’y ébattre.</p>
-      <p>Tous mettent en toi leur attente, assurés que tu leur donneras leur nourriture en temps voulu.</p>
-      <p>Tu la leur donnes, ils la recueillent; tu ouvres la main, ils sont comblés de biens.</p>
-      <p>Tu dérobes ta face, ils sont dans l’épouvante; tu leur retires le souffle, ils expirent et retombent dans leur poussière.</p>
-      <p>Tu renvoies ton souffle, ils renaissent, et tu renouvelles la face de la terre!</p>
-      <p>Que la gloire de l’Éternel dure à jamais! Que le Seigneur se réjouisse de ses œuvres!</p>
-      <p>Il regarde la terre, et elle vacille, il effleure les montagnes, et elles fument.</p>
-      <p>Je veux chanter l’Éternel ma vie durant, célébrer mon Dieu tant que j’existerai.</p>
-      <p>Puisse mon cantique lui être agréable! Moi, je me délecte en l’Éternel.</p>
-      <p>Que les pécheurs disparaissent de la terre, que les méchants ne soient plus! Mon âme, bénis l’Éternel, Alléluia!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -302,6 +408,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-103.html">← Tehilim 103</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-104.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-105.html">Tehilim 105 →</a></div>
 </main>
 
 <footer>

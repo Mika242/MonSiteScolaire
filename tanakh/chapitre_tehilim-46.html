@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 46 – D.ieu est pour nous un refuge et une force</h1>
     <p>Ketouvim, Tehilim, Chapitre 46</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-45.html">← Tehilim 45</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-46.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-47.html">Tehilim 47 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ לִבְנֵי־קֹ֑רַח עַֽל־עֲלָמ֥וֹת שִֽׁיר׃</p>
-      <p>אֱלֹהִ֣ים לָ֭נוּ מַחֲסֶ֣ה וָעֹ֑ז עֶזְרָ֥ה בְ֝צָר֗וֹת נִמְצָ֥א מְאֹֽד׃</p>
-      <p>עַל־כֵּ֣ן לֹֽא־נִ֭ירָא בְּהָמִ֣יר אָ֑רֶץ וּבְמ֥וֹט הָ֝רִ֗ים בְּלֵ֣ב יַמִּֽים׃</p>
-      <p>יֶהֱמ֣וּ יֶחְמְר֣וּ מֵימָ֑יו יִ֥רְעֲשֽׁוּ<span class="mam-implicit-maqaf">־</span>הָרִ֖ים בְּגַאֲוָת֣וֹ סֶֽלָה׃</p>
-      <p>נָהָ֗ר פְּלָגָ֗יו יְשַׂמְּח֥וּ עִיר־אֱלֹהִ֑ים קְ֝דֹ֗שׁ מִשְׁכְּנֵ֥י עֶלְיֽוֹן׃</p>
-      <p>אֱלֹהִ֣ים בְּ֭קִרְבָּהּ בַּל־תִּמּ֑וֹט יַעְזְרֶ֥הָ אֱ֝לֹהִ֗ים לִפְנ֥וֹת בֹּֽקֶר׃</p>
-      <p>הָמ֣וּ ג֭וֹיִם מָ֣טוּ מַמְלָכ֑וֹת נָתַ֥ן בְּ֝קוֹל֗וֹ תָּמ֥וּג אָֽרֶץ׃</p>
-      <p>יְהֹוָ֣ה צְבָא֣וֹת עִמָּ֑נוּ מִשְׂגָּֽב־לָ֨נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃</p>
-      <p>לְֽכוּ־חֲ֭זוּ מִפְעֲל֣וֹת יְהֹוָ֑ה אֲשֶׁר־שָׂ֖ם שַׁמּ֣וֹת בָּאָֽרֶץ׃</p>
-      <p>מַשְׁבִּ֥ית מִלְחָמוֹת֮ עַד־קְצֵ֢ה הָ֫אָ֥רֶץ קֶ֣שֶׁת יְ֭שַׁבֵּר וְקִצֵּ֣ץ חֲנִ֑ית עֲ֝גָל֗וֹת יִשְׂרֹ֥ף בָּאֵֽשׁ׃</p>
-      <p>הַרְפּ֣וּ וּ֭דְעוּ כִּֽי־אָנֹכִ֣י אֱלֹהִ֑ים אָר֥וּם בַּ֝גּוֹיִ֗ם אָר֥וּם בָּאָֽרֶץ׃</p>
-      <p>יְהֹוָ֣ה צְבָא֣וֹת עִמָּ֑נוּ מִשְׂגָּֽב־לָ֨נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ לִבְנֵי־קֹ֑רַח עַֽל־עֲלָמ֥וֹת שִֽׁיר׃</p></div><div class="heb-s"><p>למנצח לבני־קרח על־עלמות שיר׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Par les fils de Coré. Cantique sur les Alamoth.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֣ים לָ֭נוּ מַחֲסֶ֣ה וָעֹ֑ז עֶזְרָ֥ה בְ֝צָר֗וֹת נִמְצָ֥א מְאֹֽד׃</p></div><div class="heb-s"><p>אלהים לנו מחסה ועז עזרה בצרות נמצא מאד׃</p></div></div>
+      <div class="texte-fr"><p>Dieu est pour nous un abri, une force, un appui dans les tourments, facilement accessible.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֣ן לֹֽא־נִ֭ירָא בְּהָמִ֣יר אָ֑רֶץ וּבְמ֥וֹט הָ֝רִ֗ים בְּלֵ֣ב יַמִּֽים׃</p></div><div class="heb-s"><p>על־כן לא־נירא בהמיר ארץ ובמוט הרים בלב ימים׃</p></div></div>
+      <div class="texte-fr"><p>Aussi ne craindrons-nous rien, dût la terre bouger de sa place, et les montagnes s’abîmer au sein de l’Océan;</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֶהֱמ֣וּ יֶחְמְר֣וּ מֵימָ֑יו יִ֥רְעֲשֽׁוּ<span class="mam-implicit-maqaf">־</span>הָרִ֖ים בְּגַאֲוָת֣וֹ סֶֽלָה׃</p></div><div class="heb-s"><p>יהמו יחמרו מימיו ירעשו<span class="mam-implicit-maqaf">־</span>הרים בגאותו סלה׃</p></div></div>
+      <div class="texte-fr"><p>dussent ses flots gronder et bouillonner, et les montagnes trembler quand il entre en fureur!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָהָ֗ר פְּלָגָ֗יו יְשַׂמְּח֥וּ עִיר־אֱלֹהִ֑ים קְ֝דֹ֗שׁ מִשְׁכְּנֵ֥י עֶלְיֽוֹן׃</p></div><div class="heb-s"><p>נהר פלגיו ישמחו עיר־אלהים קדש משכני עליון׃</p></div></div>
+      <div class="texte-fr"><p>Le fleuve…! Ses ondes réjouissent la ville de Dieu, demeure sainte du Très-Haut.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֣ים בְּ֭קִרְבָּהּ בַּל־תִּמּ֑וֹט יַעְזְרֶ֥הָ אֱ֝לֹהִ֗ים לִפְנ֥וֹת בֹּֽקֶר׃</p></div><div class="heb-s"><p>אלהים בקרבה בל־תמוט יעזרה אלהים לפנות בקר׃</p></div></div>
+      <div class="texte-fr"><p>Dieu réside au milieu d’elle: elle ne sera point ébranlée, Dieu venant à son secours dès le lever de l’aurore.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָמ֣וּ ג֭וֹיִם מָ֣טוּ מַמְלָכ֑וֹת נָתַ֥ן בְּ֝קוֹל֗וֹ תָּמ֥וּג אָֽרֶץ׃</p></div><div class="heb-s"><p>המו גוים מטו ממלכות נתן בקולו תמוג ארץ׃</p></div></div>
+      <div class="texte-fr"><p>Les peuples s’agitent, les royaumes chancellent; il fait retentir sa voix: la terre se liquéfie!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה צְבָא֣וֹת עִמָּ֑נוּ מִשְׂגָּֽב־לָ֨נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃</p></div><div class="heb-s"><p>יהוה צבאות עמנו משגב־לנו אלהי יעקב סלה׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel-Cebaot est avec nous, le Dieu de Jacob est une citadelle pour nous. Sélah!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְֽכוּ־חֲ֭זוּ מִפְעֲל֣וֹת יְהֹוָ֑ה אֲשֶׁר־שָׂ֖ם שַׁמּ֣וֹת בָּאָֽרֶץ׃</p></div><div class="heb-s"><p>לכו־חזו מפעלות יהוה אשר־שם שמות בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Venez, contemplez les œuvres de l’Éternel, qui a opéré des ruines sur la terre!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַשְׁבִּ֥ית מִלְחָמוֹת֮ עַד־קְצֵ֢ה הָ֫אָ֥רֶץ קֶ֣שֶׁת יְ֭שַׁבֵּר וְקִצֵּ֣ץ חֲנִ֑ית עֲ֝גָל֗וֹת יִשְׂרֹ֥ף בָּאֵֽשׁ׃</p></div><div class="heb-s"><p>משבית מלחמות עד־קצה הארץ קשת ישבר וקצץ חנית עגלות ישרף באש׃</p></div></div>
+      <div class="texte-fr"><p>Il met fin aux guerres jusqu’aux confins du globe, il brise les arcs, met en pièces les lances, et livre au feu les chars [des combats].</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַרְפּ֣וּ וּ֭דְעוּ כִּֽי־אָנֹכִ֣י אֱלֹהִ֑ים אָר֥וּם בַּ֝גּוֹיִ֗ם אָר֥וּם בָּאָֽרֶץ׃</p></div><div class="heb-s"><p>הרפו ודעו כי־אנכי אלהים ארום בגוים ארום בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Tenez-vous cois et sachez que moi, je suis Dieu, grand parmi les peuples, grand sur la terre!</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה צְבָא֣וֹת עִמָּ֑נוּ מִשְׂגָּֽב־לָ֨נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יהוה צבאות עמנו משגב־לנו אלהי יעקב סלה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>L’Éternel-Cebaot est avec nous, le Dieu de Jacob est une citadelle pour nous. Sélah!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Par les fils de Coré. Cantique sur les Alamoth.</p>
-      <p>Dieu est pour nous un abri, une force, un appui dans les tourments, facilement accessible.</p>
-      <p>Aussi ne craindrons-nous rien, dût la terre bouger de sa place, et les montagnes s’abîmer au sein de l’Océan;</p>
-      <p>dussent ses flots gronder et bouillonner, et les montagnes trembler quand il entre en fureur!</p>
-      <p>Le fleuve…! Ses ondes réjouissent la ville de Dieu, demeure sainte du Très-Haut.</p>
-      <p>Dieu réside au milieu d’elle: elle ne sera point ébranlée, Dieu venant à son secours dès le lever de l’aurore.</p>
-      <p>Les peuples s’agitent, les royaumes chancellent; il fait retentir sa voix: la terre se liquéfie!</p>
-      <p>L’Éternel-Cebaot est avec nous, le Dieu de Jacob est une citadelle pour nous. Sélah!</p>
-      <p>Venez, contemplez les œuvres de l’Éternel, qui a opéré des ruines sur la terre!</p>
-      <p>Il met fin aux guerres jusqu’aux confins du globe, il brise les arcs, met en pièces les lances, et livre au feu les chars [des combats].</p>
-      <p>Tenez-vous cois et sachez que moi, je suis Dieu, grand parmi les peuples, grand sur la terre!</p>
-      <p>L’Éternel-Cebaot est avec nous, le Dieu de Jacob est une citadelle pour nous. Sélah!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -256,6 +316,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-45.html">← Tehilim 45</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-46.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-47.html">Tehilim 47 →</a></div>
 </main>
 
 <footer>

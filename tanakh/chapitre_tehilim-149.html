@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 149 – Chantez à D.ieu un chant nouveau</h1>
     <p>Ketouvim, Tehilim, Chapitre 149</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-148.html">← Tehilim 148</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-149.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-150.html">Tehilim 150 →</a></div>
   </div>
 </header>
 
@@ -161,41 +202,54 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>הַ֥לְלוּ<span class="mam-implicit-maqaf">־</span>יָ֨הּ&thinsp;<b>׀</b> שִׁ֣ירוּ לַֽ֭יהֹוָה שִׁ֣יר חָדָ֑שׁ תְּ֝הִלָּת֗וֹ בִּקְהַ֥ל חֲסִידִֽים׃</p>
-      <p>יִשְׂמַ֣ח יִשְׂרָאֵ֣ל בְּעֹשָׂ֑יו בְּנֵֽי־צִ֝יּ֗וֹן יָגִ֥ילוּ בְמַלְכָּֽם׃</p>
-      <p>יְהַלְל֣וּ שְׁמ֣וֹ בְמָח֑וֹל בְּתֹ֥ף וְ֝כִנּ֗וֹר יְזַמְּרוּ־לֽוֹ׃</p>
-      <p>כִּֽי־רוֹצֶ֣ה יְהֹוָ֣ה בְּעַמּ֑וֹ יְפָאֵ֥ר עֲ֝נָוִ֗ים בִּישׁוּעָֽה׃</p>
-      <p>יַעְלְז֣וּ חֲסִידִ֣ים בְּכָב֑וֹד יְ֝רַנְּנ֗וּ עַל־מִשְׁכְּבוֹתָֽם׃</p>
-      <p>רוֹמְמ֣וֹת אֵ֭ל בִּגְרוֹנָ֑ם וְחֶ֖רֶב פִּיפִיּ֣וֹת בְּיָדָֽם׃</p>
-      <p>לַעֲשׂ֣וֹת נְ֭קָמָה בַּגּוֹיִ֑ם תּ֝וֹכֵח֗וֹת בַּלְאֻמִּֽים׃</p>
-      <p>לֶאְסֹ֣ר מַלְכֵיהֶ֣ם בְּזִקִּ֑ים וְ֝נִכְבְּדֵיהֶ֗ם בְּכַבְלֵ֥י בַרְזֶֽל׃</p>
-      <p>לַעֲשׂ֤וֹת בָּהֶ֨ם&thinsp;<b>׀</b> מִשְׁפָּ֬ט כָּת֗וּב הָדָ֣ר ה֭וּא לְכׇל־חֲסִידָ֗יו הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֥לְלוּ<span class="mam-implicit-maqaf">־</span>יָ֨הּ&thinsp;<b>׀</b> שִׁ֣ירוּ לַֽ֭יהֹוָה שִׁ֣יר חָדָ֑שׁ תְּ֝הִלָּת֗וֹ בִּקְהַ֥ל חֲסִידִֽים׃</p></div><div class="heb-s"><p>הללו<span class="mam-implicit-maqaf">־</span>יה&thinsp;<b>׀</b> שירו ליהוה שיר חדש תהלתו בקהל חסידים׃</p></div></div>
+      <div class="texte-fr"><p>Alléluia! Chantez à l’Éternel un cantique nouveau, que ses louanges retentissent dans l’assemblée des hommes pieux!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׂמַ֣ח יִשְׂרָאֵ֣ל בְּעֹשָׂ֑יו בְּנֵֽי־צִ֝יּ֗וֹן יָגִ֥ילוּ בְמַלְכָּֽם׃</p></div><div class="heb-s"><p>ישמח ישראל בעשיו בני־ציון יגילו במלכם׃</p></div></div>
+      <div class="texte-fr"><p>Qu’Israël se réjouisse de son créateur, que les fils de Sion éclatent en transports pour leur Roi!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהַלְל֣וּ שְׁמ֣וֹ בְמָח֑וֹל בְּתֹ֥ף וְ֝כִנּ֗וֹר יְזַמְּרוּ־לֽוֹ׃</p></div><div class="heb-s"><p>יהללו שמו במחול בתף וכנור יזמרו־לו׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils glorifient son nom avec des instruments de danse, le célèbrent au son du tambourin et de la harpe!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־רוֹצֶ֣ה יְהֹוָ֣ה בְּעַמּ֑וֹ יְפָאֵ֥ר עֲ֝נָוִ֗ים בִּישׁוּעָֽה׃</p></div><div class="heb-s"><p>כי־רוצה יהוה בעמו יפאר ענוים בישועה׃</p></div></div>
+      <div class="texte-fr"><p>Car l’Éternel prend plaisir à son peuple, il entoure les humbles de salut comme d’une parure.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַעְלְז֣וּ חֲסִידִ֣ים בְּכָב֑וֹד יְ֝רַנְּנ֗וּ עַל־מִשְׁכְּבוֹתָֽם׃</p></div><div class="heb-s"><p>יעלזו חסידים בכבוד ירננו על־משכבותם׃</p></div></div>
+      <div class="texte-fr"><p>Les hommes pieux peuvent exulter avec honneur, entonner des chants sur leurs lits de repos.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>רוֹמְמ֣וֹת אֵ֭ל בִּגְרוֹנָ֑ם וְחֶ֖רֶב פִּיפִיּ֣וֹת בְּיָדָֽם׃</p></div><div class="heb-s"><p>רוממות אל בגרונם וחרב פיפיות בידם׃</p></div></div>
+      <div class="texte-fr"><p>Des hymnes louangeurs de Dieu sur les lèvres, une épée à deux tranchants dans leur main,</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַעֲשׂ֣וֹת נְ֭קָמָה בַּגּוֹיִ֑ם תּ֝וֹכֵח֗וֹת בַּלְאֻמִּֽים׃</p></div><div class="heb-s"><p>לעשות נקמה בגוים תוכחות בלאמים׃</p></div></div>
+      <div class="texte-fr"><p>ils tireront vengeance des peuples, infligeront des châtiments aux nations.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֶאְסֹ֣ר מַלְכֵיהֶ֣ם בְּזִקִּ֑ים וְ֝נִכְבְּדֵיהֶ֗ם בְּכַבְלֵ֥י בַרְזֶֽל׃</p></div><div class="heb-s"><p>לאסר מלכיהם בזקים ונכבדיהם בכבלי ברזל׃</p></div></div>
+      <div class="texte-fr"><p>Ils attacheront leurs rois par des chaînes, et leurs nobles par des entraves de fer.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַעֲשׂ֤וֹת בָּהֶ֨ם&thinsp;<b>׀</b> מִשְׁפָּ֬ט כָּת֗וּב הָדָ֣ר ה֭וּא לְכׇל־חֲסִידָ֗יו הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לעשות בהם&thinsp;<b>׀</b> משפט כתוב הדר הוא לכל־חסידיו הללו־יה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ainsi ils exécuteront contre eux l’arrêt consigné par écrit: ce sera un titre de gloire pour tous ses fidèles. Alléluia!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Alléluia! Chantez à l’Éternel un cantique nouveau, que ses louanges retentissent dans l’assemblée des hommes pieux!</p>
-      <p>Qu’Israël se réjouisse de son créateur, que les fils de Sion éclatent en transports pour leur Roi!</p>
-      <p>Qu’ils glorifient son nom avec des instruments de danse, le célèbrent au son du tambourin et de la harpe!</p>
-      <p>Car l’Éternel prend plaisir à son peuple, il entoure les humbles de salut comme d’une parure.</p>
-      <p>Les hommes pieux peuvent exulter avec honneur, entonner des chants sur leurs lits de repos.</p>
-      <p>Des hymnes louangeurs de Dieu sur les lèvres, une épée à deux tranchants dans leur main,</p>
-      <p>ils tireront vengeance des peuples, infligeront des châtiments aux nations.</p>
-      <p>Ils attacheront leurs rois par des chaînes, et leurs nobles par des entraves de fer.</p>
-      <p>Ainsi ils exécuteront contre eux l’arrêt consigné par écrit: ce sera un titre de gloire pour tous ses fidèles. Alléluia!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -247,6 +301,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-148.html">← Tehilim 148</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-149.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-150.html">Tehilim 150 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 60 – D.ieu, Tu nous as rejetés, Tu as fait brèche</h1>
     <p>Ketouvim, Tehilim, Chapitre 60</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-59.html">← Tehilim 59</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-60.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-61.html">Tehilim 61 →</a></div>
   </div>
 </header>
 
@@ -161,51 +202,74 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַ֭מְנַצֵּחַ עַל־שׁוּשַׁ֣ן עֵד֑וּת מִכְתָּ֖ם לְדָוִ֣ד לְלַמֵּֽד׃</p>
-      <p>בְּהַצּוֹת֨וֹ&thinsp;<b>׀</b> אֶ֥ת<span class="mam-implicit-maqaf">־</span>אֲרַ֣ם נַהֲרַיִם֮ וְאֶת־אֲרַ֢ם צ֫וֹבָ֥ה וַיָּ֤שׇׁב יוֹאָ֗ב וַיַּ֣ךְ אֶת־אֱד֣וֹם בְּגֵיא־מֶ֑לַח שְׁנֵ֖ים עָשָׂ֣ר אָֽלֶף׃</p>
-      <p>אֱ֭לֹהִים זְנַחְתָּ֣נוּ פְרַצְתָּ֑נוּ אָ֝נַ֗פְתָּ תְּשׁ֣וֹבֵֽב לָֽנוּ׃</p>
-      <p>הִרְעַ֣שְׁתָּה אֶ֣רֶץ פְּצַמְתָּ֑הּ רְפָ֖ה שְׁבָרֶ֣יהָ כִי־מָֽטָה׃</p>
-      <p>הִרְאִ֣יתָ עַמְּךָ֣ קָשָׁ֑ה הִ֝שְׁקִיתָ֗נוּ יַ֣יִן תַּרְעֵלָֽה׃</p>
-      <p>נָ֘תַ֤תָּה לִּירֵאֶ֣יךָ נֵּ֭ס לְהִתְנוֹסֵ֑ס מִ֝פְּנֵ֗י קֹ֣שֶׁט סֶֽלָה׃</p>
-      <p>לְ֭מַעַן יֵחָלְצ֣וּן יְדִידֶ֑יךָ הוֹשִׁ֖יעָה יְמִינְךָ֣ <span class="mam-kq"><span class="mam-kq-k">(ועננו)</span> <span class="mam-kq-q">[וַעֲנֵֽנִי]</span></span>׃</p>
-      <p>אֱלֹהִ֤ים&thinsp;<b>׀</b> דִּבֶּ֥ר בְּקׇדְשׁ֗וֹ אֶ֫עְלֹ֥זָה אֲחַלְּקָ֥ה שְׁכֶ֑ם וְעֵ֖מֶק סֻכּ֣וֹת אֲמַדֵּֽד׃</p>
-      <p>לִ֤י גִלְעָ֨ד&thinsp;<b>׀</b> וְלִ֬י מְנַשֶּׁ֗ה וְ֭אֶפְרַיִם מָע֣וֹז רֹאשִׁ֑י יְ֝הוּדָ֗ה מְחֹֽקְקִֽי׃</p>
-      <p>מוֹאָ֤ב&thinsp;<b>׀</b> סִ֬יר רַחְצִ֗י עַל־אֱ֭דוֹם אַשְׁלִ֣יךְ נַעֲלִ֑י עָ֝לַ֗י פְּלֶ֣שֶׁת הִתְרוֹעָֽעִי׃</p>
-      <p>מִ֣י יֹ֭בִלֵנִי עִ֣יר מָצ֑וֹר מִ֖י נָחַ֣נִי עַד־אֱדֽוֹם׃</p>
-      <p>הֲלֹֽא־אַתָּ֣ה אֱלֹהִ֣ים זְנַחְתָּ֑נוּ וְֽלֹא־תֵצֵ֥א אֱ֝לֹהִ֗ים בְּצִבְאוֹתֵֽינוּ׃</p>
-      <p>הָֽבָה־לָּ֣נוּ עֶזְרָ֣ת מִצָּ֑ר וְ֝שָׁ֗וְא תְּשׁוּעַ֥ת אָדָֽם׃</p>
-      <p>בֵּאלֹהִ֥ים נַֽעֲשֶׂה־חָ֑יִל וְ֝ה֗וּא יָב֥וּס צָרֵֽינוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַ֭מְנַצֵּחַ עַל־שׁוּשַׁ֣ן עֵד֑וּת מִכְתָּ֖ם לְדָוִ֣ד לְלַמֵּֽד׃</p></div><div class="heb-s"><p>למנצח על־שושן עדות מכתם לדוד ללמד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. D’après Chouchân Edouth. Mikhtam de David, poème didactique,</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּהַצּוֹת֨וֹ&thinsp;<b>׀</b> אֶ֥ת<span class="mam-implicit-maqaf">־</span>אֲרַ֣ם נַהֲרַיִם֮ וְאֶת־אֲרַ֢ם צ֫וֹבָ֥ה וַיָּ֤שׇׁב יוֹאָ֗ב וַיַּ֣ךְ אֶת־אֱד֣וֹם בְּגֵיא־מֶ֑לַח שְׁנֵ֖ים עָשָׂ֣ר אָֽלֶף׃</p></div><div class="heb-s"><p>בהצותו&thinsp;<b>׀</b> את<span class="mam-implicit-maqaf">־</span>ארם נהרים ואת־ארם צובה וישב יואב ויך את־אדום בגיא־מלח שנים עשר אלף׃</p></div></div>
+      <div class="texte-fr"><p>à l’occasion de sa guerre avec les Syriens de Çoba, lorsque Joab, à son retour, défit Edom dans la vallée du Sel, lui tuant douze mille hommes.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱ֭לֹהִים זְנַחְתָּ֣נוּ פְרַצְתָּ֑נוּ אָ֝נַ֗פְתָּ תְּשׁ֣וֹבֵֽב לָֽנוּ׃</p></div><div class="heb-s"><p>אלהים זנחתנו פרצתנו אנפת תשובב לנו׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, tu nous as délaissés, tu as fait brèche parmi nous, tu t’es irrité: puisses-tu réparer nos pertes!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִרְעַ֣שְׁתָּה אֶ֣רֶץ פְּצַמְתָּ֑הּ רְפָ֖ה שְׁבָרֶ֣יהָ כִי־מָֽטָה׃</p></div><div class="heb-s"><p>הרעשתה ארץ פצמתה רפה שבריה כי־מטה׃</p></div></div>
+      <div class="texte-fr"><p>Tu as fait trembler le pays, tu y as ouvert des crevasses; restaure ses ruines, car il vacille.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִרְאִ֣יתָ עַמְּךָ֣ קָשָׁ֑ה הִ֝שְׁקִיתָ֗נוּ יַ֣יִן תַּרְעֵלָֽה׃</p></div><div class="heb-s"><p>הראית עמך קשה השקיתנו יין תרעלה׃</p></div></div>
+      <div class="texte-fr"><p>Tu en as fait voir de dures à ton peuple, tu nous as forcés de boire un vin de vertige:</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָ֘תַ֤תָּה לִּירֵאֶ֣יךָ נֵּ֭ס לְהִתְנוֹסֵ֑ס מִ֝פְּנֵ֗י קֹ֣שֶׁט סֶֽלָה׃</p></div><div class="heb-s"><p>נתתה ליראיך נס להתנוסס מפני קשט סלה׃</p></div></div>
+      <div class="texte-fr"><p>puisses-tu donner à tes adorateurs une bannière, pour s’y rallier au nom de la vérité. Sélah!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭מַעַן יֵחָלְצ֣וּן יְדִידֶ֑יךָ הוֹשִׁ֖יעָה יְמִינְךָ֣ <span class="mam-kq"><span class="mam-kq-k">(ועננו)</span> <span class="mam-kq-q">[וַעֲנֵֽנִי]</span></span>׃</p></div><div class="heb-s"><p>למען יחלצון ידידיך הושיעה ימינך <span class="mam-kq"><span class="mam-kq-k">(ועננו)</span> <span class="mam-kq-q">[וענני]</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Afin que tes bien-aimés échappent au danger, secours-nous avec ta droite, et exauce-moi!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֤ים&thinsp;<b>׀</b> דִּבֶּ֥ר בְּקׇדְשׁ֗וֹ אֶ֫עְלֹ֥זָה אֲחַלְּקָ֥ה שְׁכֶ֑ם וְעֵ֖מֶק סֻכּ֣וֹת אֲמַדֵּֽד׃</p></div><div class="heb-s"><p>אלהים&thinsp;<b>׀</b> דבר בקדשו אעלזה אחלקה שכם ועמק סכות אמדד׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel l’a annoncé en son sanctuaire: "Je triompherai, je veux m’adjuger Sichem, mesurer au cordeau la vallée de Souccot.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִ֤י גִלְעָ֨ד&thinsp;<b>׀</b> וְלִ֬י מְנַשֶּׁ֗ה וְ֭אֶפְרַיִם מָע֣וֹז רֹאשִׁ֑י יְ֝הוּדָ֗ה מְחֹֽקְקִֽי׃</p></div><div class="heb-s"><p>לי גלעד&thinsp;<b>׀</b> ולי מנשה ואפרים מעוז ראשי יהודה מחקקי׃</p></div></div>
+      <div class="texte-fr"><p>A moi Galaad! à moi Manassé! Ephraïm " est la puissante sauvegarde de ma tête, Juda est mon sceptre.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>מוֹאָ֤ב&thinsp;<b>׀</b> סִ֬יר רַחְצִ֗י עַל־אֱ֭דוֹם אַשְׁלִ֣יךְ נַעֲלִ֑י עָ֝לַ֗י פְּלֶ֣שֶׁת הִתְרוֹעָֽעִי׃</p></div><div class="heb-s"><p>מואב&thinsp;<b>׀</b> סיר רחצי על־אדום אשליך נעלי עלי פלשת התרועעי׃</p></div></div>
+      <div class="texte-fr"><p>Moab est le bassin où je me lave; sur Edom, " je jette ma sandale. Chante donc victoire contre moi, pays des Philistins!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֣י יֹ֭בִלֵנִי עִ֣יר מָצ֑וֹר מִ֖י נָחַ֣נִי עַד־אֱדֽוֹם׃</p></div><div class="heb-s"><p>מי יבלני עיר מצור מי נחני עד־אדום׃</p></div></div>
+      <div class="texte-fr"><p>Qui me conduira à la ville forte? Qui saura me mener jusqu'à Edom?</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲלֹֽא־אַתָּ֣ה אֱלֹהִ֣ים זְנַחְתָּ֑נוּ וְֽלֹא־תֵצֵ֥א אֱ֝לֹהִ֗ים בְּצִבְאוֹתֵֽינוּ׃</p></div><div class="heb-s"><p>הלא־אתה אלהים זנחתנו ולא־תצא אלהים בצבאותינו׃</p></div></div>
+      <div class="texte-fr"><p>Ne sera-ce pas toi, ô Dieu, toi qui nous avais délaissés, qui ne faisais plus campagne avec nos armées?</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָֽבָה־לָּ֣נוּ עֶזְרָ֣ת מִצָּ֑ר וְ֝שָׁ֗וְא תְּשׁוּעַ֥ת אָדָֽם׃</p></div><div class="heb-s"><p>הבה־לנו עזרת מצר ושוא תשועת אדם׃</p></div></div>
+      <div class="texte-fr"><p>Prête-nous secours contre l'adversaire, puisque trompeuse est l'aide de l'homme.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>בֵּאלֹהִ֥ים נַֽעֲשֶׂה־חָ֑יִל וְ֝ה֗וּא יָב֥וּס צָרֵֽינוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>באלהים נעשה־חיל והוא יבוס צרינו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Avec Dieu nous ferons des prouesses: c'est lui qui écrasera nos ennemis.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. D’après Chouchân Edouth. Mikhtam de David, poème didactique,</p>
-      <p>à l’occasion de sa guerre avec les Syriens de Çoba, lorsque Joab, à son retour, défit Edom dans la vallée du Sel, lui tuant douze mille hommes.</p>
-      <p>O Dieu, tu nous as délaissés, tu as fait brèche parmi nous, tu t’es irrité: puisses-tu réparer nos pertes!</p>
-      <p>Tu as fait trembler le pays, tu y as ouvert des crevasses; restaure ses ruines, car il vacille.</p>
-      <p>Tu en as fait voir de dures à ton peuple, tu nous as forcés de boire un vin de vertige:</p>
-      <p>puisses-tu donner à tes adorateurs une bannière, pour s’y rallier au nom de la vérité. Sélah!</p>
-      <p>Afin que tes bien-aimés échappent au danger, secours-nous avec ta droite, et exauce-moi!</p>
-      <p>L’Éternel l’a annoncé en son sanctuaire: "Je triompherai, je veux m’adjuger Sichem, mesurer au cordeau la vallée de Souccot.</p>
-      <p>A moi Galaad! à moi Manassé! Ephraïm " est la puissante sauvegarde de ma tête, Juda est mon sceptre.</p>
-      <p>Moab est le bassin où je me lave; sur Edom, " je jette ma sandale. Chante donc victoire contre moi, pays des Philistins!</p>
-      <p>Qui me conduira à la ville forte? Qui saura me mener jusqu'à Edom?</p>
-      <p>Ne sera-ce pas toi, ô Dieu, toi qui nous avais délaissés, qui ne faisais plus campagne avec nos armées?</p>
-      <p>Prête-nous secours contre l'adversaire, puisque trompeuse est l'aide de l'homme.</p>
-      <p>Avec Dieu nous ferons des prouesses: c'est lui qui écrasera nos ennemis.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -260,6 +324,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-59.html">← Tehilim 59</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-60.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-61.html">Tehilim 61 →</a></div>
 </main>
 
 <footer>

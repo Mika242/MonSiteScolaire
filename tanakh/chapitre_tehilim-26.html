@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 26 – Juge-moi, D.ieu, j&#x27;ai marché dans mon intégrité</h1>
     <p>Ketouvim, Tehilim, Chapitre 26</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-25.html">← Tehilim 25</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-26.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-27.html">Tehilim 27 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְדָוִ֨ד&thinsp;<b>׀</b> שׇׁפְטֵ֤נִי יְהֹוָ֗ה כִּֽי־אֲ֭נִי בְּתֻמִּ֣י הָלַ֑כְתִּי וּבַיהֹוָ֥ה בָּ֝טַ֗חְתִּי לֹ֣א אֶמְעָֽד׃</p>
-      <p>בְּחָנֵ֣נִי יְהֹוָ֣ה וְנַסֵּ֑נִי <span class="mam-kq"><span class="mam-kq-k">(צרופה)</span> <span class="mam-kq-q">[צׇרְפָ֖ה]</span></span> כִלְיוֹתַ֣י וְלִבִּֽי׃</p>
-      <p>כִּֽי־חַ֭סְדְּךָ לְנֶ֣גֶד עֵינָ֑י וְ֝הִתְהַלַּ֗כְתִּי בַּאֲמִתֶּֽךָ׃</p>
-      <p>לֹֽא־יָ֭שַׁבְתִּי עִם־מְתֵי־שָׁ֑וְא וְעִ֥ם נַ֝עֲלָמִ֗ים לֹ֣א אָבֽוֹא׃</p>
-      <p>שָׂ֭נֵאתִי קְהַ֣ל מְרֵעִ֑ים וְעִם־רְ֝שָׁעִ֗ים לֹ֣א אֵשֵֽׁב׃</p>
-      <p>אֶרְחַ֣ץ בְּנִקָּי֣וֹן כַּפָּ֑י וַאֲסֹבְבָ֖ה אֶת־מִזְבַּחֲךָ֣ יְהֹוָֽה׃</p>
-      <p>לַ֭שְׁמִעַ בְּק֣וֹל תּוֹדָ֑ה וּ֝לְסַפֵּ֗ר כׇּל־נִפְלְאוֹתֶֽיךָ׃</p>
-      <p>יְֽהֹוָ֗ה אָ֭הַבְתִּי מְע֣וֹן בֵּיתֶ֑ךָ וּ֝מְק֗וֹם מִשְׁכַּ֥ן כְּבוֹדֶֽךָ׃</p>
-      <p>אַל־תֶּאֱסֹ֣ף עִם־חַטָּאִ֣ים נַפְשִׁ֑י וְעִם־אַנְשֵׁ֖י דָמִ֣ים חַיָּֽי׃</p>
-      <p>אֲשֶׁר־בִּידֵיהֶ֥ם זִמָּ֑ה וִ֝ימִינָ֗ם מָ֣לְאָה שֹּֽׁחַד׃</p>
-      <p>וַ֭אֲנִי בְּתֻמִּ֥י אֵלֵ֗ךְ פְּדֵ֣נִי וְחׇנֵּֽנִי׃</p>
-      <p>רַ֭גְלִי עָמְדָ֣ה בְמִישׁ֑וֹר בְּ֝מַקְהֵלִ֗ים אֲבָרֵ֥ךְ יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדָוִ֨ד&thinsp;<b>׀</b> שׇׁפְטֵ֤נִי יְהֹוָ֗ה כִּֽי־אֲ֭נִי בְּתֻמִּ֣י הָלַ֑כְתִּי וּבַיהֹוָ֥ה בָּ֝טַ֗חְתִּי לֹ֣א אֶמְעָֽד׃</p></div><div class="heb-s"><p>לדוד&thinsp;<b>׀</b> שפטני יהוה כי־אני בתמי הלכתי וביהוה בטחתי לא אמעד׃</p></div></div>
+      <div class="texte-fr"><p>De David. Rends-moi justice, Seigneur, car j’ai marché, moi, dans mon intégrité, et en l’Éternel j’ai mis ma confiance sans broncher.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּחָנֵ֣נִי יְהֹוָ֣ה וְנַסֵּ֑נִי <span class="mam-kq"><span class="mam-kq-k">(צרופה)</span> <span class="mam-kq-q">[צׇרְפָ֖ה]</span></span> כִלְיוֹתַ֣י וְלִבִּֽי׃</p></div><div class="heb-s"><p>בחנני יהוה ונסני <span class="mam-kq"><span class="mam-kq-k">(צרופה)</span> <span class="mam-kq-q">[צרפה]</span></span> כליותי ולבי׃</p></div></div>
+      <div class="texte-fr"><p>Scrute-moi, Éternel, mets-moi à l’épreuve, sonde mes reins et mon cœur.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־חַ֭סְדְּךָ לְנֶ֣גֶד עֵינָ֑י וְ֝הִתְהַלַּ֗כְתִּי בַּאֲמִתֶּֽךָ׃</p></div><div class="heb-s"><p>כי־חסדך לנגד עיני והתהלכתי באמתך׃</p></div></div>
+      <div class="texte-fr"><p>Car ta bonté est devant mes yeux, et je ne fais que marcher dans ta vérité.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יָ֭שַׁבְתִּי עִם־מְתֵי־שָׁ֑וְא וְעִ֥ם נַ֝עֲלָמִ֗ים לֹ֣א אָבֽוֹא׃</p></div><div class="heb-s"><p>לא־ישבתי עם־מתי־שוא ועם נעלמים לא אבוא׃</p></div></div>
+      <div class="texte-fr"><p>Je ne prends point place avec des gens faux, je ne fraye point avec des hypocrites.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂ֭נֵאתִי קְהַ֣ל מְרֵעִ֑ים וְעִם־רְ֝שָׁעִ֗ים לֹ֣א אֵשֵֽׁב׃</p></div><div class="heb-s"><p>שנאתי קהל מרעים ועם־רשעים לא אשב׃</p></div></div>
+      <div class="texte-fr"><p>Je hais le clan des malfaiteurs, et avec les méchants je ne siège point.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶרְחַ֣ץ בְּנִקָּי֣וֹן כַּפָּ֑י וַאֲסֹבְבָ֖ה אֶת־מִזְבַּחֲךָ֣ יְהֹוָֽה׃</p></div><div class="heb-s"><p>ארחץ בנקיון כפי ואסבבה את־מזבחך יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Je me lave les mains en état de pureté: puissé-je faire le tour, ô Seigneur, de ton autel,</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַ֭שְׁמִעַ בְּק֣וֹל תּוֹדָ֑ה וּ֝לְסַפֵּ֗ר כׇּל־נִפְלְאוֹתֶֽיךָ׃</p></div><div class="heb-s"><p>לשמע בקול תודה ולספר כל־נפלאותיך׃</p></div></div>
+      <div class="texte-fr"><p>pour faire entendre des accents de reconnaissance, et proclamer toutes tes merveilles!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְֽהֹוָ֗ה אָ֭הַבְתִּי מְע֣וֹן בֵּיתֶ֑ךָ וּ֝מְק֗וֹם מִשְׁכַּ֥ן כְּבוֹדֶֽךָ׃</p></div><div class="heb-s"><p>יהוה אהבתי מעון ביתך ומקום משכן כבודך׃</p></div></div>
+      <div class="texte-fr"><p>Seigneur, j’aime le séjour de ta maison, et le lieu où réside ta gloire.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תֶּאֱסֹ֣ף עִם־חַטָּאִ֣ים נַפְשִׁ֑י וְעִם־אַנְשֵׁ֖י דָמִ֣ים חַיָּֽי׃</p></div><div class="heb-s"><p>אל־תאסף עם־חטאים נפשי ועם־אנשי דמים חיי׃</p></div></div>
+      <div class="texte-fr"><p>N’enveloppe pas mon âme dans la ruine des méchants, ni ma vie dans celle des gens sanguinaires,</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁר־בִּידֵיהֶ֥ם זִמָּ֑ה וִ֝ימִינָ֗ם מָ֣לְאָה שֹּֽׁחַד׃</p></div><div class="heb-s"><p>אשר־בידיהם זמה וימינם מלאה שחד׃</p></div></div>
+      <div class="texte-fr"><p>dont les mains sont chargées d’infamie, et la droite se remplit de dons corrupteurs;</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֭אֲנִי בְּתֻמִּ֥י אֵלֵ֗ךְ פְּדֵ֣נִי וְחׇנֵּֽנִי׃</p></div><div class="heb-s"><p>ואני בתמי אלך פדני וחנני׃</p></div></div>
+      <div class="texte-fr"><p>alors que moi, je marche dans mon intégrité: délivre-moi et sois-moi propice!</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֭גְלִי עָמְדָ֣ה בְמִישׁ֑וֹר בְּ֝מַקְהֵלִ֗ים אֲבָרֵ֥ךְ יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>רגלי עמדה במישור במקהלים אברך יהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Mon pied foule un chemin tout droit: dans les assemblées, je veux bénir le Seigneur.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>De David. Rends-moi justice, Seigneur, car j’ai marché, moi, dans mon intégrité, et en l’Éternel j’ai mis ma confiance sans broncher.</p>
-      <p>Scrute-moi, Éternel, mets-moi à l’épreuve, sonde mes reins et mon cœur.</p>
-      <p>Car ta bonté est devant mes yeux, et je ne fais que marcher dans ta vérité.</p>
-      <p>Je ne prends point place avec des gens faux, je ne fraye point avec des hypocrites.</p>
-      <p>Je hais le clan des malfaiteurs, et avec les méchants je ne siège point.</p>
-      <p>Je me lave les mains en état de pureté: puissé-je faire le tour, ô Seigneur, de ton autel,</p>
-      <p>pour faire entendre des accents de reconnaissance, et proclamer toutes tes merveilles!</p>
-      <p>Seigneur, j’aime le séjour de ta maison, et le lieu où réside ta gloire.</p>
-      <p>N’enveloppe pas mon âme dans la ruine des méchants, ni ma vie dans celle des gens sanguinaires,</p>
-      <p>dont les mains sont chargées d’infamie, et la droite se remplit de dons corrupteurs;</p>
-      <p>alors que moi, je marche dans mon intégrité: délivre-moi et sois-moi propice!</p>
-      <p>Mon pied foule un chemin tout droit: dans les assemblées, je veux bénir le Seigneur.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -253,6 +313,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-25.html">← Tehilim 25</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-26.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-27.html">Tehilim 27 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 10 – Pourquoi, D.ieu, Te tiens-Tu loin ?</h1>
     <p>Ketouvim, Tehilim, Chapitre 10</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-9.html">← Tehilim 9</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-10.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-11.html">Tehilim 11 →</a></div>
   </div>
 </header>
 
@@ -161,59 +202,90 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לָמָ֣ה יְ֭הֹוָה תַּעֲמֹ֣ד בְּרָח֑וֹק תַּ֝עְלִ֗ים לְעִתּ֥וֹת בַּצָּרָֽה׃</p>
-      <p>בְּגַאֲוַ֣ת רָ֭שָׁע יִדְלַ֣ק עָנִ֑י יִתָּפְשׂ֓וּ&thinsp;<b>׀</b> בִּמְזִמּ֖וֹת ז֣וּ חָשָֽׁבוּ׃</p>
-      <p>כִּֽי־הִלֵּ֣ל רָ֭שָׁע עַל־תַּאֲוַ֣ת נַפְשׁ֑וֹ וּבֹצֵ֥עַ בֵּ֝רֵ֗ךְ נִ֘אֵ֥ץ&thinsp;<small>׀</small>&thinsp;יְהֹוָֽה׃</p>
-      <p>רָשָׁ֗ע כְּגֹ֣בַהּ אַ֭פּוֹ בַּל־יִדְרֹ֑שׁ אֵ֥ין אֱ֝לֹהִ֗ים כׇּל־מְזִמּוֹתָֽיו׃</p>
-      <p>יָ֘חִ֤ילוּ <span class="mam-kq-trivial">דְרָכָ֨ו&thinsp;<b>׀</b></span> בְּכׇל־עֵ֗ת מָר֣וֹם מִ֭שְׁפָּטֶיךָ מִנֶּגְדּ֑וֹ כׇּל־צ֝וֹרְרָ֗יו יָפִ֥יחַ בָּהֶֽם׃</p>
-      <p>אָמַ֣ר בְּ֭לִבּוֹ בַּל־אֶמּ֑וֹט לְדֹ֥ר וָ֝דֹ֗ר אֲשֶׁ֣ר לֹֽא־בְרָֽע׃</p>
-      <p>אָלָ֤ה&thinsp;<b>׀</b> פִּ֣יהוּ מָ֭לֵא וּמִרְמ֣וֹת וָתֹ֑ךְ תַּ֥חַת לְ֝שׁוֹנ֗וֹ עָמָ֥ל וָאָֽוֶן׃</p>
-      <p>יֵשֵׁ֤ב&thinsp;<b>׀</b> בְּמַאְרַ֬ב חֲצֵרִ֗ים בַּֽ֭מִּסְתָּרִים יַהֲרֹ֣ג נָקִ֑י עֵ֝ינָ֗יו לְֽחֵלְכָ֥ה יִצְפֹּֽנוּ׃</p>
-      <p>יֶאֱרֹ֬ב בַּמִּסְתָּ֨ר&thinsp;<b>׀</b> כְּאַרְיֵ֬ה בְסֻכֹּ֗ה יֶ֭אֱרֹב לַחֲט֣וֹף עָנִ֑י יַחְטֹ֥ף עָ֝נִ֗י בְּמׇשְׁכ֥וֹ בְרִשְׁתּֽוֹ׃</p>
-      <p><span class="mam-kq"><span class="mam-kq-k">(ודכה)</span> <span class="mam-kq-q">[יִדְכֶּ֥ה]</span></span> יָשֹׁ֑חַ וְנָפַ֥ל בַּ֝עֲצוּמָ֗יו <span class="mam-kq"><span class="mam-kq-k">(חלכאים)</span> <span class="mam-kq-q">[חֵ֣ל כָּאִֽים]</span></span>׃</p>
-      <p>אָמַ֣ר בְּ֭לִבּוֹ שָׁ֣כַֽח אֵ֑ל הִסְתִּ֥יר פָּ֝נָ֗יו בַּל־רָאָ֥ה לָנֶֽצַח׃</p>
-      <p>קוּמָ֤ה יְהֹוָ֗ה אֵ֭ל נְשָׂ֣א יָדֶ֑ךָ אַל־תִּשְׁכַּ֥ח <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[עֲנָוִֽים]</span></span>׃</p>
-      <p>עַל־מֶ֤ה&thinsp;<b>׀</b> נִאֵ֖ץ רָשָׁ֥ע&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים אָמַ֥ר בְּ֝לִבּ֗וֹ לֹ֣א תִדְרֹֽשׁ׃</p>
-      <p>רָאִ֡תָה כִּי־אַתָּ֤ה&thinsp;<b>׀</b> עָ֘מָ֤ל וָכַ֨עַס&thinsp;<b>׀</b> תַּבִּיט֮ לָתֵ֢ת בְּיָ֫דֶ֥ךָ עָ֭לֶיךָ יַעֲזֹ֣ב חֵלֵ֑כָה יָ֝ת֗וֹם אַתָּ֤ה&thinsp;<b>׀</b> הָיִ֬יתָ עוֹזֵֽר׃</p>
-      <p>שְׁ֭בֹר זְר֣וֹעַ רָשָׁ֑ע וָ֝רָ֗ע תִּֽדְרוֹשׁ־רִשְׁע֥וֹ בַל־תִּמְצָֽא׃</p>
-      <p>יְהֹוָ֣ה מֶ֭לֶךְ עוֹלָ֣ם וָעֶ֑ד אָבְד֥וּ ג֝וֹיִ֗ם מֵאַרְצֽוֹ׃</p>
-      <p>תַּאֲוַ֬ת עֲנָוִ֣ים שָׁמַ֣עְתָּ יְהֹוָ֑ה תָּכִ֥ין לִ֝בָּ֗ם תַּקְשִׁ֥יב אׇזְנֶֽךָ׃</p>
-      <p>לִשְׁפֹּ֥ט יָת֗וֹם וָ֫דָ֥ךְ בַּל־יוֹסִ֥יף ע֑וֹד לַעֲרֹ֥ץ אֱ֝נ֗וֹשׁ מִן־הָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָמָ֣ה יְ֭הֹוָה תַּעֲמֹ֣ד בְּרָח֑וֹק תַּ֝עְלִ֗ים לְעִתּ֥וֹת בַּצָּרָֽה׃</p></div><div class="heb-s"><p>למה יהוה תעמד ברחוק תעלים לעתות בצרה׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi, ô Éternel, te tiens-tu éloigné? Te dérobes-tu au temps de la détresse?</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּגַאֲוַ֣ת רָ֭שָׁע יִדְלַ֣ק עָנִ֑י יִתָּפְשׂ֓וּ&thinsp;<b>׀</b> בִּמְזִמּ֖וֹת ז֣וּ חָשָֽׁבוּ׃</p></div><div class="heb-s"><p>בגאות רשע ידלק עני יתפשו&thinsp;<b>׀</b> במזמות זו חשבו׃</p></div></div>
+      <div class="texte-fr"><p>Dans son arrogance, le méchant persécute le pauvre: qu’il tombe victime des mauvais desseins qu’il médite!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הִלֵּ֣ל רָ֭שָׁע עַל־תַּאֲוַ֣ת נַפְשׁ֑וֹ וּבֹצֵ֥עַ בֵּ֝רֵ֗ךְ נִ֘אֵ֥ץ&thinsp;<small>׀</small>&thinsp;יְהֹוָֽה׃</p></div><div class="heb-s"><p>כי־הלל רשע על־תאות נפשו ובצע ברך נאץ&thinsp;<small>׀</small>&thinsp;יהוה׃</p></div></div>
+      <div class="texte-fr"><p>car il se glorifie, le méchant, des passions de son âme; le spoliateur blasphème, outrage l’Éternel.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָשָׁ֗ע כְּגֹ֣בַהּ אַ֭פּוֹ בַּל־יִדְרֹ֑שׁ אֵ֥ין אֱ֝לֹהִ֗ים כׇּל־מְזִמּוֹתָֽיו׃</p></div><div class="heb-s"><p>רשע כגבה אפו בל־ידרש אין אלהים כל־מזמותיו׃</p></div></div>
+      <div class="texte-fr"><p>Avec son caractère hautain, le méchant ne s’inquiète de [rien]: "Il n’est point de Dieu!" Voilà le fond de sa pensée.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָ֘חִ֤ילוּ <span class="mam-kq-trivial">דְרָכָ֨ו&thinsp;<b>׀</b></span> בְּכׇל־עֵ֗ת מָר֣וֹם מִ֭שְׁפָּטֶיךָ מִנֶּגְדּ֑וֹ כׇּל־צ֝וֹרְרָ֗יו יָפִ֥יחַ בָּהֶֽם׃</p></div><div class="heb-s"><p>יחילו <span class="mam-kq-trivial">דרכו&thinsp;<b>׀</b></span> בכל־עת מרום משפטיך מנגדו כל־צורריו יפיח בהם׃</p></div></div>
+      <div class="texte-fr"><p>Ses voies sont prospères en tout temps, tes jugements passent au-dessus de sa tête; tous ses adversaires, il les renverse d’un souffle.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָמַ֣ר בְּ֭לִבּוֹ בַּל־אֶמּ֑וֹט לְדֹ֥ר וָ֝דֹ֗ר אֲשֶׁ֣ר לֹֽא־בְרָֽע׃</p></div><div class="heb-s"><p>אמר בלבו בל־אמוט לדר ודר אשר לא־ברע׃</p></div></div>
+      <div class="texte-fr"><p>Il dit en son cœur: "Je ne chancellerai point; jamais, au grand jamais, je ne serai dans l’adversité."</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָלָ֤ה&thinsp;<b>׀</b> פִּ֣יהוּ מָ֭לֵא וּמִרְמ֣וֹת וָתֹ֑ךְ תַּ֥חַת לְ֝שׁוֹנ֗וֹ עָמָ֥ל וָאָֽוֶן׃</p></div><div class="heb-s"><p>אלה&thinsp;<b>׀</b> פיהו מלא ומרמות ותך תחת לשונו עמל ואון׃</p></div></div>
+      <div class="texte-fr"><p>Sa bouche est pleine de parjure, de perfidie et de violence; sa langue est au service du mal et de l’iniquité.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵשֵׁ֤ב&thinsp;<b>׀</b> בְּמַאְרַ֬ב חֲצֵרִ֗ים בַּֽ֭מִּסְתָּרִים יַהֲרֹ֣ג נָקִ֑י עֵ֝ינָ֗יו לְֽחֵלְכָ֥ה יִצְפֹּֽנוּ׃</p></div><div class="heb-s"><p>ישב&thinsp;<b>׀</b> במארב חצרים במסתרים יהרג נקי עיניו לחלכה יצפנו׃</p></div></div>
+      <div class="texte-fr"><p>Il se met en embuscade dans les villages; à la dérobée, il fait périr l’innocent, ses yeux guettent le malheureux.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֶאֱרֹ֬ב בַּמִּסְתָּ֨ר&thinsp;<b>׀</b> כְּאַרְיֵ֬ה בְסֻכֹּ֗ה יֶ֭אֱרֹב לַחֲט֣וֹף עָנִ֑י יַחְטֹ֥ף עָ֝נִ֗י בְּמׇשְׁכ֥וֹ בְרִשְׁתּֽוֹ׃</p></div><div class="heb-s"><p>יארב במסתר&thinsp;<b>׀</b> כאריה בסכה יארב לחטוף עני יחטף עני במשכו ברשתו׃</p></div></div>
+      <div class="texte-fr"><p>Comme le lion dans le fourré, il dresse de secrètes embûches; il les dresse pour s’emparer du pauvre, il s’empare du pauvre en l’attirant dans son filet.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p><span class="mam-kq"><span class="mam-kq-k">(ודכה)</span> <span class="mam-kq-q">[יִדְכֶּ֥ה]</span></span> יָשֹׁ֑חַ וְנָפַ֥ל בַּ֝עֲצוּמָ֗יו <span class="mam-kq"><span class="mam-kq-k">(חלכאים)</span> <span class="mam-kq-q">[חֵ֣ל כָּאִֽים]</span></span>׃</p></div><div class="heb-s"><p><span class="mam-kq"><span class="mam-kq-k">(ודכה)</span> <span class="mam-kq-q">[ידכה]</span></span> ישח ונפל בעצומיו <span class="mam-kq"><span class="mam-kq-k">(חלכאים)</span> <span class="mam-kq-q">[חל כאים]</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Il s’accroupit, se tapit, et les malheureux tombent dans ses griffes.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָמַ֣ר בְּ֭לִבּוֹ שָׁ֣כַֽח אֵ֑ל הִסְתִּ֥יר פָּ֝נָ֗יו בַּל־רָאָ֥ה לָנֶֽצַח׃</p></div><div class="heb-s"><p>אמר בלבו שכח אל הסתיר פניו בל־ראה לנצח׃</p></div></div>
+      <div class="texte-fr"><p>Il dit en son cœur: "Dieu est sujet à l’oubli, il dérobe sa face; jamais il ne voit [rien]."</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>קוּמָ֤ה יְהֹוָ֗ה אֵ֭ל נְשָׂ֣א יָדֶ֑ךָ אַל־תִּשְׁכַּ֥ח <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[עֲנָוִֽים]</span></span>׃</p></div><div class="heb-s"><p>קומה יהוה אל נשא ידך אל־תשכח <span class="mam-kq"><span class="mam-kq-k">(עניים)</span> <span class="mam-kq-q">[ענוים]</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Ah! Seigneur, lève-toi! Dieu puissant, brandis ta main, n’oublie point les humbles.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־מֶ֤ה&thinsp;<b>׀</b> נִאֵ֖ץ רָשָׁ֥ע&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים אָמַ֥ר בְּ֝לִבּ֗וֹ לֹ֣א תִדְרֹֽשׁ׃</p></div><div class="heb-s"><p>על־מה&thinsp;<b>׀</b> נאץ רשע&thinsp;<small>׀</small>&thinsp;אלהים אמר בלבו לא תדרש׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi l’impie outragerait-il Dieu, dirait-il en son cœur que tu ne demandes aucun compte?</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָאִ֡תָה כִּי־אַתָּ֤ה&thinsp;<b>׀</b> עָ֘מָ֤ל וָכַ֨עַס&thinsp;<b>׀</b> תַּבִּיט֮ לָתֵ֢ת בְּיָ֫דֶ֥ךָ עָ֭לֶיךָ יַעֲזֹ֣ב חֵלֵ֑כָה יָ֝ת֗וֹם אַתָּ֤ה&thinsp;<b>׀</b> הָיִ֬יתָ עוֹזֵֽר׃</p></div><div class="heb-s"><p>ראתה כי־אתה&thinsp;<b>׀</b> עמל וכעס&thinsp;<b>׀</b> תביט לתת בידך עליך יעזב חלכה יתום אתה&thinsp;<b>׀</b> היית עוזר׃</p></div></div>
+      <div class="texte-fr"><p>Tu vois [tout]: tu regardes misères et chagrins, pour les protéger de ta main. A toi s’abandonne le malheureux, l’orphelin, tu lui prêtes assistance.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁ֭בֹר זְר֣וֹעַ רָשָׁ֑ע וָ֝רָ֗ע תִּֽדְרוֹשׁ־רִשְׁע֥וֹ בַל־תִּמְצָֽא׃</p></div><div class="heb-s"><p>שבר זרוע רשע ורע תדרוש־רשעו בל־תמצא׃</p></div></div>
+      <div class="texte-fr"><p>Brise le bras de l’impie, le méchant… châtie sa perversité, pour qu’il n’en soit plus trouvé trace.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה מֶ֭לֶךְ עוֹלָ֣ם וָעֶ֑ד אָבְד֥וּ ג֝וֹיִ֗ם מֵאַרְצֽוֹ׃</p></div><div class="heb-s"><p>יהוה מלך עולם ועד אבדו גוים מארצו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel est roi à tout jamais: les peuples disparaissent de son pays.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּאֲוַ֬ת עֲנָוִ֣ים שָׁמַ֣עְתָּ יְהֹוָ֑ה תָּכִ֥ין לִ֝בָּ֗ם תַּקְשִׁ֥יב אׇזְנֶֽךָ׃</p></div><div class="heb-s"><p>תאות ענוים שמעת יהוה תכין לבם תקשיב אזנך׃</p></div></div>
+      <div class="texte-fr"><p>Tu entends le souhait des humbles, Éternel, tu affermis leur cœur, tu leur prêtes l’oreille,</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִשְׁפֹּ֥ט יָת֗וֹם וָ֫דָ֥ךְ בַּל־יוֹסִ֥יף ע֑וֹד לַעֲרֹ֥ץ אֱ֝נ֗וֹשׁ מִן־הָאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לשפט יתום ודך בל־יוסיף עוד לערץ אנוש מן־הארץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>en vue de rendre justice à l’orphelin, à l’opprimé, pour que nul mortel n’agisse plus tyranniquement sur terre.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Pourquoi, ô Éternel, te tiens-tu éloigné? Te dérobes-tu au temps de la détresse?</p>
-      <p>Dans son arrogance, le méchant persécute le pauvre: qu’il tombe victime des mauvais desseins qu’il médite!</p>
-      <p>car il se glorifie, le méchant, des passions de son âme; le spoliateur blasphème, outrage l’Éternel.</p>
-      <p>Avec son caractère hautain, le méchant ne s’inquiète de [rien]: "Il n’est point de Dieu!" Voilà le fond de sa pensée.</p>
-      <p>Ses voies sont prospères en tout temps, tes jugements passent au-dessus de sa tête; tous ses adversaires, il les renverse d’un souffle.</p>
-      <p>Il dit en son cœur: "Je ne chancellerai point; jamais, au grand jamais, je ne serai dans l’adversité."</p>
-      <p>Sa bouche est pleine de parjure, de perfidie et de violence; sa langue est au service du mal et de l’iniquité.</p>
-      <p>Il se met en embuscade dans les villages; à la dérobée, il fait périr l’innocent, ses yeux guettent le malheureux.</p>
-      <p>Comme le lion dans le fourré, il dresse de secrètes embûches; il les dresse pour s’emparer du pauvre, il s’empare du pauvre en l’attirant dans son filet.</p>
-      <p>Il s’accroupit, se tapit, et les malheureux tombent dans ses griffes.</p>
-      <p>Il dit en son cœur: "Dieu est sujet à l’oubli, il dérobe sa face; jamais il ne voit [rien]."</p>
-      <p>Ah! Seigneur, lève-toi! Dieu puissant, brandis ta main, n’oublie point les humbles.</p>
-      <p>Pourquoi l’impie outragerait-il Dieu, dirait-il en son cœur que tu ne demandes aucun compte?</p>
-      <p>Tu vois [tout]: tu regardes misères et chagrins, pour les protéger de ta main. A toi s’abandonne le malheureux, l’orphelin, tu lui prêtes assistance.</p>
-      <p>Brise le bras de l’impie, le méchant… châtie sa perversité, pour qu’il n’en soit plus trouvé trace.</p>
-      <p>L’Éternel est roi à tout jamais: les peuples disparaissent de son pays.</p>
-      <p>Tu entends le souhait des humbles, Éternel, tu affermis leur cœur, tu leur prêtes l’oreille,</p>
-      <p>en vue de rendre justice à l’orphelin, à l’opprimé, pour que nul mortel n’agisse plus tyranniquement sur terre.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -268,6 +340,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-9.html">← Tehilim 9</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-10.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-11.html">Tehilim 11 →</a></div>
 </main>
 
 <footer>

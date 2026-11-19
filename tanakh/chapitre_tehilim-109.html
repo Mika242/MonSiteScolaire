@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 109 – D.ieu de ma louange, ne reste pas silencieux</h1>
     <p>Ketouvim, Tehilim, Chapitre 109</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-108.html">← Tehilim 108</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-109.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-110.html">Tehilim 110 →</a></div>
   </div>
 </header>
 
@@ -161,85 +202,142 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַ֭מְנַצֵּחַ לְדָוִ֣ד מִזְמ֑וֹר אֱלֹהֵ֥י תְ֝הִלָּתִ֗י אַֽל־תֶּחֱרַֽשׁ׃</p>
-      <p>כִּ֤י פִ֪י רָשָׁ֡ע וּֽפִי־מִ֭רְמָה עָלַ֣י פָּתָ֑חוּ דִּבְּר֥וּ אִ֝תִּ֗י לְשׁ֣וֹן שָֽׁקֶר׃</p>
-      <p>וְדִבְרֵ֣י שִׂנְאָ֣ה סְבָב֑וּנִי וַיִּֽלָּחֲמ֥וּנִי חִנָּֽם׃</p>
-      <p>תַּֽחַת־אַהֲבָתִ֥י יִשְׂטְנ֗וּנִי וַאֲנִ֥י תְפִלָּֽה׃</p>
-      <p>וַיָּ֘שִׂ֤ימוּ עָלַ֣י רָ֭עָה תַּ֣חַת טוֹבָ֑ה וְ֝שִׂנְאָ֗ה תַּ֣חַת אַהֲבָתִֽי׃</p>
-      <p>הַפְקֵ֣ד עָלָ֣יו רָשָׁ֑ע וְ֝שָׂטָ֗ן יַעֲמֹ֥ד עַל־יְמִינֽוֹ׃</p>
-      <p>בְּ֭הִשָּׁ֣פְטוֹ יֵצֵ֣א רָשָׁ֑ע וּ֝תְפִלָּת֗וֹ תִּֽהְיֶ֥ה לַחֲטָאָֽה׃</p>
-      <p>יִֽהְיוּ־יָמָ֥יו מְעַטִּ֑ים פְּ֝קֻדָּת֗וֹ יִקַּ֥ח אַחֵֽר׃</p>
-      <p>יִֽהְיוּ־בָנָ֥יו יְתוֹמִ֑ים וְ֝אִשְׁתּ֗וֹ אַלְמָנָֽה׃</p>
-      <p>וְנ֤וֹעַ יָנ֣וּעוּ בָנָ֣יו וְשִׁאֵ֑לוּ וְ֝דָרְשׁ֗וּ מֵחׇרְבֽוֹתֵיהֶֽם׃</p>
-      <p>יְנַקֵּ֣שׁ נ֭וֹשֶׁה לְכׇל־אֲשֶׁר־ל֑וֹ וְיָבֹ֖זּוּ זָרִ֣ים יְגִיעֽוֹ׃</p>
-      <p>אַל־יְהִי־ל֭וֹ מֹשֵׁ֣ךְ חָ֑סֶד וְֽאַל־יְהִ֥י ח֝וֹנֵ֗ן לִֽיתוֹמָֽיו׃</p>
-      <p>יְהִי־אַחֲרִית֥וֹ לְהַכְרִ֑ית בְּד֥וֹר אַ֝חֵ֗ר יִמַּ֥ח שְׁמָֽם׃</p>
-      <p>יִזָּכֵ֤ר&thinsp;<b>׀</b> עֲוֺ֣ן אֲ֭בֹתָיו אֶל־יְהֹוָ֑ה וְחַטַּ֥את אִ֝מּ֗וֹ אַל־תִּמָּֽח׃</p>
-      <p>יִהְי֣וּ נֶגֶד־יְהֹוָ֣ה תָּמִ֑יד וְיַכְרֵ֖ת מֵאֶ֣רֶץ זִכְרָֽם׃</p>
-      <p>יַ֗עַן אֲשֶׁ֤ר&thinsp;<b>׀</b> לֹ֥א זָכַר֮ עֲשׂ֢וֹת חָ֥֫סֶד וַיִּרְדֹּ֡ף אִישׁ־עָנִ֣י וְ֭אֶבְיוֹן וְנִכְאֵ֨ה לֵבָ֬ב לְמוֹתֵֽת׃</p>
-      <p>וַיֶּאֱהַ֣ב קְ֭לָלָה וַתְּבוֹאֵ֑הוּ וְֽלֹא־חָפֵ֥ץ בִּ֝בְרָכָ֗ה וַתִּרְחַ֥ק מִמֶּֽנּוּ׃</p>
-      <p>וַיִּלְבַּ֥שׁ קְלָלָ֗ה כְּמַ֫דּ֥וֹ וַתָּבֹ֣א כַמַּ֣יִם בְּקִרְבּ֑וֹ וְ֝כַשֶּׁ֗מֶן בְּעַצְמוֹתָֽיו׃</p>
-      <p>תְּהִי־ל֭וֹ כְּבֶ֣גֶד יַעְטֶ֑ה וּ֝לְמֵ֗זַח תָּמִ֥יד יַחְגְּרֶֽהָ׃</p>
-      <p>זֹ֤את פְּעֻלַּ֣ת שֹׂ֭טְנַי מֵאֵ֣ת יְהֹוָ֑ה וְהַדֹּבְרִ֥ים רָ֝֗ע עַל־נַפְשִֽׁי׃</p>
-      <p>וְאַתָּ֤ה&thinsp;<b>׀</b> יֱ֘הֹוִ֤ה אֲדֹנָ֗י עֲֽשֵׂה־אִ֭תִּי לְמַ֣עַן שְׁמֶ֑ךָ כִּי־ט֥וֹב חַ֝סְדְּךָ֗ הַצִּילֵֽנִי׃</p>
-      <p>כִּי־עָנִ֣י וְאֶבְי֣וֹן אָנֹ֑כִי וְ֝לִבִּ֗י חָלַ֥ל בְּקִרְבִּֽי׃</p>
-      <p>כְּצֵל־כִּנְטוֹת֥וֹ נֶהֱלָ֑כְתִּי נִ֝נְעַ֗רְתִּי כָּאַרְבֶּֽה׃</p>
-      <p>בִּ֭רְכַּי כָּשְׁל֣וּ מִצּ֑וֹם וּ֝בְשָׂרִ֗י כָּחַ֥שׁ מִשָּֽׁמֶן׃</p>
-      <p>וַאֲנִ֤י&thinsp;<b>׀</b> הָיִ֣יתִי חֶרְפָּ֣ה לָהֶ֑ם יִ֝רְא֗וּנִי יְנִיע֥וּן רֹאשָֽׁם׃</p>
-      <p>עׇ֭זְרֵנִי יְהֹוָ֣ה אֱלֹהָ֑י ה֖וֹשִׁיעֵ֣נִי כְחַסְדֶּֽךָ׃</p>
-      <p>וְֽ֭יֵדְעוּ כִּי־יָ֣דְךָ זֹּ֑את אַתָּ֖ה יְהֹוָ֣ה עֲשִׂיתָֽהּ׃</p>
-      <p>יְקַֽלְלוּ־הֵמָּה֮ וְאַתָּ֢ה תְבָ֫רֵ֥ךְ קָ֤מוּ&thinsp;<b>׀</b> וַיֵּבֹ֗שׁוּ וְֽעַבְדְּךָ֥ יִשְׂמָֽח׃</p>
-      <p>יִלְבְּשׁ֣וּ שׂוֹטְנַ֣י כְּלִמָּ֑ה וְיַעֲט֖וּ כַמְעִ֣יל בׇּשְׁתָּֽם׃</p>
-      <p>א֘וֹדֶ֤ה יְהֹוָ֣ה מְאֹ֣ד בְּפִ֑י וּבְת֖וֹךְ רַבִּ֣ים אֲהַלְלֶֽנּוּ׃</p>
-      <p>כִּֽי־יַ֭עֲמֹד לִימִ֣ין אֶבְי֑וֹן לְ֝הוֹשִׁ֗יעַ מִשֹּׁפְטֵ֥י נַפְשֽׁוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַ֭מְנַצֵּחַ לְדָוִ֣ד מִזְמ֑וֹר אֱלֹהֵ֥י תְ֝הִלָּתִ֗י אַֽל־תֶּחֱרַֽשׁ׃</p></div><div class="heb-s"><p>למנצח לדוד מזמור אלהי תהלתי אל־תחרש׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. De David. Psaume. Dieu, objet de mes louanges, ne garde pas le silence!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י פִ֪י רָשָׁ֡ע וּֽפִי־מִ֭רְמָה עָלַ֣י פָּתָ֑חוּ דִּבְּר֥וּ אִ֝תִּ֗י לְשׁ֣וֹן שָֽׁקֶר׃</p></div><div class="heb-s"><p>כי פי רשע ופי־מרמה עלי פתחו דברו אתי לשון שקר׃</p></div></div>
+      <div class="texte-fr"><p>Car la bouche du méchant, la bouche de la fourberie s’ouvrent contre moi; on me parle un langage mensonger.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְדִבְרֵ֣י שִׂנְאָ֣ה סְבָב֑וּנִי וַיִּֽלָּחֲמ֥וּנִי חִנָּֽם׃</p></div><div class="heb-s"><p>ודברי שנאה סבבוני וילחמוני חנם׃</p></div></div>
+      <div class="texte-fr"><p>On m’enveloppe de propos haineux, on me fait la guerre sans motif.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>תַּֽחַת־אַהֲבָתִ֥י יִשְׂטְנ֗וּנִי וַאֲנִ֥י תְפִלָּֽה׃</p></div><div class="heb-s"><p>תחת־אהבתי ישטנוני ואני תפלה׃</p></div></div>
+      <div class="texte-fr"><p>En échange de mon amour, on me traite en ennemi, et moi je ne suis que prière.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֘שִׂ֤ימוּ עָלַ֣י רָ֭עָה תַּ֣חַת טוֹבָ֑ה וְ֝שִׂנְאָ֗ה תַּ֣חַת אַהֲבָתִֽי׃</p></div><div class="heb-s"><p>וישימו עלי רעה תחת טובה ושנאה תחת אהבתי׃</p></div></div>
+      <div class="texte-fr"><p>On me rend le mal pour le bien, la haine est le prix de mon affection.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַפְקֵ֣ד עָלָ֣יו רָשָׁ֑ע וְ֝שָׂטָ֗ן יַעֲמֹ֥ד עַל־יְמִינֽוֹ׃</p></div><div class="heb-s"><p>הפקד עליו רשע ושטן יעמד על־ימינו׃</p></div></div>
+      <div class="texte-fr"><p>Suscite un méchant contre lui, qu’un accusateur se dresse à sa droite!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּ֭הִשָּׁ֣פְטוֹ יֵצֵ֣א רָשָׁ֑ע וּ֝תְפִלָּת֗וֹ תִּֽהְיֶ֥ה לַחֲטָאָֽה׃</p></div><div class="heb-s"><p>בהשפטו יצא רשע ותפלתו תהיה לחטאה׃</p></div></div>
+      <div class="texte-fr"><p>Quand il passe en jugement, qu’il s’en revienne condamné! Que sa prière lui soit imputée à péché!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִֽהְיוּ־יָמָ֥יו מְעַטִּ֑ים פְּ֝קֻדָּת֗וֹ יִקַּ֥ח אַחֵֽר׃</p></div><div class="heb-s"><p>יהיו־ימיו מעטים פקדתו יקח אחר׃</p></div></div>
+      <div class="texte-fr"><p>Que ses jours soient peu nombreux, qu’un autre s’empare de son office!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִֽהְיוּ־בָנָ֥יו יְתוֹמִ֑ים וְ֝אִשְׁתּ֗וֹ אַלְמָנָֽה׃</p></div><div class="heb-s"><p>יהיו־בניו יתומים ואשתו אלמנה׃</p></div></div>
+      <div class="texte-fr"><p>Que ses enfants soient orphelins, que sa femme devienne veuve.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנ֤וֹעַ יָנ֣וּעוּ בָנָ֣יו וְשִׁאֵ֑לוּ וְ֝דָרְשׁ֗וּ מֵחׇרְבֽוֹתֵיהֶֽם׃</p></div><div class="heb-s"><p>ונוע ינועו בניו ושאלו ודרשו מחרבותיהם׃</p></div></div>
+      <div class="texte-fr"><p>Que ses enfants errent de tous côtés pour mendier, qu’ils sollicitent, éloignés des ruines [de leur demeure].</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְנַקֵּ֣שׁ נ֭וֹשֶׁה לְכׇל־אֲשֶׁר־ל֑וֹ וְיָבֹ֖זּוּ זָרִ֣ים יְגִיעֽוֹ׃</p></div><div class="heb-s"><p>ינקש נושה לכל־אשר־לו ויבזו זרים יגיעו׃</p></div></div>
+      <div class="texte-fr"><p>Que le créancier saisisse tout son avoir, que des étrangers mettent au pillage le fruit de son labeur.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־יְהִי־ל֭וֹ מֹשֵׁ֣ךְ חָ֑סֶד וְֽאַל־יְהִ֥י ח֝וֹנֵ֗ן לִֽיתוֹמָֽיו׃</p></div><div class="heb-s"><p>אל־יהי־לו משך חסד ואל־יהי חונן ליתומיו׃</p></div></div>
+      <div class="texte-fr"><p>Qu’il n’y ait personne pour lui tendre une main secourable, personne pour avoir compassion de ses orphelins.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִי־אַחֲרִית֥וֹ לְהַכְרִ֑ית בְּד֥וֹר אַ֝חֵ֗ר יִמַּ֥ח שְׁמָֽם׃</p></div><div class="heb-s"><p>יהי־אחריתו להכרית בדור אחר ימח שמם׃</p></div></div>
+      <div class="texte-fr"><p>Que sa postérité soit condamnée à disparaître, qu’à la génération prochaine son nom soit éteint.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִזָּכֵ֤ר&thinsp;<b>׀</b> עֲוֺ֣ן אֲ֭בֹתָיו אֶל־יְהֹוָ֑ה וְחַטַּ֥את אִ֝מּ֗וֹ אַל־תִּמָּֽח׃</p></div><div class="heb-s"><p>יזכר&thinsp;<b>׀</b> עון אבתיו אל־יהוה וחטאת אמו אל־תמח׃</p></div></div>
+      <div class="texte-fr"><p>Que l’iniquité de ses pères soit présente au souvenir de l’Éternel. Que jamais ne s’efface la faute de sa mère.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִהְי֣וּ נֶגֶד־יְהֹוָ֣ה תָּמִ֑יד וְיַכְרֵ֖ת מֵאֶ֣רֶץ זִכְרָֽם׃</p></div><div class="heb-s"><p>יהיו נגד־יהוה תמיד ויכרת מארץ זכרם׃</p></div></div>
+      <div class="texte-fr"><p>Que le Seigneur les ait toujours sous les yeux, et extirpe leur mémoire de la terre;</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַ֗עַן אֲשֶׁ֤ר&thinsp;<b>׀</b> לֹ֥א זָכַר֮ עֲשׂ֢וֹת חָ֥֫סֶד וַיִּרְדֹּ֡ף אִישׁ־עָנִ֣י וְ֭אֶבְיוֹן וְנִכְאֵ֨ה לֵבָ֬ב לְמוֹתֵֽת׃</p></div><div class="heb-s"><p>יען אשר&thinsp;<b>׀</b> לא זכר עשות חסד וירדף איש־עני ואביון ונכאה לבב למותת׃</p></div></div>
+      <div class="texte-fr"><p>parce qu’il n’a pas songé à pratiquer la charité, qu’il a persécuté un homme malheureux, déshérité, au cœur brisé pour amener sa perte.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּאֱהַ֣ב קְ֭לָלָה וַתְּבוֹאֵ֑הוּ וְֽלֹא־חָפֵ֥ץ בִּ֝בְרָכָ֗ה וַתִּרְחַ֥ק מִמֶּֽנּוּ׃</p></div><div class="heb-s"><p>ויאהב קללה ותבואהו ולא־חפץ בברכה ותרחק ממנו׃</p></div></div>
+      <div class="texte-fr"><p>Il a aimé la malédiction: elle est venue le frapper; il n’avait aucun goût pour la bénédiction: elle l’a fui.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּלְבַּ֥שׁ קְלָלָ֗ה כְּמַ֫דּ֥וֹ וַתָּבֹ֣א כַמַּ֣יִם בְּקִרְבּ֑וֹ וְ֝כַשֶּׁ֗מֶן בְּעַצְמוֹתָֽיו׃</p></div><div class="heb-s"><p>וילבש קללה כמדו ותבא כמים בקרבו וכשמן בעצמותיו׃</p></div></div>
+      <div class="texte-fr"><p>Il a endossé la malédiction comme sa tunique; elle a pénétré en son sein comme de l’eau, comme de l’huile dans ses membres. י</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּהִי־ל֭וֹ כְּבֶ֣גֶד יַעְטֶ֑ה וּ֝לְמֵ֗זַח תָּמִ֥יד יַחְגְּרֶֽהָ׃</p></div><div class="heb-s"><p>תהי־לו כבגד יעטה ולמזח תמיד יחגרה׃</p></div></div>
+      <div class="texte-fr"><p>Qu’elle soit donc pour lui comme un vêtement dont il s’enveloppe, qu’elle l’entoure comme d’une perpétuelle ceinture.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֤את פְּעֻלַּ֣ת שֹׂ֭טְנַי מֵאֵ֣ת יְהֹוָ֑ה וְהַדֹּבְרִ֥ים רָ֝֗ע עַל־נַפְשִֽׁי׃</p></div><div class="heb-s"><p>זאת פעלת שטני מאת יהוה והדברים רע על־נפשי׃</p></div></div>
+      <div class="texte-fr"><p>Que tel soit, de par l’Éternel, le salaire de mes adversaires, de ceux qui débitent des méchancetés contre moi!</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתָּ֤ה&thinsp;<b>׀</b> יֱ֘הֹוִ֤ה אֲדֹנָ֗י עֲֽשֵׂה־אִ֭תִּי לְמַ֣עַן שְׁמֶ֑ךָ כִּי־ט֥וֹב חַ֝סְדְּךָ֗ הַצִּילֵֽנִי׃</p></div><div class="heb-s"><p>ואתה&thinsp;<b>׀</b> יהוה אדני עשה־אתי למען שמך כי־טוב חסדך הצילני׃</p></div></div>
+      <div class="texte-fr"><p>Mais toi, Éternel, Seigneur, traite-moi comme l’exige l’honneur de ton nom, car précieuse est ta grâce: sauve-moi!</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־עָנִ֣י וְאֶבְי֣וֹן אָנֹ֑כִי וְ֝לִבִּ֗י חָלַ֥ל בְּקִרְבִּֽי׃</p></div><div class="heb-s"><p>כי־עני ואביון אנכי ולבי חלל בקרבי׃</p></div></div>
+      <div class="texte-fr"><p>Je suis, en effet, pauvre et misérable, et mon cœur est déchiré en moi.</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּצֵל־כִּנְטוֹת֥וֹ נֶהֱלָ֑כְתִּי נִ֝נְעַ֗רְתִּי כָּאַרְבֶּֽה׃</p></div><div class="heb-s"><p>כצל־כנטותו נהלכתי ננערתי כארבה׃</p></div></div>
+      <div class="texte-fr"><p>Pareil à l’ombre qui s’allonge, je m’évanouis, je suis pourchassé comme par une nuée de sauterelles.</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּ֭רְכַּי כָּשְׁל֣וּ מִצּ֑וֹם וּ֝בְשָׂרִ֗י כָּחַ֥שׁ מִשָּֽׁמֶן׃</p></div><div class="heb-s"><p>ברכי כשלו מצום ובשרי כחש משמן׃</p></div></div>
+      <div class="texte-fr"><p>Mes genoux flageolent, épuisés par le jeûne; mon corps est amaigri, a perdu toute graisse.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֤י&thinsp;<b>׀</b> הָיִ֣יתִי חֶרְפָּ֣ה לָהֶ֑ם יִ֝רְא֗וּנִי יְנִיע֥וּן רֹאשָֽׁם׃</p></div><div class="heb-s"><p>ואני&thinsp;<b>׀</b> הייתי חרפה להם יראוני יניעון ראשם׃</p></div></div>
+      <div class="texte-fr"><p>Et je suis devenu pour eux un objet d’opprobre, ils me regardent et hochent la tête.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>עׇ֭זְרֵנִי יְהֹוָ֣ה אֱלֹהָ֑י ה֖וֹשִׁיעֵ֣נִי כְחַסְדֶּֽךָ׃</p></div><div class="heb-s"><p>עזרני יהוה אלהי הושיעני כחסדך׃</p></div></div>
+      <div class="texte-fr"><p>Secours-moi, Éternel, mon Dieu, accorde-moi ton aide en raison de ta bonté.</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽ֭יֵדְעוּ כִּי־יָ֣דְךָ זֹּ֑את אַתָּ֖ה יְהֹוָ֣ה עֲשִׂיתָֽהּ׃</p></div><div class="heb-s"><p>וידעו כי־ידך זאת אתה יהוה עשיתה׃</p></div></div>
+      <div class="texte-fr"><p>Qu’on sache que cela vient de ta main, que toi, ô Seigneur, tu as tout fait.</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְקַֽלְלוּ־הֵמָּה֮ וְאַתָּ֢ה תְבָ֫רֵ֥ךְ קָ֤מוּ&thinsp;<b>׀</b> וַיֵּבֹ֗שׁוּ וְֽעַבְדְּךָ֥ יִשְׂמָֽח׃</p></div><div class="heb-s"><p>יקללו־המה ואתה תברך קמו&thinsp;<b>׀</b> ויבשו ועבדך ישמח׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils maudissent, eux, toi, tu béniras; qu’ils se lèvent, ils seront couverts de honte, et ton serviteur sera dans la joie.</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִלְבְּשׁ֣וּ שׂוֹטְנַ֣י כְּלִמָּ֑ה וְיַעֲט֖וּ כַמְעִ֣יל בׇּשְׁתָּֽם׃</p></div><div class="heb-s"><p>ילבשו שוטני כלמה ויעטו כמעיל בשתם׃</p></div></div>
+      <div class="texte-fr"><p>Que mes adversaires se revêtent d’ignominie, qu’ils soient enveloppés de leur honte comme d’un manteau.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֘וֹדֶ֤ה יְהֹוָ֣ה מְאֹ֣ד בְּפִ֑י וּבְת֖וֹךְ רַבִּ֣ים אֲהַלְלֶֽנּוּ׃</p></div><div class="heb-s"><p>אודה יהוה מאד בפי ובתוך רבים אהללנו׃</p></div></div>
+      <div class="texte-fr"><p>Ma bouche abondera en actions de grâce à l’Éternel; au milieu des foules, je proclamerai ses louanges.</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יַ֭עֲמֹד לִימִ֣ין אֶבְי֑וֹן לְ֝הוֹשִׁ֗יעַ מִשֹּׁפְטֵ֥י נַפְשֽׁוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי־יעמד לימין אביון להושיע משפטי נפשו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Car il se tient à la droite du malheureux, pour l’assister contre ceux qui condamnent sa personne.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. De David. Psaume. Dieu, objet de mes louanges, ne garde pas le silence!</p>
-      <p>Car la bouche du méchant, la bouche de la fourberie s’ouvrent contre moi; on me parle un langage mensonger.</p>
-      <p>On m’enveloppe de propos haineux, on me fait la guerre sans motif.</p>
-      <p>En échange de mon amour, on me traite en ennemi, et moi je ne suis que prière.</p>
-      <p>On me rend le mal pour le bien, la haine est le prix de mon affection.</p>
-      <p>Suscite un méchant contre lui, qu’un accusateur se dresse à sa droite!</p>
-      <p>Quand il passe en jugement, qu’il s’en revienne condamné! Que sa prière lui soit imputée à péché!</p>
-      <p>Que ses jours soient peu nombreux, qu’un autre s’empare de son office!</p>
-      <p>Que ses enfants soient orphelins, que sa femme devienne veuve.</p>
-      <p>Que ses enfants errent de tous côtés pour mendier, qu’ils sollicitent, éloignés des ruines [de leur demeure].</p>
-      <p>Que le créancier saisisse tout son avoir, que des étrangers mettent au pillage le fruit de son labeur.</p>
-      <p>Qu’il n’y ait personne pour lui tendre une main secourable, personne pour avoir compassion de ses orphelins.</p>
-      <p>Que sa postérité soit condamnée à disparaître, qu’à la génération prochaine son nom soit éteint.</p>
-      <p>Que l’iniquité de ses pères soit présente au souvenir de l’Éternel. Que jamais ne s’efface la faute de sa mère.</p>
-      <p>Que le Seigneur les ait toujours sous les yeux, et extirpe leur mémoire de la terre;</p>
-      <p>parce qu’il n’a pas songé à pratiquer la charité, qu’il a persécuté un homme malheureux, déshérité, au cœur brisé pour amener sa perte.</p>
-      <p>Il a aimé la malédiction: elle est venue le frapper; il n’avait aucun goût pour la bénédiction: elle l’a fui.</p>
-      <p>Il a endossé la malédiction comme sa tunique; elle a pénétré en son sein comme de l’eau, comme de l’huile dans ses membres. י</p>
-      <p>Qu’elle soit donc pour lui comme un vêtement dont il s’enveloppe, qu’elle l’entoure comme d’une perpétuelle ceinture.</p>
-      <p>Que tel soit, de par l’Éternel, le salaire de mes adversaires, de ceux qui débitent des méchancetés contre moi!</p>
-      <p>Mais toi, Éternel, Seigneur, traite-moi comme l’exige l’honneur de ton nom, car précieuse est ta grâce: sauve-moi!</p>
-      <p>Je suis, en effet, pauvre et misérable, et mon cœur est déchiré en moi.</p>
-      <p>Pareil à l’ombre qui s’allonge, je m’évanouis, je suis pourchassé comme par une nuée de sauterelles.</p>
-      <p>Mes genoux flageolent, épuisés par le jeûne; mon corps est amaigri, a perdu toute graisse.</p>
-      <p>Et je suis devenu pour eux un objet d’opprobre, ils me regardent et hochent la tête.</p>
-      <p>Secours-moi, Éternel, mon Dieu, accorde-moi ton aide en raison de ta bonté.</p>
-      <p>Qu’on sache que cela vient de ta main, que toi, ô Seigneur, tu as tout fait.</p>
-      <p>Qu’ils maudissent, eux, toi, tu béniras; qu’ils se lèvent, ils seront couverts de honte, et ton serviteur sera dans la joie.</p>
-      <p>Que mes adversaires se revêtent d’ignominie, qu’ils soient enveloppés de leur honte comme d’un manteau.</p>
-      <p>Ma bouche abondera en actions de grâce à l’Éternel; au milieu des foules, je proclamerai ses louanges.</p>
-      <p>Car il se tient à la droite du malheureux, pour l’assister contre ceux qui condamnent sa personne.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -294,6 +392,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-108.html">← Tehilim 108</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-109.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-110.html">Tehilim 110 →</a></div>
 </main>
 
 <footer>

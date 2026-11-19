@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 53 – L&#x27;insensé a dit en son cœur</h1>
     <p>Ketouvim, Tehilim, Chapitre 53</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-52.html">← Tehilim 52</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-53.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-54.html">Tehilim 54 →</a></div>
   </div>
 </header>
 
@@ -161,37 +202,46 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ עַֽל־מָחֲלַ֗ת מַשְׂכִּ֥יל לְדָוִֽד׃</p>
-      <p>אָ֘מַ֤ר נָבָ֣ל בְּ֭לִבּוֹ אֵ֣ין אֱלֹהִ֑ים הִֽ֝שְׁחִ֗יתוּ וְהִֽתְעִ֥יבוּ עָ֝֗וֶל אֵ֣ין עֹֽשֵׂה־טֽוֹב׃</p>
-      <p>אֱֽלֹהִ֗ים מִשָּׁמַיִם֮ הִשְׁקִ֢יף עַֽל־בְּנֵי־אָ֫דָ֥ם לִ֭רְאוֹת הֲיֵ֣שׁ מַשְׂכִּ֑יל דֹּ֝רֵ֗שׁ אֶת־אֱלֹהִֽים׃</p>
-      <p>כֻּלּ֥וֹ סָג֮ יַחְדָּ֢ו נֶ֫אֱלָ֥חוּ אֵ֤ין עֹֽשֵׂה־ט֑וֹב אֵ֝֗ין גַּם־אֶחָֽד׃</p>
-      <p>הֲלֹ֥א יָדְעוּ֮ פֹּ֤עֲלֵ֫י אָ֥וֶן אֹכְלֵ֣י עַ֭מִּי אָ֣כְלוּ לֶ֑חֶם אֱ֝לֹהִ֗ים לֹ֣א קָרָֽאוּ׃</p>
-      <p>שָׁ֤ם&thinsp;<b>׀</b> פָּ֥חֲדוּ פַחַד֮ לֹא־הָ֢יָ֫ה פָ֥חַד כִּֽי־אֱלֹהִ֗ים פִּ֭זַּר עַצְמ֣וֹת חֹנָ֑ךְ הֱ֝בִשֹׁ֗תָה כִּֽי־אֱלֹהִ֥ים מְאָסָֽם׃</p>
-      <p>מִ֥י<span class="mam-implicit-maqaf">־</span>יִתֵּ֣ן מִצִּיּוֹן֮ יְשֻׁע֢וֹת יִשְׂרָ֫אֵ֥ל בְּשׁ֣וּב אֱ֭לֹהִים שְׁב֣וּת עַמּ֑וֹ יָגֵ֥ל יַ֝עֲקֹ֗ב יִשְׂמַ֥ח יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ עַֽל־מָחֲלַ֗ת מַשְׂכִּ֥יל לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח על־מחלת משכיל לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres; sur Mahalat. Maskîl de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֘מַ֤ר נָבָ֣ל בְּ֭לִבּוֹ אֵ֣ין אֱלֹהִ֑ים הִֽ֝שְׁחִ֗יתוּ וְהִֽתְעִ֥יבוּ עָ֝֗וֶל אֵ֣ין עֹֽשֵׂה־טֽוֹב׃</p></div><div class="heb-s"><p>אמר נבל בלבו אין אלהים השחיתו והתעיבו עול אין עשה־טוב׃</p></div></div>
+      <div class="texte-fr"><p>L’impie a dit en son cœur: "Il n’est point de Dieu!" On est corrompu, on commet des actes odieux; personne ne fait le bien.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהִ֗ים מִשָּׁמַיִם֮ הִשְׁקִ֢יף עַֽל־בְּנֵי־אָ֫דָ֥ם לִ֭רְאוֹת הֲיֵ֣שׁ מַשְׂכִּ֑יל דֹּ֝רֵ֗שׁ אֶת־אֱלֹהִֽים׃</p></div><div class="heb-s"><p>אלהים משמים השקיף על־בני־אדם לראות היש משכיל דרש את־אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Dieu, du haut du ciel, regarde les hommes, pour voir s’il en est de bien inspirés, recherchant Dieu.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֻּלּ֥וֹ סָג֮ יַחְדָּ֢ו נֶ֫אֱלָ֥חוּ אֵ֤ין עֹֽשֵׂה־ט֑וֹב אֵ֝֗ין גַּם־אֶחָֽד׃</p></div><div class="heb-s"><p>כלו סג יחדו נאלחו אין עשה־טוב אין גם־אחד׃</p></div></div>
+      <div class="texte-fr"><p>Tous ils ont dévié, ensemble ils sont pervertis; personne n’agit bien, pas même un seul.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲלֹ֥א יָדְעוּ֮ פֹּ֤עֲלֵ֫י אָ֥וֶן אֹכְלֵ֣י עַ֭מִּי אָ֣כְלוּ לֶ֑חֶם אֱ֝לֹהִ֗ים לֹ֣א קָרָֽאוּ׃</p></div><div class="heb-s"><p>הלא ידעו פעלי און אכלי עמי אכלו לחם אלהים לא קראו׃</p></div></div>
+      <div class="texte-fr"><p>Ah! ils s’en ressentiront, tous ces ouvriers d’iniquité, qui dévorent mon peuple comme on mange du pain, et n’invoquent point Dieu.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֤ם&thinsp;<b>׀</b> פָּ֥חֲדוּ פַחַד֮ לֹא־הָ֢יָ֫ה פָ֥חַד כִּֽי־אֱלֹהִ֗ים פִּ֭זַּר עַצְמ֣וֹת חֹנָ֑ךְ הֱ֝בִשֹׁ֗תָה כִּֽי־אֱלֹהִ֥ים מְאָסָֽם׃</p></div><div class="heb-s"><p>שם&thinsp;<b>׀</b> פחדו פחד לא־היה פחד כי־אלהים פזר עצמות חנך הבשתה כי־אלהים מאסם׃</p></div></div>
+      <div class="texte-fr"><p>Là même ils seront saisis d’effroi, où il n’y a pas lieu de s’effrayer; car Dieu disperse les membres de ceux qui t’assiègent. Tu les couvres de honte, Dieu les ayant rejetés.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֥י<span class="mam-implicit-maqaf">־</span>יִתֵּ֣ן מִצִּיּוֹן֮ יְשֻׁע֢וֹת יִשְׂרָ֫אֵ֥ל בְּשׁ֣וּב אֱ֭לֹהִים שְׁב֣וּת עַמּ֑וֹ יָגֵ֥ל יַ֝עֲקֹ֗ב יִשְׂמַ֥ח יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>מי<span class="mam-implicit-maqaf">־</span>יתן מציון ישעות ישראל בשוב אלהים שבות עמו יגל יעקב ישמח ישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ah! puisse venir de Sion le salut d’Israël! Quand Dieu ramènera les captifs de son peuple, Jacob jubilera, Israël sera dans la joie.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres; sur Mahalat. Maskîl de David.</p>
-      <p>L’impie a dit en son cœur: "Il n’est point de Dieu!" On est corrompu, on commet des actes odieux; personne ne fait le bien.</p>
-      <p>Dieu, du haut du ciel, regarde les hommes, pour voir s’il en est de bien inspirés, recherchant Dieu.</p>
-      <p>Tous ils ont dévié, ensemble ils sont pervertis; personne n’agit bien, pas même un seul.</p>
-      <p>Ah! ils s’en ressentiront, tous ces ouvriers d’iniquité, qui dévorent mon peuple comme on mange du pain, et n’invoquent point Dieu.</p>
-      <p>Là même ils seront saisis d’effroi, où il n’y a pas lieu de s’effrayer; car Dieu disperse les membres de ceux qui t’assiègent. Tu les couvres de honte, Dieu les ayant rejetés.</p>
-      <p>Ah! puisse venir de Sion le salut d’Israël! Quand Dieu ramènera les captifs de son peuple, Jacob jubilera, Israël sera dans la joie.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -243,6 +293,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-52.html">← Tehilim 52</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-53.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-54.html">Tehilim 54 →</a></div>
 </main>
 
 <footer>

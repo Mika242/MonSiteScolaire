@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 136 – Rendez grâce à D.ieu, car Sa bonté est éternelle</h1>
     <p>Ketouvim, Tehilim, Chapitre 136</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-135.html">← Tehilim 135</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-136.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-137.html">Tehilim 137 →</a></div>
   </div>
 </header>
 
@@ -161,75 +202,122 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>הוֹד֣וּ לַיהֹוָ֣ה כִּי־ט֑וֹב כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>ה֭וֹדוּ לֵאלֹהֵ֣י הָאֱלֹהִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>ה֭וֹדוּ לַאֲדֹנֵ֣י הָאֲדֹנִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְעֹ֘שֵׂ֤ה נִפְלָא֣וֹת גְּדֹל֣וֹת לְבַדּ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְעֹשֵׂ֣ה הַ֭שָּׁמַיִם בִּתְבוּנָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְרֹקַ֣ע הָ֭אָרֶץ עַל־הַמָּ֑יִם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְ֭עֹשֵׂה אוֹרִ֣ים גְּדֹלִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>אֶת־הַ֭שֶּׁמֶשׁ לְמֶמְשֶׁ֣לֶת בַּיּ֑וֹם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>אֶת־הַיָּרֵ֣חַ וְ֭כוֹכָבִים לְמֶמְשְׁל֣וֹת בַּלָּ֑יְלָה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְמַכֵּ֣ה מִ֭צְרַיִם בִּבְכוֹרֵיהֶ֑ם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וַיּוֹצֵ֣א יִ֭שְׂרָאֵל מִתּוֹכָ֑ם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>בְּיָ֣ד חֲ֭זָקָה וּבִזְר֣וֹעַ נְטוּיָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְגֹזֵ֣ר יַם־ס֭וּף לִגְזָרִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וְהֶעֱבִ֣יר יִשְׂרָאֵ֣ל בְּתוֹכ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וְנִ֘עֵ֤ר פַּרְעֹ֣ה וְחֵיל֣וֹ בְיַם־ס֑וּף כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְמוֹלִ֣יךְ עַ֭מּוֹ בַּמִּדְבָּ֑ר כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְ֭מַכֵּה מְלָכִ֣ים גְּדֹלִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וַֽ֭יַּהֲרֹג מְלָכִ֣ים אַדִּירִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>לְ֭סִיחוֹן מֶ֣לֶךְ הָאֱמֹרִ֑י כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וּ֭לְעוֹג מֶ֣לֶךְ הַבָּשָׁ֑ן כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וְנָתַ֣ן אַרְצָ֣ם לְנַחֲלָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>נַ֭חֲלָה לְיִשְׂרָאֵ֣ל עַבְדּ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>שֶׁ֭בְּשִׁפְלֵנוּ זָ֣כַר לָ֑נוּ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>וַיִּפְרְקֵ֥נוּ מִצָּרֵ֑ינוּ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>נֹתֵ֣ן לֶ֭חֶם לְכׇל־בָּשָׂ֑ר כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p>
-      <p>ה֭וֹדוּ לְאֵ֣ל הַשָּׁמָ֑יִם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a><a href="#v-21">21</a><a href="#v-22">22</a><a href="#v-23">23</a><a href="#v-24">24</a><a href="#v-25">25</a><a href="#v-26">26</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹד֣וּ לַיהֹוָ֣ה כִּי־ט֑וֹב כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>הודו ליהוה כי־טוב כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>Rendez hommage au Seigneur, car il est bon, car sa grâce est éternelle.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>ה֭וֹדוּ לֵאלֹהֵ֣י הָאֱלֹהִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>הודו לאלהי האלהים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>Rendez hommage au Dieu des dieux, car sa grâce est éternelle.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>ה֭וֹדוּ לַאֲדֹנֵ֣י הָאֲדֹנִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>הודו לאדני האדנים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>Rendez hommage au Maître des maîtres, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְעֹ֘שֵׂ֤ה נִפְלָא֣וֹת גְּדֹל֣וֹת לְבַדּ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לעשה נפלאות גדלות לבדו כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui accomplit, lui seul, de grandes merveilles, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְעֹשֵׂ֣ה הַ֭שָּׁמַיִם בִּתְבוּנָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לעשה השמים בתבונה כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui fit les cieux avec sagesse, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְרֹקַ֣ע הָ֭אָרֶץ עַל־הַמָּ֑יִם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לרקע הארץ על־המים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui étendit la terre par-dessus les eaux, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭עֹשֵׂה אוֹרִ֣ים גְּדֹלִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לעשה אורים גדלים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui créa les grands luminaires, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַ֭שֶּׁמֶשׁ לְמֶמְשֶׁ֣לֶת בַּיּ֑וֹם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>את־השמש לממשלת ביום כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>le soleil pour régner le jour, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַיָּרֵ֣חַ וְ֭כוֹכָבִים לְמֶמְשְׁל֣וֹת בַּלָּ֑יְלָה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>את־הירח וכוכבים לממשלות בלילה כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>la lune et les étoiles pour régner la nuit, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַכֵּ֣ה מִ֭צְרַיִם בִּבְכוֹרֵיהֶ֑ם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>למכה מצרים בבכוריהם כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui frappa les Égyptiens dans leurs premiers-nés, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּוֹצֵ֣א יִ֭שְׂרָאֵל מִתּוֹכָ֑ם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ויוצא ישראל מתוכם כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>et fit sortir Israël du milieu d’eux, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּיָ֣ד חֲ֭זָקָה וּבִזְר֣וֹעַ נְטוּיָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ביד חזקה ובזרוע נטויה כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>avec une main puissante et un bras étendu, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְגֹזֵ֣ר יַם־ס֭וּף לִגְזָרִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לגזר ים־סוף לגזרים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui fendit en deux la mer des Joncs, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֶעֱבִ֣יר יִשְׂרָאֵ֣ל בְּתוֹכ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>והעביר ישראל בתוכו כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>la fit traverser à Israël, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנִ֘עֵ֤ר פַּרְעֹ֣ה וְחֵיל֣וֹ בְיַם־ס֑וּף כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ונער פרעה וחילו בים־סוף כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>et précipita Pharaon et son armée dans ses flots, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמוֹלִ֣יךְ עַ֭מּוֹ בַּמִּדְבָּ֑ר כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>למוליך עמו במדבר כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui dirigea son peuple dans le désert, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭מַכֵּה מְלָכִ֣ים גְּדֹלִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>למכה מלכים גדלים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui qui vainquit de grands rois, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽ֭יַּהֲרֹג מְלָכִ֣ים אַדִּירִ֑ים כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ויהרג מלכים אדירים כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>et fit périr de puissants souverains, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭סִיחוֹן מֶ֣לֶךְ הָאֱמֹרִ֑י כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>לסיחון מלך האמרי כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>Sihon, roi des Amorréens, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּ֭לְעוֹג מֶ֣לֶךְ הַבָּשָׁ֑ן כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ולעוג מלך הבשן כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>et Og, roi du Basan, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַ֣ן אַרְצָ֣ם לְנַחֲלָ֑ה כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ונתן ארצם לנחלה כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>pour donner leur pays en héritage, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַ֭חֲלָה לְיִשְׂרָאֵ֣ל עַבְדּ֑וֹ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>נחלה לישראל עבדו כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>en héritage à Israël, son serviteur, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֶׁ֭בְּשִׁפְלֵנוּ זָ֣כַר לָ֑נוּ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>שבשפלנו זכר לנו כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>à Celui, qui, dans notre abaissement, se souvint de nous, car sa grâce est éternelle;</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפְרְקֵ֥נוּ מִצָּרֵ֑ינוּ כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>ויפרקנו מצרינו כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>et nous délivra de nos adversaires, car sa grâce est éternelle.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>נֹתֵ֣ן לֶ֭חֶם לְכׇל־בָּשָׂ֑ר כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃</p></div><div class="heb-s"><p>נתן לחם לכל־בשר כי לעולם חסדו׃</p></div></div>
+      <div class="texte-fr"><p>Il donne du pain à toute créature, car sa grâce est éternelle.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>ה֭וֹדוּ לְאֵ֣ל הַשָּׁמָ֑יִם כִּ֖י לְעוֹלָ֣ם חַסְדּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>הודו לאל השמים כי לעולם חסדו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Rendez hommage au Dieu du Ciel, car sa grâce est éternelle.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Rendez hommage au Seigneur, car il est bon, car sa grâce est éternelle.</p>
-      <p>Rendez hommage au Dieu des dieux, car sa grâce est éternelle.</p>
-      <p>Rendez hommage au Maître des maîtres, car sa grâce est éternelle;</p>
-      <p>à Celui qui accomplit, lui seul, de grandes merveilles, car sa grâce est éternelle;</p>
-      <p>à Celui qui fit les cieux avec sagesse, car sa grâce est éternelle;</p>
-      <p>à Celui qui étendit la terre par-dessus les eaux, car sa grâce est éternelle;</p>
-      <p>à Celui qui créa les grands luminaires, car sa grâce est éternelle;</p>
-      <p>le soleil pour régner le jour, car sa grâce est éternelle;</p>
-      <p>la lune et les étoiles pour régner la nuit, car sa grâce est éternelle;</p>
-      <p>à Celui qui frappa les Égyptiens dans leurs premiers-nés, car sa grâce est éternelle;</p>
-      <p>et fit sortir Israël du milieu d’eux, car sa grâce est éternelle;</p>
-      <p>avec une main puissante et un bras étendu, car sa grâce est éternelle;</p>
-      <p>à Celui qui fendit en deux la mer des Joncs, car sa grâce est éternelle;</p>
-      <p>la fit traverser à Israël, car sa grâce est éternelle;</p>
-      <p>et précipita Pharaon et son armée dans ses flots, car sa grâce est éternelle;</p>
-      <p>à Celui qui dirigea son peuple dans le désert, car sa grâce est éternelle;</p>
-      <p>à Celui qui vainquit de grands rois, car sa grâce est éternelle;</p>
-      <p>et fit périr de puissants souverains, car sa grâce est éternelle;</p>
-      <p>Sihon, roi des Amorréens, car sa grâce est éternelle;</p>
-      <p>et Og, roi du Basan, car sa grâce est éternelle;</p>
-      <p>pour donner leur pays en héritage, car sa grâce est éternelle;</p>
-      <p>en héritage à Israël, son serviteur, car sa grâce est éternelle;</p>
-      <p>à Celui, qui, dans notre abaissement, se souvint de nous, car sa grâce est éternelle;</p>
-      <p>et nous délivra de nos adversaires, car sa grâce est éternelle.</p>
-      <p>Il donne du pain à toute créature, car sa grâce est éternelle.</p>
-      <p>Rendez hommage au Dieu du Ciel, car sa grâce est éternelle.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -284,6 +372,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-135.html">← Tehilim 135</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-136.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-137.html">Tehilim 137 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 52 – Pourquoi te glorifies-tu du mal ?</h1>
     <p>Ketouvim, Tehilim, Chapitre 52</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-51.html">← Tehilim 51</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-52.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-53.html">Tehilim 53 →</a></div>
   </div>
 </header>
 
@@ -161,45 +202,62 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֗חַ מַשְׂכִּ֥יל לְדָוִֽד׃</p>
-      <p>בְּב֤וֹא&thinsp;<b>׀</b> דּוֹאֵ֣ג הָאֲדֹמִי֮ וַיַּגֵּ֢ד לְשָׁ֫א֥וּל וַיֹּ֥אמֶר ל֑וֹ בָּ֥א דָ֝וִ֗ד אֶל־בֵּ֥ית אֲחִימֶֽלֶךְ׃</p>
-      <p>מַה־תִּתְהַלֵּ֣ל בְּ֭רָעָה הַגִּבּ֑וֹר חֶ֥סֶד אֵ֝֗ל כׇּל־הַיּֽוֹם׃</p>
-      <p>הַ֭וּוֹת תַּחְשֹׁ֣ב לְשׁוֹנֶ֑ךָ כְּתַ֥עַר מְ֝לֻטָּ֗שׁ עֹשֵׂ֥ה רְמִיָּֽה׃</p>
-      <p>אָהַ֣בְתָּ רָּ֣ע מִטּ֑וֹב שֶׁ֓קֶר&thinsp;<b>׀</b> מִדַּבֵּ֖ר צֶ֣דֶק סֶֽלָה׃</p>
-      <p>אָהַ֥בְתָּ כׇֽל־דִּבְרֵי־בָ֗לַע לְשׁ֣וֹן מִרְמָֽה׃</p>
-      <p>גַּם־אֵל֮ יִתׇּצְךָ֢ לָ֫נֶ֥צַח יַחְתְּךָ֣ וְיִסָּחֲךָ֣ מֵאֹ֑הֶל וְשֵׁרֶשְׁךָ֨ מֵאֶ֖רֶץ חַיִּ֣ים סֶֽלָה׃</p>
-      <p>וְיִרְא֖וּ צַדִּיקִ֥ים וְיִירָ֗אוּ וְעָלָ֥יו יִשְׂחָֽקוּ׃</p>
-      <p>הִנֵּ֤ה הַגֶּ֗בֶר לֹ֤א יָשִׂ֥ים אֱלֹהִ֗ים מָ֫עוּזּ֥וֹ וַ֭יִּבְטַח בְּרֹ֣ב עׇשְׁר֑וֹ יָ֝עֹ֗ז בְּהַוָּתֽוֹ׃</p>
-      <p>וַאֲנִ֤י&thinsp;<b>׀</b> כְּזַ֣יִת רַ֭עֲנָן בְּבֵ֣ית אֱלֹהִ֑ים בָּטַ֥חְתִּי בְחֶסֶד־אֱ֝לֹהִ֗ים עוֹלָ֥ם וָעֶֽד׃</p>
-      <p>אוֹדְךָ֣ לְ֭עוֹלָם כִּ֣י עָשִׂ֑יתָ וַאֲקַוֶּ֥ה שִׁמְךָ֥ כִי־ט֝֗וֹב נֶ֣גֶד חֲסִידֶֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֗חַ מַשְׂכִּ֥יל לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח משכיל לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Maskîl, de David,</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּב֤וֹא&thinsp;<b>׀</b> דּוֹאֵ֣ג הָאֲדֹמִי֮ וַיַּגֵּ֢ד לְשָׁ֫א֥וּל וַיֹּ֥אמֶר ל֑וֹ בָּ֥א דָ֝וִ֗ד אֶל־בֵּ֥ית אֲחִימֶֽלֶךְ׃</p></div><div class="heb-s"><p>בבוא&thinsp;<b>׀</b> דואג האדמי ויגד לשאול ויאמר לו בא דוד אל־בית אחימלך׃</p></div></div>
+      <div class="texte-fr"><p>lorsque Doëg l’Iduméen fut venu faire un rapport à Saül en lui disant: "David est entré dans la maison d’Abimélec."</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־תִּתְהַלֵּ֣ל בְּ֭רָעָה הַגִּבּ֑וֹר חֶ֥סֶד אֵ֝֗ל כׇּל־הַיּֽוֹם׃</p></div><div class="heb-s"><p>מה־תתהלל ברעה הגבור חסד אל כל־היום׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi te glorifier de ta cruauté, homme vaillant? La bonté de Dieu ne se dément jamais.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֭וּוֹת תַּחְשֹׁ֣ב לְשׁוֹנֶ֑ךָ כְּתַ֥עַר מְ֝לֻטָּ֗שׁ עֹשֵׂ֥ה רְמִיָּֽה׃</p></div><div class="heb-s"><p>הוות תחשב לשונך כתער מלטש עשה רמיה׃</p></div></div>
+      <div class="texte-fr"><p>Ta langue prépare des ruines, comme un rasoir effilé, ô artisan de perfidie!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָהַ֣בְתָּ רָּ֣ע מִטּ֑וֹב שֶׁ֓קֶר&thinsp;<b>׀</b> מִדַּבֵּ֖ר צֶ֣דֶק סֶֽלָה׃</p></div><div class="heb-s"><p>אהבת רע מטוב שקר&thinsp;<b>׀</b> מדבר צדק סלה׃</p></div></div>
+      <div class="texte-fr"><p>Tu donnes la préférence au mal sur le bien, tu aimes mieux mentir que parler loyalement. Sélah!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָהַ֥בְתָּ כׇֽל־דִּבְרֵי־בָ֗לַע לְשׁ֣וֹן מִרְמָֽה׃</p></div><div class="heb-s"><p>אהבת כל־דברי־בלע לשון מרמה׃</p></div></div>
+      <div class="texte-fr"><p>Tu n’as de goût que pour les discours malfaisants, pour le langage de l’astuce.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>גַּם־אֵל֮ יִתׇּצְךָ֢ לָ֫נֶ֥צַח יַחְתְּךָ֣ וְיִסָּחֲךָ֣ מֵאֹ֑הֶל וְשֵׁרֶשְׁךָ֨ מֵאֶ֖רֶץ חַיִּ֣ים סֶֽלָה׃</p></div><div class="heb-s"><p>גם־אל יתצך לנצח יחתך ויסחך מאהל ושרשך מארץ חיים סלה׃</p></div></div>
+      <div class="texte-fr"><p>Aussi Dieu t’abattra-t-il pour toujours; il t’empoignera et t’arrachera de ta tente; il te déracinera de la terre des vivants. Sélah!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִרְא֖וּ צַדִּיקִ֥ים וְיִירָ֗אוּ וְעָלָ֥יו יִשְׂחָֽקוּ׃</p></div><div class="heb-s"><p>ויראו צדיקים וייראו ועליו ישחקו׃</p></div></div>
+      <div class="texte-fr"><p>Les justes en seront témoins, saisis de respect, et ils riront de lui.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּ֤ה הַגֶּ֗בֶר לֹ֤א יָשִׂ֥ים אֱלֹהִ֗ים מָ֫עוּזּ֥וֹ וַ֭יִּבְטַח בְּרֹ֣ב עׇשְׁר֑וֹ יָ֝עֹ֗ז בְּהַוָּתֽוֹ׃</p></div><div class="heb-s"><p>הנה הגבר לא ישים אלהים מעוזו ויבטח ברב עשרו יעז בהותו׃</p></div></div>
+      <div class="texte-fr"><p>"Le voilà, l’homme qui ne cherchait pas sa force en Dieu, mais qui se fiait à sa grande richesse, et faisait le fier dans sa passion du mal!"</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֤י&thinsp;<b>׀</b> כְּזַ֣יִת רַ֭עֲנָן בְּבֵ֣ית אֱלֹהִ֑ים בָּטַ֥חְתִּי בְחֶסֶד־אֱ֝לֹהִ֗ים עוֹלָ֥ם וָעֶֽד׃</p></div><div class="heb-s"><p>ואני&thinsp;<b>׀</b> כזית רענן בבית אלהים בטחתי בחסד־אלהים עולם ועד׃</p></div></div>
+      <div class="texte-fr"><p>Tandis que moi, je suis comme un olivier verdoyant, dans la maison de Dieu; je mets à jamais ma confiance dans la bonté de Dieu.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹדְךָ֣ לְ֭עוֹלָם כִּ֣י עָשִׂ֑יתָ וַאֲקַוֶּ֥ה שִׁמְךָ֥ כִי־ט֝֗וֹב נֶ֣גֶד חֲסִידֶֽיךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אודך לעולם כי עשית ואקוה שמך כי־טוב נגד חסידיך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Éternellement, je veux te rendre grâce pour ce que tu as fait, et placer mon espoir en ton nom, car tu es bon à l’égard de tes pieux serviteurs.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Maskîl, de David,</p>
-      <p>lorsque Doëg l’Iduméen fut venu faire un rapport à Saül en lui disant: "David est entré dans la maison d’Abimélec."</p>
-      <p>Pourquoi te glorifier de ta cruauté, homme vaillant? La bonté de Dieu ne se dément jamais.</p>
-      <p>Ta langue prépare des ruines, comme un rasoir effilé, ô artisan de perfidie!</p>
-      <p>Tu donnes la préférence au mal sur le bien, tu aimes mieux mentir que parler loyalement. Sélah!</p>
-      <p>Tu n’as de goût que pour les discours malfaisants, pour le langage de l’astuce.</p>
-      <p>Aussi Dieu t’abattra-t-il pour toujours; il t’empoignera et t’arrachera de ta tente; il te déracinera de la terre des vivants. Sélah!</p>
-      <p>Les justes en seront témoins, saisis de respect, et ils riront de lui.</p>
-      <p>"Le voilà, l’homme qui ne cherchait pas sa force en Dieu, mais qui se fiait à sa grande richesse, et faisait le fier dans sa passion du mal!"</p>
-      <p>Tandis que moi, je suis comme un olivier verdoyant, dans la maison de Dieu; je mets à jamais ma confiance dans la bonté de Dieu.</p>
-      <p>Éternellement, je veux te rendre grâce pour ce que tu as fait, et placer mon espoir en ton nom, car tu es bon à l’égard de tes pieux serviteurs.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -254,6 +312,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-51.html">← Tehilim 51</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-52.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-53.html">Tehilim 53 →</a></div>
 </main>
 
 <footer>

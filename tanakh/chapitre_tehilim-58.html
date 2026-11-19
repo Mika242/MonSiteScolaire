@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 58 – Vraiment, juges, dites-vous la justice ?</h1>
     <p>Ketouvim, Tehilim, Chapitre 58</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-57.html">← Tehilim 57</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-58.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-59.html">Tehilim 59 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ אַל־תַּשְׁחֵ֗ת לְדָוִ֥ד מִכְתָּֽם׃</p>
-      <p>הַאֻמְנָ֗ם אֵ֣לֶם צֶ֭דֶק תְּדַבֵּר֑וּן מֵישָׁרִ֥ים תִּ֝שְׁפְּט֗וּ בְּנֵ֣י אָדָֽם׃</p>
-      <p>אַף־בְּלֵב֮ עוֹלֹ֢ת תִּפְעָ֫ל֥וּן בָּאָ֡רֶץ חֲמַ֥ס יְ֝דֵיכֶ֗ם תְּפַלֵּסֽוּן׃</p>
-      <p>זֹ֣רוּ רְשָׁעִ֣ים מֵרָ֑חֶם תָּע֥וּ מִ֝בֶּ֗טֶן דֹּבְרֵ֥י כָזָֽב׃</p>
-      <p>חֲמַת־לָ֗מוֹ כִּדְמ֥וּת חֲמַת־נָחָ֑שׁ כְּמוֹ־פֶ֥תֶן חֵ֝רֵ֗שׁ יַאְטֵ֥ם אׇזְנֽוֹ׃</p>
-      <p>אֲשֶׁ֣ר לֹֽא־יִ֭שְׁמַע לְק֣וֹל מְלַחֲשִׁ֑ים חוֹבֵ֖ר חֲבָרִ֣ים מְחֻכָּֽם׃</p>
-      <p>אֱֽלֹהִ֗ים הֲרׇס־שִׁנֵּ֥ימֽוֹ בְּפִ֑ימוֹ מַלְתְּע֥וֹת כְּ֝פִירִ֗ים נְתֹ֣ץ&thinsp;<small>׀</small>&thinsp;יְהֹוָֽה׃</p>
-      <p>יִמָּאֲס֣וּ כְמוֹ־מַ֭יִם יִתְהַלְּכוּ־לָ֑מוֹ יִדְרֹ֥ךְ <span class="mam-kq-trivial">חִ֝צָּ֗ו</span> כְּמ֣וֹ יִתְמֹלָֽלוּ׃</p>
-      <p>כְּמ֣וֹ שַׁ֭בְּלוּל תֶּ֣מֶס יַהֲלֹ֑ךְ נֵ֥פֶל אֵ֝֗שֶׁת בַּל־חָ֥זוּ שָֽׁמֶשׁ׃</p>
-      <p>בְּטֶ֤רֶם&thinsp;<b>׀</b> יָבִ֣ינוּ סִּירֹתֵכֶ֣ם אָטָ֑ד כְּמוֹ־חַ֥י כְּמוֹ־חָ֝ר֗וֹן יִשְׂעָרֶֽנּוּ׃</p>
-      <p>יִשְׂמַ֣ח צַ֭דִּיק כִּי־חָזָ֣ה נָקָ֑ם פְּעָמָ֥יו יִ֝רְחַ֗ץ בְּדַ֣ם הָרָשָֽׁע׃</p>
-      <p>וְיֹאמַ֣ר אָ֭דָם אַךְ־פְּרִ֣י לַצַּדִּ֑יק אַ֥ךְ יֵשׁ־אֱ֝לֹהִ֗ים שֹׁפְטִ֥ים בָּאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ אַל־תַּשְׁחֵ֗ת לְדָוִ֥ד מִכְתָּֽם׃</p></div><div class="heb-s"><p>למנצח אל־תשחת לדוד מכתם׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Al tachhêt. Mikhtam de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַאֻמְנָ֗ם אֵ֣לֶם צֶ֭דֶק תְּדַבֵּר֑וּן מֵישָׁרִ֥ים תִּ֝שְׁפְּט֗וּ בְּנֵ֣י אָדָֽם׃</p></div><div class="heb-s"><p>האמנם אלם צדק תדברון מישרים תשפטו בני אדם׃</p></div></div>
+      <div class="texte-fr"><p>Est-ce qu’en vérité, ô puissants, vous prononcez de justes arrêts, et jugez avec droiture les fils de l’homme!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַף־בְּלֵב֮ עוֹלֹ֢ת תִּפְעָ֫ל֥וּן בָּאָ֡רֶץ חֲמַ֥ס יְ֝דֵיכֶ֗ם תְּפַלֵּסֽוּן׃</p></div><div class="heb-s"><p>אף־בלב עולת תפעלון בארץ חמס ידיכם תפלסון׃</p></div></div>
+      <div class="texte-fr"><p>Non, de tout cœur vous pratiquez l’injustice; dans le pays, vous mettez en œuvre la violence de vos mains.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֣רוּ רְשָׁעִ֣ים מֵרָ֑חֶם תָּע֥וּ מִ֝בֶּ֗טֶן דֹּבְרֵ֥י כָזָֽב׃</p></div><div class="heb-s"><p>זרו רשעים מרחם תעו מבטן דברי כזב׃</p></div></div>
+      <div class="texte-fr"><p>Dès le sein de leur mère, les méchants sont fourvoyés; dès leur naissance, ils font fausse route, ceux qui débitent le mensonge.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֲמַת־לָ֗מוֹ כִּדְמ֥וּת חֲמַת־נָחָ֑שׁ כְּמוֹ־פֶ֥תֶן חֵ֝רֵ֗שׁ יַאְטֵ֥ם אׇזְנֽוֹ׃</p></div><div class="heb-s"><p>חמת־למו כדמות חמת־נחש כמו־פתן חרש יאטם אזנו׃</p></div></div>
+      <div class="texte-fr"><p>Ils ont du venin pareil au venin du serpent, de l’aspic sourd qui se bouche l’oreille,</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר לֹֽא־יִ֭שְׁמַע לְק֣וֹל מְלַחֲשִׁ֑ים חוֹבֵ֖ר חֲבָרִ֣ים מְחֻכָּֽם׃</p></div><div class="heb-s"><p>אשר לא־ישמע לקול מלחשים חובר חברים מחכם׃</p></div></div>
+      <div class="texte-fr"><p>qui n’entend pas la voix des charmeurs, des magiciens les plus experts.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהִ֗ים הֲרׇס־שִׁנֵּ֥ימֽוֹ בְּפִ֑ימוֹ מַלְתְּע֥וֹת כְּ֝פִירִ֗ים נְתֹ֣ץ&thinsp;<small>׀</small>&thinsp;יְהֹוָֽה׃</p></div><div class="heb-s"><p>אלהים הרס־שנימו בפימו מלתעות כפירים נתץ&thinsp;<small>׀</small>&thinsp;יהוה׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, brise-leur les dents dans la bouche; fracasse, ô Éternel, les crocs des lionceaux!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִמָּאֲס֣וּ כְמוֹ־מַ֭יִם יִתְהַלְּכוּ־לָ֑מוֹ יִדְרֹ֥ךְ <span class="mam-kq-trivial">חִ֝צָּ֗ו</span> כְּמ֣וֹ יִתְמֹלָֽלוּ׃</p></div><div class="heb-s"><p>ימאסו כמו־מים יתהלכו־למו ידרך <span class="mam-kq-trivial">חצו</span> כמו יתמללו׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils se liquéfient comme de l’eau et s’écoulent! Que [Dieu] dirige ses flèches, pour qu’ils soient comme fauchés!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּמ֣וֹ שַׁ֭בְּלוּל תֶּ֣מֶס יַהֲלֹ֑ךְ נֵ֥פֶל אֵ֝֗שֶׁת בַּל־חָ֥זוּ שָֽׁמֶשׁ׃</p></div><div class="heb-s"><p>כמו שבלול תמס יהלך נפל אשת בל־חזו שמש׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils soient comme un limaçon, qui se dissout en rampant; comme l’avorton d’une femme, qui n’a pas vu le soleil!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּטֶ֤רֶם&thinsp;<b>׀</b> יָבִ֣ינוּ סִּירֹתֵכֶ֣ם אָטָ֑ד כְּמוֹ־חַ֥י כְּמוֹ־חָ֝ר֗וֹן יִשְׂעָרֶֽנּוּ׃</p></div><div class="heb-s"><p>בטרם&thinsp;<b>׀</b> יבינו סירתכם אטד כמו־חי כמו־חרון ישערנו׃</p></div></div>
+      <div class="texte-fr"><p>Avant que vos marmites sentent la flamme des broussailles, que la tempête vienne tout enlever, qu’elles soient vertes encore ou déjà consumées!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׂמַ֣ח צַ֭דִּיק כִּי־חָזָ֣ה נָקָ֑ם פְּעָמָ֥יו יִ֝רְחַ֗ץ בְּדַ֣ם הָרָשָֽׁע׃</p></div><div class="heb-s"><p>ישמח צדיק כי־חזה נקם פעמיו ירחץ בדם הרשע׃</p></div></div>
+      <div class="texte-fr"><p>Le juste se réjouira, quand il verra les représailles; il baignera ses pas dans le sang des méchants.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיֹאמַ֣ר אָ֭דָם אַךְ־פְּרִ֣י לַצַּדִּ֑יק אַ֥ךְ יֵשׁ־אֱ֝לֹהִ֗ים שֹׁפְטִ֥ים בָּאָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויאמר אדם אך־פרי לצדיק אך יש־אלהים שפטים בארץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et l’on dira: "Certes, il y a une récompense pour le juste; certes, il est une divinité exerçant la justice sur terre!"</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Al tachhêt. Mikhtam de David.</p>
-      <p>Est-ce qu’en vérité, ô puissants, vous prononcez de justes arrêts, et jugez avec droiture les fils de l’homme!</p>
-      <p>Non, de tout cœur vous pratiquez l’injustice; dans le pays, vous mettez en œuvre la violence de vos mains.</p>
-      <p>Dès le sein de leur mère, les méchants sont fourvoyés; dès leur naissance, ils font fausse route, ceux qui débitent le mensonge.</p>
-      <p>Ils ont du venin pareil au venin du serpent, de l’aspic sourd qui se bouche l’oreille,</p>
-      <p>qui n’entend pas la voix des charmeurs, des magiciens les plus experts.</p>
-      <p>O Dieu, brise-leur les dents dans la bouche; fracasse, ô Éternel, les crocs des lionceaux!</p>
-      <p>Qu’ils se liquéfient comme de l’eau et s’écoulent! Que [Dieu] dirige ses flèches, pour qu’ils soient comme fauchés!</p>
-      <p>Qu’ils soient comme un limaçon, qui se dissout en rampant; comme l’avorton d’une femme, qui n’a pas vu le soleil!</p>
-      <p>Avant que vos marmites sentent la flamme des broussailles, que la tempête vienne tout enlever, qu’elles soient vertes encore ou déjà consumées!</p>
-      <p>Le juste se réjouira, quand il verra les représailles; il baignera ses pas dans le sang des méchants.</p>
-      <p>Et l’on dira: "Certes, il y a une récompense pour le juste; certes, il est une divinité exerçant la justice sur terre!"</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -256,6 +316,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-57.html">← Tehilim 57</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-58.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-59.html">Tehilim 59 →</a></div>
 </main>
 
 <footer>

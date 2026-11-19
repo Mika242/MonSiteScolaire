@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 67 – Que D.ieu nous fasse grâce et nous bénisse</h1>
     <p>Ketouvim, Tehilim, Chapitre 67</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-66.html">← Tehilim 66</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-67.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-68.html">Tehilim 68 →</a></div>
   </div>
 </header>
 
@@ -161,39 +202,50 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ בִּנְגִינֹ֗ת מִזְמ֥וֹר שִֽׁיר׃</p>
-      <p>אֱֽלֹהִ֗ים יְחׇנֵּ֥נוּ וִיבָרְכֵ֑נוּ יָ֤אֵֽר<span class="mam-implicit-maqaf">־</span>פָּנָ֖יו אִתָּ֣נוּ סֶֽלָה׃</p>
-      <p>לָדַ֣עַת בָּאָ֣רֶץ דַּרְכֶּ֑ךָ בְּכׇל־גּ֝וֹיִ֗ם יְשׁוּעָתֶֽךָ׃</p>
-      <p>יוֹד֖וּךָ עַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים י֝וֹד֗וּךָ עַמִּ֥ים כֻּלָּֽם׃</p>
-      <p>יִ֥שְׂמְח֥וּ וִירַנְּנ֗וּ לְאֻ֫מִּ֥ים כִּֽי־תִשְׁפֹּ֣ט עַמִּ֣ים מִישֹׁ֑ר וּלְאֻמִּ֓ים&thinsp;<b>׀</b> בָּאָ֖רֶץ תַּנְחֵ֣ם סֶֽלָה׃</p>
-      <p>יוֹד֖וּךָ עַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים י֝וֹד֗וּךָ עַמִּ֥ים כֻּלָּֽם׃</p>
-      <p>אֶ֭רֶץ נָתְנָ֣ה יְבוּלָ֑הּ יְ֝בָרְכֵ֗נוּ אֱלֹהִ֥ים אֱלֹהֵֽינוּ׃</p>
-      <p>יְבָרְכֵ֥נוּ אֱלֹהִ֑ים וְיִֽירְא֥וּ א֝וֹת֗וֹ כׇּל־אַפְסֵי־אָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ בִּנְגִינֹ֗ת מִזְמ֥וֹר שִֽׁיר׃</p></div><div class="heb-s"><p>למנצח בנגינת מזמור שיר׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Avec instruments à cordes. Psaume. Cantique.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהִ֗ים יְחׇנֵּ֥נוּ וִיבָרְכֵ֑נוּ יָ֤אֵֽר<span class="mam-implicit-maqaf">־</span>פָּנָ֖יו אִתָּ֣נוּ סֶֽלָה׃</p></div><div class="heb-s"><p>אלהים יחננו ויברכנו יאר<span class="mam-implicit-maqaf">־</span>פניו אתנו סלה׃</p></div></div>
+      <div class="texte-fr"><p>Que Dieu me prenne en grâce et me bénisse! qu’il fasse luire sa face sur nous! Sélah!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָדַ֣עַת בָּאָ֣רֶץ דַּרְכֶּ֑ךָ בְּכׇל־גּ֝וֹיִ֗ם יְשׁוּעָתֶֽךָ׃</p></div><div class="heb-s"><p>לדעת בארץ דרכך בכל־גוים ישועתך׃</p></div></div>
+      <div class="texte-fr"><p>Pour que, par toute la terre, on connaisse tes voies, parmi tous les peuples, ton secours sauveur.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹד֖וּךָ עַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים י֝וֹד֗וּךָ עַמִּ֥ים כֻּלָּֽם׃</p></div><div class="heb-s"><p>יודוך עמים&thinsp;<small>׀</small>&thinsp;אלהים יודוך עמים כלם׃</p></div></div>
+      <div class="texte-fr"><p>Que les nations, ô Dieu, te rendent hommage! Oui, qu’elles te rendent hommage, toutes les nations!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִ֥שְׂמְח֥וּ וִירַנְּנ֗וּ לְאֻ֫מִּ֥ים כִּֽי־תִשְׁפֹּ֣ט עַמִּ֣ים מִישֹׁ֑ר וּלְאֻמִּ֓ים&thinsp;<b>׀</b> בָּאָ֖רֶץ תַּנְחֵ֣ם סֶֽלָה׃</p></div><div class="heb-s"><p>ישמחו וירננו לאמים כי־תשפט עמים מישר ולאמים&thinsp;<b>׀</b> בארץ תנחם סלה׃</p></div></div>
+      <div class="texte-fr"><p>Que les peuples se réjouissent et entonnent des chants! Puisque tu juges les nations avec équité, et diriges les peuples sur la terre! Sélah!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹד֖וּךָ עַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֱלֹהִ֑ים י֝וֹד֗וּךָ עַמִּ֥ים כֻּלָּֽם׃</p></div><div class="heb-s"><p>יודוך עמים&thinsp;<small>׀</small>&thinsp;אלהים יודוך עמים כלם׃</p></div></div>
+      <div class="texte-fr"><p>Que les nations, ô Dieu, te rendent hommage! Qu’elles te rendent hommage, toutes les nations!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֭רֶץ נָתְנָ֣ה יְבוּלָ֑הּ יְ֝בָרְכֵ֗נוּ אֱלֹהִ֥ים אֱלֹהֵֽינוּ׃</p></div><div class="heb-s"><p>ארץ נתנה יבולה יברכנו אלהים אלהינו׃</p></div></div>
+      <div class="texte-fr"><p>La terre prodigue ses dons. Que Dieu, notre Dieu, nous bénisse!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְבָרְכֵ֥נוּ אֱלֹהִ֑ים וְיִֽירְא֥וּ א֝וֹת֗וֹ כׇּל־אַפְסֵי־אָֽרֶץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יברכנו אלהים וייראו אותו כל־אפסי־ארץ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Que Dieu nous bénisse, et que toutes les extrémités de la terre le vénèrent!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Avec instruments à cordes. Psaume. Cantique.</p>
-      <p>Que Dieu me prenne en grâce et me bénisse! qu’il fasse luire sa face sur nous! Sélah!</p>
-      <p>Pour que, par toute la terre, on connaisse tes voies, parmi tous les peuples, ton secours sauveur.</p>
-      <p>Que les nations, ô Dieu, te rendent hommage! Oui, qu’elles te rendent hommage, toutes les nations!</p>
-      <p>Que les peuples se réjouissent et entonnent des chants! Puisque tu juges les nations avec équité, et diriges les peuples sur la terre! Sélah!</p>
-      <p>Que les nations, ô Dieu, te rendent hommage! Qu’elles te rendent hommage, toutes les nations!</p>
-      <p>La terre prodigue ses dons. Que Dieu, notre Dieu, nous bénisse!</p>
-      <p>Que Dieu nous bénisse, et que toutes les extrémités de la terre le vénèrent!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -248,6 +300,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-66.html">← Tehilim 66</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-67.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-68.html">Tehilim 68 →</a></div>
 </main>
 
 <footer>

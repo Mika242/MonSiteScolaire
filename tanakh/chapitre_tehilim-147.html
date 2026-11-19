@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 147 – Louez D.ieu, car il est bon de chanter à notre D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 147</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-146.html">← Tehilim 146</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-147.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-148.html">Tehilim 148 →</a></div>
   </div>
 </header>
 
@@ -161,63 +202,98 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>הַ֥לְלוּ<span class="mam-implicit-maqaf">־</span>יָ֨הּ&thinsp;<b>׀</b> כִּי־ט֭וֹב זַמְּרָ֣ה אֱלֹהֵ֑ינוּ כִּי־נָ֝עִ֗ים נָאוָ֥ה תְהִלָּֽה׃</p>
-      <p>בּוֹנֵ֣ה יְרוּשָׁלַ֣͏ִם יְהֹוָ֑ה נִדְחֵ֖י יִשְׂרָאֵ֣ל יְכַנֵּֽס׃</p>
-      <p>הָ֭רֹפֵא לִשְׁב֣וּרֵי לֵ֑ב וּ֝מְחַבֵּ֗שׁ לְעַצְּבוֹתָֽם׃</p>
-      <p>מוֹנֶ֣ה מִ֭סְפָּר לַכּוֹכָבִ֑ים לְ֝כֻלָּ֗ם שֵׁמ֥וֹת יִקְרָֽא׃</p>
-      <p>גָּד֣וֹל אֲדוֹנֵ֣ינוּ וְרַב־כֹּ֑חַ לִ֝תְבוּנָת֗וֹ אֵ֣ין מִסְפָּֽר׃</p>
-      <p>מְעוֹדֵ֣ד עֲנָוִ֣ים יְהֹוָ֑ה מַשְׁפִּ֖יל רְשָׁעִ֣ים עֲדֵי־אָֽרֶץ׃</p>
-      <p>עֱנ֣וּ לַֽיהֹוָ֣ה בְּתוֹדָ֑ה זַמְּר֖וּ לֵאלֹהֵ֣ינוּ בְכִנּֽוֹר׃</p>
-      <p>הַֽמְכַסֶּ֬ה שָׁמַ֨יִם&thinsp;<b>׀</b> בְּעָבִ֗ים הַמֵּכִ֣ין לָאָ֣רֶץ מָטָ֑ר הַמַּצְמִ֖יחַ הָרִ֣ים חָצִֽיר׃</p>
-      <p>נוֹתֵ֣ן לִבְהֵמָ֣ה לַחְמָ֑הּ לִבְנֵ֥י עֹ֝רֵ֗ב אֲשֶׁ֣ר יִקְרָֽאוּ׃</p>
-      <p>לֹ֤א בִגְבוּרַ֣ת הַסּ֣וּס יֶחְפָּ֑ץ לֹא־בְשׁוֹקֵ֖י הָאִ֣ישׁ יִרְצֶֽה׃</p>
-      <p>רוֹצֶ֣ה יְ֭הֹוָה אֶת־יְרֵאָ֑יו אֶת־הַֽמְיַחֲלִ֥ים לְחַסְדּֽוֹ׃</p>
-      <p>שַׁבְּחִ֣י יְ֭רוּשָׁלַ͏ִם אֶת־יְהֹוָ֑ה הַֽלְלִ֖י אֱלֹהַ֣יִךְ צִיּֽוֹן׃</p>
-      <p>כִּֽי־חִ֭זַּק בְּרִיחֵ֣י שְׁעָרָ֑יִךְ בֵּרַ֖ךְ בָּנַ֣יִךְ בְּקִרְבֵּֽךְ׃</p>
-      <p>הַשָּׂם־גְּבוּלֵ֥ךְ שָׁל֑וֹם חֵ֥לֶב חִ֝טִּ֗ים יַשְׂבִּיעֵֽךְ׃</p>
-      <p>הַשֹּׁלֵ֣חַ אִמְרָת֣וֹ אָ֑רֶץ עַד־מְ֝הֵרָ֗ה יָר֥וּץ דְּבָרֽוֹ׃</p>
-      <p>הַנֹּתֵ֣ן שֶׁ֣לֶג כַּצָּ֑מֶר כְּ֝פ֗וֹר כָּאֵ֥פֶר יְפַזֵּֽר׃</p>
-      <p>מַשְׁלִ֣יךְ קַֽרְח֣וֹ כְפִתִּ֑ים לִפְנֵ֥י קָ֝רָת֗וֹ מִ֣י יַעֲמֹֽד׃</p>
-      <p>יִשְׁלַ֣ח דְּבָר֣וֹ וְיַמְסֵ֑ם יַשֵּׁ֥ב ר֝וּח֗וֹ יִזְּלוּ־מָֽיִם׃</p>
-      <p>מַגִּ֣יד <span class="mam-kq-trivial">דְּבָרָ֣ו</span> לְיַעֲקֹ֑ב חֻקָּ֥יו וּ֝מִשְׁפָּטָ֗יו לְיִשְׂרָאֵֽל׃</p>
-      <p>לֹ֘א<span class="mam-implicit-maqaf">־</span>עָ֤שָׂה כֵ֨ן&thinsp;<b>׀</b> לְכׇל־גּ֗וֹי וּמִשְׁפָּטִ֥ים בַּל־יְדָע֗וּם הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֥לְלוּ<span class="mam-implicit-maqaf">־</span>יָ֨הּ&thinsp;<b>׀</b> כִּי־ט֭וֹב זַמְּרָ֣ה אֱלֹהֵ֑ינוּ כִּי־נָ֝עִ֗ים נָאוָ֥ה תְהִלָּֽה׃</p></div><div class="heb-s"><p>הללו<span class="mam-implicit-maqaf">־</span>יה&thinsp;<b>׀</b> כי־טוב זמרה אלהינו כי־נעים נאוה תהלה׃</p></div></div>
+      <div class="texte-fr"><p>Louez le Seigneur, car il est bon; qu’on célèbre notre Dieu, car il est aimable: à lui conviennent les louanges.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בּוֹנֵ֣ה יְרוּשָׁלַ֣͏ִם יְהֹוָ֑ה נִדְחֵ֖י יִשְׂרָאֵ֣ל יְכַנֵּֽס׃</p></div><div class="heb-s"><p>בונה ירושל͏ם יהוה נדחי ישראל יכנס׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel rebâtira Jérusalem, il y rassemblera les débris dispersés d’Israël.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָ֭רֹפֵא לִשְׁב֣וּרֵי לֵ֑ב וּ֝מְחַבֵּ֗שׁ לְעַצְּבוֹתָֽם׃</p></div><div class="heb-s"><p>הרפא לשבורי לב ומחבש לעצבותם׃</p></div></div>
+      <div class="texte-fr"><p>C’est lui qui guérit les cœurs brisés et panse leurs douloureuses blessures.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>מוֹנֶ֣ה מִ֭סְפָּר לַכּוֹכָבִ֑ים לְ֝כֻלָּ֗ם שֵׁמ֥וֹת יִקְרָֽא׃</p></div><div class="heb-s"><p>מונה מספר לכוכבים לכלם שמות יקרא׃</p></div></div>
+      <div class="texte-fr"><p>Il détermine le nombre des étoiles, à elles toutes il attribue des noms.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּד֣וֹל אֲדוֹנֵ֣ינוּ וְרַב־כֹּ֑חַ לִ֝תְבוּנָת֗וֹ אֵ֣ין מִסְפָּֽר׃</p></div><div class="heb-s"><p>גדול אדונינו ורב־כח לתבונתו אין מספר׃</p></div></div>
+      <div class="texte-fr"><p>Grand est notre Maître et tout-puissant, sa sagesse est sans limites.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְעוֹדֵ֣ד עֲנָוִ֣ים יְהֹוָ֑ה מַשְׁפִּ֖יל רְשָׁעִ֣ים עֲדֵי־אָֽרֶץ׃</p></div><div class="heb-s"><p>מעודד ענוים יהוה משפיל רשעים עדי־ארץ׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel soutient les humbles, il abaisse jusqu’à terre les méchants.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֱנ֣וּ לַֽיהֹוָ֣ה בְּתוֹדָ֑ה זַמְּר֖וּ לֵאלֹהֵ֣ינוּ בְכִנּֽוֹר׃</p></div><div class="heb-s"><p>ענו ליהוה בתודה זמרו לאלהינו בכנור׃</p></div></div>
+      <div class="texte-fr"><p>Entonnez des actions de grâce en l’honneur de l’Éternel. Célébrez notre Dieu au son de la harpe.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַֽמְכַסֶּ֬ה שָׁמַ֨יִם&thinsp;<b>׀</b> בְּעָבִ֗ים הַמֵּכִ֣ין לָאָ֣רֶץ מָטָ֑ר הַמַּצְמִ֖יחַ הָרִ֣ים חָצִֽיר׃</p></div><div class="heb-s"><p>המכסה שמים&thinsp;<b>׀</b> בעבים המכין לארץ מטר המצמיח הרים חציר׃</p></div></div>
+      <div class="texte-fr"><p>C’est lui qui couvre le ciel de nuages, prépare la pluie pour la terre, fait pousser l’herbe sur les montagnes.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>נוֹתֵ֣ן לִבְהֵמָ֣ה לַחְמָ֑הּ לִבְנֵ֥י עֹ֝רֵ֗ב אֲשֶׁ֣ר יִקְרָֽאוּ׃</p></div><div class="heb-s"><p>נותן לבהמה לחמה לבני ערב אשר יקראו׃</p></div></div>
+      <div class="texte-fr"><p>Il donne leur pâture aux bêtes, aux petits des corbeaux qui la réclament.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֤א בִגְבוּרַ֣ת הַסּ֣וּס יֶחְפָּ֑ץ לֹא־בְשׁוֹקֵ֖י הָאִ֣ישׁ יִרְצֶֽה׃</p></div><div class="heb-s"><p>לא בגבורת הסוס יחפץ לא־בשוקי האיש ירצה׃</p></div></div>
+      <div class="texte-fr"><p>Il ne prend point plaisir à la vigueur du coursier, il ne tient pas à l’agilité de l’homme;</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>רוֹצֶ֣ה יְ֭הֹוָה אֶת־יְרֵאָ֑יו אֶת־הַֽמְיַחֲלִ֥ים לְחַסְדּֽוֹ׃</p></div><div class="heb-s"><p>רוצה יהוה את־יראיו את־המיחלים לחסדו׃</p></div></div>
+      <div class="texte-fr"><p>ce qu’il aime, l’Éternel, ce sont ses adorateurs, ceux qui ont foi en sa bonté.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>שַׁבְּחִ֣י יְ֭רוּשָׁלַ͏ִם אֶת־יְהֹוָ֑ה הַֽלְלִ֖י אֱלֹהַ֣יִךְ צִיּֽוֹן׃</p></div><div class="heb-s"><p>שבחי ירושל͏ם את־יהוה הללי אלהיך ציון׃</p></div></div>
+      <div class="texte-fr"><p>Célèbre, ô Jérusalem, l’Éternel, glorifie ton Dieu, ô Sion!</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־חִ֭זַּק בְּרִיחֵ֣י שְׁעָרָ֑יִךְ בֵּרַ֖ךְ בָּנַ֣יִךְ בְּקִרְבֵּֽךְ׃</p></div><div class="heb-s"><p>כי־חזק בריחי שעריך ברך בניך בקרבך׃</p></div></div>
+      <div class="texte-fr"><p>Car il a consolidé les barres de tes portes, il a béni tes fils dans ton enceinte,</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַשָּׂם־גְּבוּלֵ֥ךְ שָׁל֑וֹם חֵ֥לֶב חִ֝טִּ֗ים יַשְׂבִּיעֵֽךְ׃</p></div><div class="heb-s"><p>השם־גבולך שלום חלב חטים ישביעך׃</p></div></div>
+      <div class="texte-fr"><p>C’est lui qui a fait régner la paix sur ton sol, qui te rassasie de la moelle du froment.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַשֹּׁלֵ֣חַ אִמְרָת֣וֹ אָ֑רֶץ עַד־מְ֝הֵרָ֗ה יָר֥וּץ דְּבָרֽוֹ׃</p></div><div class="heb-s"><p>השלח אמרתו ארץ עד־מהרה ירוץ דברו׃</p></div></div>
+      <div class="texte-fr"><p>Il envoie ses ordres sur la terre, sa parole vole avec une extrême rapidité.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַנֹּתֵ֣ן שֶׁ֣לֶג כַּצָּ֑מֶר כְּ֝פ֗וֹר כָּאֵ֥פֶר יְפַזֵּֽר׃</p></div><div class="heb-s"><p>הנתן שלג כצמר כפור כאפר יפזר׃</p></div></div>
+      <div class="texte-fr"><p>Il répand la neige comme des flocons de laine, sème le givre comme de la cendre.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַשְׁלִ֣יךְ קַֽרְח֣וֹ כְפִתִּ֑ים לִפְנֵ֥י קָ֝רָת֗וֹ מִ֣י יַעֲמֹֽד׃</p></div><div class="heb-s"><p>משליך קרחו כפתים לפני קרתו מי יעמד׃</p></div></div>
+      <div class="texte-fr"><p>Il lance des glaçons par morceaux: qui peut tenir devant ses frimas?</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׁלַ֣ח דְּבָר֣וֹ וְיַמְסֵ֑ם יַשֵּׁ֥ב ר֝וּח֗וֹ יִזְּלוּ־מָֽיִם׃</p></div><div class="heb-s"><p>ישלח דברו וימסם ישב רוחו יזלו־מים׃</p></div></div>
+      <div class="texte-fr"><p>Il émet un ordre, et le dégel s’opère; il fait souffler le vent: les eaux reprennent leur cours.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַגִּ֣יד <span class="mam-kq-trivial">דְּבָרָ֣ו</span> לְיַעֲקֹ֑ב חֻקָּ֥יו וּ֝מִשְׁפָּטָ֗יו לְיִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>מגיד <span class="mam-kq-trivial">דברו</span> ליעקב חקיו ומשפטיו לישראל׃</p></div></div>
+      <div class="texte-fr"><p>Il a révélé ses paroles à Jacob, ses statuts et ses lois de justice à Israël.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֘א<span class="mam-implicit-maqaf">־</span>עָ֤שָׂה כֵ֨ן&thinsp;<b>׀</b> לְכׇל־גּ֗וֹי וּמִשְׁפָּטִ֥ים בַּל־יְדָע֗וּם הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לא<span class="mam-implicit-maqaf">־</span>עשה כן&thinsp;<b>׀</b> לכל־גוי ומשפטים בל־ידעום הללו־יה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Il n’a fait cela pour aucun des autres peuples; aussi ses lois leur demeurent-elles inconnues. Alléluia!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Louez le Seigneur, car il est bon; qu’on célèbre notre Dieu, car il est aimable: à lui conviennent les louanges.</p>
-      <p>L’Éternel rebâtira Jérusalem, il y rassemblera les débris dispersés d’Israël.</p>
-      <p>C’est lui qui guérit les cœurs brisés et panse leurs douloureuses blessures.</p>
-      <p>Il détermine le nombre des étoiles, à elles toutes il attribue des noms.</p>
-      <p>Grand est notre Maître et tout-puissant, sa sagesse est sans limites.</p>
-      <p>L’Éternel soutient les humbles, il abaisse jusqu’à terre les méchants.</p>
-      <p>Entonnez des actions de grâce en l’honneur de l’Éternel. Célébrez notre Dieu au son de la harpe.</p>
-      <p>C’est lui qui couvre le ciel de nuages, prépare la pluie pour la terre, fait pousser l’herbe sur les montagnes.</p>
-      <p>Il donne leur pâture aux bêtes, aux petits des corbeaux qui la réclament.</p>
-      <p>Il ne prend point plaisir à la vigueur du coursier, il ne tient pas à l’agilité de l’homme;</p>
-      <p>ce qu’il aime, l’Éternel, ce sont ses adorateurs, ceux qui ont foi en sa bonté.</p>
-      <p>Célèbre, ô Jérusalem, l’Éternel, glorifie ton Dieu, ô Sion!</p>
-      <p>Car il a consolidé les barres de tes portes, il a béni tes fils dans ton enceinte,</p>
-      <p>C’est lui qui a fait régner la paix sur ton sol, qui te rassasie de la moelle du froment.</p>
-      <p>Il envoie ses ordres sur la terre, sa parole vole avec une extrême rapidité.</p>
-      <p>Il répand la neige comme des flocons de laine, sème le givre comme de la cendre.</p>
-      <p>Il lance des glaçons par morceaux: qui peut tenir devant ses frimas?</p>
-      <p>Il émet un ordre, et le dégel s’opère; il fait souffler le vent: les eaux reprennent leur cours.</p>
-      <p>Il a révélé ses paroles à Jacob, ses statuts et ses lois de justice à Israël.</p>
-      <p>Il n’a fait cela pour aucun des autres peuples; aussi ses lois leur demeurent-elles inconnues. Alléluia!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -272,6 +348,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-146.html">← Tehilim 146</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-147.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-148.html">Tehilim 148 →</a></div>
 </main>
 
 <footer>

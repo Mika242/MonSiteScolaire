@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 68 – Que D.ieu se lève et que Ses ennemis se dispersent</h1>
     <p>Ketouvim, Tehilim, Chapitre 68</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-67.html">← Tehilim 67</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-68.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-69.html">Tehilim 69 →</a></div>
   </div>
 </header>
 
@@ -161,95 +202,162 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ לְדָוִ֗ד מִזְמ֥וֹר שִֽׁיר׃</p>
-      <p>יָק֣וּם אֱ֭לֹהִים יָפ֣וּצוּ אוֹיְבָ֑יו וְיָנ֥וּסוּ מְ֝שַׂנְאָ֗יו מִפָּנָֽיו׃</p>
-      <p>כְּהִנְדֹּ֥ף עָשָׁ֗ן תִּ֫נְדֹּ֥ף כְּהִמֵּ֣ס דּ֭וֹנַג מִפְּנֵי־אֵ֑שׁ יֹאבְד֥וּ רְ֝שָׁעִ֗ים מִפְּנֵ֥י אֱלֹהִֽים׃</p>
-      <p>וְֽצַדִּיקִ֗ים יִשְׂמְח֣וּ יַ֭עַלְצוּ לִפְנֵ֥י אֱלֹהִ֗ים וְיָשִׂ֥ישׂוּ בְשִׂמְחָֽה׃</p>
-      <p>שִׁ֤ירוּ&thinsp;<b>׀</b> לֵאלֹהִים֮ זַמְּר֢וּ שְׁ֫מ֥וֹ סֹ֡לּוּ לָרֹכֵ֣ב בָּ֭עֲרָבוֹת בְּיָ֥הּ שְׁמ֗וֹ וְעִלְז֥וּ לְפָנָֽיו׃</p>
-      <p>אֲבִ֣י יְ֭תוֹמִים וְדַיַּ֣ן אַלְמָנ֑וֹת אֱ֝לֹהִ֗ים בִּמְע֥וֹן קׇדְשֽׁוֹ׃</p>
-      <p>אֱלֹהִ֤ים&thinsp;<b>׀</b> מ֘וֹשִׁ֤יב יְחִידִ֨ים&thinsp;<b>׀</b> בַּ֗יְתָה מוֹצִ֣יא אֲ֭סִירִים בַּכּוֹשָׁר֑וֹת אַ֥ךְ ס֝וֹרְרִ֗ים שָׁכְנ֥וּ צְחִיחָֽה׃</p>
-      <p>אֱֽלֹהִ֗ים בְּ֭צֵאתְךָ לִפְנֵ֣י עַמֶּ֑ךָ בְּצַעְדְּךָ֖ בִישִׁימ֣וֹן סֶֽלָה׃</p>
-      <p>אֶ֤רֶץ רָעָ֨שָׁה&thinsp;<b>׀</b> אַף־שָׁמַ֣יִם נָטְפוּ֮ מִפְּנֵ֢י אֱלֹ֫הִ֥ים זֶ֥ה סִינַ֑י מִפְּנֵ֥י אֱ֝לֹהִ֗ים אֱלֹהֵ֥י יִשְׂרָאֵֽל׃</p>
-      <p>גֶּ֣שֶׁם נְ֭דָבוֹת תָּנִ֣יף אֱלֹהִ֑ים נַחֲלָתְךָ֥ וְ֝נִלְאָ֗ה אַתָּ֥ה כוֹנַנְתָּֽהּ׃</p>
-      <p>חַיָּתְךָ֥ יָשְׁבוּ־בָ֑הּ תָּ֤כִֽין<span class="mam-implicit-maqaf">־</span>בְּטוֹבָתְךָ֖ לֶֽעָנִ֣י אֱלֹהִֽים׃</p>
-      <p>אֲדֹנָ֥י יִתֶּן־אֹ֑מֶר הַֽ֝מְבַשְּׂר֗וֹת צָבָ֥א רָֽב׃</p>
-      <p>מַלְכֵ֣י צְ֭בָאוֹת יִדֹּד֣וּן יִדֹּד֑וּן וּנְוַת־בַּ֝֗יִת תְּחַלֵּ֥ק שָׁלָֽל׃</p>
-      <p>אִֽם־תִּשְׁכְּבוּן֮ בֵּ֤ין שְׁפַ֫תָּ֥יִם כַּנְפֵ֣י י֭וֹנָה נֶחְפָּ֣ה בַכֶּ֑סֶף וְ֝אֶבְרוֹתֶ֗יהָ בִּירַקְרַ֥ק חָרֽוּץ׃</p>
-      <p>בְּפָ֘רֵ֤שׂ שַׁדַּ֓י מְלָ֘כִ֤ים בָּ֗הּ תַּשְׁלֵ֥ג בְּצַלְמֽוֹן׃</p>
-      <p>הַר־אֱ֭לֹהִים הַר־בָּשָׁ֑ן הַ֥ר גַּ֝בְנֻנִּ֗ים הַר־בָּשָֽׁן׃</p>
-      <p>לָ֤מָּה&thinsp;<b>׀</b> תְּֽרַצְּדוּן֮ הָרִ֢ים גַּבְנֻ֫נִּ֥ים הָהָ֗ר חָמַ֣ד אֱלֹהִ֣ים לְשִׁבְתּ֑וֹ אַף־יְ֝הֹוָ֗ה יִשְׁכֹּ֥ן לָנֶֽצַח׃</p>
-      <p>רֶ֤כֶב אֱלֹהִ֗ים רִבֹּתַ֣יִם אַלְפֵ֣י שִׁנְאָ֑ן אֲדֹנָ֥י בָֿ֝֗ם סִינַ֥י בַּקֹּֽדֶשׁ׃</p>
-      <p>עָ֘לִ֤יתָ לַמָּר֨וֹם&thinsp;<b>׀</b> שָׁ֘בִ֤יתָ שֶּׁ֗בִי לָקַ֣חְתָּ מַ֭תָּנוֹת בָּאָדָ֑ם וְאַ֥ף ס֝וֹרְרִ֗ים לִשְׁכֹּ֤ן&thinsp;<b>׀</b> יָ֬הּ אֱלֹהִֽים׃</p>
-      <p>בָּ֤ר֣וּךְ אֲדֹנָי֮ י֤וֹם&thinsp;<b>׀</b> י֥֫וֹם יַעֲמׇס־לָ֗נוּ הָ֘אֵ֤ל יְֽשׁוּעָתֵ֬נוּ סֶֽלָה׃</p>
-      <p>הָ֤אֵ֣ל&thinsp;<small>׀</small>&thinsp;לָנוּ֮ אֵ֤ל לְֽמ֫וֹשָׁע֥וֹת וְלֵיהֹוִ֥ה אֲדֹנָ֑י לַ֝מָּ֗וֶת תֹּצָאֽוֹת׃</p>
-      <p>אַךְ־אֱלֹהִ֗ים יִמְחַץ֮ רֹ֤אשׁ אֹ֫יְבָ֥יו קׇדְקֹ֥ד שֵׂעָ֑ר מִ֝תְהַלֵּ֗ךְ בַּאֲשָׁמָֽיו׃</p>
-      <p>אָמַ֣ר אֲ֭דֹנָי מִבָּשָׁ֣ן אָשִׁ֑יב אָ֝שִׁ֗יב מִֽמְּצֻל֥וֹת יָֽם׃</p>
-      <p>לְמַ֤עַן&thinsp;<b>׀</b> תִּ֥מְחַ֥ץ רַגְלְךָ֗ בְּ֫דָ֥ם לְשׁ֥וֹן כְּלָבֶ֑יךָ מֵאֹיְבִ֥ים מִנֵּֽהוּ׃</p>
-      <p>רָא֣וּ הֲלִיכוֹתֶ֣יךָ אֱלֹהִ֑ים הֲלִ֘יכ֤וֹת אֵלִ֖י מַלְכִּ֣י בַקֹּֽדֶשׁ׃</p>
-      <p>קִדְּמ֣וּ שָׁ֭רִים אַחַ֣ר נֹגְנִ֑ים בְּת֥וֹךְ עֲ֝לָמ֗וֹת תּוֹפֵפֽוֹת׃</p>
-      <p>בְּֽ֭מַקְהֵלוֹת בָּרְכ֣וּ אֱלֹהִ֑ים אֲ֝דֹנָ֗י מִמְּק֥וֹר יִשְׂרָאֵֽל׃</p>
-      <p>שָׁ֤ם בִּנְיָמִ֨ן&thinsp;<b>׀</b> צָעִ֡יר רֹדֵ֗ם שָׂרֵ֣י יְ֭הוּדָה רִגְמָתָ֑ם שָׂרֵ֥י זְ֝בֻל֗וּן שָׂרֵ֥י נַפְתָּלִֽי׃</p>
-      <p>צִוָּ֥ה אֱלֹהֶ֗יךָ עֻ֫זֶּ֥ךָ עוּזָּ֥ה אֱלֹהִ֑ים ז֝֗וּ פָּעַ֥לְתָּ לָּֽנוּ׃</p>
-      <p>מֵ֭הֵיכָלֶךָ עַל־יְרוּשָׁלָ֑͏ִם לְךָ֤ יוֹבִ֖ילוּ מְלָכִ֣ים שָֽׁי׃</p>
-      <p>גְּעַ֨ר חַיַּ֪ת קָנֶ֡ה עֲדַ֤ת אַבִּירִ֨ים&thinsp;<b>׀</b> בְּעֶגְלֵ֬י עַמִּ֗ים מִתְרַפֵּ֥ס בְּרַצֵּי־כָ֑סֶף בִּזַּ֥ר עַ֝מִּ֗ים קְרָב֥וֹת יֶחְפָּֽצוּ׃</p>
-      <p>יֶאֱתָ֣יוּ חַ֭שְׁמַנִּים מִנִּ֣י מִצְרָ֑יִם כּ֥וּשׁ תָּרִ֥יץ יָ֝דָ֗יו לֵאלֹהִֽים׃</p>
-      <p>מַמְלְכ֣וֹת הָ֭אָרֶץ שִׁ֣ירוּ לֵאלֹהִ֑ים זַמְּר֖וּ אֲדֹנָ֣י סֶֽלָה׃</p>
-      <p>לָ֭רֹכֵב בִּשְׁמֵ֣י שְׁמֵי־קֶ֑דֶם הֵ֥ן יִתֵּ֥ן בְּ֝קוֹל֗וֹ ק֣וֹל עֹֽז׃</p>
-      <p>תְּנ֥וּ עֹ֗ז לֵאלֹ֫הִ֥ים עַֽל־יִשְׂרָאֵ֥ל גַּאֲוָת֑וֹ וְ֝עֻזּ֗וֹ בַּשְּׁחָקִֽים׃</p>
-      <p>נ֤וֹרָ֥א אֱלֹהִ֗ים מִֽמִּקְדָּ֫שֶׁ֥יךָ אֵ֤ל יִשְׂרָאֵ֗ל ה֤וּא נֹתֵ֨ן&thinsp;<b>׀</b> עֹ֖ז וְתַעֲצֻמ֥וֹת לָעָ֗ם בָּר֥וּךְ אֱלֹהִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ לְדָוִ֗ד מִזְמ֥וֹר שִֽׁיר׃</p></div><div class="heb-s"><p>למנצח לדוד מזמור שיר׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. De David. Psaume. Cantique.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>יָק֣וּם אֱ֭לֹהִים יָפ֣וּצוּ אוֹיְבָ֑יו וְיָנ֥וּסוּ מְ֝שַׂנְאָ֗יו מִפָּנָֽיו׃</p></div><div class="heb-s"><p>יקום אלהים יפוצו אויביו וינוסו משנאיו מפניו׃</p></div></div>
+      <div class="texte-fr"><p>Que Dieu se lève! Que ses ennemis se dispersent, que ceux qui le haïssent s’enfuient crevant sa face!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּהִנְדֹּ֥ף עָשָׁ֗ן תִּ֫נְדֹּ֥ף כְּהִמֵּ֣ס דּ֭וֹנַג מִפְּנֵי־אֵ֑שׁ יֹאבְד֥וּ רְ֝שָׁעִ֗ים מִפְּנֵ֥י אֱלֹהִֽים׃</p></div><div class="heb-s"><p>כהנדף עשן תנדף כהמס דונג מפני־אש יאבדו רשעים מפני אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Comme s’évanouit, se dissipe la fumée, comme la cire se fond au feu, ainsi périssent les méchants en présence de Dieu!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽצַדִּיקִ֗ים יִשְׂמְח֣וּ יַ֭עַלְצוּ לִפְנֵ֥י אֱלֹהִ֗ים וְיָשִׂ֥ישׂוּ בְשִׂמְחָֽה׃</p></div><div class="heb-s"><p>וצדיקים ישמחו יעלצו לפני אלהים וישישו בשמחה׃</p></div></div>
+      <div class="texte-fr"><p>Mais que les justes se réjouissent, jubilent devant Dieu, et s’abandonnent à des transports de joie!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֤ירוּ&thinsp;<b>׀</b> לֵאלֹהִים֮ זַמְּר֢וּ שְׁ֫מ֥וֹ סֹ֡לּוּ לָרֹכֵ֣ב בָּ֭עֲרָבוֹת בְּיָ֥הּ שְׁמ֗וֹ וְעִלְז֥וּ לְפָנָֽיו׃</p></div><div class="heb-s"><p>שירו&thinsp;<b>׀</b> לאלהים זמרו שמו סלו לרכב בערבות ביה שמו ועלזו לפניו׃</p></div></div>
+      <div class="texte-fr"><p>Entonnez des chants à Dieu, célébrez son nom, exaltez Celui qui chevauche dans les hauteurs célestes, Éternel est son nom! et faites éclater votre allégresse devant lui.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲבִ֣י יְ֭תוֹמִים וְדַיַּ֣ן אַלְמָנ֑וֹת אֱ֝לֹהִ֗ים בִּמְע֥וֹן קׇדְשֽׁוֹ׃</p></div><div class="heb-s"><p>אבי יתומים ודין אלמנות אלהים במעון קדשו׃</p></div></div>
+      <div class="texte-fr"><p>Dans sa sainte résidence, Dieu est le père des orphelins, le défenseur des veuves.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֤ים&thinsp;<b>׀</b> מ֘וֹשִׁ֤יב יְחִידִ֨ים&thinsp;<b>׀</b> בַּ֗יְתָה מוֹצִ֣יא אֲ֭סִירִים בַּכּוֹשָׁר֑וֹת אַ֥ךְ ס֝וֹרְרִ֗ים שָׁכְנ֥וּ צְחִיחָֽה׃</p></div><div class="heb-s"><p>אלהים&thinsp;<b>׀</b> מושיב יחידים&thinsp;<b>׀</b> ביתה מוציא אסירים בכושרות אך סוררים שכנו צחיחה׃</p></div></div>
+      <div class="texte-fr"><p>Dieu donne un foyer à ceux qui vivent solitaires; il rend la liberté avec le bien-être aux prisonniers, mais les rebelles restent confinés dans des régions arides.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱֽלֹהִ֗ים בְּ֭צֵאתְךָ לִפְנֵ֣י עַמֶּ֑ךָ בְּצַעְדְּךָ֖ בִישִׁימ֣וֹן סֶֽלָה׃</p></div><div class="heb-s"><p>אלהים בצאתך לפני עמך בצעדך בישימון סלה׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, quand tu sortis à la tête de ton peuple, quand tu t’avanças dans les solitudes lugubres, Sélah!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֤רֶץ רָעָ֨שָׁה&thinsp;<b>׀</b> אַף־שָׁמַ֣יִם נָטְפוּ֮ מִפְּנֵ֢י אֱלֹ֫הִ֥ים זֶ֥ה סִינַ֑י מִפְּנֵ֥י אֱ֝לֹהִ֗ים אֱלֹהֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ארץ רעשה&thinsp;<b>׀</b> אף־שמים נטפו מפני אלהים זה סיני מפני אלהים אלהי ישראל׃</p></div></div>
+      <div class="texte-fr"><p>la terre trembla, les cieux aussi se fondirent à la vue de Dieu, ce Sinaï lui-même, à la vue du Dieu d’Israël.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>גֶּ֣שֶׁם נְ֭דָבוֹת תָּנִ֣יף אֱלֹהִ֑ים נַחֲלָתְךָ֥ וְ֝נִלְאָ֗ה אַתָּ֥ה כוֹנַנְתָּֽהּ׃</p></div><div class="heb-s"><p>גשם נדבות תניף אלהים נחלתך ונלאה אתה כוננתה׃</p></div></div>
+      <div class="texte-fr"><p>Tu fis ruisseler, ô Dieu, une pluie bienfaisante; ainsi toi-même tu restauras ton héritage, si épuisé.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַיָּתְךָ֥ יָשְׁבוּ־בָ֑הּ תָּ֤כִֽין<span class="mam-implicit-maqaf">־</span>בְּטוֹבָתְךָ֖ לֶֽעָנִ֣י אֱלֹהִֽים׃</p></div><div class="heb-s"><p>חיתך ישבו־בה תכין<span class="mam-implicit-maqaf">־</span>בטובתך לעני אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Tes légions s’y établirent, [dans ce domaine] que, dans ta bonté, ô Dieu, tu avais préparé pour ces malheureux.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲדֹנָ֥י יִתֶּן־אֹ֑מֶר הַֽ֝מְבַשְּׂר֗וֹת צָבָ֥א רָֽב׃</p></div><div class="heb-s"><p>אדני יתן־אמר המבשרות צבא רב׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur fit entendre sa parole, des messages de bonheur en grande quantité:</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַלְכֵ֣י צְ֭בָאוֹת יִדֹּד֣וּן יִדֹּד֑וּן וּנְוַת־בַּ֝֗יִת תְּחַלֵּ֥ק שָׁלָֽל׃</p></div><div class="heb-s"><p>מלכי צבאות ידדון ידדון ונות־בית תחלק שלל׃</p></div></div>
+      <div class="texte-fr"><p>"Les rois des armées se sont enfuis, enfuis! Et celle qui garde la maison répartit le butin.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִֽם־תִּשְׁכְּבוּן֮ בֵּ֤ין שְׁפַ֫תָּ֥יִם כַּנְפֵ֣י י֭וֹנָה נֶחְפָּ֣ה בַכֶּ֑סֶף וְ֝אֶבְרוֹתֶ֗יהָ בִּירַקְרַ֥ק חָרֽוּץ׃</p></div><div class="heb-s"><p>אם־תשכבון בין שפתים כנפי יונה נחפה בכסף ואברותיה בירקרק חרוץ׃</p></div></div>
+      <div class="texte-fr"><p>Resterez-vous immobiles entre les parcs de troupeaux, ô vous, ailes de la colombe, plaquées d’argent, dont les pennes ont la couleur éclatante de l’or fin?</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּפָ֘רֵ֤שׂ שַׁדַּ֓י מְלָ֘כִ֤ים בָּ֗הּ תַּשְׁלֵ֥ג בְּצַלְמֽוֹן׃</p></div><div class="heb-s"><p>בפרש שדי מלכים בה תשלג בצלמון׃</p></div></div>
+      <div class="texte-fr"><p>Quand le Tout-Puissant dispersa les rois, le Çalmon était couvert de neige."</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַר־אֱ֭לֹהִים הַר־בָּשָׁ֑ן הַ֥ר גַּ֝בְנֻנִּ֗ים הַר־בָּשָֽׁן׃</p></div><div class="heb-s"><p>הר־אלהים הר־בשן הר גבננים הר־בשן׃</p></div></div>
+      <div class="texte-fr"><p>Montagnes de Dieu, montagnes de Basan, montagnes aux croupes élevées, montagnes de Basan!</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָ֤מָּה&thinsp;<b>׀</b> תְּֽרַצְּדוּן֮ הָרִ֢ים גַּבְנֻ֫נִּ֥ים הָהָ֗ר חָמַ֣ד אֱלֹהִ֣ים לְשִׁבְתּ֑וֹ אַף־יְ֝הֹוָ֗ה יִשְׁכֹּ֥ן לָנֶֽצַח׃</p></div><div class="heb-s"><p>למה&thinsp;<b>׀</b> תרצדון הרים גבננים ההר חמד אלהים לשבתו אף־יהוה ישכן לנצח׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi, montagnes aux croupes élevées, pourquoi jalousez-vous la montagne que Dieu a désirée pour sa résidence? Oui, il y demeurera durant toute l’éternité.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֶ֤כֶב אֱלֹהִ֗ים רִבֹּתַ֣יִם אַלְפֵ֣י שִׁנְאָ֑ן אֲדֹנָ֥י בָֿ֝֗ם סִינַ֥י בַּקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>רכב אלהים רבתים אלפי שנאן אדני בם סיני בקדש׃</p></div></div>
+      <div class="texte-fr"><p>Les chars de Dieu se comptent par myriades et milliers répétés; avec eux le Seigneur se rend sur le Sinaï, dans le Sanctuaire.</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>עָ֘לִ֤יתָ לַמָּר֨וֹם&thinsp;<b>׀</b> שָׁ֘בִ֤יתָ שֶּׁ֗בִי לָקַ֣חְתָּ מַ֭תָּנוֹת בָּאָדָ֑ם וְאַ֥ף ס֝וֹרְרִ֗ים לִשְׁכֹּ֤ן&thinsp;<b>׀</b> יָ֬הּ אֱלֹהִֽים׃</p></div><div class="heb-s"><p>עלית למרום&thinsp;<b>׀</b> שבית שבי לקחת מתנות באדם ואף סוררים לשכן&thinsp;<b>׀</b> יה אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Tu es remonté dans les hauteurs, après avoir fait des prises; tu as reçu des dons parmi les hommes; même des rebelles [sont contraints] de demeurer près de l’Éternel, près de Dieu.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>בָּ֤ר֣וּךְ אֲדֹנָי֮ י֤וֹם&thinsp;<b>׀</b> י֥֫וֹם יַעֲמׇס־לָ֗נוּ הָ֘אֵ֤ל יְֽשׁוּעָתֵ֬נוּ סֶֽלָה׃</p></div><div class="heb-s"><p>ברוך אדני יום&thinsp;<b>׀</b> יום יעמס־לנו האל ישועתנו סלה׃</p></div></div>
+      <div class="texte-fr"><p>Loué soit le Seigneur! Jour par jour il nous accable [de ses bienfaits], lui, le Dieu de notre salut. Sélah!</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָ֤אֵ֣ל&thinsp;<small>׀</small>&thinsp;לָנוּ֮ אֵ֤ל לְֽמ֫וֹשָׁע֥וֹת וְלֵיהֹוִ֥ה אֲדֹנָ֑י לַ֝מָּ֗וֶת תֹּצָאֽוֹת׃</p></div><div class="heb-s"><p>האל&thinsp;<small>׀</small>&thinsp;לנו אל למושעות וליהוה אדני למות תצאות׃</p></div></div>
+      <div class="texte-fr"><p>Le Tout-Puissant est pour nous un Dieu sauveur, grâce à Dieu, notre Seigneur, on échappe à la mort.</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־אֱלֹהִ֗ים יִמְחַץ֮ רֹ֤אשׁ אֹ֫יְבָ֥יו קׇדְקֹ֥ד שֵׂעָ֑ר מִ֝תְהַלֵּ֗ךְ בַּאֲשָׁמָֽיו׃</p></div><div class="heb-s"><p>אך־אלהים ימחץ ראש איביו קדקד שער מתהלך באשמיו׃</p></div></div>
+      <div class="texte-fr"><p>Mais Dieu fracasse la tête de ses ennemis, le crâne chevelu de quiconque suit une voie criminelle.</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָמַ֣ר אֲ֭דֹנָי מִבָּשָׁ֣ן אָשִׁ֑יב אָ֝שִׁ֗יב מִֽמְּצֻל֥וֹת יָֽם׃</p></div><div class="heb-s"><p>אמר אדני מבשן אשיב אשיב ממצלות ים׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur a dit: "De Basan, je ramènerai [mon peuple], je le ramènerai des profondeurs de la mer,</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֤עַן&thinsp;<b>׀</b> תִּ֥מְחַ֥ץ רַגְלְךָ֗ בְּ֫דָ֥ם לְשׁ֥וֹן כְּלָבֶ֑יךָ מֵאֹיְבִ֥ים מִנֵּֽהוּ׃</p></div><div class="heb-s"><p>למען&thinsp;<b>׀</b> תמחץ רגלך בדם לשון כלביך מאיבים מנהו׃</p></div></div>
+      <div class="texte-fr"><p>pour que ton pied baigne dans le sang, et que la langue de tes chiens ait sa part [dans les dépouilles] des ennemis."</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָא֣וּ הֲלִיכוֹתֶ֣יךָ אֱלֹהִ֑ים הֲלִ֘יכ֤וֹת אֵלִ֖י מַלְכִּ֣י בַקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>ראו הליכותיך אלהים הליכות אלי מלכי בקדש׃</p></div></div>
+      <div class="texte-fr"><p>On a vu ta marche triomphale, ô Dieu, la marche de mon Dieu, de mon Roi, en son Sanctuaire.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>קִדְּמ֣וּ שָׁ֭רִים אַחַ֣ר נֹגְנִ֑ים בְּת֥וֹךְ עֲ֝לָמ֗וֹת תּוֹפֵפֽוֹת׃</p></div><div class="heb-s"><p>קדמו שרים אחר נגנים בתוך עלמות תופפות׃</p></div></div>
+      <div class="texte-fr"><p>En tête sont les chanteurs, puis viennent les joueurs d’instruments, au milieu de jeunes filles battant du tambourin.</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּֽ֭מַקְהֵלוֹת בָּרְכ֣וּ אֱלֹהִ֑ים אֲ֝דֹנָ֗י מִמְּק֥וֹר יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>במקהלות ברכו אלהים אדני ממקור ישראל׃</p></div></div>
+      <div class="texte-fr"><p>"Dans vos groupes, Bénissez Dieu! Bénissez le Seigneur, [vous tous, issus] de la source d’Israël!</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֤ם בִּנְיָמִ֨ן&thinsp;<b>׀</b> צָעִ֡יר רֹדֵ֗ם שָׂרֵ֣י יְ֭הוּדָה רִגְמָתָ֑ם שָׂרֵ֥י זְ֝בֻל֗וּן שָׂרֵ֥י נַפְתָּלִֽי׃</p></div><div class="heb-s"><p>שם בנימן&thinsp;<b>׀</b> צעיר רדם שרי יהודה רגמתם שרי זבלון שרי נפתלי׃</p></div></div>
+      <div class="texte-fr"><p>Là c’est Benjamin, le plus jeune, qui dirige [la procession], les princes de Juda s’avancent avec leurs frondeurs, puis les princes de Zabulon, les princes de Nephtali."</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>צִוָּ֥ה אֱלֹהֶ֗יךָ עֻ֫זֶּ֥ךָ עוּזָּ֥ה אֱלֹהִ֑ים ז֝֗וּ פָּעַ֥לְתָּ לָּֽנוּ׃</p></div><div class="heb-s"><p>צוה אלהיך עזך עוזה אלהים זו פעלת לנו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel a décrété ta victoire, c’est un triomphe, ô Dieu, que tu as préparé pour nous.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵ֭הֵיכָלֶךָ עַל־יְרוּשָׁלָ֑͏ִם לְךָ֤ יוֹבִ֖ילוּ מְלָכִ֣ים שָֽׁי׃</p></div><div class="heb-s"><p>מהיכלך על־ירושל͏ם לך יובילו מלכים שי׃</p></div></div>
+      <div class="texte-fr"><p>De ton sanctuaire, [tu veilles] sur Jérusalem; à toi les Rois apportent des présents.</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>גְּעַ֨ר חַיַּ֪ת קָנֶ֡ה עֲדַ֤ת אַבִּירִ֨ים&thinsp;<b>׀</b> בְּעֶגְלֵ֬י עַמִּ֗ים מִתְרַפֵּ֥ס בְּרַצֵּי־כָ֑סֶף בִּזַּ֥ר עַ֝מִּ֗ים קְרָב֥וֹת יֶחְפָּֽצוּ׃</p></div><div class="heb-s"><p>גער חית קנה עדת אבירים&thinsp;<b>׀</b> בעגלי עמים מתרפס ברצי־כסף בזר עמים קרבות יחפצו׃</p></div></div>
+      <div class="texte-fr"><p>Gourmande la bête tapie dans les joncs, la troupe des puissants taureaux mêlés aux bouvillons des nations, qui viennent s’humilier, munies de lingots d’argent. [Dieu] disperse les peuples qui aiment les batailles.</p></div>
+    </div><div class="seif" id="v-32">
+      <span class="seif-num">Verset 32</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֶאֱתָ֣יוּ חַ֭שְׁמַנִּים מִנִּ֣י מִצְרָ֑יִם כּ֥וּשׁ תָּרִ֥יץ יָ֝דָ֗יו לֵאלֹהִֽים׃</p></div><div class="heb-s"><p>יאתיו חשמנים מני מצרים כוש תריץ ידיו לאלהים׃</p></div></div>
+      <div class="texte-fr"><p>De grands personnages arrivent de l’Égypte; l’Ethiopie tend avidement ses mains vers Dieu.</p></div>
+    </div><div class="seif" id="v-33">
+      <span class="seif-num">Verset 33</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַמְלְכ֣וֹת הָ֭אָרֶץ שִׁ֣ירוּ לֵאלֹהִ֑ים זַמְּר֖וּ אֲדֹנָ֣י סֶֽלָה׃</p></div><div class="heb-s"><p>ממלכות הארץ שירו לאלהים זמרו אדני סלה׃</p></div></div>
+      <div class="texte-fr"><p>O Royaumes de la terre, entonnez des chants à Dieu! Célébrez le Seigneur, Sélah!</p></div>
+    </div><div class="seif" id="v-34">
+      <span class="seif-num">Verset 34</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָ֭רֹכֵב בִּשְׁמֵ֣י שְׁמֵי־קֶ֑דֶם הֵ֥ן יִתֵּ֥ן בְּ֝קוֹל֗וֹ ק֣וֹל עֹֽז׃</p></div><div class="heb-s"><p>לרכב בשמי שמי־קדם הן יתן בקולו קול עז׃</p></div></div>
+      <div class="texte-fr"><p>[Célébrez] Celui qui chevauche les cieux antiques; voici qu’il fait retentir sa voix, une voix formidable.</p></div>
+    </div><div class="seif" id="v-35">
+      <span class="seif-num">Verset 35</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּנ֥וּ עֹ֗ז לֵאלֹ֫הִ֥ים עַֽל־יִשְׂרָאֵ֥ל גַּאֲוָת֑וֹ וְ֝עֻזּ֗וֹ בַּשְּׁחָקִֽים׃</p></div><div class="heb-s"><p>תנו עז לאלהים על־ישראל גאותו ועזו בשחקים׃</p></div></div>
+      <div class="texte-fr"><p>Proclamez la puissance de Dieu; sa majesté s’étend sur Israël, et sa force éclate dans les nuées.</p></div>
+    </div><div class="seif" id="v-36">
+      <span class="seif-num">Verset 36</span>
+      <div class="texte-heb"><div class="heb-n"><p>נ֤וֹרָ֥א אֱלֹהִ֗ים מִֽמִּקְדָּ֫שֶׁ֥יךָ אֵ֤ל יִשְׂרָאֵ֗ל ה֤וּא נֹתֵ֨ן&thinsp;<b>׀</b> עֹ֖ז וְתַעֲצֻמ֥וֹת לָעָ֗ם בָּר֥וּךְ אֱלֹהִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>נורא אלהים ממקדשיך אל ישראל הוא נתן&thinsp;<b>׀</b> עז ותעצמות לעם ברוך אלהים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Tu apparais redoutable, ô Dieu, du fond de ton sanctuaire; le Dieu d’Israël octroie force et vigueur au peuple. Que Dieu soit béni!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. De David. Psaume. Cantique.</p>
-      <p>Que Dieu se lève! Que ses ennemis se dispersent, que ceux qui le haïssent s’enfuient crevant sa face!</p>
-      <p>Comme s’évanouit, se dissipe la fumée, comme la cire se fond au feu, ainsi périssent les méchants en présence de Dieu!</p>
-      <p>Mais que les justes se réjouissent, jubilent devant Dieu, et s’abandonnent à des transports de joie!</p>
-      <p>Entonnez des chants à Dieu, célébrez son nom, exaltez Celui qui chevauche dans les hauteurs célestes, Éternel est son nom! et faites éclater votre allégresse devant lui.</p>
-      <p>Dans sa sainte résidence, Dieu est le père des orphelins, le défenseur des veuves.</p>
-      <p>Dieu donne un foyer à ceux qui vivent solitaires; il rend la liberté avec le bien-être aux prisonniers, mais les rebelles restent confinés dans des régions arides.</p>
-      <p>O Dieu, quand tu sortis à la tête de ton peuple, quand tu t’avanças dans les solitudes lugubres, Sélah!</p>
-      <p>la terre trembla, les cieux aussi se fondirent à la vue de Dieu, ce Sinaï lui-même, à la vue du Dieu d’Israël.</p>
-      <p>Tu fis ruisseler, ô Dieu, une pluie bienfaisante; ainsi toi-même tu restauras ton héritage, si épuisé.</p>
-      <p>Tes légions s’y établirent, [dans ce domaine] que, dans ta bonté, ô Dieu, tu avais préparé pour ces malheureux.</p>
-      <p>Le Seigneur fit entendre sa parole, des messages de bonheur en grande quantité:</p>
-      <p>"Les rois des armées se sont enfuis, enfuis! Et celle qui garde la maison répartit le butin.</p>
-      <p>Resterez-vous immobiles entre les parcs de troupeaux, ô vous, ailes de la colombe, plaquées d’argent, dont les pennes ont la couleur éclatante de l’or fin?</p>
-      <p>Quand le Tout-Puissant dispersa les rois, le Çalmon était couvert de neige."</p>
-      <p>Montagnes de Dieu, montagnes de Basan, montagnes aux croupes élevées, montagnes de Basan!</p>
-      <p>Pourquoi, montagnes aux croupes élevées, pourquoi jalousez-vous la montagne que Dieu a désirée pour sa résidence? Oui, il y demeurera durant toute l’éternité.</p>
-      <p>Les chars de Dieu se comptent par myriades et milliers répétés; avec eux le Seigneur se rend sur le Sinaï, dans le Sanctuaire.</p>
-      <p>Tu es remonté dans les hauteurs, après avoir fait des prises; tu as reçu des dons parmi les hommes; même des rebelles [sont contraints] de demeurer près de l’Éternel, près de Dieu.</p>
-      <p>Loué soit le Seigneur! Jour par jour il nous accable [de ses bienfaits], lui, le Dieu de notre salut. Sélah!</p>
-      <p>Le Tout-Puissant est pour nous un Dieu sauveur, grâce à Dieu, notre Seigneur, on échappe à la mort.</p>
-      <p>Mais Dieu fracasse la tête de ses ennemis, le crâne chevelu de quiconque suit une voie criminelle.</p>
-      <p>Le Seigneur a dit: "De Basan, je ramènerai [mon peuple], je le ramènerai des profondeurs de la mer,</p>
-      <p>pour que ton pied baigne dans le sang, et que la langue de tes chiens ait sa part [dans les dépouilles] des ennemis."</p>
-      <p>On a vu ta marche triomphale, ô Dieu, la marche de mon Dieu, de mon Roi, en son Sanctuaire.</p>
-      <p>En tête sont les chanteurs, puis viennent les joueurs d’instruments, au milieu de jeunes filles battant du tambourin.</p>
-      <p>"Dans vos groupes, Bénissez Dieu! Bénissez le Seigneur, [vous tous, issus] de la source d’Israël!</p>
-      <p>Là c’est Benjamin, le plus jeune, qui dirige [la procession], les princes de Juda s’avancent avec leurs frondeurs, puis les princes de Zabulon, les princes de Nephtali."</p>
-      <p>L’Éternel a décrété ta victoire, c’est un triomphe, ô Dieu, que tu as préparé pour nous.</p>
-      <p>De ton sanctuaire, [tu veilles] sur Jérusalem; à toi les Rois apportent des présents.</p>
-      <p>Gourmande la bête tapie dans les joncs, la troupe des puissants taureaux mêlés aux bouvillons des nations, qui viennent s’humilier, munies de lingots d’argent. [Dieu] disperse les peuples qui aiment les batailles.</p>
-      <p>De grands personnages arrivent de l’Égypte; l’Ethiopie tend avidement ses mains vers Dieu.</p>
-      <p>O Royaumes de la terre, entonnez des chants à Dieu! Célébrez le Seigneur, Sélah!</p>
-      <p>[Célébrez] Celui qui chevauche les cieux antiques; voici qu’il fait retentir sa voix, une voix formidable.</p>
-      <p>Proclamez la puissance de Dieu; sa majesté s’étend sur Israël, et sa force éclate dans les nuées.</p>
-      <p>Tu apparais redoutable, ô Dieu, du fond de ton sanctuaire; le Dieu d’Israël octroie force et vigueur au peuple. Que Dieu soit béni!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -307,6 +415,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-67.html">← Tehilim 67</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-68.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-69.html">Tehilim 69 →</a></div>
 </main>
 
 <footer>

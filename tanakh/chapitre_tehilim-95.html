@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 95 – Venez, chantons à D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 95</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-94.html">← Tehilim 94</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-95.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-96.html">Tehilim 96 →</a></div>
   </div>
 </header>
 
@@ -161,45 +202,62 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְ֭כוּ נְרַנְּנָ֣ה לַיהֹוָ֑ה נָ֝רִ֗יעָה לְצ֣וּר יִשְׁעֵֽנוּ׃</p>
-      <p>נְקַדְּמָ֣ה פָנָ֣יו בְּתוֹדָ֑ה בִּ֝זְמִר֗וֹת נָרִ֥יעַֽ לֽוֹ׃</p>
-      <p>כִּ֤י אֵ֣ל גָּד֣וֹל יְהֹוָ֑ה וּמֶ֥לֶךְ גָּ֝ד֗וֹל עַל־כׇּל־אֱלֹהִֽים׃</p>
-      <p>אֲשֶׁ֣ר בְּ֭יָדוֹ מֶחְקְרֵי־אָ֑רֶץ וְתוֹעֲפֹ֖ת הָרִ֣ים לֽוֹ׃</p>
-      <p>אֲשֶׁר־ל֣וֹ הַ֭יָּם וְה֣וּא עָשָׂ֑הוּ וְ֝יַבֶּ֗שֶׁת יָדָ֥יו יָצָֽרוּ׃</p>
-      <p>בֹּ֭אוּ נִשְׁתַּחֲוֶ֣ה וְנִכְרָ֑עָה נִ֝בְרְכָ֗ה לִֽפְנֵי־יְהֹוָ֥ה עֹשֵֽׂנוּ׃</p>
-      <p>כִּ֘י<span class="mam-implicit-maqaf">־</span>ה֤וּא אֱלֹהֵ֗ינוּ וַאֲנַ֤חְנוּ עַ֣ם מַ֭רְעִיתוֹ וְצֹ֣אן יָד֑וֹ הַ֝יּ֗וֹם אִֽם־בְּקֹל֥וֹ תִשְׁמָֽעוּ׃</p>
-      <p>אַל־תַּקְשׁ֣וּ לְ֭בַבְכֶם כִּמְרִיבָ֑ה כְּי֥וֹם מַ֝סָּ֗ה בַּמִּדְבָּֽר׃</p>
-      <p>אֲשֶׁ֣ר נִ֭סּוּנִי אֲבֽוֹתֵיכֶ֑ם בְּ֝חָנ֗וּנִי גַּם־רָא֥וּ פׇעֳלִֽי׃</p>
-      <p>אַרְבָּ֘עִ֤ים שָׁנָ֨ה&thinsp;<b>׀</b> אָ֘ק֤וּט בְּד֗וֹר וָאֹמַ֗ר עַ֤ם תֹּעֵ֣י לֵבָ֣ב הֵ֑ם וְ֝הֵ֗ם לֹא־יָדְע֥וּ דְרָכָֽי׃</p>
-      <p>אֲשֶׁר־נִשְׁבַּ֥עְתִּי בְאַפִּ֑י אִם־יְ֝בֹא֗וּן אֶל־מְנוּחָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭כוּ נְרַנְּנָ֣ה לַיהֹוָ֑ה נָ֝רִ֗יעָה לְצ֣וּר יִשְׁעֵֽנוּ׃</p></div><div class="heb-s"><p>לכו נרננה ליהוה נריעה לצור ישענו׃</p></div></div>
+      <div class="texte-fr"><p>Allons, glorifions le Seigneur par nos chants, acclamons le Rocher de notre salut!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְקַדְּמָ֣ה פָנָ֣יו בְּתוֹדָ֑ה בִּ֝זְמִר֗וֹת נָרִ֥יעַֽ לֽוֹ׃</p></div><div class="heb-s"><p>נקדמה פניו בתודה בזמרות נריע לו׃</p></div></div>
+      <div class="texte-fr"><p>Présentons-nous devant lui avec des actions de grâce, entonnons des hymnes en son honneur!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י אֵ֣ל גָּד֣וֹל יְהֹוָ֑ה וּמֶ֥לֶךְ גָּ֝ד֗וֹל עַל־כׇּל־אֱלֹהִֽים׃</p></div><div class="heb-s"><p>כי אל גדול יהוה ומלך גדול על־כל־אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Car l’Éternel est un grand Dieu, un grand Roi, au-dessus de toutes les divinités.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר בְּ֭יָדוֹ מֶחְקְרֵי־אָ֑רֶץ וְתוֹעֲפֹ֖ת הָרִ֣ים לֽוֹ׃</p></div><div class="heb-s"><p>אשר בידו מחקרי־ארץ ותועפת הרים לו׃</p></div></div>
+      <div class="texte-fr"><p>Il tient en ses mains les profonds abîmes de la terre! Les cimes altières des montagnes sont à lui.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁר־ל֣וֹ הַ֭יָּם וְה֣וּא עָשָׂ֑הוּ וְ֝יַבֶּ֗שֶׁת יָדָ֥יו יָצָֽרוּ׃</p></div><div class="heb-s"><p>אשר־לו הים והוא עשהו ויבשת ידיו יצרו׃</p></div></div>
+      <div class="texte-fr"><p>A lui la mer: c’est lui qui l’a créée; et la terre ferme est l’œuvre de ses mains.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>בֹּ֭אוּ נִשְׁתַּחֲוֶ֣ה וְנִכְרָ֑עָה נִ֝בְרְכָ֗ה לִֽפְנֵי־יְהֹוָ֥ה עֹשֵֽׂנוּ׃</p></div><div class="heb-s"><p>באו נשתחוה ונכרעה נברכה לפני־יהוה עשנו׃</p></div></div>
+      <div class="texte-fr"><p>Venez! nous voulons nous prosterner, nous incliner, ployer les genoux devant l’Éternel, notre créateur.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֘י<span class="mam-implicit-maqaf">־</span>ה֤וּא אֱלֹהֵ֗ינוּ וַאֲנַ֤חְנוּ עַ֣ם מַ֭רְעִיתוֹ וְצֹ֣אן יָד֑וֹ הַ֝יּ֗וֹם אִֽם־בְּקֹל֥וֹ תִשְׁמָֽעוּ׃</p></div><div class="heb-s"><p>כי<span class="mam-implicit-maqaf">־</span>הוא אלהינו ואנחנו עם מרעיתו וצאן ידו היום אם־בקלו תשמעו׃</p></div></div>
+      <div class="texte-fr"><p>Oui, il est notre Dieu, et nous sommes le peuple dont il est le pasteur, le troupeau que dirige sa main. Si seulement aujourd’hui encore vous écoutiez sa voix!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תַּקְשׁ֣וּ לְ֭בַבְכֶם כִּמְרִיבָ֑ה כְּי֥וֹם מַ֝סָּ֗ה בַּמִּדְבָּֽר׃</p></div><div class="heb-s"><p>אל־תקשו לבבכם כמריבה כיום מסה במדבר׃</p></div></div>
+      <div class="texte-fr"><p>"N’endurcissez pas votre cœur comme à Meriba, comme au jour de Massa dans le désert,</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר נִ֭סּוּנִי אֲבֽוֹתֵיכֶ֑ם בְּ֝חָנ֗וּנִי גַּם־רָא֥וּ פׇעֳלִֽי׃</p></div><div class="heb-s"><p>אשר נסוני אבותיכם בחנוני גם־ראו פעלי׃</p></div></div>
+      <div class="texte-fr"><p>où vos ancêtres m’ont tenté, mis à l’épreuve, quoiqu’ils eussent vu mes œuvres.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַרְבָּ֘עִ֤ים שָׁנָ֨ה&thinsp;<b>׀</b> אָ֘ק֤וּט בְּד֗וֹר וָאֹמַ֗ר עַ֤ם תֹּעֵ֣י לֵבָ֣ב הֵ֑ם וְ֝הֵ֗ם לֹא־יָדְע֥וּ דְרָכָֽי׃</p></div><div class="heb-s"><p>ארבעים שנה&thinsp;<b>׀</b> אקוט בדור ואמר עם תעי לבב הם והם לא־ידעו דרכי׃</p></div></div>
+      <div class="texte-fr"><p>Pendant quarante ans j’étais écœuré de cette génération, et je disais: "C’est un peuple au cœur égaré, qui ne veut pas connaître mes voies."</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁר־נִשְׁבַּ֥עְתִּי בְאַפִּ֑י אִם־יְ֝בֹא֗וּן אֶל־מְנוּחָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אשר־נשבעתי באפי אם־יבאון אל־מנוחתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Aussi jurai-je, dans ma colère, qu’ils n’entreraient pas dans ma paisible résidence."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Allons, glorifions le Seigneur par nos chants, acclamons le Rocher de notre salut!</p>
-      <p>Présentons-nous devant lui avec des actions de grâce, entonnons des hymnes en son honneur!</p>
-      <p>Car l’Éternel est un grand Dieu, un grand Roi, au-dessus de toutes les divinités.</p>
-      <p>Il tient en ses mains les profonds abîmes de la terre! Les cimes altières des montagnes sont à lui.</p>
-      <p>A lui la mer: c’est lui qui l’a créée; et la terre ferme est l’œuvre de ses mains.</p>
-      <p>Venez! nous voulons nous prosterner, nous incliner, ployer les genoux devant l’Éternel, notre créateur.</p>
-      <p>Oui, il est notre Dieu, et nous sommes le peuple dont il est le pasteur, le troupeau que dirige sa main. Si seulement aujourd’hui encore vous écoutiez sa voix!</p>
-      <p>"N’endurcissez pas votre cœur comme à Meriba, comme au jour de Massa dans le désert,</p>
-      <p>où vos ancêtres m’ont tenté, mis à l’épreuve, quoiqu’ils eussent vu mes œuvres.</p>
-      <p>Pendant quarante ans j’étais écœuré de cette génération, et je disais: "C’est un peuple au cœur égaré, qui ne veut pas connaître mes voies."</p>
-      <p>Aussi jurai-je, dans ma colère, qu’ils n’entreraient pas dans ma paisible résidence."</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -254,6 +312,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-94.html">← Tehilim 94</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-95.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-96.html">Tehilim 96 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 101 – Je chanterai la bonté et la justice</h1>
     <p>Ketouvim, Tehilim, Chapitre 101</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-100.html">← Tehilim 100</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-101.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-102.html">Tehilim 102 →</a></div>
   </div>
 </header>
 
@@ -161,39 +202,50 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְדָוִ֗ד מִ֫זְמ֥וֹר חֶֽסֶד־וּמִשְׁפָּ֥ט אָשִׁ֑ירָה לְךָ֖ יְהֹוָ֣ה אֲזַמֵּֽרָה׃</p>
-      <p>אַשְׂכִּ֤ילָה&thinsp;<b>׀</b> בְּדֶ֬רֶךְ תָּמִ֗ים מָ֭תַי תָּב֣וֹא אֵלָ֑י אֶתְהַלֵּ֥ךְ בְּתׇם־לְ֝בָבִ֗י בְּקֶ֣רֶב בֵּיתִֽי׃</p>
-      <p>לֹֽא־אָשִׁ֨ית&thinsp;<b>׀</b> לְנֶ֥גֶד עֵינַ֗י דְּֽבַר־בְּלִ֫יָּ֥עַל עֲשֹֽׂה־סֵטִ֥ים שָׂנֵ֑אתִי לֹ֖א יִדְבַּ֣ק בִּֽי׃</p>
-      <p>לֵבָ֣ב עִ֭קֵּשׁ יָס֣וּר מִמֶּ֑נִּי רָ֝֗ע לֹ֣א אֵדָֽע׃</p>
-      <p><span class="mam-kq"><span class="mam-kq-k">(מלושני)</span> <span class="mam-kq-q">[מְלׇשְׁנִ֬י]</span></span> בַסֵּ֨תֶר&thinsp;<b>׀</b> רֵעֵהוּ֮ אוֹת֢וֹ אַ֫צְמִ֥ית גְּֽבַהּ־עֵ֭ינַיִם וּרְחַ֣ב לֵבָ֑ב אֹ֝ת֗וֹ לֹ֣א אוּכָֽל׃</p>
-      <p>עֵינַ֤י&thinsp;<b>׀</b> בְּנֶֽאֶמְנֵי־אֶרֶץ֮ לָשֶׁ֢בֶת עִמָּ֫דִ֥י הֹ֭לֵךְ בְּדֶ֣רֶךְ תָּמִ֑ים ה֝֗וּא יְשָׁרְתֵֽנִי׃</p>
-      <p>לֹֽא־יֵשֵׁ֨ב&thinsp;<b>׀</b> בְּקֶ֥רֶב בֵּיתִי֮ עֹשֵׂ֢ה רְמִ֫יָּ֥ה דֹּבֵ֥ר שְׁקָרִ֑ים לֹא־יִ֝כּ֗וֹן לְנֶ֣גֶד עֵינָֽי׃</p>
-      <p>לַבְּקָרִ֗ים אַצְמִ֥ית כׇּל־רִשְׁעֵי־אָ֑רֶץ לְהַכְרִ֥ית מֵעִיר־יְ֝הֹוָ֗ה כׇּל־פֹּ֥עֲלֵי אָֽוֶן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדָוִ֗ד מִ֫זְמ֥וֹר חֶֽסֶד־וּמִשְׁפָּ֥ט אָשִׁ֑ירָה לְךָ֖ יְהֹוָ֣ה אֲזַמֵּֽרָה׃</p></div><div class="heb-s"><p>לדוד מזמור חסד־ומשפט אשירה לך יהוה אזמרה׃</p></div></div>
+      <div class="texte-fr"><p>De David. Psaume. Je veux chanter la bonté et la justice: à toi, Éternel, j’adresse mon cantique.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׂכִּ֤ילָה&thinsp;<b>׀</b> בְּדֶ֬רֶךְ תָּמִ֗ים מָ֭תַי תָּב֣וֹא אֵלָ֑י אֶתְהַלֵּ֥ךְ בְּתׇם־לְ֝בָבִ֗י בְּקֶ֣רֶב בֵּיתִֽי׃</p></div><div class="heb-s"><p>אשכילה&thinsp;<b>׀</b> בדרך תמים מתי תבוא אלי אתהלך בתם־לבבי בקרב ביתי׃</p></div></div>
+      <div class="texte-fr"><p>Je veux m’appliquer à reconnaître le droit chemin (quand viendras-tu à moi?) suivre la droiture de mon cœur dans l’enceinte de ma maison.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־אָשִׁ֨ית&thinsp;<b>׀</b> לְנֶ֥גֶד עֵינַ֗י דְּֽבַר־בְּלִ֫יָּ֥עַל עֲשֹֽׂה־סֵטִ֥ים שָׂנֵ֑אתִי לֹ֖א יִדְבַּ֣ק בִּֽי׃</p></div><div class="heb-s"><p>לא־אשית&thinsp;<b>׀</b> לנגד עיני דבר־בליעל עשה־סטים שנאתי לא ידבק בי׃</p></div></div>
+      <div class="texte-fr"><p>Je ne tolérerai, sous mes yeux, rien d’indigne, je déteste les agissements des pervers: rien de commun entre eux et moi!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֵבָ֣ב עִ֭קֵּשׁ יָס֣וּר מִמֶּ֑נִּי רָ֝֗ע לֹ֣א אֵדָֽע׃</p></div><div class="heb-s"><p>לבב עקש יסור ממני רע לא אדע׃</p></div></div>
+      <div class="texte-fr"><p>Tout cœur astucieux doit rester loin de moi; le mal, je ne veux pas le connaître.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p><span class="mam-kq"><span class="mam-kq-k">(מלושני)</span> <span class="mam-kq-q">[מְלׇשְׁנִ֬י]</span></span> בַסֵּ֨תֶר&thinsp;<b>׀</b> רֵעֵהוּ֮ אוֹת֢וֹ אַ֫צְמִ֥ית גְּֽבַהּ־עֵ֭ינַיִם וּרְחַ֣ב לֵבָ֑ב אֹ֝ת֗וֹ לֹ֣א אוּכָֽל׃</p></div><div class="heb-s"><p><span class="mam-kq"><span class="mam-kq-k">(מלושני)</span> <span class="mam-kq-q">[מלשני]</span></span> בסתר&thinsp;<b>׀</b> רעהו אותו אצמית גבה־עינים ורחב לבב אתו לא אוכל׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque, dans l’ombre, calomnie son prochain, je l’anéantirai. Des yeux hautains et un cœur enflé d’orgueil, je ne puis les supporter.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֵינַ֤י&thinsp;<b>׀</b> בְּנֶֽאֶמְנֵי־אֶרֶץ֮ לָשֶׁ֢בֶת עִמָּ֫דִ֥י הֹ֭לֵךְ בְּדֶ֣רֶךְ תָּמִ֑ים ה֝֗וּא יְשָׁרְתֵֽנִי׃</p></div><div class="heb-s"><p>עיני&thinsp;<b>׀</b> בנאמני־ארץ לשבת עמדי הלך בדרך תמים הוא ישרתני׃</p></div></div>
+      <div class="texte-fr"><p>J’ai les regards tournés vers les hommes loyaux du pays, pour les faire demeurer avec moi; celui qui suit le droit chemin, je l’attacherai à mon service.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יֵשֵׁ֨ב&thinsp;<b>׀</b> בְּקֶ֥רֶב בֵּיתִי֮ עֹשֵׂ֢ה רְמִ֫יָּ֥ה דֹּבֵ֥ר שְׁקָרִ֑ים לֹא־יִ֝כּ֗וֹן לְנֶ֣גֶד עֵינָֽי׃</p></div><div class="heb-s"><p>לא־ישב&thinsp;<b>׀</b> בקרב ביתי עשה רמיה דבר שקרים לא־יכון לנגד עיני׃</p></div></div>
+      <div class="texte-fr"><p>Mais personne ne séjournera dans ma maison, qui agit avec fourberie; celui qui débite des mensonges ne subsistera pas devant mes yeux.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַבְּקָרִ֗ים אַצְמִ֥ית כׇּל־רִשְׁעֵי־אָ֑רֶץ לְהַכְרִ֥ית מֵעִיר־יְ֝הֹוָ֗ה כׇּל־פֹּ֥עֲלֵי אָֽוֶן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>לבקרים אצמית כל־רשעי־ארץ להכרית מעיר־יהוה כל־פעלי און׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Chaque matin, j’extirperai tous les impies du pays, afin de faire disparaître de la cité divine tous les artisans d’iniquité.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>De David. Psaume. Je veux chanter la bonté et la justice: à toi, Éternel, j’adresse mon cantique.</p>
-      <p>Je veux m’appliquer à reconnaître le droit chemin (quand viendras-tu à moi?) suivre la droiture de mon cœur dans l’enceinte de ma maison.</p>
-      <p>Je ne tolérerai, sous mes yeux, rien d’indigne, je déteste les agissements des pervers: rien de commun entre eux et moi!</p>
-      <p>Tout cœur astucieux doit rester loin de moi; le mal, je ne veux pas le connaître.</p>
-      <p>Quiconque, dans l’ombre, calomnie son prochain, je l’anéantirai. Des yeux hautains et un cœur enflé d’orgueil, je ne puis les supporter.</p>
-      <p>J’ai les regards tournés vers les hommes loyaux du pays, pour les faire demeurer avec moi; celui qui suit le droit chemin, je l’attacherai à mon service.</p>
-      <p>Mais personne ne séjournera dans ma maison, qui agit avec fourberie; celui qui débite des mensonges ne subsistera pas devant mes yeux.</p>
-      <p>Chaque matin, j’extirperai tous les impies du pays, afin de faire disparaître de la cité divine tous les artisans d’iniquité.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -245,6 +297,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-100.html">← Tehilim 100</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-101.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-102.html">Tehilim 102 →</a></div>
 </main>
 
 <footer>

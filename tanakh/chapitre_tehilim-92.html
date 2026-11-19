@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 92 – Il est bon de louer D.ieu : cantique du shabbat</h1>
     <p>Ketouvim, Tehilim, Chapitre 92</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-91.html">← Tehilim 91</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-92.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-93.html">Tehilim 93 →</a></div>
   </div>
 </header>
 
@@ -161,55 +202,82 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>מִזְמ֥וֹר שִׁ֗יר לְי֣וֹם הַשַּׁבָּֽת׃</p>
-      <p>ט֗וֹב לְהֹד֥וֹת לַיהֹוָ֑ה וּלְזַמֵּ֖ר לְשִׁמְךָ֣ עֶלְיֽוֹן׃</p>
-      <p>לְהַגִּ֣יד בַּבֹּ֣קֶר חַסְדֶּ֑ךָ וֶ֝אֱמ֥וּנָתְךָ֗ בַּלֵּילֽוֹת׃</p>
-      <p>עֲֽלֵי־עָ֭שׂוֹר וַעֲלֵי־נָ֑בֶל עֲלֵ֖י הִגָּי֣וֹן בְּכִנּֽוֹר׃</p>
-      <p>כִּ֤י שִׂמַּחְתַּ֣נִי יְהֹוָ֣ה בְּפׇעֳלֶ֑ךָ בְּֽמַעֲשֵׂ֖י יָדֶ֣יךָ אֲרַנֵּֽן׃</p>
-      <p>מַה־גָּדְל֣וּ מַעֲשֶׂ֣יךָ יְהֹוָ֑ה מְ֝אֹ֗ד עָמְק֥וּ מַחְשְׁבֹתֶֽיךָ׃</p>
-      <p>אִֽישׁ־בַּ֭עַר לֹ֣א יֵדָ֑ע וּ֝כְסִ֗יל לֹא־יָבִ֥ין אֶת־זֹֽאת׃</p>
-      <p>בִּפְרֹ֤חַ רְשָׁעִ֨ים&thinsp;<b>׀</b> כְּמ֥וֹ־עֵ֗שֶׂב וַ֭יָּצִיצוּ כׇּל־פֹּ֣עֲלֵי אָ֑וֶן לְהִשָּׁמְדָ֥ם עֲדֵי־עַֽד׃</p>
-      <p>וְאַתָּ֥ה מָר֗וֹם לְעֹלָ֥ם יְהֹוָֽה׃</p>
-      <p>כִּ֤י הִנֵּ֪ה אֹיְבֶ֡יךָ יְֽהֹוָ֗ה כִּֽי־הִנֵּ֣ה אֹיְבֶ֣יךָ יֹאבֵ֑דוּ יִ֝תְפָּרְד֗וּ כׇּל־פֹּ֥עֲלֵי אָֽוֶן׃</p>
-      <p>וַתָּ֣רֶם כִּרְאֵ֣ים קַרְנִ֑י בַּ֝לֹּתִ֗י בְּשֶׁ֣מֶן רַעֲנָֽן׃</p>
-      <p>וַתַּבֵּ֥ט עֵינִ֗י בְּשׁ֫וּרָ֥י בַּקָּמִ֖ים עָלַ֥י מְרֵעִ֗ים תִּשְׁמַ֥עְנָה אׇזְנָֽי׃</p>
-      <p>צַ֭דִּיק כַּתָּמָ֣ר יִפְרָ֑ח כְּאֶ֖רֶז בַּלְּבָנ֣וֹן יִשְׂגֶּֽה׃</p>
-      <p>שְׁ֭תוּלִים בְּבֵ֣ית יְהֹוָ֑ה בְּחַצְר֖וֹת אֱלֹהֵ֣ינוּ יַפְרִֽיחוּ׃</p>
-      <p>ע֭וֹד יְנוּב֣וּן בְּשֵׂיבָ֑ה דְּשֵׁנִ֖ים וְֽרַעֲנַנִּ֣ים יִהְיֽוּ׃</p>
-      <p>לְ֭הַגִּיד כִּֽי־יָשָׁ֣ר יְהֹוָ֑ה צ֝וּרִ֗י וְֽלֹא־<span class="mam-kq"><span class="mam-kq-q">[עַוְלָ֥תָה]</span> <span class="mam-kq-k">(עלתה)</span></span> בּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִזְמ֥וֹר שִׁ֗יר לְי֣וֹם הַשַּׁבָּֽת׃</p></div><div class="heb-s"><p>מזמור שיר ליום השבת׃</p></div></div>
+      <div class="texte-fr"><p>Psaume. Cantique pour le jour du Sabbat.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>ט֗וֹב לְהֹד֥וֹת לַיהֹוָ֑ה וּלְזַמֵּ֖ר לְשִׁמְךָ֣ עֶלְיֽוֹן׃</p></div><div class="heb-s"><p>טוב להדות ליהוה ולזמר לשמך עליון׃</p></div></div>
+      <div class="texte-fr"><p>Il est beau de rendre grâce à l’Éternel, de chanter en l’honneur de ton nom, ô Dieu suprême,</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְהַגִּ֣יד בַּבֹּ֣קֶר חַסְדֶּ֑ךָ וֶ֝אֱמ֥וּנָתְךָ֗ בַּלֵּילֽוֹת׃</p></div><div class="heb-s"><p>להגיד בבקר חסדך ואמונתך בלילות׃</p></div></div>
+      <div class="texte-fr"><p>d’annoncer, dès le matin, ta bonté, et ta bienveillance pendant les nuits,</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲֽלֵי־עָ֭שׂוֹר וַעֲלֵי־נָ֑בֶל עֲלֵ֖י הִגָּי֣וֹן בְּכִנּֽוֹר׃</p></div><div class="heb-s"><p>עלי־עשור ועלי־נבל עלי הגיון בכנור׃</p></div></div>
+      <div class="texte-fr"><p>avec la lyre à dix cordes et le luth, aux sons harmonieux de la harpe.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י שִׂמַּחְתַּ֣נִי יְהֹוָ֣ה בְּפׇעֳלֶ֑ךָ בְּֽמַעֲשֵׂ֖י יָדֶ֣יךָ אֲרַנֵּֽן׃</p></div><div class="heb-s"><p>כי שמחתני יהוה בפעלך במעשי ידיך ארנן׃</p></div></div>
+      <div class="texte-fr"><p>Car tu me combles de joie, ô Éternel, par tes hauts faits; je veux célébrer les œuvres de tes mains.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־גָּדְל֣וּ מַעֲשֶׂ֣יךָ יְהֹוָ֑ה מְ֝אֹ֗ד עָמְק֥וּ מַחְשְׁבֹתֶֽיךָ׃</p></div><div class="heb-s"><p>מה־גדלו מעשיך יהוה מאד עמקו מחשבתיך׃</p></div></div>
+      <div class="texte-fr"><p>Qu’elles sont grandes tes œuvres, ô Éternel, infiniment profondes tes pensées!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִֽישׁ־בַּ֭עַר לֹ֣א יֵדָ֑ע וּ֝כְסִ֗יל לֹא־יָבִ֥ין אֶת־זֹֽאת׃</p></div><div class="heb-s"><p>איש־בער לא ידע וכסיל לא־יבין את־זאת׃</p></div></div>
+      <div class="texte-fr"><p>L’homme dépourvu de sens ne peut savoir, le sot ne peut s’en rendre compte:</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּפְרֹ֤חַ רְשָׁעִ֨ים&thinsp;<b>׀</b> כְּמ֥וֹ־עֵ֗שֶׂב וַ֭יָּצִיצוּ כׇּל־פֹּ֣עֲלֵי אָ֑וֶן לְהִשָּׁמְדָ֥ם עֲדֵי־עַֽד׃</p></div><div class="heb-s"><p>בפרח רשעים&thinsp;<b>׀</b> כמו־עשב ויציצו כל־פעלי און להשמדם עדי־עד׃</p></div></div>
+      <div class="texte-fr"><p>si les méchants croissent comme l’herbe, et que fleurissent tous les artisans d’iniquité, c’est pour encourir une ruine irréparable.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתָּ֥ה מָר֗וֹם לְעֹלָ֥ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>ואתה מרום לעלם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Mais toi, Seigneur, tu es éternellement sublime;</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י הִנֵּ֪ה אֹיְבֶ֡יךָ יְֽהֹוָ֗ה כִּֽי־הִנֵּ֣ה אֹיְבֶ֣יךָ יֹאבֵ֑דוּ יִ֝תְפָּרְד֗וּ כׇּל־פֹּ֥עֲלֵי אָֽוֶן׃</p></div><div class="heb-s"><p>כי הנה איביך יהוה כי־הנה איביך יאבדו יתפרדו כל־פעלי און׃</p></div></div>
+      <div class="texte-fr"><p>car voilà que tes ennemis, ô Éternel, voilà que tes ennemis succombent, que se disloquent tous les ouvriers du mal,</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתָּ֣רֶם כִּרְאֵ֣ים קַרְנִ֑י בַּ֝לֹּתִ֗י בְּשֶׁ֣מֶן רַעֲנָֽן׃</p></div><div class="heb-s"><p>ותרם כראים קרני בלתי בשמן רענן׃</p></div></div>
+      <div class="texte-fr"><p>tandis que tu grandis ma force comme celle du reêm, et que ma décrépitude reverdit au contact de l’huile.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתַּבֵּ֥ט עֵינִ֗י בְּשׁ֫וּרָ֥י בַּקָּמִ֖ים עָלַ֥י מְרֵעִ֗ים תִּשְׁמַ֥עְנָה אׇזְנָֽי׃</p></div><div class="heb-s"><p>ותבט עיני בשורי בקמים עלי מרעים תשמענה אזני׃</p></div></div>
+      <div class="texte-fr"><p>Avec satisfaction, mes yeux contemplent mes ennemis, mes oreilles entendent les malfaiteurs se dresser contre moi.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>צַ֭דִּיק כַּתָּמָ֣ר יִפְרָ֑ח כְּאֶ֖רֶז בַּלְּבָנ֣וֹן יִשְׂגֶּֽה׃</p></div><div class="heb-s"><p>צדיק כתמר יפרח כארז בלבנון ישגה׃</p></div></div>
+      <div class="texte-fr"><p>Le juste fleurit comme le palmier; comme le cèdre du Liban, il est élancé.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁ֭תוּלִים בְּבֵ֣ית יְהֹוָ֑ה בְּחַצְר֖וֹת אֱלֹהֵ֣ינוּ יַפְרִֽיחוּ׃</p></div><div class="heb-s"><p>שתולים בבית יהוה בחצרות אלהינו יפריחו׃</p></div></div>
+      <div class="texte-fr"><p>Plantés dans la maison de l’Éternel, ils sont florissants dans les parvis de notre Dieu.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>ע֭וֹד יְנוּב֣וּן בְּשֵׂיבָ֑ה דְּשֵׁנִ֖ים וְֽרַעֲנַנִּ֣ים יִהְיֽוּ׃</p></div><div class="heb-s"><p>עוד ינובון בשיבה דשנים ורעננים יהיו׃</p></div></div>
+      <div class="texte-fr"><p>Jusque dans la haute vieillesse, ils donnent des fruits, ils sont pleins de sève et de verdeur,</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְ֭הַגִּיד כִּֽי־יָשָׁ֣ר יְהֹוָ֑ה צ֝וּרִ֗י וְֽלֹא־<span class="mam-kq"><span class="mam-kq-q">[עַוְלָ֥תָה]</span> <span class="mam-kq-k">(עלתה)</span></span> בּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>להגיד כי־ישר יהוה צורי ולא־<span class="mam-kq"><span class="mam-kq-q">[עולתה]</span> <span class="mam-kq-k">(עלתה)</span></span> בו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>prêts à proclamer que l’Éternel est droit, qu’il est mon rocher, inaccessible à l’injustice.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Psaume. Cantique pour le jour du Sabbat.</p>
-      <p>Il est beau de rendre grâce à l’Éternel, de chanter en l’honneur de ton nom, ô Dieu suprême,</p>
-      <p>d’annoncer, dès le matin, ta bonté, et ta bienveillance pendant les nuits,</p>
-      <p>avec la lyre à dix cordes et le luth, aux sons harmonieux de la harpe.</p>
-      <p>Car tu me combles de joie, ô Éternel, par tes hauts faits; je veux célébrer les œuvres de tes mains.</p>
-      <p>Qu’elles sont grandes tes œuvres, ô Éternel, infiniment profondes tes pensées!</p>
-      <p>L’homme dépourvu de sens ne peut savoir, le sot ne peut s’en rendre compte:</p>
-      <p>si les méchants croissent comme l’herbe, et que fleurissent tous les artisans d’iniquité, c’est pour encourir une ruine irréparable.</p>
-      <p>Mais toi, Seigneur, tu es éternellement sublime;</p>
-      <p>car voilà que tes ennemis, ô Éternel, voilà que tes ennemis succombent, que se disloquent tous les ouvriers du mal,</p>
-      <p>tandis que tu grandis ma force comme celle du reêm, et que ma décrépitude reverdit au contact de l’huile.</p>
-      <p>Avec satisfaction, mes yeux contemplent mes ennemis, mes oreilles entendent les malfaiteurs se dresser contre moi.</p>
-      <p>Le juste fleurit comme le palmier; comme le cèdre du Liban, il est élancé.</p>
-      <p>Plantés dans la maison de l’Éternel, ils sont florissants dans les parvis de notre Dieu.</p>
-      <p>Jusque dans la haute vieillesse, ils donnent des fruits, ils sont pleins de sève et de verdeur,</p>
-      <p>prêts à proclamer que l’Éternel est droit, qu’il est mon rocher, inaccessible à l’injustice.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -264,6 +332,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-91.html">← Tehilim 91</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-92.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-93.html">Tehilim 93 →</a></div>
 </main>
 
 <footer>

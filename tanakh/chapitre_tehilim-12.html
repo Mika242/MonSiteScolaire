@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 12 – Sauve, D.ieu, car le pieux a disparu</h1>
     <p>Ketouvim, Tehilim, Chapitre 12</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-11.html">← Tehilim 11</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-12.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-13.html">Tehilim 13 →</a></div>
   </div>
 </header>
 
@@ -161,41 +202,54 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ עַֽל־הַשְּׁמִינִ֗ית מִזְמ֥וֹר לְדָוִֽד׃</p>
-      <p>הוֹשִׁ֣יעָה יְ֭הֹוָה כִּֽי־גָמַ֣ר חָסִ֑יד כִּי־פַ֥סּוּ אֱ֝מוּנִ֗ים מִבְּנֵ֥י אָדָֽם׃</p>
-      <p>שָׁ֤וְא&thinsp;<b>׀</b> יְֽדַבְּרוּ֮ אִ֤ישׁ אֶת־רֵ֫עֵ֥הוּ שְׂפַ֥ת חֲלָק֑וֹת בְּלֵ֖ב וָלֵ֣ב יְדַבֵּֽרוּ׃</p>
-      <p>יַכְרֵ֣ת יְ֭הֹוָה כׇּל־שִׂפְתֵ֣י חֲלָק֑וֹת לָ֝שׁ֗וֹן מְדַבֶּ֥רֶת גְּדֹלֽוֹת׃</p>
-      <p>אֲשֶׁ֤ר אָמְר֨וּ&thinsp;<b>׀</b> לִלְשֹׁנֵ֣נוּ נַ֭גְבִּיר שְׂפָתֵ֣ינוּ אִתָּ֑נוּ מִ֖י אָד֣וֹן לָֽנוּ׃</p>
-      <p>מִשֹּׁ֥ד עֲנִיִּים֮ מֵאֶנְקַ֢ת אֶבְי֫וֹנִ֥ים עַתָּ֣ה אָ֭קוּם יֹאמַ֣ר יְהֹוָ֑ה אָשִׁ֥ית בְּ֝יֵ֗שַׁע יָפִ֥יחַֽ־לֽוֹ׃</p>
-      <p>אִ֥מְר֣וֹת יְהֹוָה֮ אֲמָר֢וֹת טְהֹ֫ר֥וֹת כֶּ֣סֶף צָ֭רוּף בַּעֲלִ֣יל לָאָ֑רֶץ מְ֝זֻקָּ֗ק שִׁבְעָתָֽיִם׃</p>
-      <p>אַתָּֽה־יְהֹוָ֥ה תִּשְׁמְרֵ֑ם תִּצְּרֶ֓נּוּ&thinsp;<b>׀</b> מִן־הַדּ֖וֹר ז֣וּ לְעוֹלָֽם׃</p>
-      <p>סָבִ֗יב רְשָׁעִ֥ים יִתְהַלָּכ֑וּן כְּרֻ֥ם זֻ֝לּ֗וּת לִבְנֵ֥י אָדָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ עַֽל־הַשְּׁמִינִ֗ית מִזְמ֥וֹר לְדָוִֽד׃</p></div><div class="heb-s"><p>למנצח על־השמינית מזמור לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres, à l’octave. Psaume de David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹשִׁ֣יעָה יְ֭הֹוָה כִּֽי־גָמַ֣ר חָסִ֑יד כִּי־פַ֥סּוּ אֱ֝מוּנִ֗ים מִבְּנֵ֥י אָדָֽם׃</p></div><div class="heb-s"><p>הושיעה יהוה כי־גמר חסיד כי־פסו אמונים מבני אדם׃</p></div></div>
+      <div class="texte-fr"><p>Au secours, Seigneur, car il n’est plus d’homme pieux! Car la loyauté est bannie des fils d’Adam.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֤וְא&thinsp;<b>׀</b> יְֽדַבְּרוּ֮ אִ֤ישׁ אֶת־רֵ֫עֵ֥הוּ שְׂפַ֥ת חֲלָק֑וֹת בְּלֵ֖ב וָלֵ֣ב יְדַבֵּֽרוּ׃</p></div><div class="heb-s"><p>שוא&thinsp;<b>׀</b> ידברו איש את־רעהו שפת חלקות בלב ולב ידברו׃</p></div></div>
+      <div class="texte-fr"><p>On se parle avec fausseté l’un à l’autre, on parle d’une langue mielleuse, d’un cœur plein de duplicité.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַכְרֵ֣ת יְ֭הֹוָה כׇּל־שִׂפְתֵ֣י חֲלָק֑וֹת לָ֝שׁ֗וֹן מְדַבֶּ֥רֶת גְּדֹלֽוֹת׃</p></div><div class="heb-s"><p>יכרת יהוה כל־שפתי חלקות לשון מדברת גדלות׃</p></div></div>
+      <div class="texte-fr"><p>Que l’Éternel supprime toutes les langues mielleuses, les lèvres qui s’expriment avec arrogance,</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֤ר אָמְר֨וּ&thinsp;<b>׀</b> לִלְשֹׁנֵ֣נוּ נַ֭גְבִּיר שְׂפָתֵ֣ינוּ אִתָּ֑נוּ מִ֖י אָד֣וֹן לָֽנוּ׃</p></div><div class="heb-s"><p>אשר אמרו&thinsp;<b>׀</b> ללשננו נגביר שפתינו אתנו מי אדון לנו׃</p></div></div>
+      <div class="texte-fr"><p>ceux qui disent: "Par notre langue nous triomphons, nos lèvres sont notre force: qui serait notre maître?"</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִשֹּׁ֥ד עֲנִיִּים֮ מֵאֶנְקַ֢ת אֶבְי֫וֹנִ֥ים עַתָּ֣ה אָ֭קוּם יֹאמַ֣ר יְהֹוָ֑ה אָשִׁ֥ית בְּ֝יֵ֗שַׁע יָפִ֥יחַֽ־לֽוֹ׃</p></div><div class="heb-s"><p>משד עניים מאנקת אביונים עתה אקום יאמר יהוה אשית בישע יפיח־לו׃</p></div></div>
+      <div class="texte-fr"><p>Devant l’oppression des humbles, les plaintes des pauvres. "A cette heure je me lève, dit le Seigneur, j’apporte le salut à celui qu’on entoure de pièges."</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִ֥מְר֣וֹת יְהֹוָה֮ אֲמָר֢וֹת טְהֹ֫ר֥וֹת כֶּ֣סֶף צָ֭רוּף בַּעֲלִ֣יל לָאָ֑רֶץ מְ֝זֻקָּ֗ק שִׁבְעָתָֽיִם׃</p></div><div class="heb-s"><p>אמרות יהוה אמרות טהרות כסף צרוף בעליל לארץ מזקק שבעתים׃</p></div></div>
+      <div class="texte-fr"><p>Les paroles de l’Éternel sont des paroles pures; c’est de l’argent raffiné au creuset dans le sol, et qui est sept fois épuré.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַתָּֽה־יְהֹוָ֥ה תִּשְׁמְרֵ֑ם תִּצְּרֶ֓נּוּ&thinsp;<b>׀</b> מִן־הַדּ֖וֹר ז֣וּ לְעוֹלָֽם׃</p></div><div class="heb-s"><p>אתה־יהוה תשמרם תצרנו&thinsp;<b>׀</b> מן־הדור זו לעולם׃</p></div></div>
+      <div class="texte-fr"><p>Toi, ô Seigneur, tu les protèges [les justes], tu les défends à jamais contre cette engeance.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>סָבִ֗יב רְשָׁעִ֥ים יִתְהַלָּכ֑וּן כְּרֻ֥ם זֻ֝לּ֗וּת לִבְנֵ֥י אָדָֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>סביב רשעים יתהלכון כרם זלות לבני אדם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Les méchants rôdent aux alentours, quand la vilenie domine parmi les hommes.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres, à l’octave. Psaume de David.</p>
-      <p>Au secours, Seigneur, car il n’est plus d’homme pieux! Car la loyauté est bannie des fils d’Adam.</p>
-      <p>On se parle avec fausseté l’un à l’autre, on parle d’une langue mielleuse, d’un cœur plein de duplicité.</p>
-      <p>Que l’Éternel supprime toutes les langues mielleuses, les lèvres qui s’expriment avec arrogance,</p>
-      <p>ceux qui disent: "Par notre langue nous triomphons, nos lèvres sont notre force: qui serait notre maître?"</p>
-      <p>Devant l’oppression des humbles, les plaintes des pauvres. "A cette heure je me lève, dit le Seigneur, j’apporte le salut à celui qu’on entoure de pièges."</p>
-      <p>Les paroles de l’Éternel sont des paroles pures; c’est de l’argent raffiné au creuset dans le sol, et qui est sept fois épuré.</p>
-      <p>Toi, ô Seigneur, tu les protèges [les justes], tu les défends à jamais contre cette engeance.</p>
-      <p>Les méchants rôdent aux alentours, quand la vilenie domine parmi les hommes.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -247,6 +301,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-11.html">← Tehilim 11</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-12.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-13.html">Tehilim 13 →</a></div>
 </main>
 
 <footer>

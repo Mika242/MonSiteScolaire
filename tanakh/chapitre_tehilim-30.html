@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 30 – Cantique pour l&#x27;inauguration de la Maison</h1>
     <p>Ketouvim, Tehilim, Chapitre 30</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-29.html">← Tehilim 29</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-30.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-31.html">Tehilim 31 →</a></div>
   </div>
 </header>
 
@@ -161,49 +202,70 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>מִזְמ֡וֹר שִׁיר־חֲנֻכַּ֖ת הַבַּ֣יִת לְדָוִֽד׃</p>
-      <p>אֲרוֹמִמְךָ֣ יְ֭הֹוָה כִּ֣י דִלִּיתָ֑נִי וְלֹֽא־שִׂמַּ֖חְתָּ אֹיְבַ֣י לִֽי׃</p>
-      <p>יְהֹוָ֥ה אֱלֹהָ֑י שִׁוַּ֥עְתִּי אֵ֝לֶ֗יךָ וַתִּרְפָּאֵֽנִי׃</p>
-      <p>יְֽהֹוָ֗ה הֶעֱלִ֣יתָ מִן־שְׁא֣וֹל נַפְשִׁ֑י חִ֝יִּיתַ֗נִי <span class="mam-kq"><span class="mam-kq-k">(מיורדי)</span> <span class="mam-kq-q">[מִיׇּֽרְדִי־]</span></span>בֽוֹר׃</p>
-      <p>זַמְּר֣וּ לַיהֹוָ֣ה חֲסִידָ֑יו וְ֝הוֹד֗וּ לְזֵ֣כֶר קׇדְשֽׁוֹ׃</p>
-      <p>כִּ֤י רֶ֨גַע&thinsp;<b>׀</b> בְּאַפּוֹ֮ חַיִּ֢ים בִּרְצ֫וֹנ֥וֹ בָּ֭עֶרֶב יָלִ֥ין בֶּ֗כִי וְלַבֹּ֥קֶר רִנָּֽה׃</p>
-      <p>וַ֭אֲנִי אָמַ֣רְתִּי בְשַׁלְוִ֑י בַּל־אֶמּ֥וֹט לְעוֹלָֽם׃</p>
-      <p>יְֽהֹוָ֗ה בִּרְצוֹנְךָ֮ הֶעֱמַ֢דְתָּה לְֽהַרְרִ֫י<span class="mam-implicit-maqaf">־</span>עֹ֥ז הִסְתַּ֥רְתָּ פָנֶ֗יךָ הָיִ֥יתִי נִבְהָֽל׃</p>
-      <p>אֵלֶ֣יךָ יְהֹוָ֣ה אֶקְרָ֑א וְאֶל־אֲ֝דֹנָ֗י אֶתְחַנָּֽן׃</p>
-      <p>מַה־בֶּ֥צַע בְּדָמִי֮ בְּרִדְתִּ֢י אֶ֫ל<span class="mam-implicit-maqaf">־</span>שָׁ֥חַת הֲיוֹדְךָ֥ עָפָ֑ר הֲיַגִּ֥יד אֲמִתֶּֽךָ׃</p>
-      <p>שְׁמַע־יְהֹוָ֥ה וְחׇנֵּ֑נִי יְ֝הֹוָ֗ה הֱֽיֵה־עֹזֵ֥ר לִֽי׃</p>
-      <p>הָפַ֣כְתָּ מִסְפְּדִי֮ לְמָח֢וֹל לִ֥֫י פִּתַּ֥חְתָּ שַׂקִּ֑י וַֽתְּאַזְּרֵ֥נִי שִׂמְחָֽה׃</p>
-      <p>לְמַ֤עַן&thinsp;<b>׀</b> יְזַמֶּרְךָ֣ כָ֭בוֹד וְלֹ֣א יִדֹּ֑ם יְהֹוָ֥ה אֱ֝לֹהַ֗י לְעוֹלָ֥ם אוֹדֶֽךָּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִזְמ֡וֹר שִׁיר־חֲנֻכַּ֖ת הַבַּ֣יִת לְדָוִֽד׃</p></div><div class="heb-s"><p>מזמור שיר־חנכת הבית לדוד׃</p></div></div>
+      <div class="texte-fr"><p>Psaume. Cantique de la dédicace du temple; par David.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲרוֹמִמְךָ֣ יְ֭הֹוָה כִּ֣י דִלִּיתָ֑נִי וְלֹֽא־שִׂמַּ֖חְתָּ אֹיְבַ֣י לִֽי׃</p></div><div class="heb-s"><p>ארוממך יהוה כי דליתני ולא־שמחת איבי לי׃</p></div></div>
+      <div class="texte-fr"><p>Je t’exalterai, Seigneur, car tu m’as relevé; tu n’as pas réjoui mes ennemis à mes dépens.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֥ה אֱלֹהָ֑י שִׁוַּ֥עְתִּי אֵ֝לֶ֗יךָ וַתִּרְפָּאֵֽנִי׃</p></div><div class="heb-s"><p>יהוה אלהי שועתי אליך ותרפאני׃</p></div></div>
+      <div class="texte-fr"><p>Éternel, mon Dieu, je t’ai invoqué, et tu m’as guéri:</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְֽהֹוָ֗ה הֶעֱלִ֣יתָ מִן־שְׁא֣וֹל נַפְשִׁ֑י חִ֝יִּיתַ֗נִי <span class="mam-kq"><span class="mam-kq-k">(מיורדי)</span> <span class="mam-kq-q">[מִיׇּֽרְדִי־]</span></span>בֽוֹר׃</p></div><div class="heb-s"><p>יהוה העלית מן־שאול נפשי חייתני <span class="mam-kq"><span class="mam-kq-k">(מיורדי)</span> <span class="mam-kq-q">[מירדי־]</span></span>בור׃</p></div></div>
+      <div class="texte-fr"><p>Seigneur, tu as fait remonter mon âme du Cheol, tu m’as permis de vivre, de ne pas descendre au tombeau.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>זַמְּר֣וּ לַיהֹוָ֣ה חֲסִידָ֑יו וְ֝הוֹד֗וּ לְזֵ֣כֶר קׇדְשֽׁוֹ׃</p></div><div class="heb-s"><p>זמרו ליהוה חסידיו והודו לזכר קדשו׃</p></div></div>
+      <div class="texte-fr"><p>Chantez l’Éternel, vous ses fidèles, rendez grâce à son saint nom;</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י רֶ֨גַע&thinsp;<b>׀</b> בְּאַפּוֹ֮ חַיִּ֢ים בִּרְצ֫וֹנ֥וֹ בָּ֭עֶרֶב יָלִ֥ין בֶּ֗כִי וְלַבֹּ֥קֶר רִנָּֽה׃</p></div><div class="heb-s"><p>כי רגע&thinsp;<b>׀</b> באפו חיים ברצונו בערב ילין בכי ולבקר רנה׃</p></div></div>
+      <div class="texte-fr"><p>car sa colère ne dure qu’un instant, mais sa bienveillance est pour la vie; le soir dominent les pleurs, le matin, c’est l’allégresse.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֭אֲנִי אָמַ֣רְתִּי בְשַׁלְוִ֑י בַּל־אֶמּ֥וֹט לְעוֹלָֽם׃</p></div><div class="heb-s"><p>ואני אמרתי בשלוי בל־אמוט לעולם׃</p></div></div>
+      <div class="texte-fr"><p>J’avais dit en ma quiétude: "Jamais je ne chancellerai."</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְֽהֹוָ֗ה בִּרְצוֹנְךָ֮ הֶעֱמַ֢דְתָּה לְֽהַרְרִ֫י<span class="mam-implicit-maqaf">־</span>עֹ֥ז הִסְתַּ֥רְתָּ פָנֶ֗יךָ הָיִ֥יתִי נִבְהָֽל׃</p></div><div class="heb-s"><p>יהוה ברצונך העמדתה להררי<span class="mam-implicit-maqaf">־</span>עז הסתרת פניך הייתי נבהל׃</p></div></div>
+      <div class="texte-fr"><p>Seigneur, dans ta bonté, tu avais puissamment fortifié ma montagne. Mais tu as caché ta face: j’ai été consterné!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵלֶ֣יךָ יְהֹוָ֣ה אֶקְרָ֑א וְאֶל־אֲ֝דֹנָ֗י אֶתְחַנָּֽן׃</p></div><div class="heb-s"><p>אליך יהוה אקרא ואל־אדני אתחנן׃</p></div></div>
+      <div class="texte-fr"><p>C’est vers toi que je crie, c’est à mon Seigneur que vont mes supplications:</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־בֶּ֥צַע בְּדָמִי֮ בְּרִדְתִּ֢י אֶ֫ל<span class="mam-implicit-maqaf">־</span>שָׁ֥חַת הֲיוֹדְךָ֥ עָפָ֑ר הֲיַגִּ֥יד אֲמִתֶּֽךָ׃</p></div><div class="heb-s"><p>מה־בצע בדמי ברדתי אל<span class="mam-implicit-maqaf">־</span>שחת היודך עפר היגיד אמתך׃</p></div></div>
+      <div class="texte-fr"><p>"Que gagnes-tu à ce que mon sang coule? A ce que je descende au tombeau? La poussière te rend-elle hommage? Proclame-t-elle ta persistante bonté?</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁמַע־יְהֹוָ֥ה וְחׇנֵּ֑נִי יְ֝הֹוָ֗ה הֱֽיֵה־עֹזֵ֥ר לִֽי׃</p></div><div class="heb-s"><p>שמע־יהוה וחנני יהוה היה־עזר לי׃</p></div></div>
+      <div class="texte-fr"><p>Écoute, ô Seigneur, et prends-moi en pitié! Éternel, sois mon sauveur!"</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָפַ֣כְתָּ מִסְפְּדִי֮ לְמָח֢וֹל לִ֥֫י פִּתַּ֥חְתָּ שַׂקִּ֑י וַֽתְּאַזְּרֵ֥נִי שִׂמְחָֽה׃</p></div><div class="heb-s"><p>הפכת מספדי למחול לי פתחת שקי ותאזרני שמחה׃</p></div></div>
+      <div class="texte-fr"><p>Tu as changé mon deuil en danses joyeuses, tu as dénoué mon cilice, et de la joie tu m’as fait une ceinture.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֤עַן&thinsp;<b>׀</b> יְזַמֶּרְךָ֣ כָ֭בוֹד וְלֹ֣א יִדֹּ֑ם יְהֹוָ֥ה אֱ֝לֹהַ֗י לְעוֹלָ֥ם אוֹדֶֽךָּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>למען&thinsp;<b>׀</b> יזמרך כבוד ולא ידם יהוה אלהי לעולם אודך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>De la sorte mon âme te chantera sans relâche; Éternel, mon Dieu, à tout jamais je te célébrerai.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Psaume. Cantique de la dédicace du temple; par David.</p>
-      <p>Je t’exalterai, Seigneur, car tu m’as relevé; tu n’as pas réjoui mes ennemis à mes dépens.</p>
-      <p>Éternel, mon Dieu, je t’ai invoqué, et tu m’as guéri:</p>
-      <p>Seigneur, tu as fait remonter mon âme du Cheol, tu m’as permis de vivre, de ne pas descendre au tombeau.</p>
-      <p>Chantez l’Éternel, vous ses fidèles, rendez grâce à son saint nom;</p>
-      <p>car sa colère ne dure qu’un instant, mais sa bienveillance est pour la vie; le soir dominent les pleurs, le matin, c’est l’allégresse.</p>
-      <p>J’avais dit en ma quiétude: "Jamais je ne chancellerai."</p>
-      <p>Seigneur, dans ta bonté, tu avais puissamment fortifié ma montagne. Mais tu as caché ta face: j’ai été consterné!</p>
-      <p>C’est vers toi que je crie, c’est à mon Seigneur que vont mes supplications:</p>
-      <p>"Que gagnes-tu à ce que mon sang coule? A ce que je descende au tombeau? La poussière te rend-elle hommage? Proclame-t-elle ta persistante bonté?</p>
-      <p>Écoute, ô Seigneur, et prends-moi en pitié! Éternel, sois mon sauveur!"</p>
-      <p>Tu as changé mon deuil en danses joyeuses, tu as dénoué mon cilice, et de la joie tu m’as fait une ceinture.</p>
-      <p>De la sorte mon âme te chantera sans relâche; Éternel, mon Dieu, à tout jamais je te célébrerai.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -258,6 +320,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-29.html">← Tehilim 29</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-30.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-31.html">Tehilim 31 →</a></div>
 </main>
 
 <footer>

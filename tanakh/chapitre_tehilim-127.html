@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 127 – Si D.ieu ne bâtit la maison</h1>
     <p>Ketouvim, Tehilim, Chapitre 127</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-126.html">← Tehilim 126</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-127.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-128.html">Tehilim 128 →</a></div>
   </div>
 </header>
 
@@ -161,33 +202,38 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>שִׁ֥יר הַֽמַּעֲל֗וֹת לִשְׁלֹ֫מֹ֥ה אִם־יְהֹוָ֤ה&thinsp;<b>׀</b> לֹא־יִבְנֶ֬ה בַ֗יִת שָׁ֤וְא עָמְל֣וּ בוֹנָ֣יו בּ֑וֹ אִם־יְהֹוָ֥ה לֹא־יִשְׁמׇר־עִ֝֗יר שָׁ֤וְא&thinsp;<b>׀</b> שָׁקַ֬ד שׁוֹמֵֽר׃</p>
-      <p>שָׁ֤וְא לָכֶ֨ם מַשְׁכִּ֪ימֵֽי ק֡וּם מְאַחֲרֵי־שֶׁ֗בֶת אֹ֭כְלֵי לֶ֣חֶם הָעֲצָבִ֑ים כֵּ֤ן יִתֵּ֖ן לִידִיד֣וֹ שֵׁנָֽא׃</p>
-      <p>הִנֵּ֤ה נַחֲלַ֣ת יְהֹוָ֣ה בָּנִ֑ים שָׂ֝כָ֗ר פְּרִ֣י הַבָּֽטֶן׃</p>
-      <p>כְּחִצִּ֥ים בְּיַד־גִּבּ֑וֹר כֵּ֝֗ן בְּנֵ֣י הַנְּעוּרִֽים׃</p>
-      <p>אַשְׁרֵ֤י הַגֶּ֗בֶר אֲשֶׁ֤ר מִלֵּ֥א אֶת־אַשְׁפָּת֗וֹ מֵ֫הֶ֥ם לֹֽא־יֵבֹ֑שׁוּ כִּֽי־יְדַבְּר֖וּ אֶת־אוֹיְבִ֣ים בַּשָּֽׁעַר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֥יר הַֽמַּעֲל֗וֹת לִשְׁלֹ֫מֹ֥ה אִם־יְהֹוָ֤ה&thinsp;<b>׀</b> לֹא־יִבְנֶ֬ה בַ֗יִת שָׁ֤וְא עָמְל֣וּ בוֹנָ֣יו בּ֑וֹ אִם־יְהֹוָ֥ה לֹא־יִשְׁמׇר־עִ֝֗יר שָׁ֤וְא&thinsp;<b>׀</b> שָׁקַ֬ד שׁוֹמֵֽר׃</p></div><div class="heb-s"><p>שיר המעלות לשלמה אם־יהוה&thinsp;<b>׀</b> לא־יבנה בית שוא עמלו בוניו בו אם־יהוה לא־ישמר־עיר שוא&thinsp;<b>׀</b> שקד שומר׃</p></div></div>
+      <div class="texte-fr"><p>Cantique des degrés. De Salomon. Si l’Éternel ne bâtit pas une maison, c’est en vain que peinent ceux qui la construisent; si l’Éternel ne garde pas une ville, c’est en vain que la sentinelle veille avec soin.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֤וְא לָכֶ֨ם מַשְׁכִּ֪ימֵֽי ק֡וּם מְאַחֲרֵי־שֶׁ֗בֶת אֹ֭כְלֵי לֶ֣חֶם הָעֲצָבִ֑ים כֵּ֤ן יִתֵּ֖ן לִידִיד֣וֹ שֵׁנָֽא׃</p></div><div class="heb-s"><p>שוא לכם משכימי קום מאחרי־שבת אכלי לחם העצבים כן יתן לידידו שנא׃</p></div></div>
+      <div class="texte-fr"><p>C’est en vain que vous avancez l’heure du lever, que vous prolongez tard vos veilles, mangeant un pain péniblement gagné! A celui qu’il aime [Dieu] donne le nécessaire pendant son sommeil.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּ֤ה נַחֲלַ֣ת יְהֹוָ֣ה בָּנִ֑ים שָׂ֝כָ֗ר פְּרִ֣י הַבָּֽטֶן׃</p></div><div class="heb-s"><p>הנה נחלת יהוה בנים שכר פרי הבטן׃</p></div></div>
+      <div class="texte-fr"><p>Voyez, le vrai don de l’Éternel, ce sont des fils; sa récompense, c’est le fruit des entrailles.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּחִצִּ֥ים בְּיַד־גִּבּ֑וֹר כֵּ֝֗ן בְּנֵ֣י הַנְּעוּרִֽים׃</p></div><div class="heb-s"><p>כחצים ביד־גבור כן בני הנעורים׃</p></div></div>
+      <div class="texte-fr"><p>Des flèches dans la main d’un guerrier, voilà ce que sont les fils de la jeunesse.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׁרֵ֤י הַגֶּ֗בֶר אֲשֶׁ֤ר מִלֵּ֥א אֶת־אַשְׁפָּת֗וֹ מֵ֫הֶ֥ם לֹֽא־יֵבֹ֑שׁוּ כִּֽי־יְדַבְּר֖וּ אֶת־אוֹיְבִ֣ים בַּשָּֽׁעַר׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אשרי הגבר אשר מלא את־אשפתו מהם לא־יבשו כי־ידברו את־אויבים בשער׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Heureux l’homme qui en a rempli son carquois! Ils n’auront pas à rougir, lorsqu’ils plaideront contre des ennemis à la Porte.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Cantique des degrés. De Salomon. Si l’Éternel ne bâtit pas une maison, c’est en vain que peinent ceux qui la construisent; si l’Éternel ne garde pas une ville, c’est en vain que la sentinelle veille avec soin.</p>
-      <p>C’est en vain que vous avancez l’heure du lever, que vous prolongez tard vos veilles, mangeant un pain péniblement gagné! A celui qu’il aime [Dieu] donne le nécessaire pendant son sommeil.</p>
-      <p>Voyez, le vrai don de l’Éternel, ce sont des fils; sa récompense, c’est le fruit des entrailles.</p>
-      <p>Des flèches dans la main d’un guerrier, voilà ce que sont les fils de la jeunesse.</p>
-      <p>Heureux l’homme qui en a rempli son carquois! Ils n’auront pas à rougir, lorsqu’ils plaideront contre des ennemis à la Porte.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -239,6 +285,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-126.html">← Tehilim 126</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-127.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-128.html">Tehilim 128 →</a></div>
 </main>
 
 <footer>

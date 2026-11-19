@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 57 – Dans l&#x27;ombre de Tes ailes je me réfugie</h1>
     <p>Ketouvim, Tehilim, Chapitre 57</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-56.html">← Tehilim 56</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-57.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-58.html">Tehilim 58 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֣חַ אַל־תַּ֭שְׁחֵת לְדָוִ֣ד מִכְתָּ֑ם בְּבׇרְח֥וֹ מִפְּנֵי־שָׁ֝א֗וּל בַּמְּעָרָֽה׃</p>
-      <p>חׇנֵּ֤נִי אֱלֹהִ֨ים&thinsp;<b>׀</b> חׇנֵּ֗נִי כִּ֥י בְךָ֮ חָסָ֢יָה נַ֫פְשִׁ֥י וּבְצֵֽל־כְּנָפֶ֥יךָ אֶחְסֶ֑ה עַ֝֗ד יַעֲבֹ֥ר הַוּֽוֹת׃</p>
-      <p>אֶ֭קְרָא לֵאלֹהִ֣ים עֶלְי֑וֹן לָ֝אֵ֗ל גֹּמֵ֥ר עָלָֽי׃</p>
-      <p>יִשְׁלַ֤ח מִשָּׁמַ֨יִם&thinsp;<b>׀</b> וְֽיוֹשִׁיעֵ֗נִי חֵרֵ֣ף שֹׁאֲפִ֣י סֶ֑לָה יִשְׁלַ֥ח אֱ֝לֹהִ֗ים חַסְדּ֥וֹ וַאֲמִתּֽוֹ׃</p>
-      <p>נַפְשִׁ֤י&thinsp;<b>׀</b> בְּת֥וֹךְ לְבָאִם֮ אֶשְׁכְּבָ֢ה לֹ֫הֲטִ֥ים בְּֽנֵי־אָדָ֗ם שִׁ֭נֵּיהֶם חֲנִ֣ית וְחִצִּ֑ים וּ֝לְשׁוֹנָ֗ם חֶ֣רֶב חַדָּֽה׃</p>
-      <p>ר֣וּמָה עַל־הַשָּׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃</p>
-      <p>רֶ֤שֶׁת&thinsp;<b>׀</b> הֵכִ֣ינוּ לִפְעָמַי֮ כָּפַ֢ף נַ֫פְשִׁ֥י כָּר֣וּ לְפָנַ֣י שִׁיחָ֑ה נָפְל֖וּ בְתוֹכָ֣הּ סֶֽלָה׃</p>
-      <p>נָ֘כ֤וֹן לִבִּ֣י אֱ֭לֹהִים נָכ֣וֹן לִבִּ֑י אָ֝שִׁ֗ירָה וַאֲזַמֵּֽרָה׃</p>
-      <p>ע֤וּרָה כְבוֹדִ֗י ע֭וּרָֽה הַנֵּ֥בֶל וְכִנּ֗וֹר אָעִ֥ירָה שָּֽׁחַר׃</p>
-      <p>אוֹדְךָ֖ בָעַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֲדֹנָ֑י אֲ֝זַמֶּרְךָ֗ בַּלְאֻמִּֽים׃</p>
-      <p>כִּֽי־גָדֹ֣ל עַד־שָׁמַ֣יִם חַסְדֶּ֑ךָ וְֽעַד־שְׁחָקִ֥ים אֲמִתֶּֽךָ׃</p>
-      <p>ר֣וּמָה עַל־שָׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֣חַ אַל־תַּ֭שְׁחֵת לְדָוִ֣ד מִכְתָּ֑ם בְּבׇרְח֥וֹ מִפְּנֵי־שָׁ֝א֗וּל בַּמְּעָרָֽה׃</p></div><div class="heb-s"><p>למנצח אל־תשחת לדוד מכתם בברחו מפני־שאול במערה׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Al tachhêt. Mikhtam de David, lorsqu’il se fut réfugié, à cause de Saül, dans la caverne.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>חׇנֵּ֤נִי אֱלֹהִ֨ים&thinsp;<b>׀</b> חׇנֵּ֗נִי כִּ֥י בְךָ֮ חָסָ֢יָה נַ֫פְשִׁ֥י וּבְצֵֽל־כְּנָפֶ֥יךָ אֶחְסֶ֑ה עַ֝֗ד יַעֲבֹ֥ר הַוּֽוֹת׃</p></div><div class="heb-s"><p>חנני אלהים&thinsp;<b>׀</b> חנני כי בך חסיה נפשי ובצל־כנפיך אחסה עד יעבר הוות׃</p></div></div>
+      <div class="texte-fr"><p>Sois-moi propice, ô Dieu, sois-moi propice, car en toi s’abrite mon âme; je me mets à couvert à l’ombre de tes ailes, jusqu’à ce que le malheur ait passé.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֭קְרָא לֵאלֹהִ֣ים עֶלְי֑וֹן לָ֝אֵ֗ל גֹּמֵ֥ר עָלָֽי׃</p></div><div class="heb-s"><p>אקרא לאלהים עליון לאל גמר עלי׃</p></div></div>
+      <div class="texte-fr"><p>Je crie vers le Dieu suprême, vers le Tout-Puissant qui prendra ma cause en main.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׁלַ֤ח מִשָּׁמַ֨יִם&thinsp;<b>׀</b> וְֽיוֹשִׁיעֵ֗נִי חֵרֵ֣ף שֹׁאֲפִ֣י סֶ֑לָה יִשְׁלַ֥ח אֱ֝לֹהִ֗ים חַסְדּ֥וֹ וַאֲמִתּֽוֹ׃</p></div><div class="heb-s"><p>ישלח משמים&thinsp;<b>׀</b> ויושיעני חרף שאפי סלה ישלח אלהים חסדו ואמתו׃</p></div></div>
+      <div class="texte-fr"><p>Que du haut du ciel il m’envoie son secours, celui qui m’opprime aura beau m’insulter, Sélah! Que Dieu envoie sa grâce et sa bienveillance!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַפְשִׁ֤י&thinsp;<b>׀</b> בְּת֥וֹךְ לְבָאִם֮ אֶשְׁכְּבָ֢ה לֹ֫הֲטִ֥ים בְּֽנֵי־אָדָ֗ם שִׁ֭נֵּיהֶם חֲנִ֣ית וְחִצִּ֑ים וּ֝לְשׁוֹנָ֗ם חֶ֣רֶב חַדָּֽה׃</p></div><div class="heb-s"><p>נפשי&thinsp;<b>׀</b> בתוך לבאם אשכבה להטים בני־אדם שניהם חנית וחצים ולשונם חרב חדה׃</p></div></div>
+      <div class="texte-fr"><p>Je pourrai me coucher parmi des lions aux regards flamboyants, parmi des hommes dont les dents sont des lances et des flèches, et la langue un glaive tranchant.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>ר֣וּמָה עַל־הַשָּׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃</p></div><div class="heb-s"><p>רומה על־השמים אלהים על כל־הארץ כבודך׃</p></div></div>
+      <div class="texte-fr"><p>Montre, ô Dieu, ta grandeur qui dépasse les cieux; que ta gloire brille sur toute la terre!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֶ֤שֶׁת&thinsp;<b>׀</b> הֵכִ֣ינוּ לִפְעָמַי֮ כָּפַ֢ף נַ֫פְשִׁ֥י כָּר֣וּ לְפָנַ֣י שִׁיחָ֑ה נָפְל֖וּ בְתוֹכָ֣הּ סֶֽלָה׃</p></div><div class="heb-s"><p>רשת&thinsp;<b>׀</b> הכינו לפעמי כפף נפשי כרו לפני שיחה נפלו בתוכה סלה׃</p></div></div>
+      <div class="texte-fr"><p>On avait dressé des filets sous mes pas pour me faire ployer, on avait creusé une fosse devant moi: ils y sont tombés eux-mêmes. Sélah!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָ֘כ֤וֹן לִבִּ֣י אֱ֭לֹהִים נָכ֣וֹן לִבִּ֑י אָ֝שִׁ֗ירָה וַאֲזַמֵּֽרָה׃</p></div><div class="heb-s"><p>נכון לבי אלהים נכון לבי אשירה ואזמרה׃</p></div></div>
+      <div class="texte-fr"><p>Mon cœur reste ferme, ô Dieu, mon cœur reste ferme: je puis chanter, célébrer tes louanges.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>ע֤וּרָה כְבוֹדִ֗י ע֭וּרָֽה הַנֵּ֥בֶל וְכִנּ֗וֹר אָעִ֥ירָה שָּֽׁחַר׃</p></div><div class="heb-s"><p>עורה כבודי עורה הנבל וכנור אעירה שחר׃</p></div></div>
+      <div class="texte-fr"><p>Réveille-toi, ô mon âme, réveillez-vous, ô luth et harpe: je veux réveiller l’aurore.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹדְךָ֖ בָעַמִּ֥ים&thinsp;<small>׀</small>&thinsp;אֲדֹנָ֑י אֲ֝זַמֶּרְךָ֗ בַּלְאֻמִּֽים׃</p></div><div class="heb-s"><p>אודך בעמים&thinsp;<small>׀</small>&thinsp;אדני אזמרך בלאמים׃</p></div></div>
+      <div class="texte-fr"><p>Je te louerai parmi les nations, ô Seigneur, je te chanterai parmi les peuples.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־גָדֹ֣ל עַד־שָׁמַ֣יִם חַסְדֶּ֑ךָ וְֽעַד־שְׁחָקִ֥ים אֲמִתֶּֽךָ׃</p></div><div class="heb-s"><p>כי־גדל עד־שמים חסדך ועד־שחקים אמתך׃</p></div></div>
+      <div class="texte-fr"><p>Car ta grâce s’élève jusqu’aux cieux, et ta bonté atteint jusqu’au firmament.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>ר֣וּמָה עַל־שָׁמַ֣יִם אֱלֹהִ֑ים עַ֖ל כׇּל־הָאָ֣רֶץ כְּבוֹדֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>רומה על־שמים אלהים על כל־הארץ כבודך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Montre, ô Dieu, ta grandeur qui dépasse les cieux; que ta gloire brille sur toute la terre!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Al tachhêt. Mikhtam de David, lorsqu’il se fut réfugié, à cause de Saül, dans la caverne.</p>
-      <p>Sois-moi propice, ô Dieu, sois-moi propice, car en toi s’abrite mon âme; je me mets à couvert à l’ombre de tes ailes, jusqu’à ce que le malheur ait passé.</p>
-      <p>Je crie vers le Dieu suprême, vers le Tout-Puissant qui prendra ma cause en main.</p>
-      <p>Que du haut du ciel il m’envoie son secours, celui qui m’opprime aura beau m’insulter, Sélah! Que Dieu envoie sa grâce et sa bienveillance!</p>
-      <p>Je pourrai me coucher parmi des lions aux regards flamboyants, parmi des hommes dont les dents sont des lances et des flèches, et la langue un glaive tranchant.</p>
-      <p>Montre, ô Dieu, ta grandeur qui dépasse les cieux; que ta gloire brille sur toute la terre!</p>
-      <p>On avait dressé des filets sous mes pas pour me faire ployer, on avait creusé une fosse devant moi: ils y sont tombés eux-mêmes. Sélah!</p>
-      <p>Mon cœur reste ferme, ô Dieu, mon cœur reste ferme: je puis chanter, célébrer tes louanges.</p>
-      <p>Réveille-toi, ô mon âme, réveillez-vous, ô luth et harpe: je veux réveiller l’aurore.</p>
-      <p>Je te louerai parmi les nations, ô Seigneur, je te chanterai parmi les peuples.</p>
-      <p>Car ta grâce s’élève jusqu’aux cieux, et ta bonté atteint jusqu’au firmament.</p>
-      <p>Montre, ô Dieu, ta grandeur qui dépasse les cieux; que ta gloire brille sur toute la terre!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -253,6 +313,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-56.html">← Tehilim 56</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-57.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-58.html">Tehilim 58 →</a></div>
 </main>
 
 <footer>

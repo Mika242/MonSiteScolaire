@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 105 – Rendez grâce à D.ieu, proclamez Son nom</h1>
     <p>Ketouvim, Tehilim, Chapitre 105</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-104.html">← Tehilim 104</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-105.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-106.html">Tehilim 106 →</a></div>
   </div>
 </header>
 
@@ -161,113 +202,198 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>הוֹד֣וּ לַ֭יהֹוָה קִרְא֣וּ בִשְׁמ֑וֹ הוֹדִ֥יעוּ בָ֝עַמִּ֗ים עֲלִילוֹתָֽיו׃</p>
-      <p>שִֽׁירוּ־ל֭וֹ זַמְּרוּ־ל֑וֹ שִׂ֝֗יחוּ בְּכׇל־נִפְלְאוֹתָֽיו׃</p>
-      <p>הִֽ֭תְהַלְלוּ בְּשֵׁ֣ם קׇדְשׁ֑וֹ יִ֝שְׂמַ֗ח לֵ֤ב&thinsp;<b>׀</b> מְבַקְשֵׁ֬י יְהֹוָֽה׃</p>
-      <p>דִּרְשׁ֣וּ יְהֹוָ֣ה וְעֻזּ֑וֹ בַּקְּשׁ֖וּ פָנָ֣יו תָּמִֽיד׃</p>
-      <p>זִכְר֗וּ נִפְלְאוֹתָ֥יו אֲשֶׁר־עָשָׂ֑ה מֹ֝פְתָ֗יו וּמִשְׁפְּטֵי־פִֽיו׃</p>
-      <p>זֶ֭רַע אַבְרָהָ֣ם עַבְדּ֑וֹ בְּנֵ֖י יַעֲקֹ֣ב בְּחִירָֽיו׃</p>
-      <p>ה֭וּא יְהֹוָ֣ה אֱלֹהֵ֑ינוּ בְּכׇל־הָ֝אָ֗רֶץ מִשְׁפָּטָֽיו׃</p>
-      <p>זָכַ֣ר לְעוֹלָ֣ם בְּרִית֑וֹ דָּבָ֥ר צִ֝וָּ֗ה לְאֶ֣לֶף דּֽוֹר׃</p>
-      <p>אֲשֶׁ֣ר כָּ֭רַת אֶת־אַבְרָהָ֑ם וּשְׁב֖וּעָת֣וֹ לְיִשְׂחָֽק׃</p>
-      <p>וַיַּעֲמִידֶ֣הָ לְיַעֲקֹ֣ב לְחֹ֑ק לְ֝יִשְׂרָאֵ֗ל בְּרִ֣ית עוֹלָֽם׃</p>
-      <p>לֵאמֹ֗ר לְךָ֗ אֶתֵּ֥ן אֶת־אֶֽרֶץ־כְּנָ֑עַן חֶ֝֗בֶל נַחֲלַתְכֶֽם׃</p>
-      <p>בִּֽ֭הְיוֹתָם מְתֵ֣י מִסְפָּ֑ר כִּ֝מְעַ֗ט וְגָרִ֥ים בָּֽהּ׃</p>
-      <p>וַ֭יִּֽתְהַלְּכוּ מִגּ֣וֹי אֶל־גּ֑וֹי מִ֝מַּמְלָכָ֗ה אֶל־עַ֥ם אַחֵֽר׃</p>
-      <p>לֹא־הִנִּ֣יחַ אָדָ֣ם לְעׇשְׁקָ֑ם וַיּ֖וֹכַח עֲלֵיהֶ֣ם מְלָכִֽים׃</p>
-      <p>אַֽל־תִּגְּע֥וּ בִמְשִׁיחָ֑י וְ֝לִנְבִיאַ֗י אַל־תָּרֵֽעוּ׃</p>
-      <p>וַיִּקְרָ֣א רָ֭עָב עַל־הָאָ֑רֶץ כׇּֽל־מַטֵּה־לֶ֥חֶם שָׁבָֽר׃</p>
-      <p>שָׁלַ֣ח לִפְנֵיהֶ֣ם אִ֑ישׁ לְ֝עֶ֗בֶד נִמְכַּ֥ר יוֹסֵֽף׃</p>
-      <p>עִנּ֣וּ בַכֶּ֣בֶל <span class="mam-kq"><span class="mam-kq-k">(רגליו)</span> <span class="mam-kq-q">[רַגְל֑וֹ]</span></span> בַּ֝רְזֶ֗ל בָּ֣אָה נַפְשֽׁוֹ׃</p>
-      <p>עַד־עֵ֥ת בֹּא־דְבָר֑וֹ אִמְרַ֖ת יְהֹוָ֣ה צְרָפָֽתְהוּ׃</p>
-      <p>שָׁ֣לַח מֶ֭לֶךְ וַיַּתִּירֵ֑הוּ מֹשֵׁ֥ל עַ֝מִּ֗ים וַֽיְפַתְּחֵֽהוּ׃</p>
-      <p>שָׂמ֣וֹ אָד֣וֹן לְבֵית֑וֹ וּ֝מֹשֵׁ֗ל בְּכׇל־קִנְיָנֽוֹ׃</p>
-      <p>לֶאְסֹ֣ר שָׂרָ֣יו בְּנַפְשׁ֑וֹ וּזְקֵנָ֥יו יְחַכֵּֽם׃</p>
-      <p>וַיָּבֹ֣א יִשְׂרָאֵ֣ל מִצְרָ֑יִם וְ֝יַעֲקֹ֗ב גָּ֣ר בְּאֶֽרֶץ־חָֽם׃</p>
-      <p>וַיֶּ֣פֶר אֶת־עַמּ֣וֹ מְאֹ֑ד וַ֝יַּעֲצִמֵ֗הוּ מִצָּרָֽיו׃</p>
-      <p>הָפַ֣ךְ לִ֭בָּם לִשְׂנֹ֣א עַמּ֑וֹ לְ֝הִתְנַכֵּ֗ל בַּעֲבָדָֽיו׃</p>
-      <p>שָׁ֭לַח מֹשֶׁ֣ה עַבְדּ֑וֹ אַ֝הֲרֹ֗ן אֲשֶׁ֣ר בָּחַר־בּֽוֹ׃</p>
-      <p>שָֽׂמוּ־בָ֭ם דִּבְרֵ֣י אֹתוֹתָ֑יו וּ֝מֹפְתִ֗ים בְּאֶ֣רֶץ חָֽם׃</p>
-      <p>שָׁ֣לַֽח חֹ֭שֶׁךְ וַיַּחְשִׁ֑ךְ וְלֹא־מָ֝ר֗וּ אֶת־<span class="mam-kq"><span class="mam-kq-q">[דְּבָרֽוֹ]</span> <span class="mam-kq-k">(דבריו)</span></span>׃</p>
-      <p>הָפַ֣ךְ אֶת־מֵימֵיהֶ֣ם לְדָ֑ם וַ֝יָּ֗מֶת אֶת־דְּגָתָֽם׃</p>
-      <p>שָׁרַ֣ץ אַרְצָ֣ם צְפַרְדְּעִ֑ים בְּ֝חַדְרֵ֗י מַלְכֵיהֶֽם׃</p>
-      <p>אָ֭מַר וַיָּבֹ֣א עָרֹ֑ב כִּ֝נִּ֗ים בְּכׇל־גְּבוּלָֽם׃</p>
-      <p>נָתַ֣ן גִּשְׁמֵיהֶ֣ם בָּרָ֑ד אֵ֖שׁ לֶהָב֣וֹת בְּאַרְצָֽם׃</p>
-      <p>וַיַּ֣ךְ גַּ֭פְנָם וּתְאֵנָתָ֑ם וַ֝יְשַׁבֵּ֗ר עֵ֣ץ גְּבוּלָֽם׃</p>
-      <p>אָ֭מַר וַיָּבֹ֣א אַרְבֶּ֑ה וְ֝יֶ֗לֶק וְאֵ֣ין מִסְפָּֽר׃</p>
-      <p>וַיֹּ֣אכַל כׇּל־עֵ֣שֶׂב בְּאַרְצָ֑ם וַ֝יֹּ֗אכַל פְּרִ֣י אַדְמָתָֽם׃</p>
-      <p>וַיַּ֣ךְ כׇּל־בְּכ֣וֹר בְּאַרְצָ֑ם רֵ֝אשִׁ֗ית לְכׇל־אוֹנָֽם׃</p>
-      <p>וַֽ֭יּוֹצִיאֵם בְּכֶ֣סֶף וְזָהָ֑ב וְאֵ֖ין בִּשְׁבָטָ֣יו כּוֹשֵֽׁל׃</p>
-      <p>שָׂמַ֣ח מִצְרַ֣יִם בְּצֵאתָ֑ם כִּֽי־נָפַ֖ל פַּחְדָּ֣ם עֲלֵיהֶֽם׃</p>
-      <p>פָּרַ֣שׂ עָנָ֣ן לְמָסָ֑ךְ וְ֝אֵ֗שׁ לְהָאִ֥יר לָֽיְלָה׃</p>
-      <p>שָׁ֭אַל וַיָּבֵ֣א <span class="mam-kq-trivial">שְׂלָ֑ו</span> וְלֶ֥חֶם שָׁ֝מַ֗יִם יַשְׂבִּיעֵֽם׃</p>
-      <p>פָּ֣תַח צ֭וּר וַיָּז֣וּבוּ מָ֑יִם הָ֝לְכ֗וּ בַּצִּיּ֥וֹת נָהָֽר׃</p>
-      <p>כִּֽי־זָ֭כַר אֶת־דְּבַ֣ר קׇדְשׁ֑וֹ אֶֽת־אַבְרָהָ֥ם עַבְדּֽוֹ׃</p>
-      <p>וַיּוֹצִ֣א עַמּ֣וֹ בְשָׂשׂ֑וֹן בְּ֝רִנָּ֗ה אֶת־בְּחִירָֽיו׃</p>
-      <p>וַיִּתֵּ֣ן לָ֭הֶם אַרְצ֣וֹת גּוֹיִ֑ם וַעֲמַ֖ל לְאֻמִּ֣ים יִירָֽשׁוּ׃</p>
-      <p>בַּעֲב֤וּר&thinsp;<b>׀</b> יִשְׁמְר֣וּ חֻ֭קָּיו וְתוֹרֹתָ֥יו יִנְצֹ֗רוּ הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-10">10</a><a href="#v-20">20</a><a href="#v-30">30</a><a href="#v-40">40</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹד֣וּ לַ֭יהֹוָה קִרְא֣וּ בִשְׁמ֑וֹ הוֹדִ֥יעוּ בָ֝עַמִּ֗ים עֲלִילוֹתָֽיו׃</p></div><div class="heb-s"><p>הודו ליהוה קראו בשמו הודיעו בעמים עלילותיו׃</p></div></div>
+      <div class="texte-fr"><p>Rendez hommage à l’Éternel, proclamez son nom, publiez parmi les nations ses hauts faits.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִֽׁירוּ־ל֭וֹ זַמְּרוּ־ל֑וֹ שִׂ֝֗יחוּ בְּכׇל־נִפְלְאוֹתָֽיו׃</p></div><div class="heb-s"><p>שירו־לו זמרו־לו שיחו בכל־נפלאותיו׃</p></div></div>
+      <div class="texte-fr"><p>Chantez en son honneur, célébrez-le, entretenez-vous de toutes ses merveilles.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִֽ֭תְהַלְלוּ בְּשֵׁ֣ם קׇדְשׁ֑וֹ יִ֝שְׂמַ֗ח לֵ֤ב&thinsp;<b>׀</b> מְבַקְשֵׁ֬י יְהֹוָֽה׃</p></div><div class="heb-s"><p>התהללו בשם קדשו ישמח לב&thinsp;<b>׀</b> מבקשי יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Glorifiez-vous de son saint nom; que le cœur de ceux qui recherchent l’Éternel soit en joie!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>דִּרְשׁ֣וּ יְהֹוָ֣ה וְעֻזּ֑וֹ בַּקְּשׁ֖וּ פָנָ֣יו תָּמִֽיד׃</p></div><div class="heb-s"><p>דרשו יהוה ועזו בקשו פניו תמיד׃</p></div></div>
+      <div class="texte-fr"><p>Mettez-vous en quête de l’Éternel et de sa puissance, aspirez constamment à jouir de sa présence.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>זִכְר֗וּ נִפְלְאוֹתָ֥יו אֲשֶׁר־עָשָׂ֑ה מֹ֝פְתָ֗יו וּמִשְׁפְּטֵי־פִֽיו׃</p></div><div class="heb-s"><p>זכרו נפלאותיו אשר־עשה מפתיו ומשפטי־פיו׃</p></div></div>
+      <div class="texte-fr"><p>Souvenez-vous des merveilles qu’il a opérées, de ses prodiges et des arrêts sortis de sa bouche,</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֶ֭רַע אַבְרָהָ֣ם עַבְדּ֑וֹ בְּנֵ֖י יַעֲקֹ֣ב בְּחִירָֽיו׃</p></div><div class="heb-s"><p>זרע אברהם עבדו בני יעקב בחיריו׃</p></div></div>
+      <div class="texte-fr"><p>vous, ô postérité d’Abraham, son serviteur, fils de Jacob, ses élus!</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>ה֭וּא יְהֹוָ֣ה אֱלֹהֵ֑ינוּ בְּכׇל־הָ֝אָ֗רֶץ מִשְׁפָּטָֽיו׃</p></div><div class="heb-s"><p>הוא יהוה אלהינו בכל־הארץ משפטיו׃</p></div></div>
+      <div class="texte-fr"><p>Il est, lui, l’Éternel, notre Dieu; ses jugements s’étendent à toute la terre.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>זָכַ֣ר לְעוֹלָ֣ם בְּרִית֑וֹ דָּבָ֥ר צִ֝וָּ֗ה לְאֶ֣לֶף דּֽוֹר׃</p></div><div class="heb-s"><p>זכר לעולם בריתו דבר צוה לאלף דור׃</p></div></div>
+      <div class="texte-fr"><p>Éternellement il garde le souvenir de son alliance, du pacte qu’il a promulgué pour mille générations,</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר כָּ֭רַת אֶת־אַבְרָהָ֑ם וּשְׁב֖וּעָת֣וֹ לְיִשְׂחָֽק׃</p></div><div class="heb-s"><p>אשר כרת את־אברהם ושבועתו לישחק׃</p></div></div>
+      <div class="texte-fr"><p>qu’il a conclu avec Abraham, qu’il a fait par serment avec Isaac.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲמִידֶ֣הָ לְיַעֲקֹ֣ב לְחֹ֑ק לְ֝יִשְׂרָאֵ֗ל בְּרִ֣ית עוֹלָֽם׃</p></div><div class="heb-s"><p>ויעמידה ליעקב לחק לישראל ברית עולם׃</p></div></div>
+      <div class="texte-fr"><p>Il l’a érigé en loi pour Jacob, en contrat immuable pour Israël.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֵאמֹ֗ר לְךָ֗ אֶתֵּ֥ן אֶת־אֶֽרֶץ־כְּנָ֑עַן חֶ֝֗בֶל נַחֲלַתְכֶֽם׃</p></div><div class="heb-s"><p>לאמר לך אתן את־ארץ־כנען חבל נחלתכם׃</p></div></div>
+      <div class="texte-fr"><p>"C’est à toi, disait-il, que je donnerai le pays de Canaan comme un lot héréditaire",</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּֽ֭הְיוֹתָם מְתֵ֣י מִסְפָּ֑ר כִּ֝מְעַ֗ט וְגָרִ֥ים בָּֽהּ׃</p></div><div class="heb-s"><p>בהיותם מתי מספר כמעט וגרים בה׃</p></div></div>
+      <div class="texte-fr"><p>alors qu’ils étaient encore en petit nombre, et à peine établis comme étrangers dans ce pays.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֭יִּֽתְהַלְּכוּ מִגּ֣וֹי אֶל־גּ֑וֹי מִ֝מַּמְלָכָ֗ה אֶל־עַ֥ם אַחֵֽר׃</p></div><div class="heb-s"><p>ויתהלכו מגוי אל־גוי מממלכה אל־עם אחר׃</p></div></div>
+      <div class="texte-fr"><p>Puis ils se mirent à errer de nation en nation, d’un royaume vers un autre peuple.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־הִנִּ֣יחַ אָדָ֣ם לְעׇשְׁקָ֑ם וַיּ֖וֹכַח עֲלֵיהֶ֣ם מְלָכִֽים׃</p></div><div class="heb-s"><p>לא־הניח אדם לעשקם ויוכח עליהם מלכים׃</p></div></div>
+      <div class="texte-fr"><p>Il ne permit à personne de les opprimer, et à cause d’eux il châtia des rois.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַֽל־תִּגְּע֥וּ בִמְשִׁיחָ֑י וְ֝לִנְבִיאַ֗י אַל־תָּרֵֽעוּ׃</p></div><div class="heb-s"><p>אל־תגעו במשיחי ולנביאי אל־תרעו׃</p></div></div>
+      <div class="texte-fr"><p>"Ne touchez pas à mes oints, ne faites pas de mal à mes prophètes!"</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֣א רָ֭עָב עַל־הָאָ֑רֶץ כׇּֽל־מַטֵּה־לֶ֥חֶם שָׁבָֽר׃</p></div><div class="heb-s"><p>ויקרא רעב על־הארץ כל־מטה־לחם שבר׃</p></div></div>
+      <div class="texte-fr"><p>Il appela la famine sur la terre, et anéantit toute ressource en pain.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁלַ֣ח לִפְנֵיהֶ֣ם אִ֑ישׁ לְ֝עֶ֗בֶד נִמְכַּ֥ר יוֹסֵֽף׃</p></div><div class="heb-s"><p>שלח לפניהם איש לעבד נמכר יוסף׃</p></div></div>
+      <div class="texte-fr"><p>[Mais déjà] il avait envoyé devant eux un homme: Joseph avait été vendu comme esclave.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>עִנּ֣וּ בַכֶּ֣בֶל <span class="mam-kq"><span class="mam-kq-k">(רגליו)</span> <span class="mam-kq-q">[רַגְל֑וֹ]</span></span> בַּ֝רְזֶ֗ל בָּ֣אָה נַפְשֽׁוֹ׃</p></div><div class="heb-s"><p>ענו בכבל <span class="mam-kq"><span class="mam-kq-k">(רגליו)</span> <span class="mam-kq-q">[רגלו]</span></span> ברזל באה נפשו׃</p></div></div>
+      <div class="texte-fr"><p>On chargea ses pieds de liens, son corps fut retenu par les fers,</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַד־עֵ֥ת בֹּא־דְבָר֑וֹ אִמְרַ֖ת יְהֹוָ֣ה צְרָפָֽתְהוּ׃</p></div><div class="heb-s"><p>עד־עת בא־דברו אמרת יהוה צרפתהו׃</p></div></div>
+      <div class="texte-fr"><p>jusqu’à ce que s’accomplit sa prédiction et que la parole du Seigneur l’eût innocenté.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֣לַח מֶ֭לֶךְ וַיַּתִּירֵ֑הוּ מֹשֵׁ֥ל עַ֝מִּ֗ים וַֽיְפַתְּחֵֽהוּ׃</p></div><div class="heb-s"><p>שלח מלך ויתירהו משל עמים ויפתחהו׃</p></div></div>
+      <div class="texte-fr"><p>Le roi donna ordre d’ouvrir sa prison, le souverain des peuples, de faire tomber ses chaînes.</p></div>
+    </div><div class="seif" id="v-21">
+      <span class="seif-num">Verset 21</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂמ֣וֹ אָד֣וֹן לְבֵית֑וֹ וּ֝מֹשֵׁ֗ל בְּכׇל־קִנְיָנֽוֹ׃</p></div><div class="heb-s"><p>שמו אדון לביתו ומשל בכל־קנינו׃</p></div></div>
+      <div class="texte-fr"><p>Il l’établit chef de sa maison, intendant de tous ses biens,</p></div>
+    </div><div class="seif" id="v-22">
+      <span class="seif-num">Verset 22</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֶאְסֹ֣ר שָׂרָ֣יו בְּנַפְשׁ֑וֹ וּזְקֵנָ֥יו יְחַכֵּֽם׃</p></div><div class="heb-s"><p>לאסר שריו בנפשו וזקניו יחכם׃</p></div></div>
+      <div class="texte-fr"><p>avec la mission d’enchaîner les seigneurs à sa volonté, d’apprendre la sagesse aux vieux conseillers.</p></div>
+    </div><div class="seif" id="v-23">
+      <span class="seif-num">Verset 23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֣א יִשְׂרָאֵ֣ל מִצְרָ֑יִם וְ֝יַעֲקֹ֗ב גָּ֣ר בְּאֶֽרֶץ־חָֽם׃</p></div><div class="heb-s"><p>ויבא ישראל מצרים ויעקב גר בארץ־חם׃</p></div></div>
+      <div class="texte-fr"><p>Puis Israël vint en Égypte, Jacob alla séjourner dans le pays de Cham,</p></div>
+    </div><div class="seif" id="v-24">
+      <span class="seif-num">Verset 24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּ֣פֶר אֶת־עַמּ֣וֹ מְאֹ֑ד וַ֝יַּעֲצִמֵ֗הוּ מִצָּרָֽיו׃</p></div><div class="heb-s"><p>ויפר את־עמו מאד ויעצמהו מצריו׃</p></div></div>
+      <div class="texte-fr"><p>et Dieu multiplia prodigieusement son peuple, le rendit plus nombreux que ses oppresseurs.</p></div>
+    </div><div class="seif" id="v-25">
+      <span class="seif-num">Verset 25</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָפַ֣ךְ לִ֭בָּם לִשְׂנֹ֣א עַמּ֑וֹ לְ֝הִתְנַכֵּ֗ל בַּעֲבָדָֽיו׃</p></div><div class="heb-s"><p>הפך לבם לשנא עמו להתנכל בעבדיו׃</p></div></div>
+      <div class="texte-fr"><p>Leur cœur changea jusqu’à prendre son peuple en haine, et ourdir des machinations contre ses serviteurs.</p></div>
+    </div><div class="seif" id="v-26">
+      <span class="seif-num">Verset 26</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֭לַח מֹשֶׁ֣ה עַבְדּ֑וֹ אַ֝הֲרֹ֗ן אֲשֶׁ֣ר בָּחַר־בּֽוֹ׃</p></div><div class="heb-s"><p>שלח משה עבדו אהרן אשר בחר־בו׃</p></div></div>
+      <div class="texte-fr"><p>Il délégua Moïse, son serviteur, Aaron qu’il avait élu.</p></div>
+    </div><div class="seif" id="v-27">
+      <span class="seif-num">Verset 27</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָֽׂמוּ־בָ֭ם דִּבְרֵ֣י אֹתוֹתָ֑יו וּ֝מֹפְתִ֗ים בְּאֶ֣רֶץ חָֽם׃</p></div><div class="heb-s"><p>שמו־בם דברי אתותיו ומפתים בארץ חם׃</p></div></div>
+      <div class="texte-fr"><p>Ils accomplirent parmi eux les miracles qu’il avait annoncés, ses prodiges dans le pays de Cham.</p></div>
+    </div><div class="seif" id="v-28">
+      <span class="seif-num">Verset 28</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֣לַֽח חֹ֭שֶׁךְ וַיַּחְשִׁ֑ךְ וְלֹא־מָ֝ר֗וּ אֶת־<span class="mam-kq"><span class="mam-kq-q">[דְּבָרֽוֹ]</span> <span class="mam-kq-k">(דבריו)</span></span>׃</p></div><div class="heb-s"><p>שלח חשך ויחשך ולא־מרו את־<span class="mam-kq"><span class="mam-kq-q">[דברו]</span> <span class="mam-kq-k">(דבריו)</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Il répandit des ténèbres qu’il rendit impénétrables, pour qu’ils ne résistassent pas à sa parole.</p></div>
+    </div><div class="seif" id="v-29">
+      <span class="seif-num">Verset 29</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָפַ֣ךְ אֶת־מֵימֵיהֶ֣ם לְדָ֑ם וַ֝יָּ֗מֶת אֶת־דְּגָתָֽם׃</p></div><div class="heb-s"><p>הפך את־מימיהם לדם וימת את־דגתם׃</p></div></div>
+      <div class="texte-fr"><p>Il changea leurs eaux en sang, et fit périr leur poisson.</p></div>
+    </div><div class="seif" id="v-30">
+      <span class="seif-num">Verset 30</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁרַ֣ץ אַרְצָ֣ם צְפַרְדְּעִ֑ים בְּ֝חַדְרֵ֗י מַלְכֵיהֶֽם׃</p></div><div class="heb-s"><p>שרץ ארצם צפרדעים בחדרי מלכיהם׃</p></div></div>
+      <div class="texte-fr"><p>Leur pays fut inondé de grenouilles, jusque dans les appartements de leurs rois.</p></div>
+    </div><div class="seif" id="v-31">
+      <span class="seif-num">Verset 31</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֭מַר וַיָּבֹ֣א עָרֹ֑ב כִּ֝נִּ֗ים בְּכׇל־גְּבוּלָֽם׃</p></div><div class="heb-s"><p>אמר ויבא ערב כנים בכל־גבולם׃</p></div></div>
+      <div class="texte-fr"><p>Il dit, et des bêtes malfaisantes firent irruption, la vermine sévit dans toute leur contrée.</p></div>
+    </div><div class="seif" id="v-32">
+      <span class="seif-num">Verset 32</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָתַ֣ן גִּשְׁמֵיהֶ֣ם בָּרָ֑ד אֵ֖שׁ לֶהָב֣וֹת בְּאַרְצָֽם׃</p></div><div class="heb-s"><p>נתן גשמיהם ברד אש להבות בארצם׃</p></div></div>
+      <div class="texte-fr"><p>En guise de pluie, il leur envoya de la grêle, du feu, des flammes dans leur pays.</p></div>
+    </div><div class="seif" id="v-33">
+      <span class="seif-num">Verset 33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣ךְ גַּ֭פְנָם וּתְאֵנָתָ֑ם וַ֝יְשַׁבֵּ֗ר עֵ֣ץ גְּבוּלָֽם׃</p></div><div class="heb-s"><p>ויך גפנם ותאנתם וישבר עץ גבולם׃</p></div></div>
+      <div class="texte-fr"><p>Il dévasta leurs vignes et leurs figuiers, et fracassa les arbres de leur territoire.</p></div>
+    </div><div class="seif" id="v-34">
+      <span class="seif-num">Verset 34</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֭מַר וַיָּבֹ֣א אַרְבֶּ֑ה וְ֝יֶ֗לֶק וְאֵ֣ין מִסְפָּֽר׃</p></div><div class="heb-s"><p>אמר ויבא ארבה וילק ואין מספר׃</p></div></div>
+      <div class="texte-fr"><p>Il dit, et des sauterelles vinrent, des locustes en nombre infini,</p></div>
+    </div><div class="seif" id="v-35">
+      <span class="seif-num">Verset 35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אכַל כׇּל־עֵ֣שֶׂב בְּאַרְצָ֑ם וַ֝יֹּ֗אכַל פְּרִ֣י אַדְמָתָֽם׃</p></div><div class="heb-s"><p>ויאכל כל־עשב בארצם ויאכל פרי אדמתם׃</p></div></div>
+      <div class="texte-fr"><p>qui dévorèrent toutes les plantes de leurs champs et dévorèrent les fruits de leur sol.</p></div>
+    </div><div class="seif" id="v-36">
+      <span class="seif-num">Verset 36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣ךְ כׇּל־בְּכ֣וֹר בְּאַרְצָ֑ם רֵ֝אשִׁ֗ית לְכׇל־אוֹנָֽם׃</p></div><div class="heb-s"><p>ויך כל־בכור בארצם ראשית לכל־אונם׃</p></div></div>
+      <div class="texte-fr"><p>Puis il frappa tout premier-né dans leur pays, les prémices de toute leur vigueur.</p></div>
+    </div><div class="seif" id="v-37">
+      <span class="seif-num">Verset 37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽ֭יּוֹצִיאֵם בְּכֶ֣סֶף וְזָהָ֑ב וְאֵ֖ין בִּשְׁבָטָ֣יו כּוֹשֵֽׁל׃</p></div><div class="heb-s"><p>ויוציאם בכסף וזהב ואין בשבטיו כושל׃</p></div></div>
+      <div class="texte-fr"><p>Il les fit sortir, chargés d’argent et d’or; nul parmi ses tribus ne faiblit.</p></div>
+    </div><div class="seif" id="v-38">
+      <span class="seif-num">Verset 38</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂמַ֣ח מִצְרַ֣יִם בְּצֵאתָ֑ם כִּֽי־נָפַ֖ל פַּחְדָּ֣ם עֲלֵיהֶֽם׃</p></div><div class="heb-s"><p>שמח מצרים בצאתם כי־נפל פחדם עליהם׃</p></div></div>
+      <div class="texte-fr"><p>Les Égyptiens se réjouirent de leur départ, car ils avaient été saisis d’épouvante à cause d’eux.</p></div>
+    </div><div class="seif" id="v-39">
+      <span class="seif-num">Verset 39</span>
+      <div class="texte-heb"><div class="heb-n"><p>פָּרַ֣שׂ עָנָ֣ן לְמָסָ֑ךְ וְ֝אֵ֗שׁ לְהָאִ֥יר לָֽיְלָה׃</p></div><div class="heb-s"><p>פרש ענן למסך ואש להאיר לילה׃</p></div></div>
+      <div class="texte-fr"><p>Il déploya une nuée comme un voile protecteur, un feu pour éclairer la nuit.</p></div>
+    </div><div class="seif" id="v-40">
+      <span class="seif-num">Verset 40</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֭אַל וַיָּבֵ֣א <span class="mam-kq-trivial">שְׂלָ֑ו</span> וְלֶ֥חֶם שָׁ֝מַ֗יִם יַשְׂבִּיעֵֽם׃</p></div><div class="heb-s"><p>שאל ויבא <span class="mam-kq-trivial">שלו</span> ולחם שמים ישביעם׃</p></div></div>
+      <div class="texte-fr"><p>Ils réclamèrent, et il amena des cailles, les nourrit à satiété d’un pain du ciel.</p></div>
+    </div><div class="seif" id="v-41">
+      <span class="seif-num">Verset 41</span>
+      <div class="texte-heb"><div class="heb-n"><p>פָּ֣תַח צ֭וּר וַיָּז֣וּבוּ מָ֑יִם הָ֝לְכ֗וּ בַּצִּיּ֥וֹת נָהָֽר׃</p></div><div class="heb-s"><p>פתח צור ויזובו מים הלכו בציות נהר׃</p></div></div>
+      <div class="texte-fr"><p>Il fendit la roche et des eaux jaillirent, s’épandant dans les régions arides comme un fleuve.</p></div>
+    </div><div class="seif" id="v-42">
+      <span class="seif-num">Verset 42</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־זָ֭כַר אֶת־דְּבַ֣ר קׇדְשׁ֑וֹ אֶֽת־אַבְרָהָ֥ם עַבְדּֽוֹ׃</p></div><div class="heb-s"><p>כי־זכר את־דבר קדשו את־אברהם עבדו׃</p></div></div>
+      <div class="texte-fr"><p>C’est qu’il se souvint de sa sainte promesse à Abraham, son serviteur;</p></div>
+    </div><div class="seif" id="v-43">
+      <span class="seif-num">Verset 43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּוֹצִ֣א עַמּ֣וֹ בְשָׂשׂ֑וֹן בְּ֝רִנָּ֗ה אֶת־בְּחִירָֽיו׃</p></div><div class="heb-s"><p>ויוצא עמו בששון ברנה את־בחיריו׃</p></div></div>
+      <div class="texte-fr"><p>il fit donc sortir son peuple dans l’allégresse, ses élus avec des chants joyeux.</p></div>
+    </div><div class="seif" id="v-44">
+      <span class="seif-num">Verset 44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֣ן לָ֭הֶם אַרְצ֣וֹת גּוֹיִ֑ם וַעֲמַ֖ל לְאֻמִּ֣ים יִירָֽשׁוּ׃</p></div><div class="heb-s"><p>ויתן להם ארצות גוים ועמל לאמים יירשו׃</p></div></div>
+      <div class="texte-fr"><p>Il leur octroya des terres occupées par des peuples: ils héritèrent du labeur d’autres nations,</p></div>
+    </div><div class="seif" id="v-45">
+      <span class="seif-num">Verset 45</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּעֲב֤וּר&thinsp;<b>׀</b> יִשְׁמְר֣וּ חֻ֭קָּיו וְתוֹרֹתָ֥יו יִנְצֹ֗רוּ הַֽלְלוּ־יָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>בעבור&thinsp;<b>׀</b> ישמרו חקיו ותורתיו ינצרו הללו־יה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>afin qu’ils observassent ses statuts et respectassent ses lois. Alléluia!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Rendez hommage à l’Éternel, proclamez son nom, publiez parmi les nations ses hauts faits.</p>
-      <p>Chantez en son honneur, célébrez-le, entretenez-vous de toutes ses merveilles.</p>
-      <p>Glorifiez-vous de son saint nom; que le cœur de ceux qui recherchent l’Éternel soit en joie!</p>
-      <p>Mettez-vous en quête de l’Éternel et de sa puissance, aspirez constamment à jouir de sa présence.</p>
-      <p>Souvenez-vous des merveilles qu’il a opérées, de ses prodiges et des arrêts sortis de sa bouche,</p>
-      <p>vous, ô postérité d’Abraham, son serviteur, fils de Jacob, ses élus!</p>
-      <p>Il est, lui, l’Éternel, notre Dieu; ses jugements s’étendent à toute la terre.</p>
-      <p>Éternellement il garde le souvenir de son alliance, du pacte qu’il a promulgué pour mille générations,</p>
-      <p>qu’il a conclu avec Abraham, qu’il a fait par serment avec Isaac.</p>
-      <p>Il l’a érigé en loi pour Jacob, en contrat immuable pour Israël.</p>
-      <p>"C’est à toi, disait-il, que je donnerai le pays de Canaan comme un lot héréditaire",</p>
-      <p>alors qu’ils étaient encore en petit nombre, et à peine établis comme étrangers dans ce pays.</p>
-      <p>Puis ils se mirent à errer de nation en nation, d’un royaume vers un autre peuple.</p>
-      <p>Il ne permit à personne de les opprimer, et à cause d’eux il châtia des rois.</p>
-      <p>"Ne touchez pas à mes oints, ne faites pas de mal à mes prophètes!"</p>
-      <p>Il appela la famine sur la terre, et anéantit toute ressource en pain.</p>
-      <p>[Mais déjà] il avait envoyé devant eux un homme: Joseph avait été vendu comme esclave.</p>
-      <p>On chargea ses pieds de liens, son corps fut retenu par les fers,</p>
-      <p>jusqu’à ce que s’accomplit sa prédiction et que la parole du Seigneur l’eût innocenté.</p>
-      <p>Le roi donna ordre d’ouvrir sa prison, le souverain des peuples, de faire tomber ses chaînes.</p>
-      <p>Il l’établit chef de sa maison, intendant de tous ses biens,</p>
-      <p>avec la mission d’enchaîner les seigneurs à sa volonté, d’apprendre la sagesse aux vieux conseillers.</p>
-      <p>Puis Israël vint en Égypte, Jacob alla séjourner dans le pays de Cham,</p>
-      <p>et Dieu multiplia prodigieusement son peuple, le rendit plus nombreux que ses oppresseurs.</p>
-      <p>Leur cœur changea jusqu’à prendre son peuple en haine, et ourdir des machinations contre ses serviteurs.</p>
-      <p>Il délégua Moïse, son serviteur, Aaron qu’il avait élu.</p>
-      <p>Ils accomplirent parmi eux les miracles qu’il avait annoncés, ses prodiges dans le pays de Cham.</p>
-      <p>Il répandit des ténèbres qu’il rendit impénétrables, pour qu’ils ne résistassent pas à sa parole.</p>
-      <p>Il changea leurs eaux en sang, et fit périr leur poisson.</p>
-      <p>Leur pays fut inondé de grenouilles, jusque dans les appartements de leurs rois.</p>
-      <p>Il dit, et des bêtes malfaisantes firent irruption, la vermine sévit dans toute leur contrée.</p>
-      <p>En guise de pluie, il leur envoya de la grêle, du feu, des flammes dans leur pays.</p>
-      <p>Il dévasta leurs vignes et leurs figuiers, et fracassa les arbres de leur territoire.</p>
-      <p>Il dit, et des sauterelles vinrent, des locustes en nombre infini,</p>
-      <p>qui dévorèrent toutes les plantes de leurs champs et dévorèrent les fruits de leur sol.</p>
-      <p>Puis il frappa tout premier-né dans leur pays, les prémices de toute leur vigueur.</p>
-      <p>Il les fit sortir, chargés d’argent et d’or; nul parmi ses tribus ne faiblit.</p>
-      <p>Les Égyptiens se réjouirent de leur départ, car ils avaient été saisis d’épouvante à cause d’eux.</p>
-      <p>Il déploya une nuée comme un voile protecteur, un feu pour éclairer la nuit.</p>
-      <p>Ils réclamèrent, et il amena des cailles, les nourrit à satiété d’un pain du ciel.</p>
-      <p>Il fendit la roche et des eaux jaillirent, s’épandant dans les régions arides comme un fleuve.</p>
-      <p>C’est qu’il se souvint de sa sainte promesse à Abraham, son serviteur;</p>
-      <p>il fit donc sortir son peuple dans l’allégresse, ses élus avec des chants joyeux.</p>
-      <p>Il leur octroya des terres occupées par des peuples: ils héritèrent du labeur d’autres nations,</p>
-      <p>afin qu’ils observassent ses statuts et respectassent ses lois. Alléluia!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -322,6 +448,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-104.html">← Tehilim 104</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-105.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-106.html">Tehilim 106 →</a></div>
 </main>
 
 <footer>

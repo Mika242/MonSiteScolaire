@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 32 – Heureux celui dont la faute est pardonnée</h1>
     <p>Ketouvim, Tehilim, Chapitre 32</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-31.html">← Tehilim 31</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-32.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-33.html">Tehilim 33 →</a></div>
   </div>
 </header>
 
@@ -161,45 +202,62 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לְדָוִ֗ד מַ֫שְׂכִּ֥יל אַשְׁרֵ֥י נְֽשׂוּי־פֶּ֗שַׁע כְּס֣וּי חֲטָאָֽה׃</p>
-      <p>אַ֥שְֽׁרֵי<span class="mam-implicit-maqaf">־</span>אָדָ֗ם לֹ֤א יַחְשֹׁ֬ב יְהֹוָ֣ה ל֣וֹ עָוֺ֑ן וְאֵ֖ין בְּרוּח֣וֹ רְמִיָּֽה׃</p>
-      <p>כִּֽי־הֶ֭חֱרַשְׁתִּי בָּל֣וּ עֲצָמָ֑י בְּ֝שַׁאֲגָתִ֗י כׇּל־הַיּֽוֹם׃</p>
-      <p>כִּ֤י&thinsp;<b>׀</b> יוֹמָ֣ם וָלַיְלָה֮ תִּכְבַּ֥ד עָלַ֗י יָ֫דֶ֥ךָ נֶהְפַּ֥ךְ לְשַׁדִּ֑י בְּחַרְבֹ֖נֵי קַ֣יִץ סֶֽלָה׃</p>
-      <p>חַטָּאתִ֨י אוֹדִ֪יעֲךָ֡ וַעֲ֘וֺנִ֤י לֹֽא־כִסִּ֗יתִי אָמַ֗רְתִּי אוֹדֶ֤ה עֲלֵ֣י פְ֭שָׁעַי לַיהֹוָ֑ה וְאַתָּ֨ה נָ֘שָׂ֤אתָ עֲוֺ֖ן חַטָּאתִ֣י סֶֽלָה׃</p>
-      <p>עַל־זֹ֡את יִתְפַּלֵּ֬ל כׇּל־חָסִ֨יד&thinsp;<b>׀</b> אֵלֶיךָ֮ לְעֵ֢ת מְ֫צֹ֥א רַ֗ק לְ֭שֵׁטֶף מַ֣יִם רַבִּ֑ים אֵ֝לָ֗יו לֹ֣א יַגִּֽיעוּ׃</p>
-      <p>אַתָּ֤ה&thinsp;<b>׀</b> סֵ֥תֶר לִי֮ מִצַּ֢ר תִּ֫צְּרֵ֥נִי רׇנֵּ֥י פַלֵּ֑ט תְּס֖וֹבְבֵ֣נִי סֶֽלָה׃</p>
-      <p>אַשְׂכִּֽילְךָ֨&thinsp;<b>׀</b> וְֽאוֹרְךָ֗ בְּדֶֽרֶךְ־ז֥וּ תֵלֵ֑ךְ אִיעֲצָ֖ה עָלֶ֣יךָ עֵינִֽי׃</p>
-      <p>אַל־תִּהְי֤וּ&thinsp;<b>׀</b> כְּס֥וּס כְּפֶרֶד֮ אֵ֤ין הָ֫בִ֥ין בְּמֶתֶג־וָרֶ֣סֶן עֶדְי֣וֹ לִבְל֑וֹם בַּ֝֗ל קְרֹ֣ב אֵלֶֽיךָ׃</p>
-      <p>רַבִּ֥ים מַכְאוֹבִ֗ים לָ֫רָשָׁ֥ע וְהַבּוֹטֵ֥חַ בַּֽיהֹוָ֑ה חֶ֝֗סֶד יְסוֹבְבֶֽנּוּ׃</p>
-      <p>שִׂמְח֬וּ בַיהֹוָ֣ה וְ֭גִילוּ צַדִּיקִ֑ים וְ֝הַרְנִ֗ינוּ כׇּל־יִשְׁרֵי־לֵֽב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְדָוִ֗ד מַ֫שְׂכִּ֥יל אַשְׁרֵ֥י נְֽשׂוּי־פֶּ֗שַׁע כְּס֣וּי חֲטָאָֽה׃</p></div><div class="heb-s"><p>לדוד משכיל אשרי נשוי־פשע כסוי חטאה׃</p></div></div>
+      <div class="texte-fr"><p>De David. Maskîl. Heureux celui dont les fautes sont remises, dont les péchés sont couverts [par le pardon]!</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֥שְֽׁרֵי<span class="mam-implicit-maqaf">־</span>אָדָ֗ם לֹ֤א יַחְשֹׁ֬ב יְהֹוָ֣ה ל֣וֹ עָוֺ֑ן וְאֵ֖ין בְּרוּח֣וֹ רְמִיָּֽה׃</p></div><div class="heb-s"><p>אשרי<span class="mam-implicit-maqaf">־</span>אדם לא יחשב יהוה לו עון ואין ברוחו רמיה׃</p></div></div>
+      <div class="texte-fr"><p>Heureux l’homme à qui l’Éternel n’impute pas d’iniquité, et qui n’a point d’astuce dans l’esprit!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הֶ֭חֱרַשְׁתִּי בָּל֣וּ עֲצָמָ֑י בְּ֝שַׁאֲגָתִ֗י כׇּל־הַיּֽוֹם׃</p></div><div class="heb-s"><p>כי־החרשתי בלו עצמי בשאגתי כל־היום׃</p></div></div>
+      <div class="texte-fr"><p>Tant que je gardais le silence, mes membres dépérissaient par mes plaintes tout le long de la journée.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י&thinsp;<b>׀</b> יוֹמָ֣ם וָלַיְלָה֮ תִּכְבַּ֥ד עָלַ֗י יָ֫דֶ֥ךָ נֶהְפַּ֥ךְ לְשַׁדִּ֑י בְּחַרְבֹ֖נֵי קַ֣יִץ סֶֽלָה׃</p></div><div class="heb-s"><p>כי&thinsp;<b>׀</b> יומם ולילה תכבד עלי ידך נהפך לשדי בחרבני קיץ סלה׃</p></div></div>
+      <div class="texte-fr"><p>C’est que jour et nuit ta main pesait sur moi: ma sève s’altérait [comme] aux feux de l’été. Sélah!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַטָּאתִ֨י אוֹדִ֪יעֲךָ֡ וַעֲ֘וֺנִ֤י לֹֽא־כִסִּ֗יתִי אָמַ֗רְתִּי אוֹדֶ֤ה עֲלֵ֣י פְ֭שָׁעַי לַיהֹוָ֑ה וְאַתָּ֨ה נָ֘שָׂ֤אתָ עֲוֺ֖ן חַטָּאתִ֣י סֶֽלָה׃</p></div><div class="heb-s"><p>חטאתי אודיעך ועוני לא־כסיתי אמרתי אודה עלי פשעי ליהוה ואתה נשאת עון חטאתי סלה׃</p></div></div>
+      <div class="texte-fr"><p>[Maintenant] je te fais l’aveu de mon péché, et je ne dissimule pas mon iniquité. J’ai dit: "Je confesserai mes transgressions au Seigneur", et toi, tu fais disparaître la gravité de ma faute. Sélah!</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־זֹ֡את יִתְפַּלֵּ֬ל כׇּל־חָסִ֨יד&thinsp;<b>׀</b> אֵלֶיךָ֮ לְעֵ֢ת מְ֫צֹ֥א רַ֗ק לְ֭שֵׁטֶף מַ֣יִם רַבִּ֑ים אֵ֝לָ֗יו לֹ֣א יַגִּֽיעוּ׃</p></div><div class="heb-s"><p>על־זאת יתפלל כל־חסיד&thinsp;<b>׀</b> אליך לעת מצא רק לשטף מים רבים אליו לא יגיעו׃</p></div></div>
+      <div class="texte-fr"><p>C’est pourquoi tout homme pieux doit t’implorer à l’heure qui est propice, ne serait-ce que pour que la violence des grandes eaux ne vienne pas l’atteindre.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַתָּ֤ה&thinsp;<b>׀</b> סֵ֥תֶר לִי֮ מִצַּ֢ר תִּ֫צְּרֵ֥נִי רׇנֵּ֥י פַלֵּ֑ט תְּס֖וֹבְבֵ֣נִי סֶֽלָה׃</p></div><div class="heb-s"><p>אתה&thinsp;<b>׀</b> סתר לי מצר תצרני רני פלט תסובבני סלה׃</p></div></div>
+      <div class="texte-fr"><p>C’est toi qui es mon abri! Tu me protèges contre l’adversité, tu m’environnes de chants de délivrance. Sélah!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׂכִּֽילְךָ֨&thinsp;<b>׀</b> וְֽאוֹרְךָ֗ בְּדֶֽרֶךְ־ז֥וּ תֵלֵ֑ךְ אִיעֲצָ֖ה עָלֶ֣יךָ עֵינִֽי׃</p></div><div class="heb-s"><p>אשכילך&thinsp;<b>׀</b> ואורך בדרך־זו תלך איעצה עליך עיני׃</p></div></div>
+      <div class="texte-fr"><p>"Je te donnerai la sagesse, je te guiderai dans la voie que tu dois suivre; j’aurai les yeux fixés sur toi."</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תִּהְי֤וּ&thinsp;<b>׀</b> כְּס֥וּס כְּפֶרֶד֮ אֵ֤ין הָ֫בִ֥ין בְּמֶתֶג־וָרֶ֣סֶן עֶדְי֣וֹ לִבְל֑וֹם בַּ֝֗ל קְרֹ֣ב אֵלֶֽיךָ׃</p></div><div class="heb-s"><p>אל־תהיו&thinsp;<b>׀</b> כסוס כפרד אין הבין במתג־ורסן עדיו לבלום בל קרב אליך׃</p></div></div>
+      <div class="texte-fr"><p>Ne soyez pas comme le cheval, comme le mulet, auxquels manque l’intelligence, qu’il faut retenir par les rênes et le mors, leur parure qu’ils rongent pour qu’ils ne s’approchent pas de toi.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַבִּ֥ים מַכְאוֹבִ֗ים לָ֫רָשָׁ֥ע וְהַבּוֹטֵ֥חַ בַּֽיהֹוָ֑ה חֶ֝֗סֶד יְסוֹבְבֶֽנּוּ׃</p></div><div class="heb-s"><p>רבים מכאובים לרשע והבוטח ביהוה חסד יסובבנו׃</p></div></div>
+      <div class="texte-fr"><p>Nombreux sont les maux qui menacent le méchant; mais quiconque a confiance en l’Éternel se trouve environné de sa grâce.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׂמְח֬וּ בַיהֹוָ֣ה וְ֭גִילוּ צַדִּיקִ֑ים וְ֝הַרְנִ֗ינוּ כׇּל־יִשְׁרֵי־לֵֽב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>שמחו ביהוה וגילו צדיקים והרנינו כל־ישרי־לב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Réjouissez-vous en l’Éternel, soyez dans l’allégresse, ô justes, entonnez des chants de triomphe, vous tous, cœurs droits!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>De David. Maskîl. Heureux celui dont les fautes sont remises, dont les péchés sont couverts [par le pardon]!</p>
-      <p>Heureux l’homme à qui l’Éternel n’impute pas d’iniquité, et qui n’a point d’astuce dans l’esprit!</p>
-      <p>Tant que je gardais le silence, mes membres dépérissaient par mes plaintes tout le long de la journée.</p>
-      <p>C’est que jour et nuit ta main pesait sur moi: ma sève s’altérait [comme] aux feux de l’été. Sélah!</p>
-      <p>[Maintenant] je te fais l’aveu de mon péché, et je ne dissimule pas mon iniquité. J’ai dit: "Je confesserai mes transgressions au Seigneur", et toi, tu fais disparaître la gravité de ma faute. Sélah!</p>
-      <p>C’est pourquoi tout homme pieux doit t’implorer à l’heure qui est propice, ne serait-ce que pour que la violence des grandes eaux ne vienne pas l’atteindre.</p>
-      <p>C’est toi qui es mon abri! Tu me protèges contre l’adversité, tu m’environnes de chants de délivrance. Sélah!</p>
-      <p>"Je te donnerai la sagesse, je te guiderai dans la voie que tu dois suivre; j’aurai les yeux fixés sur toi."</p>
-      <p>Ne soyez pas comme le cheval, comme le mulet, auxquels manque l’intelligence, qu’il faut retenir par les rênes et le mors, leur parure qu’ils rongent pour qu’ils ne s’approchent pas de toi.</p>
-      <p>Nombreux sont les maux qui menacent le méchant; mais quiconque a confiance en l’Éternel se trouve environné de sa grâce.</p>
-      <p>Réjouissez-vous en l’Éternel, soyez dans l’allégresse, ô justes, entonnez des chants de triomphe, vous tous, cœurs droits!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -251,6 +309,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-31.html">← Tehilim 31</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-32.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-33.html">Tehilim 33 →</a></div>
 </main>
 
 <footer>

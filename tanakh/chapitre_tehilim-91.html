@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 91 – Celui qui demeure sous l&#x27;abri du Très-Haut</h1>
     <p>Ketouvim, Tehilim, Chapitre 91</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-90.html">← Tehilim 90</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-91.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-92.html">Tehilim 92 →</a></div>
   </div>
 </header>
 
@@ -161,55 +202,82 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>יֹ֭שֵׁב בְּסֵ֣תֶר עֶלְי֑וֹן בְּצֵ֥ל שַׁ֝דַּ֗י יִתְלוֹנָֽן׃</p>
-      <p>אֹמַ֗ר לַ֭יהֹוָה מַחְסִ֣י וּמְצוּדָתִ֑י אֱ֝לֹהַ֗י אֶבְטַח־בּֽוֹ׃</p>
-      <p>כִּ֤י ה֣וּא יַ֭צִּילְךָ מִפַּ֥ח יָק֗וּשׁ מִדֶּ֥בֶר הַוּֽוֹת׃</p>
-      <p>בְּאֶבְרָת֨וֹ&thinsp;<b>׀</b> יָ֣סֶךְ לָ֭ךְ וְתַחַת־כְּנָפָ֣יו תֶּחְסֶ֑ה צִנָּ֖ה וְסֹחֵרָ֣ה אֲמִתּֽוֹ׃</p>
-      <p>לֹֽא־תִ֭ירָא מִפַּ֣חַד לָ֑יְלָה מֵ֝חֵ֗ץ יָע֥וּף יוֹמָֽם׃</p>
-      <p>מִ֭דֶּבֶר בָּאֹ֣פֶל יַהֲלֹ֑ךְ מִ֝קֶּ֗טֶב יָשׁ֥וּד צׇהֳרָֽיִם׃</p>
-      <p>יִפֹּ֤ל מִצִּדְּךָ֨&thinsp;<b>׀</b> אֶ֗לֶף וּרְבָבָ֥ה מִימִינֶ֑ךָ אֵ֝לֶ֗יךָ לֹ֣א יִגָּֽשׁ׃</p>
-      <p>רַ֭ק בְּעֵינֶ֣יךָ תַבִּ֑יט וְשִׁלֻּמַ֖ת רְשָׁעִ֣ים תִּרְאֶֽה׃</p>
-      <p>כִּֽי־אַתָּ֣ה יְהֹוָ֣ה מַחְסִ֑י עֶ֝לְי֗וֹן שַׂ֣מְתָּ מְעוֹנֶֽךָ׃</p>
-      <p>לֹא־תְאֻנֶּ֣ה אֵלֶ֣יךָ רָעָ֑ה וְ֝נֶ֗גַע לֹא־יִקְרַ֥ב בְּאׇהֳלֶֽךָ׃</p>
-      <p>כִּ֣י מַ֭לְאָכָיו יְצַוֶּה־לָּ֑ךְ לִ֝שְׁמׇרְךָ֗ בְּכׇל־דְּרָכֶֽיךָ׃</p>
-      <p>עַל־כַּפַּ֥יִם יִשָּׂא֑וּנְךָ פֶּן־תִּגֹּ֖ף בָּאֶ֣בֶן רַגְלֶֽךָ׃</p>
-      <p>עַל־שַׁ֣חַל וָפֶ֣תֶן תִּדְרֹ֑ךְ תִּרְמֹ֖ס כְּפִ֣יר וְתַנִּֽין׃</p>
-      <p>כִּ֤י בִ֣י חָ֭שַׁק וַאֲפַלְּטֵ֑הוּ אֲ֝שַׂגְּבֵ֗הוּ כִּֽי־יָדַ֥ע שְׁמִֽי׃</p>
-      <p>יִקְרָאֵ֨נִי&thinsp;<b>׀</b> וְֽאֶעֱנֵ֗הוּ עִמּֽוֹ־אָנֹכִ֥י בְצָרָ֑ה אֲ֝חַלְּצֵ֗הוּ וַאֲכַבְּדֵֽהוּ׃</p>
-      <p>אֹ֣רֶךְ יָ֭מִים אַשְׂבִּיעֵ֑הוּ וְ֝אַרְאֵ֗הוּ בִּישׁוּעָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֹ֭שֵׁב בְּסֵ֣תֶר עֶלְי֑וֹן בְּצֵ֥ל שַׁ֝דַּ֗י יִתְלוֹנָֽן׃</p></div><div class="heb-s"><p>ישב בסתר עליון בצל שדי יתלונן׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui demeure sous la sauvegarde du Très-Haut, et s’abrite à l’ombre du Tout-Puissant,</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֹמַ֗ר לַ֭יהֹוָה מַחְסִ֣י וּמְצוּדָתִ֑י אֱ֝לֹהַ֗י אֶבְטַח־בּֽוֹ׃</p></div><div class="heb-s"><p>אמר ליהוה מחסי ומצודתי אלהי אבטח־בו׃</p></div></div>
+      <div class="texte-fr"><p>qu’il dise à l’Éternel: "Tu es mon refuge, ma citadelle, mon Dieu, en qui je place ma confiance!"</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י ה֣וּא יַ֭צִּילְךָ מִפַּ֥ח יָק֗וּשׁ מִדֶּ֥בֶר הַוּֽוֹת׃</p></div><div class="heb-s"><p>כי הוא יצילך מפח יקוש מדבר הוות׃</p></div></div>
+      <div class="texte-fr"><p>Car c’est lui qui te préserve du piège de l’oiseleur, de la peste meurtrière.</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּאֶבְרָת֨וֹ&thinsp;<b>׀</b> יָ֣סֶךְ לָ֭ךְ וְתַחַת־כְּנָפָ֣יו תֶּחְסֶ֑ה צִנָּ֖ה וְסֹחֵרָ֣ה אֲמִתּֽוֹ׃</p></div><div class="heb-s"><p>באברתו&thinsp;<b>׀</b> יסך לך ותחת־כנפיו תחסה צנה וסחרה אמתו׃</p></div></div>
+      <div class="texte-fr"><p>Il te recouvre de ses vastes pennes; sous ses ailes tu trouves un refuge: sa bonté est un bouclier et une cuirasse.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־תִ֭ירָא מִפַּ֣חַד לָ֑יְלָה מֵ֝חֵ֗ץ יָע֥וּף יוֹמָֽם׃</p></div><div class="heb-s"><p>לא־תירא מפחד לילה מחץ יעוף יומם׃</p></div></div>
+      <div class="texte-fr"><p>Tu n’auras à craindre ni les terreurs de la nuit, ni les flèches qui voltigent le jour,</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֭דֶּבֶר בָּאֹ֣פֶל יַהֲלֹ֑ךְ מִ֝קֶּ֗טֶב יָשׁ֥וּד צׇהֳרָֽיִם׃</p></div><div class="heb-s"><p>מדבר באפל יהלך מקטב ישוד צהרים׃</p></div></div>
+      <div class="texte-fr"><p>ni la peste qui chemine dans l’ombre, ni l’épidémie qui exerce ses ravages en plein midi.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִפֹּ֤ל מִצִּדְּךָ֨&thinsp;<b>׀</b> אֶ֗לֶף וּרְבָבָ֥ה מִימִינֶ֑ךָ אֵ֝לֶ֗יךָ לֹ֣א יִגָּֽשׁ׃</p></div><div class="heb-s"><p>יפל מצדך&thinsp;<b>׀</b> אלף ורבבה מימינך אליך לא יגש׃</p></div></div>
+      <div class="texte-fr"><p>Qu’à tes côtés il en tombe mille, dix mille à ta droite: toi, le mal ne t’atteindra point.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֭ק בְּעֵינֶ֣יךָ תַבִּ֑יט וְשִׁלֻּמַ֖ת רְשָׁעִ֣ים תִּרְאֶֽה׃</p></div><div class="heb-s"><p>רק בעיניך תביט ושלמת רשעים תראה׃</p></div></div>
+      <div class="texte-fr"><p>Tu le verras seulement de tes yeux, tu seras témoin de la rémunération des méchants.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־אַתָּ֣ה יְהֹוָ֣ה מַחְסִ֑י עֶ֝לְי֗וֹן שַׂ֣מְתָּ מְעוֹנֶֽךָ׃</p></div><div class="heb-s"><p>כי־אתה יהוה מחסי עליון שמת מעונך׃</p></div></div>
+      <div class="texte-fr"><p>C’est que [tu as dit]: "L’Éternel est mon refuge!" Dans le Très-Haut tu as placé ton abri.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־תְאֻנֶּ֣ה אֵלֶ֣יךָ רָעָ֑ה וְ֝נֶ֗גַע לֹא־יִקְרַ֥ב בְּאׇהֳלֶֽךָ׃</p></div><div class="heb-s"><p>לא־תאנה אליך רעה ונגע לא־יקרב באהלך׃</p></div></div>
+      <div class="texte-fr"><p>Nul malheur ne te surviendra, nul fléau n’approchera de ta tente;</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י מַ֭לְאָכָיו יְצַוֶּה־לָּ֑ךְ לִ֝שְׁמׇרְךָ֗ בְּכׇל־דְּרָכֶֽיךָ׃</p></div><div class="heb-s"><p>כי מלאכיו יצוה־לך לשמרך בכל־דרכיך׃</p></div></div>
+      <div class="texte-fr"><p>car à ses anges il a donné mission de te protéger en toutes tes voies.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כַּפַּ֥יִם יִשָּׂא֑וּנְךָ פֶּן־תִּגֹּ֖ף בָּאֶ֣בֶן רַגְלֶֽךָ׃</p></div><div class="heb-s"><p>על־כפים ישאונך פן־תגף באבן רגלך׃</p></div></div>
+      <div class="texte-fr"><p>Sur leurs bras ils te porteront, pour que ton pied ne se heurte à aucune pierre.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־שַׁ֣חַל וָפֶ֣תֶן תִּדְרֹ֑ךְ תִּרְמֹ֖ס כְּפִ֣יר וְתַנִּֽין׃</p></div><div class="heb-s"><p>על־שחל ופתן תדרך תרמס כפיר ותנין׃</p></div></div>
+      <div class="texte-fr"><p>Tu marcheras sur le chacal et la vipère, tu fouleras le lionceau et le serpent.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י בִ֣י חָ֭שַׁק וַאֲפַלְּטֵ֑הוּ אֲ֝שַׂגְּבֵ֗הוּ כִּֽי־יָדַ֥ע שְׁמִֽי׃</p></div><div class="heb-s"><p>כי בי חשק ואפלטהו אשגבהו כי־ידע שמי׃</p></div></div>
+      <div class="texte-fr"><p>"Car [dit le Seigneur] il m’est attaché, et je veux le sauver du danger; je veux le grandir, parce qu’il connaît mon nom.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִקְרָאֵ֨נִי&thinsp;<b>׀</b> וְֽאֶעֱנֵ֗הוּ עִמּֽוֹ־אָנֹכִ֥י בְצָרָ֑ה אֲ֝חַלְּצֵ֗הוּ וַאֲכַבְּדֵֽהוּ׃</p></div><div class="heb-s"><p>יקראני&thinsp;<b>׀</b> ואענהו עמו־אנכי בצרה אחלצהו ואכבדהו׃</p></div></div>
+      <div class="texte-fr"><p>Il m’appelle et je lui réponds; je suis avec lui dans la détresse, je le délivre et le comble d’honneur.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֹ֣רֶךְ יָ֭מִים אַשְׂבִּיעֵ֑הוּ וְ֝אַרְאֵ֗הוּ בִּישׁוּעָתִֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ארך ימים אשביעהו ואראהו בישועתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je le rassasie de longs jours, et le fais jouir de mon salut.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Celui qui demeure sous la sauvegarde du Très-Haut, et s’abrite à l’ombre du Tout-Puissant,</p>
-      <p>qu’il dise à l’Éternel: "Tu es mon refuge, ma citadelle, mon Dieu, en qui je place ma confiance!"</p>
-      <p>Car c’est lui qui te préserve du piège de l’oiseleur, de la peste meurtrière.</p>
-      <p>Il te recouvre de ses vastes pennes; sous ses ailes tu trouves un refuge: sa bonté est un bouclier et une cuirasse.</p>
-      <p>Tu n’auras à craindre ni les terreurs de la nuit, ni les flèches qui voltigent le jour,</p>
-      <p>ni la peste qui chemine dans l’ombre, ni l’épidémie qui exerce ses ravages en plein midi.</p>
-      <p>Qu’à tes côtés il en tombe mille, dix mille à ta droite: toi, le mal ne t’atteindra point.</p>
-      <p>Tu le verras seulement de tes yeux, tu seras témoin de la rémunération des méchants.</p>
-      <p>C’est que [tu as dit]: "L’Éternel est mon refuge!" Dans le Très-Haut tu as placé ton abri.</p>
-      <p>Nul malheur ne te surviendra, nul fléau n’approchera de ta tente;</p>
-      <p>car à ses anges il a donné mission de te protéger en toutes tes voies.</p>
-      <p>Sur leurs bras ils te porteront, pour que ton pied ne se heurte à aucune pierre.</p>
-      <p>Tu marcheras sur le chacal et la vipère, tu fouleras le lionceau et le serpent.</p>
-      <p>"Car [dit le Seigneur] il m’est attaché, et je veux le sauver du danger; je veux le grandir, parce qu’il connaît mon nom.</p>
-      <p>Il m’appelle et je lui réponds; je suis avec lui dans la détresse, je le délivre et le comble d’honneur.</p>
-      <p>Je le rassasie de longs jours, et le fais jouir de mon salut.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -264,6 +332,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-90.html">← Tehilim 90</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-91.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-92.html">Tehilim 92 →</a></div>
 </main>
 
 <footer>

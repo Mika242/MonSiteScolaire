@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 48 – Grand est D.ieu dans la ville de notre D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 48</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-47.html">← Tehilim 47</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-48.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-49.html">Tehilim 49 →</a></div>
   </div>
 </header>
 
@@ -161,53 +202,78 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>שִׁ֥יר מִ֝זְמ֗וֹר לִבְנֵי־קֹֽרַח׃</p>
-      <p>גָּ֘ד֤וֹל יְהֹוָ֣ה וּמְהֻלָּ֣ל מְאֹ֑ד בְּעִ֥יר אֱ֝לֹהֵ֗ינוּ הַר־קׇדְשֽׁוֹ׃</p>
-      <p>יְפֵ֥ה נוֹף֮ מְשׂ֢וֹשׂ כׇּל־הָ֫אָ֥רֶץ הַר־צִ֭יּוֹן יַרְכְּתֵ֣י צָפ֑וֹן קִ֝רְיַ֗ת מֶ֣לֶךְ רָֽב׃</p>
-      <p>אֱלֹהִ֥ים בְּאַרְמְנוֹתֶ֗יהָ נוֹדַ֥ע לְמִשְׂגָּֽב׃</p>
-      <p>כִּֽי־הִנֵּ֣ה הַ֭מְּלָכִים נ֥וֹעֲד֑וּ עָבְר֥וּ יַחְדָּֽו׃</p>
-      <p>הֵ֣מָּה רָ֭אוּ כֵּ֣ן תָּמָ֑הוּ נִבְהֲל֥וּ נֶחְפָּֽזוּ׃</p>
-      <p>רְ֭עָדָה אֲחָזָ֣תַם שָׁ֑ם חִ֝֗יל כַּיּוֹלֵדָֽה׃</p>
-      <p>בְּר֥וּחַ קָדִ֑ים תְּ֝שַׁבֵּ֗ר אֳנִיּ֥וֹת תַּרְשִֽׁישׁ׃</p>
-      <p>כַּאֲשֶׁ֤ר שָׁמַ֨עְנוּ&thinsp;<b>׀</b> כֵּ֤ן רָאִ֗ינוּ בְּעִיר־יְהֹוָ֣ה צְ֭בָאוֹת בְּעִ֣יר אֱלֹהֵ֑ינוּ אֱלֹ֘הִ֤ים יְכוֹנְנֶ֖הָ עַד־עוֹלָ֣ם סֶֽלָה׃</p>
-      <p>דִּמִּ֣ינוּ אֱלֹהִ֣ים חַסְדֶּ֑ךָ בְּ֝קֶ֗רֶב הֵיכָלֶֽךָ׃</p>
-      <p>כְּשִׁמְךָ֤ אֱלֹהִ֗ים כֵּ֣ן תְּ֭הִלָּתְךָ עַל־קַצְוֵי־אֶ֑רֶץ צֶ֝֗דֶק מָלְאָ֥ה יְמִינֶֽךָ׃</p>
-      <p>יִשְׂמַ֤ח&thinsp;<b>׀</b> הַר־צִיּ֗וֹן תָּ֭גֵלְנָה בְּנ֣וֹת יְהוּדָ֑ה לְ֝מַ֗עַן מִשְׁפָּטֶֽיךָ׃</p>
-      <p>סֹ֣בּוּ צִ֭יּוֹן וְהַקִּיפ֑וּהָ סִ֝פְר֗וּ מִגְדָּלֶֽיהָ׃</p>
-      <p>שִׁ֤יתוּ לִבְּכֶ֨ם&thinsp;<b>׀</b> לְֽחֵילָ֗הֿ פַּסְּג֥וּ אַרְמְנוֹתֶ֑יהָ לְמַ֥עַן תְּ֝סַפְּר֗וּ לְד֣וֹר אַחֲרֽוֹן׃</p>
-      <p>כִּ֤י זֶ֨ה&thinsp;<b>׀</b> אֱלֹהִ֣ים אֱ֭לֹהֵינוּ עוֹלָ֣ם וָעֶ֑ד ה֖וּא יְנַהֲגֵ֣נוּ עַל־מֽוּת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֥יר מִ֝זְמ֗וֹר לִבְנֵי־קֹֽרַח׃</p></div><div class="heb-s"><p>שיר מזמור לבני־קרח׃</p></div></div>
+      <div class="texte-fr"><p>Cantique. Psaume des fils de Coré.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּ֘ד֤וֹל יְהֹוָ֣ה וּמְהֻלָּ֣ל מְאֹ֑ד בְּעִ֥יר אֱ֝לֹהֵ֗ינוּ הַר־קׇדְשֽׁוֹ׃</p></div><div class="heb-s"><p>גדול יהוה ומהלל מאד בעיר אלהינו הר־קדשו׃</p></div></div>
+      <div class="texte-fr"><p>Grand est l’Éternel et justement glorifié, dans la ville de notre Dieu, sa sainte montagne.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְפֵ֥ה נוֹף֮ מְשׂ֢וֹשׂ כׇּל־הָ֫אָ֥רֶץ הַר־צִ֭יּוֹן יַרְכְּתֵ֣י צָפ֑וֹן קִ֝רְיַ֗ת מֶ֣לֶךְ רָֽב׃</p></div><div class="heb-s"><p>יפה נוף משוש כל־הארץ הר־ציון ירכתי צפון קרית מלך רב׃</p></div></div>
+      <div class="texte-fr"><p>Comme elle se dresse magnifique, joie de toute la terre, la montagne de Sion, aux flancs dirigés vers le Nord, la cité d’un roi puissant!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֥ים בְּאַרְמְנוֹתֶ֗יהָ נוֹדַ֥ע לְמִשְׂגָּֽב׃</p></div><div class="heb-s"><p>אלהים בארמנותיה נודע למשגב׃</p></div></div>
+      <div class="texte-fr"><p>Dieu réside en ses palais, il s’est fait connaître comme leur vrai rempart.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הִנֵּ֣ה הַ֭מְּלָכִים נ֥וֹעֲד֑וּ עָבְר֥וּ יַחְדָּֽו׃</p></div><div class="heb-s"><p>כי־הנה המלכים נועדו עברו יחדו׃</p></div></div>
+      <div class="texte-fr"><p>Car voici, les rois s’étaient ligués, mais ensemble ils ont disparu.</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵ֣מָּה רָ֭אוּ כֵּ֣ן תָּמָ֑הוּ נִבְהֲל֥וּ נֶחְפָּֽזוּ׃</p></div><div class="heb-s"><p>המה ראו כן תמהו נבהלו נחפזו׃</p></div></div>
+      <div class="texte-fr"><p>C’est qu’ils ont vu: aussitôt ils furent frappés de stupeur, l’épouvante les saisit; éperdus, ils s’enfuirent.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>רְ֭עָדָה אֲחָזָ֣תַם שָׁ֑ם חִ֝֗יל כַּיּוֹלֵדָֽה׃</p></div><div class="heb-s"><p>רעדה אחזתם שם חיל כיולדה׃</p></div></div>
+      <div class="texte-fr"><p>Là un frisson s’empara d’eux, une angoisse comme d’une femme qui enfante:</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּר֥וּחַ קָדִ֑ים תְּ֝שַׁבֵּ֗ר אֳנִיּ֥וֹת תַּרְשִֽׁישׁ׃</p></div><div class="heb-s"><p>ברוח קדים תשבר אניות תרשיש׃</p></div></div>
+      <div class="texte-fr"><p>par le vent d’Est, tu as brisé les vaisseaux de Tarsis.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּאֲשֶׁ֤ר שָׁמַ֨עְנוּ&thinsp;<b>׀</b> כֵּ֤ן רָאִ֗ינוּ בְּעִיר־יְהֹוָ֣ה צְ֭בָאוֹת בְּעִ֣יר אֱלֹהֵ֑ינוּ אֱלֹ֘הִ֤ים יְכוֹנְנֶ֖הָ עַד־עוֹלָ֣ם סֶֽלָה׃</p></div><div class="heb-s"><p>כאשר שמענו&thinsp;<b>׀</b> כן ראינו בעיר־יהוה צבאות בעיר אלהינו אלהים יכוננה עד־עולם סלה׃</p></div></div>
+      <div class="texte-fr"><p>Ce que nous avions entendu, nous l’avons vu dans la ville de l’Éternel-Cebaot, la ville de notre Dieu: Dieu l’a affermie pour l’éternité. Sélah!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>דִּמִּ֣ינוּ אֱלֹהִ֣ים חַסְדֶּ֑ךָ בְּ֝קֶ֗רֶב הֵיכָלֶֽךָ׃</p></div><div class="heb-s"><p>דמינו אלהים חסדך בקרב היכלך׃</p></div></div>
+      <div class="texte-fr"><p>Nous nous représentons, ô Dieu, ta bonté, dans l’enceinte de ton sanctuaire.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּשִׁמְךָ֤ אֱלֹהִ֗ים כֵּ֣ן תְּ֭הִלָּתְךָ עַל־קַצְוֵי־אֶ֑רֶץ צֶ֝֗דֶק מָלְאָ֥ה יְמִינֶֽךָ׃</p></div><div class="heb-s"><p>כשמך אלהים כן תהלתך על־קצוי־ארץ צדק מלאה ימינך׃</p></div></div>
+      <div class="texte-fr"><p>Comme ta renommée, ô Dieu, ainsi [éclatent] tes louanges jusqu’aux confins de la terre; ta droite est pleine de justice.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשְׂמַ֤ח&thinsp;<b>׀</b> הַר־צִיּ֗וֹן תָּ֭גֵלְנָה בְּנ֣וֹת יְהוּדָ֑ה לְ֝מַ֗עַן מִשְׁפָּטֶֽיךָ׃</p></div><div class="heb-s"><p>ישמח&thinsp;<b>׀</b> הר־ציון תגלנה בנות יהודה למען משפטיך׃</p></div></div>
+      <div class="texte-fr"><p>Qu’elle se réjouisse, la montagne de Sion, qu’elles se livrent à l’allégresse, les filles de Juda, en raison de tes jugements!</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>סֹ֣בּוּ צִ֭יּוֹן וְהַקִּיפ֑וּהָ סִ֝פְר֗וּ מִגְדָּלֶֽיהָ׃</p></div><div class="heb-s"><p>סבו ציון והקיפוה ספרו מגדליה׃</p></div></div>
+      <div class="texte-fr"><p>Faites le tour de Sion, parcourez-la à la ronde, comptez ses tourelles.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֤יתוּ לִבְּכֶ֨ם&thinsp;<b>׀</b> לְֽחֵילָ֗הֿ פַּסְּג֥וּ אַרְמְנוֹתֶ֑יהָ לְמַ֥עַן תְּ֝סַפְּר֗וּ לְד֣וֹר אַחֲרֽוֹן׃</p></div><div class="heb-s"><p>שיתו לבכם&thinsp;<b>׀</b> לחילה פסגו ארמנותיה למען תספרו לדור אחרון׃</p></div></div>
+      <div class="texte-fr"><p>Fixez votre attention sur ses remparts, admirez ses palais, pour que vous puissiez raconter aux générations futures</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י זֶ֨ה&thinsp;<b>׀</b> אֱלֹהִ֣ים אֱ֭לֹהֵינוּ עוֹלָ֣ם וָעֶ֑ד ה֖וּא יְנַהֲגֵ֣נוּ עַל־מֽוּת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי זה&thinsp;<b>׀</b> אלהים אלהינו עולם ועד הוא ינהגנו על־מות׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>que ce Dieu est notre Dieu pour l’éternité! C’est lui qui nous dirigera jusqu’à l’heure de la mort.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Cantique. Psaume des fils de Coré.</p>
-      <p>Grand est l’Éternel et justement glorifié, dans la ville de notre Dieu, sa sainte montagne.</p>
-      <p>Comme elle se dresse magnifique, joie de toute la terre, la montagne de Sion, aux flancs dirigés vers le Nord, la cité d’un roi puissant!</p>
-      <p>Dieu réside en ses palais, il s’est fait connaître comme leur vrai rempart.</p>
-      <p>Car voici, les rois s’étaient ligués, mais ensemble ils ont disparu.</p>
-      <p>C’est qu’ils ont vu: aussitôt ils furent frappés de stupeur, l’épouvante les saisit; éperdus, ils s’enfuirent.</p>
-      <p>Là un frisson s’empara d’eux, une angoisse comme d’une femme qui enfante:</p>
-      <p>par le vent d’Est, tu as brisé les vaisseaux de Tarsis.</p>
-      <p>Ce que nous avions entendu, nous l’avons vu dans la ville de l’Éternel-Cebaot, la ville de notre Dieu: Dieu l’a affermie pour l’éternité. Sélah!</p>
-      <p>Nous nous représentons, ô Dieu, ta bonté, dans l’enceinte de ton sanctuaire.</p>
-      <p>Comme ta renommée, ô Dieu, ainsi [éclatent] tes louanges jusqu’aux confins de la terre; ta droite est pleine de justice.</p>
-      <p>Qu’elle se réjouisse, la montagne de Sion, qu’elles se livrent à l’allégresse, les filles de Juda, en raison de tes jugements!</p>
-      <p>Faites le tour de Sion, parcourez-la à la ronde, comptez ses tourelles.</p>
-      <p>Fixez votre attention sur ses remparts, admirez ses palais, pour que vous puissiez raconter aux générations futures</p>
-      <p>que ce Dieu est notre Dieu pour l’éternité! C’est lui qui nous dirigera jusqu’à l’heure de la mort.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -262,6 +328,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-47.html">← Tehilim 47</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-48.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-49.html">Tehilim 49 →</a></div>
 </main>
 
 <footer>

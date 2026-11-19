@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 81 – Chantez à D.ieu notre force</h1>
     <p>Ketouvim, Tehilim, Chapitre 81</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-80.html">← Tehilim 80</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-81.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-82.html">Tehilim 82 →</a></div>
   </div>
 </header>
 
@@ -161,57 +202,86 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֬חַ&thinsp;<small>׀</small>&thinsp;עַֽל־הַגִּתִּ֬ית לְאָסָֽף׃</p>
-      <p>הַ֭רְנִינוּ לֵאלֹהִ֣ים עוּזֵּ֑נוּ הָ֝רִ֗יעוּ לֵאלֹהֵ֥י יַעֲקֹֽב׃</p>
-      <p>שְֽׂאוּ־זִ֭מְרָה וּתְנוּ־תֹ֑ף כִּנּ֖וֹר נָעִ֣ים עִם־נָֽבֶל׃</p>
-      <p>תִּקְע֣וּ בַחֹ֣דֶשׁ שׁוֹפָ֑ר בַּ֝כֵּ֗סֶה לְי֣וֹם חַגֵּֽנוּ׃</p>
-      <p>כִּ֤י חֹ֣ק לְיִשְׂרָאֵ֣ל ה֑וּא מִ֝שְׁפָּ֗ט לֵאלֹהֵ֥י יַעֲקֹֽב׃</p>
-      <p>עֵד֤וּת&thinsp;<b>׀</b> בִּיה֘וֹסֵ֤ף שָׂמ֗וֹ בְּ֭צֵאתוֹ עַל־אֶ֣רֶץ מִצְרָ֑יִם שְׂפַ֖ת לֹא־יָדַ֣עְתִּי אֶשְׁמָֽע׃</p>
-      <p>הֲסִיר֣וֹתִי מִסֵּ֣בֶל שִׁכְמ֑וֹ כַּ֝פָּ֗יו מִדּ֥וּד תַּעֲבֹֽרְנָה׃</p>
-      <p>בַּצָּרָ֥ה קָרָ֗אתָ וָאֲחַ֫לְּצֶ֥ךָּ אֶ֭עֶנְךָ בְּסֵ֣תֶר רַ֑עַם אֶבְחׇנְךָ֨ עַל־מֵ֖י מְרִיבָ֣ה סֶֽלָה׃</p>
-      <p>שְׁמַ֣ע עַ֭מִּי וְאָעִ֣ידָה בָּ֑ךְ יִ֝שְׂרָאֵ֗ל אִם־תִּֽשְׁמַֽע־לִֽי׃</p>
-      <p>לֹא־יִהְיֶ֣ה בְ֭ךָ אֵ֣ל זָ֑ר וְלֹ֥א תִ֝שְׁתַּחֲוֶ֗ה לְאֵ֣ל נֵכָֽר׃</p>
-      <p>אָֽנֹכִ֨י&thinsp;<b>׀</b> יְ֘הֹוָ֤ה אֱלֹהֶ֗יךָ הַֽ֭מַּעַלְךָ מֵאֶ֣רֶץ מִצְרָ֑יִם הַרְחֶב־פִּ֝֗יךָ וַאֲמַלְאֵֽהוּ׃</p>
-      <p>וְלֹא־שָׁמַ֣ע עַמִּ֣י לְקוֹלִ֑י וְ֝יִשְׂרָאֵ֗ל לֹא־אָ֥בָה לִֽי׃</p>
-      <p>וָ֭אֲשַׁלְּחֵהוּ בִּשְׁרִיר֣וּת לִבָּ֑ם יֵ֝לְכ֗וּ בְּֽמוֹעֲצ֖וֹתֵיהֶֽם׃</p>
-      <p>ל֗וּ עַ֭מִּי שֹׁמֵ֣עַֽ לִ֑י יִ֝שְׂרָאֵ֗ל בִּדְרָכַ֥י יְהַלֵּֽכוּ׃</p>
-      <p>כִּ֭מְעַט אוֹיְבֵיהֶ֣ם אַכְנִ֑יעַ וְעַ֥ל צָ֝רֵיהֶ֗ם אָשִׁ֥יב יָדִֽי׃</p>
-      <p>מְשַׂנְאֵ֣י יְ֭הֹוָה יְכַחֲשׁוּ־ל֑וֹ וִיהִ֖י עִתָּ֣ם לְעוֹלָֽם׃</p>
-      <p>וַֽ֭יַּאֲכִילֵהוּ מֵחֵ֣לֶב חִטָּ֑ה וּ֝מִצּ֗וּר דְּבַ֣שׁ אַשְׂבִּיעֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֬חַ&thinsp;<small>׀</small>&thinsp;עַֽל־הַגִּתִּ֬ית לְאָסָֽף׃</p></div><div class="heb-s"><p>למנצח&thinsp;<small>׀</small>&thinsp;על־הגתית לאסף׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Sur la Ghitit. D’Assaph.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַ֭רְנִינוּ לֵאלֹהִ֣ים עוּזֵּ֑נוּ הָ֝רִ֗יעוּ לֵאלֹהֵ֥י יַעֲקֹֽב׃</p></div><div class="heb-s"><p>הרנינו לאלהים עוזנו הריעו לאלהי יעקב׃</p></div></div>
+      <div class="texte-fr"><p>Célébrez Dieu, notre force, acclamez le Dieu de Jacob!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְֽׂאוּ־זִ֭מְרָה וּתְנוּ־תֹ֑ף כִּנּ֖וֹר נָעִ֣ים עִם־נָֽבֶל׃</p></div><div class="heb-s"><p>שאו־זמרה ותנו־תף כנור נעים עם־נבל׃</p></div></div>
+      <div class="texte-fr"><p>Chantez des hymnes, faites retentir le tambourin, la harpe suave ainsi que le luth,</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>תִּקְע֣וּ בַחֹ֣דֶשׁ שׁוֹפָ֑ר בַּ֝כֵּ֗סֶה לְי֣וֹם חַגֵּֽנוּ׃</p></div><div class="heb-s"><p>תקעו בחדש שופר בכסה ליום חגנו׃</p></div></div>
+      <div class="texte-fr"><p>sonnez le Chofar à la nouvelle lune, au jour fixé pour notre solennité.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י חֹ֣ק לְיִשְׂרָאֵ֣ל ה֑וּא מִ֝שְׁפָּ֗ט לֵאלֹהֵ֥י יַעֲקֹֽב׃</p></div><div class="heb-s"><p>כי חק לישראל הוא משפט לאלהי יעקב׃</p></div></div>
+      <div class="texte-fr"><p>Car c’est une loi en Israël, une coutume en l’honneur du Dieu de Jacob;</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֵד֤וּת&thinsp;<b>׀</b> בִּיה֘וֹסֵ֤ף שָׂמ֗וֹ בְּ֭צֵאתוֹ עַל־אֶ֣רֶץ מִצְרָ֑יִם שְׂפַ֖ת לֹא־יָדַ֣עְתִּי אֶשְׁמָֽע׃</p></div><div class="heb-s"><p>עדות&thinsp;<b>׀</b> ביהוסף שמו בצאתו על־ארץ מצרים שפת לא־ידעתי אשמע׃</p></div></div>
+      <div class="texte-fr"><p>c’est un témoignage qu’il établit dans Joseph, quand il marcha contre l’Égypte. J’entendis alors des accents inconnus pour moi…</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲסִיר֣וֹתִי מִסֵּ֣בֶל שִׁכְמ֑וֹ כַּ֝פָּ֗יו מִדּ֥וּד תַּעֲבֹֽרְנָה׃</p></div><div class="heb-s"><p>הסירותי מסבל שכמו כפיו מדוד תעברנה׃</p></div></div>
+      <div class="texte-fr"><p>J’ai déchargé du fardeau son épaule, ses mains sont affranchies du lourd panier.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּצָּרָ֥ה קָרָ֗אתָ וָאֲחַ֫לְּצֶ֥ךָּ אֶ֭עֶנְךָ בְּסֵ֣תֶר רַ֑עַם אֶבְחׇנְךָ֨ עַל־מֵ֖י מְרִיבָ֣ה סֶֽלָה׃</p></div><div class="heb-s"><p>בצרה קראת ואחלצך אענך בסתר רעם אבחנך על־מי מריבה סלה׃</p></div></div>
+      <div class="texte-fr"><p>Dans la détresse tu as appelé, et je t’ai délivré, je t’ai exaucé du sein mystérieux de la foudre, je t’ai éprouvé auprès des eaux de Meriba. Sélah!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁמַ֣ע עַ֭מִּי וְאָעִ֣ידָה בָּ֑ךְ יִ֝שְׂרָאֵ֗ל אִם־תִּֽשְׁמַֽע־לִֽי׃</p></div><div class="heb-s"><p>שמע עמי ואעידה בך ישראל אם־תשמע־לי׃</p></div></div>
+      <div class="texte-fr"><p>"Écoute, mon peuple, je veux t’adjurer; ô Israël, puisses-tu m’écouter!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־יִהְיֶ֣ה בְ֭ךָ אֵ֣ל זָ֑ר וְלֹ֥א תִ֝שְׁתַּחֲוֶ֗ה לְאֵ֣ל נֵכָֽר׃</p></div><div class="heb-s"><p>לא־יהיה בך אל זר ולא תשתחוה לאל נכר׃</p></div></div>
+      <div class="texte-fr"><p>Qu’il n’y ait pas chez toi de divinité étrangère, ne te prosterne pas devant un dieu du dehors.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָֽנֹכִ֨י&thinsp;<b>׀</b> יְ֘הֹוָ֤ה אֱלֹהֶ֗יךָ הַֽ֭מַּעַלְךָ מֵאֶ֣רֶץ מִצְרָ֑יִם הַרְחֶב־פִּ֝֗יךָ וַאֲמַלְאֵֽהוּ׃</p></div><div class="heb-s"><p>אנכי&thinsp;<b>׀</b> יהוה אלהיך המעלך מארץ מצרים הרחב־פיך ואמלאהו׃</p></div></div>
+      <div class="texte-fr"><p>Je suis, moi, l’Éternel, ton Dieu qui t’ai tiré du pays d’Égypte. Ouvre largement ta bouche et je la remplirai."</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־שָׁמַ֣ע עַמִּ֣י לְקוֹלִ֑י וְ֝יִשְׂרָאֵ֗ל לֹא־אָ֥בָה לִֽי׃</p></div><div class="heb-s"><p>ולא־שמע עמי לקולי וישראל לא־אבה לי׃</p></div></div>
+      <div class="texte-fr"><p>Mais mon peuple n’a pas écouté ma voix, Israël a refusé de m’obéir.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וָ֭אֲשַׁלְּחֵהוּ בִּשְׁרִיר֣וּת לִבָּ֑ם יֵ֝לְכ֗וּ בְּֽמוֹעֲצ֖וֹתֵיהֶֽם׃</p></div><div class="heb-s"><p>ואשלחהו בשרירות לבם ילכו במועצותיהם׃</p></div></div>
+      <div class="texte-fr"><p>Je les ai donc abandonnés à l’entraînement de leur cœur, ils suivirent leurs propres inspirations.</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>ל֗וּ עַ֭מִּי שֹׁמֵ֣עַֽ לִ֑י יִ֝שְׂרָאֵ֗ל בִּדְרָכַ֥י יְהַלֵּֽכוּ׃</p></div><div class="heb-s"><p>לו עמי שמע לי ישראל בדרכי יהלכו׃</p></div></div>
+      <div class="texte-fr"><p>Ah! si mon peuple voulait m’écouter, Israël marcher dans mes voies,</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֭מְעַט אוֹיְבֵיהֶ֣ם אַכְנִ֑יעַ וְעַ֥ל צָ֝רֵיהֶ֗ם אָשִׁ֥יב יָדִֽי׃</p></div><div class="heb-s"><p>כמעט אויביהם אכניע ועל צריהם אשיב ידי׃</p></div></div>
+      <div class="texte-fr"><p>bien vite, je dompterais leurs ennemis, je ferais peser ma main sur leurs adversaires.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְשַׂנְאֵ֣י יְ֭הֹוָה יְכַחֲשׁוּ־ל֑וֹ וִיהִ֖י עִתָּ֣ם לְעוֹלָֽם׃</p></div><div class="heb-s"><p>משנאי יהוה יכחשו־לו ויהי עתם לעולם׃</p></div></div>
+      <div class="texte-fr"><p>Ceux qui haïssent l’Éternel ramperaient devant lui, mais leur bonheur, à eux, durerait toujours.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽ֭יַּאֲכִילֵהוּ מֵחֵ֣לֶב חִטָּ֑ה וּ֝מִצּ֗וּר דְּבַ֣שׁ אַשְׂבִּיעֶֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויאכילהו מחלב חטה ומצור דבש אשביעך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Il les nourrirait de la mœlle du froment, et les rassasierait avec le miel des rochers.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Sur la Ghitit. D’Assaph.</p>
-      <p>Célébrez Dieu, notre force, acclamez le Dieu de Jacob!</p>
-      <p>Chantez des hymnes, faites retentir le tambourin, la harpe suave ainsi que le luth,</p>
-      <p>sonnez le Chofar à la nouvelle lune, au jour fixé pour notre solennité.</p>
-      <p>Car c’est une loi en Israël, une coutume en l’honneur du Dieu de Jacob;</p>
-      <p>c’est un témoignage qu’il établit dans Joseph, quand il marcha contre l’Égypte. J’entendis alors des accents inconnus pour moi…</p>
-      <p>J’ai déchargé du fardeau son épaule, ses mains sont affranchies du lourd panier.</p>
-      <p>Dans la détresse tu as appelé, et je t’ai délivré, je t’ai exaucé du sein mystérieux de la foudre, je t’ai éprouvé auprès des eaux de Meriba. Sélah!</p>
-      <p>"Écoute, mon peuple, je veux t’adjurer; ô Israël, puisses-tu m’écouter!</p>
-      <p>Qu’il n’y ait pas chez toi de divinité étrangère, ne te prosterne pas devant un dieu du dehors.</p>
-      <p>Je suis, moi, l’Éternel, ton Dieu qui t’ai tiré du pays d’Égypte. Ouvre largement ta bouche et je la remplirai."</p>
-      <p>Mais mon peuple n’a pas écouté ma voix, Israël a refusé de m’obéir.</p>
-      <p>Je les ai donc abandonnés à l’entraînement de leur cœur, ils suivirent leurs propres inspirations.</p>
-      <p>Ah! si mon peuple voulait m’écouter, Israël marcher dans mes voies,</p>
-      <p>bien vite, je dompterais leurs ennemis, je ferais peser ma main sur leurs adversaires.</p>
-      <p>Ceux qui haïssent l’Éternel ramperaient devant lui, mais leur bonheur, à eux, durerait toujours.</p>
-      <p>Il les nourrirait de la mœlle du froment, et les rassasierait avec le miel des rochers.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -266,6 +336,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-80.html">← Tehilim 80</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-81.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-82.html">Tehilim 82 →</a></div>
 </main>
 
 <footer>

@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 2 – Les nations se soulèvent contre l&#x27;oint de D.ieu</h1>
     <p>Ketouvim, Tehilim, Chapitre 2</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-1.html">← Tehilim 1</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-2.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-3.html">Tehilim 3 →</a></div>
   </div>
 </header>
 
@@ -161,47 +202,66 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לָ֭מָּה רָגְשׁ֣וּ גוֹיִ֑ם וּ֝לְאֻמִּ֗ים יֶהְגּוּ־רִֽיק׃</p>
-      <p>יִ֥תְיַצְּב֨וּ&thinsp;<b>׀</b> מַלְכֵי־אֶ֗רֶץ וְרוֹזְנִ֥ים נֽוֹסְדוּ־יָ֑חַד עַל־יְ֝הֹוָ֗ה וְעַל־מְשִׁיחֽוֹ׃</p>
-      <p>נְֽ֭נַתְּקָה אֶת־מֽוֹסְרוֹתֵ֑ימוֹ וְנַשְׁלִ֖יכָה מִמֶּ֣נּוּ עֲבֹתֵֽימוֹ׃</p>
-      <p>יוֹשֵׁ֣ב בַּשָּׁמַ֣יִם יִשְׂחָ֑ק אֲ֝דֹנָ֗י יִלְעַג־לָֽמוֹ׃</p>
-      <p>אָ֤ז יְדַבֵּ֣ר אֵלֵ֣ימוֹ בְאַפּ֑וֹ וּֽבַחֲרוֹנ֥וֹ יְבַהֲלֵֽמוֹ׃</p>
-      <p>וַ֭אֲנִי נָסַ֣כְתִּי מַלְכִּ֑י עַל־צִ֝יּ֗וֹן הַר־קׇדְשִֽׁי׃</p>
-      <p>אֲסַפְּרָ֗ה אֶֽ֫ל<span class="mam-implicit-maqaf">־</span>חֹ֥ק יְֽהֹוָ֗ה אָמַ֘ר<span class="mam-implicit-maqaf">־</span>אֵלַ֥י בְּנִ֥י אַ֑תָּה אֲ֝נִ֗י הַיּ֥וֹם יְלִדְתִּֽיךָ׃</p>
-      <p>שְׁאַ֤ל מִמֶּ֗נִּי וְאֶתְּנָ֣ה ג֭וֹיִם נַחֲלָתֶ֑ךָ וַ֝אֲחֻזָּתְךָ֗ אַפְסֵי־אָֽרֶץ׃</p>
-      <p>תְּ֭רֹעֵם בְּשֵׁ֣בֶט בַּרְזֶ֑ל כִּכְלִ֖י יוֹצֵ֣ר תְּנַפְּצֵֽם׃</p>
-      <p>וְ֭עַתָּה מְלָכִ֣ים הַשְׂכִּ֑ילוּ הִ֝וָּסְר֗וּ שֹׁ֣פְטֵי אָֽרֶץ׃</p>
-      <p>עִבְד֣וּ אֶת־יְהֹוָ֣ה בְּיִרְאָ֑ה וְ֝גִ֗ילוּ בִּרְעָדָֽה׃</p>
-      <p>נַשְּׁקוּ־בַ֡ר פֶּן־יֶאֱנַ֤ף&thinsp;<b>׀</b> וְתֹ֬אבְדוּ דֶ֗רֶךְ כִּֽי־יִבְעַ֣ר כִּמְעַ֣ט אַפּ֑וֹ אַ֝שְׁרֵ֗י כׇּל־ח֥וֹסֵי בֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָ֭מָּה רָגְשׁ֣וּ גוֹיִ֑ם וּ֝לְאֻמִּ֗ים יֶהְגּוּ־רִֽיק׃</p></div><div class="heb-s"><p>למה רגשו גוים ולאמים יהגו־ריק׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi se démènent les peuples, et les nations agitent-elles de vains projets?</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִ֥תְיַצְּב֨וּ&thinsp;<b>׀</b> מַלְכֵי־אֶ֗רֶץ וְרוֹזְנִ֥ים נֽוֹסְדוּ־יָ֑חַד עַל־יְ֝הֹוָ֗ה וְעַל־מְשִׁיחֽוֹ׃</p></div><div class="heb-s"><p>יתיצבו&thinsp;<b>׀</b> מלכי־ארץ ורוזנים נוסדו־יחד על־יהוה ועל־משיחו׃</p></div></div>
+      <div class="texte-fr"><p>Les rois de la terre se soulèvent, les princes se liguent ensemble contre l’Éternel et son oint.</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְֽ֭נַתְּקָה אֶת־מֽוֹסְרוֹתֵ֑ימוֹ וְנַשְׁלִ֖יכָה מִמֶּ֣נּוּ עֲבֹתֵֽימוֹ׃</p></div><div class="heb-s"><p>ננתקה את־מוסרותימו ונשליכה ממנו עבתימו׃</p></div></div>
+      <div class="texte-fr"><p>"Brisons [disent-ils] leurs liens. Rejetons loin de nous leurs chaînes!"</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹשֵׁ֣ב בַּשָּׁמַ֣יִם יִשְׂחָ֑ק אֲ֝דֹנָ֗י יִלְעַג־לָֽמוֹ׃</p></div><div class="heb-s"><p>יושב בשמים ישחק אדני ילעג־למו׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui réside dans les cieux en rit, le Seigneur se raille d’eux.</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֤ז יְדַבֵּ֣ר אֵלֵ֣ימוֹ בְאַפּ֑וֹ וּֽבַחֲרוֹנ֥וֹ יְבַהֲלֵֽמוֹ׃</p></div><div class="heb-s"><p>אז ידבר אלימו באפו ובחרונו יבהלמו׃</p></div></div>
+      <div class="texte-fr"><p>Puis il les apostrophe dans sa colère et, dans son courroux, il les terrifie:</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֭אֲנִי נָסַ֣כְתִּי מַלְכִּ֑י עַל־צִ֝יּ֗וֹן הַר־קׇדְשִֽׁי׃</p></div><div class="heb-s"><p>ואני נסכתי מלכי על־ציון הר־קדשי׃</p></div></div>
+      <div class="texte-fr"><p>"C’est moi [dit-il] qui ai consacré mon roi sur Sion, ma montagne sainte!"</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲסַפְּרָ֗ה אֶֽ֫ל<span class="mam-implicit-maqaf">־</span>חֹ֥ק יְֽהֹוָ֗ה אָמַ֘ר<span class="mam-implicit-maqaf">־</span>אֵלַ֥י בְּנִ֥י אַ֑תָּה אֲ֝נִ֗י הַיּ֥וֹם יְלִדְתִּֽיךָ׃</p></div><div class="heb-s"><p>אספרה אל<span class="mam-implicit-maqaf">־</span>חק יהוה אמר<span class="mam-implicit-maqaf">־</span>אלי בני אתה אני היום ילדתיך׃</p></div></div>
+      <div class="texte-fr"><p>Je veux proclamer ce qui est une loi immuable: "L’Éternel m’a dit: Tu es mon fils, c’est moi qui, aujourd’hui, t’ai engendré!</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁאַ֤ל מִמֶּ֗נִּי וְאֶתְּנָ֣ה ג֭וֹיִם נַחֲלָתֶ֑ךָ וַ֝אֲחֻזָּתְךָ֗ אַפְסֵי־אָֽרֶץ׃</p></div><div class="heb-s"><p>שאל ממני ואתנה גוים נחלתך ואחזתך אפסי־ארץ׃</p></div></div>
+      <div class="texte-fr"><p>Demande-le-moi, et je te donnerai des peuples comme héritage, les confins de la terre pour domaine.</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּ֭רֹעֵם בְּשֵׁ֣בֶט בַּרְזֶ֑ל כִּכְלִ֖י יוֹצֵ֣ר תְּנַפְּצֵֽם׃</p></div><div class="heb-s"><p>תרעם בשבט ברזל ככלי יוצר תנפצם׃</p></div></div>
+      <div class="texte-fr"><p>Tu les briseras avec un sceptre de fer, tu les broieras comme un vase de potier."</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֭עַתָּה מְלָכִ֣ים הַשְׂכִּ֑ילוּ הִ֝וָּסְר֗וּ שֹׁ֣פְטֵי אָֽרֶץ׃</p></div><div class="heb-s"><p>ועתה מלכים השכילו הוסרו שפטי ארץ׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, ô rois, sachez comprendre, tenez-vous pour avertis, juges de la terre!</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>עִבְד֣וּ אֶת־יְהֹוָ֣ה בְּיִרְאָ֑ה וְ֝גִ֗ילוּ בִּרְעָדָֽה׃</p></div><div class="heb-s"><p>עבדו את־יהוה ביראה וגילו ברעדה׃</p></div></div>
+      <div class="texte-fr"><p>Adorez l’Éternel avec crainte, et réjouissez-vous [en Dieu] avec tremblement.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַשְּׁקוּ־בַ֡ר פֶּן־יֶאֱנַ֤ף&thinsp;<b>׀</b> וְתֹ֬אבְדוּ דֶ֗רֶךְ כִּֽי־יִבְעַ֣ר כִּמְעַ֣ט אַפּ֑וֹ אַ֝שְׁרֵ֗י כׇּל־ח֥וֹסֵי בֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>נשקו־בר פן־יאנף&thinsp;<b>׀</b> ותאבדו דרך כי־יבער כמעט אפו אשרי כל־חוסי בו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Rendez hommage au fils, de peur qu’il ne s’indigne, et que vous n’alliez a votre perte; car bien vite sa colère prend feu: heureux tous ceux qui s’abritent en lui!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Pourquoi se démènent les peuples, et les nations agitent-elles de vains projets?</p>
-      <p>Les rois de la terre se soulèvent, les princes se liguent ensemble contre l’Éternel et son oint.</p>
-      <p>"Brisons [disent-ils] leurs liens. Rejetons loin de nous leurs chaînes!"</p>
-      <p>Celui qui réside dans les cieux en rit, le Seigneur se raille d’eux.</p>
-      <p>Puis il les apostrophe dans sa colère et, dans son courroux, il les terrifie:</p>
-      <p>"C’est moi [dit-il] qui ai consacré mon roi sur Sion, ma montagne sainte!"</p>
-      <p>Je veux proclamer ce qui est une loi immuable: "L’Éternel m’a dit: Tu es mon fils, c’est moi qui, aujourd’hui, t’ai engendré!</p>
-      <p>Demande-le-moi, et je te donnerai des peuples comme héritage, les confins de la terre pour domaine.</p>
-      <p>Tu les briseras avec un sceptre de fer, tu les broieras comme un vase de potier."</p>
-      <p>Et maintenant, ô rois, sachez comprendre, tenez-vous pour avertis, juges de la terre!</p>
-      <p>Adorez l’Éternel avec crainte, et réjouissez-vous [en Dieu] avec tremblement.</p>
-      <p>Rendez hommage au fils, de peur qu’il ne s’indigne, et que vous n’alliez a votre perte; car bien vite sa colère prend feu: heureux tous ceux qui s’abritent en lui!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -259,6 +319,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-1.html">← Tehilim 1</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-2.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-3.html">Tehilim 3 →</a></div>
 </main>
 
 <footer>

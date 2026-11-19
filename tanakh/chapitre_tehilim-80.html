@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 80 – Berger d&#x27;Israël, prête l&#x27;oreille</h1>
     <p>Ketouvim, Tehilim, Chapitre 80</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-79.html">← Tehilim 79</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-80.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-81.html">Tehilim 81 →</a></div>
   </div>
 </header>
 
@@ -161,63 +202,98 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>לַמְנַצֵּ֥חַ אֶל־שֹׁשַׁנִּ֑ים עֵד֖וּת לְאָסָ֣ף מִזְמֽוֹר׃</p>
-      <p>רֹ֘עֵ֤ה יִשְׂרָאֵ֨ל&thinsp;<b>׀</b> הַאֲזִ֗ינָה נֹהֵ֣ג כַּצֹּ֣אן יוֹסֵ֑ף יֹשֵׁ֖ב הַכְּרוּבִ֣ים הוֹפִֽיעָה׃</p>
-      <p>לִפְנֵ֤י אֶפְרַ֨יִם&thinsp;<b>׀</b> וּבִנְיָ֘מִ֤ן וּמְנַשֶּׁ֗ה עוֹרְרָ֥ה אֶת־גְּבוּרָתֶ֑ךָ וּלְכָ֖ה לִישֻׁעָ֣תָה לָּֽנוּ׃</p>
-      <p>אֱלֹהִ֥ים הֲשִׁיבֵ֑נוּ וְהָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃</p>
-      <p>יְהֹוָ֣ה אֱלֹהִ֣ים צְבָא֑וֹת עַד־מָתַ֥י עָ֝שַׁ֗נְתָּ בִּתְפִלַּ֥ת עַמֶּֽךָ׃</p>
-      <p>הֶ֭אֱכַלְתָּם לֶ֣חֶם דִּמְעָ֑ה וַ֝תַּשְׁקֵ֗מוֹ בִּדְמָע֥וֹת שָׁלִֽישׁ׃</p>
-      <p>תְּשִׂימֵ֣נוּ מָ֭דוֹן לִשְׁכֵנֵ֑ינוּ וְ֝אֹיְבֵ֗ינוּ יִלְעֲגוּ־לָֽמוֹ׃</p>
-      <p>אֱלֹהִ֣ים צְבָא֣וֹת הֲשִׁיבֵ֑נוּ וְהָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃</p>
-      <p>גֶּ֭פֶן מִמִּצְרַ֣יִם תַּסִּ֑יעַ תְּגָרֵ֥שׁ גּ֝וֹיִ֗ם וַתִּטָּעֶֽהָ׃</p>
-      <p>פִּנִּ֥יתָ לְפָנֶ֑יהָ וַתַּשְׁרֵ֥שׁ שׇׁ֝רָשֶׁ֗יהָ וַתְּמַלֵּא־אָֽרֶץ׃</p>
-      <p>כׇּסּ֣וּ הָרִ֣ים צִלָּ֑הּ וַ֝עֲנָפֶ֗יהָ אַֽרְזֵי־אֵֽל׃</p>
-      <p>תְּשַׁלַּ֣ח קְצִירֶ֣הָ עַד־יָ֑ם וְאֶל־נָ֝הָ֗ר יוֹנְקוֹתֶֽיהָ׃</p>
-      <p>לָ֭מָּה פָּרַ֣צְתָּ גְדֵרֶ֑יהָ וְ֝אָר֗וּהָ כׇּל־עֹ֥בְרֵי דָֽרֶךְ׃</p>
-      <p>יְכַרְסְמֶ֣נָּֽה חֲזִ֣יר מִיָּ֑<sup>עַ</sup>ר וְזִ֖יז שָׂדַ֣י יִרְעֶֽנָּה׃</p>
-      <p>אֱלֹהִ֣ים צְבָאוֹת֮ שֽׁ֫וּב<span class="mam-implicit-maqaf">־</span>נָ֥א הַבֵּ֣ט מִשָּׁמַ֣יִם וּרְאֵ֑ה וּ֝פְקֹ֗ד גֶּ֣פֶן זֹֽאת׃</p>
-      <p>וְ֭<big>כַ</big>נָּה אֲשֶׁר־נָטְעָ֣ה יְמִינֶ֑ךָ וְעַל־בֵּ֝֗ן אִמַּ֥צְתָּה לָּֽךְ׃</p>
-      <p>שְׂרֻפָ֣ה בָאֵ֣שׁ כְּסוּחָ֑ה מִגַּעֲרַ֖ת פָּנֶ֣יךָ יֹאבֵֽדוּ׃</p>
-      <p>תְּֽהִי־יָ֭דְךָ עַל־אִ֣ישׁ יְמִינֶ֑ךָ עַל־בֶּן־אָ֝דָ֗ם אִמַּ֥צְתָּ לָּֽךְ׃</p>
-      <p>וְלֹא־נָס֥וֹג מִמֶּ֑ךָּ תְּ֝חַיֵּ֗נוּ וּבְשִׁמְךָ֥ נִקְרָֽא׃</p>
-      <p>יְ֘הֹוָ֤ה אֱלֹהִ֣ים צְבָא֣וֹת הֲשִׁיבֵ֑נוּ הָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a><a href="#v-19">19</a><a href="#v-20">20</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמְנַצֵּ֥חַ אֶל־שֹׁשַׁנִּ֑ים עֵד֖וּת לְאָסָ֣ף מִזְמֽוֹר׃</p></div><div class="heb-s"><p>למנצח אל־ששנים עדות לאסף מזמור׃</p></div></div>
+      <div class="texte-fr"><p>Au chef des chantres. Sur les Chochanim, Edouth. Psaume d’Assaph.</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֹ֘עֵ֤ה יִשְׂרָאֵ֨ל&thinsp;<b>׀</b> הַאֲזִ֗ינָה נֹהֵ֣ג כַּצֹּ֣אן יוֹסֵ֑ף יֹשֵׁ֖ב הַכְּרוּבִ֣ים הוֹפִֽיעָה׃</p></div><div class="heb-s"><p>רעה ישראל&thinsp;<b>׀</b> האזינה נהג כצאן יוסף ישב הכרובים הופיעה׃</p></div></div>
+      <div class="texte-fr"><p>Pasteur d’Israël, prête l’oreille, toi qui mènes Joseph comme un troupeau! Révèle-toi dans ta splendeur, toi qui trônes sur les Chérubins!</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִפְנֵ֤י אֶפְרַ֨יִם&thinsp;<b>׀</b> וּבִנְיָ֘מִ֤ן וּמְנַשֶּׁ֗ה עוֹרְרָ֥ה אֶת־גְּבוּרָתֶ֑ךָ וּלְכָ֖ה לִישֻׁעָ֣תָה לָּֽנוּ׃</p></div><div class="heb-s"><p>לפני אפרים&thinsp;<b>׀</b> ובנימן ומנשה עוררה את־גבורתך ולכה לישעתה לנו׃</p></div></div>
+      <div class="texte-fr"><p>Aux regards d’Ephraïm, Benjamin et Manassé, déploie ta puissance, et marche à notre secours!</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֥ים הֲשִׁיבֵ֑נוּ וְהָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃</p></div><div class="heb-s"><p>אלהים השיבנו והאר פניך ונושעה׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu, régénère-nous, fais luire ta face et nous serons sauvés!</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֣ה אֱלֹהִ֣ים צְבָא֑וֹת עַד־מָתַ֥י עָ֝שַׁ֗נְתָּ בִּתְפִלַּ֥ת עַמֶּֽךָ׃</p></div><div class="heb-s"><p>יהוה אלהים צבאות עד־מתי עשנת בתפלת עמך׃</p></div></div>
+      <div class="texte-fr"><p>Éternel, Dieu-Cebaot! Jusques à quand accueilleras-tu avec colère la prière de ton peuple?</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֶ֭אֱכַלְתָּם לֶ֣חֶם דִּמְעָ֑ה וַ֝תַּשְׁקֵ֗מוֹ בִּדְמָע֥וֹת שָׁלִֽישׁ׃</p></div><div class="heb-s"><p>האכלתם לחם דמעה ותשקמו בדמעות שליש׃</p></div></div>
+      <div class="texte-fr"><p>Tu leur fais manger un pain [trempé] de pleurs, tu les abreuves d’un déluge de larmes.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּשִׂימֵ֣נוּ מָ֭דוֹן לִשְׁכֵנֵ֑ינוּ וְ֝אֹיְבֵ֗ינוּ יִלְעֲגוּ־לָֽמוֹ׃</p></div><div class="heb-s"><p>תשימנו מדון לשכנינו ואיבינו ילעגו־למו׃</p></div></div>
+      <div class="texte-fr"><p>Tu fais de nous un brandon de discorde pour nos voisins, et nos ennemis se livrent à leurs moqueries.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֣ים צְבָא֣וֹת הֲשִׁיבֵ֑נוּ וְהָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃</p></div><div class="heb-s"><p>אלהים צבאות השיבנו והאר פניך ונושעה׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu-Cebaot, régénère-nous, fais luire ta face et nous serons sauvés!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>גֶּ֭פֶן מִמִּצְרַ֣יִם תַּסִּ֑יעַ תְּגָרֵ֥שׁ גּ֝וֹיִ֗ם וַתִּטָּעֶֽהָ׃</p></div><div class="heb-s"><p>גפן ממצרים תסיע תגרש גוים ותטעה׃</p></div></div>
+      <div class="texte-fr"><p>Tu as fait émigrer une vigne de l’Égypte, et expulsé des nations pour la replanter.</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>פִּנִּ֥יתָ לְפָנֶ֑יהָ וַתַּשְׁרֵ֥שׁ שׇׁ֝רָשֶׁ֗יהָ וַתְּמַלֵּא־אָֽרֶץ׃</p></div><div class="heb-s"><p>פנית לפניה ותשרש שרשיה ותמלא־ארץ׃</p></div></div>
+      <div class="texte-fr"><p>Tu as fait place nette devant elle; aussi elle jeta de profondes racines, et s’étendit sur le pays.</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּסּ֣וּ הָרִ֣ים צִלָּ֑הּ וַ֝עֲנָפֶ֗יהָ אַֽרְזֵי־אֵֽל׃</p></div><div class="heb-s"><p>כסו הרים צלה וענפיה ארזי־אל׃</p></div></div>
+      <div class="texte-fr"><p>Les montagnes furent couvertes de son ombrage, ses branches égalèrent les cèdres de Dieu.</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּשַׁלַּ֣ח קְצִירֶ֣הָ עַד־יָ֑ם וְאֶל־נָ֝הָ֗ר יוֹנְקוֹתֶֽיהָ׃</p></div><div class="heb-s"><p>תשלח קצירה עד־ים ואל־נהר יונקותיה׃</p></div></div>
+      <div class="texte-fr"><p>Elle poussa ses sarments jusqu’à la mer, jusqu’au Fleuve ses rejetons.</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָ֭מָּה פָּרַ֣צְתָּ גְדֵרֶ֑יהָ וְ֝אָר֗וּהָ כׇּל־עֹ֥בְרֵי דָֽרֶךְ׃</p></div><div class="heb-s"><p>למה פרצת גדריה וארוה כל־עברי דרך׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi as-tu démoli ses clôtures, si bien que tous les passants la dépouillent,</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְכַרְסְמֶ֣נָּֽה חֲזִ֣יר מִיָּ֑<sup>עַ</sup>ר וְזִ֖יז שָׂדַ֣י יִרְעֶֽנָּה׃</p></div><div class="heb-s"><p>יכרסמנה חזיר מי<sup>ע</sup>ר וזיז שדי ירענה׃</p></div></div>
+      <div class="texte-fr"><p>que le sanglier de la forêt la mutile, et qu’elle sert de pâture à ce qui se meut dans les champs?</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱלֹהִ֣ים צְבָאוֹת֮ שֽׁ֫וּב<span class="mam-implicit-maqaf">־</span>נָ֥א הַבֵּ֣ט מִשָּׁמַ֣יִם וּרְאֵ֑ה וּ֝פְקֹ֗ד גֶּ֣פֶן זֹֽאת׃</p></div><div class="heb-s"><p>אלהים צבאות שוב<span class="mam-implicit-maqaf">־</span>נא הבט משמים וראה ופקד גפן זאת׃</p></div></div>
+      <div class="texte-fr"><p>O Dieu-Cébaot! Reviens de grâce! Du haut du Ciel regarde et vois; prends sous ta protection cette vigne,</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֭<big>כַ</big>נָּה אֲשֶׁר־נָטְעָ֣ה יְמִינֶ֑ךָ וְעַל־בֵּ֝֗ן אִמַּ֥צְתָּה לָּֽךְ׃</p></div><div class="heb-s"><p>ו<big>כ</big>נה אשר־נטעה ימינך ועל־בן אמצתה לך׃</p></div></div>
+      <div class="texte-fr"><p>ces ceps que ta droite a mis en terre, cette plantation que tu avais voulue si vigoureuse.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׂרֻפָ֣ה בָאֵ֣שׁ כְּסוּחָ֑ה מִגַּעֲרַ֖ת פָּנֶ֣יךָ יֹאבֵֽדוּ׃</p></div><div class="heb-s"><p>שרפה באש כסוחה מגערת פניך יאבדו׃</p></div></div>
+      <div class="texte-fr"><p>La voilà consumée par le feu, mise en pièces: sous la colère menaçante de ta face, tout périt!</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>תְּֽהִי־יָ֭דְךָ עַל־אִ֣ישׁ יְמִינֶ֑ךָ עַל־בֶּן־אָ֝דָ֗ם אִמַּ֥צְתָּ לָּֽךְ׃</p></div><div class="heb-s"><p>תהי־ידך על־איש ימינך על־בן־אדם אמצת לך׃</p></div></div>
+      <div class="texte-fr"><p>Oh! que ta protection s’étende sur l’homme élu par ta droite, sur le fils de l’homme que tu avais rendu fort en ton honneur!</p></div>
+    </div><div class="seif" id="v-19">
+      <span class="seif-num">Verset 19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־נָס֥וֹג מִמֶּ֑ךָּ תְּ֝חַיֵּ֗נוּ וּבְשִׁמְךָ֥ נִקְרָֽא׃</p></div><div class="heb-s"><p>ולא־נסוג ממך תחינו ובשמך נקרא׃</p></div></div>
+      <div class="texte-fr"><p>Nous ne nous éloignerons plus de toi: ranime notre vie, et nous invoquerons ton nom.</p></div>
+    </div><div class="seif" id="v-20">
+      <span class="seif-num">Verset 20</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְ֘הֹוָ֤ה אֱלֹהִ֣ים צְבָא֣וֹת הֲשִׁיבֵ֑נוּ הָאֵ֥ר פָּ֝נֶ֗יךָ וְנִוָּשֵֽׁעָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יהוה אלהים צבאות השיבנו האר פניך ונושעה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>O Éternel, Dieu-Cebaot, régénère-nous, fais luire ta face et nous serons sauvés!</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Au chef des chantres. Sur les Chochanim, Edouth. Psaume d’Assaph.</p>
-      <p>Pasteur d’Israël, prête l’oreille, toi qui mènes Joseph comme un troupeau! Révèle-toi dans ta splendeur, toi qui trônes sur les Chérubins!</p>
-      <p>Aux regards d’Ephraïm, Benjamin et Manassé, déploie ta puissance, et marche à notre secours!</p>
-      <p>O Dieu, régénère-nous, fais luire ta face et nous serons sauvés!</p>
-      <p>Éternel, Dieu-Cebaot! Jusques à quand accueilleras-tu avec colère la prière de ton peuple?</p>
-      <p>Tu leur fais manger un pain [trempé] de pleurs, tu les abreuves d’un déluge de larmes.</p>
-      <p>Tu fais de nous un brandon de discorde pour nos voisins, et nos ennemis se livrent à leurs moqueries.</p>
-      <p>O Dieu-Cebaot, régénère-nous, fais luire ta face et nous serons sauvés!</p>
-      <p>Tu as fait émigrer une vigne de l’Égypte, et expulsé des nations pour la replanter.</p>
-      <p>Tu as fait place nette devant elle; aussi elle jeta de profondes racines, et s’étendit sur le pays.</p>
-      <p>Les montagnes furent couvertes de son ombrage, ses branches égalèrent les cèdres de Dieu.</p>
-      <p>Elle poussa ses sarments jusqu’à la mer, jusqu’au Fleuve ses rejetons.</p>
-      <p>Pourquoi as-tu démoli ses clôtures, si bien que tous les passants la dépouillent,</p>
-      <p>que le sanglier de la forêt la mutile, et qu’elle sert de pâture à ce qui se meut dans les champs?</p>
-      <p>O Dieu-Cébaot! Reviens de grâce! Du haut du Ciel regarde et vois; prends sous ta protection cette vigne,</p>
-      <p>ces ceps que ta droite a mis en terre, cette plantation que tu avais voulue si vigoureuse.</p>
-      <p>La voilà consumée par le feu, mise en pièces: sous la colère menaçante de ta face, tout périt!</p>
-      <p>Oh! que ta protection s’étende sur l’homme élu par ta droite, sur le fils de l’homme que tu avais rendu fort en ton honneur!</p>
-      <p>Nous ne nous éloignerons plus de toi: ranime notre vie, et nous invoquerons ton nom.</p>
-      <p>O Éternel, Dieu-Cebaot, régénère-nous, fais luire ta face et nous serons sauvés!</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -272,6 +348,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-79.html">← Tehilim 79</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-80.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-81.html">Tehilim 81 →</a></div>
 </main>
 
 <footer>

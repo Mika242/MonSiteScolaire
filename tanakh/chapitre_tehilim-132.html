@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Tehilim · Chapitre</div>
     <h1>Tehilim 132 – Souviens-Toi, D.ieu, de David</h1>
     <p>Ketouvim, Tehilim, Chapitre 132</p>
+    <div class="hnav"><a class="hbtn" href="chapitre_tehilim-131.html">← Tehilim 131</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-132.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-133.html">Tehilim 133 →</a></div>
   </div>
 </header>
 
@@ -161,59 +202,90 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>שִׁ֗יר הַֽמַּ֫עֲל֥וֹת זְכוֹר־יְהֹוָ֥ה לְדָוִ֑ד אֵ֝֗ת כׇּל־עֻנּוֹתֽוֹ׃</p>
-      <p>אֲשֶׁ֣ר נִ֭שְׁבַּע לַֽיהֹוָ֑ה נָ֝דַ֗ר לַאֲבִ֥יר יַעֲקֹֽב׃</p>
-      <p>אִם־אָ֭בֹא בְּאֹ֣הֶל בֵּיתִ֑י אִם־אֶ֝עֱלֶ֗ה עַל־עֶ֥רֶשׂ יְצוּעָֽי׃</p>
-      <p>אִם־אֶתֵּ֣ן שְׁנַ֣ת לְעֵינָ֑י לְֽעַפְעַפַּ֥י תְּנוּמָֽה׃</p>
-      <p>עַד־אֶמְצָ֣א מָ֭קוֹם לַיהֹוָ֑ה מִ֝שְׁכָּנ֗וֹת לַאֲבִ֥יר יַעֲקֹֽב׃</p>
-      <p>הִנֵּֽה־שְׁמַעֲנ֥וּהָ בְאֶפְרָ֑תָה מְ֝צָאנ֗וּהָ בִּשְׂדֵי־יָֽעַר׃</p>
-      <p>נָב֥וֹאָה לְמִשְׁכְּנוֹתָ֑יו נִ֝שְׁתַּחֲוֶ֗ה לַהֲדֹ֥ם רַגְלָֽיו׃</p>
-      <p>קוּמָ֣ה יְ֭הֹוָה לִמְנוּחָתֶ֑ךָ אַ֝תָּ֗ה וַאֲר֥וֹן עֻזֶּֽךָ׃</p>
-      <p>כֹּהֲנֶ֥יךָ יִלְבְּשׁוּ־צֶ֑דֶק וַחֲסִידֶ֥יךָ יְרַנֵּֽנוּ׃</p>
-      <p>בַּ֭עֲבוּר דָּוִ֣ד עַבְדֶּ֑ךָ אַל־תָּ֝שֵׁ֗ב פְּנֵ֣י מְשִׁיחֶֽךָ׃</p>
-      <p>נִשְׁבַּֽע־יְהֹוָ֨ה&thinsp;<b>׀</b> לְדָוִ֡ד אֱמֶת֮ לֹא־יָשׁ֢וּב מִ֫מֶּ֥נָּה מִפְּרִ֥י בִטְנְךָ֑ אָ֝שִׁ֗ית לְכִסֵּא־לָֽךְ׃</p>
-      <p>אִֽם־יִשְׁמְר֬וּ בָנֶ֨יךָ&thinsp;<b>׀</b> בְּרִיתִי֮ וְעֵדֹתִ֥י ז֗וֹ אֲלַ֫מְּדֵ֥ם גַּם־בְּנֵיהֶ֥ם עֲדֵי־עַ֑ד יֵ֝שְׁב֗וּ לְכִסֵּא־לָֽךְ׃</p>
-      <p>כִּי־בָחַ֣ר יְהֹוָ֣ה בְּצִיּ֑וֹן אִ֝וָּ֗הּ לְמוֹשָׁ֥ב לֽוֹ׃</p>
-      <p>זֹאת־מְנוּחָתִ֥י עֲדֵי־עַ֑ד פֹּה־אֵ֝שֵׁ֗ב כִּ֣י אִוִּתִֽיהָ׃</p>
-      <p>צֵ֭ידָהּ בָּרֵ֣ךְ אֲבָרֵ֑ךְ אֶ֝בְיוֹנֶ֗יהָ אַשְׂבִּ֥יעַֽ לָֽחֶם׃</p>
-      <p>וְֽ֭כֹהֲנֶיהָ אַלְבִּ֣ישׁ יֶ֑שַׁע וַ֝חֲסִידֶ֗יהָ רַנֵּ֥ן יְרַנֵּֽנוּ׃</p>
-      <p>שָׁ֤ם אַצְמִ֣יחַ קֶ֣רֶן לְדָוִ֑ד עָרַ֥כְתִּי נֵ֝֗ר לִמְשִׁיחִֽי׃</p>
-      <p>א֭וֹיְבָיו אַלְבִּ֣ישׁ בֹּ֑שֶׁת וְ֝עָלָ֗יו יָצִ֥יץ נִזְרֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-1">1</a><a href="#v-2">2</a><a href="#v-3">3</a><a href="#v-4">4</a><a href="#v-5">5</a><a href="#v-6">6</a><a href="#v-7">7</a><a href="#v-8">8</a><a href="#v-9">9</a><a href="#v-10">10</a><a href="#v-11">11</a><a href="#v-12">12</a><a href="#v-13">13</a><a href="#v-14">14</a><a href="#v-15">15</a><a href="#v-16">16</a><a href="#v-17">17</a><a href="#v-18">18</a></div>
+  <div class="seif" id="v-1">
+      <span class="seif-num">Verset 1</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁ֗יר הַֽמַּ֫עֲל֥וֹת זְכוֹר־יְהֹוָ֥ה לְדָוִ֑ד אֵ֝֗ת כׇּל־עֻנּוֹתֽוֹ׃</p></div><div class="heb-s"><p>שיר המעלות זכור־יהוה לדוד את כל־ענותו׃</p></div></div>
+      <div class="texte-fr"><p>Cantique des degrés. Souviens-toi, Seigneur, en faveur de David, de toutes les souffrances qu’il a subies,</p></div>
+    </div><div class="seif" id="v-2">
+      <span class="seif-num">Verset 2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֣ר נִ֭שְׁבַּע לַֽיהֹוָ֑ה נָ֝דַ֗ר לַאֲבִ֥יר יַעֲקֹֽב׃</p></div><div class="heb-s"><p>אשר נשבע ליהוה נדר לאביר יעקב׃</p></div></div>
+      <div class="texte-fr"><p>du serment qu’il fit à l’Éternel, du vœu qu’il exprima au fort de Jacob:</p></div>
+    </div><div class="seif" id="v-3">
+      <span class="seif-num">Verset 3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־אָ֭בֹא בְּאֹ֣הֶל בֵּיתִ֑י אִם־אֶ֝עֱלֶ֗ה עַל־עֶ֥רֶשׂ יְצוּעָֽי׃</p></div><div class="heb-s"><p>אם־אבא באהל ביתי אם־אעלה על־ערש יצועי׃</p></div></div>
+      <div class="texte-fr"><p>"Si j’entre dans la tente qui me sert de demeure, si je monte sur le lit qui me sert de couche,</p></div>
+    </div><div class="seif" id="v-4">
+      <span class="seif-num">Verset 4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־אֶתֵּ֣ן שְׁנַ֣ת לְעֵינָ֑י לְֽעַפְעַפַּ֥י תְּנוּמָֽה׃</p></div><div class="heb-s"><p>אם־אתן שנת לעיני לעפעפי תנומה׃</p></div></div>
+      <div class="texte-fr"><p>si je permets le sommeil à mes yeux, à mes paupières le repos,</p></div>
+    </div><div class="seif" id="v-5">
+      <span class="seif-num">Verset 5</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַד־אֶמְצָ֣א מָ֭קוֹם לַיהֹוָ֑ה מִ֝שְׁכָּנ֗וֹת לַאֲבִ֥יר יַעֲקֹֽב׃</p></div><div class="heb-s"><p>עד־אמצא מקום ליהוה משכנות לאביר יעקב׃</p></div></div>
+      <div class="texte-fr"><p>avant que j’aie trouvé un lieu pour l’Éternel, une résidence pour le Fort de Jacob!…"</p></div>
+    </div><div class="seif" id="v-6">
+      <span class="seif-num">Verset 6</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּֽה־שְׁמַעֲנ֥וּהָ בְאֶפְרָ֑תָה מְ֝צָאנ֗וּהָ בִּשְׂדֵי־יָֽעַר׃</p></div><div class="heb-s"><p>הנה־שמענוה באפרתה מצאנוה בשדי־יער׃</p></div></div>
+      <div class="texte-fr"><p>Oui, nous avons entendu la nouvelle à Efrata, nous l’avons recueillie dans les districts forestiers.</p></div>
+    </div><div class="seif" id="v-7">
+      <span class="seif-num">Verset 7</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָב֥וֹאָה לְמִשְׁכְּנוֹתָ֑יו נִ֝שְׁתַּחֲוֶ֗ה לַהֲדֹ֥ם רַגְלָֽיו׃</p></div><div class="heb-s"><p>נבואה למשכנותיו נשתחוה להדם רגליו׃</p></div></div>
+      <div class="texte-fr"><p>Entrons donc dans ses demeures, prosternons-nous [dans ce sanctuaire] qui est l’escabeau de ses pieds.</p></div>
+    </div><div class="seif" id="v-8">
+      <span class="seif-num">Verset 8</span>
+      <div class="texte-heb"><div class="heb-n"><p>קוּמָ֣ה יְ֭הֹוָה לִמְנוּחָתֶ֑ךָ אַ֝תָּ֗ה וַאֲר֥וֹן עֻזֶּֽךָ׃</p></div><div class="heb-s"><p>קומה יהוה למנוחתך אתה וארון עזך׃</p></div></div>
+      <div class="texte-fr"><p>"Lève-toi, Seigneur, pour entrer dans ton lieu de repos, toi et l’arche de ta puissance!</p></div>
+    </div><div class="seif" id="v-9">
+      <span class="seif-num">Verset 9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּהֲנֶ֥יךָ יִלְבְּשׁוּ־צֶ֑דֶק וַחֲסִידֶ֥יךָ יְרַנֵּֽנוּ׃</p></div><div class="heb-s"><p>כהניך ילבשו־צדק וחסידיך ירננו׃</p></div></div>
+      <div class="texte-fr"><p>Que tes prêtres endossent des vêtements de triomphe, et que tes fidèles adorateurs éclatent en cris de joie!</p></div>
+    </div><div class="seif" id="v-10">
+      <span class="seif-num">Verset 10</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּ֭עֲבוּר דָּוִ֣ד עַבְדֶּ֑ךָ אַל־תָּ֝שֵׁ֗ב פְּנֵ֣י מְשִׁיחֶֽךָ׃</p></div><div class="heb-s"><p>בעבור דוד עבדך אל־תשב פני משיחך׃</p></div></div>
+      <div class="texte-fr"><p>Pour l’amour de David, ton serviteur, ne repousse point la face de ton Oint."</p></div>
+    </div><div class="seif" id="v-11">
+      <span class="seif-num">Verset 11</span>
+      <div class="texte-heb"><div class="heb-n"><p>נִשְׁבַּֽע־יְהֹוָ֨ה&thinsp;<b>׀</b> לְדָוִ֡ד אֱמֶת֮ לֹא־יָשׁ֢וּב מִ֫מֶּ֥נָּה מִפְּרִ֥י בִטְנְךָ֑ אָ֝שִׁ֗ית לְכִסֵּא־לָֽךְ׃</p></div><div class="heb-s"><p>נשבע־יהוה&thinsp;<b>׀</b> לדוד אמת לא־ישוב ממנה מפרי בטנך אשית לכסא־לך׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel a fait à David un serment véridique auquel il ne manquera pas: "Je placerai sur ton trône un fruit de tes entrailles!</p></div>
+    </div><div class="seif" id="v-12">
+      <span class="seif-num">Verset 12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִֽם־יִשְׁמְר֬וּ בָנֶ֨יךָ&thinsp;<b>׀</b> בְּרִיתִי֮ וְעֵדֹתִ֥י ז֗וֹ אֲלַ֫מְּדֵ֥ם גַּם־בְּנֵיהֶ֥ם עֲדֵי־עַ֑ד יֵ֝שְׁב֗וּ לְכִסֵּא־לָֽךְ׃</p></div><div class="heb-s"><p>אם־ישמרו בניך&thinsp;<b>׀</b> בריתי ועדתי זו אלמדם גם־בניהם עדי־עד ישבו לכסא־לך׃</p></div></div>
+      <div class="texte-fr"><p>Si tes fils gardent mon pacte, les lois que je leur enseignerai, leurs descendants, jusqu’à l’éternité, siégeront après toi sur ton trône."</p></div>
+    </div><div class="seif" id="v-13">
+      <span class="seif-num">Verset 13</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־בָחַ֣ר יְהֹוָ֣ה בְּצִיּ֑וֹן אִ֝וָּ֗הּ לְמוֹשָׁ֥ב לֽוֹ׃</p></div><div class="heb-s"><p>כי־בחר יהוה בציון אוה למושב לו׃</p></div></div>
+      <div class="texte-fr"><p>Car l’Éternel a fait choix de Sion, il l’a voulue pour demeure:</p></div>
+    </div><div class="seif" id="v-14">
+      <span class="seif-num">Verset 14</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹאת־מְנוּחָתִ֥י עֲדֵי־עַ֑ד פֹּה־אֵ֝שֵׁ֗ב כִּ֣י אִוִּתִֽיהָ׃</p></div><div class="heb-s"><p>זאת־מנוחתי עדי־עד פה־אשב כי אותיה׃</p></div></div>
+      <div class="texte-fr"><p>"Ce sera là mon lieu de repos à jamais, là je demeurerai, car je l’ai voulu.</p></div>
+    </div><div class="seif" id="v-15">
+      <span class="seif-num">Verset 15</span>
+      <div class="texte-heb"><div class="heb-n"><p>צֵ֭ידָהּ בָּרֵ֣ךְ אֲבָרֵ֑ךְ אֶ֝בְיוֹנֶ֗יהָ אַשְׂבִּ֥יעַֽ לָֽחֶם׃</p></div><div class="heb-s"><p>צידה ברך אברך אביוניה אשביע לחם׃</p></div></div>
+      <div class="texte-fr"><p>Je bénirai amplement ses approvisionnements, je rassasierai ses pauvres de pain.</p></div>
+    </div><div class="seif" id="v-16">
+      <span class="seif-num">Verset 16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽ֭כֹהֲנֶיהָ אַלְבִּ֣ישׁ יֶ֑שַׁע וַ֝חֲסִידֶ֗יהָ רַנֵּ֥ן יְרַנֵּֽנוּ׃</p></div><div class="heb-s"><p>וכהניה אלביש ישע וחסידיה רנן ירננו׃</p></div></div>
+      <div class="texte-fr"><p>J’habillerai ses prêtres de vêtements de triomphe, et ses hommes pieux éclateront en cris de joie.</p></div>
+    </div><div class="seif" id="v-17">
+      <span class="seif-num">Verset 17</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֤ם אַצְמִ֣יחַ קֶ֣רֶן לְדָוִ֑ד עָרַ֥כְתִּי נֵ֝֗ר לִמְשִׁיחִֽי׃</p></div><div class="heb-s"><p>שם אצמיח קרן לדוד ערכתי נר למשיחי׃</p></div></div>
+      <div class="texte-fr"><p>Là je ferai grandir la corne de David, j’allumerai le flambeau de mon Oint.</p></div>
+    </div><div class="seif" id="v-18">
+      <span class="seif-num">Verset 18</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֭וֹיְבָיו אַלְבִּ֣ישׁ בֹּ֑שֶׁת וְ֝עָלָ֗יו יָצִ֥יץ נִזְרֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אויביו אלביש בשת ועליו יציץ נזרו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ses ennemis, je les revêtirai de honte et sur sa tête brillera son diadème."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Cantique des degrés. Souviens-toi, Seigneur, en faveur de David, de toutes les souffrances qu’il a subies,</p>
-      <p>du serment qu’il fit à l’Éternel, du vœu qu’il exprima au fort de Jacob:</p>
-      <p>"Si j’entre dans la tente qui me sert de demeure, si je monte sur le lit qui me sert de couche,</p>
-      <p>si je permets le sommeil à mes yeux, à mes paupières le repos,</p>
-      <p>avant que j’aie trouvé un lieu pour l’Éternel, une résidence pour le Fort de Jacob!…"</p>
-      <p>Oui, nous avons entendu la nouvelle à Efrata, nous l’avons recueillie dans les districts forestiers.</p>
-      <p>Entrons donc dans ses demeures, prosternons-nous [dans ce sanctuaire] qui est l’escabeau de ses pieds.</p>
-      <p>"Lève-toi, Seigneur, pour entrer dans ton lieu de repos, toi et l’arche de ta puissance!</p>
-      <p>Que tes prêtres endossent des vêtements de triomphe, et que tes fidèles adorateurs éclatent en cris de joie!</p>
-      <p>Pour l’amour de David, ton serviteur, ne repousse point la face de ton Oint."</p>
-      <p>L’Éternel a fait à David un serment véridique auquel il ne manquera pas: "Je placerai sur ton trône un fruit de tes entrailles!</p>
-      <p>Si tes fils gardent mon pacte, les lois que je leur enseignerai, leurs descendants, jusqu’à l’éternité, siégeront après toi sur ton trône."</p>
-      <p>Car l’Éternel a fait choix de Sion, il l’a voulue pour demeure:</p>
-      <p>"Ce sera là mon lieu de repos à jamais, là je demeurerai, car je l’ai voulu.</p>
-      <p>Je bénirai amplement ses approvisionnements, je rassasierai ses pauvres de pain.</p>
-      <p>J’habillerai ses prêtres de vêtements de triomphe, et ses hommes pieux éclateront en cris de joie.</p>
-      <p>Là je ferai grandir la corne de David, j’allumerai le flambeau de mon Oint.</p>
-      <p>Ses ennemis, je les revêtirai de honte et sur sa tête brillera son diadème."</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -265,6 +337,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="chapitre_tehilim-131.html">← Tehilim 131</a><a class="hbtn qcm" href="qcm_chapitre_tehilim-132.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Tous les Tehilim</a><a class="hbtn" href="chapitre_tehilim-133.html">Tehilim 133 →</a></div>
 </main>
 
 <footer>
