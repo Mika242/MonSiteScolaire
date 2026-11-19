@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bereshit · Paracha</div>
     <h1>Lekh Lekha – L&#x27;appel d&#x27;Avram, l&#x27;alliance entre les morceaux et la circoncision</h1>
     <p>Torah, Bereshit (Genesis 12:1-17:27)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_noach.html">← Noach</a><a class="hbtn qcm" href="qcm_paracha_lech-lecha.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayera.html">Vayera →</a></div>
   </div>
 </header>
 
@@ -161,6 +202,522 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-12-1">Chap. 12</a><a href="#v-13-1">Chap. 13</a><a href="#v-14-1">Chap. 14</a><a href="#v-15-1">Chap. 15</a><a href="#v-16-1">Chap. 16</a><a href="#v-17-1">Chap. 17</a></div>
+  <div class="seif" id="v-12-1">
+      <span class="seif-num">12:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־אַבְרָ֔ם לֶךְ־לְךָ֛ מֵאַרְצְךָ֥ וּמִמּֽוֹלַדְתְּךָ֖ וּמִבֵּ֣ית אָבִ֑יךָ אֶל־הָאָ֖רֶץ אֲשֶׁ֥ר אַרְאֶֽךָּ׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־אברם לך־לך מארצך וממולדתך ומבית אביך אל־הארץ אשר אראך׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel avait dit à Abram: "Éloigne-toi de ton pays, de ton lieu natal et de la maison paternelle, et va au pays que je t’indiquerai.</p></div>
+    </div><div class="seif" id="v-12-2">
+      <span class="seif-num">12:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶֽעֶשְׂךָ֙ לְג֣וֹי גָּד֔וֹל וַאֲבָ֣רֶכְךָ֔ וַאֲגַדְּלָ֖ה שְׁמֶ֑ךָ וֶהְיֵ֖ה בְּרָכָֽה׃</p></div><div class="heb-s"><p>ואעשך לגוי גדול ואברכך ואגדלה שמך והיה ברכה׃</p></div></div>
+      <div class="texte-fr"><p>Je te ferai devenir une grande nation; je te bénirai, je rendrai ton nom glorieux, et tu seras un type de bénédiction.</p></div>
+    </div><div class="seif" id="v-12-3">
+      <span class="seif-num">12:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲבָֽרְכָה֙ מְבָ֣רְכֶ֔יךָ וּמְקַלֶּלְךָ֖ אָאֹ֑ר וְנִבְרְכ֣וּ בְךָ֔ כֹּ֖ל מִשְׁפְּחֹ֥ת הָאֲדָמָֽה׃</p></div><div class="heb-s"><p>ואברכה מברכיך ומקללך אאר ונברכו בך כל משפחת האדמה׃</p></div></div>
+      <div class="texte-fr"><p>Je bénirai ceux qui te béniront, et qui t’outragera je le maudirai; et par toi seront heureuses toutes les races de la terre."</p></div>
+    </div><div class="seif" id="v-12-4">
+      <span class="seif-num">12:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֣לֶךְ אַבְרָ֗ם כַּאֲשֶׁ֨ר דִּבֶּ֤ר אֵלָיו֙ יְהֹוָ֔ה וַיֵּ֥לֶךְ אִתּ֖וֹ ל֑וֹט וְאַבְרָ֗ם בֶּן־חָמֵ֤שׁ שָׁנִים֙ וְשִׁבְעִ֣ים שָׁנָ֔ה בְּצֵאת֖וֹ מֵחָרָֽן׃</p></div><div class="heb-s"><p>וילך אברם כאשר דבר אליו יהוה וילך אתו לוט ואברם בן־חמש שנים ושבעים שנה בצאתו מחרן׃</p></div></div>
+      <div class="texte-fr"><p>Abram partit comme le lui avait dit l’Éternel, et Loth alla avec lui. Abram était âgé de soixante-quinze ans lorsqu’il sortit de Harân.</p></div>
+    </div><div class="seif" id="v-12-5">
+      <span class="seif-num">12:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֣ח אַבְרָם֩ אֶת־שָׂרַ֨י אִשְׁתּ֜וֹ וְאֶת־ל֣וֹט בֶּן־אָחִ֗יו וְאֶת־כׇּל־רְכוּשָׁם֙ אֲשֶׁ֣ר רָכָ֔שׁוּ וְאֶת־הַנֶּ֖פֶשׁ אֲשֶׁר־עָשׂ֣וּ בְחָרָ֑ן וַיֵּצְא֗וּ לָלֶ֙כֶת֙ אַ֣רְצָה כְּנַ֔עַן וַיָּבֹ֖אוּ אַ֥רְצָה כְּנָֽעַן׃</p></div><div class="heb-s"><p>ויקח אברם את־שרי אשתו ואת־לוט בן־אחיו ואת־כל־רכושם אשר רכשו ואת־הנפש אשר־עשו בחרן ויצאו ללכת ארצה כנען ויבאו ארצה כנען׃</p></div></div>
+      <div class="texte-fr"><p>"Abram prit Saraï son épouse, Loth fils de son frère, et tous les biens et les gens qu’ils avaient acquis à Harân. Ils partirent pour se rendre dans le pays de Canaan, et ils arrivèrent dans ce pays.</p></div>
+    </div><div class="seif" id="v-12-6">
+      <span class="seif-num">12:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲבֹ֤ר אַבְרָם֙ בָּאָ֔רֶץ עַ֚ד מְק֣וֹם שְׁכֶ֔ם עַ֖ד אֵל֣וֹן מוֹרֶ֑ה וְהַֽכְּנַעֲנִ֖י אָ֥ז בָּאָֽרֶץ׃</p></div><div class="heb-s"><p>ויעבר אברם בארץ עד מקום שכם עד אלון מורה והכנעני אז בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Abram s’avança dans le pays jusqu’au territoire de Sichem, jusqu’à la plaine de Môré; le Cananéen habitait dès lors ce pays.</p></div>
+    </div><div class="seif" id="v-12-7">
+      <span class="seif-num">12:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּרָ֤א יְהֹוָה֙ אֶל־אַבְרָ֔ם וַיֹּ֕אמֶר לְזַ֨רְעֲךָ֔ אֶתֵּ֖ן אֶת־הָאָ֣רֶץ הַזֹּ֑את וַיִּ֤בֶן שָׁם֙ מִזְבֵּ֔חַ לַיהֹוָ֖ה הַנִּרְאֶ֥ה אֵלָֽיו׃</p></div><div class="heb-s"><p>וירא יהוה אל־אברם ויאמר לזרעך אתן את־הארץ הזאת ויבן שם מזבח ליהוה הנראה אליו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel apparut à Abram et dit:"C’est à ta postérité que je destine ce pays." Il bâtit en ce lieu un autel au Dieu qui lui était apparu.</p></div>
+    </div><div class="seif" id="v-12-8">
+      <span class="seif-num">12:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעְתֵּ֨ק מִשָּׁ֜ם הָהָ֗רָה מִקֶּ֛דֶם לְבֵֽית־אֵ֖ל וַיֵּ֣ט אׇהֳלֹ֑ה בֵּֽית־אֵ֤ל מִיָּם֙ וְהָעַ֣י מִקֶּ֔דֶם וַיִּֽבֶן־שָׁ֤ם מִזְבֵּ֙חַ֙ לַֽיהֹוָ֔ה וַיִּקְרָ֖א בְּשֵׁ֥ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויעתק משם ההרה מקדם לבית־אל ויט אהלה בית־אל מים והעי מקדם ויבן־שם מזבח ליהוה ויקרא בשם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Il se transporta de là vers la montagne à l’est de Béthel et y dressa sa tente, ayant Béthel à l’occident et Aï à l’orient; il y érigea un autel au Seigneur, et il proclama le nom de l’Éternel.</p></div>
+    </div><div class="seif" id="v-12-9">
+      <span class="seif-num">12:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסַּ֣ע אַבְרָ֔ם הָל֥וֹךְ וְנָס֖וֹעַ הַנֶּֽגְבָּה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויסע אברם הלוך ונסוע הנגבה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Abram partit ensuite, se dirigeant constamment vers le midi.</p></div>
+    </div><div class="seif" id="v-12-10">
+      <span class="seif-num">12:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֥י רָעָ֖ב בָּאָ֑רֶץ וַיֵּ֨רֶד אַבְרָ֤ם מִצְרַ֙יְמָה֙ לָג֣וּר שָׁ֔ם כִּֽי־כָבֵ֥ד הָרָעָ֖ב בָּאָֽרֶץ׃</p></div><div class="heb-s"><p>ויהי רעב בארץ וירד אברם מצרימה לגור שם כי־כבד הרעב בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Or, il y eut une famine dans le pays. Abram descendit en Égypte pour y séjourner, la famine étant excessive dans le pays.</p></div>
+    </div><div class="seif" id="v-12-11">
+      <span class="seif-num">12:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֕י כַּאֲשֶׁ֥ר הִקְרִ֖יב לָב֣וֹא מִצְרָ֑יְמָה וַיֹּ֙אמֶר֙ אֶל־שָׂרַ֣י אִשְׁתּ֔וֹ הִנֵּה־נָ֣א יָדַ֔עְתִּי כִּ֛י אִשָּׁ֥ה יְפַת־מַרְאֶ֖ה אָֽתְּ׃</p></div><div class="heb-s"><p>ויהי כאשר הקריב לבוא מצרימה ויאמר אל־שרי אשתו הנה־נא ידעתי כי אשה יפת־מראה את׃</p></div></div>
+      <div class="texte-fr"><p>Quand il fut sur le point d’arriver en Égypte, il dit à Saraï son épouse: "Certes, je sais que tu es une femme au gracieux visage.</p></div>
+    </div><div class="seif" id="v-12-12">
+      <span class="seif-num">12:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֗ה כִּֽי־יִרְא֤וּ אֹתָךְ֙ הַמִּצְרִ֔ים וְאָמְר֖וּ אִשְׁתּ֣וֹ זֹ֑את וְהָרְג֥וּ אֹתִ֖י וְאֹתָ֥ךְ יְחַיּֽוּ׃</p></div><div class="heb-s"><p>והיה כי־יראו אתך המצרים ואמרו אשתו זאת והרגו אתי ואתך יחיו׃</p></div></div>
+      <div class="texte-fr"><p>Il arrivera que, lorsque les Égyptiens te verront, ils diront: ‘C’est sa femme’; et ils me tueront, et ils te conserveront la vie.</p></div>
+    </div><div class="seif" id="v-12-13">
+      <span class="seif-num">12:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִמְרִי־נָ֖א אֲחֹ֣תִי אָ֑תְּ לְמַ֙עַן֙ יִֽיטַב־לִ֣י בַעֲבוּרֵ֔ךְ וְחָיְתָ֥ה נַפְשִׁ֖י בִּגְלָלֵֽךְ׃</p></div><div class="heb-s"><p>אמרי־נא אחתי את למען ייטב־לי בעבורך וחיתה נפשי בגללך׃</p></div></div>
+      <div class="texte-fr"><p>Dis, je te prie, que tu es ma soeur; et je serai heureux par toi, car j’aurai, grâce à toi, la vie sauve."</p></div>
+    </div><div class="seif" id="v-12-14">
+      <span class="seif-num">12:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֕י כְּב֥וֹא אַבְרָ֖ם מִצְרָ֑יְמָה וַיִּרְא֤וּ הַמִּצְרִים֙ אֶת־הָ֣אִשָּׁ֔ה כִּֽי־יָפָ֥ה הִ֖וא מְאֹֽד׃</p></div><div class="heb-s"><p>ויהי כבוא אברם מצרימה ויראו המצרים את־האשה כי־יפה הוא מאד׃</p></div></div>
+      <div class="texte-fr"><p>En effet, lorsqu’Abram fut arrivé en Égypte, les Égyptiens remarquèrent que cette femme était extrêmement belle;</p></div>
+    </div><div class="seif" id="v-12-15">
+      <span class="seif-num">12:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְא֤וּ אֹתָהּ֙ שָׂרֵ֣י פַרְעֹ֔ה וַיְהַֽלְל֥וּ אֹתָ֖הּ אֶל־פַּרְעֹ֑ה וַתֻּקַּ֥ח הָאִשָּׁ֖ה בֵּ֥ית פַּרְעֹֽה׃</p></div><div class="heb-s"><p>ויראו אתה שרי פרעה ויהללו אתה אל־פרעה ותקח האשה בית פרעה׃</p></div></div>
+      <div class="texte-fr"><p>puis les officiers de Pharaon la virent et la vantèrent à Pharaon et cette femme fut enlevée pour le palais de Pharaon.</p></div>
+    </div><div class="seif" id="v-12-16">
+      <span class="seif-num">12:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְאַבְרָ֥ם הֵיטִ֖יב בַּעֲבוּרָ֑הּ וַֽיְהִי־ל֤וֹ צֹאן־וּבָקָר֙ וַחֲמֹרִ֔ים וַעֲבָדִים֙ וּשְׁפָחֹ֔ת וַאֲתֹנֹ֖ת וּגְמַלִּֽים׃</p></div><div class="heb-s"><p>ולאברם היטיב בעבורה ויהי־לו צאן־ובקר וחמרים ועבדים ושפחת ואתנת וגמלים׃</p></div></div>
+      <div class="texte-fr"><p>Quant à Abram, il fut bien traité pour l’amour d’elle; il eut du menu et du gros bétail, des ânes, des esclaves mâles et femelles, des ânesses et des chameaux.</p></div>
+    </div><div class="seif" id="v-12-17">
+      <span class="seif-num">12:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְנַגַּ֨ע יְהֹוָ֧ה&thinsp;<small>׀</small>&thinsp;אֶת־פַּרְעֹ֛ה נְגָעִ֥ים גְּדֹלִ֖ים וְאֶת־בֵּית֑וֹ עַל־דְּבַ֥ר שָׂרַ֖י אֵ֥שֶׁת אַבְרָֽם׃</p></div><div class="heb-s"><p>וינגע יהוה&thinsp;<small>׀</small>&thinsp;את־פרעה נגעים גדלים ואת־ביתו על־דבר שרי אשת אברם׃</p></div></div>
+      <div class="texte-fr"><p>Mais l’Éternel affligea de plaies terribles Pharaon et sa maison, à cause de Saraï, l’épouse d’Abram.</p></div>
+    </div><div class="seif" id="v-12-18">
+      <span class="seif-num">12:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֤א פַרְעֹה֙ לְאַבְרָ֔ם וַיֹּ֕אמֶר מַה־זֹּ֖את עָשִׂ֣יתָ לִּ֑י לָ֚מָּה לֹא־הִגַּ֣דְתָּ לִּ֔י כִּ֥י אִשְׁתְּךָ֖ הִֽוא׃</p></div><div class="heb-s"><p>ויקרא פרעה לאברם ויאמר מה־זאת עשית לי למה לא־הגדת לי כי אשתך הוא׃</p></div></div>
+      <div class="texte-fr"><p>Pharaon manda Abram, et dit: "Qu’as-tu fait là à mon égard? Pourquoi ne m’as-tu pas déclaré qu’elle est ta femme?</p></div>
+    </div><div class="seif" id="v-12-19">
+      <span class="seif-num">12:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָמָ֤ה אָמַ֙רְתָּ֙ אֲחֹ֣תִי הִ֔וא וָאֶקַּ֥ח אֹתָ֛הּ לִ֖י לְאִשָּׁ֑ה וְעַתָּ֕ה הִנֵּ֥ה אִשְׁתְּךָ֖ קַ֥ח וָלֵֽךְ׃</p></div><div class="heb-s"><p>למה אמרת אחתי הוא ואקח אתה לי לאשה ועתה הנה אשתך קח ולך׃</p></div></div>
+      <div class="texte-fr"><p>"Pourquoi as-tu dit: ‘Elle est ma sœur’, de sorte que je l’ai prise pour moi comme épouse? Or maintenant, voici ta femme, reprends-la et retire-toi!"</p></div>
+    </div><div class="seif" id="v-12-20">
+      <span class="seif-num">12:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֥ו עָלָ֛יו פַּרְעֹ֖ה אֲנָשִׁ֑ים וַֽיְשַׁלְּח֥וּ אֹת֛וֹ וְאֶת־אִשְׁתּ֖וֹ וְאֶת־כׇּל־אֲשֶׁר־לֽוֹ׃</p></div><div class="heb-s"><p>ויצו עליו פרעה אנשים וישלחו אתו ואת־אשתו ואת־כל־אשר־לו׃</p></div></div>
+      <div class="texte-fr"><p>Pharaon lui donna une escorte, qui le reconduisit avec sa femme et toute sa suite.</p></div>
+    </div><div class="seif" id="v-13-1">
+      <span class="seif-num">13:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֩עַל֩ אַבְרָ֨ם מִמִּצְרַ֜יִם ה֠וּא וְאִשְׁתּ֧וֹ וְכׇל־אֲשֶׁר־ל֛וֹ וְל֥וֹט עִמּ֖וֹ הַנֶּֽגְבָּה׃</p></div><div class="heb-s"><p>ויעל אברם ממצרים הוא ואשתו וכל־אשר־לו ולוט עמו הנגבה׃</p></div></div>
+      <div class="texte-fr"><p>Abraham remonta d’Egypte lui, sa femme et toute sa suite, et Loth avec lui, s’acheminant vers le midi.</p></div>
+    </div><div class="seif" id="v-13-2">
+      <span class="seif-num">13:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַבְרָ֖ם כָּבֵ֣ד מְאֹ֑ד בַּמִּקְנֶ֕ה בַּכֶּ֖סֶף וּבַזָּהָֽב׃</p></div><div class="heb-s"><p>ואברם כבד מאד במקנה בכסף ובזהב׃</p></div></div>
+      <div class="texte-fr"><p>Or, Abraham était puissamment riche en bétail, en argent et en or.</p></div>
+    </div><div class="seif" id="v-13-3">
+      <span class="seif-num">13:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֙לֶךְ֙ לְמַסָּעָ֔יו מִנֶּ֖גֶב וְעַד־בֵּֽית־אֵ֑ל עַד־הַמָּק֗וֹם אֲשֶׁר־הָ֨יָה שָׁ֤ם <span class="mam-kq-trivial">אׇֽהֳלֹה֙</span> בַּתְּחִלָּ֔ה בֵּ֥ין בֵּֽית־אֵ֖ל וּבֵ֥ין הָעָֽי׃</p></div><div class="heb-s"><p>וילך למסעיו מנגב ועד־בית־אל עד־המקום אשר־היה שם <span class="mam-kq-trivial">אהלה</span> בתחלה בין בית־אל ובין העי׃</p></div></div>
+      <div class="texte-fr"><p>Il repassa par ses pérégrinations, depuis le midi, jusqu’à Béthel, jusqu’à l’endroit où avait été sa tente la première fois, entre Béthel et Aï,</p></div>
+    </div><div class="seif" id="v-13-4">
+      <span class="seif-num">13:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶל־מְקוֹם֙ הַמִּזְבֵּ֔חַ אֲשֶׁר־עָ֥שָׂה שָׁ֖ם בָּרִאשֹׁנָ֑ה וַיִּקְרָ֥א שָׁ֛ם אַבְרָ֖ם בְּשֵׁ֥ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>אל־מקום המזבח אשר־עשה שם בראשנה ויקרא שם אברם בשם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>à l’endroit où se trouvait l’autel qu’il y avait précédemment érigé. Abram y proclama le nom de l’Éternel.</p></div>
+    </div><div class="seif" id="v-13-5">
+      <span class="seif-num">13:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְגַ֨ם־לְל֔וֹט הַהֹלֵ֖ךְ אֶת־אַבְרָ֑ם הָיָ֥ה צֹאן־וּבָקָ֖ר וְאֹהָלִֽים׃</p></div><div class="heb-s"><p>וגם־ללוט ההלך את־אברם היה צאן־ובקר ואהלים׃</p></div></div>
+      <div class="texte-fr"><p>Loth aussi, qui accompagnait Abram, avait du menu bétail, du gros bétail et ses tentes.</p></div>
+    </div><div class="seif" id="v-13-6">
+      <span class="seif-num">13:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־נָשָׂ֥א אֹתָ֛ם הָאָ֖רֶץ לָשֶׁ֣בֶת יַחְדָּ֑ו כִּֽי־הָיָ֤ה רְכוּשָׁם֙ רָ֔ב וְלֹ֥א יָֽכְל֖וּ לָשֶׁ֥בֶת יַחְדָּֽו׃</p></div><div class="heb-s"><p>ולא־נשא אתם הארץ לשבת יחדו כי־היה רכושם רב ולא יכלו לשבת יחדו׃</p></div></div>
+      <div class="texte-fr"><p>Le terrain ne put se prêter à ce qu’ils demeurassent ensemble; car leurs possessions étaient considérables, et ils ne pouvaient habiter ensemble.</p></div>
+    </div><div class="seif" id="v-13-7">
+      <span class="seif-num">13:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי־רִ֗יב בֵּ֚ין רֹעֵ֣י מִקְנֵֽה־אַבְרָ֔ם וּבֵ֖ין רֹעֵ֣י מִקְנֵה־ל֑וֹט וְהַֽכְּנַעֲנִי֙ וְהַפְּרִזִּ֔י אָ֖ז יֹשֵׁ֥ב בָּאָֽרֶץ׃</p></div><div class="heb-s"><p>ויהי־ריב בין רעי מקנה־אברם ובין רעי מקנה־לוט והכנעני והפרזי אז ישב בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Il s’éleva des différends entre les pasteurs des troupeaux d’Abram et les pasteurs des troupeaux de Loth; le Cananéen et le Phérezéen occupaient alors le pays.</p></div>
+    </div><div class="seif" id="v-13-8">
+      <span class="seif-num">13:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר אַבְרָ֜ם אֶל־ל֗וֹט אַל־נָ֨א תְהִ֤י מְרִיבָה֙ בֵּינִ֣י וּבֵינֶ֔ךָ וּבֵ֥ין רֹעַ֖י וּבֵ֣ין רֹעֶ֑יךָ כִּֽי־אֲנָשִׁ֥ים אַחִ֖ים אֲנָֽחְנוּ׃</p></div><div class="heb-s"><p>ויאמר אברם אל־לוט אל־נא תהי מריבה ביני ובינך ובין רעי ובין רעיך כי־אנשים אחים אנחנו׃</p></div></div>
+      <div class="texte-fr"><p>Abram dit à Loth: "Qu’il n’y ait donc point de querelles entre moi et toi, entre mes pasteurs et les tiens; car nous sommes frères.</p></div>
+    </div><div class="seif" id="v-13-9">
+      <span class="seif-num">13:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲלֹ֤א כׇל־הָאָ֙רֶץ֙ לְפָנֶ֔יךָ הִפָּ֥רֶד נָ֖א מֵעָלָ֑י אִם־הַשְּׂמֹ֣אל וְאֵימִ֔נָה וְאִם־הַיָּמִ֖ין וְאַשְׂמְאִֽילָה׃</p></div><div class="heb-s"><p>הלא כל־הארץ לפניך הפרד נא מעלי אם־השמאל ואימנה ואם־הימין ואשמאילה׃</p></div></div>
+      <div class="texte-fr"><p>Toute la contrée n’est elle pas devant toi? De grâce, sépare-toi de moi: si tu vas à gauche, j’irai à droite; si tu vas à droite, je prendrai la gauche."</p></div>
+    </div><div class="seif" id="v-13-10">
+      <span class="seif-num">13:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂא־ל֣וֹט אֶת־עֵינָ֗יו וַיַּרְא֙ אֶת־כׇּל־כִּכַּ֣ר הַיַּרְדֵּ֔ן כִּ֥י כֻלָּ֖הּ מַשְׁקֶ֑ה לִפְנֵ֣י&thinsp;<b>׀</b> שַׁחֵ֣ת יְהֹוָ֗ה אֶת־סְדֹם֙ וְאֶת־עֲמֹרָ֔ה כְּגַן־יְהֹוָה֙ כְּאֶ֣רֶץ מִצְרַ֔יִם בֹּאֲכָ֖ה צֹֽעַר׃</p></div><div class="heb-s"><p>וישא־לוט את־עיניו וירא את־כל־ככר הירדן כי כלה משקה לפני&thinsp;<b>׀</b> שחת יהוה את־סדם ואת־עמרה כגן־יהוה כארץ מצרים באכה צער׃</p></div></div>
+      <div class="texte-fr"><p>Loth leva les yeux et considéra toute la plaine du Jourdain, tout entière arrosée, avant que l’Éternel eût détruit Sodome et Gommorhe; semblable à un jardin céleste, à la contrée d’Egypte, et s’étendant jusqu’à Ã‡oar.</p></div>
+    </div><div class="seif" id="v-13-11">
+      <span class="seif-num">13:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּבְחַר־ל֣וֹ ל֗וֹט אֵ֚ת כׇּל־כִּכַּ֣ר הַיַּרְדֵּ֔ן וַיִּסַּ֥ע ל֖וֹט מִקֶּ֑דֶם וַיִּפָּ֣רְד֔וּ אִ֖ישׁ מֵעַ֥ל אָחִֽיו׃</p></div><div class="heb-s"><p>ויבחר־לו לוט את כל־ככר הירדן ויסע לוט מקדם ויפרדו איש מעל אחיו׃</p></div></div>
+      <div class="texte-fr"><p>Loth choisit toute la plaine du Jourdain, et se dirigea du côté oriental; et ils se séparèrent l’un de l’autre.</p></div>
+    </div><div class="seif" id="v-13-12">
+      <span class="seif-num">13:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַבְרָ֖ם יָשַׁ֣ב בְּאֶֽרֶץ־כְּנָ֑עַן וְל֗וֹט יָשַׁב֙ בְּעָרֵ֣י הַכִּכָּ֔ר וַיֶּאֱהַ֖ל עַד־סְדֹֽם׃</p></div><div class="heb-s"><p>אברם ישב בארץ־כנען ולוט ישב בערי הככר ויאהל עד־סדם׃</p></div></div>
+      <div class="texte-fr"><p>Abram demeura dans le pays de Canaan; Loth s’établit dans les villes de la plaine et dressa ses tentes jusqu’à Sodome.</p></div>
+    </div><div class="seif" id="v-13-13">
+      <span class="seif-num">13:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַנְשֵׁ֣י סְדֹ֔ם רָעִ֖ים וְחַטָּאִ֑ים לַיהֹוָ֖ה מְאֹֽד׃</p></div><div class="heb-s"><p>ואנשי סדם רעים וחטאים ליהוה מאד׃</p></div></div>
+      <div class="texte-fr"><p>Or, les habitants de Sodome étaient pervers et pécheurs devant l’Éternel, à un haut degré.</p></div>
+    </div><div class="seif" id="v-13-14">
+      <span class="seif-num">13:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיהֹוָ֞ה אָמַ֣ר אֶל־אַבְרָ֗ם אַחֲרֵי֙ הִפָּֽרֶד־ל֣וֹט מֵֽעִמּ֔וֹ שָׂ֣א נָ֤א עֵינֶ֙יךָ֙ וּרְאֵ֔ה מִן־הַמָּק֖וֹם אֲשֶׁר־אַתָּ֣ה שָׁ֑ם צָפֹ֥נָה וָנֶ֖גְבָּה וָקֵ֥דְמָה וָיָֽמָּה׃</p></div><div class="heb-s"><p>ויהוה אמר אל־אברם אחרי הפרד־לוט מעמו שא נא עיניך וראה מן־המקום אשר־אתה שם צפנה ונגבה וקדמה וימה׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel dit à Abram, après que Loth se fut séparé de lui: "Lève les yeux et du point où tu es placé, promène tes regards au nord, au midi, à l’orient et à l’occident:</p></div>
+    </div><div class="seif" id="v-13-15">
+      <span class="seif-num">13:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֧י אֶת־כׇּל־הָאָ֛רֶץ אֲשֶׁר־אַתָּ֥ה רֹאֶ֖ה לְךָ֣ אֶתְּנֶ֑נָּה וּֽלְזַרְעֲךָ֖ עַד־עוֹלָֽם׃</p></div><div class="heb-s"><p>כי את־כל־הארץ אשר־אתה ראה לך אתננה ולזרעך עד־עולם׃</p></div></div>
+      <div class="texte-fr"><p>Eh bien! tout le pays que tu aperçois, je le donne à toi et à ta perpétuité.</p></div>
+    </div><div class="seif" id="v-13-16">
+      <span class="seif-num">13:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשַׂמְתִּ֥י אֶֽת־זַרְעֲךָ֖ כַּעֲפַ֣ר הָאָ֑רֶץ אֲשֶׁ֣ר&thinsp;<b>׀</b> אִם־יוּכַ֣ל אִ֗ישׁ לִמְנוֹת֙ אֶת־עֲפַ֣ר הָאָ֔רֶץ גַּֽם־זַרְעֲךָ֖ יִמָּנֶֽה׃</p></div><div class="heb-s"><p>ושמתי את־זרעך כעפר הארץ אשר&thinsp;<b>׀</b> אם־יוכל איש למנות את־עפר הארץ גם־זרעך ימנה׃</p></div></div>
+      <div class="texte-fr"><p>Je rendrai ta race semblable à la poussière de la terre; tellement que, si l’on peut nombrer la poussière de la terre, ta race aussi pourra être nombrée.</p></div>
+    </div><div class="seif" id="v-13-17">
+      <span class="seif-num">13:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>ק֚וּם הִתְהַלֵּ֣ךְ בָּאָ֔רֶץ לְאׇרְכָּ֖הּ וּלְרׇחְבָּ֑הּ כִּ֥י לְךָ֖ אֶתְּנֶֽנָּה׃</p></div><div class="heb-s"><p>קום התהלך בארץ לארכה ולרחבה כי לך אתננה׃</p></div></div>
+      <div class="texte-fr"><p>Lève-toi! parcours cette contrée en long et en large! car c’est à toi que je la destine."</p></div>
+    </div><div class="seif" id="v-13-18">
+      <span class="seif-num">13:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּאֱהַ֣ל אַבְרָ֗ם וַיָּבֹ֛א וַיֵּ֛שֶׁב בְּאֵלֹנֵ֥י מַמְרֵ֖א אֲשֶׁ֣ר בְּחֶבְר֑וֹן וַיִּֽבֶן־שָׁ֥ם מִזְבֵּ֖חַ לַֽיהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויאהל אברם ויבא וישב באלני ממרא אשר בחברון ויבן־שם מזבח ליהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Abram alla dresser sa tente et établir sa demeure dans les plaines de Mamré, qui sont en Hébron; et il y éleva un autel au Seigneur.</p></div>
+    </div><div class="seif" id="v-14-1">
+      <span class="seif-num">14:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י בִּימֵי֙ אַמְרָפֶ֣ל מֶֽלֶךְ־שִׁנְעָ֔ר אַרְי֖וֹךְ מֶ֣לֶךְ אֶלָּסָ֑ר כְּדׇרְלָעֹ֙מֶר֙ מֶ֣לֶךְ עֵילָ֔ם וְתִדְעָ֖ל מֶ֥לֶךְ גּוֹיִֽם׃</p></div><div class="heb-s"><p>ויהי בימי אמרפל מלך־שנער אריוך מלך אלסר כדרלעמר מלך עילם ותדעל מלך גוים׃</p></div></div>
+      <div class="texte-fr"><p>Ceci arriva du temps d’Amrafel, roi de Sennaar; d’Aryoc, roi d’Ellasar; de Kedorlaomer, roi d’Elam, et de Tidal, roi de Goyim:</p></div>
+    </div><div class="seif" id="v-14-2">
+      <span class="seif-num">14:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>עָשׂ֣וּ מִלְחָמָ֗ה אֶת־בֶּ֙רַע֙ מֶ֣לֶךְ סְדֹ֔ם וְאֶת־בִּרְשַׁ֖ע מֶ֣לֶךְ עֲמֹרָ֑ה שִׁנְאָ֣ב&thinsp;<b>׀</b> מֶ֣לֶךְ אַדְמָ֗ה וְשֶׁמְאֵ֙בֶר֙ מֶ֣לֶךְ <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צְבוֹיִ֔ם]</span></span> וּמֶ֥לֶךְ בֶּ֖לַע הִיא־צֹֽעַר׃</p></div><div class="heb-s"><p>עשו מלחמה את־ברע מלך סדם ואת־ברשע מלך עמרה שנאב&thinsp;<b>׀</b> מלך אדמה ושמאבר מלך <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צבוים]</span></span> ומלך בלע היא־צער׃</p></div></div>
+      <div class="texte-fr"><p>ils firent la guerre à Béra, roi de Sodome; à Bircha, roi de Gommorrhe; à Chinab, roi d’Adma; à Chémêber, roi de Ceboïm, et au roi de Béla, la même que Ã‡oar.</p></div>
+    </div><div class="seif" id="v-14-3">
+      <span class="seif-num">14:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־אֵ֙לֶּה֙ חָֽבְר֔וּ אֶל־עֵ֖מֶק הַשִּׂדִּ֑ים ה֖וּא יָ֥ם הַמֶּֽלַח׃</p></div><div class="heb-s"><p>כל־אלה חברו אל־עמק השדים הוא ים המלח׃</p></div></div>
+      <div class="texte-fr"><p>Tous ceux-là se réunirent dans la vallée des Siddim, qui est devenue la mer du Sel.</p></div>
+    </div><div class="seif" id="v-14-4">
+      <span class="seif-num">14:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁתֵּ֤ים עֶשְׂרֵה֙ שָׁנָ֔ה עָבְד֖וּ אֶת־כְּדׇרְלָעֹ֑מֶר וּשְׁלֹשׁ־עֶשְׂרֵ֥ה שָׁנָ֖ה מָרָֽדוּ׃</p></div><div class="heb-s"><p>שתים עשרה שנה עבדו את־כדרלעמר ושלש־עשרה שנה מרדו׃</p></div></div>
+      <div class="texte-fr"><p>Douze années, ils avaient été asservis à Kedorlaomer, et la treizième année ils s’étaient révoltés.</p></div>
+    </div><div class="seif" id="v-14-5">
+      <span class="seif-num">14:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְאַרְבַּע֩ עֶשְׂרֵ֨ה שָׁנָ֜ה בָּ֣א כְדׇרְלָעֹ֗מֶר וְהַמְּלָכִים֙ אֲשֶׁ֣ר אִתּ֔וֹ וַיַּכּ֤וּ אֶת־רְפָאִים֙ בְּעַשְׁתְּרֹ֣ת קַרְנַ֔יִם וְאֶת־הַזּוּזִ֖ים בְּהָ֑ם וְאֵת֙ הָֽאֵימִ֔ים בְּשָׁוֵ֖ה קִרְיָתָֽיִם׃</p></div><div class="heb-s"><p>ובארבע עשרה שנה בא כדרלעמר והמלכים אשר אתו ויכו את־רפאים בעשתרת קרנים ואת־הזוזים בהם ואת האימים בשוה קריתים׃</p></div></div>
+      <div class="texte-fr"><p>La quatorzième année, Kedorlaomer s’avança avec les rois ses alliés, et ils défirent les Refaïm à Achteroth-Karnayim, les Zouzim à Ham, les Emim à Chavé-Kiryathayim;</p></div>
+    </div><div class="seif" id="v-14-6">
+      <span class="seif-num">14:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַחֹרִ֖י בְּהַרְרָ֣ם שֵׂעִ֑יר עַ֚ד אֵ֣יל פָּארָ֔ן אֲשֶׁ֖ר עַל־הַמִּדְבָּֽר׃</p></div><div class="heb-s"><p>ואת־החרי בהררם שעיר עד איל פארן אשר על־המדבר׃</p></div></div>
+      <div class="texte-fr"><p>et les Horéens dans leur montagne de Séir, jusqu’à la plaine de Pharan qui borde le désert.</p></div>
+    </div><div class="seif" id="v-14-7">
+      <span class="seif-num">14:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֠יָּשֻׁ֠בוּ וַיָּבֹ֜אוּ אֶל־עֵ֤ין מִשְׁפָּט֙ הִ֣וא קָדֵ֔שׁ וַיַּכּ֕וּ אֶֽת־כׇּל־שְׂדֵ֖ה הָעֲמָלֵקִ֑י וְגַם֙ אֶת־הָ֣אֱמֹרִ֔י הַיֹּשֵׁ֖ב בְּחַֽצְצֹ֥ן תָּמָֽר׃</p></div><div class="heb-s"><p>וישבו ויבאו אל־עין משפט הוא קדש ויכו את־כל־שדה העמלקי וגם את־האמרי הישב בחצצן תמר׃</p></div></div>
+      <div class="texte-fr"><p>Ils revinrent marchèrent sur Enmichpat, la même que Cadès, et dévastèrent tout le territoire de l’Amalécite et aussi de l’Amoréen établi à Haçaçon-Tamar.</p></div>
+    </div><div class="seif" id="v-14-8">
+      <span class="seif-num">14:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּצֵ֨א מֶֽלֶךְ־סְדֹ֜ם וּמֶ֣לֶךְ עֲמֹרָ֗ה וּמֶ֤לֶךְ אַדְמָה֙ וּמֶ֣לֶךְ <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צְבוֹיִ֔ם]</span></span> וּמֶ֥לֶךְ בֶּ֖לַע הִוא־צֹ֑עַר וַיַּֽעַרְכ֤וּ אִתָּם֙ מִלְחָמָ֔ה בְּעֵ֖מֶק הַשִּׂדִּֽים׃</p></div><div class="heb-s"><p>ויצא מלך־סדם ומלך עמרה ומלך אדמה ומלך <span class="mam-kq"><span class="mam-kq-k">(צביים)</span> <span class="mam-kq-q">[צבוים]</span></span> ומלך בלע הוא־צער ויערכו אתם מלחמה בעמק השדים׃</p></div></div>
+      <div class="texte-fr"><p>Alors s’avancèrent le roi de Sodome, le roi de Gommorrhe, celui d’Adma, celui de Ceboim et celui de Béla ou Coar, ils se rangèrent contre eux en bataille dans la vallée des Siddim:</p></div>
+    </div><div class="seif" id="v-14-9">
+      <span class="seif-num">14:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣ת כְּדׇרְלָעֹ֜מֶר מֶ֣לֶךְ עֵילָ֗ם וְתִדְעָל֙ מֶ֣לֶךְ גּוֹיִ֔ם וְאַמְרָפֶל֙ מֶ֣לֶךְ שִׁנְעָ֔ר וְאַרְי֖וֹךְ מֶ֣לֶךְ אֶלָּסָ֑ר אַרְבָּעָ֥ה מְלָכִ֖ים אֶת־הַחֲמִשָּֽׁה׃</p></div><div class="heb-s"><p>את כדרלעמר מלך עילם ותדעל מלך גוים ואמרפל מלך שנער ואריוך מלך אלסר ארבעה מלכים את־החמשה׃</p></div></div>
+      <div class="texte-fr"><p>contre Kedorlaomer, roi d’Elam; Tidal, roi de Goyim; Amrafel, roi de Sennaar, et Aryoc, roi d’Ellasar: quatre rois contre cinq.</p></div>
+    </div><div class="seif" id="v-14-10">
+      <span class="seif-num">14:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעֵ֣מֶק הַשִּׂדִּ֗ים בֶּֽאֱרֹ֤ת בֶּאֱרֹת֙ חֵמָ֔ר וַיָּנֻ֛סוּ מֶֽלֶךְ־סְדֹ֥ם וַעֲמֹרָ֖ה וַיִּפְּלוּ־שָׁ֑מָּה וְהַנִּשְׁאָרִ֖ים הֶ֥רָה נָּֽסוּ׃</p></div><div class="heb-s"><p>ועמק השדים בארת בארת חמר וינסו מלך־סדם ועמרה ויפלו־שמה והנשארים הרה נסו׃</p></div></div>
+      <div class="texte-fr"><p>La vallée des Siddim était remplie de puits de bitume: le roi de Sodome et celui de Gomorrhe s’enfuirent et y tombèrent; les autres se réfugièrent vers les montagnes.</p></div>
+    </div><div class="seif" id="v-14-11">
+      <span class="seif-num">14:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֠יִּקְח֠וּ אֶת־כׇּל־רְכֻ֨שׁ סְדֹ֧ם וַעֲמֹרָ֛ה וְאֶת־כׇּל־אׇכְלָ֖ם וַיֵּלֵֽכוּ׃</p></div><div class="heb-s"><p>ויקחו את־כל־רכש סדם ועמרה ואת־כל־אכלם וילכו׃</p></div></div>
+      <div class="texte-fr"><p>Les vainqueurs s’emparèrent de toutes les richesses de Sodome et de Gommorrhe et de tous leurs vivres, puis se retirèrent.</p></div>
+    </div><div class="seif" id="v-14-12">
+      <span class="seif-num">14:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְח֨וּ אֶת־ל֧וֹט וְאֶת־רְכֻשׁ֛וֹ בֶּן־אֲחִ֥י אַבְרָ֖ם וַיֵּלֵ֑כוּ וְה֥וּא יֹשֵׁ֖ב בִּסְדֹֽם׃</p></div><div class="heb-s"><p>ויקחו את־לוט ואת־רכשו בן־אחי אברם וילכו והוא ישב בסדם׃</p></div></div>
+      <div class="texte-fr"><p>Ils prirent aussi, avec ses biens, Loth, neveu d’Abram, qui était alors à Sodome, et se retirèrent.</p></div>
+    </div><div class="seif" id="v-14-13">
+      <span class="seif-num">14:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹא֙ הַפָּלִ֔יט וַיַּגֵּ֖ד לְאַבְרָ֣ם הָעִבְרִ֑י וְהוּא֩ שֹׁכֵ֨ן בְּאֵֽלֹנֵ֜י מַמְרֵ֣א הָאֱמֹרִ֗י אֲחִ֤י אֶשְׁכֹּל֙ וַאֲחִ֣י עָנֵ֔ר וְהֵ֖ם בַּעֲלֵ֥י בְרִית־אַבְרָֽם׃</p></div><div class="heb-s"><p>ויבא הפליט ויגד לאברם העברי והוא שכן באלני ממרא האמרי אחי אשכל ואחי ענר והם בעלי ברית־אברם׃</p></div></div>
+      <div class="texte-fr"><p>Les fuyards vinrent en apporter la nouvelle à Abram l’Hébreu. Celui-ci demeurait dans les plaines de Mamré l’Amorréen, frère d’Echkol et d’Aner, lesquels étaient les alliés d’Abram.</p></div>
+    </div><div class="seif" id="v-14-14">
+      <span class="seif-num">14:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֣ע אַבְרָ֔ם כִּ֥י נִשְׁבָּ֖ה אָחִ֑יו וַיָּ֨רֶק אֶת־חֲנִיכָ֜יו יְלִידֵ֣י בֵית֗וֹ שְׁמֹנָ֤ה עָשָׂר֙ וּשְׁלֹ֣שׁ מֵא֔וֹת וַיִּרְדֹּ֖ף עַד־דָּֽן׃</p></div><div class="heb-s"><p>וישמע אברם כי נשבה אחיו וירק את־חניכיו ילידי ביתו שמנה עשר ושלש מאות וירדף עד־דן׃</p></div></div>
+      <div class="texte-fr"><p>Abram, ayant appris que son parent était prisonnier, arma ses fidèles, enfants de sa maison, trois cent dix huit, et suivit la trace des ennemis jusqu’à Dan.</p></div>
+    </div><div class="seif" id="v-14-15">
+      <span class="seif-num">14:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּחָלֵ֨ק עֲלֵיהֶ֧ם&thinsp;<small>׀</small>&thinsp;לַ֛יְלָה ה֥וּא וַעֲבָדָ֖יו וַיַּכֵּ֑ם וַֽיִּרְדְּפֵם֙ עַד־חוֹבָ֔ה אֲשֶׁ֥ר מִשְּׂמֹ֖אל לְדַמָּֽשֶׂק׃</p></div><div class="heb-s"><p>ויחלק עליהם&thinsp;<small>׀</small>&thinsp;לילה הוא ועבדיו ויכם וירדפם עד־חובה אשר משמאל לדמשק׃</p></div></div>
+      <div class="texte-fr"><p>Il se glissa sur eux la nuit avec ses serviteurs, les battit et les poursuivit jusqu’à Hoba, qui est à gauche de Damas.</p></div>
+    </div><div class="seif" id="v-14-16">
+      <span class="seif-num">14:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֕שֶׁב אֵ֖ת כׇּל־הָרְכֻ֑שׁ וְגַם֩ אֶת־ל֨וֹט אָחִ֤יו וּרְכֻשׁוֹ֙ הֵשִׁ֔יב וְגַ֥ם אֶת־הַנָּשִׁ֖ים וְאֶת־הָעָֽם׃</p></div><div class="heb-s"><p>וישב את כל־הרכש וגם את־לוט אחיו ורכשו השיב וגם את־הנשים ואת־העם׃</p></div></div>
+      <div class="texte-fr"><p>Il reprit tout le butin, ramena aussi Loth son parent, avec ses biens, et les femmes et la multitude.</p></div>
+    </div><div class="seif" id="v-14-17">
+      <span class="seif-num">14:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּצֵ֣א מֶֽלֶךְ־סְדֹם֮ לִקְרָאתוֹ֒ אַחֲרֵ֣י שׁוּב֗וֹ מֵֽהַכּוֹת֙ אֶת־כְּדׇרְלָעֹ֔מֶר וְאֶת־הַמְּלָכִ֖ים אֲשֶׁ֣ר אִתּ֑וֹ אֶל־עֵ֣מֶק שָׁוֵ֔ה ה֖וּא עֵ֥מֶק הַמֶּֽלֶךְ׃</p></div><div class="heb-s"><p>ויצא מלך־סדם לקראתו אחרי שובו מהכות את־כדרלעמר ואת־המלכים אשר אתו אל־עמק שוה הוא עמק המלך׃</p></div></div>
+      <div class="texte-fr"><p>Le roi de Sodome sortit à sa rencontre, comme il revenait de défaire Kedorlaomer et les rois ses auxiliaires, vers la vallée de Chavé, qui est la vallée Royale.</p></div>
+    </div><div class="seif" id="v-14-18">
+      <span class="seif-num">14:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמַלְכִּי־צֶ֙דֶק֙ מֶ֣לֶךְ שָׁלֵ֔ם הוֹצִ֖יא לֶ֣חֶם וָיָ֑יִן וְה֥וּא כֹהֵ֖ן לְאֵ֥ל עֶלְיֽוֹן׃</p></div><div class="heb-s"><p>ומלכי־צדק מלך שלם הוציא לחם ויין והוא כהן לאל עליון׃</p></div></div>
+      <div class="texte-fr"><p>Melchisédec, roi de Salem, apporta du pain et du vin: il était prêtre du Dieu suprême.</p></div>
+    </div><div class="seif" id="v-14-19">
+      <span class="seif-num">14:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְבָרְכֵ֖הוּ וַיֹּאמַ֑ר בָּר֤וּךְ אַבְרָם֙ לְאֵ֣ל עֶלְי֔וֹן קֹנֵ֖ה שָׁמַ֥יִם וָאָֽרֶץ׃</p></div><div class="heb-s"><p>ויברכהו ויאמר ברוך אברם לאל עליון קנה שמים וארץ׃</p></div></div>
+      <div class="texte-fr"><p>Il le bénit, en disant: "Béni soit Abram de par le Dieu suprême, auteur des cieux et de la terre!</p></div>
+    </div><div class="seif" id="v-14-20">
+      <span class="seif-num">14:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָרוּךְ֙ אֵ֣ל עֶלְי֔וֹן אֲשֶׁר־מִגֵּ֥ן צָרֶ֖יךָ בְּיָדֶ֑ךָ וַיִּתֶּן־ל֥וֹ מַעֲשֵׂ֖ר מִכֹּֽל׃</p></div><div class="heb-s"><p>וברוך אל עליון אשר־מגן צריך בידך ויתן־לו מעשר מכל׃</p></div></div>
+      <div class="texte-fr"><p>Et béni le Dieu suprême d’avoir livré tes ennemis en ta main!" Et Abram lui donna la dîme de tout le butin.</p></div>
+    </div><div class="seif" id="v-14-21">
+      <span class="seif-num">14:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר מֶֽלֶךְ־סְדֹ֖ם אֶל־אַבְרָ֑ם תֶּן־לִ֣י הַנֶּ֔פֶשׁ וְהָרְכֻ֖שׁ קַֽח־לָֽךְ׃</p></div><div class="heb-s"><p>ויאמר מלך־סדם אל־אברם תן־לי הנפש והרכש קח־לך׃</p></div></div>
+      <div class="texte-fr"><p>Le roi de Sodome dit à Abram: "Donne-moi les personnes, et les biens garde-les pour toi.</p></div>
+    </div><div class="seif" id="v-14-22">
+      <span class="seif-num">14:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר אַבְרָ֖ם אֶל־מֶ֣לֶךְ סְדֹ֑ם הֲרִמֹ֨תִי יָדִ֤י אֶל־יְהֹוָה֙ אֵ֣ל עֶלְי֔וֹן קֹנֵ֖ה שָׁמַ֥יִם וָאָֽרֶץ׃</p></div><div class="heb-s"><p>ויאמר אברם אל־מלך סדם הרמתי ידי אל־יהוה אל עליון קנה שמים וארץ׃</p></div></div>
+      <div class="texte-fr"><p>Abram répondit au roi de Sodome: "Je lève la main devant l’Éternel, qui est le Dieu suprême, auteur des cieux et de la terre;</p></div>
+    </div><div class="seif" id="v-14-23">
+      <span class="seif-num">14:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־מִחוּט֙ וְעַ֣ד שְׂרֽוֹךְ־נַ֔עַל וְאִם־אֶקַּ֖ח מִכׇּל־אֲשֶׁר־לָ֑ךְ וְלֹ֣א תֹאמַ֔ר אֲנִ֖י הֶעֱשַׁ֥רְתִּי אֶת־אַבְרָֽם׃</p></div><div class="heb-s"><p>אם־מחוט ועד שרוך־נעל ואם־אקח מכל־אשר־לך ולא תאמר אני העשרתי את־אברם׃</p></div></div>
+      <div class="texte-fr"><p>et je jure que fût-ce un fil, fût-ce la courroie d’une sandale, je ne prendrai rien de ce qui est à toi; que tu ne dises pas: "C’est moi qui ai enrichi Abram!</p></div>
+    </div><div class="seif" id="v-14-24">
+      <span class="seif-num">14:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּלְעָדַ֗י רַ֚ק אֲשֶׁ֣ר אָֽכְל֣וּ הַנְּעָרִ֔ים וְחֵ֙לֶק֙ הָֽאֲנָשִׁ֔ים אֲשֶׁ֥ר הָלְכ֖וּ אִתִּ֑י עָנֵר֙ אֶשְׁכֹּ֣ל וּמַמְרֵ֔א הֵ֖ם יִקְח֥וּ חֶלְקָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>בלעדי רק אשר אכלו הנערים וחלק האנשים אשר הלכו אתי ענר אשכל וממרא הם יקחו חלקם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Loin de moi! Si ce n’est ce qu’ont déjà mangé ces jeunes gens, et la part des hommes qui m’ont accompagné; Aner, Echkol et Mamré, que ceux-là prennent leurs parts."</p></div>
+    </div><div class="seif" id="v-15-1">
+      <span class="seif-num">15:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַחַ֣ר&thinsp;<b>׀</b> הַדְּבָרִ֣ים הָאֵ֗לֶּה הָיָ֤ה דְבַר־יְהֹוָה֙ אֶל־אַבְרָ֔ם בַּֽמַּחֲזֶ֖ה לֵאמֹ֑ר אַל־תִּירָ֣א אַבְרָ֗ם אָנֹכִי֙ מָגֵ֣ן לָ֔ךְ שְׂכָרְךָ֖ הַרְבֵּ֥ה מְאֹֽד׃</p></div><div class="heb-s"><p>אחר&thinsp;<b>׀</b> הדברים האלה היה דבר־יהוה אל־אברם במחזה לאמר אל־תירא אברם אנכי מגן לך שכרך הרבה מאד׃</p></div></div>
+      <div class="texte-fr"><p>Après ces faits, la parole du Seigneur se fit entendre à Abram, dans une vision, en ces termes: "Ne crains point, Abram: je suis un bouclier pour toi; ta récompense sera très grande"</p></div>
+    </div><div class="seif" id="v-15-2">
+      <span class="seif-num">15:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אַבְרָ֗ם אֲדֹנָ֤י יֱהֹוִה֙ מַה־תִּתֶּן־לִ֔י וְאָנֹכִ֖י הוֹלֵ֣ךְ עֲרִירִ֑י וּבֶן־מֶ֣שֶׁק בֵּיתִ֔י ה֖וּא דַּמֶּ֥שֶׂק אֱלִיעֶֽזֶר׃</p></div><div class="heb-s"><p>ויאמר אברם אדני יהוה מה־תתן־לי ואנכי הולך ערירי ובן־משק ביתי הוא דמשק אליעזר׃</p></div></div>
+      <div class="texte-fr"><p>Abram répondit: "Dieu-Éternel, que me donnerais-tu, alors que je m’en vais sans postérité et que le fils adoptif de ma maison est un Damascénien, Eliézer?"</p></div>
+    </div><div class="seif" id="v-15-3">
+      <span class="seif-num">15:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אַבְרָ֔ם הֵ֣ן לִ֔י לֹ֥א נָתַ֖תָּה זָ֑רַע וְהִנֵּ֥ה בֶן־בֵּיתִ֖י יוֹרֵ֥שׁ אֹתִֽי׃</p></div><div class="heb-s"><p>ויאמר אברם הן לי לא נתתה זרע והנה בן־ביתי יורש אתי׃</p></div></div>
+      <div class="texte-fr"><p>"Certes, disait Abram, tu ne m’as pas donné de postérité, et l’enfant de ma maison sera mon héritier."</p></div>
+    </div><div class="seif" id="v-15-4">
+      <span class="seif-num">15:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִנֵּ֨ה דְבַר־יְהֹוָ֤ה אֵלָיו֙ לֵאמֹ֔ר לֹ֥א יִֽירָשְׁךָ֖ זֶ֑ה כִּי־אִם֙ אֲשֶׁ֣ר יֵצֵ֣א מִמֵּעֶ֔יךָ ה֖וּא יִֽירָשֶֽׁךָ׃</p></div><div class="heb-s"><p>והנה דבר־יהוה אליו לאמר לא יירשך זה כי־אם אשר יצא ממעיך הוא יירשך׃</p></div></div>
+      <div class="texte-fr"><p>Mais voici que la parole de l’Éternel vint à lui, disant:"Celui-ci n’héritera pas de toi; c’est bien un homme issu de tes entrailles qui sera ton héritier."</p></div>
+    </div><div class="seif" id="v-15-5">
+      <span class="seif-num">15:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּוֹצֵ֨א אֹת֜וֹ הַח֗וּצָה וַיֹּ֙אמֶר֙ הַבֶּט־נָ֣א הַשָּׁמַ֗יְמָה וּסְפֹר֙ הַכּ֣וֹכָבִ֔ים אִם־תּוּכַ֖ל לִסְפֹּ֣ר אֹתָ֑ם וַיֹּ֣אמֶר ל֔וֹ כֹּ֥ה יִהְיֶ֖ה זַרְעֶֽךָ׃</p></div><div class="heb-s"><p>ויוצא אתו החוצה ויאמר הבט־נא השמימה וספר הכוכבים אם־תוכל לספר אתם ויאמר לו כה יהיה זרעך׃</p></div></div>
+      <div class="texte-fr"><p>Il le fit sortir en plein air, et dit: "Regarde le ciel et compte les étoiles: peux-tu en supputer le nombre? Ainsi reprit-il, sera ta descendance."</p></div>
+    </div><div class="seif" id="v-15-6">
+      <span class="seif-num">15:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֶאֱמִ֖ן בַּֽיהֹוָ֑ה וַיַּחְשְׁבֶ֥הָ לּ֖וֹ צְדָקָֽה׃</p></div><div class="heb-s"><p>והאמן ביהוה ויחשבה לו צדקה׃</p></div></div>
+      <div class="texte-fr"><p>Et il eut foi en l’Éternel, et l’Éternel lui en fit un mérite.</p></div>
+    </div><div class="seif" id="v-15-7">
+      <span class="seif-num">15:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֖אמֶר אֵלָ֑יו אֲנִ֣י יְהֹוָ֗ה אֲשֶׁ֤ר הוֹצֵאתִ֙יךָ֙ מֵא֣וּר כַּשְׂדִּ֔ים לָ֧תֶת לְךָ֛ אֶת־הָאָ֥רֶץ הַזֹּ֖את לְרִשְׁתָּֽהּ׃</p></div><div class="heb-s"><p>ויאמר אליו אני יהוה אשר הוצאתיך מאור כשדים לתת לך את־הארץ הזאת לרשתה׃</p></div></div>
+      <div class="texte-fr"><p>Et il lui dit: "Je suis l’Éternel, qui t’ai tiré d’Our-Kasdim, pour te donner ce pays en possession."</p></div>
+    </div><div class="seif" id="v-15-8">
+      <span class="seif-num">15:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמַ֑ר אֲדֹנָ֣י יֱהֹוִ֔ה בַּמָּ֥ה אֵדַ֖ע כִּ֥י אִֽירָשֶֽׁנָּה׃</p></div><div class="heb-s"><p>ויאמר אדני יהוה במה אדע כי אירשנה׃</p></div></div>
+      <div class="texte-fr"><p>Il répondit: "Dieu-Éternel, comment saurai-je que j’en suis possesseur?"</p></div>
+    </div><div class="seif" id="v-15-9">
+      <span class="seif-num">15:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֵלָ֗יו קְחָ֥ה לִי֙ עֶגְלָ֣ה מְשֻׁלֶּ֔שֶׁת וְעֵ֥ז מְשֻׁלֶּ֖שֶׁת וְאַ֣יִל מְשֻׁלָּ֑שׁ וְתֹ֖ר וְגוֹזָֽל׃</p></div><div class="heb-s"><p>ויאמר אליו קחה לי עגלה משלשת ועז משלשת ואיל משלש ותר וגוזל׃</p></div></div>
+      <div class="texte-fr"><p>Il lui dit: "Prépare-moi une génisse âgée de trois ans, une chèvre de trois ans, un bélier de trois ans, une tourterelle et une jeune colombe."</p></div>
+    </div><div class="seif" id="v-15-10">
+      <span class="seif-num">15:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּֽקַּֽח־ל֣וֹ אֶת־כׇּל־אֵ֗לֶּה וַיְבַתֵּ֤ר אֹתָם֙ בַּתָּ֔וֶךְ וַיִּתֵּ֥ן אִישׁ־בִּתְר֖וֹ לִקְרַ֣את רֵעֵ֑הוּ וְאֶת־הַצִּפֹּ֖ר לֹ֥א בָתָֽר׃</p></div><div class="heb-s"><p>ויקח־לו את־כל־אלה ויבתר אתם בתוך ויתן איש־בתרו לקראת רעהו ואת־הצפר לא בתר׃</p></div></div>
+      <div class="texte-fr"><p>Abram prit tous ces animaux, divisa chacun par le milieu, et disposa chaque moitié en regard de l’autre; mais il ne divisa point les oiseaux.</p></div>
+    </div><div class="seif" id="v-15-11">
+      <span class="seif-num">15:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥רֶד הָעַ֖יִט עַל־הַפְּגָרִ֑ים וַיַּשֵּׁ֥ב אֹתָ֖ם אַבְרָֽם׃</p></div><div class="heb-s"><p>וירד העיט על־הפגרים וישב אתם אברם׃</p></div></div>
+      <div class="texte-fr"><p>Les oiseaux de proie s’abattirent sur les corps; Abram les mit en fuite.</p></div>
+    </div><div class="seif" id="v-15-12">
+      <span class="seif-num">15:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י הַשֶּׁ֙מֶשׁ֙ לָב֔וֹא וְתַרְדֵּמָ֖ה נָפְלָ֣ה עַל־אַבְרָ֑ם וְהִנֵּ֥ה אֵימָ֛ה חֲשֵׁכָ֥ה גְדֹלָ֖ה נֹפֶ֥לֶת עָלָֽיו׃</p></div><div class="heb-s"><p>ויהי השמש לבוא ותרדמה נפלה על־אברם והנה אימה חשכה גדלה נפלת עליו׃</p></div></div>
+      <div class="texte-fr"><p>Le soleil étant sur son déclin, une torpeur s’empara d’Abram: tandis qu’une angoisse sombre profonde pesait sur lui.</p></div>
+    </div><div class="seif" id="v-15-13">
+      <span class="seif-num">15:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר לְאַבְרָ֗ם יָדֹ֨עַ תֵּדַ֜ע כִּי־גֵ֣ר&thinsp;<b>׀</b> יִהְיֶ֣ה זַרְעֲךָ֗ בְּאֶ֙רֶץ֙ לֹ֣א לָהֶ֔ם וַעֲבָד֖וּם וְעִנּ֣וּ אֹתָ֑ם אַרְבַּ֥ע מֵא֖וֹת שָׁנָֽה׃</p></div><div class="heb-s"><p>ויאמר לאברם ידע תדע כי־גר&thinsp;<b>׀</b> יהיה זרעך בארץ לא להם ועבדום וענו אתם ארבע מאות שנה׃</p></div></div>
+      <div class="texte-fr"><p>Dieu dit à Abram: "Sache-le bien, ta postérité séjournera sur une terre étrangère, où elle sera asservie et opprimée, durant quatre cents ans.</p></div>
+    </div><div class="seif" id="v-15-14">
+      <span class="seif-num">15:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְגַ֧ם אֶת־הַגּ֛וֹי אֲשֶׁ֥ר יַעֲבֹ֖דוּ דָּ֣ן אָנֹ֑כִי וְאַחֲרֵי־כֵ֥ן יֵצְא֖וּ בִּרְכֻ֥שׁ גָּדֽוֹל׃</p></div><div class="heb-s"><p>וגם את־הגוי אשר יעבדו דן אנכי ואחרי־כן יצאו ברכש גדול׃</p></div></div>
+      <div class="texte-fr"><p>Mais, à son tour, la nation qu’ils serviront sera jugée par moi; et alors ils la quitteront avec de grandes richesses.</p></div>
+    </div><div class="seif" id="v-15-15">
+      <span class="seif-num">15:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתָּ֛ה תָּב֥וֹא אֶל־אֲבֹתֶ֖יךָ בְּשָׁל֑וֹם תִּקָּבֵ֖ר בְּשֵׂיבָ֥ה טוֹבָֽה׃</p></div><div class="heb-s"><p>ואתה תבוא אל־אבתיך בשלום תקבר בשיבה טובה׃</p></div></div>
+      <div class="texte-fr"><p>Pour toi, tu rejoindras paisiblement tes pères; tu seras enterré après une vieillesse heureuse.</p></div>
+    </div><div class="seif" id="v-15-16">
+      <span class="seif-num">15:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְד֥וֹר רְבִיעִ֖י יָשׁ֣וּבוּ הֵ֑נָּה כִּ֧י לֹא־שָׁלֵ֛ם עֲוֺ֥ן הָאֱמֹרִ֖י עַד־הֵֽנָּה׃</p></div><div class="heb-s"><p>ודור רביעי ישובו הנה כי לא־שלם עון האמרי עד־הנה׃</p></div></div>
+      <div class="texte-fr"><p>Mais la quatrième génération reviendra ici, parce qu’alors seulement la perversité de l’Amorréen sera complète."</p></div>
+    </div><div class="seif" id="v-15-17">
+      <span class="seif-num">15:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י הַשֶּׁ֙מֶשׁ֙ בָּ֔אָה וַעֲלָטָ֖ה הָיָ֑ה וְהִנֵּ֨ה תַנּ֤וּר עָשָׁן֙ וְלַפִּ֣יד אֵ֔שׁ אֲשֶׁ֣ר עָבַ֔ר בֵּ֖ין הַגְּזָרִ֥ים הָאֵֽלֶּה׃</p></div><div class="heb-s"><p>ויהי השמש באה ועלטה היה והנה תנור עשן ולפיד אש אשר עבר בין הגזרים האלה׃</p></div></div>
+      <div class="texte-fr"><p>Cependant le soleil s’était couché, et l’obscurité régnait: voici qu’un tourbillon de fumée et un sillon de feu passèrent entre ces chairs dépecées.</p></div>
+    </div><div class="seif" id="v-15-18">
+      <span class="seif-num">15:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּיּ֣וֹם הַה֗וּא כָּרַ֧ת יְהֹוָ֛ה אֶת־אַבְרָ֖ם בְּרִ֣ית לֵאמֹ֑ר לְזַרְעֲךָ֗ נָתַ֙תִּי֙ אֶת־הָאָ֣רֶץ הַזֹּ֔את מִנְּהַ֣ר מִצְרַ֔יִם עַד־הַנָּהָ֥ר הַגָּדֹ֖ל נְהַר־פְּרָֽת׃</p></div><div class="heb-s"><p>ביום ההוא כרת יהוה את־אברם ברית לאמר לזרעך נתתי את־הארץ הזאת מנהר מצרים עד־הנהר הגדל נהר־פרת׃</p></div></div>
+      <div class="texte-fr"><p>Ce jour-là, l’Éternel conclut avec Abram un pacte, en disant: "J’ai octroyé à ta race ce territoire, depuis le torrent d’Egypte jusqu’au grand fleuve, le fleuve d’Euphrate:</p></div>
+    </div><div class="seif" id="v-15-19">
+      <span class="seif-num">15:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַקֵּינִי֙ וְאֶת־הַקְּנִזִּ֔י וְאֵ֖ת הַקַּדְמֹנִֽי׃</p></div><div class="heb-s"><p>את־הקיני ואת־הקנזי ואת הקדמני׃</p></div></div>
+      <div class="texte-fr"><p>le Kénéen, le Kenizzéen, le Kadmonéen;</p></div>
+    </div><div class="seif" id="v-15-20">
+      <span class="seif-num">15:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַחִתִּ֥י וְאֶת־הַפְּרִזִּ֖י וְאֶת־הָרְפָאִֽים׃</p></div><div class="heb-s"><p>ואת־החתי ואת־הפרזי ואת־הרפאים׃</p></div></div>
+      <div class="texte-fr"><p>le Héthéen, le Phérézéen, les Rephaim;</p></div>
+    </div><div class="seif" id="v-15-21">
+      <span class="seif-num">15:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הָֽאֱמֹרִי֙ וְאֶת־הַֽכְּנַעֲנִ֔י וְאֶת־הַגִּרְגָּשִׁ֖י וְאֶת־הַיְבוּסִֽי׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואת־האמרי ואת־הכנעני ואת־הגרגשי ואת־היבוסי׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>l’Amorréen, le Cananéen, le Ghirgachéen et le Jébuséeen."</p></div>
+    </div><div class="seif" id="v-16-1">
+      <span class="seif-num">16:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׂרַי֙ אֵ֣שֶׁת אַבְרָ֔ם לֹ֥א יָלְדָ֖ה ל֑וֹ וְלָ֛הּ שִׁפְחָ֥ה מִצְרִ֖ית וּשְׁמָ֥הּ הָגָֽר׃</p></div><div class="heb-s"><p>ושרי אשת אברם לא ילדה לו ולה שפחה מצרית ושמה הגר׃</p></div></div>
+      <div class="texte-fr"><p>Saraï, épouse d’Abram, ne lui avait pas donné d’enfant. Elle avait une esclave égyptienne nommée Agar.</p></div>
+    </div><div class="seif" id="v-16-2">
+      <span class="seif-num">16:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֨אמֶר שָׂרַ֜י אֶל־אַבְרָ֗ם הִנֵּה־נָ֞א עֲצָרַ֤נִי יְהֹוָה֙ מִלֶּ֔דֶת בֹּא־נָא֙ אֶל־שִׁפְחָתִ֔י אוּלַ֥י אִבָּנֶ֖ה מִמֶּ֑נָּה וַיִּשְׁמַ֥ע אַבְרָ֖ם לְק֥וֹל שָׂרָֽי׃</p></div><div class="heb-s"><p>ותאמר שרי אל־אברם הנה־נא עצרני יהוה מלדת בא־נא אל־שפחתי אולי אבנה ממנה וישמע אברם לקול שרי׃</p></div></div>
+      <div class="texte-fr"><p>Saraï dit à Abram: "Hélas! l’Éternel m’a refusé l’enfantement; approche-toi donc de mon esclave: peut-être, par elle, aurai-je un enfant." Abram obéit à la voix de Saraï.</p></div>
+    </div><div class="seif" id="v-16-3">
+      <span class="seif-num">16:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּקַּ֞ח שָׂרַ֣י אֵֽשֶׁת־אַבְרָ֗ם אֶת־הָגָ֤ר הַמִּצְרִית֙ שִׁפְחָתָ֔הּ מִקֵּץ֙ עֶ֣שֶׂר שָׁנִ֔ים לְשֶׁ֥בֶת אַבְרָ֖ם בְּאֶ֣רֶץ כְּנָ֑עַן וַתִּתֵּ֥ן אֹתָ֛הּ לְאַבְרָ֥ם אִישָׁ֖הּ ל֥וֹ לְאִשָּֽׁה׃</p></div><div class="heb-s"><p>ותקח שרי אשת־אברם את־הגר המצרית שפחתה מקץ עשר שנים לשבת אברם בארץ כנען ותתן אתה לאברם אישה לו לאשה׃</p></div></div>
+      <div class="texte-fr"><p>Saraï, épouse d’Abram, prit Agar l’Egyptienne, son esclave, il y avait dix ans qu’Abram demeurait au pays de Canaan; et elle la donna à son époux Abram pour qu’elle lui servît de femme.</p></div>
+    </div><div class="seif" id="v-16-4">
+      <span class="seif-num">16:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֥א אֶל־הָגָ֖ר וַתַּ֑הַר וַתֵּ֙רֶא֙ כִּ֣י הָרָ֔תָה וַתֵּקַ֥ל גְּבִרְתָּ֖הּ בְּעֵינֶֽיהָ׃</p></div><div class="heb-s"><p>ויבא אל־הגר ותהר ותרא כי הרתה ותקל גברתה בעיניה׃</p></div></div>
+      <div class="texte-fr"><p>Il s’approcha d’Agar, et elle conçut. Quand elle vit qu’elle avait conçu, sa maîtresse devint l’objet de son dédain.</p></div>
+    </div><div class="seif" id="v-16-5">
+      <span class="seif-num">16:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֨אמֶר שָׂרַ֣י אֶל־אַבְרָם֮ חֲמָסִ֣י עָלֶ֒יךָ֒ אָנֹכִ֗י נָתַ֤תִּי שִׁפְחָתִי֙ בְּחֵיקֶ֔ךָ וַתֵּ֙רֶא֙ כִּ֣י הָרָ֔תָה וָאֵקַ֖ל בְּעֵינֶ֑יהָ יִשְׁפֹּ֥ט יְהֹוָ֖ה בֵּינִ֥י וּבֵינֶֽיׄךָ׃</p></div><div class="heb-s"><p>ותאמר שרי אל־אברם חמסי עליך אנכי נתתי שפחתי בחיקך ותרא כי הרתה ואקל בעיניה ישפט יהוה ביני וביניך׃</p></div></div>
+      <div class="texte-fr"><p>Saraï dit à Abram: "Mon injure est la tienne. Moi-même, j’ai placé mon esclave dans tes bras; or, elle a vu qu’elle avait conçu, et je suis devenue méprisable à ses yeux. L’Éternel prononcera entre moi et toi."</p></div>
+    </div><div class="seif" id="v-16-6">
+      <span class="seif-num">16:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר אַבְרָ֜ם אֶל־שָׂרַ֗י הִנֵּ֤ה שִׁפְחָתֵךְ֙ בְּיָדֵ֔ךְ עֲשִׂי־לָ֖הּ הַטּ֣וֹב בְּעֵינָ֑יִךְ וַתְּעַנֶּ֣הָ שָׂרַ֔י וַתִּבְרַ֖ח מִפָּנֶֽיהָ׃</p></div><div class="heb-s"><p>ויאמר אברם אל־שרי הנה שפחתך בידך עשי־לה הטוב בעיניך ותענה שרי ותברח מפניה׃</p></div></div>
+      <div class="texte-fr"><p>Abram dit à Sarai: "Voici, ton esclave est dans ta main, fais-lui ce que bon te semble." Sarai l’humilia, et elle s’enfuit de devant elle.</p></div>
+    </div><div class="seif" id="v-16-7">
+      <span class="seif-num">16:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּמְצָאָ֞הּ מַלְאַ֧ךְ יְהֹוָ֛ה עַל־עֵ֥ין הַמַּ֖יִם בַּמִּדְבָּ֑ר עַל־הָעַ֖יִן בְּדֶ֥רֶךְ שֽׁוּר׃</p></div><div class="heb-s"><p>וימצאה מלאך יהוה על־עין המים במדבר על־העין בדרך שור׃</p></div></div>
+      <div class="texte-fr"><p>Un envoyé du Seigneur la trouva près d’une source d’eau, dans le désert, près de la source sur le chemin de Chour.</p></div>
+    </div><div class="seif" id="v-16-8">
+      <span class="seif-num">16:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמַ֗ר הָגָ֞ר שִׁפְחַ֥ת שָׂרַ֛י אֵֽי־מִזֶּ֥ה בָ֖את וְאָ֣נָה תֵלֵ֑כִי וַתֹּ֕אמֶר מִפְּנֵי֙ שָׂרַ֣י גְּבִרְתִּ֔י אָנֹכִ֖י בֹּרַֽחַת׃</p></div><div class="heb-s"><p>ויאמר הגר שפחת שרי אי־מזה באת ואנה תלכי ותאמר מפני שרי גברתי אנכי ברחת׃</p></div></div>
+      <div class="texte-fr"><p>Il dit: "Agar, esclave de Saraï, d’où viens tu, et où veux-tu aller?" Elle répondit: "Je fuis de devant Saraï, ma maîtresse."</p></div>
+    </div><div class="seif" id="v-16-9">
+      <span class="seif-num">16:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה שׁ֖וּבִי אֶל־גְּבִרְתֵּ֑ךְ וְהִתְעַנִּ֖י תַּ֥חַת יָדֶֽיהָ׃</p></div><div class="heb-s"><p>ויאמר לה מלאך יהוה שובי אל־גברתך והתעני תחת ידיה׃</p></div></div>
+      <div class="texte-fr"><p>L’envoyé du Seigneur lui dit: "Retourne chez ta maîtresse, et humilie-toi sous sa main."</p></div>
+    </div><div class="seif" id="v-16-10">
+      <span class="seif-num">16:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה הַרְבָּ֥ה אַרְבֶּ֖ה אֶת־זַרְעֵ֑ךְ וְלֹ֥א יִסָּפֵ֖ר מֵרֹֽב׃</p></div><div class="heb-s"><p>ויאמר לה מלאך יהוה הרבה ארבה את־זרעך ולא יספר מרב׃</p></div></div>
+      <div class="texte-fr"><p>L’envoyé du Seigneur ajouta: "Je rendrai ta race très nombreuse, tellement qu’elle ne pourra être comptée."</p></div>
+    </div><div class="seif" id="v-16-11">
+      <span class="seif-num">16:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר לָהּ֙ מַלְאַ֣ךְ יְהֹוָ֔ה הִנָּ֥ךְ הָרָ֖ה וְיֹלַ֣דְתְּ בֵּ֑ן וְקָרָ֤את שְׁמוֹ֙ יִשְׁמָעֵ֔אל כִּֽי־שָׁמַ֥ע יְהֹוָ֖ה אֶל־עׇנְיֵֽךְ׃</p></div><div class="heb-s"><p>ויאמר לה מלאך יהוה הנך הרה וילדת בן וקראת שמו ישמעאל כי־שמע יהוה אל־עניך׃</p></div></div>
+      <div class="texte-fr"><p>L’envoyé du Seigneur lui dit encore: "Te voici enceinte, et près d’enfanter un fils; tu énonceras son nom Ismaël, parce que Dieu a entendu ton affliction.</p></div>
+    </div><div class="seif" id="v-16-12">
+      <span class="seif-num">16:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְה֤וּא יִהְיֶה֙ פֶּ֣רֶא אָדָ֔ם יָד֣וֹ בַכֹּ֔ל וְיַ֥ד כֹּ֖ל בּ֑וֹ וְעַל־פְּנֵ֥י כׇל־אֶחָ֖יו יִשְׁכֹּֽן׃</p></div><div class="heb-s"><p>והוא יהיה פרא אדם ידו בכל ויד כל בו ועל־פני כל־אחיו ישכן׃</p></div></div>
+      <div class="texte-fr"><p>Celui-ci sera un onagre parmi les hommes: sa main sera contre tous, et la main de tous contre lui; mais il se maintiendra à la face de tous ses frères."</p></div>
+    </div><div class="seif" id="v-16-13">
+      <span class="seif-num">16:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּקְרָ֤א שֵׁם־יְהֹוָה֙ הַדֹּבֵ֣ר אֵלֶ֔יהָ אַתָּ֖ה אֵ֣ל רֳאִ֑י כִּ֣י אָֽמְרָ֗ה הֲגַ֥ם הֲלֹ֛ם רָאִ֖יתִי אַחֲרֵ֥י רֹאִֽי׃</p></div><div class="heb-s"><p>ותקרא שם־יהוה הדבר אליה אתה אל ראי כי אמרה הגם הלם ראיתי אחרי ראי׃</p></div></div>
+      <div class="texte-fr"><p>Et elle proclama ainsi le nom de l’Éternel qui lui avait parlé: "Tu es un Dieu visible!</p></div>
+    </div><div class="seif" id="v-16-14">
+      <span class="seif-num">16:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּן֙ קָרָ֣א לַבְּאֵ֔ר בְּאֵ֥ר לַחַ֖י רֹאִ֑י הִנֵּ֥ה בֵין־קָדֵ֖שׁ וּבֵ֥ין בָּֽרֶד׃</p></div><div class="heb-s"><p>על־כן קרא לבאר באר לחי ראי הנה בין־קדש ובין ברד׃</p></div></div>
+      <div class="texte-fr"><p>C’est pourquoi on appela cette source "la source du Vivant-qui-me-voit"; elle se trouve entre Cadès et Béred.</p></div>
+    </div><div class="seif" id="v-16-15">
+      <span class="seif-num">16:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֧לֶד הָגָ֛ר לְאַבְרָ֖ם בֵּ֑ן וַיִּקְרָ֨א אַבְרָ֧ם שֶׁם־בְּנ֛וֹ אֲשֶׁר־יָלְדָ֥ה הָגָ֖ר יִשְׁמָעֵֽאל׃</p></div><div class="heb-s"><p>ותלד הגר לאברם בן ויקרא אברם שם־בנו אשר־ילדה הגר ישמעאל׃</p></div></div>
+      <div class="texte-fr"><p>Agar enfanta un fils à Abram; et Abram nomma son fils, qu’avait enfanté Agar, Ismaël.</p></div>
+    </div><div class="seif" id="v-16-16">
+      <span class="seif-num">16:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַבְרָ֕ם בֶּן־שְׁמֹנִ֥ים שָׁנָ֖ה וְשֵׁ֣שׁ שָׁנִ֑ים בְּלֶֽדֶת־הָגָ֥ר אֶת־יִשְׁמָעֵ֖אל לְאַבְרָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואברם בן־שמנים שנה ושש שנים בלדת־הגר את־ישמעאל לאברם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Abram était âgé de quatre-vingt-six-ans, lorsque Agar lui enfanta Ismaël.</p></div>
+    </div><div class="seif" id="v-17-1">
+      <span class="seif-num">17:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י אַבְרָ֔ם בֶּן־תִּשְׁעִ֥ים שָׁנָ֖ה וְתֵ֣שַׁע שָׁנִ֑ים וַיֵּרָ֨א יְהֹוָ֜ה אֶל־אַבְרָ֗ם וַיֹּ֤אמֶר אֵלָיו֙ אֲנִי־אֵ֣ל שַׁדַּ֔י הִתְהַלֵּ֥ךְ לְפָנַ֖י וֶהְיֵ֥ה תָמִֽים׃</p></div><div class="heb-s"><p>ויהי אברם בן־תשעים שנה ותשע שנים וירא יהוה אל־אברם ויאמר אליו אני־אל שדי התהלך לפני והיה תמים׃</p></div></div>
+      <div class="texte-fr"><p>Abraham étant âgé de quatre-vingt-dix-neuf ans, le Seigneur lui apparut et lui dit: "Je suis le Dieu tout-puissant; conduis-toi à mon gré, sois irréprochable,</p></div>
+    </div><div class="seif" id="v-17-2">
+      <span class="seif-num">17:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶתְּנָ֥ה בְרִיתִ֖י בֵּינִ֣י וּבֵינֶ֑ךָ וְאַרְבֶּ֥ה אוֹתְךָ֖ בִּמְאֹ֥ד מְאֹֽד׃</p></div><div class="heb-s"><p>ואתנה בריתי ביני ובינך וארבה אותך במאד מאד׃</p></div></div>
+      <div class="texte-fr"><p>et je maintiendrai mon alliance avec toi, et je te multiplierai à l’infini."</p></div>
+    </div><div class="seif" id="v-17-3">
+      <span class="seif-num">17:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפֹּ֥ל אַבְרָ֖ם עַל־פָּנָ֑יו וַיְדַבֵּ֥ר אִתּ֛וֹ אֱלֹהִ֖ים לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויפל אברם על־פניו וידבר אתו אלהים לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Abram tomba sur sa face, et Dieu lui parla de la sorte:</p></div>
+    </div><div class="seif" id="v-17-4">
+      <span class="seif-num">17:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲנִ֕י הִנֵּ֥ה בְרִיתִ֖י אִתָּ֑ךְ וְהָיִ֕יתָ לְאַ֖ב הֲמ֥וֹן גּוֹיִֽם׃</p></div><div class="heb-s"><p>אני הנה בריתי אתך והיית לאב המון גוים׃</p></div></div>
+      <div class="texte-fr"><p>"Moi-même, oui, je traite avec toi: tu seras le père d’une multitude de nations.</p></div>
+    </div><div class="seif" id="v-17-5">
+      <span class="seif-num">17:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־יִקָּרֵ֥א ע֛וֹד אֶת־שִׁמְךָ֖ אַבְרָ֑ם וְהָיָ֤ה שִׁמְךָ֙ אַבְרָהָ֔ם כִּ֛י אַב־הֲמ֥וֹן גּוֹיִ֖ם נְתַתִּֽיךָ׃</p></div><div class="heb-s"><p>ולא־יקרא עוד את־שמך אברם והיה שמך אברהם כי אב־המון גוים נתתיך׃</p></div></div>
+      <div class="texte-fr"><p>Ton nom ne s’énoncera plus, désormais, Abram: ton nom sera Abraham, car je te fais le père d’une multitude de nations.</p></div>
+    </div><div class="seif" id="v-17-6">
+      <span class="seif-num">17:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִפְרֵתִ֤י אֹֽתְךָ֙ בִּמְאֹ֣ד מְאֹ֔ד וּנְתַתִּ֖יךָ לְגוֹיִ֑ם וּמְלָכִ֖ים מִמְּךָ֥ יֵצֵֽאוּ׃</p></div><div class="heb-s"><p>והפרתי אתך במאד מאד ונתתיך לגוים ומלכים ממך יצאו׃</p></div></div>
+      <div class="texte-fr"><p>Je te ferai fructifier prodigieusement; je ferai de toi des peuples, et des rois seront tes descendants.</p></div>
+    </div><div class="seif" id="v-17-7">
+      <span class="seif-num">17:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַהֲקִמֹתִ֨י אֶת־בְּרִיתִ֜י בֵּינִ֣י וּבֵינֶ֗ךָ וּבֵ֨ין זַרְעֲךָ֧ אַחֲרֶ֛יךָ לְדֹרֹתָ֖ם לִבְרִ֣ית עוֹלָ֑ם לִהְי֤וֹת לְךָ֙ לֵֽאלֹהִ֔ים וּֽלְזַרְעֲךָ֖ אַחֲרֶֽיךָ׃</p></div><div class="heb-s"><p>והקמתי את־בריתי ביני ובינך ובין זרעך אחריך לדרתם לברית עולם להיות לך לאלהים ולזרעך אחריך׃</p></div></div>
+      <div class="texte-fr"><p>Cette alliance, établie entre moi et entre toi et ta postérité dernière, je l’érigerai en alliance perpétuelle, étant pour toi un Dieu comme pour ta postérité après toi.</p></div>
+    </div><div class="seif" id="v-17-8">
+      <span class="seif-num">17:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֣י לְ֠ךָ֠ וּלְזַרְעֲךָ֨ אַחֲרֶ֜יךָ אֵ֣ת&thinsp;<b>׀</b> אֶ֣רֶץ מְגֻרֶ֗יךָ אֵ֚ת כׇּל־אֶ֣רֶץ כְּנַ֔עַן לַאֲחֻזַּ֖ת עוֹלָ֑ם וְהָיִ֥יתִי לָהֶ֖ם לֵאלֹהִֽים׃</p></div><div class="heb-s"><p>ונתתי לך ולזרעך אחריך את&thinsp;<b>׀</b> ארץ מגריך את כל־ארץ כנען לאחזת עולם והייתי להם לאלהים׃</p></div></div>
+      <div class="texte-fr"><p>Et je donnerai à toi et à ta postérité la terre de tes pérégrinations, toute la terre de Canaan, comme possession indéfinie; et je serai pour eux un Dieu tutélaire."</p></div>
+    </div><div class="seif" id="v-17-9">
+      <span class="seif-num">17:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־אַבְרָהָ֔ם וְאַתָּ֖ה אֶת־בְּרִיתִ֣י תִשְׁמֹ֑ר אַתָּ֛ה וְזַרְעֲךָ֥ אַֽחֲרֶ֖יךָ לְדֹרֹתָֽם׃</p></div><div class="heb-s"><p>ויאמר אלהים אל־אברהם ואתה את־בריתי תשמר אתה וזרעך אחריך לדרתם׃</p></div></div>
+      <div class="texte-fr"><p>Dieu dit à Abraham: "Pour toi, sois fidèle à mon alliance, toi et ta postérité après toi dans tous les âges.</p></div>
+    </div><div class="seif" id="v-17-10">
+      <span class="seif-num">17:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֣את בְּרִיתִ֞י אֲשֶׁ֣ר תִּשְׁמְר֗וּ בֵּינִי֙ וּבֵ֣ינֵיכֶ֔ם וּבֵ֥ין זַרְעֲךָ֖ אַחֲרֶ֑יךָ הִמּ֥וֹל לָכֶ֖ם כׇּל־זָכָֽר׃</p></div><div class="heb-s"><p>זאת בריתי אשר תשמרו ביני וביניכם ובין זרעך אחריך המול לכם כל־זכר׃</p></div></div>
+      <div class="texte-fr"><p>Voici le pacte que vous observerez, qui est entre moi et vous, jusqu’à ta dernière postérité: circoncire tout mâle d’entre vous.</p></div>
+    </div><div class="seif" id="v-17-11">
+      <span class="seif-num">17:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּנְמַלְתֶּ֕ם אֵ֖ת בְּשַׂ֣ר עׇרְלַתְכֶ֑ם וְהָיָה֙ לְא֣וֹת בְּרִ֔ית בֵּינִ֖י וּבֵינֵיכֶֽם׃</p></div><div class="heb-s"><p>ונמלתם את בשר ערלתכם והיה לאות ברית ביני וביניכם׃</p></div></div>
+      <div class="texte-fr"><p>Vous retrancherez la chair de votre excroissance, et ce sera un symbole d’alliance entre moi et vous.</p></div>
+    </div><div class="seif" id="v-17-12">
+      <span class="seif-num">17:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבֶן־שְׁמֹנַ֣ת יָמִ֗ים יִמּ֥וֹל לָכֶ֛ם כׇּל־זָכָ֖ר לְדֹרֹתֵיכֶ֑ם יְלִ֣יד בָּ֔יִת וּמִקְנַת־כֶּ֙סֶף֙ מִכֹּ֣ל בֶּן־נֵכָ֔ר אֲשֶׁ֛ר לֹ֥א מִֽזַּרְעֲךָ֖ הֽוּא׃</p></div><div class="heb-s"><p>ובן־שמנת ימים ימול לכם כל־זכר לדרתיכם יליד בית ומקנת־כסף מכל בן־נכר אשר לא מזרעך הוא׃</p></div></div>
+      <div class="texte-fr"><p>A l’âge de huit jours, que tout mâle, dans vos générations, soit circoncis par vous; même l’enfant né dans ta maison, ou acheté à prix d’argent parmi les fils de l’étranger, qui ne sont pas de ta race.</p></div>
+    </div><div class="seif" id="v-17-13">
+      <span class="seif-num">17:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִמּ֧וֹל&thinsp;<small>׀</small>&thinsp;יִמּ֛וֹל יְלִ֥יד בֵּֽיתְךָ֖ וּמִקְנַ֣ת כַּסְפֶּ֑ךָ וְהָיְתָ֧ה בְרִיתִ֛י בִּבְשַׂרְכֶ֖ם לִבְרִ֥ית עוֹלָֽם׃</p></div><div class="heb-s"><p>המול&thinsp;<small>׀</small>&thinsp;ימול יליד ביתך ומקנת כספך והיתה בריתי בבשרכם לברית עולם׃</p></div></div>
+      <div class="texte-fr"><p>Oui, il sera circoncis, l’enfant de ta maison ou celui que tu auras acheté; et mon alliance, à perpétuité, sera gravée dans votre chair.</p></div>
+    </div><div class="seif" id="v-17-14">
+      <span class="seif-num">17:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָרֵ֣ל&thinsp;<b>׀</b> זָכָ֗ר אֲשֶׁ֤ר לֹֽא־יִמּוֹל֙ אֶת־בְּשַׂ֣ר עׇרְלָת֔וֹ וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מֵעַמֶּ֑יהָ אֶת־בְּרִיתִ֖י הֵפַֽר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וערל&thinsp;<b>׀</b> זכר אשר לא־ימול את־בשר ערלתו ונכרתה הנפש ההוא מעמיה את־בריתי הפר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et le mâle incirconcis, qui n’aura pas retranché la chair de son excroissance, sera supprimé lui-même du sein de son peuple pour avoir enfreint mon alliance."</p></div>
+    </div><div class="seif" id="v-17-15">
+      <span class="seif-num">17:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־אַבְרָהָ֔ם שָׂרַ֣י אִשְׁתְּךָ֔ לֹא־תִקְרָ֥א אֶת־שְׁמָ֖הּ שָׂרָ֑י כִּ֥י שָׂרָ֖ה שְׁמָֽהּ׃</p></div><div class="heb-s"><p>ויאמר אלהים אל־אברהם שרי אשתך לא־תקרא את־שמה שרי כי שרה שמה׃</p></div></div>
+      <div class="texte-fr"><p>Dieu dit à Abraham: "Saraï, ton épouse, tu ne l’appelleras plus Saraï, mais bien Sara.</p></div>
+    </div><div class="seif" id="v-17-16">
+      <span class="seif-num">17:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבֵרַכְתִּ֣י אֹתָ֔הּ וְגַ֨ם נָתַ֧תִּי מִמֶּ֛נָּה לְךָ֖ בֵּ֑ן וּבֵֽרַכְתִּ֙יהָ֙ וְהָֽיְתָ֣ה לְגוֹיִ֔ם מַלְכֵ֥י עַמִּ֖ים מִמֶּ֥נָּה יִהְיֽוּ׃</p></div><div class="heb-s"><p>וברכתי אתה וגם נתתי ממנה לך בן וברכתיה והיתה לגוים מלכי עמים ממנה יהיו׃</p></div></div>
+      <div class="texte-fr"><p>Je la bénirai, en te donnant, par elle aussi, un fils; je la bénirai, en ce qu’elle produira des nations et que des chefs de peuples naîtront d’elle."</p></div>
+    </div><div class="seif" id="v-17-17">
+      <span class="seif-num">17:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפֹּ֧ל אַבְרָהָ֛ם עַל־פָּנָ֖יו וַיִּצְחָ֑ק וַיֹּ֣אמֶר בְּלִבּ֗וֹ הַלְּבֶ֤ן מֵאָֽה־שָׁנָה֙ יִוָּלֵ֔ד וְאִ֨ם־שָׂרָ֔ה הֲבַת־תִּשְׁעִ֥ים שָׁנָ֖ה תֵּלֵֽד׃</p></div><div class="heb-s"><p>ויפל אברהם על־פניו ויצחק ויאמר בלבו הלבן מאה־שנה יולד ואם־שרה הבת־תשעים שנה תלד׃</p></div></div>
+      <div class="texte-fr"><p>Abraham tomba sur sa face et sourit; et il dit en son coeur"Quoi! un centenaire engendrerait encore! et à quatre-vingt-dix ans, Sara deviendrait mère!"</p></div>
+    </div><div class="seif" id="v-17-18">
+      <span class="seif-num">17:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר אַבְרָהָ֖ם אֶל־הָֽאֱלֹהִ֑ים ל֥וּ יִשְׁמָעֵ֖אל יִחְיֶ֥ה לְפָנֶֽיךָ׃</p></div><div class="heb-s"><p>ויאמר אברהם אל־האלהים לו ישמעאל יחיה לפניך׃</p></div></div>
+      <div class="texte-fr"><p>Abraham dit au Seigneur: "Puisse Ismaël, à tes yeux, mériter de vivre!"</p></div>
+    </div><div class="seif" id="v-17-19">
+      <span class="seif-num">17:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֱלֹהִ֗ים אֲבָל֙ שָׂרָ֣ה אִשְׁתְּךָ֗ יֹלֶ֤דֶת לְךָ֙ בֵּ֔ן וְקָרָ֥אתָ אֶת־שְׁמ֖וֹ יִצְחָ֑ק וַהֲקִמֹתִ֨י אֶת־בְּרִיתִ֥י אִתּ֛וֹ לִבְרִ֥ית עוֹלָ֖ם לְזַרְע֥וֹ אַחֲרָֽיו׃</p></div><div class="heb-s"><p>ויאמר אלהים אבל שרה אשתך ילדת לך בן וקראת את־שמו יצחק והקמתי את־בריתי אתו לברית עולם לזרעו אחריו׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur répondit: "Certes, Sara, ton épouse, te donnera un fils, et tu le nommeras Isaac. Je maintiendrai mon pacte avec lui, comme pacte perpétuel à l’égard de sa descendance.</p></div>
+    </div><div class="seif" id="v-17-20">
+      <span class="seif-num">17:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּֽלְיִשְׁמָעֵאל֮ שְׁמַעְתִּ֒יךָ֒ הִנֵּ֣ה&thinsp;<b>׀</b> בֵּרַ֣כְתִּי אֹת֗וֹ וְהִפְרֵיתִ֥י אֹת֛וֹ וְהִרְבֵּיתִ֥י אֹת֖וֹ בִּמְאֹ֣ד מְאֹ֑ד שְׁנֵים־עָשָׂ֤ר נְשִׂיאִם֙ יוֹלִ֔יד וּנְתַתִּ֖יו לְג֥וֹי גָּדֽוֹל׃</p></div><div class="heb-s"><p>ולישמעאל שמעתיך הנה&thinsp;<b>׀</b> ברכתי אתו והפריתי אתו והרביתי אתו במאד מאד שנים־עשר נשיאם יוליד ונתתיו לגוי גדול׃</p></div></div>
+      <div class="texte-fr"><p>Quant à Ismaël, je t’ai exaucé: oui, je l’ai béni; je le ferai fructifier et multiplier à l’infini; il engendra douze princes, et je le ferai devenir une grande nation.</p></div>
+    </div><div class="seif" id="v-17-21">
+      <span class="seif-num">17:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־בְּרִיתִ֖י אָקִ֣ים אֶת־יִצְחָ֑ק אֲשֶׁר֩ תֵּלֵ֨ד לְךָ֤ שָׂרָה֙ לַמּוֹעֵ֣ד הַזֶּ֔ה בַּשָּׁנָ֖ה הָאַחֶֽרֶת׃</p></div><div class="heb-s"><p>ואת־בריתי אקים את־יצחק אשר תלד לך שרה למועד הזה בשנה האחרת׃</p></div></div>
+      <div class="texte-fr"><p>Pour mon alliance, je la confirmerai sur Isaac, que Sara t’enfantera à pareille époque, l’année prochaine."</p></div>
+    </div><div class="seif" id="v-17-22">
+      <span class="seif-num">17:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְכַ֖ל לְדַבֵּ֣ר אִתּ֑וֹ וַיַּ֣עַל אֱלֹהִ֔ים מֵעַ֖ל אַבְרָהָֽם׃</p></div><div class="heb-s"><p>ויכל לדבר אתו ויעל אלהים מעל אברהם׃</p></div></div>
+      <div class="texte-fr"><p>Ayant achevé de lui parler, Dieu disparut de devant Abraham.</p></div>
+    </div><div class="seif" id="v-17-23">
+      <span class="seif-num">17:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֨ח אַבְרָהָ֜ם אֶת־יִשְׁמָעֵ֣אל בְּנ֗וֹ וְאֵ֨ת כׇּל־יְלִידֵ֤י בֵיתוֹ֙ וְאֵת֙ כׇּל־מִקְנַ֣ת כַּסְפּ֔וֹ כׇּל־זָכָ֕ר בְּאַנְשֵׁ֖י בֵּ֣ית אַבְרָהָ֑ם וַיָּ֜מׇל אֶת־בְּשַׂ֣ר עׇרְלָתָ֗ם בְּעֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה כַּאֲשֶׁ֛ר דִּבֶּ֥ר אִתּ֖וֹ אֱלֹהִֽים׃</p></div><div class="heb-s"><p>ויקח אברהם את־ישמעאל בנו ואת כל־ילידי ביתו ואת כל־מקנת כספו כל־זכר באנשי בית אברהם וימל את־בשר ערלתם בעצם היום הזה כאשר דבר אתו אלהים׃</p></div></div>
+      <div class="texte-fr"><p>Abraham prit Ismaël son fils, tous les enfants de ses esclaves et ceux qu’il avait achetés à prix d’argent, tous les mâles de la maison d’Abraham; il retrancha la chair de leur excroissance, ce jour-là même, ainsi que Dieu le lui avait dit.</p></div>
+    </div><div class="seif" id="v-17-24">
+      <span class="seif-num">17:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַ֨בְרָהָ֔ם בֶּן־תִּשְׁעִ֥ים וָתֵ֖שַׁע שָׁנָ֑ה בְּהִמֹּל֖וֹ בְּשַׂ֥ר עׇרְלָתֽוֹ׃</p></div><div class="heb-s"><p>ואברהם בן־תשעים ותשע שנה בהמלו בשר ערלתו׃</p></div></div>
+      <div class="texte-fr"><p>Or, Abraham était âgé de quatre-vingt-dix-neuf ans, lorsque fut retranchée la chair de son excroissance.</p></div>
+    </div><div class="seif" id="v-17-25">
+      <span class="seif-num">17:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִשְׁמָעֵ֣אל בְּנ֔וֹ בֶּן־שְׁלֹ֥שׁ עֶשְׂרֵ֖ה שָׁנָ֑ה בְּהִ֨מֹּל֔וֹ אֵ֖ת בְּשַׂ֥ר עׇרְלָתֽוֹ׃</p></div><div class="heb-s"><p>וישמעאל בנו בן־שלש עשרה שנה בהמלו את בשר ערלתו׃</p></div></div>
+      <div class="texte-fr"><p>Ismaël, son fils, était âgé de treize ans, lorsque la chair de son excroissance fut retranchée.</p></div>
+    </div><div class="seif" id="v-17-26">
+      <span class="seif-num">17:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּעֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה נִמּ֖וֹל אַבְרָהָ֑ם וְיִשְׁמָעֵ֖אל בְּנֽוֹ׃</p></div><div class="heb-s"><p>בעצם היום הזה נמול אברהם וישמעאל בנו׃</p></div></div>
+      <div class="texte-fr"><p>C’est en ce même jour que fut circoncis Abraham, ainsi qu’Ismaël son fils.</p></div>
+    </div><div class="seif" id="v-17-27">
+      <span class="seif-num">17:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־אַנְשֵׁ֤י בֵיתוֹ֙ יְלִ֣יד בָּ֔יִת וּמִקְנַת־כֶּ֖סֶף מֵאֵ֣ת בֶּן־נֵכָ֑ר נִמֹּ֖לוּ אִתּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וכל־אנשי ביתו יליד בית ומקנת־כסף מאת בן־נכר נמלו אתו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et tous les gens de sa maison, nés chez lui ou achetés à prix d’argent à l’étranger, furent circoncis en même temps.</p></div>
+    </div>
+</div>
+<details class="trad-redigee"><summary>📝 Traduction française rédigée (autre version)</summary>
   <div class="bloc-texte">
   <div class="bloc-hd">
     <span>📜 Texte original</span>
@@ -558,7 +1115,8 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
       
     </div>
   </div>
-</div>
+</div></details>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -634,6 +1192,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Le Rambam (Michné Torah, Hilkhot Mila 1:1) précise que la mitsva incombe au père, et non à la mère (Kiddouchin 29a). Il note aussi que l'obligation s'appuie sur le commandement donné à Moïse (Lévitique 12:3), tout en dérivant du récit d'Abraham de nombreux détails. Le Choulhan Aroukh (Yoré Déa, siman 260-266) en détaille la pratique, incluant les qualifications requises du mohel (officiant) et les circonstances justifiant un report pour raison médicale.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_noach.html">← Noach</a><a class="hbtn qcm" href="qcm_paracha_lech-lecha.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayera.html">Vayera →</a></div>
 </main>
 
 <footer>

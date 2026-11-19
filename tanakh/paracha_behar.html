@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Behar – Chemita, Jubilé, lésion et esclave hébreu</h1>
     <p>Torah, Vayikra (Leviticus 25:1-26:2)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_emor.html">← Emor</a><a class="hbtn qcm" href="qcm_paracha_behar.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_bechukotai.html">Bechukotai →</a></div>
   </div>
 </header>
 
@@ -161,27 +202,246 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֤ר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה בְּהַ֥ר סִינַ֖י לֵאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם כִּ֤י תָבֹ֙אוּ֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר אֲנִ֖י נֹתֵ֣ן לָכֶ֑ם וְשָׁבְתָ֣ה הָאָ֔רֶץ שַׁבָּ֖ת לַיהֹוָֽה׃', 'שֵׁ֤שׁ שָׁנִים֙ תִּזְרַ֣ע שָׂדֶ֔ךָ וְשֵׁ֥שׁ שָׁנִ֖ים תִּזְמֹ֣ר כַּרְמֶ֑ךָ וְאָסַפְתָּ֖ אֶת־תְּבוּאָתָֽהּ׃', 'וּבַשָּׁנָ֣ה הַשְּׁבִיעִ֗ת שַׁבַּ֤ת שַׁבָּתוֹן֙ יִהְיֶ֣ה לָאָ֔רֶץ שַׁבָּ֖ת לַיהֹוָ֑ה שָֽׂדְךָ֙ לֹ֣א תִזְרָ֔ע וְכַרְמְךָ֖ לֹ֥א תִזְמֹֽר׃', 'אֵ֣ת סְפִ֤יחַ קְצִֽירְךָ֙ לֹ֣א תִקְצ֔וֹר וְאֶת־עִנְּבֵ֥י נְזִירֶ֖ךָ לֹ֣א תִבְצֹ֑ר שְׁנַ֥ת שַׁבָּת֖וֹן יִהְיֶ֥ה לָאָֽרֶץ׃', 'וְ֠הָיְתָ֠ה שַׁבַּ֨ת הָאָ֤רֶץ לָכֶם֙ לְאׇכְלָ֔ה לְךָ֖ וּלְעַבְדְּךָ֣ וְלַאֲמָתֶ֑ךָ וְלִשְׂכִֽירְךָ֙ וּלְתוֹשָׁ֣בְךָ֔ הַגָּרִ֖ים עִמָּֽךְ׃', 'וְלִ֨בְהֶמְתְּךָ֔ וְלַֽחַיָּ֖ה אֲשֶׁ֣ר בְּאַרְצֶ֑ךָ תִּהְיֶ֥ה כׇל־תְּבוּאָתָ֖הּ לֶאֱכֹֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְסָפַרְתָּ֣ לְךָ֗ שֶׁ֚בַע שַׁבְּתֹ֣ת שָׁנִ֔ים שֶׁ֥בַע שָׁנִ֖ים שֶׁ֣בַע פְּעָמִ֑ים וְהָי֣וּ לְךָ֗ יְמֵי֙ שֶׁ֚בַע שַׁבְּתֹ֣ת הַשָּׁנִ֔ים תֵּ֥שַׁע וְאַרְבָּעִ֖ים שָׁנָֽה׃', 'וְהַֽעֲבַרְתָּ֞ שׁוֹפַ֤ר תְּרוּעָה֙ בַּחֹ֣דֶשׁ הַשְּׁבִעִ֔י בֶּעָשׂ֖וֹר לַחֹ֑דֶשׁ בְּיוֹם֙ הַכִּפֻּרִ֔ים תַּעֲבִ֥ירוּ שׁוֹפָ֖ר בְּכׇל־אַרְצְכֶֽם׃', 'וְקִדַּשְׁתֶּ֗ם אֵ֣ת שְׁנַ֤ת הַחֲמִשִּׁים֙ שָׁנָ֔ה וּקְרָאתֶ֥ם דְּר֛וֹר בָּאָ֖רֶץ לְכׇל־יֹשְׁבֶ֑יהָ יוֹבֵ֥ל הִוא֙ תִּהְיֶ֣ה לָכֶ֔ם וְשַׁבְתֶּ֗ם אִ֚ישׁ אֶל־אֲחֻזָּת֔וֹ וְאִ֥ישׁ אֶל־מִשְׁפַּחְתּ֖וֹ תָּשֻֽׁבוּ׃', 'יוֹבֵ֣ל הִ֗וא שְׁנַ֛ת הַחֲמִשִּׁ֥ים שָׁנָ֖ה תִּהְיֶ֣ה לָכֶ֑ם לֹ֣א תִזְרָ֔עוּ וְלֹ֤א תִקְצְרוּ֙ אֶת־סְפִיחֶ֔יהָ וְלֹ֥א תִבְצְר֖וּ אֶת־נְזִרֶֽיהָ׃', 'כִּ֚י יוֹבֵ֣ל הִ֔וא קֹ֖דֶשׁ תִּהְיֶ֣ה לָכֶ֑ם מִ֨ן־הַשָּׂדֶ֔ה תֹּאכְל֖וּ אֶת־תְּבוּאָתָֽהּ׃', 'בִּשְׁנַ֥ת הַיּוֹבֵ֖ל הַזֹּ֑את תָּשֻׁ֕בוּ אִ֖ישׁ אֶל־אֲחֻזָּתֽוֹ׃', 'וְכִֽי־תִמְכְּר֤וּ מִמְכָּר֙ לַעֲמִיתֶ֔ךָ א֥וֹ קָנֹ֖ה מִיַּ֣ד עֲמִיתֶ֑ךָ אַל־תּוֹנ֖וּ אִ֥ישׁ אֶת־אָחִֽיו׃', 'בְּמִסְפַּ֤ר שָׁנִים֙ אַחַ֣ר הַיּוֹבֵ֔ל תִּקְנֶ֖ה מֵאֵ֣ת עֲמִיתֶ֑ךָ בְּמִסְפַּ֥ר שְׁנֵֽי־תְבוּאֹ֖ת יִמְכׇּר־לָֽךְ׃', 'לְפִ֣י&thinsp;<b>׀</b> רֹ֣ב הַשָּׁנִ֗ים תַּרְבֶּה֙ מִקְנָת֔וֹ וּלְפִי֙ מְעֹ֣ט הַשָּׁנִ֔ים תַּמְעִ֖יט מִקְנָת֑וֹ כִּ֚י מִסְפַּ֣ר תְּבוּאֹ֔ת ה֥וּא מֹכֵ֖ר לָֽךְ׃', 'וְלֹ֤א תוֹנוּ֙ אִ֣ישׁ אֶת־עֲמִית֔וֹ וְיָרֵ֖אתָ מֵֽאֱלֹהֶ֑יךָ כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃', 'וַעֲשִׂיתֶם֙ אֶת־חֻקֹּתַ֔י וְאֶת־מִשְׁפָּטַ֥י תִּשְׁמְר֖וּ וַעֲשִׂיתֶ֣ם אֹתָ֑ם וִֽישַׁבְתֶּ֥ם עַל־הָאָ֖רֶץ לָבֶֽטַח׃', 'וְנָתְנָ֤ה הָאָ֙רֶץ֙ פִּרְיָ֔הּ וַאֲכַלְתֶּ֖ם לָשֹׂ֑בַע וִֽישַׁבְתֶּ֥ם לָבֶ֖טַח עָלֶֽיהָ׃', 'וְכִ֣י תֹאמְר֔וּ מַה־נֹּאכַ֖ל בַּשָּׁנָ֣ה הַשְּׁבִיעִ֑ת הֵ֚ן לֹ֣א נִזְרָ֔ע וְלֹ֥א נֶאֱסֹ֖ף אֶת־תְּבוּאָתֵֽנוּ׃', 'וְצִוִּ֤יתִי אֶת־בִּרְכָתִי֙ לָכֶ֔ם בַּשָּׁנָ֖ה הַשִּׁשִּׁ֑ית וְעָשָׂת֙ אֶת־הַתְּבוּאָ֔ה לִשְׁלֹ֖שׁ הַשָּׁנִֽים׃', 'וּזְרַעְתֶּ֗ם אֵ֚ת הַשָּׁנָ֣ה הַשְּׁמִינִ֔ת וַאֲכַלְתֶּ֖ם מִן־הַתְּבוּאָ֣ה יָשָׁ֑ן עַ֣ד&thinsp;<b>׀</b> הַשָּׁנָ֣ה הַתְּשִׁיעִ֗ת עַד־בּוֹא֙ תְּב֣וּאָתָ֔הּ תֹּאכְל֖וּ יָשָֽׁן׃', 'וְהָאָ֗רֶץ לֹ֤א תִמָּכֵר֙ לִצְמִתֻ֔ת כִּי־לִ֖י הָאָ֑רֶץ כִּֽי־גֵרִ֧ים וְתוֹשָׁבִ֛ים אַתֶּ֖ם עִמָּדִֽי׃', 'וּבְכֹ֖ל אֶ֣רֶץ אֲחֻזַּתְכֶ֑ם גְּאֻלָּ֖ה תִּתְּנ֥וּ לָאָֽרֶץ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּֽי־יָמ֣וּךְ אָחִ֔יךָ וּמָכַ֖ר מֵאֲחֻזָּת֑וֹ וּבָ֤א גֹֽאֲלוֹ֙ הַקָּרֹ֣ב אֵלָ֔יו וְגָאַ֕ל אֵ֖ת מִמְכַּ֥ר אָחִֽיו׃', 'וְאִ֕ישׁ כִּ֛י לֹ֥א יִֽהְיֶה־לּ֖וֹ גֹּאֵ֑ל וְהִשִּׂ֣יגָה יָד֔וֹ וּמָצָ֖א כְּדֵ֥י גְאֻלָּתֽוֹ׃', 'וְחִשַּׁב֙ אֶת־שְׁנֵ֣י מִמְכָּר֔וֹ וְהֵשִׁיב֙ אֶת־הָ֣עֹדֵ֔ף לָאִ֖ישׁ אֲשֶׁ֣ר מָֽכַר־ל֑וֹ וְשָׁ֖ב לַאֲחֻזָּתֽוֹ׃', 'וְאִ֨ם לֹֽא־מָצְאָ֜ה יָד֗וֹ דֵּי֮ הָשִׁ֣יב לוֹ֒ וְהָיָ֣ה מִמְכָּר֗וֹ בְּיַד֙ הַקֹּנֶ֣ה אֹת֔וֹ עַ֖ד שְׁנַ֣ת הַיּוֹבֵ֑ל וְיָצָא֙ בַּיֹּבֵ֔ל וְשָׁ֖ב לַאֲחֻזָּתֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִ֗ישׁ כִּֽי־יִמְכֹּ֤ר בֵּית־מוֹשַׁב֙ עִ֣יר חוֹמָ֔ה וְהָיְתָה֙ גְּאֻלָּת֔וֹ עַד־תֹּ֖ם שְׁנַ֣ת מִמְכָּר֑וֹ יָמִ֖ים תִּהְיֶ֥ה גְאֻלָּתֽוֹ׃', 'וְאִ֣ם לֹֽא־יִגָּאֵ֗ל עַד־מְלֹ֣את לוֹ֮ שָׁנָ֣ה תְמִימָה֒ וְ֠קָ֠ם הַבַּ֨יִת אֲשֶׁר־בָּעִ֜יר אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[ל֣וֹ]</span> <span class="mam-kq-k">(לא)</span></span> חֹמָ֗ה לַצְּמִיתֻ֛ת לַקֹּנֶ֥ה אֹת֖וֹ לְדֹרֹתָ֑יו לֹ֥א יֵצֵ֖א בַּיֹּבֵֽל׃', 'וּבָתֵּ֣י הַחֲצֵרִ֗ים אֲשֶׁ֨ר אֵין־לָהֶ֤ם חֹמָה֙ סָבִ֔יב עַל־שְׂדֵ֥ה הָאָ֖רֶץ יֵחָשֵׁ֑ב גְּאֻלָּה֙ תִּהְיֶה־לּ֔וֹ וּבַיֹּבֵ֖ל יֵצֵֽא׃', 'וְעָרֵי֙ הַלְוִיִּ֔ם בָּתֵּ֖י עָרֵ֣י אֲחֻזָּתָ֑ם גְּאֻלַּ֥ת עוֹלָ֖ם תִּהְיֶ֥ה לַלְוִיִּֽם׃', 'וַאֲשֶׁ֤ר יִגְאַל֙ מִן־הַלְוִיִּ֔ם וְיָצָ֧א מִמְכַּר־בַּ֛יִת וְעִ֥יר אֲחֻזָּת֖וֹ בַּיֹּבֵ֑ל כִּ֣י בָתֵּ֞י עָרֵ֣י הַלְוִיִּ֗ם הִ֚וא אֲחֻזָּתָ֔ם בְּת֖וֹךְ בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וּֽשְׂדֵ֛ה מִגְרַ֥שׁ עָרֵיהֶ֖ם לֹ֣א יִמָּכֵ֑ר כִּֽי־אֲחֻזַּ֥ת עוֹלָ֛ם ה֖וּא לָהֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִֽי־יָמ֣וּךְ אָחִ֔יךָ וּמָ֥טָה יָד֖וֹ עִמָּ֑ךְ וְהֶֽחֱזַ֣קְתָּ בּ֔וֹ גֵּ֧ר וְתוֹשָׁ֛ב וָחַ֖י עִמָּֽךְ׃', 'אַל־תִּקַּ֤ח מֵֽאִתּוֹ֙ נֶ֣שֶׁךְ וְתַרְבִּ֔ית וְיָרֵ֖אתָ מֵֽאֱלֹהֶ֑יךָ וְחֵ֥י אָחִ֖יךָ עִמָּֽךְ׃', 'אֶ֨ת־כַּסְפְּךָ֔ לֹֽא־תִתֵּ֥ן ל֖וֹ בְּנֶ֑שֶׁךְ וּבְמַרְבִּ֖ית לֹא־תִתֵּ֥ן אׇכְלֶֽךָ׃', 'אֲנִ֗י יְהֹוָה֙ אֱלֹ֣הֵיכֶ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אֶתְכֶ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם לָתֵ֤ת לָכֶם֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִֽי־יָמ֥וּךְ אָחִ֛יךָ עִמָּ֖ךְ וְנִמְכַּר־לָ֑ךְ לֹא־תַעֲבֹ֥ד בּ֖וֹ עֲבֹ֥דַת עָֽבֶד׃', 'כְּשָׂכִ֥יר כְּתוֹשָׁ֖ב יִהְיֶ֣ה עִמָּ֑ךְ עַד־שְׁנַ֥ת הַיֹּבֵ֖ל יַעֲבֹ֥ד עִמָּֽךְ׃', 'וְיָצָא֙ מֵֽעִמָּ֔ךְ ה֖וּא וּבָנָ֣יו עִמּ֑וֹ וְשָׁב֙ אֶל־מִשְׁפַּחְתּ֔וֹ וְאֶל־אֲחֻזַּ֥ת אֲבֹתָ֖יו יָשֽׁוּב׃', 'כִּֽי־עֲבָדַ֣י הֵ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם לֹ֥א יִמָּכְר֖וּ מִמְכֶּ֥רֶת עָֽבֶד׃', 'לֹא־תִרְדֶּ֥ה ב֖וֹ בְּפָ֑רֶךְ וְיָרֵ֖אתָ מֵאֱלֹהֶֽיךָ׃', 'וְעַבְדְּךָ֥ וַאֲמָתְךָ֖ אֲשֶׁ֣ר יִהְיוּ־לָ֑ךְ מֵאֵ֣ת הַגּוֹיִ֗ם אֲשֶׁר֙ סְבִיבֹ֣תֵיכֶ֔ם מֵהֶ֥ם תִּקְנ֖וּ עֶ֥בֶד וְאָמָֽה׃', 'וְ֠גַ֠ם מִבְּנֵ֨י הַתּוֹשָׁבִ֜ים הַגָּרִ֤ים עִמָּכֶם֙ מֵהֶ֣ם תִּקְנ֔וּ וּמִמִּשְׁפַּחְתָּם֙ אֲשֶׁ֣ר עִמָּכֶ֔ם אֲשֶׁ֥ר הוֹלִ֖ידוּ בְּאַרְצְכֶ֑ם וְהָי֥וּ לָכֶ֖ם לַֽאֲחֻזָּֽה׃', 'וְהִתְנַחַלְתֶּ֨ם אֹתָ֜ם לִבְנֵיכֶ֤ם אַחֲרֵיכֶם֙ לָרֶ֣שֶׁת אֲחֻזָּ֔ה לְעֹלָ֖ם בָּהֶ֣ם תַּעֲבֹ֑דוּ וּבְאַ֨חֵיכֶ֤ם בְּנֵֽי־יִשְׂרָאֵל֙ אִ֣ישׁ בְּאָחִ֔יו לֹא־תִרְדֶּ֥ה ב֖וֹ בְּפָֽרֶךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִ֣י תַשִּׂ֗יג יַ֣ד גֵּ֤ר וְתוֹשָׁב֙ עִמָּ֔ךְ וּמָ֥ךְ אָחִ֖יךָ עִמּ֑וֹ וְנִמְכַּ֗ר לְגֵ֤ר תּוֹשָׁב֙ עִמָּ֔ךְ א֥וֹ לְעֵ֖קֶר מִשְׁפַּ֥חַת גֵּֽר׃', 'אַחֲרֵ֣י נִמְכַּ֔ר גְּאֻלָּ֖ה תִּהְיֶה־לּ֑וֹ אֶחָ֥ד מֵאֶחָ֖יו יִגְאָלֶֽנּוּ׃', 'אוֹ־דֹד֞וֹ א֤וֹ בֶן־דֹּדוֹ֙ יִגְאָלֶ֔נּוּ אֽוֹ־מִשְּׁאֵ֧ר בְּשָׂר֛וֹ מִמִּשְׁפַּחְתּ֖וֹ יִגְאָלֶ֑נּוּ אֽוֹ־הִשִּׂ֥יגָה יָד֖וֹ וְנִגְאָֽל׃', 'וְחִשַּׁב֙ עִם־קֹנֵ֔הוּ מִשְּׁנַת֙ הִמָּ֣כְרוֹ ל֔וֹ עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְהָיָ֞ה כֶּ֤סֶף מִמְכָּרוֹ֙ בְּמִסְפַּ֣ר שָׁנִ֔ים כִּימֵ֥י שָׂכִ֖יר יִהְיֶ֥ה עִמּֽוֹ׃', 'אִם־ע֥וֹד רַבּ֖וֹת בַּשָּׁנִ֑ים לְפִיהֶן֙ יָשִׁ֣יב גְּאֻלָּת֔וֹ מִכֶּ֖סֶף מִקְנָתֽוֹ׃', 'וְאִם־מְעַ֞ט נִשְׁאַ֧ר בַּשָּׁנִ֛ים עַד־שְׁנַ֥ת הַיֹּבֵ֖ל וְחִשַּׁב־ל֑וֹ כְּפִ֣י שָׁנָ֔יו יָשִׁ֖יב אֶת־גְּאֻלָּתֽוֹ׃', 'כִּשְׂכִ֥יר שָׁנָ֛ה בְּשָׁנָ֖ה יִהְיֶ֣ה עִמּ֑וֹ לֹֽא־יִרְדֶּ֥נּֽוּ בְּפֶ֖רֶךְ לְעֵינֶֽיךָ׃', 'וְאִם־לֹ֥א יִגָּאֵ֖ל בְּאֵ֑לֶּה וְיָצָא֙ בִּשְׁנַ֣ת הַיֹּבֵ֔ל ה֖וּא וּבָנָ֥יו עִמּֽוֹ׃', 'כִּֽי־לִ֤י בְנֵֽי־יִשְׂרָאֵל֙ עֲבָדִ֔ים עֲבָדַ֣י הֵ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אוֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃']</p>
-      <p>['לֹֽא־תַעֲשׂ֨וּ לָכֶ֜ם אֱלִילִ֗ם וּפֶ֤סֶל וּמַצֵּבָה֙ לֹֽא־תָקִ֣ימוּ לָכֶ֔ם וְאֶ֣בֶן מַשְׂכִּ֗ית לֹ֤א תִתְּנוּ֙ בְּאַרְצְכֶ֔ם לְהִֽשְׁתַּחֲוֺ֖ת עָלֶ֑יהָ כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃', 'אֶת־שַׁבְּתֹתַ֣י תִּשְׁמֹ֔רוּ וּמִקְדָּשִׁ֖י תִּירָ֑אוּ אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-25-1">Chap. 25</a><a href="#v-26-1">Chap. 26</a></div>
+  <div class="seif" id="v-25-1">
+      <span class="seif-num">25:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֤ר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה בְּהַ֥ר סִינַ֖י לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה בהר סיני לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse au mont Sinaï, en ces termes:</p></div>
+    </div><div class="seif" id="v-25-2">
+      <span class="seif-num">25:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם כִּ֤י תָבֹ֙אוּ֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר אֲנִ֖י נֹתֵ֣ן לָכֶ֑ם וְשָׁבְתָ֣ה הָאָ֔רֶץ שַׁבָּ֖ת לַיהֹוָֽה׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם כי תבאו אל־הארץ אשר אני נתן לכם ושבתה הארץ שבת ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur: Quand vous serez entrés dans le pays que je vous donne, la terre sera soumise à un chômage en l’honneur de l’Éternel.</p></div>
+    </div><div class="seif" id="v-25-3">
+      <span class="seif-num">25:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֵׁ֤שׁ שָׁנִים֙ תִּזְרַ֣ע שָׂדֶ֔ךָ וְשֵׁ֥שׁ שָׁנִ֖ים תִּזְמֹ֣ר כַּרְמֶ֑ךָ וְאָסַפְתָּ֖ אֶת־תְּבוּאָתָֽהּ׃</p></div><div class="heb-s"><p>שש שנים תזרע שדך ושש שנים תזמר כרמך ואספת את־תבואתה׃</p></div></div>
+      <div class="texte-fr"><p>Six années tu ensemenceras ton champ, six années tu travailleras ta vigne, et tu en recueilleras le produit;</p></div>
+    </div><div class="seif" id="v-25-4">
+      <span class="seif-num">25:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַשָּׁנָ֣ה הַשְּׁבִיעִ֗ת שַׁבַּ֤ת שַׁבָּתוֹן֙ יִהְיֶ֣ה לָאָ֔רֶץ שַׁבָּ֖ת לַיהֹוָ֑ה שָֽׂדְךָ֙ לֹ֣א תִזְרָ֔ע וְכַרְמְךָ֖ לֹ֥א תִזְמֹֽר׃</p></div><div class="heb-s"><p>ובשנה השביעת שבת שבתון יהיה לארץ שבת ליהוה שדך לא תזרע וכרמך לא תזמר׃</p></div></div>
+      <div class="texte-fr"><p>mais, la septième année, un chômage absolu sera accordé à la terre, un sabbat en l’honneur de l’Éternel. Tu n’ensemenceras ton champ ni ne tailleras ta vigne.</p></div>
+    </div><div class="seif" id="v-25-5">
+      <span class="seif-num">25:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣ת סְפִ֤יחַ קְצִֽירְךָ֙ לֹ֣א תִקְצ֔וֹר וְאֶת־עִנְּבֵ֥י נְזִירֶ֖ךָ לֹ֣א תִבְצֹ֑ר שְׁנַ֥ת שַׁבָּת֖וֹן יִהְיֶ֥ה לָאָֽרֶץ׃</p></div><div class="heb-s"><p>את ספיח קצירך לא תקצור ואת־ענבי נזירך לא תבצר שנת שבתון יהיה לארץ׃</p></div></div>
+      <div class="texte-fr"><p>Le produit spontané de ta moisson, tu ne le couperas point, et les raisins de ta vigne intacte, tu ne les vendangeras point: ce sera une année de chômage pour le sol.</p></div>
+    </div><div class="seif" id="v-25-6">
+      <span class="seif-num">25:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠הָיְתָ֠ה שַׁבַּ֨ת הָאָ֤רֶץ לָכֶם֙ לְאׇכְלָ֔ה לְךָ֖ וּלְעַבְדְּךָ֣ וְלַאֲמָתֶ֑ךָ וְלִשְׂכִֽירְךָ֙ וּלְתוֹשָׁ֣בְךָ֔ הַגָּרִ֖ים עִמָּֽךְ׃</p></div><div class="heb-s"><p>והיתה שבת הארץ לכם לאכלה לך ולעבדך ולאמתך ולשכירך ולתושבך הגרים עמך׃</p></div></div>
+      <div class="texte-fr"><p>Ce solen repos vous appartiendra à tous pour la consommation: à toi, à ton esclave, à ta servante, au mercenaire et à l’étranger qui habitent avec toi;</p></div>
+    </div><div class="seif" id="v-25-7">
+      <span class="seif-num">25:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלִ֨בְהֶמְתְּךָ֔ וְלַֽחַיָּ֖ה אֲשֶׁ֣ר בְּאַרְצֶ֑ךָ תִּהְיֶ֥ה כׇל־תְּבוּאָתָ֖הּ לֶאֱכֹֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ולבהמתך ולחיה אשר בארצך תהיה כל־תבואתה לאכל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>ton bétail même, ainsi que les bêtes sauvages de ton pays, pourront se nourrir de tous ces produits.</p></div>
+    </div><div class="seif" id="v-25-8">
+      <span class="seif-num">25:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְסָפַרְתָּ֣ לְךָ֗ שֶׁ֚בַע שַׁבְּתֹ֣ת שָׁנִ֔ים שֶׁ֥בַע שָׁנִ֖ים שֶׁ֣בַע פְּעָמִ֑ים וְהָי֣וּ לְךָ֗ יְמֵי֙ שֶׁ֚בַע שַׁבְּתֹ֣ת הַשָּׁנִ֔ים תֵּ֥שַׁע וְאַרְבָּעִ֖ים שָׁנָֽה׃</p></div><div class="heb-s"><p>וספרת לך שבע שבתת שנים שבע שנים שבע פעמים והיו לך ימי שבע שבתת השנים תשע וארבעים שנה׃</p></div></div>
+      <div class="texte-fr"><p>Tu compteras chez toi sept années sabbatiques, sept fois sept années, de sorte que la période de ces sept années sabbatiques te fera quarante-neuf ans;</p></div>
+    </div><div class="seif" id="v-25-9">
+      <span class="seif-num">25:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַֽעֲבַרְתָּ֞ שׁוֹפַ֤ר תְּרוּעָה֙ בַּחֹ֣דֶשׁ הַשְּׁבִעִ֔י בֶּעָשׂ֖וֹר לַחֹ֑דֶשׁ בְּיוֹם֙ הַכִּפֻּרִ֔ים תַּעֲבִ֥ירוּ שׁוֹפָ֖ר בְּכׇל־אַרְצְכֶֽם׃</p></div><div class="heb-s"><p>והעברת שופר תרועה בחדש השבעי בעשור לחדש ביום הכפרים תעבירו שופר בכל־ארצכם׃</p></div></div>
+      <div class="texte-fr"><p>puis tu feras circuler le retentissement du cor, dans le septième mois, le dixième jour du mois: au jour des expiations, vous ferez retentir le son du cor à travers tout votre pays.</p></div>
+    </div><div class="seif" id="v-25-10">
+      <span class="seif-num">25:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְקִדַּשְׁתֶּ֗ם אֵ֣ת שְׁנַ֤ת הַחֲמִשִּׁים֙ שָׁנָ֔ה וּקְרָאתֶ֥ם דְּר֛וֹר בָּאָ֖רֶץ לְכׇל־יֹשְׁבֶ֑יהָ יוֹבֵ֥ל הִוא֙ תִּהְיֶ֣ה לָכֶ֔ם וְשַׁבְתֶּ֗ם אִ֚ישׁ אֶל־אֲחֻזָּת֔וֹ וְאִ֥ישׁ אֶל־מִשְׁפַּחְתּ֖וֹ תָּשֻֽׁבוּ׃</p></div><div class="heb-s"><p>וקדשתם את שנת החמשים שנה וקראתם דרור בארץ לכל־ישביה יובל הוא תהיה לכם ושבתם איש אל־אחזתו ואיש אל־משפחתו תשבו׃</p></div></div>
+      <div class="texte-fr"><p>Vous sanctifierez cette cinquantième année, en proclamant, dans le pays, la liberté pour tous ceux qui l’habitent: cette année sera pour vous le Jubilé, où chacun de vous rentrera dans son bien, où chacun retournera à sa famille.</p></div>
+    </div><div class="seif" id="v-25-11">
+      <span class="seif-num">25:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>יוֹבֵ֣ל הִ֗וא שְׁנַ֛ת הַחֲמִשִּׁ֥ים שָׁנָ֖ה תִּהְיֶ֣ה לָכֶ֑ם לֹ֣א תִזְרָ֔עוּ וְלֹ֤א תִקְצְרוּ֙ אֶת־סְפִיחֶ֔יהָ וְלֹ֥א תִבְצְר֖וּ אֶת־נְזִרֶֽיהָ׃</p></div><div class="heb-s"><p>יובל הוא שנת החמשים שנה תהיה לכם לא תזרעו ולא תקצרו את־ספיחיה ולא תבצרו את־נזריה׃</p></div></div>
+      <div class="texte-fr"><p>La cinquantième année est le Jubilé, elle le sera pour vous: vous ne sèmerez point, vous n’en couperez point les produits, ni n’en vendangerez les vignes intactes,</p></div>
+    </div><div class="seif" id="v-25-12">
+      <span class="seif-num">25:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֚י יוֹבֵ֣ל הִ֔וא קֹ֖דֶשׁ תִּהְיֶ֣ה לָכֶ֑ם מִ֨ן־הַשָּׂדֶ֔ה תֹּאכְל֖וּ אֶת־תְּבוּאָתָֽהּ׃</p></div><div class="heb-s"><p>כי יובל הוא קדש תהיה לכם מן־השדה תאכלו את־תבואתה׃</p></div></div>
+      <div class="texte-fr"><p>parce que cette année est le jubilé et doit vous être une chose sainte. C’est à même le champ que vous en mangerez le produit.</p></div>
+    </div><div class="seif" id="v-25-13">
+      <span class="seif-num">25:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּשְׁנַ֥ת הַיּוֹבֵ֖ל הַזֹּ֑את תָּשֻׁ֕בוּ אִ֖ישׁ אֶל־אֲחֻזָּתֽוֹ׃</p></div><div class="heb-s"><p>בשנת היובל הזאת תשבו איש אל־אחזתו׃</p></div></div>
+      <div class="texte-fr"><p>En cette année jubilaire, vous rentrerez chacun dans votre possession.</p></div>
+    </div><div class="seif" id="v-25-14">
+      <span class="seif-num">25:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־תִמְכְּר֤וּ מִמְכָּר֙ לַעֲמִיתֶ֔ךָ א֥וֹ קָנֹ֖ה מִיַּ֣ד עֲמִיתֶ֑ךָ אַל־תּוֹנ֖וּ אִ֥ישׁ אֶת־אָחִֽיו׃</p></div><div class="heb-s"><p>וכי־תמכרו ממכר לעמיתך או קנה מיד עמיתך אל־תונו איש את־אחיו׃</p></div></div>
+      <div class="texte-fr"><p>Si donc tu fais une vente à ton prochain, ou si tu acquiers de sa main quelque chose, ne vous lésez point l’un l’autre.</p></div>
+    </div><div class="seif" id="v-25-15">
+      <span class="seif-num">25:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּמִסְפַּ֤ר שָׁנִים֙ אַחַ֣ר הַיּוֹבֵ֔ל תִּקְנֶ֖ה מֵאֵ֣ת עֲמִיתֶ֑ךָ בְּמִסְפַּ֥ר שְׁנֵֽי־תְבוּאֹ֖ת יִמְכׇּר־לָֽךְ׃</p></div><div class="heb-s"><p>במספר שנים אחר היובל תקנה מאת עמיתך במספר שני־תבואת ימכר־לך׃</p></div></div>
+      <div class="texte-fr"><p>C’est en tenant compte des années écoulées depuis le Jubilé, que tu feras cet achat à ton prochain; c’est en tenant compte des années de récolte, qu’il doit te vendre.</p></div>
+    </div><div class="seif" id="v-25-16">
+      <span class="seif-num">25:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְפִ֣י&thinsp;<b>׀</b> רֹ֣ב הַשָּׁנִ֗ים תַּרְבֶּה֙ מִקְנָת֔וֹ וּלְפִי֙ מְעֹ֣ט הַשָּׁנִ֔ים תַּמְעִ֖יט מִקְנָת֑וֹ כִּ֚י מִסְפַּ֣ר תְּבוּאֹ֔ת ה֥וּא מֹכֵ֖ר לָֽךְ׃</p></div><div class="heb-s"><p>לפי&thinsp;<b>׀</b> רב השנים תרבה מקנתו ולפי מעט השנים תמעיט מקנתו כי מספר תבואת הוא מכר לך׃</p></div></div>
+      <div class="texte-fr"><p>Selon que ces années seront plus ou moins nombreuses, tu paieras plus ou moins cher la chose acquise; car c’est un nombre de récoltes qu’il te vend.</p></div>
+    </div><div class="seif" id="v-25-17">
+      <span class="seif-num">25:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֤א תוֹנוּ֙ אִ֣ישׁ אֶת־עֲמִית֔וֹ וְיָרֵ֖אתָ מֵֽאֱלֹהֶ֑יךָ כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>ולא תונו איש את־עמיתו ויראת מאלהיך כי אני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>Ne vous lésez point l’un l’autre, mais redoute ton Dieu! Car je suis l’Éternel votre Dieu.</p></div>
+    </div><div class="seif" id="v-25-18">
+      <span class="seif-num">25:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשִׂיתֶם֙ אֶת־חֻקֹּתַ֔י וְאֶת־מִשְׁפָּטַ֥י תִּשְׁמְר֖וּ וַעֲשִׂיתֶ֣ם אֹתָ֑ם וִֽישַׁבְתֶּ֥ם עַל־הָאָ֖רֶץ לָבֶֽטַח׃</p></div><div class="heb-s"><p>ועשיתם את־חקתי ואת־משפטי תשמרו ועשיתם אתם וישבתם על־הארץ לבטח׃</p></div></div>
+      <div class="texte-fr"><p>Exécutez mes édits, observez et pratiquez mes lois, et vous demeurerez dans le pays en sécurité.</p></div>
+    </div><div class="seif" id="v-25-19">
+      <span class="seif-num">25:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתְנָ֤ה הָאָ֙רֶץ֙ פִּרְיָ֔הּ וַאֲכַלְתֶּ֖ם לָשֹׂ֑בַע וִֽישַׁבְתֶּ֥ם לָבֶ֖טַח עָלֶֽיהָ׃</p></div><div class="heb-s"><p>ונתנה הארץ פריה ואכלתם לשבע וישבתם לבטח עליה׃</p></div></div>
+      <div class="texte-fr"><p>La terre donnera ses fruits, dont vous vous nourrirez abondamment, et vous y résiderez en toute quiétude.</p></div>
+    </div><div class="seif" id="v-25-20">
+      <span class="seif-num">25:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֣י תֹאמְר֔וּ מַה־נֹּאכַ֖ל בַּשָּׁנָ֣ה הַשְּׁבִיעִ֑ת הֵ֚ן לֹ֣א נִזְרָ֔ע וְלֹ֥א נֶאֱסֹ֖ף אֶת־תְּבוּאָתֵֽנוּ׃</p></div><div class="heb-s"><p>וכי תאמרו מה־נאכל בשנה השביעת הן לא נזרע ולא נאסף את־תבואתנו׃</p></div></div>
+      <div class="texte-fr"><p>Que si vous dites: "Qu’aurons-nous à manger la septième année, puisque nous ne pouvons ni semer, ni rentrer nos récoltes?"</p></div>
+    </div><div class="seif" id="v-25-21">
+      <span class="seif-num">25:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוִּ֤יתִי אֶת־בִּרְכָתִי֙ לָכֶ֔ם בַּשָּׁנָ֖ה הַשִּׁשִּׁ֑ית וְעָשָׂת֙ אֶת־הַתְּבוּאָ֔ה לִשְׁלֹ֖שׁ הַשָּׁנִֽים׃</p></div><div class="heb-s"><p>וצויתי את־ברכתי לכם בשנה הששית ועשת את־התבואה לשלש השנים׃</p></div></div>
+      <div class="texte-fr"><p>Je vous octroierai ma bénédiction dans la sixième année, tellement qu’elle produira la récolte de trois années;</p></div>
+    </div><div class="seif" id="v-25-22">
+      <span class="seif-num">25:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּזְרַעְתֶּ֗ם אֵ֚ת הַשָּׁנָ֣ה הַשְּׁמִינִ֔ת וַאֲכַלְתֶּ֖ם מִן־הַתְּבוּאָ֣ה יָשָׁ֑ן עַ֣ד&thinsp;<b>׀</b> הַשָּׁנָ֣ה הַתְּשִׁיעִ֗ת עַד־בּוֹא֙ תְּב֣וּאָתָ֔הּ תֹּאכְל֖וּ יָשָֽׁן׃</p></div><div class="heb-s"><p>וזרעתם את השנה השמינת ואכלתם מן־התבואה ישן עד&thinsp;<b>׀</b> השנה התשיעת עד־בוא תבואתה תאכלו ישן׃</p></div></div>
+      <div class="texte-fr"><p>et quand vous sèmerez la huitième année, vous vivrez sur la récolte antérieure: jusqu’à la neuvième année, jusqu’à ce que s’effectue sa récolte, vous vivrez sur l’ancienne.</p></div>
+    </div><div class="seif" id="v-25-23">
+      <span class="seif-num">25:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָאָ֗רֶץ לֹ֤א תִמָּכֵר֙ לִצְמִתֻ֔ת כִּי־לִ֖י הָאָ֑רֶץ כִּֽי־גֵרִ֧ים וְתוֹשָׁבִ֛ים אַתֶּ֖ם עִמָּדִֽי׃</p></div><div class="heb-s"><p>והארץ לא תמכר לצמתת כי־לי הארץ כי־גרים ותושבים אתם עמדי׃</p></div></div>
+      <div class="texte-fr"><p>Nulle terre ne sera aliénée irrévocablement, car la terre est à moi, car vous n’êtes que des étrangers domiciliés chez moi.</p></div>
+    </div><div class="seif" id="v-25-24">
+      <span class="seif-num">25:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְכֹ֖ל אֶ֣רֶץ אֲחֻזַּתְכֶ֑ם גְּאֻלָּ֖ה תִּתְּנ֥וּ לָאָֽרֶץ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ובכל ארץ אחזתכם גאלה תתנו לארץ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et dans tout le pays que vous posséderez, vous accorderez le droit de rachat sur les terres.</p></div>
+    </div><div class="seif" id="v-25-25">
+      <span class="seif-num">25:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יָמ֣וּךְ אָחִ֔יךָ וּמָכַ֖ר מֵאֲחֻזָּת֑וֹ וּבָ֤א גֹֽאֲלוֹ֙ הַקָּרֹ֣ב אֵלָ֔יו וְגָאַ֕ל אֵ֖ת מִמְכַּ֥ר אָחִֽיו׃</p></div><div class="heb-s"><p>כי־ימוך אחיך ומכר מאחזתו ובא גאלו הקרב אליו וגאל את ממכר אחיו׃</p></div></div>
+      <div class="texte-fr"><p>Si ton frère, se trouvant dans la gêne, a vendu une partie de sa propriété, son plus proche parent aura la faculté de racheter ce qu’a vendu son frère.</p></div>
+    </div><div class="seif" id="v-25-26">
+      <span class="seif-num">25:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּ֛י לֹ֥א יִֽהְיֶה־לּ֖וֹ גֹּאֵ֑ל וְהִשִּׂ֣יגָה יָד֔וֹ וּמָצָ֖א כְּדֵ֥י גְאֻלָּתֽוֹ׃</p></div><div class="heb-s"><p>ואיש כי לא יהיה־לו גאל והשיגה ידו ומצא כדי גאלתו׃</p></div></div>
+      <div class="texte-fr"><p>Quelqu’un dont personne n’a racheté le bien, mais qui retrouve des ressources suffisantes pour le racheter lui-même,</p></div>
+    </div><div class="seif" id="v-25-27">
+      <span class="seif-num">25:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחִשַּׁב֙ אֶת־שְׁנֵ֣י מִמְכָּר֔וֹ וְהֵשִׁיב֙ אֶת־הָ֣עֹדֵ֔ף לָאִ֖ישׁ אֲשֶׁ֣ר מָֽכַר־ל֑וֹ וְשָׁ֖ב לַאֲחֻזָּתֽוֹ׃</p></div><div class="heb-s"><p>וחשב את־שני ממכרו והשיב את־העדף לאיש אשר מכר־לו ושב לאחזתו׃</p></div></div>
+      <div class="texte-fr"><p>supputera les années de la vente, rendra l’excédent à celui à qui il avait vendu, et rentrera dans son bien.</p></div>
+    </div><div class="seif" id="v-25-28">
+      <span class="seif-num">25:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם לֹֽא־מָצְאָ֜ה יָד֗וֹ דֵּי֮ הָשִׁ֣יב לוֹ֒ וְהָיָ֣ה מִמְכָּר֗וֹ בְּיַד֙ הַקֹּנֶ֣ה אֹת֔וֹ עַ֖ד שְׁנַ֣ת הַיּוֹבֵ֑ל וְיָצָא֙ בַּיֹּבֵ֔ל וְשָׁ֖ב לַאֲחֻזָּתֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואם לא־מצאה ידו די השיב לו והיה ממכרו ביד הקנה אתו עד שנת היובל ויצא ביבל ושב לאחזתו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Que s’il n’a point de ressources suffisantes pour cette restitution, la chose vendue restera entre les mains de l’acquéreur jusqu’à l’année jubilaire; elle en sortira à cette époque, et l’autre en reprendra possession.</p></div>
+    </div><div class="seif" id="v-25-29">
+      <span class="seif-num">25:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֗ישׁ כִּֽי־יִמְכֹּ֤ר בֵּית־מוֹשַׁב֙ עִ֣יר חוֹמָ֔ה וְהָיְתָה֙ גְּאֻלָּת֔וֹ עַד־תֹּ֖ם שְׁנַ֣ת מִמְכָּר֑וֹ יָמִ֖ים תִּהְיֶ֥ה גְאֻלָּתֽוֹ׃</p></div><div class="heb-s"><p>ואיש כי־ימכר בית־מושב עיר חומה והיתה גאלתו עד־תם שנת ממכרו ימים תהיה גאלתו׃</p></div></div>
+      <div class="texte-fr"><p>Si quelqu’un vend une maison d’habitation située dans une ville murée, le droit de rachat durera jusqu’à la fin de l’année de la vente: pendant une année pleine cette faculté subsistera.</p></div>
+    </div><div class="seif" id="v-25-30">
+      <span class="seif-num">25:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֣ם לֹֽא־יִגָּאֵ֗ל עַד־מְלֹ֣את לוֹ֮ שָׁנָ֣ה תְמִימָה֒ וְ֠קָ֠ם הַבַּ֨יִת אֲשֶׁר־בָּעִ֜יר אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[ל֣וֹ]</span> <span class="mam-kq-k">(לא)</span></span> חֹמָ֗ה לַצְּמִיתֻ֛ת לַקֹּנֶ֥ה אֹת֖וֹ לְדֹרֹתָ֑יו לֹ֥א יֵצֵ֖א בַּיֹּבֵֽל׃</p></div><div class="heb-s"><p>ואם לא־יגאל עד־מלאת לו שנה תמימה וקם הבית אשר־בעיר אשר־<span class="mam-kq"><span class="mam-kq-q">[לו]</span> <span class="mam-kq-k">(לא)</span></span> חמה לצמיתת לקנה אתו לדרתיו לא יצא ביבל׃</p></div></div>
+      <div class="texte-fr"><p>Et si elle n’a pas été rachetée dans l’espace d’une année entière, cette maison sise dans une ville close de murs sera acquise définitivement à l’acheteur, pour lui et sa descendance; le Jubilé ne la dégagera point.</p></div>
+    </div><div class="seif" id="v-25-31">
+      <span class="seif-num">25:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָתֵּ֣י הַחֲצֵרִ֗ים אֲשֶׁ֨ר אֵין־לָהֶ֤ם חֹמָה֙ סָבִ֔יב עַל־שְׂדֵ֥ה הָאָ֖רֶץ יֵחָשֵׁ֑ב גְּאֻלָּה֙ תִּהְיֶה־לּ֔וֹ וּבַיֹּבֵ֖ל יֵצֵֽא׃</p></div><div class="heb-s"><p>ובתי החצרים אשר אין־להם חמה סביב על־שדה הארץ יחשב גאלה תהיה־לו וביבל יצא׃</p></div></div>
+      <div class="texte-fr"><p>Mais les maisons des villages non entourés de murs seront réputées une dépendance de la campagne, laquelle sera rachetable, et dégagée au Jubilé.</p></div>
+    </div><div class="seif" id="v-25-32">
+      <span class="seif-num">25:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָרֵי֙ הַלְוִיִּ֔ם בָּתֵּ֖י עָרֵ֣י אֲחֻזָּתָ֑ם גְּאֻלַּ֥ת עוֹלָ֖ם תִּהְיֶ֥ה לַלְוִיִּֽם׃</p></div><div class="heb-s"><p>וערי הלוים בתי ערי אחזתם גאלת עולם תהיה ללוים׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux villes des Lévites, aux maisons situées dans les villes qu’ils possèdent, les Lévites auront toujours le droit de les racheter.</p></div>
+    </div><div class="seif" id="v-25-33">
+      <span class="seif-num">25:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲשֶׁ֤ר יִגְאַל֙ מִן־הַלְוִיִּ֔ם וְיָצָ֧א מִמְכַּר־בַּ֛יִת וְעִ֥יר אֲחֻזָּת֖וֹ בַּיֹּבֵ֑ל כִּ֣י בָתֵּ֞י עָרֵ֣י הַלְוִיִּ֗ם הִ֚וא אֲחֻזָּתָ֔ם בְּת֖וֹךְ בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ואשר יגאל מן־הלוים ויצא ממכר־בית ועיר אחזתו ביבל כי בתי ערי הלוים הוא אחזתם בתוך בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Si même quelqu’un des Lévites l’a rachetée, la vente de cette maison ou de cette ville qu’il possède sera résiliée par le Jubilé; car les maisons situées dans les villes des Lévites sont leur propriété parmi les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-25-34">
+      <span class="seif-num">25:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּֽשְׂדֵ֛ה מִגְרַ֥שׁ עָרֵיהֶ֖ם לֹ֣א יִמָּכֵ֑ר כִּֽי־אֲחֻזַּ֥ת עוֹלָ֛ם ה֖וּא לָהֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ושדה מגרש עריהם לא ימכר כי־אחזת עולם הוא להם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Une terre située dans la banlieue de leurs villes ne peut être vendue: elle est leur propriété inaliénable.</p></div>
+    </div><div class="seif" id="v-25-35">
+      <span class="seif-num">25:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יָמ֣וּךְ אָחִ֔יךָ וּמָ֥טָה יָד֖וֹ עִמָּ֑ךְ וְהֶֽחֱזַ֣קְתָּ בּ֔וֹ גֵּ֧ר וְתוֹשָׁ֛ב וָחַ֖י עִמָּֽךְ׃</p></div><div class="heb-s"><p>וכי־ימוך אחיך ומטה ידו עמך והחזקת בו גר ותושב וחי עמך׃</p></div></div>
+      <div class="texte-fr"><p>Si ton frère vient à déchoir, si tu vois chanceler sa fortune, soutiens-le, fût-il étranger et nouveau venu, et qu’Il vive avec toi.</p></div>
+    </div><div class="seif" id="v-25-36">
+      <span class="seif-num">25:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תִּקַּ֤ח מֵֽאִתּוֹ֙ נֶ֣שֶׁךְ וְתַרְבִּ֔ית וְיָרֵ֖אתָ מֵֽאֱלֹהֶ֑יךָ וְחֵ֥י אָחִ֖יךָ עִמָּֽךְ׃</p></div><div class="heb-s"><p>אל־תקח מאתו נשך ותרבית ויראת מאלהיך וחי אחיך עמך׃</p></div></div>
+      <div class="texte-fr"><p>N’accepte de sa part ni intérêt ni profit, mais crains ton Dieu, et que ton frère vive avec toi.</p></div>
+    </div><div class="seif" id="v-25-37">
+      <span class="seif-num">25:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֨ת־כַּסְפְּךָ֔ לֹֽא־תִתֵּ֥ן ל֖וֹ בְּנֶ֑שֶׁךְ וּבְמַרְבִּ֖ית לֹא־תִתֵּ֥ן אׇכְלֶֽךָ׃</p></div><div class="heb-s"><p>את־כספך לא־תתן לו בנשך ובמרבית לא־תתן אכלך׃</p></div></div>
+      <div class="texte-fr"><p>Ne lui donne point ton argent à intérêt, ni tes aliments pour en tirer profit.</p></div>
+    </div><div class="seif" id="v-25-38">
+      <span class="seif-num">25:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲנִ֗י יְהֹוָה֙ אֱלֹ֣הֵיכֶ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אֶתְכֶ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם לָתֵ֤ת לָכֶם֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>אני יהוה אלהיכם אשר־הוצאתי אתכם מארץ מצרים לתת לכם את־ארץ כנען להיות לכם לאלהים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Je suis l’Éternel votre Dieu, qui vous ai fait sortir du pays d’Égypte pour vous donner celui de Canaan, pour devenir votre Dieu.</p></div>
+    </div><div class="seif" id="v-25-39">
+      <span class="seif-num">25:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יָמ֥וּךְ אָחִ֛יךָ עִמָּ֖ךְ וְנִמְכַּר־לָ֑ךְ לֹא־תַעֲבֹ֥ד בּ֖וֹ עֲבֹ֥דַת עָֽבֶד׃</p></div><div class="heb-s"><p>וכי־ימוך אחיך עמך ונמכר־לך לא־תעבד בו עבדת עבד׃</p></div></div>
+      <div class="texte-fr"><p>Si ton frère, près de toi, réduit à la misère, se vend à toi, ne lui impose point le travail d’un esclave.</p></div>
+    </div><div class="seif" id="v-25-40">
+      <span class="seif-num">25:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּשָׂכִ֥יר כְּתוֹשָׁ֖ב יִהְיֶ֣ה עִמָּ֑ךְ עַד־שְׁנַ֥ת הַיֹּבֵ֖ל יַעֲבֹ֥ד עִמָּֽךְ׃</p></div><div class="heb-s"><p>כשכיר כתושב יהיה עמך עד־שנת היבל יעבד עמך׃</p></div></div>
+      <div class="texte-fr"><p>C’est comme un mercenaire, comme un hôte, qu’il sera avec toi; il servira chez toi jusqu’à l’année du Jubilé.</p></div>
+    </div><div class="seif" id="v-25-41">
+      <span class="seif-num">25:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָצָא֙ מֵֽעִמָּ֔ךְ ה֖וּא וּבָנָ֣יו עִמּ֑וֹ וְשָׁב֙ אֶל־מִשְׁפַּחְתּ֔וֹ וְאֶל־אֲחֻזַּ֥ת אֲבֹתָ֖יו יָשֽׁוּב׃</p></div><div class="heb-s"><p>ויצא מעמך הוא ובניו עמו ושב אל־משפחתו ואל־אחזת אבתיו ישוב׃</p></div></div>
+      <div class="texte-fr"><p>Alors il sortira de chez toi, lui ainsi que ses enfants; il retournera dans sa famille, et recouvrera le bien de ses pères.</p></div>
+    </div><div class="seif" id="v-25-42">
+      <span class="seif-num">25:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־עֲבָדַ֣י הֵ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם לֹ֥א יִמָּכְר֖וּ מִמְכֶּ֥רֶת עָֽבֶד׃</p></div><div class="heb-s"><p>כי־עבדי הם אשר־הוצאתי אתם מארץ מצרים לא ימכרו ממכרת עבד׃</p></div></div>
+      <div class="texte-fr"><p>Car ils sont mes esclaves, à moi, qui les ai fait sortir du pays d’Égypte; ils ne doivent pas être vendus à la façon des esclaves.</p></div>
+    </div><div class="seif" id="v-25-43">
+      <span class="seif-num">25:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־תִרְדֶּ֥ה ב֖וֹ בְּפָ֑רֶךְ וְיָרֵ֖אתָ מֵאֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>לא־תרדה בו בפרך ויראת מאלהיך׃</p></div></div>
+      <div class="texte-fr"><p>Ne le régente point avec rigueur, crains d’offenser ton Dieu!</p></div>
+    </div><div class="seif" id="v-25-44">
+      <span class="seif-num">25:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַבְדְּךָ֥ וַאֲמָתְךָ֖ אֲשֶׁ֣ר יִהְיוּ־לָ֑ךְ מֵאֵ֣ת הַגּוֹיִ֗ם אֲשֶׁר֙ סְבִיבֹ֣תֵיכֶ֔ם מֵהֶ֥ם תִּקְנ֖וּ עֶ֥בֶד וְאָמָֽה׃</p></div><div class="heb-s"><p>ועבדך ואמתך אשר יהיו־לך מאת הגוים אשר סביבתיכם מהם תקנו עבד ואמה׃</p></div></div>
+      <div class="texte-fr"><p>Ton esclave ou ta servante, que tu veux avoir en propre, doit provenir des peuples qui vous entourent; à ceux-là vous pouvez acheter esclaves et servantes.</p></div>
+    </div><div class="seif" id="v-25-45">
+      <span class="seif-num">25:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠גַ֠ם מִבְּנֵ֨י הַתּוֹשָׁבִ֜ים הַגָּרִ֤ים עִמָּכֶם֙ מֵהֶ֣ם תִּקְנ֔וּ וּמִמִּשְׁפַּחְתָּם֙ אֲשֶׁ֣ר עִמָּכֶ֔ם אֲשֶׁ֥ר הוֹלִ֖ידוּ בְּאַרְצְכֶ֑ם וְהָי֥וּ לָכֶ֖ם לַֽאֲחֻזָּֽה׃</p></div><div class="heb-s"><p>וגם מבני התושבים הגרים עמכם מהם תקנו וממשפחתם אשר עמכם אשר הולידו בארצכם והיו לכם לאחזה׃</p></div></div>
+      <div class="texte-fr"><p>Vous pourrez en acheter encore parmi les enfants des étrangers qui viennent s’établir chez vous, et parmi leurs familles qui sont avec vous, qu’ils ont engendrées dans votre pays: ils pourront devenir votre propriété.</p></div>
+    </div><div class="seif" id="v-25-46">
+      <span class="seif-num">25:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִתְנַחַלְתֶּ֨ם אֹתָ֜ם לִבְנֵיכֶ֤ם אַחֲרֵיכֶם֙ לָרֶ֣שֶׁת אֲחֻזָּ֔ה לְעֹלָ֖ם בָּהֶ֣ם תַּעֲבֹ֑דוּ וּבְאַ֨חֵיכֶ֤ם בְּנֵֽי־יִשְׂרָאֵל֙ אִ֣ישׁ בְּאָחִ֔יו לֹא־תִרְדֶּ֥ה ב֖וֹ בְּפָֽרֶךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>והתנחלתם אתם לבניכם אחריכם לרשת אחזה לעלם בהם תעבדו ובאחיכם בני־ישראל איש באחיו לא־תרדה בו בפרך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Vous pourrez les léguer à vos enfants pour qu’ils en prennent possession après vous, et les traiter perpétuellement en esclaves; mais sur vos frères les enfants d’Israël un frère sur un autre! Tu n’exerceras point sur eux une domination rigoureuse.</p></div>
+    </div><div class="seif" id="v-25-47">
+      <span class="seif-num">25:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֣י תַשִּׂ֗יג יַ֣ד גֵּ֤ר וְתוֹשָׁב֙ עִמָּ֔ךְ וּמָ֥ךְ אָחִ֖יךָ עִמּ֑וֹ וְנִמְכַּ֗ר לְגֵ֤ר תּוֹשָׁב֙ עִמָּ֔ךְ א֥וֹ לְעֵ֖קֶר מִשְׁפַּ֥חַת גֵּֽר׃</p></div><div class="heb-s"><p>וכי תשיג יד גר ותושב עמך ומך אחיך עמו ונמכר לגר תושב עמך או לעקר משפחת גר׃</p></div></div>
+      <div class="texte-fr"><p>Si l’étranger, celui qui s’est établi près de toi, acquiert des moyens, et que ton frère, près de lui, devenu pauvre, se soit vendu à l’étranger établi près de toi, ou au rejeton d’une famille étrangère,</p></div>
+    </div><div class="seif" id="v-25-48">
+      <span class="seif-num">25:48</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַחֲרֵ֣י נִמְכַּ֔ר גְּאֻלָּ֖ה תִּהְיֶה־לּ֑וֹ אֶחָ֥ד מֵאֶחָ֖יו יִגְאָלֶֽנּוּ׃</p></div><div class="heb-s"><p>אחרי נמכר גאלה תהיה־לו אחד מאחיו יגאלנו׃</p></div></div>
+      <div class="texte-fr"><p>après qu’il s’est vendu, le droit de rachat existe pour lui; l’un de ses frères donc le rachètera.</p></div>
+    </div><div class="seif" id="v-25-49">
+      <span class="seif-num">25:49</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹ־דֹד֞וֹ א֤וֹ בֶן־דֹּדוֹ֙ יִגְאָלֶ֔נּוּ אֽוֹ־מִשְּׁאֵ֧ר בְּשָׂר֛וֹ מִמִּשְׁפַּחְתּ֖וֹ יִגְאָלֶ֑נּוּ אֽוֹ־הִשִּׂ֥יגָה יָד֖וֹ וְנִגְאָֽל׃</p></div><div class="heb-s"><p>או־דדו או בן־דדו יגאלנו או־משאר בשרו ממשפחתו יגאלנו או־השיגה ידו ונגאל׃</p></div></div>
+      <div class="texte-fr"><p>Il sera racheté ou par son oncle ou par le fils de son oncle, ou par quelque autre de sa parenté, de sa famille; ou, s’il a acquis des moyens, il se rachètera lui-même.</p></div>
+    </div><div class="seif" id="v-25-50">
+      <span class="seif-num">25:50</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחִשַּׁב֙ עִם־קֹנֵ֔הוּ מִשְּׁנַת֙ הִמָּ֣כְרוֹ ל֔וֹ עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְהָיָ֞ה כֶּ֤סֶף מִמְכָּרוֹ֙ בְּמִסְפַּ֣ר שָׁנִ֔ים כִּימֵ֥י שָׂכִ֖יר יִהְיֶ֥ה עִמּֽוֹ׃</p></div><div class="heb-s"><p>וחשב עם־קנהו משנת המכרו לו עד שנת היבל והיה כסף ממכרו במספר שנים כימי שכיר יהיה עמו׃</p></div></div>
+      <div class="texte-fr"><p>Il calculera, avec son acquéreur, l’intervalle entre l’année où il s’est vendu à lui et l’année du Jubilé; le prix de sa vente sera comparé au chiffre des années, qui seront considérées à son égard comme le temps d’un mercenaire.</p></div>
+    </div><div class="seif" id="v-25-51">
+      <span class="seif-num">25:51</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־ע֥וֹד רַבּ֖וֹת בַּשָּׁנִ֑ים לְפִיהֶן֙ יָשִׁ֣יב גְּאֻלָּת֔וֹ מִכֶּ֖סֶף מִקְנָתֽוֹ׃</p></div><div class="heb-s"><p>אם־עוד רבות בשנים לפיהן ישיב גאלתו מכסף מקנתו׃</p></div></div>
+      <div class="texte-fr"><p>S’il y a encore un grand nombre d’années, il rendra pour son rachat, sur le prix de son acquisition, une somme équivalente;</p></div>
+    </div><div class="seif" id="v-25-52">
+      <span class="seif-num">25:52</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־מְעַ֞ט נִשְׁאַ֧ר בַּשָּׁנִ֛ים עַד־שְׁנַ֥ת הַיֹּבֵ֖ל וְחִשַּׁב־ל֑וֹ כְּפִ֣י שָׁנָ֔יו יָשִׁ֖יב אֶת־גְּאֻלָּתֽוֹ׃</p></div><div class="heb-s"><p>ואם־מעט נשאר בשנים עד־שנת היבל וחשב־לו כפי שניו ישיב את־גאלתו׃</p></div></div>
+      <div class="texte-fr"><p>et de même, s’il reste un petit nombre d’années jusqu’à l’an jubilaire, il lui en tiendra compte: c’est à proportion des années qu’il paiera son rachat.</p></div>
+    </div><div class="seif" id="v-25-53">
+      <span class="seif-num">25:53</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּשְׂכִ֥יר שָׁנָ֛ה בְּשָׁנָ֖ה יִהְיֶ֣ה עִמּ֑וֹ לֹֽא־יִרְדֶּ֥נּֽוּ בְּפֶ֖רֶךְ לְעֵינֶֽיךָ׃</p></div><div class="heb-s"><p>כשכיר שנה בשנה יהיה עמו לא־ירדנו בפרך לעיניך׃</p></div></div>
+      <div class="texte-fr"><p>Qu’il soit chez lui comme le mercenaire loué à l’année: qu’on ne le régente point avec dureté, toi présent.</p></div>
+    </div><div class="seif" id="v-25-54">
+      <span class="seif-num">25:54</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֥א יִגָּאֵ֖ל בְּאֵ֑לֶּה וְיָצָא֙ בִּשְׁנַ֣ת הַיֹּבֵ֔ל ה֖וּא וּבָנָ֥יו עִמּֽוֹ׃</p></div><div class="heb-s"><p>ואם־לא יגאל באלה ויצא בשנת היבל הוא ובניו עמו׃</p></div></div>
+      <div class="texte-fr"><p>Et s’il n’a pas été racheté par ces voies, il sortira libre à l’époque du jubilé, lui, et ses enfants avec lui.</p></div>
+    </div><div class="seif" id="v-25-55">
+      <span class="seif-num">25:55</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־לִ֤י בְנֵֽי־יִשְׂרָאֵל֙ עֲבָדִ֔ים עֲבָדַ֣י הֵ֔ם אֲשֶׁר־הוֹצֵ֥אתִי אוֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>כי־לי בני־ישראל עבדים עבדי הם אשר־הוצאתי אותם מארץ מצרים אני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>Car c’est à moi que les Israélites appartiennent comme esclaves; ce sont mes serfs à moi, qui les ai tirés du pays d’Égypte, moi, l’Éternel, votre Dieu!"</p></div>
+    </div><div class="seif" id="v-26-1">
+      <span class="seif-num">26:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־תַעֲשׂ֨וּ לָכֶ֜ם אֱלִילִ֗ם וּפֶ֤סֶל וּמַצֵּבָה֙ לֹֽא־תָקִ֣ימוּ לָכֶ֔ם וְאֶ֣בֶן מַשְׂכִּ֗ית לֹ֤א תִתְּנוּ֙ בְּאַרְצְכֶ֔ם לְהִֽשְׁתַּחֲוֺ֖ת עָלֶ֑יהָ כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>לא־תעשו לכם אלילם ופסל ומצבה לא־תקימו לכם ואבן משכית לא תתנו בארצכם להשתחות עליה כי אני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>"Ne vous faites point de faux dieux; n’érigez point, chez vous, image ni monument, et ne mettez point de pierre symbolique dans votre pays pour vous y prosterner: car c’est moi, Éternel, qui suis votre Dieu.</p></div>
+    </div><div class="seif" id="v-26-2">
+      <span class="seif-num">26:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־שַׁבְּתֹתַ֣י תִּשְׁמֹ֔רוּ וּמִקְדָּשִׁ֖י תִּירָ֑אוּ אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>את־שבתתי תשמרו ומקדשי תיראו אני יהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Observez mes sabbats et révérez mon sanctuaire: je suis l’Éternel.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel parla à Moïse au mont Sinaï, en ces termes: &quot;Parle aux enfants d’Israël et dis-leur: Quand vous serez entrés dans le pays que je vous donne, la terre sera soumise à un chômage en l’honneur de l’Éternel. Six années tu ensemenceras ton champ, six années tu travailleras ta vigne, et tu en recueilleras le produit; mais, la septième année, un chômage absolu sera accordé à la terre, un sabbat en l’honneur de l’Éternel. Tu n’ensemenceras ton champ ni ne tailleras ta vigne. Le produit spontané de ta moisson, tu ne le couperas point, et les raisins de ta vigne intacte, tu ne les vendangeras point: ce sera une année de chômage pour le sol. Ce solen repos vous appartiendra à tous pour la consommation: à toi, à ton esclave, à ta servante, au mercenaire et à l’étranger qui habitent avec toi; ton bétail même, ainsi que les bêtes sauvages de ton pays, pourront se nourrir de tous ces produits. Tu compteras chez toi sept années sabbatiques, sept fois sept années, de sorte que la période de ces sept années sabbatiques te fera quarante-neuf ans; puis tu feras circuler le retentissement du cor, dans le septième mois, le dixième jour du mois: au jour des expiations, vous ferez retentir le son du cor à travers tout votre pays. Vous sanctifierez cette cinquantième année, en proclamant, dans le pays, la liberté pour tous ceux qui l’habitent: cette année sera pour vous le Jubilé, où chacun de vous rentrera dans son bien, où chacun retournera à sa famille. La cinquantième année est le Jubilé, elle le sera pour vous: vous ne sèmerez point, vous n’en couperez point les produits, ni n’en vendangerez les vignes intactes, parce que cette année est le jubilé et doit vous être une chose sainte. C’est à même le champ que vous en mangerez le produit. En cette année jubilaire, vous rentrerez chacun dans votre possession. Si donc tu fais une vente à ton prochain, ou si tu acquiers de sa main quelque chose, ne vous lésez point l’un l’autre. C’est en tenant compte des années écoulées depuis le Jubilé, que tu feras cet achat à ton prochain; c’est en tenant compte des années de récolte, qu’il doit te vendre. Selon que ces années seront plus ou moins nombreuses, tu paieras plus ou moins cher la chose acquise; car c’est un nombre de récoltes qu’il te vend. Ne vous lésez point l’un l’autre, mais redoute ton Dieu! Car je suis l’Éternel votre Dieu. Exécutez mes édits, observez et pratiquez mes lois, et vous demeurerez dans le pays en sécurité. La terre donnera ses fruits, dont vous vous nourrirez abondamment, et vous y résiderez en toute quiétude. Que si vous dites: &quot;Qu’aurons-nous à manger la septième année, puisque nous ne pouvons ni semer, ni rentrer nos récoltes?&quot; Je vous octroierai ma bénédiction dans la sixième année, tellement qu’elle produira la récolte de trois années; et quand vous sèmerez la huitième année, vous vivrez sur la récolte antérieure: jusqu’à la neuvième année, jusqu’à ce que s’effectue sa récolte, vous vivrez sur l’ancienne. Nulle terre ne sera aliénée irrévocablement, car la terre est à moi, car vous n’êtes que des étrangers domiciliés chez moi. Et dans tout le pays que vous posséderez, vous accorderez le droit de rachat sur les terres. Si ton frère, se trouvant dans la gêne, a vendu une partie de sa propriété, son plus proche parent aura la faculté de racheter ce qu’a vendu son frère. Quelqu’un dont personne n’a racheté le bien, mais qui retrouve des ressources suffisantes pour le racheter lui-même, supputera les années de la vente, rendra l’excédent à celui à qui il avait vendu, et rentrera dans son bien. Que s’il n’a point de ressources suffisantes pour cette restitution, la chose vendue restera entre les mains de l’acquéreur jusqu’à l’année jubilaire; elle en sortira à cette époque, et l’autre en reprendra possession. Si quelqu’un vend une maison d’habitation située dans une ville murée, le droit de rachat durera jusqu’à la fin de l’année de la vente: pendant une année pleine cette faculté subsistera. Et si elle n’a pas été rachetée dans l’espace d’une année entière, cette maison sise dans une ville close de murs sera acquise définitivement à l’acheteur, pour lui et sa descendance; le Jubilé ne la dégagera point. Mais les maisons des villages non entourés de murs seront réputées une dépendance de la campagne, laquelle sera rachetable, et dégagée au Jubilé. Quant aux villes des Lévites, aux maisons situées dans les villes qu’ils possèdent, les Lévites auront toujours le droit de les racheter. Si même quelqu’un des Lévites l’a rachetée, la vente de cette maison ou de cette ville qu’il possède sera résiliée par le Jubilé; car les maisons situées dans les villes des Lévites sont leur propriété parmi les enfants d’Israël. Une terre située dans la banlieue de leurs villes ne peut être vendue: elle est leur propriété inaliénable. Si ton frère vient à déchoir, si tu vois chanceler sa fortune, soutiens-le, fût-il étranger et nouveau venu, et qu’Il vive avec toi. N’accepte de sa part ni intérêt ni profit, mais crains ton Dieu, et que ton frère vive avec toi. Ne lui donne point ton argent à intérêt, ni tes aliments pour en tirer profit. Je suis l’Éternel votre Dieu, qui vous ai fait sortir du pays d’Égypte pour vous donner celui de Canaan, pour devenir votre Dieu. Si ton frère, près de toi, réduit à la misère, se vend à toi, ne lui impose point le travail d’un esclave. C’est comme un mercenaire, comme un hôte, qu’il sera avec toi; il servira chez toi jusqu’à l’année du Jubilé. Alors il sortira de chez toi, lui ainsi que ses enfants; il retournera dans sa famille, et recouvrera le bien de ses pères. Car ils sont mes esclaves, à moi, qui les ai fait sortir du pays d’Égypte; ils ne doivent pas être vendus à la façon des esclaves. Ne le régente point avec rigueur, crains d’offenser ton Dieu! Ton esclave ou ta servante, que tu veux avoir en propre, doit provenir des peuples qui vous entourent; à ceux-là vous pouvez acheter esclaves et servantes. Vous pourrez en acheter encore parmi les enfants des étrangers qui viennent s’établir chez vous, et parmi leurs familles qui sont avec vous, qu’ils ont engendrées dans votre pays: ils pourront devenir votre propriété. Vous pourrez les léguer à vos enfants pour qu’ils en prennent possession après vous, et les traiter perpétuellement en esclaves; mais sur vos frères les enfants d’Israël un frère sur un autre! Tu n’exerceras point sur eux une domination rigoureuse. Si l’étranger, celui qui s’est établi près de toi, acquiert des moyens, et que ton frère, près de lui, devenu pauvre, se soit vendu à l’étranger établi près de toi, ou au rejeton d’une famille étrangère, après qu’il s’est vendu, le droit de rachat existe pour lui; l’un de ses frères donc le rachètera. Il sera racheté ou par son oncle ou par le fils de son oncle, ou par quelque autre de sa parenté, de sa famille; ou, s’il a acquis des moyens, il se rachètera lui-même. Il calculera, avec son acquéreur, l’intervalle entre l’année où il s’est vendu à lui et l’année du Jubilé; le prix de sa vente sera comparé au chiffre des années, qui seront considérées à son égard comme le temps d’un mercenaire. S’il y a encore un grand nombre d’années, il rendra pour son rachat, sur le prix de son acquisition, une somme équivalente; et de même, s’il reste un petit nombre d’années jusqu’à l’an jubilaire, il lui en tiendra compte: c’est à proportion des années qu’il paiera son rachat. Qu’il soit chez lui comme le mercenaire loué à l’année: qu’on ne le régente point avec dureté, toi présent. Et s’il n’a pas été racheté par ces voies, il sortira libre à l’époque du jubilé, lui, et ses enfants avec lui. Car c’est à moi que les Israélites appartiennent comme esclaves; ce sont mes serfs à moi, qui les ai tirés du pays d’Égypte, moi, l’Éternel, votre Dieu!&quot;</p>
-      <p>&quot;Ne vous faites point de faux dieux; n’érigez point, chez vous, image ni monument, et ne mettez point de pierre symbolique dans votre pays pour vous y prosterner: car c’est moi, Éternel, qui suis votre Dieu. Observez mes sabbats et révérez mon sanctuaire: je suis l’Éternel.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -308,6 +568,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_emor.html">← Emor</a><a class="hbtn qcm" href="qcm_paracha_behar.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_bechukotai.html">Bechukotai →</a></div>
 </main>
 
 <footer>

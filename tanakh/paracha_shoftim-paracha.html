@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Devarim · Paracha</div>
     <h1>Choftim – Juges, roi, prophète, villes de refuge et guerre</h1>
     <p>Torah, Devarim (Deuteronomy 16:18-21:9)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_reeh.html">← Re&#x27;eh</a><a class="hbtn qcm" href="qcm_paracha_shoftim-paracha.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_ki-teitzei.html">Ki Teitzeï →</a></div>
   </div>
 </header>
 
@@ -161,35 +202,406 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['שֹׁפְטִ֣ים וְשֹֽׁטְרִ֗ים תִּֽתֶּן־לְךָ֙ בְּכׇל־שְׁעָרֶ֔יךָ אֲשֶׁ֨ר יְהֹוָ֧ה אֱלֹהֶ֛יךָ נֹתֵ֥ן לְךָ֖ לִשְׁבָטֶ֑יךָ וְשָׁפְט֥וּ אֶת־הָעָ֖ם מִשְׁפַּט־צֶֽדֶק׃', 'לֹא־תַטֶּ֣ה מִשְׁפָּ֔ט לֹ֥א תַכִּ֖יר פָּנִ֑ים וְלֹא־תִקַּ֣ח שֹׁ֔חַד כִּ֣י הַשֹּׁ֗חַד יְעַוֵּר֙ עֵינֵ֣י חֲכָמִ֔ים וִֽיסַלֵּ֖ף דִּבְרֵ֥י צַדִּיקִֽם׃', 'צֶ֥דֶק צֶ֖דֶק תִּרְדֹּ֑ף לְמַ֤עַן תִּֽחְיֶה֙ וְיָרַשְׁתָּ֣ אֶת־הָאָ֔רֶץ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֥ן לָֽךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'לֹֽא־תִטַּ֥ע לְךָ֛ אֲשֵׁרָ֖ה כׇּל־עֵ֑ץ אֵ֗צֶל מִזְבַּ֛ח יְהֹוָ֥ה אֱלֹהֶ֖יךָ אֲשֶׁ֥ר תַּעֲשֶׂה־לָּֽךְ׃', 'וְלֹֽא־תָקִ֥ים לְךָ֖ מַצֵּבָ֑ה אֲשֶׁ֥ר שָׂנֵ֖א יְהֹוָ֥ה אֱלֹהֶֽיךָ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['לֹא־תִזְבַּח֩ לַיהֹוָ֨ה אֱלֹהֶ֜יךָ שׁ֣וֹר וָשֶׂ֗ה אֲשֶׁ֨ר יִהְיֶ֥ה בוֹ֙ מ֔וּם כֹּ֖ל דָּבָ֣ר רָ֑ע כִּ֧י תוֹעֲבַ֛ת יְהֹוָ֥ה אֱלֹהֶ֖יךָ הֽוּא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּֽי־יִמָּצֵ֤א בְקִרְבְּךָ֙ בְּאַחַ֣ד שְׁעָרֶ֔יךָ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֣ן לָ֑ךְ אִ֣ישׁ אוֹ־אִשָּׁ֗ה אֲשֶׁ֨ר יַעֲשֶׂ֧ה אֶת־הָרַ֛ע בְּעֵינֵ֥י יְהֹוָה־אֱלֹהֶ֖יךָ לַעֲבֹ֥ר בְּרִיתֽוֹ׃', 'וַיֵּ֗לֶךְ וַֽיַּעֲבֹד֙ אֱלֹהִ֣ים אֲחֵרִ֔ים וַיִּשְׁתַּ֖חוּ לָהֶ֑ם וְלַשֶּׁ֣מֶשׁ&thinsp;<b>׀</b> א֣וֹ לַיָּרֵ֗חַ א֛וֹ לְכׇל־צְבָ֥א הַשָּׁמַ֖יִם אֲשֶׁ֥ר לֹא־צִוִּֽיתִי׃', 'וְהֻֽגַּד־לְךָ֖ וְשָׁמָ֑עְתָּ וְדָרַשְׁתָּ֣ הֵיטֵ֔ב וְהִנֵּ֤ה אֱמֶת֙ נָכ֣וֹן הַדָּבָ֔ר נֶעֶשְׂתָ֛ה הַתּוֹעֵבָ֥ה הַזֹּ֖את בְּיִשְׂרָאֵֽל׃', 'וְהֽוֹצֵאתָ֣ אֶת־הָאִ֣ישׁ הַה֡וּא אוֹ֩ אֶת־הָאִשָּׁ֨ה הַהִ֜וא אֲשֶׁ֣ר עָ֠שׂ֠וּ אֶת־הַדָּבָ֨ר הָרָ֤ע הַזֶּה֙ אֶל־שְׁעָרֶ֔יךָ אֶת־הָאִ֕ישׁ א֖וֹ אֶת־הָאִשָּׁ֑ה וּסְקַלְתָּ֥ם בָּאֲבָנִ֖ים וָמֵֽתוּ׃', 'עַל־פִּ֣י&thinsp;<b>׀</b> שְׁנַ֣יִם עֵדִ֗ים א֛וֹ שְׁלֹשָׁ֥ה עֵדִ֖ים יוּמַ֣ת הַמֵּ֑ת לֹ֣א יוּמַ֔ת עַל־פִּ֖י עֵ֥ד אֶחָֽד׃', 'יַ֣ד הָעֵדִ֞ים תִּֽהְיֶה־בּ֤וֹ בָרִאשֹׁנָה֙ לַהֲמִית֔וֹ וְיַ֥ד כׇּל־הָעָ֖ם בָּאַחֲרֹנָ֑ה וּבִֽעַרְתָּ֥ הָרָ֖ע מִקִּרְבֶּֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'כִּ֣י יִפָּלֵא֩ מִמְּךָ֨ דָבָ֜ר לַמִּשְׁפָּ֗ט בֵּֽין־דָּ֨ם&thinsp;<small>׀</small>&thinsp;לְדָ֜ם בֵּֽין־דִּ֣ין לְדִ֗ין וּבֵ֥ין נֶ֙גַע֙ לָנֶ֔גַע דִּבְרֵ֥י רִיבֹ֖ת בִּשְׁעָרֶ֑יךָ וְקַמְתָּ֣ וְעָלִ֔יתָ אֶ֨ל־הַמָּק֔וֹם אֲשֶׁ֥ר יִבְחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ בּֽוֹ׃', 'וּבָאתָ֗ אֶל־הַכֹּהֲנִים֙ הַלְוִיִּ֔ם וְאֶ֨ל־הַשֹּׁפֵ֔ט אֲשֶׁ֥ר יִהְיֶ֖ה בַּיָּמִ֣ים הָהֵ֑ם וְדָרַשְׁתָּ֙ וְהִגִּ֣ידוּ לְךָ֔ אֵ֖ת דְּבַ֥ר הַמִּשְׁפָּֽט׃', 'וְעָשִׂ֗יתָ עַל־פִּ֤י הַדָּבָר֙ אֲשֶׁ֣ר יַגִּ֣ידֽוּ לְךָ֔ מִן־הַמָּק֣וֹם הַה֔וּא אֲשֶׁ֖ר יִבְחַ֣ר יְהֹוָ֑ה וְשָׁמַרְתָּ֣ לַעֲשׂ֔וֹת כְּכֹ֖ל אֲשֶׁ֥ר יוֹרֽוּךָ׃', 'עַל־פִּ֨י הַתּוֹרָ֜ה אֲשֶׁ֣ר יוֹר֗וּךָ וְעַל־הַמִּשְׁפָּ֛ט אֲשֶׁר־יֹאמְר֥וּ לְךָ֖ תַּעֲשֶׂ֑ה לֹ֣א תָס֗וּר מִן־הַדָּבָ֛ר אֲשֶׁר־יַגִּ֥ידֽוּ לְךָ֖ יָמִ֥ין וּשְׂמֹֽאל׃', 'וְהָאִ֞ישׁ אֲשֶׁר־יַעֲשֶׂ֣ה בְזָד֗וֹן לְבִלְתִּ֨י שְׁמֹ֤עַ אֶל־הַכֹּהֵן֙ הָעֹמֵ֞ד לְשָׁ֤רֶת שָׁם֙ אֶת־יְהֹוָ֣ה אֱלֹהֶ֔יךָ א֖וֹ אֶל־הַשֹּׁפֵ֑ט וּמֵת֙ הָאִ֣ישׁ הַה֔וּא וּבִֽעַרְתָּ֥ הָרָ֖ע מִיִּשְׂרָאֵֽל׃', 'וְכׇל־הָעָ֖ם יִשְׁמְע֣וּ וְיִרָ֑אוּ וְלֹ֥א יְזִיד֖וּן עֽוֹד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּֽי־תָבֹ֣א אֶל־הָאָ֗רֶץ אֲשֶׁ֨ר יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ נֹתֵ֣ן לָ֔ךְ וִֽירִשְׁתָּ֖הּ וְיָשַׁ֣בְתָּה בָּ֑הּ וְאָמַרְתָּ֗ אָשִׂ֤ימָה עָלַי֙ מֶ֔לֶךְ כְּכׇל־הַגּוֹיִ֖ם אֲשֶׁ֥ר סְבִיבֹתָֽי׃', 'שׂ֣וֹם תָּשִׂ֤ים עָלֶ֙יךָ֙ מֶ֔לֶךְ אֲשֶׁ֥ר יִבְחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ בּ֑וֹ מִקֶּ֣רֶב אַחֶ֗יךָ תָּשִׂ֤ים עָלֶ֙יךָ֙ מֶ֔לֶךְ לֹ֣א תוּכַ֗ל לָתֵ֤ת עָלֶ֙יךָ֙ אִ֣ישׁ נׇכְרִ֔י אֲשֶׁ֥ר לֹֽא־אָחִ֖יךָ הֽוּא׃', 'רַק֮ לֹא־יַרְבֶּה־לּ֣וֹ סוּסִים֒ וְלֹֽא־יָשִׁ֤יב אֶת־הָעָם֙ מִצְרַ֔יְמָה לְמַ֖עַן הַרְבּ֣וֹת ס֑וּס וַֽיהֹוָה֙ אָמַ֣ר לָכֶ֔ם לֹ֣א תֹסִפ֗וּן לָשׁ֛וּב בַּדֶּ֥רֶךְ הַזֶּ֖ה עֽוֹד׃', 'וְלֹ֤א יַרְבֶּה־לּוֹ֙ נָשִׁ֔ים וְלֹ֥א יָס֖וּר לְבָב֑וֹ וְכֶ֣סֶף וְזָהָ֔ב לֹ֥א יַרְבֶּה־לּ֖וֹ מְאֹֽד׃', 'וְהָיָ֣ה כְשִׁבְתּ֔וֹ עַ֖ל כִּסֵּ֣א מַמְלַכְתּ֑וֹ וְכָ֨תַב ל֜וֹ אֶת־מִשְׁנֵ֨ה הַתּוֹרָ֤ה הַזֹּאת֙ עַל־סֵ֔פֶר מִלִּפְנֵ֖י הַכֹּהֲנִ֥ים הַלְוִיִּֽם׃', 'וְהָיְתָ֣ה עִמּ֔וֹ וְקָ֥רָא ב֖וֹ כׇּל־יְמֵ֣י חַיָּ֑יו לְמַ֣עַן יִלְמַ֗ד לְיִרְאָה֙ אֶת־יְהֹוָ֣ה אֱלֹהָ֔יו לִ֠שְׁמֹ֠ר אֶֽת־כׇּל־דִּבְרֵ֞י הַתּוֹרָ֥ה הַזֹּ֛את וְאֶת־הַחֻקִּ֥ים הָאֵ֖לֶּה לַעֲשֹׂתָֽם׃', 'לְבִלְתִּ֤י רוּם־לְבָבוֹ֙ מֵֽאֶחָ֔יו וּלְבִלְתִּ֛י ס֥וּר מִן־הַמִּצְוָ֖ה יָמִ֣ין וּשְׂמֹ֑אול לְמַ֩עַן֩ יַאֲרִ֨יךְ יָמִ֧ים עַל־מַמְלַכְתּ֛וֹ ה֥וּא וּבָנָ֖יו בְּקֶ֥רֶב יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['לֹֽא־יִ֠הְיֶ֠ה לַכֹּהֲנִ֨ים הַלְוִיִּ֜ם כׇּל־שֵׁ֧בֶט לֵוִ֛י חֵ֥לֶק וְנַחֲלָ֖ה עִם־יִשְׂרָאֵ֑ל אִשֵּׁ֧י יְהֹוָ֛ה וְנַחֲלָת֖וֹ יֹאכֵלֽוּן׃', 'וְנַחֲלָ֥ה לֹא־יִֽהְיֶה־לּ֖וֹ בְּקֶ֣רֶב אֶחָ֑יו יְהֹוָה֙ ה֣וּא נַחֲלָת֔וֹ כַּאֲשֶׁ֖ר דִּבֶּר־לֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְזֶ֡ה יִהְיֶה֩ מִשְׁפַּ֨ט הַכֹּהֲנִ֜ים מֵאֵ֣ת הָעָ֗ם מֵאֵ֛ת זֹבְחֵ֥י הַזֶּ֖בַח אִם־שׁ֣וֹר אִם־שֶׂ֑ה וְנָתַן֙ לַכֹּהֵ֔ן הַזְּרֹ֥עַ וְהַלְּחָיַ֖יִם וְהַקֵּבָֽה׃', 'רֵאשִׁ֨ית דְּגָֽנְךָ֜ תִּירֹשְׁךָ֣ וְיִצְהָרֶ֗ךָ וְרֵאשִׁ֛ית גֵּ֥ז צֹאנְךָ֖ תִּתֶּן־לֽוֹ׃', 'כִּ֣י ב֗וֹ בָּחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ מִכׇּל־שְׁבָטֶ֑יךָ לַעֲמֹ֨ד לְשָׁרֵ֧ת בְּשֵׁם־יְהֹוָ֛ה ה֥וּא וּבָנָ֖יו כׇּל־הַיָּמִֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִֽי־יָבֹ֨א הַלֵּוִ֜י מֵאַחַ֤ד שְׁעָרֶ֙יךָ֙ מִכׇּל־יִשְׂרָאֵ֔ל אֲשֶׁר־ה֖וּא גָּ֣ר שָׁ֑ם וּבָא֙ בְּכׇל־אַוַּ֣ת נַפְשׁ֔וֹ אֶל־הַמָּק֖וֹם אֲשֶׁר־יִבְחַ֥ר יְהֹוָֽה׃', 'וְשֵׁרֵ֕ת בְּשֵׁ֖ם יְהֹוָ֣ה אֱלֹהָ֑יו כְּכׇל־אֶחָיו֙ הַלְוִיִּ֔ם הָעֹמְדִ֥ים שָׁ֖ם לִפְנֵ֥י יְהֹוָֽה׃', 'חֵ֥לֶק כְּחֵ֖לֶק יֹאכֵ֑לוּ לְבַ֥ד מִמְכָּרָ֖יו עַל־הָאָבֽוֹת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּ֤י אַתָּה֙ בָּ֣א אֶל־הָאָ֔רֶץ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֣ן לָ֑ךְ לֹֽא־תִלְמַ֣ד לַעֲשׂ֔וֹת כְּתוֹעֲבֹ֖ת הַגּוֹיִ֥ם הָהֵֽם׃', 'לֹֽא־יִמָּצֵ֣א בְךָ֔ מַעֲבִ֥יר בְּנֽוֹ־וּבִתּ֖וֹ בָּאֵ֑שׁ קֹסֵ֣ם קְסָמִ֔ים מְעוֹנֵ֥ן וּמְנַחֵ֖שׁ וּמְכַשֵּֽׁף׃', 'וְחֹבֵ֖ר חָ֑בֶר וְשֹׁאֵ֥ל אוֹב֙ וְיִדְּעֹנִ֔י וְדֹרֵ֖שׁ אֶל־הַמֵּתִֽים׃', 'כִּֽי־תוֹעֲבַ֥ת יְהֹוָ֖ה כׇּל־עֹ֣שֵׂה אֵ֑לֶּה וּבִגְלַל֙ הַתּוֹעֵבֹ֣ת הָאֵ֔לֶּה יְהֹוָ֣ה אֱלֹהֶ֔יךָ מוֹרִ֥ישׁ אוֹתָ֖ם מִפָּנֶֽיךָ׃', 'תָּמִ֣ים תִּֽהְיֶ֔ה עִ֖ם יְהֹוָ֥ה אֱלֹהֶֽיךָ׃', 'כִּ֣י&thinsp;<b>׀</b> הַגּוֹיִ֣ם הָאֵ֗לֶּה אֲשֶׁ֤ר אַתָּה֙ יוֹרֵ֣שׁ אוֹתָ֔ם אֶל־מְעֹנְנִ֥ים וְאֶל־קֹסְמִ֖ים יִשְׁמָ֑עוּ וְאַתָּ֕ה לֹ֣א כֵ֔ן נָ֥תַן לְךָ֖ יְהֹוָ֥ה אֱלֹהֶֽיךָ׃', 'נָבִ֨יא מִקִּרְבְּךָ֤ מֵאַחֶ֙יךָ֙ כָּמֹ֔נִי יָקִ֥ים לְךָ֖ יְהֹוָ֣ה אֱלֹהֶ֑יךָ אֵלָ֖יו תִּשְׁמָעֽוּן׃', 'כְּכֹ֨ל אֲשֶׁר־שָׁאַ֜לְתָּ מֵעִ֨ם יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ בְּחֹרֵ֔ב בְּי֥וֹם הַקָּהָ֖ל לֵאמֹ֑ר לֹ֣א אֹסֵ֗ף לִשְׁמֹ֙עַ֙ אֶת־קוֹל֙ יְהֹוָ֣ה אֱלֹהָ֔י וְאֶת־הָאֵ֨שׁ הַגְּדֹלָ֥ה הַזֹּ֛את לֹֽא־אֶרְאֶ֥ה ע֖וֹד וְלֹ֥א אָמֽוּת׃', 'וַיֹּ֥אמֶר יְהֹוָ֖ה אֵלָ֑י הֵיטִ֖יבוּ אֲשֶׁ֥ר דִּבֵּֽרוּ׃', 'נָבִ֨יא אָקִ֥ים לָהֶ֛ם מִקֶּ֥רֶב אֲחֵיהֶ֖ם כָּמ֑וֹךָ וְנָתַתִּ֤י דְבָרַי֙ בְּפִ֔יו וְדִבֶּ֣ר אֲלֵיהֶ֔ם אֵ֖ת כׇּל־אֲשֶׁ֥ר אֲצַוֶּֽנּוּ׃', 'וְהָיָ֗ה הָאִישׁ֙ אֲשֶׁ֤ר לֹֽא־יִשְׁמַע֙ אֶל־דְּבָרַ֔י אֲשֶׁ֥ר יְדַבֵּ֖ר בִּשְׁמִ֑י אָנֹכִ֖י אֶדְרֹ֥שׁ מֵעִמּֽוֹ׃', 'אַ֣ךְ הַנָּבִ֡יא אֲשֶׁ֣ר יָזִיד֩ לְדַבֵּ֨ר דָּבָ֜ר בִּשְׁמִ֗י אֵ֣ת אֲשֶׁ֤ר לֹֽא־צִוִּיתִיו֙ לְדַבֵּ֔ר וַאֲשֶׁ֣ר יְדַבֵּ֔ר בְּשֵׁ֖ם אֱלֹהִ֣ים אֲחֵרִ֑ים וּמֵ֖ת הַנָּבִ֥יא הַהֽוּא׃', 'וְכִ֥י תֹאמַ֖ר בִּלְבָבֶ֑ךָ אֵיכָה֙ נֵדַ֣ע אֶת־הַדָּבָ֔ר אֲשֶׁ֥ר לֹא־דִבְּר֖וֹ יְהֹוָֽה׃', 'אֲשֶׁר֩ יְדַבֵּ֨ר הַנָּבִ֜יא בְּשֵׁ֣ם יְהֹוָ֗ה וְלֹֽא־יִהְיֶ֤ה הַדָּבָר֙ וְלֹ֣א יָבֹ֔א ה֣וּא הַדָּבָ֔ר אֲשֶׁ֥ר לֹא־דִבְּר֖וֹ יְהֹוָ֑ה בְּזָדוֹן֙ דִּבְּר֣וֹ הַנָּבִ֔יא לֹ֥א תָג֖וּר מִמֶּֽנּוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['כִּֽי־יַכְרִ֞ית יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ אֶת־הַגּוֹיִ֔ם אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ אֶת־אַרְצָ֑ם וִֽירִשְׁתָּ֕ם וְיָשַׁבְתָּ֥ בְעָרֵיהֶ֖ם וּבְבָתֵּיהֶֽם׃', 'שָׁל֥וֹשׁ עָרִ֖ים תַּבְדִּ֣יל לָ֑ךְ בְּת֣וֹךְ אַרְצְךָ֔ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ לְרִשְׁתָּֽהּ׃', 'תָּכִ֣ין לְךָ֮ הַדֶּ֒רֶךְ֒ וְשִׁלַּשְׁתָּ֙ אֶת־גְּב֣וּל אַרְצְךָ֔ אֲשֶׁ֥ר יַנְחִֽילְךָ֖ יְהֹוָ֣ה אֱלֹהֶ֑יךָ וְהָיָ֕ה לָנ֥וּס שָׁ֖מָּה כׇּל־רֹצֵֽחַ׃', 'וְזֶה֙ דְּבַ֣ר הָרֹצֵ֔חַ אֲשֶׁר־יָנ֥וּס שָׁ֖מָּה וָחָ֑י אֲשֶׁ֨ר יַכֶּ֤ה אֶת־רֵעֵ֙הוּ֙ בִּבְלִי־דַ֔עַת וְה֛וּא לֹא־שֹׂנֵ֥א ל֖וֹ מִתְּמֹ֥ל שִׁלְשֹֽׁם׃', 'וַאֲשֶׁר֩ יָבֹ֨א אֶת־רֵעֵ֥הוּ בַיַּ֘עַר֮ לַחְטֹ֣ב עֵצִים֒ וְנִדְּחָ֨ה יָד֤וֹ בַגַּרְזֶן֙ לִכְרֹ֣ת הָעֵ֔ץ וְנָשַׁ֤ל הַבַּרְזֶל֙ מִן־הָעֵ֔ץ וּמָצָ֥א אֶת־רֵעֵ֖הוּ וָמֵ֑ת ה֗וּא יָנ֛וּס אֶל־אַחַ֥ת הֶעָרִים־הָאֵ֖לֶּה וָחָֽי׃', 'פֶּן־יִרְדֹּף֩ גֹּאֵ֨ל הַדָּ֜ם אַחֲרֵ֣י הָרֹצֵ֗חַ כִּי־יֵחַם֮ לְבָבוֹ֒ וְהִשִּׂיג֛וֹ כִּֽי־יִרְבֶּ֥ה הַדֶּ֖רֶךְ וְהִכָּ֣הוּ נָ֑פֶשׁ וְלוֹ֙ אֵ֣ין מִשְׁפַּט־מָ֔וֶת כִּ֠י לֹ֣א שֹׂנֵ֥א ה֛וּא ל֖וֹ מִתְּמ֥וֹל שִׁלְשֽׁוֹם׃', 'עַל־כֵּ֛ן אָנֹכִ֥י מְצַוְּךָ֖ לֵאמֹ֑ר שָׁלֹ֥שׁ עָרִ֖ים תַּבְדִּ֥יל לָֽךְ׃', 'וְאִם־יַרְחִ֞יב יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ אֶת־גְּבֻ֣לְךָ֔ כַּאֲשֶׁ֥ר נִשְׁבַּ֖ע לַאֲבֹתֶ֑יךָ וְנָ֤תַן לְךָ֙ אֶת־כׇּל־הָאָ֔רֶץ אֲשֶׁ֥ר דִּבֶּ֖ר לָתֵ֥ת לַאֲבֹתֶֽיךָ׃', 'כִּֽי־תִשְׁמֹר֩ אֶת־כׇּל־הַמִּצְוָ֨ה הַזֹּ֜את לַעֲשֹׂתָ֗הּ אֲשֶׁ֨ר אָנֹכִ֣י מְצַוְּךָ֮ הַיּוֹם֒ לְאַהֲבָ֞ה אֶת־יְהֹוָ֧ה אֱלֹהֶ֛יךָ וְלָלֶ֥כֶת בִּדְרָכָ֖יו כׇּל־הַיָּמִ֑ים וְיָסַפְתָּ֨ לְךָ֥ עוֹד֙ שָׁלֹ֣שׁ עָרִ֔ים עַ֖ל הַשָּׁלֹ֥שׁ הָאֵֽלֶּה׃', 'וְלֹ֤א יִשָּׁפֵךְ֙ דָּ֣ם נָקִ֔י בְּקֶ֣רֶב אַרְצְךָ֔ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ נַחֲלָ֑ה וְהָיָ֥ה עָלֶ֖יךָ דָּמִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וְכִֽי־יִהְיֶ֥ה אִישׁ֙ שֹׂנֵ֣א לְרֵעֵ֔הוּ וְאָ֤רַב לוֹ֙ וְקָ֣ם עָלָ֔יו וְהִכָּ֥הוּ נֶ֖פֶשׁ וָמֵ֑ת וְנָ֕ס אֶל־אַחַ֖ת הֶעָרִ֥ים הָאֵֽל׃', 'וְשָֽׁלְחוּ֙ זִקְנֵ֣י עִיר֔וֹ וְלָקְח֥וּ אֹת֖וֹ מִשָּׁ֑ם וְנָתְנ֣וּ אֹת֗וֹ בְּיַ֛ד גֹּאֵ֥ל הַדָּ֖ם וָמֵֽת׃', 'לֹא־תָח֥וֹס עֵֽינְךָ֖ עָלָ֑יו וּבִֽעַרְתָּ֧ דַֽם־הַנָּקִ֛י מִיִּשְׂרָאֵ֖ל וְט֥וֹב לָֽךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'לֹ֤א תַסִּיג֙ גְּב֣וּל רֵֽעֲךָ֔ אֲשֶׁ֥ר גָּבְל֖וּ רִאשֹׁנִ֑ים בְּנַחֲלָֽתְךָ֙ אֲשֶׁ֣ר תִּנְחַ֔ל בָּאָ֕רֶץ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'לֹֽא־יָקוּם֩ עֵ֨ד אֶחָ֜ד בְּאִ֗ישׁ לְכׇל־עָוֺן֙ וּלְכׇל־חַטָּ֔את בְּכׇל־חֵ֖טְא אֲשֶׁ֣ר יֶֽחֱטָ֑א עַל־פִּ֣י&thinsp;<b>׀</b> שְׁנֵ֣י עֵדִ֗ים א֛וֹ עַל־פִּ֥י שְׁלֹשָֽׁה־עֵדִ֖ים יָק֥וּם דָּבָֽר׃', 'כִּֽי־יָק֥וּם עֵד־חָמָ֖ס בְּאִ֑ישׁ לַעֲנ֥וֹת בּ֖וֹ סָרָֽה׃', 'וְעָמְד֧וּ שְׁנֵֽי־הָאֲנָשִׁ֛ים אֲשֶׁר־לָהֶ֥ם הָרִ֖יב לִפְנֵ֣י יְהֹוָ֑ה לִפְנֵ֤י הַכֹּֽהֲנִים֙ וְהַשֹּׁ֣פְטִ֔ים אֲשֶׁ֥ר יִהְי֖וּ בַּיָּמִ֥ים הָהֵֽם׃', 'וְדָרְשׁ֥וּ הַשֹּׁפְטִ֖ים הֵיטֵ֑ב וְהִנֵּ֤ה עֵֽד־שֶׁ֙קֶר֙ הָעֵ֔ד שֶׁ֖קֶר עָנָ֥ה בְאָחִֽיו׃', 'וַעֲשִׂ֣יתֶם ל֔וֹ כַּאֲשֶׁ֥ר זָמַ֖ם לַעֲשׂ֣וֹת לְאָחִ֑יו וּבִֽעַרְתָּ֥ הָרָ֖ע מִקִּרְבֶּֽךָ׃', 'וְהַנִּשְׁאָרִ֖ים יִשְׁמְע֣וּ וְיִרָ֑אוּ וְלֹֽא־יֹסִ֨פוּ לַעֲשׂ֜וֹת ע֗וֹד כַּדָּבָ֥ר הָרָ֛ע הַזֶּ֖ה בְּקִרְבֶּֽךָ׃', 'וְלֹ֥א תָח֖וֹס עֵינֶ֑ךָ נֶ֣פֶשׁ בְּנֶ֗פֶשׁ עַ֤יִן בְּעַ֙יִן֙ שֵׁ֣ן בְּשֵׁ֔ן יָ֥ד בְּיָ֖ד רֶ֥גֶל בְּרָֽגֶל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['כִּֽי־תֵצֵ֨א לַמִּלְחָמָ֜ה עַל־אֹיְבֶ֗ךָ וְֽרָאִ֜יתָ ס֤וּס וָרֶ֙כֶב֙ עַ֚ם רַ֣ב מִמְּךָ֔ לֹ֥א תִירָ֖א מֵהֶ֑ם כִּֽי־יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ עִמָּ֔ךְ הַמַּֽעַלְךָ֖ מֵאֶ֥רֶץ מִצְרָֽיִם׃', 'וְהָיָ֕ה כְּקָֽרׇבְכֶ֖ם אֶל־הַמִּלְחָמָ֑ה וְנִגַּ֥שׁ הַכֹּהֵ֖ן וְדִבֶּ֥ר אֶל־הָעָֽם׃', 'וְאָמַ֤ר אֲלֵהֶם֙ שְׁמַ֣ע יִשְׂרָאֵ֔ל אַתֶּ֨ם קְרֵבִ֥ים הַיּ֛וֹם לַמִּלְחָמָ֖ה עַל־אֹיְבֵיכֶ֑ם אַל־יֵרַ֣ךְ לְבַבְכֶ֗ם אַל־תִּֽירְא֧וּ וְאַֽל־תַּחְפְּז֛וּ וְאַל־תַּֽעַרְצ֖וּ מִפְּנֵיהֶֽם׃', 'כִּ֚י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֔ם הַהֹלֵ֖ךְ עִמָּכֶ֑ם לְהִלָּחֵ֥ם לָכֶ֛ם עִם־אֹיְבֵיכֶ֖ם לְהוֹשִׁ֥יעַ אֶתְכֶֽם׃', 'וְדִבְּר֣וּ הַשֹּֽׁטְרִים֮ אֶל־הָעָ֣ם לֵאמֹר֒ מִֽי־הָאִ֞ישׁ אֲשֶׁ֨ר בָּנָ֤ה בַֽיִת־חָדָשׁ֙ וְלֹ֣א חֲנָכ֔וֹ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יַחְנְכֶֽנּוּ׃', 'וּמִֽי־הָאִ֞ישׁ אֲשֶׁר־נָטַ֥ע כֶּ֙רֶם֙ וְלֹ֣א חִלְּל֔וֹ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יְחַלְּלֶֽנּוּ׃', 'וּמִֽי־הָאִ֞ישׁ אֲשֶׁר־אֵרַ֤שׂ אִשָּׁה֙ וְלֹ֣א לְקָחָ֔הּ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יִקָּחֶֽנָּה׃', 'וְיָסְפ֣וּ הַשֹּׁטְרִים֮ לְדַבֵּ֣ר אֶל־הָעָם֒ וְאָמְר֗וּ מִי־הָאִ֤ישׁ הַיָּרֵא֙ וְרַ֣ךְ הַלֵּבָ֔ב יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ וְלֹ֥א יִמַּ֛ס אֶת־לְבַ֥ב אֶחָ֖יו כִּלְבָבֽוֹ׃', 'וְהָיָ֛ה כְּכַלֹּ֥ת הַשֹּׁטְרִ֖ים לְדַבֵּ֣ר אֶל־הָעָ֑ם וּפָ֥קְד֛וּ שָׂרֵ֥י צְבָא֖וֹת בְּרֹ֥אשׁ הָעָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּֽי־תִקְרַ֣ב אֶל־עִ֔יר לְהִלָּחֵ֖ם עָלֶ֑יהָ וְקָרָ֥אתָ אֵלֶ֖יהָ לְשָׁלֽוֹם׃', 'וְהָיָה֙ אִם־שָׁל֣וֹם תַּֽעַנְךָ֔ וּפָתְחָ֖ה לָ֑ךְ וְהָיָ֞ה כׇּל־הָעָ֣ם הַנִּמְצָא־בָ֗הּ יִהְי֥וּ לְךָ֛ לָמַ֖ס וַעֲבָדֽוּךָ׃', 'וְאִם־לֹ֤א תַשְׁלִים֙ עִמָּ֔ךְ וְעָשְׂתָ֥ה עִמְּךָ֖ מִלְחָמָ֑ה וְצַרְתָּ֖ עָלֶֽיהָ׃', 'וּנְתָנָ֛הּ יְהֹוָ֥ה אֱלֹהֶ֖יךָ בְּיָדֶ֑ךָ וְהִכִּיתָ֥ אֶת־כׇּל־זְכוּרָ֖הּ לְפִי־חָֽרֶב׃', 'רַ֣ק הַ֠נָּשִׁ֠ים וְהַטַּ֨ף וְהַבְּהֵמָ֜ה וְכֹל֩ אֲשֶׁ֨ר יִהְיֶ֥ה בָעִ֛יר כׇּל־שְׁלָלָ֖הּ תָּבֹ֣ז לָ֑ךְ וְאָֽכַלְתָּ֙ אֶת־שְׁלַ֣ל אֹיְבֶ֔יךָ אֲשֶׁ֥ר נָתַ֛ן יְהֹוָ֥ה אֱלֹהֶ֖יךָ לָֽךְ׃', 'כֵּ֤ן תַּעֲשֶׂה֙ לְכׇל־הֶ֣עָרִ֔ים הָרְחֹקֹ֥ת מִמְּךָ֖ מְאֹ֑ד אֲשֶׁ֛ר לֹא־מֵעָרֵ֥י הַגּֽוֹיִם־הָאֵ֖לֶּה הֵֽנָּה׃', 'רַ֗ק מֵעָרֵ֤י הָֽעַמִּים֙ הָאֵ֔לֶּה אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ נַחֲלָ֑ה לֹ֥א תְחַיֶּ֖ה כׇּל־נְשָׁמָֽה׃', 'כִּֽי־הַחֲרֵ֣ם תַּחֲרִימֵ֗ם הַחִתִּ֤י וְהָאֱמֹרִי֙ הַכְּנַעֲנִ֣י וְהַפְּרִזִּ֔י הַחִוִּ֖י וְהַיְבוּסִ֑י כַּאֲשֶׁ֥ר צִוְּךָ֖ יְהֹוָ֥ה אֱלֹהֶֽיךָ׃', 'לְמַ֗עַן אֲשֶׁ֨ר לֹֽא־יְלַמְּד֤וּ אֶתְכֶם֙ לַעֲשׂ֔וֹת כְּכֹל֙ תּֽוֹעֲבֹתָ֔ם אֲשֶׁ֥ר עָשׂ֖וּ לֵאלֹֽהֵיהֶ֑ם וַחֲטָאתֶ֖ם לַיהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כִּֽי־תָצ֣וּר אֶל־עִיר֩ יָמִ֨ים רַבִּ֜ים לְֽהִלָּחֵ֧ם עָלֶ֣יהָ לְתׇפְשָׂ֗הּ לֹֽא־תַשְׁחִ֤ית אֶת־עֵצָהּ֙ לִנְדֹּ֤חַ עָלָיו֙ גַּרְזֶ֔ן כִּ֚י מִמֶּ֣נּוּ תֹאכֵ֔ל וְאֹת֖וֹ לֹ֣א תִכְרֹ֑ת כִּ֤י הָֽאָדָם֙ עֵ֣ץ הַשָּׂדֶ֔ה לָבֹ֥א מִפָּנֶ֖יךָ בַּמָּצֽוֹר׃', 'רַ֞ק עֵ֣ץ אֲשֶׁר־תֵּדַ֗ע כִּֽי־לֹא־עֵ֤ץ מַאֲכָל֙ ה֔וּא אֹת֥וֹ תַשְׁחִ֖ית וְכָרָ֑תָּ וּבָנִ֣יתָ מָצ֗וֹר עַל־הָעִיר֙ אֲשֶׁר־הִ֨וא עֹשָׂ֧ה עִמְּךָ֛ מִלְחָמָ֖ה עַ֥ד רִדְתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['כִּי־יִמָּצֵ֣א חָלָ֗ל בָּאֲדָמָה֙ אֲשֶׁר֩ יְהֹוָ֨ה אֱלֹהֶ֜יךָ נֹתֵ֤ן לְךָ֙ לְרִשְׁתָּ֔הּ נֹפֵ֖ל בַּשָּׂדֶ֑ה לֹ֥א נוֹדַ֖ע מִ֥י הִכָּֽהוּ׃', 'וְיָצְא֥וּ זְקֵנֶ֖יךָ וְשֹׁפְטֶ֑יךָ וּמָדְדוּ֙ אֶל־הֶ֣עָרִ֔ים אֲשֶׁ֖ר סְבִיבֹ֥ת הֶחָלָֽל׃', 'וְהָיָ֣ה הָעִ֔יר הַקְּרֹבָ֖ה אֶל־הֶחָלָ֑ל וְלָֽקְח֡וּ זִקְנֵי֩ הָעִ֨יר הַהִ֜וא עֶגְלַ֣ת בָּקָ֗ר אֲשֶׁ֤ר לֹֽא־עֻבַּד֙ בָּ֔הּ אֲשֶׁ֥ר לֹא־מָשְׁכָ֖ה בְּעֹֽל׃', 'וְהוֹרִ֡דוּ זִקְנֵי֩ הָעִ֨יר הַהִ֤וא אֶת־הָֽעֶגְלָה֙ אֶל־נַ֣חַל אֵיתָ֔ן אֲשֶׁ֛ר לֹא־יֵעָבֵ֥ד בּ֖וֹ וְלֹ֣א יִזָּרֵ֑עַ וְעָֽרְפוּ־שָׁ֥ם אֶת־הָעֶגְלָ֖ה בַּנָּֽחַל׃', 'וְנִגְּשׁ֣וּ הַכֹּהֲנִים֮ בְּנֵ֣י לֵוִי֒ כִּ֣י בָ֗ם בָּחַ֞ר יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ לְשָׁ֣רְת֔וֹ וּלְבָרֵ֖ךְ בְּשֵׁ֣ם יְהֹוָ֑ה וְעַל־פִּיהֶ֥ם יִהְיֶ֖ה כׇּל־רִ֥יב וְכׇל־נָֽגַע׃', 'וְכֹ֗ל זִקְנֵי֙ הָעִ֣יר הַהִ֔וא הַקְּרֹבִ֖ים אֶל־הֶחָלָ֑ל יִרְחֲצוּ֙ אֶת־יְדֵיהֶ֔ם עַל־הָעֶגְלָ֖ה הָעֲרוּפָ֥ה בַנָּֽחַל׃', 'וְעָנ֖וּ וְאָמְר֑וּ יָדֵ֗ינוּ לֹ֤א <span class="mam-kq"><span class="mam-kq-k">(שפכה)</span> <span class="mam-kq-q">[שָֽׁפְכוּ֙]</span></span> אֶת־הַדָּ֣ם הַזֶּ֔ה וְעֵינֵ֖ינוּ לֹ֥א רָאֽוּ׃', 'כַּפֵּר֩ לְעַמְּךָ֨ יִשְׂרָאֵ֤ל אֲשֶׁר־פָּדִ֙יתָ֙ יְהֹוָ֔ה וְאַל־תִּתֵּן֙ דָּ֣ם נָקִ֔י בְּקֶ֖רֶב עַמְּךָ֣ יִשְׂרָאֵ֑ל וְנִכַּפֵּ֥ר לָהֶ֖ם הַדָּֽם׃', 'וְאַתָּ֗ה תְּבַעֵ֛ר הַדָּ֥ם הַנָּקִ֖י מִקִּרְבֶּ֑ךָ כִּֽי־תַעֲשֶׂ֥ה הַיָּשָׁ֖ר בְּעֵינֵ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-16-18">Chap. 16</a><a href="#v-17-1">Chap. 17</a><a href="#v-18-1">Chap. 18</a><a href="#v-19-1">Chap. 19</a><a href="#v-20-1">Chap. 20</a><a href="#v-21-1">Chap. 21</a></div>
+  <div class="seif" id="v-16-18">
+      <span class="seif-num">16:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֹׁפְטִ֣ים וְשֹֽׁטְרִ֗ים תִּֽתֶּן־לְךָ֙ בְּכׇל־שְׁעָרֶ֔יךָ אֲשֶׁ֨ר יְהֹוָ֧ה אֱלֹהֶ֛יךָ נֹתֵ֥ן לְךָ֖ לִשְׁבָטֶ֑יךָ וְשָׁפְט֥וּ אֶת־הָעָ֖ם מִשְׁפַּט־צֶֽדֶק׃</p></div><div class="heb-s"><p>שפטים ושטרים תתן־לך בכל־שעריך אשר יהוה אלהיך נתן לך לשבטיך ושפטו את־העם משפט־צדק׃</p></div></div>
+      <div class="texte-fr"><p>Tu institueras des juges et des magistrats dans toutes les villes que l’Éternel, ton Dieu, te donnera, dans chacune de tes tribus; et ils devront juger le peuple selon la justice.</p></div>
+    </div><div class="seif" id="v-16-19">
+      <span class="seif-num">16:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־תַטֶּ֣ה מִשְׁפָּ֔ט לֹ֥א תַכִּ֖יר פָּנִ֑ים וְלֹא־תִקַּ֣ח שֹׁ֔חַד כִּ֣י הַשֹּׁ֗חַד יְעַוֵּר֙ עֵינֵ֣י חֲכָמִ֔ים וִֽיסַלֵּ֖ף דִּבְרֵ֥י צַדִּיקִֽם׃</p></div><div class="heb-s"><p>לא־תטה משפט לא תכיר פנים ולא־תקח שחד כי השחד יעור עיני חכמים ויסלף דברי צדיקם׃</p></div></div>
+      <div class="texte-fr"><p>Ne fais pas fléchir le droit, n’aie pas égard à la personne, et n’accepte point de présent corrupteur, car la corruption aveugle les yeux des sages et fausse la parole des justes.</p></div>
+    </div><div class="seif" id="v-16-20">
+      <span class="seif-num">16:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>צֶ֥דֶק צֶ֖דֶק תִּרְדֹּ֑ף לְמַ֤עַן תִּֽחְיֶה֙ וְיָרַשְׁתָּ֣ אֶת־הָאָ֔רֶץ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֥ן לָֽךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>צדק צדק תרדף למען תחיה וירשת את־הארץ אשר־יהוה אלהיך נתן לך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>C’est la justice, la justice seule que tu dois rechercher, si tu veux te maintenir en possession du pays que l’Éternel, ton Dieu, te destine.</p></div>
+    </div><div class="seif" id="v-16-21">
+      <span class="seif-num">16:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־תִטַּ֥ע לְךָ֛ אֲשֵׁרָ֖ה כׇּל־עֵ֑ץ אֵ֗צֶל מִזְבַּ֛ח יְהֹוָ֥ה אֱלֹהֶ֖יךָ אֲשֶׁ֥ר תַּעֲשֶׂה־לָּֽךְ׃</p></div><div class="heb-s"><p>לא־תטע לך אשרה כל־עץ אצל מזבח יהוה אלהיך אשר תעשה־לך׃</p></div></div>
+      <div class="texte-fr"><p>Ne plante chez toi ni bosquet ni arbre quelconque auprès de l’autel que tu devras ériger à l’Éternel, ton Dieu;</p></div>
+    </div><div class="seif" id="v-16-22">
+      <span class="seif-num">16:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹֽא־תָקִ֥ים לְךָ֖ מַצֵּבָ֑ה אֲשֶׁ֥ר שָׂנֵ֖א יְהֹוָ֥ה אֱלֹהֶֽיךָ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ולא־תקים לך מצבה אשר שנא יהוה אלהיך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et n’érige pas de statue chez toi, chose odieuse à l’Éternel, ton Dieu.</p></div>
+    </div><div class="seif" id="v-17-1">
+      <span class="seif-num">17:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־תִזְבַּח֩ לַיהֹוָ֨ה אֱלֹהֶ֜יךָ שׁ֣וֹר וָשֶׂ֗ה אֲשֶׁ֨ר יִהְיֶ֥ה בוֹ֙ מ֔וּם כֹּ֖ל דָּבָ֣ר רָ֑ע כִּ֧י תוֹעֲבַ֛ת יְהֹוָ֥ה אֱלֹהֶ֖יךָ הֽוּא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לא־תזבח ליהוה אלהיך שור ושה אשר יהיה בו מום כל דבר רע כי תועבת יהוה אלהיך הוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>"N’immole à l’Éternel, ton Dieu, ni grosse ni menue bête qui ait un défaut ou un vice quelconque; c’est un objet d’aversion pour l’Éternel, ton Dieu.</p></div>
+    </div><div class="seif" id="v-17-2">
+      <span class="seif-num">17:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יִמָּצֵ֤א בְקִרְבְּךָ֙ בְּאַחַ֣ד שְׁעָרֶ֔יךָ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֣ן לָ֑ךְ אִ֣ישׁ אוֹ־אִשָּׁ֗ה אֲשֶׁ֨ר יַעֲשֶׂ֧ה אֶת־הָרַ֛ע בְּעֵינֵ֥י יְהֹוָה־אֱלֹהֶ֖יךָ לַעֲבֹ֥ר בְּרִיתֽוֹ׃</p></div><div class="heb-s"><p>כי־ימצא בקרבך באחד שעריך אשר־יהוה אלהיך נתן לך איש או־אשה אשר יעשה את־הרע בעיני יהוה־אלהיך לעבר בריתו׃</p></div></div>
+      <div class="texte-fr"><p>S’il se trouve dans ton sein, dans l’une des villes que l’Éternel, ton Dieu, te donnera, un homme ou une femme qui fasse une chose coupable aux yeux de l’Éternel, ton Dieu, en violant son alliance;</p></div>
+    </div><div class="seif" id="v-17-3">
+      <span class="seif-num">17:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֗לֶךְ וַֽיַּעֲבֹד֙ אֱלֹהִ֣ים אֲחֵרִ֔ים וַיִּשְׁתַּ֖חוּ לָהֶ֑ם וְלַשֶּׁ֣מֶשׁ&thinsp;<b>׀</b> א֣וֹ לַיָּרֵ֗חַ א֛וֹ לְכׇל־צְבָ֥א הַשָּׁמַ֖יִם אֲשֶׁ֥ר לֹא־צִוִּֽיתִי׃</p></div><div class="heb-s"><p>וילך ויעבד אלהים אחרים וישתחו להם ולשמש&thinsp;<b>׀</b> או לירח או לכל־צבא השמים אשר לא־צויתי׃</p></div></div>
+      <div class="texte-fr"><p>qui soit allé servir d’autres divinités et se prosterner devant elles, ou devant le soleil ou la lune, ou quoi que ce soit de la milice céleste, contrairement à ma loi:</p></div>
+    </div><div class="seif" id="v-17-4">
+      <span class="seif-num">17:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֻֽגַּד־לְךָ֖ וְשָׁמָ֑עְתָּ וְדָרַשְׁתָּ֣ הֵיטֵ֔ב וְהִנֵּ֤ה אֱמֶת֙ נָכ֣וֹן הַדָּבָ֔ר נֶעֶשְׂתָ֛ה הַתּוֹעֵבָ֥ה הַזֹּ֖את בְּיִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>והגד־לך ושמעת ודרשת היטב והנה אמת נכון הדבר נעשתה התועבה הזאת בישראל׃</p></div></div>
+      <div class="texte-fr"><p>instruit du fait par ouï-dire, tu feras une enquête sévère; et si la chose est avérée, constante, si cette infamie s’est commise en Israël,</p></div>
+    </div><div class="seif" id="v-17-5">
+      <span class="seif-num">17:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֽוֹצֵאתָ֣ אֶת־הָאִ֣ישׁ הַה֡וּא אוֹ֩ אֶת־הָאִשָּׁ֨ה הַהִ֜וא אֲשֶׁ֣ר עָ֠שׂ֠וּ אֶת־הַדָּבָ֨ר הָרָ֤ע הַזֶּה֙ אֶל־שְׁעָרֶ֔יךָ אֶת־הָאִ֕ישׁ א֖וֹ אֶת־הָאִשָּׁ֑ה וּסְקַלְתָּ֥ם בָּאֲבָנִ֖ים וָמֵֽתוּ׃</p></div><div class="heb-s"><p>והוצאת את־האיש ההוא או את־האשה ההוא אשר עשו את־הדבר הרע הזה אל־שעריך את־האיש או את־האשה וסקלתם באבנים ומתו׃</p></div></div>
+      <div class="texte-fr"><p>tu feras conduire aux portes de la ville cet homme ou cette femme, coupable d’un tel crime, l’homme ou la femme! Et tu les lapideras, pour qu’ils meurent sous les pierres.</p></div>
+    </div><div class="seif" id="v-17-6">
+      <span class="seif-num">17:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־פִּ֣י&thinsp;<b>׀</b> שְׁנַ֣יִם עֵדִ֗ים א֛וֹ שְׁלֹשָׁ֥ה עֵדִ֖ים יוּמַ֣ת הַמֵּ֑ת לֹ֣א יוּמַ֔ת עַל־פִּ֖י עֵ֥ד אֶחָֽד׃</p></div><div class="heb-s"><p>על־פי&thinsp;<b>׀</b> שנים עדים או שלשה עדים יומת המת לא יומת על־פי עד אחד׃</p></div></div>
+      <div class="texte-fr"><p>C’est sur la déposition de deux ou de trois témoins que sera mis à mort celui qui encourt la peine capitale; il ne pourra être supplicié sur le dire d’un seul témoin.</p></div>
+    </div><div class="seif" id="v-17-7">
+      <span class="seif-num">17:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַ֣ד הָעֵדִ֞ים תִּֽהְיֶה־בּ֤וֹ בָרִאשֹׁנָה֙ לַהֲמִית֔וֹ וְיַ֥ד כׇּל־הָעָ֖ם בָּאַחֲרֹנָ֑ה וּבִֽעַרְתָּ֥ הָרָ֖ע מִקִּרְבֶּֽךָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>יד העדים תהיה־בו בראשנה להמיתו ויד כל־העם באחרנה ובערת הרע מקרבך׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>La main des témoins doit le frapper la première pour le faire mourir, et la main du peuple en dernier lieu, et tu extirperas ainsi le mal du milieu de toi.</p></div>
+    </div><div class="seif" id="v-17-8">
+      <span class="seif-num">17:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י יִפָּלֵא֩ מִמְּךָ֨ דָבָ֜ר לַמִּשְׁפָּ֗ט בֵּֽין־דָּ֨ם&thinsp;<small>׀</small>&thinsp;לְדָ֜ם בֵּֽין־דִּ֣ין לְדִ֗ין וּבֵ֥ין נֶ֙גַע֙ לָנֶ֔גַע דִּבְרֵ֥י רִיבֹ֖ת בִּשְׁעָרֶ֑יךָ וְקַמְתָּ֣ וְעָלִ֔יתָ אֶ֨ל־הַמָּק֔וֹם אֲשֶׁ֥ר יִבְחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ בּֽוֹ׃</p></div><div class="heb-s"><p>כי יפלא ממך דבר למשפט בין־דם&thinsp;<small>׀</small>&thinsp;לדם בין־דין לדין ובין נגע לנגע דברי ריבת בשעריך וקמת ועלית אל־המקום אשר יבחר יהוה אלהיך בו׃</p></div></div>
+      <div class="texte-fr"><p>Si tu es impuissant à prononcer sur un cas judiciaire, sur une question de meurtre ou de droit civil, ou de blessure corporelle, sur un litige quelconque porté devant tes tribunaux, tu te rendras à l’endroit qu’aura choisi l’Éternel, ton Dieu;</p></div>
+    </div><div class="seif" id="v-17-9">
+      <span class="seif-num">17:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָאתָ֗ אֶל־הַכֹּהֲנִים֙ הַלְוִיִּ֔ם וְאֶ֨ל־הַשֹּׁפֵ֔ט אֲשֶׁ֥ר יִהְיֶ֖ה בַּיָּמִ֣ים הָהֵ֑ם וְדָרַשְׁתָּ֙ וְהִגִּ֣ידוּ לְךָ֔ אֵ֖ת דְּבַ֥ר הַמִּשְׁפָּֽט׃</p></div><div class="heb-s"><p>ובאת אל־הכהנים הלוים ואל־השפט אשר יהיה בימים ההם ודרשת והגידו לך את דבר המשפט׃</p></div></div>
+      <div class="texte-fr"><p>tu iras trouver les pontifes, descendants de Lévi, ou le juge qui siégera à cette époque; tu les consulteras, et ils t’éclaireront sur le jugement à prononcer.</p></div>
+    </div><div class="seif" id="v-17-10">
+      <span class="seif-num">17:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשִׂ֗יתָ עַל־פִּ֤י הַדָּבָר֙ אֲשֶׁ֣ר יַגִּ֣ידֽוּ לְךָ֔ מִן־הַמָּק֣וֹם הַה֔וּא אֲשֶׁ֖ר יִבְחַ֣ר יְהֹוָ֑ה וְשָׁמַרְתָּ֣ לַעֲשׂ֔וֹת כְּכֹ֖ל אֲשֶׁ֥ר יוֹרֽוּךָ׃</p></div><div class="heb-s"><p>ועשית על־פי הדבר אשר יגידו לך מן־המקום ההוא אשר יבחר יהוה ושמרת לעשות ככל אשר יורוך׃</p></div></div>
+      <div class="texte-fr"><p>Et tu agiras selon leur déclaration, émanée de ce lieu choisi par l’Éternel, et tu auras soin de te conformer à toutes leurs instructions.</p></div>
+    </div><div class="seif" id="v-17-11">
+      <span class="seif-num">17:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־פִּ֨י הַתּוֹרָ֜ה אֲשֶׁ֣ר יוֹר֗וּךָ וְעַל־הַמִּשְׁפָּ֛ט אֲשֶׁר־יֹאמְר֥וּ לְךָ֖ תַּעֲשֶׂ֑ה לֹ֣א תָס֗וּר מִן־הַדָּבָ֛ר אֲשֶׁר־יַגִּ֥ידֽוּ לְךָ֖ יָמִ֥ין וּשְׂמֹֽאל׃</p></div><div class="heb-s"><p>על־פי התורה אשר יורוך ועל־המשפט אשר־יאמרו לך תעשה לא תסור מן־הדבר אשר־יגידו לך ימין ושמאל׃</p></div></div>
+      <div class="texte-fr"><p>Selon la doctrine qu’ils t’enseigneront, selon la règle qu’ils t’indiqueront, tu procéderas; ne t’écarte de ce qu’ils t’auront dit ni à droite ni à gauche.</p></div>
+    </div><div class="seif" id="v-17-12">
+      <span class="seif-num">17:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָאִ֞ישׁ אֲשֶׁר־יַעֲשֶׂ֣ה בְזָד֗וֹן לְבִלְתִּ֨י שְׁמֹ֤עַ אֶל־הַכֹּהֵן֙ הָעֹמֵ֞ד לְשָׁ֤רֶת שָׁם֙ אֶת־יְהֹוָ֣ה אֱלֹהֶ֔יךָ א֖וֹ אֶל־הַשֹּׁפֵ֑ט וּמֵת֙ הָאִ֣ישׁ הַה֔וּא וּבִֽעַרְתָּ֥ הָרָ֖ע מִיִּשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>והאיש אשר־יעשה בזדון לבלתי שמע אל־הכהן העמד לשרת שם את־יהוה אלהיך או אל־השפט ומת האיש ההוא ובערת הרע מישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et celui qui, téméraire en sa conduite, n’obéirait pas à la décision du pontife établi là pour servir l’Éternel, ton Dieu, ou à celle du juge, cet homme doit mourir, pour que tu fasses disparaître ce mal en Israël;</p></div>
+    </div><div class="seif" id="v-17-13">
+      <span class="seif-num">17:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הָעָ֖ם יִשְׁמְע֣וּ וְיִרָ֑אוּ וְלֹ֥א יְזִיד֖וּן עֽוֹד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וכל־העם ישמעו ויראו ולא יזידון עוד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>afin que tous l’apprennent et tremblent, et n’aient plus pareille témérité.</p></div>
+    </div><div class="seif" id="v-17-14">
+      <span class="seif-num">17:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תָבֹ֣א אֶל־הָאָ֗רֶץ אֲשֶׁ֨ר יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ נֹתֵ֣ן לָ֔ךְ וִֽירִשְׁתָּ֖הּ וְיָשַׁ֣בְתָּה בָּ֑הּ וְאָמַרְתָּ֗ אָשִׂ֤ימָה עָלַי֙ מֶ֔לֶךְ כְּכׇל־הַגּוֹיִ֖ם אֲשֶׁ֥ר סְבִיבֹתָֽי׃</p></div><div class="heb-s"><p>כי־תבא אל־הארץ אשר יהוה אלהיך נתן לך וירשתה וישבתה בה ואמרת אשימה עלי מלך ככל־הגוים אשר סביבתי׃</p></div></div>
+      <div class="texte-fr"><p>Quand, arrivé dans le pays que l’Éternel, ton Dieu, te donne, tu en auras pris possession et y seras bien établi, si tu dis alors: "Je voudrais mettre un roi à ma tête, à l’exemple de tous les peuples qui m’entourent",</p></div>
+    </div><div class="seif" id="v-17-15">
+      <span class="seif-num">17:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>שׂ֣וֹם תָּשִׂ֤ים עָלֶ֙יךָ֙ מֶ֔לֶךְ אֲשֶׁ֥ר יִבְחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ בּ֑וֹ מִקֶּ֣רֶב אַחֶ֗יךָ תָּשִׂ֤ים עָלֶ֙יךָ֙ מֶ֔לֶךְ לֹ֣א תוּכַ֗ל לָתֵ֤ת עָלֶ֙יךָ֙ אִ֣ישׁ נׇכְרִ֔י אֲשֶׁ֥ר לֹֽא־אָחִ֖יךָ הֽוּא׃</p></div><div class="heb-s"><p>שום תשים עליך מלך אשר יבחר יהוה אלהיך בו מקרב אחיך תשים עליך מלך לא תוכל לתת עליך איש נכרי אשר לא־אחיך הוא׃</p></div></div>
+      <div class="texte-fr"><p>tu pourras te donner un roi, celui dont l’Éternel, ton Dieu, approuvera le choix: c’est un de tes frères que tu dois désigner pour ton roi; tu n’auras pas le droit de te soumettre à un étranger, qui ne serait pas ton frère.</p></div>
+    </div><div class="seif" id="v-17-16">
+      <span class="seif-num">17:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַק֮ לֹא־יַרְבֶּה־לּ֣וֹ סוּסִים֒ וְלֹֽא־יָשִׁ֤יב אֶת־הָעָם֙ מִצְרַ֔יְמָה לְמַ֖עַן הַרְבּ֣וֹת ס֑וּס וַֽיהֹוָה֙ אָמַ֣ר לָכֶ֔ם לֹ֣א תֹסִפ֗וּן לָשׁ֛וּב בַּדֶּ֥רֶךְ הַזֶּ֖ה עֽוֹד׃</p></div><div class="heb-s"><p>רק לא־ירבה־לו סוסים ולא־ישיב את־העם מצרימה למען הרבות סוס ויהוה אמר לכם לא תספון לשוב בדרך הזה עוד׃</p></div></div>
+      <div class="texte-fr"><p>Seulement, il doit se garder d’entretenir beaucoup de chevaux, et ne pas ramener le peuple en Égypte pour en augmenter le nombre, l’Éternel vous ayant déclaré que vous ne reprendrez plus ce chemin-là désormais.</p></div>
+    </div><div class="seif" id="v-17-17">
+      <span class="seif-num">17:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֤א יַרְבֶּה־לּוֹ֙ נָשִׁ֔ים וְלֹ֥א יָס֖וּר לְבָב֑וֹ וְכֶ֣סֶף וְזָהָ֔ב לֹ֥א יַרְבֶּה־לּ֖וֹ מְאֹֽד׃</p></div><div class="heb-s"><p>ולא ירבה־לו נשים ולא יסור לבבו וכסף וזהב לא ירבה־לו מאד׃</p></div></div>
+      <div class="texte-fr"><p>Il ne doit pas non plus avoir beaucoup de femmes, de crainte que son cœur ne s’égare; même de l’argent et de l’or, il n’en amassera pas outre mesure.</p></div>
+    </div><div class="seif" id="v-17-18">
+      <span class="seif-num">17:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֣ה כְשִׁבְתּ֔וֹ עַ֖ל כִּסֵּ֣א מַמְלַכְתּ֑וֹ וְכָ֨תַב ל֜וֹ אֶת־מִשְׁנֵ֨ה הַתּוֹרָ֤ה הַזֹּאת֙ עַל־סֵ֔פֶר מִלִּפְנֵ֖י הַכֹּהֲנִ֥ים הַלְוִיִּֽם׃</p></div><div class="heb-s"><p>והיה כשבתו על כסא ממלכתו וכתב לו את־משנה התורה הזאת על־ספר מלפני הכהנים הלוים׃</p></div></div>
+      <div class="texte-fr"><p>Or, quand il occupera le siège royal, il écrira pour son usage, dans un livre, une copie de cette doctrine, en s’inspirant des pontifes descendants de Lévi.</p></div>
+    </div><div class="seif" id="v-17-19">
+      <span class="seif-num">17:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיְתָ֣ה עִמּ֔וֹ וְקָ֥רָא ב֖וֹ כׇּל־יְמֵ֣י חַיָּ֑יו לְמַ֣עַן יִלְמַ֗ד לְיִרְאָה֙ אֶת־יְהֹוָ֣ה אֱלֹהָ֔יו לִ֠שְׁמֹ֠ר אֶֽת־כׇּל־דִּבְרֵ֞י הַתּוֹרָ֥ה הַזֹּ֛את וְאֶת־הַחֻקִּ֥ים הָאֵ֖לֶּה לַעֲשֹׂתָֽם׃</p></div><div class="heb-s"><p>והיתה עמו וקרא בו כל־ימי חייו למען ילמד ליראה את־יהוה אלהיו לשמר את־כל־דברי התורה הזאת ואת־החקים האלה לעשתם׃</p></div></div>
+      <div class="texte-fr"><p>Elle restera par devers lui, car il doit y lire toute sa vie, afin qu’il s’habitue à révérer l’Éternel, son Dieu, qu’il respecte et exécute tout le contenu de cette doctrine et les présents statuts;</p></div>
+    </div><div class="seif" id="v-17-20">
+      <span class="seif-num">17:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְבִלְתִּ֤י רוּם־לְבָבוֹ֙ מֵֽאֶחָ֔יו וּלְבִלְתִּ֛י ס֥וּר מִן־הַמִּצְוָ֖ה יָמִ֣ין וּשְׂמֹ֑אול לְמַ֩עַן֩ יַאֲרִ֨יךְ יָמִ֧ים עַל־מַמְלַכְתּ֛וֹ ה֥וּא וּבָנָ֖יו בְּקֶ֥רֶב יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לבלתי רום־לבבו מאחיו ולבלתי סור מן־המצוה ימין ושמאול למען יאריך ימים על־ממלכתו הוא ובניו בקרב ישראל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>afin que son cœur ne s’enorgueillisse point à l’égard de ses frères, et qu’il ne s’écarte de la loi ni à droite ni à gauche. De la sorte, il conservera longtemps sa royauté, lui ainsi que ses fils, au milieu d’Israël.</p></div>
+    </div><div class="seif" id="v-18-1">
+      <span class="seif-num">18:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יִ֠הְיֶ֠ה לַכֹּהֲנִ֨ים הַלְוִיִּ֜ם כׇּל־שֵׁ֧בֶט לֵוִ֛י חֵ֥לֶק וְנַחֲלָ֖ה עִם־יִשְׂרָאֵ֑ל אִשֵּׁ֧י יְהֹוָ֛ה וְנַחֲלָת֖וֹ יֹאכֵלֽוּן׃</p></div><div class="heb-s"><p>לא־יהיה לכהנים הלוים כל־שבט לוי חלק ונחלה עם־ישראל אשי יהוה ונחלתו יאכלון׃</p></div></div>
+      <div class="texte-fr"><p>"Il n’est accordé aux pontifes, descendants de Lévi, à la tribu de Lévi en général, ni part ni héritage comme au reste d’Israël: c’est des sacrifices de l’Éternel et de son patrimoine qu’ils subsisteront.</p></div>
+    </div><div class="seif" id="v-18-2">
+      <span class="seif-num">18:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנַחֲלָ֥ה לֹא־יִֽהְיֶה־לּ֖וֹ בְּקֶ֣רֶב אֶחָ֑יו יְהֹוָה֙ ה֣וּא נַחֲלָת֔וֹ כַּאֲשֶׁ֖ר דִּבֶּר־לֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ונחלה לא־יהיה־לו בקרב אחיו יהוה הוא נחלתו כאשר דבר־לו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ils n’auront point d’héritage au milieu de leurs frères: c’est Dieu qui est leur héritage, comme il le leur a déclaré.</p></div>
+    </div><div class="seif" id="v-18-3">
+      <span class="seif-num">18:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזֶ֡ה יִהְיֶה֩ מִשְׁפַּ֨ט הַכֹּהֲנִ֜ים מֵאֵ֣ת הָעָ֗ם מֵאֵ֛ת זֹבְחֵ֥י הַזֶּ֖בַח אִם־שׁ֣וֹר אִם־שֶׂ֑ה וְנָתַן֙ לַכֹּהֵ֔ן הַזְּרֹ֥עַ וְהַלְּחָיַ֖יִם וְהַקֵּבָֽה׃</p></div><div class="heb-s"><p>וזה יהיה משפט הכהנים מאת העם מאת זבחי הזבח אם־שור אם־שה ונתן לכהן הזרע והלחיים והקבה׃</p></div></div>
+      <div class="texte-fr"><p>Voici quel sera le droit dû aux pontifes par le peuple, par quiconque tuera une bête, soit de gros ou de menu bétail: il en donnera au pontife l’épaule, les mâchoires et l’estomac.</p></div>
+    </div><div class="seif" id="v-18-4">
+      <span class="seif-num">18:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֵאשִׁ֨ית דְּגָֽנְךָ֜ תִּירֹשְׁךָ֣ וְיִצְהָרֶ֗ךָ וְרֵאשִׁ֛ית גֵּ֥ז צֹאנְךָ֖ תִּתֶּן־לֽוֹ׃</p></div><div class="heb-s"><p>ראשית דגנך תירשך ויצהרך וראשית גז צאנך תתן־לו׃</p></div></div>
+      <div class="texte-fr"><p>Les prémices de ton blé, de ton vin, de ton huile, les prémices de la toison de ton menu bétail, tu les lui donneras.</p></div>
+    </div><div class="seif" id="v-18-5">
+      <span class="seif-num">18:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י ב֗וֹ בָּחַ֛ר יְהֹוָ֥ה אֱלֹהֶ֖יךָ מִכׇּל־שְׁבָטֶ֑יךָ לַעֲמֹ֨ד לְשָׁרֵ֧ת בְּשֵׁם־יְהֹוָ֛ה ה֥וּא וּבָנָ֖יו כׇּל־הַיָּמִֽים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי בו בחר יהוה אלהיך מכל־שבטיך לעמד לשרת בשם־יהוה הוא ובניו כל־הימים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Car c’est lui que l’Éternel, ton Dieu, a désigné entre toutes les tribus, pour remplir, en permanence, son ministère au nom de l’Éternel, de père en fils, à jamais.</p></div>
+    </div><div class="seif" id="v-18-6">
+      <span class="seif-num">18:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יָבֹ֨א הַלֵּוִ֜י מֵאַחַ֤ד שְׁעָרֶ֙יךָ֙ מִכׇּל־יִשְׂרָאֵ֔ל אֲשֶׁר־ה֖וּא גָּ֣ר שָׁ֑ם וּבָא֙ בְּכׇל־אַוַּ֣ת נַפְשׁ֔וֹ אֶל־הַמָּק֖וֹם אֲשֶׁר־יִבְחַ֥ר יְהֹוָֽה׃</p></div><div class="heb-s"><p>וכי־יבא הלוי מאחד שעריך מכל־ישראל אשר־הוא גר שם ובא בכל־אות נפשו אל־המקום אשר־יבחר יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Lorsque le Lévite, quittant l’une de tes villes, une localité quelconque en Israël où il habite, viendra, de son plein gré, à l’endroit élu par le Seigneur,</p></div>
+    </div><div class="seif" id="v-18-7">
+      <span class="seif-num">18:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשֵׁרֵ֕ת בְּשֵׁ֖ם יְהֹוָ֣ה אֱלֹהָ֑יו כְּכׇל־אֶחָיו֙ הַלְוִיִּ֔ם הָעֹמְדִ֥ים שָׁ֖ם לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ושרת בשם יהוה אלהיו ככל־אחיו הלוים העמדים שם לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>il pourra servir au nom de l’Éternel, son Dieu, comme tous ses frères les Lévites, qui se tiennent là devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-18-8">
+      <span class="seif-num">18:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֵ֥לֶק כְּחֵ֖לֶק יֹאכֵ֑לוּ לְבַ֥ד מִמְכָּרָ֖יו עַל־הָאָבֽוֹת׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>חלק כחלק יאכלו לבד ממכריו על־האבות׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Il jouira d’une portion égale à la leur, indépendamment de ses ventes sur les biens paternels.</p></div>
+    </div><div class="seif" id="v-18-9">
+      <span class="seif-num">18:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י אַתָּה֙ בָּ֣א אֶל־הָאָ֔רֶץ אֲשֶׁר־יְהֹוָ֥ה אֱלֹהֶ֖יךָ נֹתֵ֣ן לָ֑ךְ לֹֽא־תִלְמַ֣ד לַעֲשׂ֔וֹת כְּתוֹעֲבֹ֖ת הַגּוֹיִ֥ם הָהֵֽם׃</p></div><div class="heb-s"><p>כי אתה בא אל־הארץ אשר־יהוה אלהיך נתן לך לא־תלמד לעשות כתועבת הגוים ההם׃</p></div></div>
+      <div class="texte-fr"><p>Quand tu seras entré dans le pays que l’Éternel, ton Dieu, te donne, ne t’habitue pas à imiter les abominations de ces peuples-là.</p></div>
+    </div><div class="seif" id="v-18-10">
+      <span class="seif-num">18:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יִמָּצֵ֣א בְךָ֔ מַעֲבִ֥יר בְּנֽוֹ־וּבִתּ֖וֹ בָּאֵ֑שׁ קֹסֵ֣ם קְסָמִ֔ים מְעוֹנֵ֥ן וּמְנַחֵ֖שׁ וּמְכַשֵּֽׁף׃</p></div><div class="heb-s"><p>לא־ימצא בך מעביר בנו־ובתו באש קסם קסמים מעונן ומנחש ומכשף׃</p></div></div>
+      <div class="texte-fr"><p>Qu’il ne se trouve personne, chez toi, qui fasse passer par le feu son fils ou sa fille; qui pratique des enchantements, qui s’adonne aux augures, à la divination, à la magie</p></div>
+    </div><div class="seif" id="v-18-11">
+      <span class="seif-num">18:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחֹבֵ֖ר חָ֑בֶר וְשֹׁאֵ֥ל אוֹב֙ וְיִדְּעֹנִ֔י וְדֹרֵ֖שׁ אֶל־הַמֵּתִֽים׃</p></div><div class="heb-s"><p>וחבר חבר ושאל אוב וידעני ודרש אל־המתים׃</p></div></div>
+      <div class="texte-fr"><p>qui emploie des charmes, qui ait recours aux évocations ou aux sortilèges ou qui interroge les morts.</p></div>
+    </div><div class="seif" id="v-18-12">
+      <span class="seif-num">18:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תוֹעֲבַ֥ת יְהֹוָ֖ה כׇּל־עֹ֣שֵׂה אֵ֑לֶּה וּבִגְלַל֙ הַתּוֹעֵבֹ֣ת הָאֵ֔לֶּה יְהֹוָ֣ה אֱלֹהֶ֔יךָ מוֹרִ֥ישׁ אוֹתָ֖ם מִפָּנֶֽיךָ׃</p></div><div class="heb-s"><p>כי־תועבת יהוה כל־עשה אלה ובגלל התועבת האלה יהוה אלהיך מוריש אותם מפניך׃</p></div></div>
+      <div class="texte-fr"><p>Car l’Éternel a horreur de quiconque fait pareilles choses; et c’est à cause de telles abominations que l’Éternel, ton Dieu, dépossède ces peuples à ton profit.</p></div>
+    </div><div class="seif" id="v-18-13">
+      <span class="seif-num">18:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּמִ֣ים תִּֽהְיֶ֔ה עִ֖ם יְהֹוָ֥ה אֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>תמים תהיה עם יהוה אלהיך׃</p></div></div>
+      <div class="texte-fr"><p>Reste entièrement avec l’Éternel, ton Dieu!</p></div>
+    </div><div class="seif" id="v-18-14">
+      <span class="seif-num">18:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י&thinsp;<b>׀</b> הַגּוֹיִ֣ם הָאֵ֗לֶּה אֲשֶׁ֤ר אַתָּה֙ יוֹרֵ֣שׁ אוֹתָ֔ם אֶל־מְעֹנְנִ֥ים וְאֶל־קֹסְמִ֖ים יִשְׁמָ֑עוּ וְאַתָּ֕ה לֹ֣א כֵ֔ן נָ֥תַן לְךָ֖ יְהֹוָ֥ה אֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>כי&thinsp;<b>׀</b> הגוים האלה אשר אתה יורש אותם אל־מעננים ואל־קסמים ישמעו ואתה לא כן נתן לך יהוה אלהיך׃</p></div></div>
+      <div class="texte-fr"><p>Car ces nations que tu vas déposséder ajoutent foi à des augures et à des enchanteurs; mais toi, ce n’est pas là ce que t’a départi l’Éternel, ton Dieu.</p></div>
+    </div><div class="seif" id="v-18-15">
+      <span class="seif-num">18:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָבִ֨יא מִקִּרְבְּךָ֤ מֵאַחֶ֙יךָ֙ כָּמֹ֔נִי יָקִ֥ים לְךָ֖ יְהֹוָ֣ה אֱלֹהֶ֑יךָ אֵלָ֖יו תִּשְׁמָעֽוּן׃</p></div><div class="heb-s"><p>נביא מקרבך מאחיך כמני יקים לך יהוה אלהיך אליו תשמעון׃</p></div></div>
+      <div class="texte-fr"><p>C’est un prophète sorti de tes rangs, un de tes frères comme moi, que l’Éternel, ton Dieu, suscitera en ta faveur: c’est lui que vous devez écouter!</p></div>
+    </div><div class="seif" id="v-18-16">
+      <span class="seif-num">18:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּכֹ֨ל אֲשֶׁר־שָׁאַ֜לְתָּ מֵעִ֨ם יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ בְּחֹרֵ֔ב בְּי֥וֹם הַקָּהָ֖ל לֵאמֹ֑ר לֹ֣א אֹסֵ֗ף לִשְׁמֹ֙עַ֙ אֶת־קוֹל֙ יְהֹוָ֣ה אֱלֹהָ֔י וְאֶת־הָאֵ֨שׁ הַגְּדֹלָ֥ה הַזֹּ֛את לֹֽא־אֶרְאֶ֥ה ע֖וֹד וְלֹ֥א אָמֽוּת׃</p></div><div class="heb-s"><p>ככל אשר־שאלת מעם יהוה אלהיך בחרב ביום הקהל לאמר לא אסף לשמע את־קול יהוה אלהי ואת־האש הגדלה הזאת לא־אראה עוד ולא אמות׃</p></div></div>
+      <div class="texte-fr"><p>Absolument comme tu l’as demandé à l’Éternel, ton Dieu, au mont Horeb, le jour de la convocation, quand tu as dit: "Je ne veux plus entendre la voix de l’Éternel, mon Dieu, et ce feu intense, je ne veux plus le voir, de peur d’en mourir;</p></div>
+    </div><div class="seif" id="v-18-17">
+      <span class="seif-num">18:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר יְהֹוָ֖ה אֵלָ֑י הֵיטִ֖יבוּ אֲשֶׁ֥ר דִּבֵּֽרוּ׃</p></div><div class="heb-s"><p>ויאמר יהוה אלי היטיבו אשר דברו׃</p></div></div>
+      <div class="texte-fr"><p>et le Seigneur me dit alors: "Ils ont bien parlé.</p></div>
+    </div><div class="seif" id="v-18-18">
+      <span class="seif-num">18:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>נָבִ֨יא אָקִ֥ים לָהֶ֛ם מִקֶּ֥רֶב אֲחֵיהֶ֖ם כָּמ֑וֹךָ וְנָתַתִּ֤י דְבָרַי֙ בְּפִ֔יו וְדִבֶּ֣ר אֲלֵיהֶ֔ם אֵ֖ת כׇּל־אֲשֶׁ֥ר אֲצַוֶּֽנּוּ׃</p></div><div class="heb-s"><p>נביא אקים להם מקרב אחיהם כמוך ונתתי דברי בפיו ודבר אליהם את כל־אשר אצונו׃</p></div></div>
+      <div class="texte-fr"><p>Je leur susciterai un prophète du milieu de leurs frères, tel que toi, et je mettrai mes paroles dans sa bouche, et il leur dira tout ce que je lui ordonnerai.</p></div>
+    </div><div class="seif" id="v-18-19">
+      <span class="seif-num">18:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֗ה הָאִישׁ֙ אֲשֶׁ֤ר לֹֽא־יִשְׁמַע֙ אֶל־דְּבָרַ֔י אֲשֶׁ֥ר יְדַבֵּ֖ר בִּשְׁמִ֑י אָנֹכִ֖י אֶדְרֹ֥שׁ מֵעִמּֽוֹ׃</p></div><div class="heb-s"><p>והיה האיש אשר לא־ישמע אל־דברי אשר ידבר בשמי אנכי אדרש מעמו׃</p></div></div>
+      <div class="texte-fr"><p>Et alors, celui qui n’obéira pas à mes paroles, qu’il énoncera en mon nom, c’est moi qui lui demanderai compte!</p></div>
+    </div><div class="seif" id="v-18-20">
+      <span class="seif-num">18:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ הַנָּבִ֡יא אֲשֶׁ֣ר יָזִיד֩ לְדַבֵּ֨ר דָּבָ֜ר בִּשְׁמִ֗י אֵ֣ת אֲשֶׁ֤ר לֹֽא־צִוִּיתִיו֙ לְדַבֵּ֔ר וַאֲשֶׁ֣ר יְדַבֵּ֔ר בְּשֵׁ֖ם אֱלֹהִ֣ים אֲחֵרִ֑ים וּמֵ֖ת הַנָּבִ֥יא הַהֽוּא׃</p></div><div class="heb-s"><p>אך הנביא אשר יזיד לדבר דבר בשמי את אשר לא־צויתיו לדבר ואשר ידבר בשם אלהים אחרים ומת הנביא ההוא׃</p></div></div>
+      <div class="texte-fr"><p>Toutefois, si un prophète avait l’audace d’annoncer en mon nom une chose que je ne lui aurais pas enjoint d’annoncer, ou s’il parlait au nom d’un divinité étrangère, ce prophète doit mourir."</p></div>
+    </div><div class="seif" id="v-18-21">
+      <span class="seif-num">18:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֥י תֹאמַ֖ר בִּלְבָבֶ֑ךָ אֵיכָה֙ נֵדַ֣ע אֶת־הַדָּבָ֔ר אֲשֶׁ֥ר לֹא־דִבְּר֖וֹ יְהֹוָֽה׃</p></div><div class="heb-s"><p>וכי תאמר בלבבך איכה נדע את־הדבר אשר לא־דברו יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Mais, diras-tu en toi-même, comment reconnaîtrons-nous la parole qui n’émane pas de l’Éternel?</p></div>
+    </div><div class="seif" id="v-18-22">
+      <span class="seif-num">18:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁר֩ יְדַבֵּ֨ר הַנָּבִ֜יא בְּשֵׁ֣ם יְהֹוָ֗ה וְלֹֽא־יִהְיֶ֤ה הַדָּבָר֙ וְלֹ֣א יָבֹ֔א ה֣וּא הַדָּבָ֔ר אֲשֶׁ֥ר לֹא־דִבְּר֖וֹ יְהֹוָ֑ה בְּזָדוֹן֙ דִּבְּר֣וֹ הַנָּבִ֔יא לֹ֥א תָג֖וּר מִמֶּֽנּוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>אשר ידבר הנביא בשם יהוה ולא־יהיה הדבר ולא יבא הוא הדבר אשר לא־דברו יהוה בזדון דברו הנביא לא תגור ממנו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Si le prophète annonce de la part de l’Éternel une chose qui ne saurait être, ou qui n’est pas suivie d’effet, cette annonce n’aura pas été dictée par l’Éternel; c’est avec témérité que le prophète l’a émise, ne crains pas de sévir à son égard.</p></div>
+    </div><div class="seif" id="v-19-1">
+      <span class="seif-num">19:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יַכְרִ֞ית יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ אֶת־הַגּוֹיִ֔ם אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ אֶת־אַרְצָ֑ם וִֽירִשְׁתָּ֕ם וְיָשַׁבְתָּ֥ בְעָרֵיהֶ֖ם וּבְבָתֵּיהֶֽם׃</p></div><div class="heb-s"><p>כי־יכרית יהוה אלהיך את־הגוים אשר יהוה אלהיך נתן לך את־ארצם וירשתם וישבת בעריהם ובבתיהם׃</p></div></div>
+      <div class="texte-fr"><p>"Quand l’Éternel, ton Dieu, aura fait disparaître les peuples dont il te donne le territoire, quand tu les auras dépossédés et que tu seras établi dans leurs villes et dans leurs maisons,</p></div>
+    </div><div class="seif" id="v-19-2">
+      <span class="seif-num">19:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁל֥וֹשׁ עָרִ֖ים תַּבְדִּ֣יל לָ֑ךְ בְּת֣וֹךְ אַרְצְךָ֔ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ לְרִשְׁתָּֽהּ׃</p></div><div class="heb-s"><p>שלוש ערים תבדיל לך בתוך ארצך אשר יהוה אלהיך נתן לך לרשתה׃</p></div></div>
+      <div class="texte-fr"><p>tu te réserveras trois villes dans ce pays dont l’Éternel, ton Dieu, t’accorde la possession.</p></div>
+    </div><div class="seif" id="v-19-3">
+      <span class="seif-num">19:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>תָּכִ֣ין לְךָ֮ הַדֶּ֒רֶךְ֒ וְשִׁלַּשְׁתָּ֙ אֶת־גְּב֣וּל אַרְצְךָ֔ אֲשֶׁ֥ר יַנְחִֽילְךָ֖ יְהֹוָ֣ה אֱלֹהֶ֑יךָ וְהָיָ֕ה לָנ֥וּס שָׁ֖מָּה כׇּל־רֹצֵֽחַ׃</p></div><div class="heb-s"><p>תכין לך הדרך ושלשת את־גבול ארצך אשר ינחילך יהוה אלהיך והיה לנוס שמה כל־רצח׃</p></div></div>
+      <div class="texte-fr"><p>Tu devras en faciliter l’accès et diviser en trois parts le territoire du pays que l’Éternel, ton Dieu, te fera échoir; et cela, pour que tout meurtrier s’y puisse réfugier.</p></div>
+    </div><div class="seif" id="v-19-4">
+      <span class="seif-num">19:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזֶה֙ דְּבַ֣ר הָרֹצֵ֔חַ אֲשֶׁר־יָנ֥וּס שָׁ֖מָּה וָחָ֑י אֲשֶׁ֨ר יַכֶּ֤ה אֶת־רֵעֵ֙הוּ֙ בִּבְלִי־דַ֔עַת וְה֛וּא לֹא־שֹׂנֵ֥א ל֖וֹ מִתְּמֹ֥ל שִׁלְשֹֽׁם׃</p></div><div class="heb-s"><p>וזה דבר הרצח אשר־ינוס שמה וחי אשר יכה את־רעהו בבלי־דעת והוא לא־שנא לו מתמל שלשם׃</p></div></div>
+      <div class="texte-fr"><p>Or, voici dans quel cas le meurtrier, en s’y réfugiant, aura la vie sauve: s’il a frappé son prochain sans intention, n’ayant pas été son ennemi antérieurement.</p></div>
+    </div><div class="seif" id="v-19-5">
+      <span class="seif-num">19:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲשֶׁר֩ יָבֹ֨א אֶת־רֵעֵ֥הוּ בַיַּ֘עַר֮ לַחְטֹ֣ב עֵצִים֒ וְנִדְּחָ֨ה יָד֤וֹ בַגַּרְזֶן֙ לִכְרֹ֣ת הָעֵ֔ץ וְנָשַׁ֤ל הַבַּרְזֶל֙ מִן־הָעֵ֔ץ וּמָצָ֥א אֶת־רֵעֵ֖הוּ וָמֵ֑ת ה֗וּא יָנ֛וּס אֶל־אַחַ֥ת הֶעָרִים־הָאֵ֖לֶּה וָחָֽי׃</p></div><div class="heb-s"><p>ואשר יבא את־רעהו ביער לחטב עצים ונדחה ידו בגרזן לכרת העץ ונשל הברזל מן־העץ ומצא את־רעהו ומת הוא ינוס אל־אחת הערים־האלה וחי׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi, il entre avec son compagnon dans la forêt pour abattre du bois; sa main brandissant la cognée pour couper l’arbre, le fer s’échappe du manche et atteint le compagnon, qui en meurt: l’autre alors pourra fuir dans une de ces villes et sauver sa vie.</p></div>
+    </div><div class="seif" id="v-19-6">
+      <span class="seif-num">19:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>פֶּן־יִרְדֹּף֩ גֹּאֵ֨ל הַדָּ֜ם אַחֲרֵ֣י הָרֹצֵ֗חַ כִּי־יֵחַם֮ לְבָבוֹ֒ וְהִשִּׂיג֛וֹ כִּֽי־יִרְבֶּ֥ה הַדֶּ֖רֶךְ וְהִכָּ֣הוּ נָ֑פֶשׁ וְלוֹ֙ אֵ֣ין מִשְׁפַּט־מָ֔וֶת כִּ֠י לֹ֣א שֹׂנֵ֥א ה֛וּא ל֖וֹ מִתְּמ֥וֹל שִׁלְשֽׁוֹם׃</p></div><div class="heb-s"><p>פן־ירדף גאל הדם אחרי הרצח כי־יחם לבבו והשיגו כי־ירבה הדרך והכהו נפש ולו אין משפט־מות כי לא שנא הוא לו מתמול שלשום׃</p></div></div>
+      <div class="texte-fr"><p>Autrement, le vengeur du sang pourrait, dans l’effervescence de son cœur, courir sus au meurtrier, l’atteindre si le chemin était long, et lui porter un coup mortel; et cependant, il ne méritait point la mort, puisqu’il ne haïssait pas l’autre antérieurement.</p></div>
+    </div><div class="seif" id="v-19-7">
+      <span class="seif-num">19:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֛ן אָנֹכִ֥י מְצַוְּךָ֖ לֵאמֹ֑ר שָׁלֹ֥שׁ עָרִ֖ים תַּבְדִּ֥יל לָֽךְ׃</p></div><div class="heb-s"><p>על־כן אנכי מצוך לאמר שלש ערים תבדיל לך׃</p></div></div>
+      <div class="texte-fr"><p>C’est pour cela que je te donne cet ordre: Réserve-toi trois villes.</p></div>
+    </div><div class="seif" id="v-19-8">
+      <span class="seif-num">19:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־יַרְחִ֞יב יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ אֶת־גְּבֻ֣לְךָ֔ כַּאֲשֶׁ֥ר נִשְׁבַּ֖ע לַאֲבֹתֶ֑יךָ וְנָ֤תַן לְךָ֙ אֶת־כׇּל־הָאָ֔רֶץ אֲשֶׁ֥ר דִּבֶּ֖ר לָתֵ֥ת לַאֲבֹתֶֽיךָ׃</p></div><div class="heb-s"><p>ואם־ירחיב יהוה אלהיך את־גבלך כאשר נשבע לאבתיך ונתן לך את־כל־הארץ אשר דבר לתת לאבתיך׃</p></div></div>
+      <div class="texte-fr"><p>Que si l’Éternel, ton Dieu, élargit ta frontière, comme il l’a juré à tes ancêtres, et te donne la région entière qu’il a déclaré octroyer à tes pères,</p></div>
+    </div><div class="seif" id="v-19-9">
+      <span class="seif-num">19:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תִשְׁמֹר֩ אֶת־כׇּל־הַמִּצְוָ֨ה הַזֹּ֜את לַעֲשֹׂתָ֗הּ אֲשֶׁ֨ר אָנֹכִ֣י מְצַוְּךָ֮ הַיּוֹם֒ לְאַהֲבָ֞ה אֶת־יְהֹוָ֧ה אֱלֹהֶ֛יךָ וְלָלֶ֥כֶת בִּדְרָכָ֖יו כׇּל־הַיָּמִ֑ים וְיָסַפְתָּ֨ לְךָ֥ עוֹד֙ שָׁלֹ֣שׁ עָרִ֔ים עַ֖ל הַשָּׁלֹ֥שׁ הָאֵֽלֶּה׃</p></div><div class="heb-s"><p>כי־תשמר את־כל־המצוה הזאת לעשתה אשר אנכי מצוך היום לאהבה את־יהוה אלהיך וללכת בדרכיו כל־הימים ויספת לך עוד שלש ערים על השלש האלה׃</p></div></div>
+      <div class="texte-fr"><p>à condition que tu t’appliques à accomplir toute cette loi que je t’impose en ce jour, d’aimer l’Éternel, ton Dieu, et de marcher constamment dans ses voies, alors tu ajouteras encore trois villes à ces trois-là;</p></div>
+    </div><div class="seif" id="v-19-10">
+      <span class="seif-num">19:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֤א יִשָּׁפֵךְ֙ דָּ֣ם נָקִ֔י בְּקֶ֣רֶב אַרְצְךָ֔ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ נַחֲלָ֑ה וְהָיָ֥ה עָלֶ֖יךָ דָּמִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ולא ישפך דם נקי בקרב ארצך אשר יהוה אלהיך נתן לך נחלה והיה עליך דמים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>afin que le sang innocent ne soit pas répandu au sein de ce pays que l’Éternel, ton Dieu, te donne pour héritage, et qu’une responsabilité sanglante ne pèse point sur toi.</p></div>
+    </div><div class="seif" id="v-19-11">
+      <span class="seif-num">19:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יִהְיֶ֥ה אִישׁ֙ שֹׂנֵ֣א לְרֵעֵ֔הוּ וְאָ֤רַב לוֹ֙ וְקָ֣ם עָלָ֔יו וְהִכָּ֥הוּ נֶ֖פֶשׁ וָמֵ֑ת וְנָ֕ס אֶל־אַחַ֖ת הֶעָרִ֥ים הָאֵֽל׃</p></div><div class="heb-s"><p>וכי־יהיה איש שנא לרעהו וארב לו וקם עליו והכהו נפש ומת ונס אל־אחת הערים האל׃</p></div></div>
+      <div class="texte-fr"><p>Mais si quelqu’un, animé de haine pour son prochain, le guette, se jette sur lui et le frappe de manière à lui donner la mort, puis se réfugie dans une des villes en question,</p></div>
+    </div><div class="seif" id="v-19-12">
+      <span class="seif-num">19:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָֽׁלְחוּ֙ זִקְנֵ֣י עִיר֔וֹ וְלָקְח֥וּ אֹת֖וֹ מִשָּׁ֑ם וְנָתְנ֣וּ אֹת֗וֹ בְּיַ֛ד גֹּאֵ֥ל הַדָּ֖ם וָמֵֽת׃</p></div><div class="heb-s"><p>ושלחו זקני עירו ולקחו אתו משם ונתנו אתו ביד גאל הדם ומת׃</p></div></div>
+      <div class="texte-fr"><p>les anciens de sa ville le feront extraire de là et le livreront au vengeur du sang pour qu’il meure.</p></div>
+    </div><div class="seif" id="v-19-13">
+      <span class="seif-num">19:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹא־תָח֥וֹס עֵֽינְךָ֖ עָלָ֑יו וּבִֽעַרְתָּ֧ דַֽם־הַנָּקִ֛י מִיִּשְׂרָאֵ֖ל וְט֥וֹב לָֽךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לא־תחוס עינך עליו ובערת דם־הנקי מישראל וטוב לך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Que ton œil soit sans pitié pour lui; tu feras disparaître d’Israël le sang innocent, et tu t’en trouveras bien.</p></div>
+    </div><div class="seif" id="v-19-14">
+      <span class="seif-num">19:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֤א תַסִּיג֙ גְּב֣וּל רֵֽעֲךָ֔ אֲשֶׁ֥ר גָּבְל֖וּ רִאשֹׁנִ֑ים בְּנַחֲלָֽתְךָ֙ אֲשֶׁ֣ר תִּנְחַ֔ל בָּאָ֕רֶץ אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לא תסיג גבול רעך אשר גבלו ראשנים בנחלתך אשר תנחל בארץ אשר יהוה אלהיך נתן לך לרשתה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ne déplace point la borne de ton voisin, telle que l’auront posée les devanciers, dans le lot qui te sera échu sur le territoire dont l’Éternel, ton Dieu, t’accorde la possession.</p></div>
+    </div><div class="seif" id="v-19-15">
+      <span class="seif-num">19:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יָקוּם֩ עֵ֨ד אֶחָ֜ד בְּאִ֗ישׁ לְכׇל־עָוֺן֙ וּלְכׇל־חַטָּ֔את בְּכׇל־חֵ֖טְא אֲשֶׁ֣ר יֶֽחֱטָ֑א עַל־פִּ֣י&thinsp;<b>׀</b> שְׁנֵ֣י עֵדִ֗ים א֛וֹ עַל־פִּ֥י שְׁלֹשָֽׁה־עֵדִ֖ים יָק֥וּם דָּבָֽר׃</p></div><div class="heb-s"><p>לא־יקום עד אחד באיש לכל־עון ולכל־חטאת בכל־חטא אשר יחטא על־פי&thinsp;<b>׀</b> שני עדים או על־פי שלשה־עדים יקום דבר׃</p></div></div>
+      <div class="texte-fr"><p>Un témoignage isolé ne sera pas valable contre une personne, quel que soit le crime ou le délit, quelque faute qui lui soit imputée: c’est par la déposition de deux témoins, ou de trois, qu’un fait sera établi.</p></div>
+    </div><div class="seif" id="v-19-16">
+      <span class="seif-num">19:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יָק֥וּם עֵד־חָמָ֖ס בְּאִ֑ישׁ לַעֲנ֥וֹת בּ֖וֹ סָרָֽה׃</p></div><div class="heb-s"><p>כי־יקום עד־חמס באיש לענות בו סרה׃</p></div></div>
+      <div class="texte-fr"><p>Si un témoin malveillant se présente contre un individu, pour l’accuser d’un méfait,</p></div>
+    </div><div class="seif" id="v-19-17">
+      <span class="seif-num">19:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָמְד֧וּ שְׁנֵֽי־הָאֲנָשִׁ֛ים אֲשֶׁר־לָהֶ֥ם הָרִ֖יב לִפְנֵ֣י יְהֹוָ֑ה לִפְנֵ֤י הַכֹּֽהֲנִים֙ וְהַשֹּׁ֣פְטִ֔ים אֲשֶׁ֥ר יִהְי֖וּ בַּיָּמִ֥ים הָהֵֽם׃</p></div><div class="heb-s"><p>ועמדו שני־האנשים אשר־להם הריב לפני יהוה לפני הכהנים והשפטים אשר יהיו בימים ההם׃</p></div></div>
+      <div class="texte-fr"><p>les deux personnes intéressées dans le débat comparaîtront devant l’Éternel, devant les pontifes et les juges en fonctions à cette époque.</p></div>
+    </div><div class="seif" id="v-19-18">
+      <span class="seif-num">19:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְדָרְשׁ֥וּ הַשֹּׁפְטִ֖ים הֵיטֵ֑ב וְהִנֵּ֤ה עֵֽד־שֶׁ֙קֶר֙ הָעֵ֔ד שֶׁ֖קֶר עָנָ֥ה בְאָחִֽיו׃</p></div><div class="heb-s"><p>ודרשו השפטים היטב והנה עד־שקר העד שקר ענה באחיו׃</p></div></div>
+      <div class="texte-fr"><p>Ceux-ci examineront attentivement; et si ce témoin est un faux témoin, si c’est un mensonge qu’il a articulé contre son frère,</p></div>
+    </div><div class="seif" id="v-19-19">
+      <span class="seif-num">19:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשִׂ֣יתֶם ל֔וֹ כַּאֲשֶׁ֥ר זָמַ֖ם לַעֲשׂ֣וֹת לְאָחִ֑יו וּבִֽעַרְתָּ֥ הָרָ֖ע מִקִּרְבֶּֽךָ׃</p></div><div class="heb-s"><p>ועשיתם לו כאשר זמם לעשות לאחיו ובערת הרע מקרבך׃</p></div></div>
+      <div class="texte-fr"><p>vous le traiterez comme il a eu dessein de faire traiter son frère, et tu extirperas le mal du milieu de toi.</p></div>
+    </div><div class="seif" id="v-19-20">
+      <span class="seif-num">19:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנִּשְׁאָרִ֖ים יִשְׁמְע֣וּ וְיִרָ֑אוּ וְלֹֽא־יֹסִ֨פוּ לַעֲשׂ֜וֹת ע֗וֹד כַּדָּבָ֥ר הָרָ֛ע הַזֶּ֖ה בְּקִרְבֶּֽךָ׃</p></div><div class="heb-s"><p>והנשארים ישמעו ויראו ולא־יספו לעשות עוד כדבר הרע הזה בקרבך׃</p></div></div>
+      <div class="texte-fr"><p>Les autres l’apprendront et seront intimidés, et l’on n’osera plus commettre une aussi mauvaise action chez toi.</p></div>
+    </div><div class="seif" id="v-19-21">
+      <span class="seif-num">19:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֥א תָח֖וֹס עֵינֶ֑ךָ נֶ֣פֶשׁ בְּנֶ֗פֶשׁ עַ֤יִן בְּעַ֙יִן֙ שֵׁ֣ן בְּשֵׁ֔ן יָ֥ד בְּיָ֖ד רֶ֥גֶל בְּרָֽגֶל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ולא תחוס עינך נפש בנפש עין בעין שן בשן יד ביד רגל ברגל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ne laisse donc point s’attendrir ton regard: vie pour vie, œil pour œil, dent pour dent, main pour main, pied pour pied!</p></div>
+    </div><div class="seif" id="v-20-1">
+      <span class="seif-num">20:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תֵצֵ֨א לַמִּלְחָמָ֜ה עַל־אֹיְבֶ֗ךָ וְֽרָאִ֜יתָ ס֤וּס וָרֶ֙כֶב֙ עַ֚ם רַ֣ב מִמְּךָ֔ לֹ֥א תִירָ֖א מֵהֶ֑ם כִּֽי־יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ עִמָּ֔ךְ הַמַּֽעַלְךָ֖ מֵאֶ֥רֶץ מִצְרָֽיִם׃</p></div><div class="heb-s"><p>כי־תצא למלחמה על־איבך וראית סוס ורכב עם רב ממך לא תירא מהם כי־יהוה אלהיך עמך המעלך מארץ מצרים׃</p></div></div>
+      <div class="texte-fr"><p>"Quand tu t’avanceras contre tes ennemis pour leur livrer bataille, et que tu verras cavalerie et chariots de guerre, une armée supérieure à la tienne, n’en sois pas effrayé; car tu as avec toi l’Éternel, ton Dieu, qui t’a fait sortir du pays d’Égypte.</p></div>
+    </div><div class="seif" id="v-20-2">
+      <span class="seif-num">20:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֕ה כְּקָֽרׇבְכֶ֖ם אֶל־הַמִּלְחָמָ֑ה וְנִגַּ֥שׁ הַכֹּהֵ֖ן וְדִבֶּ֥ר אֶל־הָעָֽם׃</p></div><div class="heb-s"><p>והיה כקרבכם אל־המלחמה ונגש הכהן ודבר אל־העם׃</p></div></div>
+      <div class="texte-fr"><p>Or, quand vous serez sur le point de combattre, le pontife s’avancera et parlera au peuple.</p></div>
+    </div><div class="seif" id="v-20-3">
+      <span class="seif-num">20:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָמַ֤ר אֲלֵהֶם֙ שְׁמַ֣ע יִשְׂרָאֵ֔ל אַתֶּ֨ם קְרֵבִ֥ים הַיּ֛וֹם לַמִּלְחָמָ֖ה עַל־אֹיְבֵיכֶ֑ם אַל־יֵרַ֣ךְ לְבַבְכֶ֗ם אַל־תִּֽירְא֧וּ וְאַֽל־תַּחְפְּז֛וּ וְאַל־תַּֽעַרְצ֖וּ מִפְּנֵיהֶֽם׃</p></div><div class="heb-s"><p>ואמר אלהם שמע ישראל אתם קרבים היום למלחמה על־איביכם אל־ירך לבבכם אל־תיראו ואל־תחפזו ואל־תערצו מפניהם׃</p></div></div>
+      <div class="texte-fr"><p>Il leur dira: "Ecoute, Israël! Vous allez, en ce moment, livrer bataille à vos ennemis; que votre courage ne mollisse point; soyez sans crainte, ne vous laissez ni déconcerter ni terrifier par eux.</p></div>
+    </div><div class="seif" id="v-20-4">
+      <span class="seif-num">20:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֚י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֔ם הַהֹלֵ֖ךְ עִמָּכֶ֑ם לְהִלָּחֵ֥ם לָכֶ֛ם עִם־אֹיְבֵיכֶ֖ם לְהוֹשִׁ֥יעַ אֶתְכֶֽם׃</p></div><div class="heb-s"><p>כי יהוה אלהיכם ההלך עמכם להלחם לכם עם־איביכם להושיע אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Car c’est l’Éternel, votre Dieu, qui marche avec vous, afin de combattre pour vous contre vos ennemis et de vous procurer la victoire."</p></div>
+    </div><div class="seif" id="v-20-5">
+      <span class="seif-num">20:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְדִבְּר֣וּ הַשֹּֽׁטְרִים֮ אֶל־הָעָ֣ם לֵאמֹר֒ מִֽי־הָאִ֞ישׁ אֲשֶׁ֨ר בָּנָ֤ה בַֽיִת־חָדָשׁ֙ וְלֹ֣א חֲנָכ֔וֹ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יַחְנְכֶֽנּוּ׃</p></div><div class="heb-s"><p>ודברו השטרים אל־העם לאמר מי־האיש אשר בנה בית־חדש ולא חנכו ילך וישב לביתו פן־ימות במלחמה ואיש אחר יחנכנו׃</p></div></div>
+      <div class="texte-fr"><p>Ensuite les préposés parleront au peuple en ces termes: "Si quelqu’un a bâti une maison neuve et n’en a pas encore pris possession, qu’il parte et s’en retourne à sa maison; car il pourrait mourir dans la bataille, et un autre en prendrait possession.</p></div>
+    </div><div class="seif" id="v-20-6">
+      <span class="seif-num">20:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִֽי־הָאִ֞ישׁ אֲשֶׁר־נָטַ֥ע כֶּ֙רֶם֙ וְלֹ֣א חִלְּל֔וֹ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יְחַלְּלֶֽנּוּ׃</p></div><div class="heb-s"><p>ומי־האיש אשר־נטע כרם ולא חללו ילך וישב לביתו פן־ימות במלחמה ואיש אחר יחללנו׃</p></div></div>
+      <div class="texte-fr"><p>Si quelqu’un a planté une vigne et n’en a pas encore acquis la jouissance, qu’il parte et s’en retourne chez lui; car il pourrait mourir dans la bataille, et un autre acquerrait cette jouissance.</p></div>
+    </div><div class="seif" id="v-20-7">
+      <span class="seif-num">20:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִֽי־הָאִ֞ישׁ אֲשֶׁר־אֵרַ֤שׂ אִשָּׁה֙ וְלֹ֣א לְקָחָ֔הּ יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ פֶּן־יָמוּת֙ בַּמִּלְחָמָ֔ה וְאִ֥ישׁ אַחֵ֖ר יִקָּחֶֽנָּה׃</p></div><div class="heb-s"><p>ומי־האיש אשר־ארש אשה ולא לקחה ילך וישב לביתו פן־ימות במלחמה ואיש אחר יקחנה׃</p></div></div>
+      <div class="texte-fr"><p>Et si quelqu’un a promis mariage à une femme et ne l’a pas encore épousée, qu’il parte et s’en retourne chez lui; car il pourrait mourir dans la bataille, et un autre homme l’épouserait."</p></div>
+    </div><div class="seif" id="v-20-8">
+      <span class="seif-num">20:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָסְפ֣וּ הַשֹּׁטְרִים֮ לְדַבֵּ֣ר אֶל־הָעָם֒ וְאָמְר֗וּ מִי־הָאִ֤ישׁ הַיָּרֵא֙ וְרַ֣ךְ הַלֵּבָ֔ב יֵלֵ֖ךְ וְיָשֹׁ֣ב לְבֵית֑וֹ וְלֹ֥א יִמַּ֛ס אֶת־לְבַ֥ב אֶחָ֖יו כִּלְבָבֽוֹ׃</p></div><div class="heb-s"><p>ויספו השטרים לדבר אל־העם ואמרו מי־האיש הירא ורך הלבב ילך וישב לביתו ולא ימס את־לבב אחיו כלבבו׃</p></div></div>
+      <div class="texte-fr"><p>Les préposés adresseront de nouveau la parole au peuple, et diront: "S’il est un homme qui ait peur et dont le cœur soit lâche, qu’il se retire et retourne chez lui, pour que le cœur de ses frères ne défaille point comme le sien!"</p></div>
+    </div><div class="seif" id="v-20-9">
+      <span class="seif-num">20:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֛ה כְּכַלֹּ֥ת הַשֹּׁטְרִ֖ים לְדַבֵּ֣ר אֶל־הָעָ֑ם וּפָ֥קְד֛וּ שָׂרֵ֥י צְבָא֖וֹת בְּרֹ֥אשׁ הָעָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>והיה ככלת השטרים לדבר אל־העם ופקדו שרי צבאות בראש העם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Alors, les préposés ayant fini de parler au peuple, on placera des officiers de légions à la tête de l’armée.</p></div>
+    </div><div class="seif" id="v-20-10">
+      <span class="seif-num">20:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תִקְרַ֣ב אֶל־עִ֔יר לְהִלָּחֵ֖ם עָלֶ֑יהָ וְקָרָ֥אתָ אֵלֶ֖יהָ לְשָׁלֽוֹם׃</p></div><div class="heb-s"><p>כי־תקרב אל־עיר להלחם עליה וקראת אליה לשלום׃</p></div></div>
+      <div class="texte-fr"><p>Quand tu marcheras sur une ville pour l’attaquer, tu l’inviteras d’abord à la paix.</p></div>
+    </div><div class="seif" id="v-20-11">
+      <span class="seif-num">20:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָה֙ אִם־שָׁל֣וֹם תַּֽעַנְךָ֔ וּפָתְחָ֖ה לָ֑ךְ וְהָיָ֞ה כׇּל־הָעָ֣ם הַנִּמְצָא־בָ֗הּ יִהְי֥וּ לְךָ֛ לָמַ֖ס וַעֲבָדֽוּךָ׃</p></div><div class="heb-s"><p>והיה אם־שלום תענך ופתחה לך והיה כל־העם הנמצא־בה יהיו לך למס ועבדוך׃</p></div></div>
+      <div class="texte-fr"><p>Alors, si elle te répond dans le sens de la paix et t’ouvre ses portes, tout ce qu’elle renferme d’habitants te devront tribut et te serviront.</p></div>
+    </div><div class="seif" id="v-20-12">
+      <span class="seif-num">20:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֤א תַשְׁלִים֙ עִמָּ֔ךְ וְעָשְׂתָ֥ה עִמְּךָ֖ מִלְחָמָ֑ה וְצַרְתָּ֖ עָלֶֽיהָ׃</p></div><div class="heb-s"><p>ואם־לא תשלים עמך ועשתה עמך מלחמה וצרת עליה׃</p></div></div>
+      <div class="texte-fr"><p>Mais si elle ne compose pas avec toi et veut te faire la guerre, tu assiégeras cette ville.</p></div>
+    </div><div class="seif" id="v-20-13">
+      <span class="seif-num">20:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּנְתָנָ֛הּ יְהֹוָ֥ה אֱלֹהֶ֖יךָ בְּיָדֶ֑ךָ וְהִכִּיתָ֥ אֶת־כׇּל־זְכוּרָ֖הּ לְפִי־חָֽרֶב׃</p></div><div class="heb-s"><p>ונתנה יהוה אלהיך בידך והכית את־כל־זכורה לפי־חרב׃</p></div></div>
+      <div class="texte-fr"><p>Et l’Éternel, ton Dieu, la livrera en ton pouvoir, et tu feras périr tous ses habitants mâles par le tranchant de l’épée.</p></div>
+    </div><div class="seif" id="v-20-14">
+      <span class="seif-num">20:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֣ק הַ֠נָּשִׁ֠ים וְהַטַּ֨ף וְהַבְּהֵמָ֜ה וְכֹל֩ אֲשֶׁ֨ר יִהְיֶ֥ה בָעִ֛יר כׇּל־שְׁלָלָ֖הּ תָּבֹ֣ז לָ֑ךְ וְאָֽכַלְתָּ֙ אֶת־שְׁלַ֣ל אֹיְבֶ֔יךָ אֲשֶׁ֥ר נָתַ֛ן יְהֹוָ֥ה אֱלֹהֶ֖יךָ לָֽךְ׃</p></div><div class="heb-s"><p>רק הנשים והטף והבהמה וכל אשר יהיה בעיר כל־שללה תבז לך ואכלת את־שלל איביך אשר נתן יהוה אלהיך לך׃</p></div></div>
+      <div class="texte-fr"><p>Il n’y aura que les femmes, les enfants, le bétail, et tout ce qui se trouvera dans la ville en fait de butin, que tu pourras capturer; et tu profiteras de la dépouille de tes ennemis, que l’Éternel, ton Dieu, t’aura livrée.</p></div>
+    </div><div class="seif" id="v-20-15">
+      <span class="seif-num">20:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֵּ֤ן תַּעֲשֶׂה֙ לְכׇל־הֶ֣עָרִ֔ים הָרְחֹקֹ֥ת מִמְּךָ֖ מְאֹ֑ד אֲשֶׁ֛ר לֹא־מֵעָרֵ֥י הַגּֽוֹיִם־הָאֵ֖לֶּה הֵֽנָּה׃</p></div><div class="heb-s"><p>כן תעשה לכל־הערים הרחקת ממך מאד אשר לא־מערי הגוים־האלה הנה׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi procéderas-tu pour toutes les villes situées très loin de chez toi, qui ne font point partie des villes de ces nations;</p></div>
+    </div><div class="seif" id="v-20-16">
+      <span class="seif-num">20:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֗ק מֵעָרֵ֤י הָֽעַמִּים֙ הָאֵ֔לֶּה אֲשֶׁר֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ נֹתֵ֥ן לְךָ֖ נַחֲלָ֑ה לֹ֥א תְחַיֶּ֖ה כׇּל־נְשָׁמָֽה׃</p></div><div class="heb-s"><p>רק מערי העמים האלה אשר יהוה אלהיך נתן לך נחלה לא תחיה כל־נשמה׃</p></div></div>
+      <div class="texte-fr"><p>mais dans les villes de ces peuples que l’Éternel, ton Dieu, te donne comme héritage, tu ne laisseras pas subsister une âme.</p></div>
+    </div><div class="seif" id="v-20-17">
+      <span class="seif-num">20:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־הַחֲרֵ֣ם תַּחֲרִימֵ֗ם הַחִתִּ֤י וְהָאֱמֹרִי֙ הַכְּנַעֲנִ֣י וְהַפְּרִזִּ֔י הַחִוִּ֖י וְהַיְבוּסִ֑י כַּאֲשֶׁ֥ר צִוְּךָ֖ יְהֹוָ֥ה אֱלֹהֶֽיךָ׃</p></div><div class="heb-s"><p>כי־החרם תחרימם החתי והאמרי הכנעני והפרזי החוי והיבוסי כאשר צוך יהוה אלהיך׃</p></div></div>
+      <div class="texte-fr"><p>Car tu dois les vouer à l’extermination, le Héthéen et l’Amorréen, le Cananéen et le Phérézéen, le Hévéen et le Jébuséen, comme te l’a commandé l’Éternel, ton Dieu,</p></div>
+    </div><div class="seif" id="v-20-18">
+      <span class="seif-num">20:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֗עַן אֲשֶׁ֨ר לֹֽא־יְלַמְּד֤וּ אֶתְכֶם֙ לַעֲשׂ֔וֹת כְּכֹל֙ תּֽוֹעֲבֹתָ֔ם אֲשֶׁ֥ר עָשׂ֖וּ לֵאלֹֽהֵיהֶ֑ם וַחֲטָאתֶ֖ם לַיהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>למען אשר לא־ילמדו אתכם לעשות ככל תועבתם אשר עשו לאלהיהם וחטאתם ליהוה אלהיכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>afin qu’ils ne vous apprennent pas à imiter toutes les abominations commises par eux en l’honneur de leurs dieux, et à devenir coupables envers l’Éternel, votre Dieu.</p></div>
+    </div><div class="seif" id="v-20-19">
+      <span class="seif-num">20:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־תָצ֣וּר אֶל־עִיר֩ יָמִ֨ים רַבִּ֜ים לְֽהִלָּחֵ֧ם עָלֶ֣יהָ לְתׇפְשָׂ֗הּ לֹֽא־תַשְׁחִ֤ית אֶת־עֵצָהּ֙ לִנְדֹּ֤חַ עָלָיו֙ גַּרְזֶ֔ן כִּ֚י מִמֶּ֣נּוּ תֹאכֵ֔ל וְאֹת֖וֹ לֹ֣א תִכְרֹ֑ת כִּ֤י הָֽאָדָם֙ עֵ֣ץ הַשָּׂדֶ֔ה לָבֹ֥א מִפָּנֶ֖יךָ בַּמָּצֽוֹר׃</p></div><div class="heb-s"><p>כי־תצור אל־עיר ימים רבים להלחם עליה לתפשה לא־תשחית את־עצה לנדח עליו גרזן כי ממנו תאכל ואתו לא תכרת כי האדם עץ השדה לבא מפניך במצור׃</p></div></div>
+      <div class="texte-fr"><p>Si tu es arrêté longtemps au siège d’une ville que tu attaques pour t’en rendre maître, tu ne dois cependant pas en détruire les arbres en portant sur eux la cognée: ce sont eux qui te nourrissent, tu ne dois pas les abattre. Oui, l’arbre du champ c’est l’homme même, tu l’épargneras dans les travaux du siège.</p></div>
+    </div><div class="seif" id="v-20-20">
+      <span class="seif-num">20:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>רַ֞ק עֵ֣ץ אֲשֶׁר־תֵּדַ֗ע כִּֽי־לֹא־עֵ֤ץ מַאֲכָל֙ ה֔וּא אֹת֥וֹ תַשְׁחִ֖ית וְכָרָ֑תָּ וּבָנִ֣יתָ מָצ֗וֹר עַל־הָעִיר֙ אֲשֶׁר־הִ֨וא עֹשָׂ֧ה עִמְּךָ֛ מִלְחָמָ֖ה עַ֥ד רִדְתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>רק עץ אשר־תדע כי־לא־עץ מאכל הוא אתו תשחית וכרת ובנית מצור על־העיר אשר־הוא עשה עמך מלחמה עד רדתה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Seulement, l’arbre que tu sauras n’être pas un arbre fruitier, celui-là tu peux le sacrifier et l’abattre, pour l’employer à des travaux de siège contre la ville qui est en guerre avec toi, jusqu’à ce qu’elle succombe.</p></div>
+    </div><div class="seif" id="v-21-1">
+      <span class="seif-num">21:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־יִמָּצֵ֣א חָלָ֗ל בָּאֲדָמָה֙ אֲשֶׁר֩ יְהֹוָ֨ה אֱלֹהֶ֜יךָ נֹתֵ֤ן לְךָ֙ לְרִשְׁתָּ֔הּ נֹפֵ֖ל בַּשָּׂדֶ֑ה לֹ֥א נוֹדַ֖ע מִ֥י הִכָּֽהוּ׃</p></div><div class="heb-s"><p>כי־ימצא חלל באדמה אשר יהוה אלהיך נתן לך לרשתה נפל בשדה לא נודע מי הכהו׃</p></div></div>
+      <div class="texte-fr"><p>"Si l’on trouve, dans le pays que l’Éternel, ton Dieu, te donne en possession, un cadavre gisant en plein champ, et que l’auteur du meurtre soit resté inconnu,</p></div>
+    </div><div class="seif" id="v-21-2">
+      <span class="seif-num">21:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָצְא֥וּ זְקֵנֶ֖יךָ וְשֹׁפְטֶ֑יךָ וּמָדְדוּ֙ אֶל־הֶ֣עָרִ֔ים אֲשֶׁ֖ר סְבִיבֹ֥ת הֶחָלָֽל׃</p></div><div class="heb-s"><p>ויצאו זקניך ושפטיך ומדדו אל־הערים אשר סביבת החלל׃</p></div></div>
+      <div class="texte-fr"><p>tes anciens et tes juges s’y transporteront, et mesureront la distance jusqu’aux villes situées autour du cadavre.</p></div>
+    </div><div class="seif" id="v-21-3">
+      <span class="seif-num">21:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֣ה הָעִ֔יר הַקְּרֹבָ֖ה אֶל־הֶחָלָ֑ל וְלָֽקְח֡וּ זִקְנֵי֩ הָעִ֨יר הַהִ֜וא עֶגְלַ֣ת בָּקָ֗ר אֲשֶׁ֤ר לֹֽא־עֻבַּד֙ בָּ֔הּ אֲשֶׁ֥ר לֹא־מָשְׁכָ֖ה בְּעֹֽל׃</p></div><div class="heb-s"><p>והיה העיר הקרבה אל־החלל ולקחו זקני העיר ההוא עגלת בקר אשר לא־עבד בה אשר לא־משכה בעל׃</p></div></div>
+      <div class="texte-fr"><p>La ville la plus rapprochée du cadavre étant déterminée, les anciens de cette ville prendront une jeune vache qu’on n’aura pas encore employée au travail, qui n’aura porté aucun joug.</p></div>
+    </div><div class="seif" id="v-21-4">
+      <span class="seif-num">21:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהוֹרִ֡דוּ זִקְנֵי֩ הָעִ֨יר הַהִ֤וא אֶת־הָֽעֶגְלָה֙ אֶל־נַ֣חַל אֵיתָ֔ן אֲשֶׁ֛ר לֹא־יֵעָבֵ֥ד בּ֖וֹ וְלֹ֣א יִזָּרֵ֑עַ וְעָֽרְפוּ־שָׁ֥ם אֶת־הָעֶגְלָ֖ה בַּנָּֽחַל׃</p></div><div class="heb-s"><p>והורדו זקני העיר ההוא את־העגלה אל־נחל איתן אשר לא־יעבד בו ולא יזרע וערפו־שם את־העגלה בנחל׃</p></div></div>
+      <div class="texte-fr"><p>Ces anciens feront descendre la génisse dans un bas-fond sauvage, où on ne laboure ni ne sème, et là, dans ce bas-fond, ils briseront la nuque à la génisse.</p></div>
+    </div><div class="seif" id="v-21-5">
+      <span class="seif-num">21:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנִגְּשׁ֣וּ הַכֹּהֲנִים֮ בְּנֵ֣י לֵוִי֒ כִּ֣י בָ֗ם בָּחַ֞ר יְהֹוָ֤ה אֱלֹהֶ֙יךָ֙ לְשָׁ֣רְת֔וֹ וּלְבָרֵ֖ךְ בְּשֵׁ֣ם יְהֹוָ֑ה וְעַל־פִּיהֶ֥ם יִהְיֶ֖ה כׇּל־רִ֥יב וְכׇל־נָֽגַע׃</p></div><div class="heb-s"><p>ונגשו הכהנים בני לוי כי בם בחר יהוה אלהיך לשרתו ולברך בשם יהוה ועל־פיהם יהיה כל־ריב וכל־נגע׃</p></div></div>
+      <div class="texte-fr"><p>Puis s’avanceront les pontifes, descendants de Lévi; car ce sont eux que l’Éternel, ton Dieu, a désignés pour le servir, pour prononcer les bénédictions en son nom, et c’est par eux qu’est jugé tout débat, tout dommage.</p></div>
+    </div><div class="seif" id="v-21-6">
+      <span class="seif-num">21:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֗ל זִקְנֵי֙ הָעִ֣יר הַהִ֔וא הַקְּרֹבִ֖ים אֶל־הֶחָלָ֑ל יִרְחֲצוּ֙ אֶת־יְדֵיהֶ֔ם עַל־הָעֶגְלָ֖ה הָעֲרוּפָ֥ה בַנָּֽחַל׃</p></div><div class="heb-s"><p>וכל זקני העיר ההוא הקרבים אל־החלל ירחצו את־ידיהם על־העגלה הערופה בנחל׃</p></div></div>
+      <div class="texte-fr"><p>Et tous les anciens de la ville en question, comme voisins du cadavre, se laveront les mains sur la génisse dont on a brisé la nuque dans le bas-fond.</p></div>
+    </div><div class="seif" id="v-21-7">
+      <span class="seif-num">21:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָנ֖וּ וְאָמְר֑וּ יָדֵ֗ינוּ לֹ֤א <span class="mam-kq"><span class="mam-kq-k">(שפכה)</span> <span class="mam-kq-q">[שָֽׁפְכוּ֙]</span></span> אֶת־הַדָּ֣ם הַזֶּ֔ה וְעֵינֵ֖ינוּ לֹ֥א רָאֽוּ׃</p></div><div class="heb-s"><p>וענו ואמרו ידינו לא <span class="mam-kq"><span class="mam-kq-k">(שפכה)</span> <span class="mam-kq-q">[שפכו]</span></span> את־הדם הזה ועינינו לא ראו׃</p></div></div>
+      <div class="texte-fr"><p>Et ils diront tour à tour: "Nos mains n’ont point répandu ce sang-là, et nos yeux ne l’ont point vu répandre.</p></div>
+    </div><div class="seif" id="v-21-8">
+      <span class="seif-num">21:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּפֵּר֩ לְעַמְּךָ֨ יִשְׂרָאֵ֤ל אֲשֶׁר־פָּדִ֙יתָ֙ יְהֹוָ֔ה וְאַל־תִּתֵּן֙ דָּ֣ם נָקִ֔י בְּקֶ֖רֶב עַמְּךָ֣ יִשְׂרָאֵ֑ל וְנִכַּפֵּ֥ר לָהֶ֖ם הַדָּֽם׃</p></div><div class="heb-s"><p>כפר לעמך ישראל אשר־פדית יהוה ואל־תתן דם נקי בקרב עמך ישראל ונכפר להם הדם׃</p></div></div>
+      <div class="texte-fr"><p>Pardonne à ton peuple Israël, que tu as racheté, Seigneur! Et n’impute pas le sang innocent à ton peuple Israël!" Et ce sang leur sera pardonné.</p></div>
+    </div><div class="seif" id="v-21-9">
+      <span class="seif-num">21:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתָּ֗ה תְּבַעֵ֛ר הַדָּ֥ם הַנָּקִ֖י מִקִּרְבֶּ֑ךָ כִּֽי־תַעֲשֶׂ֥ה הַיָּשָׁ֖ר בְּעֵינֵ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואתה תבער הדם הנקי מקרבך כי־תעשה הישר בעיני יהוה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Toi, cependant, tu dois faire disparaître du milieu de toi le sang innocent, si tu veux faire ce qui est juste aux yeux de l’Éternel.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Tu institueras des juges et des magistrats dans toutes les villes que l’Éternel, ton Dieu, te donnera, dans chacune de tes tribus; et ils devront juger le peuple selon la justice. Ne fais pas fléchir le droit, n’aie pas égard à la personne, et n’accepte point de présent corrupteur, car la corruption aveugle les yeux des sages et fausse la parole des justes. C’est la justice, la justice seule que tu dois rechercher, si tu veux te maintenir en possession du pays que l’Éternel, ton Dieu, te destine. Ne plante chez toi ni bosquet ni arbre quelconque auprès de l’autel que tu devras ériger à l’Éternel, ton Dieu; et n’érige pas de statue chez toi, chose odieuse à l’Éternel, ton Dieu.</p>
-      <p>&quot;N’immole à l’Éternel, ton Dieu, ni grosse ni menue bête qui ait un défaut ou un vice quelconque; c’est un objet d’aversion pour l’Éternel, ton Dieu. S’il se trouve dans ton sein, dans l’une des villes que l’Éternel, ton Dieu, te donnera, un homme ou une femme qui fasse une chose coupable aux yeux de l’Éternel, ton Dieu, en violant son alliance; qui soit allé servir d’autres divinités et se prosterner devant elles, ou devant le soleil ou la lune, ou quoi que ce soit de la milice céleste, contrairement à ma loi: instruit du fait par ouï-dire, tu feras une enquête sévère; et si la chose est avérée, constante, si cette infamie s’est commise en Israël, tu feras conduire aux portes de la ville cet homme ou cette femme, coupable d’un tel crime, l’homme ou la femme! Et tu les lapideras, pour qu’ils meurent sous les pierres. C’est sur la déposition de deux ou de trois témoins que sera mis à mort celui qui encourt la peine capitale; il ne pourra être supplicié sur le dire d’un seul témoin. La main des témoins doit le frapper la première pour le faire mourir, et la main du peuple en dernier lieu, et tu extirperas ainsi le mal du milieu de toi. Si tu es impuissant à prononcer sur un cas judiciaire, sur une question de meurtre ou de droit civil, ou de blessure corporelle, sur un litige quelconque porté devant tes tribunaux, tu te rendras à l’endroit qu’aura choisi l’Éternel, ton Dieu; tu iras trouver les pontifes, descendants de Lévi, ou le juge qui siégera à cette époque; tu les consulteras, et ils t’éclaireront sur le jugement à prononcer. Et tu agiras selon leur déclaration, émanée de ce lieu choisi par l’Éternel, et tu auras soin de te conformer à toutes leurs instructions. Selon la doctrine qu’ils t’enseigneront, selon la règle qu’ils t’indiqueront, tu procéderas; ne t’écarte de ce qu’ils t’auront dit ni à droite ni à gauche. Et celui qui, téméraire en sa conduite, n’obéirait pas à la décision du pontife établi là pour servir l’Éternel, ton Dieu, ou à celle du juge, cet homme doit mourir, pour que tu fasses disparaître ce mal en Israël; afin que tous l’apprennent et tremblent, et n’aient plus pareille témérité. Quand, arrivé dans le pays que l’Éternel, ton Dieu, te donne, tu en auras pris possession et y seras bien établi, si tu dis alors: &quot;Je voudrais mettre un roi à ma tête, à l’exemple de tous les peuples qui m’entourent&quot;, tu pourras te donner un roi, celui dont l’Éternel, ton Dieu, approuvera le choix: c’est un de tes frères que tu dois désigner pour ton roi; tu n’auras pas le droit de te soumettre à un étranger, qui ne serait pas ton frère. Seulement, il doit se garder d’entretenir beaucoup de chevaux, et ne pas ramener le peuple en Égypte pour en augmenter le nombre, l’Éternel vous ayant déclaré que vous ne reprendrez plus ce chemin-là désormais. Il ne doit pas non plus avoir beaucoup de femmes, de crainte que son cœur ne s’égare; même de l’argent et de l’or, il n’en amassera pas outre mesure. Or, quand il occupera le siège royal, il écrira pour son usage, dans un livre, une copie de cette doctrine, en s’inspirant des pontifes descendants de Lévi. Elle restera par devers lui, car il doit y lire toute sa vie, afin qu’il s’habitue à révérer l’Éternel, son Dieu, qu’il respecte et exécute tout le contenu de cette doctrine et les présents statuts; afin que son cœur ne s’enorgueillisse point à l’égard de ses frères, et qu’il ne s’écarte de la loi ni à droite ni à gauche. De la sorte, il conservera longtemps sa royauté, lui ainsi que ses fils, au milieu d’Israël.</p>
-      <p>&quot;Il n’est accordé aux pontifes, descendants de Lévi, à la tribu de Lévi en général, ni part ni héritage comme au reste d’Israël: c’est des sacrifices de l’Éternel et de son patrimoine qu’ils subsisteront. Ils n’auront point d’héritage au milieu de leurs frères: c’est Dieu qui est leur héritage, comme il le leur a déclaré. Voici quel sera le droit dû aux pontifes par le peuple, par quiconque tuera une bête, soit de gros ou de menu bétail: il en donnera au pontife l’épaule, les mâchoires et l’estomac. Les prémices de ton blé, de ton vin, de ton huile, les prémices de la toison de ton menu bétail, tu les lui donneras. Car c’est lui que l’Éternel, ton Dieu, a désigné entre toutes les tribus, pour remplir, en permanence, son ministère au nom de l’Éternel, de père en fils, à jamais. Lorsque le Lévite, quittant l’une de tes villes, une localité quelconque en Israël où il habite, viendra, de son plein gré, à l’endroit élu par le Seigneur, il pourra servir au nom de l’Éternel, son Dieu, comme tous ses frères les Lévites, qui se tiennent là devant l’Éternel. Il jouira d’une portion égale à la leur, indépendamment de ses ventes sur les biens paternels. Quand tu seras entré dans le pays que l’Éternel, ton Dieu, te donne, ne t’habitue pas à imiter les abominations de ces peuples-là. Qu’il ne se trouve personne, chez toi, qui fasse passer par le feu son fils ou sa fille; qui pratique des enchantements, qui s’adonne aux augures, à la divination, à la magie qui emploie des charmes, qui ait recours aux évocations ou aux sortilèges ou qui interroge les morts. Car l’Éternel a horreur de quiconque fait pareilles choses; et c’est à cause de telles abominations que l’Éternel, ton Dieu, dépossède ces peuples à ton profit. Reste entièrement avec l’Éternel, ton Dieu! Car ces nations que tu vas déposséder ajoutent foi à des augures et à des enchanteurs; mais toi, ce n’est pas là ce que t’a départi l’Éternel, ton Dieu. C’est un prophète sorti de tes rangs, un de tes frères comme moi, que l’Éternel, ton Dieu, suscitera en ta faveur: c’est lui que vous devez écouter! Absolument comme tu l’as demandé à l’Éternel, ton Dieu, au mont Horeb, le jour de la convocation, quand tu as dit: &quot;Je ne veux plus entendre la voix de l’Éternel, mon Dieu, et ce feu intense, je ne veux plus le voir, de peur d’en mourir; et le Seigneur me dit alors: &quot;Ils ont bien parlé. Je leur susciterai un prophète du milieu de leurs frères, tel que toi, et je mettrai mes paroles dans sa bouche, et il leur dira tout ce que je lui ordonnerai. Et alors, celui qui n’obéira pas à mes paroles, qu’il énoncera en mon nom, c’est moi qui lui demanderai compte! Toutefois, si un prophète avait l’audace d’annoncer en mon nom une chose que je ne lui aurais pas enjoint d’annoncer, ou s’il parlait au nom d’un divinité étrangère, ce prophète doit mourir.&quot; Mais, diras-tu en toi-même, comment reconnaîtrons-nous la parole qui n’émane pas de l’Éternel? Si le prophète annonce de la part de l’Éternel une chose qui ne saurait être, ou qui n’est pas suivie d’effet, cette annonce n’aura pas été dictée par l’Éternel; c’est avec témérité que le prophète l’a émise, ne crains pas de sévir à son égard.</p>
-      <p>&quot;Quand l’Éternel, ton Dieu, aura fait disparaître les peuples dont il te donne le territoire, quand tu les auras dépossédés et que tu seras établi dans leurs villes et dans leurs maisons, tu te réserveras trois villes dans ce pays dont l’Éternel, ton Dieu, t’accorde la possession. Tu devras en faciliter l’accès et diviser en trois parts le territoire du pays que l’Éternel, ton Dieu, te fera échoir; et cela, pour que tout meurtrier s’y puisse réfugier. Or, voici dans quel cas le meurtrier, en s’y réfugiant, aura la vie sauve: s’il a frappé son prochain sans intention, n’ayant pas été son ennemi antérieurement. Ainsi, il entre avec son compagnon dans la forêt pour abattre du bois; sa main brandissant la cognée pour couper l’arbre, le fer s’échappe du manche et atteint le compagnon, qui en meurt: l’autre alors pourra fuir dans une de ces villes et sauver sa vie. Autrement, le vengeur du sang pourrait, dans l’effervescence de son cœur, courir sus au meurtrier, l’atteindre si le chemin était long, et lui porter un coup mortel; et cependant, il ne méritait point la mort, puisqu’il ne haïssait pas l’autre antérieurement. C’est pour cela que je te donne cet ordre: Réserve-toi trois villes. Que si l’Éternel, ton Dieu, élargit ta frontière, comme il l’a juré à tes ancêtres, et te donne la région entière qu’il a déclaré octroyer à tes pères, à condition que tu t’appliques à accomplir toute cette loi que je t’impose en ce jour, d’aimer l’Éternel, ton Dieu, et de marcher constamment dans ses voies, alors tu ajouteras encore trois villes à ces trois-là; afin que le sang innocent ne soit pas répandu au sein de ce pays que l’Éternel, ton Dieu, te donne pour héritage, et qu’une responsabilité sanglante ne pèse point sur toi. Mais si quelqu’un, animé de haine pour son prochain, le guette, se jette sur lui et le frappe de manière à lui donner la mort, puis se réfugie dans une des villes en question, les anciens de sa ville le feront extraire de là et le livreront au vengeur du sang pour qu’il meure. Que ton œil soit sans pitié pour lui; tu feras disparaître d’Israël le sang innocent, et tu t’en trouveras bien. Ne déplace point la borne de ton voisin, telle que l’auront posée les devanciers, dans le lot qui te sera échu sur le territoire dont l’Éternel, ton Dieu, t’accorde la possession. Un témoignage isolé ne sera pas valable contre une personne, quel que soit le crime ou le délit, quelque faute qui lui soit imputée: c’est par la déposition de deux témoins, ou de trois, qu’un fait sera établi. Si un témoin malveillant se présente contre un individu, pour l’accuser d’un méfait, les deux personnes intéressées dans le débat comparaîtront devant l’Éternel, devant les pontifes et les juges en fonctions à cette époque. Ceux-ci examineront attentivement; et si ce témoin est un faux témoin, si c’est un mensonge qu’il a articulé contre son frère, vous le traiterez comme il a eu dessein de faire traiter son frère, et tu extirperas le mal du milieu de toi. Les autres l’apprendront et seront intimidés, et l’on n’osera plus commettre une aussi mauvaise action chez toi. Ne laisse donc point s’attendrir ton regard: vie pour vie, œil pour œil, dent pour dent, main pour main, pied pour pied!</p>
-      <p>&quot;Quand tu t’avanceras contre tes ennemis pour leur livrer bataille, et que tu verras cavalerie et chariots de guerre, une armée supérieure à la tienne, n’en sois pas effrayé; car tu as avec toi l’Éternel, ton Dieu, qui t’a fait sortir du pays d’Égypte. Or, quand vous serez sur le point de combattre, le pontife s’avancera et parlera au peuple. Il leur dira: &quot;Ecoute, Israël! Vous allez, en ce moment, livrer bataille à vos ennemis; que votre courage ne mollisse point; soyez sans crainte, ne vous laissez ni déconcerter ni terrifier par eux. Car c’est l’Éternel, votre Dieu, qui marche avec vous, afin de combattre pour vous contre vos ennemis et de vous procurer la victoire.&quot; Ensuite les préposés parleront au peuple en ces termes: &quot;Si quelqu’un a bâti une maison neuve et n’en a pas encore pris possession, qu’il parte et s’en retourne à sa maison; car il pourrait mourir dans la bataille, et un autre en prendrait possession. Si quelqu’un a planté une vigne et n’en a pas encore acquis la jouissance, qu’il parte et s’en retourne chez lui; car il pourrait mourir dans la bataille, et un autre acquerrait cette jouissance. Et si quelqu’un a promis mariage à une femme et ne l’a pas encore épousée, qu’il parte et s’en retourne chez lui; car il pourrait mourir dans la bataille, et un autre homme l’épouserait.&quot; Les préposés adresseront de nouveau la parole au peuple, et diront: &quot;S’il est un homme qui ait peur et dont le cœur soit lâche, qu’il se retire et retourne chez lui, pour que le cœur de ses frères ne défaille point comme le sien!&quot; Alors, les préposés ayant fini de parler au peuple, on placera des officiers de légions à la tête de l’armée. Quand tu marcheras sur une ville pour l’attaquer, tu l’inviteras d’abord à la paix. Alors, si elle te répond dans le sens de la paix et t’ouvre ses portes, tout ce qu’elle renferme d’habitants te devront tribut et te serviront. Mais si elle ne compose pas avec toi et veut te faire la guerre, tu assiégeras cette ville. Et l’Éternel, ton Dieu, la livrera en ton pouvoir, et tu feras périr tous ses habitants mâles par le tranchant de l’épée. Il n’y aura que les femmes, les enfants, le bétail, et tout ce qui se trouvera dans la ville en fait de butin, que tu pourras capturer; et tu profiteras de la dépouille de tes ennemis, que l’Éternel, ton Dieu, t’aura livrée. Ainsi procéderas-tu pour toutes les villes situées très loin de chez toi, qui ne font point partie des villes de ces nations; mais dans les villes de ces peuples que l’Éternel, ton Dieu, te donne comme héritage, tu ne laisseras pas subsister une âme. Car tu dois les vouer à l’extermination, le Héthéen et l’Amorréen, le Cananéen et le Phérézéen, le Hévéen et le Jébuséen, comme te l’a commandé l’Éternel, ton Dieu, afin qu’ils ne vous apprennent pas à imiter toutes les abominations commises par eux en l’honneur de leurs dieux, et à devenir coupables envers l’Éternel, votre Dieu. Si tu es arrêté longtemps au siège d’une ville que tu attaques pour t’en rendre maître, tu ne dois cependant pas en détruire les arbres en portant sur eux la cognée: ce sont eux qui te nourrissent, tu ne dois pas les abattre. Oui, l’arbre du champ c’est l’homme même, tu l’épargneras dans les travaux du siège. Seulement, l’arbre que tu sauras n’être pas un arbre fruitier, celui-là tu peux le sacrifier et l’abattre, pour l’employer à des travaux de siège contre la ville qui est en guerre avec toi, jusqu’à ce qu’elle succombe.</p>
-      <p>&quot;Si l’on trouve, dans le pays que l’Éternel, ton Dieu, te donne en possession, un cadavre gisant en plein champ, et que l’auteur du meurtre soit resté inconnu, tes anciens et tes juges s’y transporteront, et mesureront la distance jusqu’aux villes situées autour du cadavre. La ville la plus rapprochée du cadavre étant déterminée, les anciens de cette ville prendront une jeune vache qu’on n’aura pas encore employée au travail, qui n’aura porté aucun joug. Ces anciens feront descendre la génisse dans un bas-fond sauvage, où on ne laboure ni ne sème, et là, dans ce bas-fond, ils briseront la nuque à la génisse. Puis s’avanceront les pontifes, descendants de Lévi; car ce sont eux que l’Éternel, ton Dieu, a désignés pour le servir, pour prononcer les bénédictions en son nom, et c’est par eux qu’est jugé tout débat, tout dommage. Et tous les anciens de la ville en question, comme voisins du cadavre, se laveront les mains sur la génisse dont on a brisé la nuque dans le bas-fond. Et ils diront tour à tour: &quot;Nos mains n’ont point répandu ce sang-là, et nos yeux ne l’ont point vu répandre. Pardonne à ton peuple Israël, que tu as racheté, Seigneur! Et n’impute pas le sang innocent à ton peuple Israël!&quot; Et ce sang leur sera pardonné. Toi, cependant, tu dois faire disparaître du milieu de toi le sang innocent, si tu veux faire ce qui est juste aux yeux de l’Éternel.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -321,6 +733,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_reeh.html">← Re&#x27;eh</a><a class="hbtn qcm" href="qcm_paracha_shoftim-paracha.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_ki-teitzei.html">Ki Teitzeï →</a></div>
 </main>
 
 <footer>

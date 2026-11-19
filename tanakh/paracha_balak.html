@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bamidbar · Paracha</div>
     <h1>Balak – Bilam, l&#x27;ânesse et Pin&#x27;has</h1>
     <p>Torah, Bamidbar (Numbers 22:2-25:9)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_chukat.html">← Houkat</a><a class="hbtn qcm" href="qcm_paracha_balak.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_pinchas.html">Pin&#x27;has →</a></div>
   </div>
 </header>
 
@@ -161,31 +202,434 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיַּ֥רְא בָּלָ֖ק בֶּן־צִפּ֑וֹר אֵ֛ת כׇּל־אֲשֶׁר־עָשָׂ֥ה יִשְׂרָאֵ֖ל לָֽאֱמֹרִֽי׃', 'וַיָּ֨גׇר מוֹאָ֜ב מִפְּנֵ֥י הָעָ֛ם מְאֹ֖ד כִּ֣י רַב־ה֑וּא וַיָּ֣קׇץ מוֹאָ֔ב מִפְּנֵ֖י בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וַיֹּ֨אמֶר מוֹאָ֜ב אֶל־זִקְנֵ֣י מִדְיָ֗ן עַתָּ֞ה יְלַחֲכ֤וּ הַקָּהָל֙ אֶת־כׇּל־סְבִ֣יבֹתֵ֔ינוּ כִּלְחֹ֣ךְ הַשּׁ֔וֹר אֵ֖ת יֶ֣רֶק הַשָּׂדֶ֑ה וּבָלָ֧ק בֶּן־צִפּ֛וֹר מֶ֥לֶךְ לְמוֹאָ֖ב בָּעֵ֥ת הַהִֽוא׃', 'וַיִּשְׁלַ֨ח מַלְאָכִ֜ים אֶל־בִּלְעָ֣ם בֶּן־בְּעֹ֗ר<sup class="footnote-marker">*</sup><i class="footnote">(בספרי ספרד ואשכנז בְּע֗וֹר)</i> פְּ֠ת֠וֹרָה אֲשֶׁ֧ר עַל־הַנָּהָ֛ר אֶ֥רֶץ בְּנֵי־עַמּ֖וֹ לִקְרֹא־ל֑וֹ לֵאמֹ֗ר הִ֠נֵּ֠ה עַ֣ם יָצָ֤א מִמִּצְרַ֙יִם֙ הִנֵּ֤ה כִסָּה֙ אֶת־עֵ֣ין הָאָ֔רֶץ וְה֥וּא יֹשֵׁ֖ב מִמֻּלִֽי׃', 'וְעַתָּה֩ לְכָה־נָּ֨א אָֽרָה־לִּ֜י אֶת־הָעָ֣ם הַזֶּ֗ה כִּֽי־עָצ֥וּם הוּא֙ מִמֶּ֔נִּי אוּלַ֤י אוּכַל֙ נַכֶּה־בּ֔וֹ וַאֲגָרְשֶׁ֖נּוּ מִן־הָאָ֑רֶץ כִּ֣י יָדַ֗עְתִּי אֵ֤ת אֲשֶׁר־תְּבָרֵךְ֙ מְבֹרָ֔ךְ וַאֲשֶׁ֥ר תָּאֹ֖ר יוּאָֽר׃', 'וַיֵּ֨לְכ֜וּ זִקְנֵ֤י מוֹאָב֙ וְזִקְנֵ֣י מִדְיָ֔ן וּקְסָמִ֖ים בְּיָדָ֑ם וַיָּבֹ֙אוּ֙ אֶל־בִּלְעָ֔ם וַיְדַבְּר֥וּ אֵלָ֖יו דִּבְרֵ֥י בָלָֽק׃', 'וַיֹּ֣אמֶר אֲלֵיהֶ֗ם לִ֤ינוּ פֹה֙ הַלַּ֔יְלָה וַהֲשִׁבֹתִ֤י אֶתְכֶם֙ דָּבָ֔ר כַּאֲשֶׁ֛ר יְדַבֵּ֥ר יְהֹוָ֖ה אֵלָ֑י וַיֵּשְׁב֥וּ שָׂרֵֽי־מוֹאָ֖ב עִם־בִּלְעָֽם׃', 'וַיָּבֹ֥א אֱלֹהִ֖ים אֶל־בִּלְעָ֑ם וַיֹּ֕אמֶר מִ֛י הָאֲנָשִׁ֥ים הָאֵ֖לֶּה עִמָּֽךְ׃', 'וַיֹּ֥אמֶר בִּלְעָ֖ם אֶל־הָאֱלֹהִ֑ים בָּלָ֧ק בֶּן־צִפֹּ֛ר מֶ֥לֶךְ מוֹאָ֖ב שָׁלַ֥ח אֵלָֽי׃', 'הִנֵּ֤ה הָעָם֙ הַיֹּצֵ֣א מִמִּצְרַ֔יִם וַיְכַ֖ס אֶת־עֵ֣ין הָאָ֑רֶץ עַתָּ֗ה לְכָ֤ה קָֽבָה־לִּי֙ אֹת֔וֹ אוּלַ֥י אוּכַ֛ל לְהִלָּ֥חֶם בּ֖וֹ וְגֵרַשְׁתִּֽיו׃', 'וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־בִּלְעָ֔ם לֹ֥א תֵלֵ֖ךְ עִמָּהֶ֑ם לֹ֤א תָאֹר֙ אֶת־הָעָ֔ם כִּ֥י בָר֖וּךְ הֽוּא׃', 'וַיָּ֤קׇם בִּלְעָם֙ בַּבֹּ֔קֶר וַיֹּ֙אמֶר֙ אֶל־שָׂרֵ֣י בָלָ֔ק לְכ֖וּ אֶֽל־אַרְצְכֶ֑ם כִּ֚י מֵאֵ֣ן יְהֹוָ֔ה לְתִתִּ֖י לַהֲלֹ֥ךְ עִמָּכֶֽם׃', 'וַיָּק֙וּמוּ֙ שָׂרֵ֣י מוֹאָ֔ב וַיָּבֹ֖אוּ אֶל־בָּלָ֑ק וַיֹּ֣אמְר֔וּ מֵאֵ֥ן בִּלְעָ֖ם הֲלֹ֥ךְ עִמָּֽנוּ׃', 'וַיֹּ֥סֶף ע֖וֹד בָּלָ֑ק שְׁלֹ֣חַ שָׂרִ֔ים רַבִּ֥ים וְנִכְבָּדִ֖ים מֵאֵֽלֶּה׃', 'וַיָּבֹ֖אוּ אֶל־בִּלְעָ֑ם וַיֹּ֣אמְרוּ ל֗וֹ כֹּ֤ה אָמַר֙ בָּלָ֣ק בֶּן־צִפּ֔וֹר אַל־נָ֥א תִמָּנַ֖ע מֵהֲלֹ֥ךְ אֵלָֽי׃', 'כִּֽי־כַבֵּ֤ד אֲכַבֶּדְךָ֙ מְאֹ֔ד וְכֹ֛ל אֲשֶׁר־תֹּאמַ֥ר אֵלַ֖י אֶֽעֱשֶׂ֑ה וּלְכָה־נָּא֙ קָֽבָה־לִּ֔י אֵ֖ת הָעָ֥ם הַזֶּֽה׃', 'וַיַּ֣עַן בִּלְעָ֗ם וַיֹּ֙אמֶר֙ אֶל־עַבְדֵ֣י בָלָ֔ק אִם־יִתֶּן־לִ֥י בָלָ֛ק מְלֹ֥א בֵית֖וֹ כֶּ֣סֶף וְזָהָ֑ב לֹ֣א אוּכַ֗ל לַעֲבֹר֙ אֶת־פִּי֙ יְהֹוָ֣ה אֱלֹהָ֔י לַעֲשׂ֥וֹת קְטַנָּ֖ה א֥וֹ גְדוֹלָֽה׃', 'וְעַתָּ֗ה שְׁב֨וּ נָ֥א בָזֶ֛ה גַּם־אַתֶּ֖ם הַלָּ֑יְלָה וְאֵ֣דְעָ֔ה מַה־יֹּסֵ֥ף יְהֹוָ֖ה דַּבֵּ֥ר עִמִּֽי׃', 'וַיָּבֹ֨א אֱלֹהִ֥ים&thinsp;<small>׀</small>&thinsp;אֶל־בִּלְעָם֮ לַ֒יְלָה֒ וַיֹּ֣אמֶר ל֗וֹ אִם־לִקְרֹ֤א לְךָ֙ בָּ֣אוּ הָאֲנָשִׁ֔ים ק֖וּם לֵ֣ךְ אִתָּ֑ם וְאַ֗ךְ אֶת־הַדָּבָ֛ר אֲשֶׁר־אֲדַבֵּ֥ר אֵלֶ֖יךָ אֹת֥וֹ תַעֲשֶֽׂה׃', 'וַיָּ֤קׇם בִּלְעָם֙ בַּבֹּ֔קֶר וַֽיַּחֲבֹ֖שׁ אֶת־אֲתֹנ֑וֹ וַיֵּ֖לֶךְ עִם־שָׂרֵ֥י מוֹאָֽב׃', 'וַיִּֽחַר־אַ֣ף אֱלֹהִים֮ כִּֽי־הוֹלֵ֣ךְ הוּא֒ וַיִּתְיַצֵּ֞ב מַלְאַ֧ךְ יְהֹוָ֛ה בַּדֶּ֖רֶךְ לְשָׂטָ֣ן ל֑וֹ וְהוּא֙ רֹכֵ֣ב עַל־אֲתֹנ֔וֹ וּשְׁנֵ֥י נְעָרָ֖יו עִמּֽוֹ׃', 'וַתֵּ֣רֶא הָאָתוֹן֩ אֶת־מַלְאַ֨ךְ יְהֹוָ֜ה נִצָּ֣ב בַּדֶּ֗רֶךְ וְחַרְבּ֤וֹ שְׁלוּפָה֙ בְּיָד֔וֹ וַתֵּ֤ט הָֽאָתוֹן֙ מִן־הַדֶּ֔רֶךְ וַתֵּ֖לֶךְ בַּשָּׂדֶ֑ה וַיַּ֤ךְ בִּלְעָם֙ אֶת־הָ֣אָת֔וֹן לְהַטֹּתָ֖הּ הַדָּֽרֶךְ׃', 'וַֽיַּעֲמֹד֙ מַלְאַ֣ךְ יְהֹוָ֔ה בְּמִשְׁע֖וֹל הַכְּרָמִ֑ים גָּדֵ֥ר מִזֶּ֖ה וְגָדֵ֥ר מִזֶּֽה׃', 'וַתֵּ֨רֶא הָאָת֜וֹן אֶת־מַלְאַ֣ךְ יְהֹוָ֗ה וַתִּלָּחֵץ֙ אֶל־הַקִּ֔יר וַתִּלְחַ֛ץ אֶת־רֶ֥גֶל בִּלְעָ֖ם אֶל־הַקִּ֑יר וַיֹּ֖סֶף לְהַכֹּתָֽהּ׃', 'וַיּ֥וֹסֶף מַלְאַךְ־יְהֹוָ֖ה עֲב֑וֹר וַֽיַּעֲמֹד֙ בְּמָק֣וֹם צָ֔ר אֲשֶׁ֛ר אֵֽין־דֶּ֥רֶךְ לִנְט֖וֹת יָמִ֥ין וּשְׂמֹֽאול׃', 'וַתֵּ֤רֶא הָֽאָתוֹן֙ אֶת־מַלְאַ֣ךְ יְהֹוָ֔ה וַתִּרְבַּ֖ץ תַּ֣חַת בִּלְעָ֑ם וַיִּֽחַר־אַ֣ף בִּלְעָ֔ם וַיַּ֥ךְ אֶת־הָאָת֖וֹן בַּמַּקֵּֽל׃', 'וַיִּפְתַּ֥ח יְהֹוָ֖ה אֶת־פִּ֣י הָאָת֑וֹן וַתֹּ֤אמֶר לְבִלְעָם֙ מֶה־עָשִׂ֣יתִֽי לְךָ֔ כִּ֣י הִכִּיתַ֔נִי זֶ֖ה שָׁלֹ֥שׁ רְגָלִֽים׃', 'וַיֹּ֤אמֶר בִּלְעָם֙ לָֽאָת֔וֹן כִּ֥י הִתְעַלַּ֖לְתְּ בִּ֑י ל֤וּ יֶשׁ־חֶ֙רֶב֙ בְּיָדִ֔י כִּ֥י עַתָּ֖ה הֲרַגְתִּֽיךְ׃', 'וַתֹּ֨אמֶר הָאָת֜וֹן אֶל־בִּלְעָ֗ם הֲלוֹא֩ אָנֹכִ֨י אֲתֹֽנְךָ֜ אֲשֶׁר־רָכַ֣בְתָּ עָלַ֗י מֵעֽוֹדְךָ֙ עַד־הַיּ֣וֹם הַזֶּ֔ה הַֽהַסְכֵּ֣ן הִסְכַּ֔נְתִּי לַעֲשׂ֥וֹת לְךָ֖ כֹּ֑ה וַיֹּ֖אמֶר לֹֽא׃', 'וַיְגַ֣ל יְהֹוָה֮ אֶת־עֵינֵ֣י בִלְעָם֒ וַיַּ֞רְא אֶת־מַלְאַ֤ךְ יְהֹוָה֙ נִצָּ֣ב בַּדֶּ֔רֶךְ וְחַרְבּ֥וֹ שְׁלֻפָ֖ה בְּיָד֑וֹ וַיִּקֹּ֥ד וַיִּשְׁתַּ֖חוּ לְאַפָּֽיו׃', 'וַיֹּ֤אמֶר אֵלָיו֙ מַלְאַ֣ךְ יְהֹוָ֔ה עַל־מָ֗ה הִכִּ֙יתָ֙ אֶת־אֲתֹ֣נְךָ֔ זֶ֖ה שָׁל֣וֹשׁ רְגָלִ֑ים הִנֵּ֤ה אָנֹכִי֙ יָצָ֣אתִי לְשָׂטָ֔ן כִּֽי־יָרַ֥ט הַדֶּ֖רֶךְ לְנֶגְדִּֽי׃', 'וַתִּרְאַ֙נִי֙ הָֽאָת֔וֹן וַתֵּ֣ט לְפָנַ֔י זֶ֖ה שָׁלֹ֣שׁ רְגָלִ֑ים אוּלַי֙ נָטְתָ֣ה מִפָּנַ֔י כִּ֥י עַתָּ֛ה גַּם־אֹתְכָ֥ה הָרַ֖גְתִּי וְאוֹתָ֥הּ הֶחֱיֵֽיתִי׃', 'וַיֹּ֨אמֶר בִּלְעָ֜ם אֶל־מַלְאַ֤ךְ יְהֹוָה֙ חָטָ֔אתִי כִּ֚י לֹ֣א יָדַ֔עְתִּי כִּ֥י אַתָּ֛ה נִצָּ֥ב לִקְרָאתִ֖י בַּדָּ֑רֶךְ וְעַתָּ֛ה אִם־רַ֥ע בְּעֵינֶ֖יךָ אָשׁ֥וּבָה לִּֽי׃', 'וַיֹּ֩אמֶר֩ מַלְאַ֨ךְ יְהֹוָ֜ה אֶל־בִּלְעָ֗ם לֵ֚ךְ עִם־הָ֣אֲנָשִׁ֔ים וְאֶ֗פֶס אֶת־הַדָּבָ֛ר אֲשֶׁר־אֲדַבֵּ֥ר אֵלֶ֖יךָ אֹת֣וֹ תְדַבֵּ֑ר וַיֵּ֥לֶךְ בִּלְעָ֖ם עִם־שָׂרֵ֥י בָלָֽק׃', 'וַיִּשְׁמַ֥ע בָּלָ֖ק כִּ֣י בָ֣א בִלְעָ֑ם וַיֵּצֵ֨א לִקְרָאת֜וֹ אֶל־עִ֣יר מוֹאָ֗ב אֲשֶׁר֙ עַל־גְּב֣וּל אַרְנֹ֔ן אֲשֶׁ֖ר בִּקְצֵ֥ה הַגְּבֽוּל׃', 'וַיֹּ֨אמֶר בָּלָ֜ק אֶל־בִּלְעָ֗ם הֲלֹא֩ שָׁלֹ֨חַ שָׁלַ֤חְתִּי אֵלֶ֙יךָ֙ לִקְרֹא־לָ֔ךְ לָ֥מָּה לֹא־הָלַ֖כְתָּ אֵלָ֑י הַֽאֻמְנָ֔ם לֹ֥א אוּכַ֖ל כַּבְּדֶֽךָ׃', 'וַיֹּ֨אמֶר בִּלְעָ֜ם אֶל־בָּלָ֗ק הִֽנֵּה־בָ֙אתִי֙ אֵלֶ֔יךָ עַתָּ֕ה הֲיָכֹ֥ל אוּכַ֖ל דַּבֵּ֣ר מְא֑וּמָה הַדָּבָ֗ר אֲשֶׁ֨ר יָשִׂ֧ים אֱלֹהִ֛ים בְּפִ֖י אֹת֥וֹ אֲדַבֵּֽר׃', 'וַיֵּ֥לֶךְ בִּלְעָ֖ם עִם־בָּלָ֑ק וַיָּבֹ֖אוּ קִרְיַ֥ת חֻצֽוֹת׃', 'וַיִּזְבַּ֥ח בָּלָ֖ק בָּקָ֣ר וָצֹ֑אן וַיְשַׁלַּ֣ח לְבִלְעָ֔ם וְלַשָּׂרִ֖ים אֲשֶׁ֥ר אִתּֽוֹ׃', 'וַיְהִ֣י בַבֹּ֔קֶר וַיִּקַּ֤ח בָּלָק֙ אֶת־בִּלְעָ֔ם וַֽיַּעֲלֵ֖הוּ בָּמ֣וֹת בָּ֑עַל וַיַּ֥רְא מִשָּׁ֖ם קְצֵ֥ה הָעָֽם׃']</p>
-      <p>['וַיֹּ֤אמֶר בִּלְעָם֙ אֶל־בָּלָ֔ק בְּנֵה־לִ֥י בָזֶ֖ה שִׁבְעָ֣ה מִזְבְּחֹ֑ת וְהָכֵ֥ן לִי֙ בָּזֶ֔ה שִׁבְעָ֥ה פָרִ֖ים וְשִׁבְעָ֥ה אֵילִֽים׃', 'וַיַּ֣עַשׂ בָּלָ֔ק כַּאֲשֶׁ֖ר דִּבֶּ֣ר בִּלְעָ֑ם וַיַּ֨עַל בָּלָ֧ק וּבִלְעָ֛ם פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃', 'וַיֹּ֨אמֶר בִּלְעָ֜ם לְבָלָ֗ק הִתְיַצֵּב֮ עַל־עֹלָתֶ֒ךָ֒ וְאֵֽלְכָ֗ה אוּלַ֞י יִקָּרֵ֤ה יְהֹוָה֙ לִקְרָאתִ֔י וּדְבַ֥ר מַה־יַּרְאֵ֖נִי וְהִגַּ֣דְתִּי לָ֑ךְ וַיֵּ֖לֶךְ שֶֽׁפִי׃', 'וַיִּקָּ֥ר אֱלֹהִ֖ים אֶל־בִּלְעָ֑ם וַיֹּ֣אמֶר אֵלָ֗יו אֶת־שִׁבְעַ֤ת הַֽמִּזְבְּחֹת֙ עָרַ֔כְתִּי וָאַ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃', 'וַיָּ֧שֶׂם יְהֹוָ֛ה דָּבָ֖ר בְּפִ֣י בִלְעָ֑ם וַיֹּ֛אמֶר שׁ֥וּב אֶל־בָּלָ֖ק וְכֹ֥ה תְדַבֵּֽר׃', 'וַיָּ֣שׇׁב אֵלָ֔יו וְהִנֵּ֥ה נִצָּ֖ב עַל־עֹלָת֑וֹ ה֖וּא וְכׇל־שָׂרֵ֥י מוֹאָֽב׃', 'וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר מִן־אֲ֠רָ֠ם יַנְחֵ֨נִי בָלָ֤ק מֶֽלֶךְ־מוֹאָב֙ מֵֽהַרְרֵי־קֶ֔דֶם לְכָה֙ אָֽרָה־לִּ֣י יַעֲקֹ֔ב וּלְכָ֖ה זֹעֲמָ֥ה יִשְׂרָאֵֽל׃', 'מָ֣ה אֶקֹּ֔ב לֹ֥א קַבֹּ֖ה אֵ֑ל וּמָ֣ה אֶזְעֹ֔ם לֹ֥א זָעַ֖ם יְהֹוָֽה׃', 'כִּֽי־מֵרֹ֤אשׁ צֻרִים֙ אֶרְאֶ֔נּוּ וּמִגְּבָע֖וֹת אֲשׁוּרֶ֑נּוּ הֶן־עָם֙ לְבָדָ֣ד יִשְׁכֹּ֔ן וּבַגּוֹיִ֖ם לֹ֥א יִתְחַשָּֽׁב׃', 'מִ֤י מָנָה֙ עֲפַ֣ר יַעֲקֹ֔ב וּמִסְפָּ֖ר אֶת־רֹ֣בַע יִשְׂרָאֵ֑ל תָּמֹ֤ת נַפְשִׁי֙ מ֣וֹת יְשָׁרִ֔ים וּתְהִ֥י אַחֲרִיתִ֖י כָּמֹֽהוּ׃', 'וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם מֶ֥ה עָשִׂ֖יתָ לִ֑י לָקֹ֤ב אֹיְבַי֙ לְקַחְתִּ֔יךָ וְהִנֵּ֖ה בֵּרַ֥כְתָּ בָרֵֽךְ׃', 'וַיַּ֖עַן וַיֹּאמַ֑ר הֲלֹ֗א אֵת֩ אֲשֶׁ֨ר יָשִׂ֤ים יְהֹוָה֙ בְּפִ֔י אֹת֥וֹ אֶשְׁמֹ֖ר לְדַבֵּֽר׃', 'וַיֹּ֨אמֶר אֵלָ֜יו בָּלָ֗ק <span class="mam-kq"><span class="mam-kq-k">(לך)</span> <span class="mam-kq-q">[לְכָה־]</span></span>נָּ֨א אִתִּ֜י אֶל־מָק֤וֹם אַחֵר֙ אֲשֶׁ֣ר תִּרְאֶ֣נּוּ מִשָּׁ֔ם אֶ֚פֶס קָצֵ֣הוּ תִרְאֶ֔ה וְכֻלּ֖וֹ לֹ֣א תִרְאֶ֑ה וְקׇבְנוֹ־לִ֖י מִשָּֽׁם׃', 'וַיִּקָּחֵ֙הוּ֙ שְׂדֵ֣ה צֹפִ֔ים אֶל־רֹ֖אשׁ הַפִּסְגָּ֑ה וַיִּ֙בֶן֙ שִׁבְעָ֣ה מִזְבְּחֹ֔ת וַיַּ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃', 'וַיֹּ֙אמֶר֙ אֶל־בָּלָ֔ק הִתְיַצֵּ֥ב כֹּ֖ה עַל־עֹלָתֶ֑ךָ וְאָנֹכִ֖י אִקָּ֥רֶה כֹּֽה׃', 'וַיִּקָּ֤ר יְהֹוָה֙ אֶל־בִּלְעָ֔ם וַיָּ֥שֶׂם דָּבָ֖ר בְּפִ֑יו וַיֹּ֛אמֶר שׁ֥וּב אֶל־בָּלָ֖ק וְכֹ֥ה תְדַבֵּֽר׃', 'וַיָּבֹ֣א אֵלָ֗יו וְהִנּ֤וֹ נִצָּב֙ עַל־עֹ֣לָת֔וֹ וְשָׂרֵ֥י מוֹאָ֖ב אִתּ֑וֹ וַיֹּ֤אמֶר לוֹ֙ בָּלָ֔ק מַה־דִּבֶּ֖ר יְהֹוָֽה׃', 'וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר ק֤וּם בָּלָק֙ וּֽשְׁמָ֔ע הַאֲזִ֥ינָה עָדַ֖י בְּנ֥וֹ צִפֹּֽר׃', 'לֹ֣א אִ֥ישׁ אֵל֙ וִֽיכַזֵּ֔ב וּבֶן־אָדָ֖ם וְיִתְנֶחָ֑ם הַה֤וּא אָמַר֙ וְלֹ֣א יַעֲשֶׂ֔ה וְדִבֶּ֖ר וְלֹ֥א יְקִימֶֽנָּה׃', 'הִנֵּ֥ה בָרֵ֖ךְ לָקָ֑חְתִּי וּבֵרֵ֖ךְ וְלֹ֥א אֲשִׁיבֶֽנָּה׃', 'לֹֽא־הִבִּ֥יט אָ֙וֶן֙ בְּיַעֲקֹ֔ב וְלֹא־רָאָ֥ה עָמָ֖ל בְּיִשְׂרָאֵ֑ל יְהֹוָ֤ה אֱלֹהָיו֙ עִמּ֔וֹ וּתְרוּעַ֥ת מֶ֖לֶךְ בּֽוֹ׃', 'אֵ֖ל מוֹצִיאָ֣ם מִמִּצְרָ֑יִם כְּתוֹעֲפֹ֥ת רְאֵ֖ם לֽוֹ׃', 'כִּ֤י לֹא־נַ֙חַשׁ֙ בְּיַעֲקֹ֔ב וְלֹא־קֶ֖סֶם בְּיִשְׂרָאֵ֑ל כָּעֵ֗ת יֵאָמֵ֤ר לְיַעֲקֹב֙ וּלְיִשְׂרָאֵ֔ל מַה־פָּ֖עַל אֵֽל׃', 'הֶן־עָם֙ כְּלָבִ֣יא יָק֔וּם וְכַאֲרִ֖י יִתְנַשָּׂ֑א לֹ֤א יִשְׁכַּב֙ עַד־יֹ֣אכַל טֶ֔רֶף וְדַם־חֲלָלִ֖ים יִשְׁתֶּֽה׃', 'וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם גַּם־קֹ֖ב לֹ֣א תִקֳּבֶ֑נּוּ גַּם־בָּרֵ֖ךְ לֹ֥א תְבָרְכֶֽנּוּ׃', 'וַיַּ֣עַן בִּלְעָ֔ם וַיֹּ֖אמֶר אֶל־בָּלָ֑ק הֲלֹ֗א דִּבַּ֤רְתִּי אֵלֶ֙יךָ֙ לֵאמֹ֔ר כֹּ֛ל אֲשֶׁר־יְדַבֵּ֥ר יְהֹוָ֖ה אֹת֥וֹ אֶֽעֱשֶֽׂה׃', 'וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם לְכָה־נָּא֙ אֶקָּ֣חֲךָ֔ אֶל־מָק֖וֹם אַחֵ֑ר אוּלַ֤י יִישַׁר֙ בְּעֵינֵ֣י הָאֱלֹהִ֔ים וְקַבֹּ֥תוֹ לִ֖י מִשָּֽׁם׃', 'וַיִּקַּ֥ח בָּלָ֖ק אֶת־בִּלְעָ֑ם רֹ֣אשׁ הַפְּע֔וֹר הַנִּשְׁקָ֖ף עַל־פְּנֵ֥י הַיְשִׁימֹֽן׃', 'וַיֹּ֤אמֶר בִּלְעָם֙ אֶל־בָּלָ֔ק בְּנֵה־לִ֥י בָזֶ֖ה שִׁבְעָ֣ה מִזְבְּחֹ֑ת וְהָכֵ֥ן לִי֙ בָּזֶ֔ה שִׁבְעָ֥ה פָרִ֖ים וְשִׁבְעָ֥ה אֵילִֽם׃', 'וַיַּ֣עַשׂ בָּלָ֔ק כַּאֲשֶׁ֖ר אָמַ֣ר בִּלְעָ֑ם וַיַּ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃']</p>
-      <p>['וַיַּ֣רְא בִּלְעָ֗ם כִּ֣י ט֞וֹב בְּעֵינֵ֤י יְהֹוָה֙ לְבָרֵ֣ךְ אֶת־יִשְׂרָאֵ֔ל וְלֹא־הָלַ֥ךְ כְּפַֽעַם־בְּפַ֖עַם לִקְרַ֣את נְחָשִׁ֑ים וַיָּ֥שֶׁת אֶל־הַמִּדְבָּ֖ר פָּנָֽיו׃', 'וַיִּשָּׂ֨א בִלְעָ֜ם אֶת־עֵינָ֗יו וַיַּרְא֙ אֶת־יִשְׂרָאֵ֔ל שֹׁכֵ֖ן לִשְׁבָטָ֑יו וַתְּהִ֥י עָלָ֖יו ר֥וּחַ אֱלֹהִֽים׃', 'וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר נְאֻ֤ם בִּלְעָם֙ בְּנ֣וֹ בְעֹ֔ר וּנְאֻ֥ם הַגֶּ֖בֶר שְׁתֻ֥ם הָעָֽיִן׃', 'נְאֻ֕ם שֹׁמֵ֖עַ אִמְרֵי־אֵ֑ל אֲשֶׁ֨ר מַחֲזֵ֤ה שַׁדַּי֙ יֶֽחֱזֶ֔ה נֹפֵ֖ל וּגְל֥וּי עֵינָֽיִם׃', 'מַה־טֹּ֥בוּ אֹהָלֶ֖יךָ יַעֲקֹ֑ב מִשְׁכְּנֹתֶ֖יךָ יִשְׂרָאֵֽל׃', 'כִּנְחָלִ֣ים נִטָּ֔יוּ כְּגַנֹּ֖ת עֲלֵ֣י נָהָ֑ר כַּאֲהָלִים֙ נָטַ֣ע יְהֹוָ֔ה כַּאֲרָזִ֖ים עֲלֵי־מָֽיִם׃', 'יִֽזַּל־מַ֙יִם֙ מִדָּ֣לְיָ֔ו וְזַרְע֖וֹ בְּמַ֣יִם רַבִּ֑ים וְיָרֹ֤ם מֵֽאֲגַג֙ מַלְכּ֔וֹ וְתִנַּשֵּׂ֖א מַלְכֻתֽוֹ׃', 'אֵ֚ל מוֹצִיא֣וֹ מִמִּצְרַ֔יִם כְּתוֹעֲפֹ֥ת רְאֵ֖ם ל֑וֹ יֹאכַ֞ל גּוֹיִ֣ם צָרָ֗יו וְעַצְמֹתֵיהֶ֛ם יְגָרֵ֖ם וְחִצָּ֥יו יִמְחָֽץ׃', 'כָּרַ֨ע שָׁכַ֧ב כַּאֲרִ֛י וּכְלָבִ֖יא מִ֣י יְקִימֶ֑נּוּ מְבָרְכֶ֣יךָ בָר֔וּךְ וְאֹרְרֶ֖יךָ אָרֽוּר׃', 'וַיִּֽחַר־אַ֤ף בָּלָק֙ אֶל־בִּלְעָ֔ם וַיִּסְפֹּ֖ק אֶת־כַּפָּ֑יו וַיֹּ֨אמֶר בָּלָ֜ק אֶל־בִּלְעָ֗ם לָקֹ֤ב אֹֽיְבַי֙ קְרָאתִ֔יךָ וְהִנֵּה֙ בֵּרַ֣כְתָּ בָרֵ֔ךְ זֶ֖ה שָׁלֹ֥שׁ פְּעָמִֽים׃', 'וְעַתָּ֖ה בְּרַח־לְךָ֣ אֶל־מְקוֹמֶ֑ךָ אָמַ֙רְתִּי֙ כַּבֵּ֣ד אֲכַבֶּדְךָ֔ וְהִנֵּ֛ה מְנָעֲךָ֥ יְהֹוָ֖ה מִכָּבֽוֹד׃', 'וַיֹּ֥אמֶר בִּלְעָ֖ם אֶל־בָּלָ֑ק הֲלֹ֗א גַּ֧ם אֶל־מַלְאָכֶ֛יךָ אֲשֶׁר־שָׁלַ֥חְתָּ אֵלַ֖י דִּבַּ֥רְתִּי לֵאמֹֽר׃', 'אִם־יִתֶּן־לִ֨י בָלָ֜ק מְלֹ֣א בֵיתוֹ֮ כֶּ֣סֶף וְזָהָב֒ לֹ֣א אוּכַ֗ל לַעֲבֹר֙ אֶת־פִּ֣י יְהֹוָ֔ה לַעֲשׂ֥וֹת טוֹבָ֛ה א֥וֹ רָעָ֖ה מִלִּבִּ֑י אֲשֶׁר־יְדַבֵּ֥ר יְהֹוָ֖ה אֹת֥וֹ אֲדַבֵּֽר׃', 'וְעַתָּ֕ה הִנְנִ֥י הוֹלֵ֖ךְ לְעַמִּ֑י לְכָה֙ אִיעָ֣צְךָ֔ אֲשֶׁ֨ר יַעֲשֶׂ֜ה הָעָ֥ם הַזֶּ֛ה לְעַמְּךָ֖ בְּאַחֲרִ֥ית הַיָּמִֽים׃', 'וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר נְאֻ֤ם בִּלְעָם֙ בְּנ֣וֹ בְעֹ֔ר וּנְאֻ֥ם הַגֶּ֖בֶר שְׁתֻ֥ם הָעָֽיִן׃', 'נְאֻ֗ם שֹׁמֵ֙עַ֙ אִמְרֵי־אֵ֔ל וְיֹדֵ֖עַ דַּ֣עַת עֶלְי֑וֹן מַחֲזֵ֤ה שַׁדַּי֙ יֶֽחֱזֶ֔ה נֹפֵ֖ל וּגְל֥וּי עֵינָֽיִם׃', 'אֶרְאֶ֙נּוּ֙ וְלֹ֣א עַתָּ֔ה אֲשׁוּרֶ֖נּוּ וְלֹ֣א קָר֑וֹב דָּרַ֨ךְ כּוֹכָ֜ב מִֽיַּעֲקֹ֗ב וְקָ֥ם שֵׁ֙בֶט֙ מִיִּשְׂרָאֵ֔ל וּמָחַץ֙ פַּאֲתֵ֣י מוֹאָ֔ב וְקַרְקַ֖ר כׇּל־בְּנֵי־שֵֽׁת׃', 'וְהָיָ֨ה אֱד֜וֹם יְרֵשָׁ֗ה וְהָיָ֧ה יְרֵשָׁ֛ה שֵׂעִ֖יר אֹיְבָ֑יו וְיִשְׂרָאֵ֖ל עֹ֥שֶׂה חָֽיִל׃', 'וְיֵ֖רְדְּ מִֽיַּעֲקֹ֑ב וְהֶֽאֱבִ֥יד שָׂרִ֖יד מֵעִֽיר׃', 'וַיַּרְא֙ אֶת־עֲמָלֵ֔ק וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר רֵאשִׁ֤ית גּוֹיִם֙ עֲמָלֵ֔ק וְאַחֲרִית֖וֹ עֲדֵ֥י אֹבֵֽד׃', 'וַיַּרְא֙ אֶת־הַקֵּינִ֔י וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר אֵיתָן֙ מֽוֹשָׁבֶ֔ךָ וְשִׂ֥ים בַּסֶּ֖לַע קִנֶּֽךָ׃', 'כִּ֥י אִם־יִהְיֶ֖ה לְבָ֣עֵֽר קָ֑יִן עַד־מָ֖ה אַשּׁ֥וּר תִּשְׁבֶּֽךָּ׃', 'וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר א֕וֹי מִ֥י יִחְיֶ֖ה מִשֻּׂמ֥וֹ אֵֽל׃', 'וְצִים֙ מִיַּ֣ד כִּתִּ֔ים וְעִנּ֥וּ אַשּׁ֖וּר וְעִנּוּ־עֵ֑בֶר וְגַם־ה֖וּא עֲדֵ֥י אֹבֵֽד׃', 'וַיָּ֣קׇם בִּלְעָ֔ם וַיֵּ֖לֶךְ וַיָּ֣שׇׁב לִמְקֹמ֑וֹ וְגַם־בָּלָ֖ק הָלַ֥ךְ לְדַרְכּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיֵּ֥שֶׁב יִשְׂרָאֵ֖ל בַּשִּׁטִּ֑ים וַיָּ֣חֶל הָעָ֔ם לִזְנ֖וֹת אֶל־בְּנ֥וֹת מוֹאָֽב׃', 'וַתִּקְרֶ֣אןָ לָעָ֔ם לְזִבְחֵ֖י אֱלֹהֵיהֶ֑ן וַיֹּ֣אכַל הָעָ֔ם וַיִּֽשְׁתַּחֲו֖וּ לֵאלֹֽהֵיהֶֽן׃', 'וַיִּצָּ֥מֶד יִשְׂרָאֵ֖ל לְבַ֣עַל פְּע֑וֹר וַיִּֽחַר־אַ֥ף יְהֹוָ֖ה בְּיִשְׂרָאֵֽל׃', 'וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה קַ֚ח אֶת־כׇּל־רָאשֵׁ֣י הָעָ֔ם וְהוֹקַ֥ע אוֹתָ֛ם לַיהֹוָ֖ה נֶ֣גֶד הַשָּׁ֑מֶשׁ וְיָשֹׁ֛ב חֲר֥וֹן אַף־יְהֹוָ֖ה מִיִּשְׂרָאֵֽל׃', 'וַיֹּ֣אמֶר מֹשֶׁ֔ה אֶל־שֹׁפְטֵ֖י יִשְׂרָאֵ֑ל הִרְגוּ֙ אִ֣ישׁ אֲנָשָׁ֔יו הַנִּצְמָדִ֖ים לְבַ֥עַל פְּעֽוֹר׃', 'וְהִנֵּ֡ה אִישׁ֩ מִבְּנֵ֨י יִשְׂרָאֵ֜ל בָּ֗א וַיַּקְרֵ֤ב אֶל־אֶחָיו֙ אֶת־הַמִּדְיָנִ֔ית לְעֵינֵ֣י מֹשֶׁ֔ה וּלְעֵינֵ֖י כׇּל־עֲדַ֣ת בְּנֵי־יִשְׂרָאֵ֑ל וְהֵ֣מָּה בֹכִ֔ים פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃', 'וַיַּ֗רְא פִּֽינְחָס֙ בֶּן־אֶלְעָזָ֔ר בֶּֽן־אַהֲרֹ֖ן הַכֹּהֵ֑ן וַיָּ֙קׇם֙ מִתּ֣וֹךְ הָֽעֵדָ֔ה וַיִּקַּ֥ח רֹ֖מַח בְּיָדֽוֹ׃', 'וַ֠יָּבֹ֠א אַחַ֨ר אִֽישׁ־יִשְׂרָאֵ֜ל אֶל־הַקֻּבָּ֗ה וַיִּדְקֹר֙ אֶת־שְׁנֵיהֶ֔ם אֵ֚ת אִ֣ישׁ יִשְׂרָאֵ֔ל וְאֶת־הָאִשָּׁ֖ה אֶל־קֳבָתָ֑הּ וַתֵּֽעָצַר֙ הַמַּגֵּפָ֔ה מֵעַ֖ל בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וַיִּהְי֕וּ הַמֵּתִ֖ים בַּמַּגֵּפָ֑ה אַרְבָּעָ֥ה וְעֶשְׂרִ֖ים אָֽלֶף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-22-2">Chap. 22</a><a href="#v-23-1">Chap. 23</a><a href="#v-24-1">Chap. 24</a><a href="#v-25-1">Chap. 25</a></div>
+  <div class="seif" id="v-22-2">
+      <span class="seif-num">22:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥רְא בָּלָ֖ק בֶּן־צִפּ֑וֹר אֵ֛ת כׇּל־אֲשֶׁר־עָשָׂ֥ה יִשְׂרָאֵ֖ל לָֽאֱמֹרִֽי׃</p></div><div class="heb-s"><p>וירא בלק בן־צפור את כל־אשר־עשה ישראל לאמרי׃</p></div></div>
+      <div class="texte-fr"><p>Balak, fils de Cippor, ayant su tout ce qu’Israël avait fait aux Amorréens,</p></div>
+    </div><div class="seif" id="v-22-3">
+      <span class="seif-num">22:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֨גׇר מוֹאָ֜ב מִפְּנֵ֥י הָעָ֛ם מְאֹ֖ד כִּ֣י רַב־ה֑וּא וַיָּ֣קׇץ מוֹאָ֔ב מִפְּנֵ֖י בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויגר מואב מפני העם מאד כי רב־הוא ויקץ מואב מפני בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Moab eut grand peur de ce peuple, parce qu’il était nombreux, et Moab trembla à cause des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-22-4">
+      <span class="seif-num">22:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר מוֹאָ֜ב אֶל־זִקְנֵ֣י מִדְיָ֗ן עַתָּ֞ה יְלַחֲכ֤וּ הַקָּהָל֙ אֶת־כׇּל־סְבִ֣יבֹתֵ֔ינוּ כִּלְחֹ֣ךְ הַשּׁ֔וֹר אֵ֖ת יֶ֣רֶק הַשָּׂדֶ֑ה וּבָלָ֧ק בֶּן־צִפּ֛וֹר מֶ֥לֶךְ לְמוֹאָ֖ב בָּעֵ֥ת הַהִֽוא׃</p></div><div class="heb-s"><p>ויאמר מואב אל־זקני מדין עתה ילחכו הקהל את־כל־סביבתינו כלחך השור את ירק השדה ובלק בן־צפור מלך למואב בעת ההוא׃</p></div></div>
+      <div class="texte-fr"><p>Et Moab dit aux anciens de Madian: "Bientôt cette multitude aura fourragé tous nos alentours, comme le bœuf fourrage l’herbe des champs!" Or, Balak, fils de Cippor, régnait sur Moab, à cette époque.</p></div>
+    </div><div class="seif" id="v-22-5">
+      <span class="seif-num">22:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֨ח מַלְאָכִ֜ים אֶל־בִּלְעָ֣ם בֶּן־בְּעֹ֗ר<sup class="footnote-marker">*</sup><i class="footnote">(בספרי ספרד ואשכנז בְּע֗וֹר)</i> פְּ֠ת֠וֹרָה אֲשֶׁ֧ר עַל־הַנָּהָ֛ר אֶ֥רֶץ בְּנֵי־עַמּ֖וֹ לִקְרֹא־ל֑וֹ לֵאמֹ֗ר הִ֠נֵּ֠ה עַ֣ם יָצָ֤א מִמִּצְרַ֙יִם֙ הִנֵּ֤ה כִסָּה֙ אֶת־עֵ֣ין הָאָ֔רֶץ וְה֥וּא יֹשֵׁ֖ב מִמֻּלִֽי׃</p></div><div class="heb-s"><p>וישלח מלאכים אל־בלעם בן־בער<sup class="footnote-marker">*</sup><i class="footnote">(בספרי ספרד ואשכנז בעור)</i> פתורה אשר על־הנהר ארץ בני־עמו לקרא־לו לאמר הנה עם יצא ממצרים הנה כסה את־עין הארץ והוא ישב ממלי׃</p></div></div>
+      <div class="texte-fr"><p>Il envoya des messagers à Balaam, fils de Beor, à Pethor qui est sur le fleuve, dans le pays de ses concitoyens, pour le mander, en ces termes: "Un peuple est sorti d’Égypte; déjà il couvre la face du pays, et il est campé vis-à-vis de moi.</p></div>
+    </div><div class="seif" id="v-22-6">
+      <span class="seif-num">22:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּה֩ לְכָה־נָּ֨א אָֽרָה־לִּ֜י אֶת־הָעָ֣ם הַזֶּ֗ה כִּֽי־עָצ֥וּם הוּא֙ מִמֶּ֔נִּי אוּלַ֤י אוּכַל֙ נַכֶּה־בּ֔וֹ וַאֲגָרְשֶׁ֖נּוּ מִן־הָאָ֑רֶץ כִּ֣י יָדַ֗עְתִּי אֵ֤ת אֲשֶׁר־תְּבָרֵךְ֙ מְבֹרָ֔ךְ וַאֲשֶׁ֥ר תָּאֹ֖ר יוּאָֽר׃</p></div><div class="heb-s"><p>ועתה לכה־נא ארה־לי את־העם הזה כי־עצום הוא ממני אולי אוכל נכה־בו ואגרשנו מן־הארץ כי ידעתי את אשר־תברך מברך ואשר תאר יואר׃</p></div></div>
+      <div class="texte-fr"><p>Viens donc, je te prie, et maudis-moi ce peuple, car il est plus puissant que moi: peut-être parviendrai-je à le vaincre et le repousserai-je du pays. Car, je le sais, celui que tu bénis est béni, et celui que tu maudis est maudit."</p></div>
+    </div><div class="seif" id="v-22-7">
+      <span class="seif-num">22:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֨לְכ֜וּ זִקְנֵ֤י מוֹאָב֙ וְזִקְנֵ֣י מִדְיָ֔ן וּקְסָמִ֖ים בְּיָדָ֑ם וַיָּבֹ֙אוּ֙ אֶל־בִּלְעָ֔ם וַיְדַבְּר֥וּ אֵלָ֖יו דִּבְרֵ֥י בָלָֽק׃</p></div><div class="heb-s"><p>וילכו זקני מואב וזקני מדין וקסמים בידם ויבאו אל־בלעם וידברו אליו דברי בלק׃</p></div></div>
+      <div class="texte-fr"><p>Les anciens de Moab et ceux de Madian partirent, munis des honoraires de la divination, et, arrivés chez Balaam, lui transmirent les paroles de Balak.</p></div>
+    </div><div class="seif" id="v-22-8">
+      <span class="seif-num">22:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֲלֵיהֶ֗ם לִ֤ינוּ פֹה֙ הַלַּ֔יְלָה וַהֲשִׁבֹתִ֤י אֶתְכֶם֙ דָּבָ֔ר כַּאֲשֶׁ֛ר יְדַבֵּ֥ר יְהֹוָ֖ה אֵלָ֑י וַיֵּשְׁב֥וּ שָׂרֵֽי־מוֹאָ֖ב עִם־בִּלְעָֽם׃</p></div><div class="heb-s"><p>ויאמר אליהם לינו פה הלילה והשבתי אתכם דבר כאשר ידבר יהוה אלי וישבו שרי־מואב עם־בלעם׃</p></div></div>
+      <div class="texte-fr"><p>Il leur répondit: "Restez ici cette nuit, et je vous rendrai réponse selon ce que l’Éternel m’aura dit." Et les princes moabites restèrent chez Balaam.</p></div>
+    </div><div class="seif" id="v-22-9">
+      <span class="seif-num">22:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֥א אֱלֹהִ֖ים אֶל־בִּלְעָ֑ם וַיֹּ֕אמֶר מִ֛י הָאֲנָשִׁ֥ים הָאֵ֖לֶּה עִמָּֽךְ׃</p></div><div class="heb-s"><p>ויבא אלהים אל־בלעם ויאמר מי האנשים האלה עמך׃</p></div></div>
+      <div class="texte-fr"><p>Dieu aborda Balaam, en disant: "Qui sont ces hommes-là chez toi?"</p></div>
+    </div><div class="seif" id="v-22-10">
+      <span class="seif-num">22:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר בִּלְעָ֖ם אֶל־הָאֱלֹהִ֑ים בָּלָ֧ק בֶּן־צִפֹּ֛ר מֶ֥לֶךְ מוֹאָ֖ב שָׁלַ֥ח אֵלָֽי׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־האלהים בלק בן־צפר מלך מואב שלח אלי׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit à Dieu: "C’est Balak fils de Cippor, roi de Moab, qui m’envoie dire:</p></div>
+    </div><div class="seif" id="v-22-11">
+      <span class="seif-num">22:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּ֤ה הָעָם֙ הַיֹּצֵ֣א מִמִּצְרַ֔יִם וַיְכַ֖ס אֶת־עֵ֣ין הָאָ֑רֶץ עַתָּ֗ה לְכָ֤ה קָֽבָה־לִּי֙ אֹת֔וֹ אוּלַ֥י אוּכַ֛ל לְהִלָּ֥חֶם בּ֖וֹ וְגֵרַשְׁתִּֽיו׃</p></div><div class="heb-s"><p>הנה העם היצא ממצרים ויכס את־עין הארץ עתה לכה קבה־לי אתו אולי אוכל להלחם בו וגרשתיו׃</p></div></div>
+      <div class="texte-fr"><p>Déjà ce peuple, sorti de l’Égypte, a couvert la face du pays. Viens donc, maudis-le moi; peut-être pourrai-je l’attaquer et l’expulserai-je."</p></div>
+    </div><div class="seif" id="v-22-12">
+      <span class="seif-num">22:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־בִּלְעָ֔ם לֹ֥א תֵלֵ֖ךְ עִמָּהֶ֑ם לֹ֤א תָאֹר֙ אֶת־הָעָ֔ם כִּ֥י בָר֖וּךְ הֽוּא׃</p></div><div class="heb-s"><p>ויאמר אלהים אל־בלעם לא תלך עמהם לא תאר את־העם כי ברוך הוא׃</p></div></div>
+      <div class="texte-fr"><p>Dieu dit à Balaam: "Tu n’iras point avec eux. Tu ne maudiras point ce peuple, car il est béni!"</p></div>
+    </div><div class="seif" id="v-22-13">
+      <span class="seif-num">22:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֤קׇם בִּלְעָם֙ בַּבֹּ֔קֶר וַיֹּ֙אמֶר֙ אֶל־שָׂרֵ֣י בָלָ֔ק לְכ֖וּ אֶֽל־אַרְצְכֶ֑ם כִּ֚י מֵאֵ֣ן יְהֹוָ֔ה לְתִתִּ֖י לַהֲלֹ֥ךְ עִמָּכֶֽם׃</p></div><div class="heb-s"><p>ויקם בלעם בבקר ויאמר אל־שרי בלק לכו אל־ארצכם כי מאן יהוה לתתי להלך עמכם׃</p></div></div>
+      <div class="texte-fr"><p>Balaam, s’étant levé le matin, dit aux officiers de Balak: "Retournez dans votre pays; car l’Éternel n’a pas voulu me permettre de partir avec vous."</p></div>
+    </div><div class="seif" id="v-22-14">
+      <span class="seif-num">22:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּק֙וּמוּ֙ שָׂרֵ֣י מוֹאָ֔ב וַיָּבֹ֖אוּ אֶל־בָּלָ֑ק וַיֹּ֣אמְר֔וּ מֵאֵ֥ן בִּלְעָ֖ם הֲלֹ֥ךְ עִמָּֽנוּ׃</p></div><div class="heb-s"><p>ויקומו שרי מואב ויבאו אל־בלק ויאמרו מאן בלעם הלך עמנו׃</p></div></div>
+      <div class="texte-fr"><p>Les princes de Moab se retirèrent, revinrent auprès de Balak et lui dirent:"Balaam a refusé de nous accompagner."</p></div>
+    </div><div class="seif" id="v-22-15">
+      <span class="seif-num">22:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥סֶף ע֖וֹד בָּלָ֑ק שְׁלֹ֣חַ שָׂרִ֔ים רַבִּ֥ים וְנִכְבָּדִ֖ים מֵאֵֽלֶּה׃</p></div><div class="heb-s"><p>ויסף עוד בלק שלח שרים רבים ונכבדים מאלה׃</p></div></div>
+      <div class="texte-fr"><p>Balak revint à la charge, en envoyant des princes plus nombreux et plus considérés que ceux-là.</p></div>
+    </div><div class="seif" id="v-22-16">
+      <span class="seif-num">22:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֖אוּ אֶל־בִּלְעָ֑ם וַיֹּ֣אמְרוּ ל֗וֹ כֹּ֤ה אָמַר֙ בָּלָ֣ק בֶּן־צִפּ֔וֹר אַל־נָ֥א תִמָּנַ֖ע מֵהֲלֹ֥ךְ אֵלָֽי׃</p></div><div class="heb-s"><p>ויבאו אל־בלעם ויאמרו לו כה אמר בלק בן־צפור אל־נא תמנע מהלך אלי׃</p></div></div>
+      <div class="texte-fr"><p>Arrivés chez Balaam, ils lui dirent: "Ainsi parle Balak, fils de Cippor: Ne te défends pas, de grâce, de venir auprès de moi.</p></div>
+    </div><div class="seif" id="v-22-17">
+      <span class="seif-num">22:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־כַבֵּ֤ד אֲכַבֶּדְךָ֙ מְאֹ֔ד וְכֹ֛ל אֲשֶׁר־תֹּאמַ֥ר אֵלַ֖י אֶֽעֱשֶׂ֑ה וּלְכָה־נָּא֙ קָֽבָה־לִּ֔י אֵ֖ת הָעָ֥ם הַזֶּֽה׃</p></div><div class="heb-s"><p>כי־כבד אכבדך מאד וכל אשר־תאמר אלי אעשה ולכה־נא קבה־לי את העם הזה׃</p></div></div>
+      <div class="texte-fr"><p>Car je veux te combler d’honneurs, et tout ce que tu me diras je le ferai; mais viens, de grâce, maudis-moi ce peuple!"</p></div>
+    </div><div class="seif" id="v-22-18">
+      <span class="seif-num">22:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַן בִּלְעָ֗ם וַיֹּ֙אמֶר֙ אֶל־עַבְדֵ֣י בָלָ֔ק אִם־יִתֶּן־לִ֥י בָלָ֛ק מְלֹ֥א בֵית֖וֹ כֶּ֣סֶף וְזָהָ֑ב לֹ֣א אוּכַ֗ל לַעֲבֹר֙ אֶת־פִּי֙ יְהֹוָ֣ה אֱלֹהָ֔י לַעֲשׂ֥וֹת קְטַנָּ֖ה א֥וֹ גְדוֹלָֽה׃</p></div><div class="heb-s"><p>ויען בלעם ויאמר אל־עבדי בלק אם־יתן־לי בלק מלא ביתו כסף וזהב לא אוכל לעבר את־פי יהוה אלהי לעשות קטנה או גדולה׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit en ces termes aux serviteurs de Balak: "Quand Balak me donnerait de l’argent et de l’or plein son palais, je ne pourrais contrevenir à l’ordre de l’Éternel mon Dieu, en aucune façon.</p></div>
+    </div><div class="seif" id="v-22-19">
+      <span class="seif-num">22:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֗ה שְׁב֨וּ נָ֥א בָזֶ֛ה גַּם־אַתֶּ֖ם הַלָּ֑יְלָה וְאֵ֣דְעָ֔ה מַה־יֹּסֵ֥ף יְהֹוָ֖ה דַּבֵּ֥ר עִמִּֽי׃</p></div><div class="heb-s"><p>ועתה שבו נא בזה גם־אתם הלילה ואדעה מה־יסף יהוה דבר עמי׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, veuillez attendre ici, vous aussi, cette nuit, que je sache ce que l’Éternel doit encore me dire."</p></div>
+    </div><div class="seif" id="v-22-20">
+      <span class="seif-num">22:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֨א אֱלֹהִ֥ים&thinsp;<small>׀</small>&thinsp;אֶל־בִּלְעָם֮ לַ֒יְלָה֒ וַיֹּ֣אמֶר ל֗וֹ אִם־לִקְרֹ֤א לְךָ֙ בָּ֣אוּ הָאֲנָשִׁ֔ים ק֖וּם לֵ֣ךְ אִתָּ֑ם וְאַ֗ךְ אֶת־הַדָּבָ֛ר אֲשֶׁר־אֲדַבֵּ֥ר אֵלֶ֖יךָ אֹת֥וֹ תַעֲשֶֽׂה׃</p></div><div class="heb-s"><p>ויבא אלהים&thinsp;<small>׀</small>&thinsp;אל־בלעם לילה ויאמר לו אם־לקרא לך באו האנשים קום לך אתם ואך את־הדבר אשר־אדבר אליך אתו תעשה׃</p></div></div>
+      <div class="texte-fr"><p>Dieu aborda Balaam pendant la nuit, en lui disant: "Puisque ces hommes sont venus pour te mander, va, pars avec eux! Et cependant, les ordres que je te donnerai, ceux-là seulement, tu les accompliras!"</p></div>
+    </div><div class="seif" id="v-22-21">
+      <span class="seif-num">22:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֤קׇם בִּלְעָם֙ בַּבֹּ֔קֶר וַֽיַּחֲבֹ֖שׁ אֶת־אֲתֹנ֑וֹ וַיֵּ֖לֶךְ עִם־שָׂרֵ֥י מוֹאָֽב׃</p></div><div class="heb-s"><p>ויקם בלעם בבקר ויחבש את־אתנו וילך עם־שרי מואב׃</p></div></div>
+      <div class="texte-fr"><p>Balaam se leva le matin, sangla son ânesse, et partit avec les princes de Moab.</p></div>
+    </div><div class="seif" id="v-22-22">
+      <span class="seif-num">22:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּֽחַר־אַ֣ף אֱלֹהִים֮ כִּֽי־הוֹלֵ֣ךְ הוּא֒ וַיִּתְיַצֵּ֞ב מַלְאַ֧ךְ יְהֹוָ֛ה בַּדֶּ֖רֶךְ לְשָׂטָ֣ן ל֑וֹ וְהוּא֙ רֹכֵ֣ב עַל־אֲתֹנ֔וֹ וּשְׁנֵ֥י נְעָרָ֖יו עִמּֽוֹ׃</p></div><div class="heb-s"><p>ויחר־אף אלהים כי־הולך הוא ויתיצב מלאך יהוה בדרך לשטן לו והוא רכב על־אתנו ושני נעריו עמו׃</p></div></div>
+      <div class="texte-fr"><p>Mais Dieu étant irrité de ce qu’il partait, un ange du Seigneur se mit sur son chemin pour lui faire obstacle. Or, il était monté sur son ânesse, et ses deux jeunes esclaves l’accompagnaient.</p></div>
+    </div><div class="seif" id="v-22-23">
+      <span class="seif-num">22:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֣רֶא הָאָתוֹן֩ אֶת־מַלְאַ֨ךְ יְהֹוָ֜ה נִצָּ֣ב בַּדֶּ֗רֶךְ וְחַרְבּ֤וֹ שְׁלוּפָה֙ בְּיָד֔וֹ וַתֵּ֤ט הָֽאָתוֹן֙ מִן־הַדֶּ֔רֶךְ וַתֵּ֖לֶךְ בַּשָּׂדֶ֑ה וַיַּ֤ךְ בִּלְעָם֙ אֶת־הָ֣אָת֔וֹן לְהַטֹּתָ֖הּ הַדָּֽרֶךְ׃</p></div><div class="heb-s"><p>ותרא האתון את־מלאך יהוה נצב בדרך וחרבו שלופה בידו ותט האתון מן־הדרך ותלך בשדה ויך בלעם את־האתון להטתה הדרך׃</p></div></div>
+      <div class="texte-fr"><p>L’ânesse, voyant l’ange du Seigneur debout sur son passage et l’épée nue à la main, s’écarta de la route et alla à travers champs; Balaam frappa l’ânesse pour la ramener sur la route.</p></div>
+    </div><div class="seif" id="v-22-24">
+      <span class="seif-num">22:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲמֹד֙ מַלְאַ֣ךְ יְהֹוָ֔ה בְּמִשְׁע֖וֹל הַכְּרָמִ֑ים גָּדֵ֥ר מִזֶּ֖ה וְגָדֵ֥ר מִזֶּֽה׃</p></div><div class="heb-s"><p>ויעמד מלאך יהוה במשעול הכרמים גדר מזה וגדר מזה׃</p></div></div>
+      <div class="texte-fr"><p>Alors l’ange du Seigneur se plaça dans un chemin creux entre les vignes, clôture deçà, clôture delà.</p></div>
+    </div><div class="seif" id="v-22-25">
+      <span class="seif-num">22:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֨רֶא הָאָת֜וֹן אֶת־מַלְאַ֣ךְ יְהֹוָ֗ה וַתִּלָּחֵץ֙ אֶל־הַקִּ֔יר וַתִּלְחַ֛ץ אֶת־רֶ֥גֶל בִּלְעָ֖ם אֶל־הַקִּ֑יר וַיֹּ֖סֶף לְהַכֹּתָֽהּ׃</p></div><div class="heb-s"><p>ותרא האתון את־מלאך יהוה ותלחץ אל־הקיר ותלחץ את־רגל בלעם אל־הקיר ויסף להכתה׃</p></div></div>
+      <div class="texte-fr"><p>L’ânesse, voyant l’ange du Seigneur, se serra contre le mur, et froissa contre le mur le pied de Balaam, qui la frappa de nouveau.</p></div>
+    </div><div class="seif" id="v-22-26">
+      <span class="seif-num">22:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּ֥וֹסֶף מַלְאַךְ־יְהֹוָ֖ה עֲב֑וֹר וַֽיַּעֲמֹד֙ בְּמָק֣וֹם צָ֔ר אֲשֶׁ֛ר אֵֽין־דֶּ֥רֶךְ לִנְט֖וֹת יָמִ֥ין וּשְׂמֹֽאול׃</p></div><div class="heb-s"><p>ויוסף מלאך־יהוה עבור ויעמד במקום צר אשר אין־דרך לנטות ימין ושמאול׃</p></div></div>
+      <div class="texte-fr"><p>Mais de nouveau l’ange du Seigneur prit les devants, et il se plaça dans un lieu étroit, où il n’était possible de s’écarter ni à droite ni à gauche.</p></div>
+    </div><div class="seif" id="v-22-27">
+      <span class="seif-num">22:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֤רֶא הָֽאָתוֹן֙ אֶת־מַלְאַ֣ךְ יְהֹוָ֔ה וַתִּרְבַּ֖ץ תַּ֣חַת בִּלְעָ֑ם וַיִּֽחַר־אַ֣ף בִּלְעָ֔ם וַיַּ֥ךְ אֶת־הָאָת֖וֹן בַּמַּקֵּֽל׃</p></div><div class="heb-s"><p>ותרא האתון את־מלאך יהוה ותרבץ תחת בלעם ויחר־אף בלעם ויך את־האתון במקל׃</p></div></div>
+      <div class="texte-fr"><p>L’ânesse, voyant encore l’ange du Seigneur, se coucha sous Balaam; enflammé de colère, Balaam la frappa de son bâton.</p></div>
+    </div><div class="seif" id="v-22-28">
+      <span class="seif-num">22:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפְתַּ֥ח יְהֹוָ֖ה אֶת־פִּ֣י הָאָת֑וֹן וַתֹּ֤אמֶר לְבִלְעָם֙ מֶה־עָשִׂ֣יתִֽי לְךָ֔ כִּ֣י הִכִּיתַ֔נִי זֶ֖ה שָׁלֹ֥שׁ רְגָלִֽים׃</p></div><div class="heb-s"><p>ויפתח יהוה את־פי האתון ותאמר לבלעם מה־עשיתי לך כי הכיתני זה שלש רגלים׃</p></div></div>
+      <div class="texte-fr"><p>Alors le Seigneur ouvrit la bouche de l’ânesse, qui dit à Balaam: "Que t’ai-je fait, pour que tu m’aies frappée ainsi à trois reprises?"</p></div>
+    </div><div class="seif" id="v-22-29">
+      <span class="seif-num">22:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בִּלְעָם֙ לָֽאָת֔וֹן כִּ֥י הִתְעַלַּ֖לְתְּ בִּ֑י ל֤וּ יֶשׁ־חֶ֙רֶב֙ בְּיָדִ֔י כִּ֥י עַתָּ֖ה הֲרַגְתִּֽיךְ׃</p></div><div class="heb-s"><p>ויאמר בלעם לאתון כי התעללת בי לו יש־חרב בידי כי עתה הרגתיך׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit à l’ânesse: "Parce que tu te joues de moi! Si je tenais une épée, certes, je te tuerais sur l’heure!"</p></div>
+    </div><div class="seif" id="v-22-30">
+      <span class="seif-num">22:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֨אמֶר הָאָת֜וֹן אֶל־בִּלְעָ֗ם הֲלוֹא֩ אָנֹכִ֨י אֲתֹֽנְךָ֜ אֲשֶׁר־רָכַ֣בְתָּ עָלַ֗י מֵעֽוֹדְךָ֙ עַד־הַיּ֣וֹם הַזֶּ֔ה הַֽהַסְכֵּ֣ן הִסְכַּ֔נְתִּי לַעֲשׂ֥וֹת לְךָ֖ כֹּ֑ה וַיֹּ֖אמֶר לֹֽא׃</p></div><div class="heb-s"><p>ותאמר האתון אל־בלעם הלוא אנכי אתנך אשר־רכבת עלי מעודך עד־היום הזה ההסכן הסכנתי לעשות לך כה ויאמר לא׃</p></div></div>
+      <div class="texte-fr"><p>Et l’ânesse dit à Balaam: "Ne suis-je pas ton ânesse, que tu as toujours montée jusqu’à ce jour? Avais-je accoutumé d’agir ainsi avec toi?" Et il répondit: "Non."</p></div>
+    </div><div class="seif" id="v-22-31">
+      <span class="seif-num">22:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְגַ֣ל יְהֹוָה֮ אֶת־עֵינֵ֣י בִלְעָם֒ וַיַּ֞רְא אֶת־מַלְאַ֤ךְ יְהֹוָה֙ נִצָּ֣ב בַּדֶּ֔רֶךְ וְחַרְבּ֥וֹ שְׁלֻפָ֖ה בְּיָד֑וֹ וַיִּקֹּ֥ד וַיִּשְׁתַּ֖חוּ לְאַפָּֽיו׃</p></div><div class="heb-s"><p>ויגל יהוה את־עיני בלעם וירא את־מלאך יהוה נצב בדרך וחרבו שלפה בידו ויקד וישתחו לאפיו׃</p></div></div>
+      <div class="texte-fr"><p>Soudan, le Seigneur dessilla les yeux de Balaam, et il vit l’ange du Seigneur debout sur la route; l’épée nue à la main; il s’inclina et se prosterna sur sa face.</p></div>
+    </div><div class="seif" id="v-22-32">
+      <span class="seif-num">22:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֵלָיו֙ מַלְאַ֣ךְ יְהֹוָ֔ה עַל־מָ֗ה הִכִּ֙יתָ֙ אֶת־אֲתֹ֣נְךָ֔ זֶ֖ה שָׁל֣וֹשׁ רְגָלִ֑ים הִנֵּ֤ה אָנֹכִי֙ יָצָ֣אתִי לְשָׂטָ֔ן כִּֽי־יָרַ֥ט הַדֶּ֖רֶךְ לְנֶגְדִּֽי׃</p></div><div class="heb-s"><p>ויאמר אליו מלאך יהוה על־מה הכית את־אתנך זה שלוש רגלים הנה אנכי יצאתי לשטן כי־ירט הדרך לנגדי׃</p></div></div>
+      <div class="texte-fr"><p>L’ange du Seigneur lui dit: "Pourquoi as-tu frappé ton ânesse par trois fois? C’est moi qui suis venu me poser en obstacle, parce que ce voyage a lieu contre mon gré.</p></div>
+    </div><div class="seif" id="v-22-33">
+      <span class="seif-num">22:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּרְאַ֙נִי֙ הָֽאָת֔וֹן וַתֵּ֣ט לְפָנַ֔י זֶ֖ה שָׁלֹ֣שׁ רְגָלִ֑ים אוּלַי֙ נָטְתָ֣ה מִפָּנַ֔י כִּ֥י עַתָּ֛ה גַּם־אֹתְכָ֥ה הָרַ֖גְתִּי וְאוֹתָ֥הּ הֶחֱיֵֽיתִי׃</p></div><div class="heb-s"><p>ותראני האתון ותט לפני זה שלש רגלים אולי נטתה מפני כי עתה גם־אתכה הרגתי ואותה החייתי׃</p></div></div>
+      <div class="texte-fr"><p>Cette ânesse m’a vu, et elle s’est écartée à mon aspect, trois fois; si elle ne s’était écartée de devant moi, assurément je t’aurais fait mourir, tandis que je l’aurais laissée vivre."</p></div>
+    </div><div class="seif" id="v-22-34">
+      <span class="seif-num">22:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר בִּלְעָ֜ם אֶל־מַלְאַ֤ךְ יְהֹוָה֙ חָטָ֔אתִי כִּ֚י לֹ֣א יָדַ֔עְתִּי כִּ֥י אַתָּ֛ה נִצָּ֥ב לִקְרָאתִ֖י בַּדָּ֑רֶךְ וְעַתָּ֛ה אִם־רַ֥ע בְּעֵינֶ֖יךָ אָשׁ֥וּבָה לִּֽי׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־מלאך יהוה חטאתי כי לא ידעתי כי אתה נצב לקראתי בדרך ועתה אם־רע בעיניך אשובה לי׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit à l’ange du Seigneur: "J’ai péché, parce que je ne savais pas que tu fusses posté devant moi sur le chemin; et maintenant, si cela te déplaît, je m’en retournerai."</p></div>
+    </div><div class="seif" id="v-22-35">
+      <span class="seif-num">22:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֩אמֶר֩ מַלְאַ֨ךְ יְהֹוָ֜ה אֶל־בִּלְעָ֗ם לֵ֚ךְ עִם־הָ֣אֲנָשִׁ֔ים וְאֶ֗פֶס אֶת־הַדָּבָ֛ר אֲשֶׁר־אֲדַבֵּ֥ר אֵלֶ֖יךָ אֹת֣וֹ תְדַבֵּ֑ר וַיֵּ֥לֶךְ בִּלְעָ֖ם עִם־שָׂרֵ֥י בָלָֽק׃</p></div><div class="heb-s"><p>ויאמר מלאך יהוה אל־בלעם לך עם־האנשים ואפס את־הדבר אשר־אדבר אליך אתו תדבר וילך בלעם עם־שרי בלק׃</p></div></div>
+      <div class="texte-fr"><p>Mais l’ange du Seigneur dit à Balaam: "Va avec ces hommes! Et cependant, la parole que je te dicterai, celle-là seule tu la diras." Et Balaam poursuivit sa route avec les officiers de Balak.</p></div>
+    </div><div class="seif" id="v-22-36">
+      <span class="seif-num">22:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֥ע בָּלָ֖ק כִּ֣י בָ֣א בִלְעָ֑ם וַיֵּצֵ֨א לִקְרָאת֜וֹ אֶל־עִ֣יר מוֹאָ֗ב אֲשֶׁר֙ עַל־גְּב֣וּל אַרְנֹ֔ן אֲשֶׁ֖ר בִּקְצֵ֥ה הַגְּבֽוּל׃</p></div><div class="heb-s"><p>וישמע בלק כי בא בלעם ויצא לקראתו אל־עיר מואב אשר על־גבול ארנן אשר בקצה הגבול׃</p></div></div>
+      <div class="texte-fr"><p>Balak, ayant appris que Balaam venait, alla le recevoir à Ir-Moab, qui est sur la limite de l’Arnon, au point extrême de la frontière.</p></div>
+    </div><div class="seif" id="v-22-37">
+      <span class="seif-num">22:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר בָּלָ֜ק אֶל־בִּלְעָ֗ם הֲלֹא֩ שָׁלֹ֨חַ שָׁלַ֤חְתִּי אֵלֶ֙יךָ֙ לִקְרֹא־לָ֔ךְ לָ֥מָּה לֹא־הָלַ֖כְתָּ אֵלָ֑י הַֽאֻמְנָ֔ם לֹ֥א אוּכַ֖ל כַּבְּדֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר בלק אל־בלעם הלא שלח שלחתי אליך לקרא־לך למה לא־הלכת אלי האמנם לא אוכל כבדך׃</p></div></div>
+      <div class="texte-fr"><p>Et Balak dit à Balaam: "Ne t’avais-je pas appelé par un premier message? Pourquoi n’es-tu pas venu près de moi? Est-ce qu’en vérité je n’ai pas le pouvoir de te faire honneur?"</p></div>
+    </div><div class="seif" id="v-22-38">
+      <span class="seif-num">22:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר בִּלְעָ֜ם אֶל־בָּלָ֗ק הִֽנֵּה־בָ֙אתִי֙ אֵלֶ֔יךָ עַתָּ֕ה הֲיָכֹ֥ל אוּכַ֖ל דַּבֵּ֣ר מְא֑וּמָה הַדָּבָ֗ר אֲשֶׁ֨ר יָשִׂ֧ים אֱלֹהִ֛ים בְּפִ֖י אֹת֥וֹ אֲדַבֵּֽר׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־בלק הנה־באתי אליך עתה היכל אוכל דבר מאומה הדבר אשר ישים אלהים בפי אתו אדבר׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit a Balak: "Tu le vois, je suis venu vers toi; mais est-il en ma puissance de dire quoi que ce soit? La parole que Dieu mettra dans ma bouche, c’est celle-là que je dois dire."</p></div>
+    </div><div class="seif" id="v-22-39">
+      <span class="seif-num">22:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥לֶךְ בִּלְעָ֖ם עִם־בָּלָ֑ק וַיָּבֹ֖אוּ קִרְיַ֥ת חֻצֽוֹת׃</p></div><div class="heb-s"><p>וילך בלעם עם־בלק ויבאו קרית חצות׃</p></div></div>
+      <div class="texte-fr"><p>Balaam fit route avec Balak, et ils arrivèrent à Kiryath-Houçoth.</p></div>
+    </div><div class="seif" id="v-22-40">
+      <span class="seif-num">22:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּזְבַּ֥ח בָּלָ֖ק בָּקָ֣ר וָצֹ֑אן וַיְשַׁלַּ֣ח לְבִלְעָ֔ם וְלַשָּׂרִ֖ים אֲשֶׁ֥ר אִתּֽוֹ׃</p></div><div class="heb-s"><p>ויזבח בלק בקר וצאן וישלח לבלעם ולשרים אשר אתו׃</p></div></div>
+      <div class="texte-fr"><p>Balak immola bœufs et brebis, dont il envoya des parts à Balaam et aux officiers qui l’accompagnaient.</p></div>
+    </div><div class="seif" id="v-22-41">
+      <span class="seif-num">22:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י בַבֹּ֔קֶר וַיִּקַּ֤ח בָּלָק֙ אֶת־בִּלְעָ֔ם וַֽיַּעֲלֵ֖הוּ בָּמ֣וֹת בָּ֑עַל וַיַּ֥רְא מִשָּׁ֖ם קְצֵ֥ה הָעָֽם׃</p></div><div class="heb-s"><p>ויהי בבקר ויקח בלק את־בלעם ויעלהו במות בעל וירא משם קצה העם׃</p></div></div>
+      <div class="texte-fr"><p>Et le matin venu, Balak alla prendre Balaam et le conduisit sur les hauteurs de Baal, d’où il vit jusqu’aux dernières lignes du peuple.</p></div>
+    </div><div class="seif" id="v-23-1">
+      <span class="seif-num">23:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בִּלְעָם֙ אֶל־בָּלָ֔ק בְּנֵה־לִ֥י בָזֶ֖ה שִׁבְעָ֣ה מִזְבְּחֹ֑ת וְהָכֵ֥ן לִי֙ בָּזֶ֔ה שִׁבְעָ֥ה פָרִ֖ים וְשִׁבְעָ֥ה אֵילִֽים׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־בלק בנה־לי בזה שבעה מזבחת והכן לי בזה שבעה פרים ושבעה אילים׃</p></div></div>
+      <div class="texte-fr"><p>Alors Balaam dit à Balak: "Dresse-moi ici sept autels, et prépare-moi ici sept taureaux et sept béliers."</p></div>
+    </div><div class="seif" id="v-23-2">
+      <span class="seif-num">23:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַשׂ בָּלָ֔ק כַּאֲשֶׁ֖ר דִּבֶּ֣ר בִּלְעָ֑ם וַיַּ֨עַל בָּלָ֧ק וּבִלְעָ֛ם פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויעש בלק כאשר דבר בלעם ויעל בלק ובלעם פר ואיל במזבח׃</p></div></div>
+      <div class="texte-fr"><p>Balak fit ce qu’avait dit Balaam; puis Balak et Balaam offrirent un taureau et un bélier sur chaque autel.</p></div>
+    </div><div class="seif" id="v-23-3">
+      <span class="seif-num">23:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר בִּלְעָ֜ם לְבָלָ֗ק הִתְיַצֵּב֮ עַל־עֹלָתֶ֒ךָ֒ וְאֵֽלְכָ֗ה אוּלַ֞י יִקָּרֵ֤ה יְהֹוָה֙ לִקְרָאתִ֔י וּדְבַ֥ר מַה־יַּרְאֵ֖נִי וְהִגַּ֣דְתִּי לָ֑ךְ וַיֵּ֖לֶךְ שֶֽׁפִי׃</p></div><div class="heb-s"><p>ויאמר בלעם לבלק התיצב על־עלתך ואלכה אולי יקרה יהוה לקראתי ודבר מה־יראני והגדתי לך וילך שפי׃</p></div></div>
+      <div class="texte-fr"><p>Balaam dit à Balak: "Demeure près de ton holocauste; moi je m’en irai: peut-être l’Éternel s’offrira-t-il à ma rencontre, et, quoi qu’il me révèle, je t’en ferai part." Et il s’en alla dans la solitude.</p></div>
+    </div><div class="seif" id="v-23-4">
+      <span class="seif-num">23:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקָּ֥ר אֱלֹהִ֖ים אֶל־בִּלְעָ֑ם וַיֹּ֣אמֶר אֵלָ֗יו אֶת־שִׁבְעַ֤ת הַֽמִּזְבְּחֹת֙ עָרַ֔כְתִּי וָאַ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויקר אלהים אל־בלעם ויאמר אליו את־שבעת המזבחת ערכתי ואעל פר ואיל במזבח׃</p></div></div>
+      <div class="texte-fr"><p>Dieu se présenta à Balaam, qui lui dit: "J’ai dressé les sept autels, et j’ai offert un taureau et un bélier sur chaque autel."</p></div>
+    </div><div class="seif" id="v-23-5">
+      <span class="seif-num">23:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֧שֶׂם יְהֹוָ֛ה דָּבָ֖ר בְּפִ֣י בִלְעָ֑ם וַיֹּ֛אמֶר שׁ֥וּב אֶל־בָּלָ֖ק וְכֹ֥ה תְדַבֵּֽר׃</p></div><div class="heb-s"><p>וישם יהוה דבר בפי בלעם ויאמר שוב אל־בלק וכה תדבר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel mit sa parole dans la bouche de Balaam, et lui dit: "Retourne vers Balak, et tu parleras de la sorte..."</p></div>
+    </div><div class="seif" id="v-23-6">
+      <span class="seif-num">23:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֣שׇׁב אֵלָ֔יו וְהִנֵּ֥ה נִצָּ֖ב עַל־עֹלָת֑וֹ ה֖וּא וְכׇל־שָׂרֵ֥י מוֹאָֽב׃</p></div><div class="heb-s"><p>וישב אליו והנה נצב על־עלתו הוא וכל־שרי מואב׃</p></div></div>
+      <div class="texte-fr"><p>II retourna vers lui et le trouva debout près de son holocauste, lui et tous les princes de Moab.</p></div>
+    </div><div class="seif" id="v-23-7">
+      <span class="seif-num">23:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר מִן־אֲ֠רָ֠ם יַנְחֵ֨נִי בָלָ֤ק מֶֽלֶךְ־מוֹאָב֙ מֵֽהַרְרֵי־קֶ֔דֶם לְכָה֙ אָֽרָה־לִּ֣י יַעֲקֹ֔ב וּלְכָ֖ה זֹעֲמָ֥ה יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>וישא משלו ויאמר מן־ארם ינחני בלק מלך־מואב מהררי־קדם לכה ארה־לי יעקב ולכה זעמה ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et il proféra son oracle en disant: "II me fait venir d’Aram, Balak roi de Moab; il m’appelle des monts de l’orient: "Viens maudire pour moi Jacob! Oui, viens menacer Israël!"</p></div>
+    </div><div class="seif" id="v-23-8">
+      <span class="seif-num">23:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>מָ֣ה אֶקֹּ֔ב לֹ֥א קַבֹּ֖ה אֵ֑ל וּמָ֣ה אֶזְעֹ֔ם לֹ֥א זָעַ֖ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>מה אקב לא קבה אל ומה אזעם לא זעם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Comment maudirais-je celui que Dieu n’a point maudit? Comment menacerai-je, quand l’Éternel est sans colère?</p></div>
+    </div><div class="seif" id="v-23-9">
+      <span class="seif-num">23:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־מֵרֹ֤אשׁ צֻרִים֙ אֶרְאֶ֔נּוּ וּמִגְּבָע֖וֹת אֲשׁוּרֶ֑נּוּ הֶן־עָם֙ לְבָדָ֣ד יִשְׁכֹּ֔ן וּבַגּוֹיִ֖ם לֹ֥א יִתְחַשָּֽׁב׃</p></div><div class="heb-s"><p>כי־מראש צרים אראנו ומגבעות אשורנו הן־עם לבדד ישכן ובגוים לא יתחשב׃</p></div></div>
+      <div class="texte-fr"><p>Oui, je le vois de la cime des rochers, et du haut des collines, je le découvre: ce peuple, il vit solitaire, iI ne se confondra point avec les nations.</p></div>
+    </div><div class="seif" id="v-23-10">
+      <span class="seif-num">23:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִ֤י מָנָה֙ עֲפַ֣ר יַעֲקֹ֔ב וּמִסְפָּ֖ר אֶת־רֹ֣בַע יִשְׂרָאֵ֑ל תָּמֹ֤ת נַפְשִׁי֙ מ֣וֹת יְשָׁרִ֔ים וּתְהִ֥י אַחֲרִיתִ֖י כָּמֹֽהוּ׃</p></div><div class="heb-s"><p>מי מנה עפר יעקב ומספר את־רבע ישראל תמת נפשי מות ישרים ותהי אחריתי כמהו׃</p></div></div>
+      <div class="texte-fr"><p>Qui peut compter la poussière de Jacob, nombrer la multitude d’Israël? Puissé-je mourir comme meurent ces justes, et puisse ma fin ressembler à la leur!".</p></div>
+    </div><div class="seif" id="v-23-11">
+      <span class="seif-num">23:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם מֶ֥ה עָשִׂ֖יתָ לִ֑י לָקֹ֤ב אֹיְבַי֙ לְקַחְתִּ֔יךָ וְהִנֵּ֖ה בֵּרַ֥כְתָּ בָרֵֽךְ׃</p></div><div class="heb-s"><p>ויאמר בלק אל־בלעם מה עשית לי לקב איבי לקחתיך והנה ברכת ברך׃</p></div></div>
+      <div class="texte-fr"><p>Balak dit à Balaam: "Que m’as-tu fait! J’ai eu recours à toi pour maudire mes ennemis, et voilà que tu les bénis, au contraire!"</p></div>
+    </div><div class="seif" id="v-23-12">
+      <span class="seif-num">23:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֖עַן וַיֹּאמַ֑ר הֲלֹ֗א אֵת֩ אֲשֶׁ֨ר יָשִׂ֤ים יְהֹוָה֙ בְּפִ֔י אֹת֥וֹ אֶשְׁמֹ֖ר לְדַבֵּֽר׃</p></div><div class="heb-s"><p>ויען ויאמר הלא את אשר ישים יהוה בפי אתו אשמר לדבר׃</p></div></div>
+      <div class="texte-fr"><p>Mais il répondit: "Certes, ce que l’Éternel met dans ma bouche, ne dois-je pas fidèlement le redire?"</p></div>
+    </div><div class="seif" id="v-23-13">
+      <span class="seif-num">23:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר אֵלָ֜יו בָּלָ֗ק <span class="mam-kq"><span class="mam-kq-k">(לך)</span> <span class="mam-kq-q">[לְכָה־]</span></span>נָּ֨א אִתִּ֜י אֶל־מָק֤וֹם אַחֵר֙ אֲשֶׁ֣ר תִּרְאֶ֣נּוּ מִשָּׁ֔ם אֶ֚פֶס קָצֵ֣הוּ תִרְאֶ֔ה וְכֻלּ֖וֹ לֹ֣א תִרְאֶ֑ה וְקׇבְנוֹ־לִ֖י מִשָּֽׁם׃</p></div><div class="heb-s"><p>ויאמר אליו בלק <span class="mam-kq"><span class="mam-kq-k">(לך)</span> <span class="mam-kq-q">[לכה־]</span></span>נא אתי אל־מקום אחר אשר תראנו משם אפס קצהו תראה וכלו לא תראה וקבנו־לי משם׃</p></div></div>
+      <div class="texte-fr"><p>Balak lui dit: "Viens, je te prie, avec moi dans un autre lieu, d’où tu pourras voir ce peuple: tu n’en verras que les derniers rangs, tu ne le verras pas tout entier. Et maudis-le moi de là."</p></div>
+    </div><div class="seif" id="v-23-14">
+      <span class="seif-num">23:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקָּחֵ֙הוּ֙ שְׂדֵ֣ה צֹפִ֔ים אֶל־רֹ֖אשׁ הַפִּסְגָּ֑ה וַיִּ֙בֶן֙ שִׁבְעָ֣ה מִזְבְּחֹ֔ת וַיַּ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויקחהו שדה צפים אל־ראש הפסגה ויבן שבעה מזבחת ויעל פר ואיל במזבח׃</p></div></div>
+      <div class="texte-fr"><p>Il le conduisit au plateau de Çofîm, sur la crête du Pisga; il y dressa sept autels, et offrit sur chaque autel un taureau et un bélier.</p></div>
+    </div><div class="seif" id="v-23-15">
+      <span class="seif-num">23:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֙אמֶר֙ אֶל־בָּלָ֔ק הִתְיַצֵּ֥ב כֹּ֖ה עַל־עֹלָתֶ֑ךָ וְאָנֹכִ֖י אִקָּ֥רֶה כֹּֽה׃</p></div><div class="heb-s"><p>ויאמר אל־בלק התיצב כה על־עלתך ואנכי אקרה כה׃</p></div></div>
+      <div class="texte-fr"><p>Balaam dit à Balak: "Tiens-toi ici, près de ton holocauste, et moi, j’attendrai là-bas la rencontre."</p></div>
+    </div><div class="seif" id="v-23-16">
+      <span class="seif-num">23:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקָּ֤ר יְהֹוָה֙ אֶל־בִּלְעָ֔ם וַיָּ֥שֶׂם דָּבָ֖ר בְּפִ֑יו וַיֹּ֛אמֶר שׁ֥וּב אֶל־בָּלָ֖ק וְכֹ֥ה תְדַבֵּֽר׃</p></div><div class="heb-s"><p>ויקר יהוה אל־בלעם וישם דבר בפיו ויאמר שוב אל־בלק וכה תדבר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel se présenta à Balaam, inspira un discours à ses lèvres, lui disant: "Va rejoindre Balak, et tu parleras ainsi..."</p></div>
+    </div><div class="seif" id="v-23-17">
+      <span class="seif-num">23:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֣א אֵלָ֗יו וְהִנּ֤וֹ נִצָּב֙ עַל־עֹ֣לָת֔וֹ וְשָׂרֵ֥י מוֹאָ֖ב אִתּ֑וֹ וַיֹּ֤אמֶר לוֹ֙ בָּלָ֔ק מַה־דִּבֶּ֖ר יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויבא אליו והנו נצב על־עלתו ושרי מואב אתו ויאמר לו בלק מה־דבר יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Il revint près de lui, et le trouva debout près de son holocauste, les princes de Moab à ses côtés. Et Balak lui demanda: "Qu’a dit l’Éternel?"</p></div>
+    </div><div class="seif" id="v-23-18">
+      <span class="seif-num">23:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר ק֤וּם בָּלָק֙ וּֽשְׁמָ֔ע הַאֲזִ֥ינָה עָדַ֖י בְּנ֥וֹ צִפֹּֽר׃</p></div><div class="heb-s"><p>וישא משלו ויאמר קום בלק ושמע האזינה עדי בנו צפר׃</p></div></div>
+      <div class="texte-fr"><p>Il proféra son oracle en ces termes: "Prépare-toi, Balak, à m’entendre; prête-moi _l’oreille, fils de Cippor!</p></div>
+    </div><div class="seif" id="v-23-19">
+      <span class="seif-num">23:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֣א אִ֥ישׁ אֵל֙ וִֽיכַזֵּ֔ב וּבֶן־אָדָ֖ם וְיִתְנֶחָ֑ם הַה֤וּא אָמַר֙ וְלֹ֣א יַעֲשֶׂ֔ה וְדִבֶּ֖ר וְלֹ֥א יְקִימֶֽנָּה׃</p></div><div class="heb-s"><p>לא איש אל ויכזב ובן־אדם ויתנחם ההוא אמר ולא יעשה ודבר ולא יקימנה׃</p></div></div>
+      <div class="texte-fr"><p>Dieu n’est pas un mortel, pour mentir, ni un fils d’Adam, pour qu’il se ravise; est-ce lui qui parle et ne tient point parole? Qui affirme et n’exécute point?</p></div>
+    </div><div class="seif" id="v-23-20">
+      <span class="seif-num">23:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִנֵּ֥ה בָרֵ֖ךְ לָקָ֑חְתִּי וּבֵרֵ֖ךְ וְלֹ֥א אֲשִׁיבֶֽנָּה׃</p></div><div class="heb-s"><p>הנה ברך לקחתי וברך ולא אשיבנה׃</p></div></div>
+      <div class="texte-fr"><p>Oui, j’ai reçu mission de bénir; il a béni, je ne puis le dédire.</p></div>
+    </div><div class="seif" id="v-23-21">
+      <span class="seif-num">23:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־הִבִּ֥יט אָ֙וֶן֙ בְּיַעֲקֹ֔ב וְלֹא־רָאָ֥ה עָמָ֖ל בְּיִשְׂרָאֵ֑ל יְהֹוָ֤ה אֱלֹהָיו֙ עִמּ֔וֹ וּתְרוּעַ֥ת מֶ֖לֶךְ בּֽוֹ׃</p></div><div class="heb-s"><p>לא־הביט און ביעקב ולא־ראה עמל בישראל יהוה אלהיו עמו ותרועת מלך בו׃</p></div></div>
+      <div class="texte-fr"><p>Il n’aperçoit point d’iniquité en Jacob, il ne voit point de mal en Israël: l’Éternel, son Dieu, est avec lui, et l’amitié d’un roi le protège.</p></div>
+    </div><div class="seif" id="v-23-22">
+      <span class="seif-num">23:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֖ל מוֹצִיאָ֣ם מִמִּצְרָ֑יִם כְּתוֹעֲפֹ֥ת רְאֵ֖ם לֽוֹ׃</p></div><div class="heb-s"><p>אל מוציאם ממצרים כתועפת ראם לו׃</p></div></div>
+      <div class="texte-fr"><p>Délivré, par ce Dieu, de l’Égypte, il a le vigoureux élan du réêm.</p></div>
+    </div><div class="seif" id="v-23-23">
+      <span class="seif-num">23:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י לֹא־נַ֙חַשׁ֙ בְּיַעֲקֹ֔ב וְלֹא־קֶ֖סֶם בְּיִשְׂרָאֵ֑ל כָּעֵ֗ת יֵאָמֵ֤ר לְיַעֲקֹב֙ וּלְיִשְׂרָאֵ֔ל מַה־פָּ֖עַל אֵֽל׃</p></div><div class="heb-s"><p>כי לא־נחש ביעקב ולא־קסם בישראל כעת יאמר ליעקב ולישראל מה־פעל אל׃</p></div></div>
+      <div class="texte-fr"><p>Il ne faut point de magie à Jacob, point de sortilège à Israël: ils apprennent à point nommé, Jacob et Israël, ce que Dieu a résolu.</p></div>
+    </div><div class="seif" id="v-23-24">
+      <span class="seif-num">23:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֶן־עָם֙ כְּלָבִ֣יא יָק֔וּם וְכַאֲרִ֖י יִתְנַשָּׂ֑א לֹ֤א יִשְׁכַּב֙ עַד־יֹ֣אכַל טֶ֔רֶף וְדַם־חֲלָלִ֖ים יִשְׁתֶּֽה׃</p></div><div class="heb-s"><p>הן־עם כלביא יקום וכארי יתנשא לא ישכב עד־יאכל טרף ודם־חללים ישתה׃</p></div></div>
+      <div class="texte-fr"><p>Voyez! Ce peuple se lève comme un léopard, il se dresse comme un lion; il ne se reposera qu’assouvi de carnage, qu’enivré du sang de ses victimes!"</p></div>
+    </div><div class="seif" id="v-23-25">
+      <span class="seif-num">23:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם גַּם־קֹ֖ב לֹ֣א תִקֳּבֶ֑נּוּ גַּם־בָּרֵ֖ךְ לֹ֥א תְבָרְכֶֽנּוּ׃</p></div><div class="heb-s"><p>ויאמר בלק אל־בלעם גם־קב לא תקבנו גם־ברך לא תברכנו׃</p></div></div>
+      <div class="texte-fr"><p>Balak dit à Balaam: "Ne le maudis point, soit, mais ne le bénis point non plus."</p></div>
+    </div><div class="seif" id="v-23-26">
+      <span class="seif-num">23:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַן בִּלְעָ֔ם וַיֹּ֖אמֶר אֶל־בָּלָ֑ק הֲלֹ֗א דִּבַּ֤רְתִּי אֵלֶ֙יךָ֙ לֵאמֹ֔ר כֹּ֛ל אֲשֶׁר־יְדַבֵּ֥ר יְהֹוָ֖ה אֹת֥וֹ אֶֽעֱשֶֽׂה׃</p></div><div class="heb-s"><p>ויען בלעם ויאמר אל־בלק הלא דברתי אליך לאמר כל אשר־ידבר יהוה אתו אעשה׃</p></div></div>
+      <div class="texte-fr"><p>Balaam répondit à Balak: "Ne t’avais-je pas fait cette déclaration: tout ce que dira l’Éternel, je dois le faire?"</p></div>
+    </div><div class="seif" id="v-23-27">
+      <span class="seif-num">23:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בָּלָק֙ אֶל־בִּלְעָ֔ם לְכָה־נָּא֙ אֶקָּ֣חֲךָ֔ אֶל־מָק֖וֹם אַחֵ֑ר אוּלַ֤י יִישַׁר֙ בְּעֵינֵ֣י הָאֱלֹהִ֔ים וְקַבֹּ֥תוֹ לִ֖י מִשָּֽׁם׃</p></div><div class="heb-s"><p>ויאמר בלק אל־בלעם לכה־נא אקחך אל־מקום אחר אולי יישר בעיני האלהים וקבתו לי משם׃</p></div></div>
+      <div class="texte-fr"><p>Et Balak dit à Balaam: "Viens donc, que je te conduise à une autre place; peut-être ce Dieu trouvera-t-il bon que, de là, tu me les maudisses."</p></div>
+    </div><div class="seif" id="v-23-28">
+      <span class="seif-num">23:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֥ח בָּלָ֖ק אֶת־בִּלְעָ֑ם רֹ֣אשׁ הַפְּע֔וֹר הַנִּשְׁקָ֖ף עַל־פְּנֵ֥י הַיְשִׁימֹֽן׃</p></div><div class="heb-s"><p>ויקח בלק את־בלעם ראש הפעור הנשקף על־פני הישימן׃</p></div></div>
+      <div class="texte-fr"><p>Et Balak emmena Balaam sur la cime du Peor, qui domine la surface du désert.</p></div>
+    </div><div class="seif" id="v-23-29">
+      <span class="seif-num">23:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בִּלְעָם֙ אֶל־בָּלָ֔ק בְּנֵה־לִ֥י בָזֶ֖ה שִׁבְעָ֣ה מִזְבְּחֹ֑ת וְהָכֵ֥ן לִי֙ בָּזֶ֔ה שִׁבְעָ֥ה פָרִ֖ים וְשִׁבְעָ֥ה אֵילִֽם׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־בלק בנה־לי בזה שבעה מזבחת והכן לי בזה שבעה פרים ושבעה אילם׃</p></div></div>
+      <div class="texte-fr"><p>Balaam dit à Balak: "Construis-moi ici sept autels, et prépare-moi ici sept taureaux et sept béliers."</p></div>
+    </div><div class="seif" id="v-23-30">
+      <span class="seif-num">23:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַשׂ בָּלָ֔ק כַּאֲשֶׁ֖ר אָמַ֣ר בִּלְעָ֑ם וַיַּ֛עַל פָּ֥ר וָאַ֖יִל בַּמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויעש בלק כאשר אמר בלעם ויעל פר ואיל במזבח׃</p></div></div>
+      <div class="texte-fr"><p>Balak fit ce qu’avait dit Balaam, et il offrit un taureau et un bélier sur chaque autel.</p></div>
+    </div><div class="seif" id="v-24-1">
+      <span class="seif-num">24:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣רְא בִּלְעָ֗ם כִּ֣י ט֞וֹב בְּעֵינֵ֤י יְהֹוָה֙ לְבָרֵ֣ךְ אֶת־יִשְׂרָאֵ֔ל וְלֹא־הָלַ֥ךְ כְּפַֽעַם־בְּפַ֖עַם לִקְרַ֣את נְחָשִׁ֑ים וַיָּ֥שֶׁת אֶל־הַמִּדְבָּ֖ר פָּנָֽיו׃</p></div><div class="heb-s"><p>וירא בלעם כי טוב בעיני יהוה לברך את־ישראל ולא־הלך כפעם־בפעם לקראת נחשים וישת אל־המדבר פניו׃</p></div></div>
+      <div class="texte-fr"><p>Balaam, voyant que l’Éternel se plaisait à bénir Israël, n’eut plus recours, comme précédemment, à des opérations magiques, mais tourna son visage du côté du désert.</p></div>
+    </div><div class="seif" id="v-24-2">
+      <span class="seif-num">24:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֨א בִלְעָ֜ם אֶת־עֵינָ֗יו וַיַּרְא֙ אֶת־יִשְׂרָאֵ֔ל שֹׁכֵ֖ן לִשְׁבָטָ֑יו וַתְּהִ֥י עָלָ֖יו ר֥וּחַ אֱלֹהִֽים׃</p></div><div class="heb-s"><p>וישא בלעם את־עיניו וירא את־ישראל שכן לשבטיו ותהי עליו רוח אלהים׃</p></div></div>
+      <div class="texte-fr"><p>En y portant ses regards, Balaam vit Israël, dont les tribus s’y déployaient; et l’esprit divin s’empara de lui;</p></div>
+    </div><div class="seif" id="v-24-3">
+      <span class="seif-num">24:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר נְאֻ֤ם בִּלְעָם֙ בְּנ֣וֹ בְעֹ֔ר וּנְאֻ֥ם הַגֶּ֖בֶר שְׁתֻ֥ם הָעָֽיִן׃</p></div><div class="heb-s"><p>וישא משלו ויאמר נאם בלעם בנו בער ונאם הגבר שתם העין׃</p></div></div>
+      <div class="texte-fr"><p>et il proféra son oracle en ces termes: "Parole de Balaam, fils de Beor, parole de l’homme au clairvoyant regard,</p></div>
+    </div><div class="seif" id="v-24-4">
+      <span class="seif-num">24:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְאֻ֕ם שֹׁמֵ֖עַ אִמְרֵי־אֵ֑ל אֲשֶׁ֨ר מַחֲזֵ֤ה שַׁדַּי֙ יֶֽחֱזֶ֔ה נֹפֵ֖ל וּגְל֥וּי עֵינָֽיִם׃</p></div><div class="heb-s"><p>נאם שמע אמרי־אל אשר מחזה שדי יחזה נפל וגלוי עינים׃</p></div></div>
+      <div class="texte-fr"><p>de celui qui entend le verbe divin, qui perçoit la vision du Tout-Puissant il fléchit, mais son œil reste ouvert:</p></div>
+    </div><div class="seif" id="v-24-5">
+      <span class="seif-num">24:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַה־טֹּ֥בוּ אֹהָלֶ֖יךָ יַעֲקֹ֑ב מִשְׁכְּנֹתֶ֖יךָ יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>מה־טבו אהליך יעקב משכנתיך ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Qu’elles sont belles tes tentes, ô Jacob! Tes demeures, ô Israël!</p></div>
+    </div><div class="seif" id="v-24-6">
+      <span class="seif-num">24:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּנְחָלִ֣ים נִטָּ֔יוּ כְּגַנֹּ֖ת עֲלֵ֣י נָהָ֑ר כַּאֲהָלִים֙ נָטַ֣ע יְהֹוָ֔ה כַּאֲרָזִ֖ים עֲלֵי־מָֽיִם׃</p></div><div class="heb-s"><p>כנחלים נטיו כגנת עלי נהר כאהלים נטע יהוה כארזים עלי־מים׃</p></div></div>
+      <div class="texte-fr"><p>Elles se développent comme des vallées, comme des vergers le long d’un fleuve; Dieu les a plantées comme des aloès, comme des cèdres au bord des eaux.</p></div>
+    </div><div class="seif" id="v-24-7">
+      <span class="seif-num">24:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִֽזַּל־מַ֙יִם֙ מִדָּ֣לְיָ֔ו וְזַרְע֖וֹ בְּמַ֣יִם רַבִּ֑ים וְיָרֹ֤ם מֵֽאֲגַג֙ מַלְכּ֔וֹ וְתִנַּשֵּׂ֖א מַלְכֻתֽוֹ׃</p></div><div class="heb-s"><p>יזל־מים מדליו וזרעו במים רבים וירם מאגג מלכו ותנשא מלכתו׃</p></div></div>
+      <div class="texte-fr"><p>La sève ruisselle de ses branches, et sa graine est abondamment arrosée; son roi est plus grand que n’est Agag, sa royauté est souveraine!</p></div>
+    </div><div class="seif" id="v-24-8">
+      <span class="seif-num">24:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֚ל מוֹצִיא֣וֹ מִמִּצְרַ֔יִם כְּתוֹעֲפֹ֥ת רְאֵ֖ם ל֑וֹ יֹאכַ֞ל גּוֹיִ֣ם צָרָ֗יו וְעַצְמֹתֵיהֶ֛ם יְגָרֵ֖ם וְחִצָּ֥יו יִמְחָֽץ׃</p></div><div class="heb-s"><p>אל מוציאו ממצרים כתועפת ראם לו יאכל גוים צריו ועצמתיהם יגרם וחציו ימחץ׃</p></div></div>
+      <div class="texte-fr"><p>Quand Dieu le fit sortir de l’Égypte, son élan fut celui du réêm; iI dévore les peuples qui l’attaquent, il brise leurs os, trempe ses flèches dans leur sang.</p></div>
+    </div><div class="seif" id="v-24-9">
+      <span class="seif-num">24:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כָּרַ֨ע שָׁכַ֧ב כַּאֲרִ֛י וּכְלָבִ֖יא מִ֣י יְקִימֶ֑נּוּ מְבָרְכֶ֣יךָ בָר֔וּךְ וְאֹרְרֶ֖יךָ אָרֽוּר׃</p></div><div class="heb-s"><p>כרע שכב כארי וכלביא מי יקימנו מברכיך ברוך וארריך ארור׃</p></div></div>
+      <div class="texte-fr"><p>Il se couche, il repose comme le lion et le léopard: qui osera le réveiller? Heureux ceux qui te bénissent! Malheur à qui te maudit:"</p></div>
+    </div><div class="seif" id="v-24-10">
+      <span class="seif-num">24:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּֽחַר־אַ֤ף בָּלָק֙ אֶל־בִּלְעָ֔ם וַיִּסְפֹּ֖ק אֶת־כַּפָּ֑יו וַיֹּ֨אמֶר בָּלָ֜ק אֶל־בִּלְעָ֗ם לָקֹ֤ב אֹֽיְבַי֙ קְרָאתִ֔יךָ וְהִנֵּה֙ בֵּרַ֣כְתָּ בָרֵ֔ךְ זֶ֖ה שָׁלֹ֥שׁ פְּעָמִֽים׃</p></div><div class="heb-s"><p>ויחר־אף בלק אל־בלעם ויספק את־כפיו ויאמר בלק אל־בלעם לקב איבי קראתיך והנה ברכת ברך זה שלש פעמים׃</p></div></div>
+      <div class="texte-fr"><p>Balak, enflammé de colère contre Balaam, frappa des mains, et il dit à Balaam: "C’est pour maudire mes ennemis que je t’avais appelé, et tu as persisté à les bénir, par trois fois!</p></div>
+    </div><div class="seif" id="v-24-11">
+      <span class="seif-num">24:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֖ה בְּרַח־לְךָ֣ אֶל־מְקוֹמֶ֑ךָ אָמַ֙רְתִּי֙ כַּבֵּ֣ד אֲכַבֶּדְךָ֔ וְהִנֵּ֛ה מְנָעֲךָ֥ יְהֹוָ֖ה מִכָּבֽוֹד׃</p></div><div class="heb-s"><p>ועתה ברח־לך אל־מקומך אמרתי כבד אכבדך והנה מנעך יהוה מכבוד׃</p></div></div>
+      <div class="texte-fr"><p>Eh bien donc, fuis dans ton pays; je voulais te combler d’honneurs, et voici que l’Éternel t’en a frustré!"</p></div>
+    </div><div class="seif" id="v-24-12">
+      <span class="seif-num">24:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר בִּלְעָ֖ם אֶל־בָּלָ֑ק הֲלֹ֗א גַּ֧ם אֶל־מַלְאָכֶ֛יךָ אֲשֶׁר־שָׁלַ֥חְתָּ אֵלַ֖י דִּבַּ֥רְתִּי לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויאמר בלעם אל־בלק הלא גם אל־מלאכיך אשר־שלחת אלי דברתי לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Balaam repartit à Balak: "N’avais-je pas déjà, aux messagers que tu m’avais envoyés, répondu en ces termes:</p></div>
+    </div><div class="seif" id="v-24-13">
+      <span class="seif-num">24:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־יִתֶּן־לִ֨י בָלָ֜ק מְלֹ֣א בֵיתוֹ֮ כֶּ֣סֶף וְזָהָב֒ לֹ֣א אוּכַ֗ל לַעֲבֹר֙ אֶת־פִּ֣י יְהֹוָ֔ה לַעֲשׂ֥וֹת טוֹבָ֛ה א֥וֹ רָעָ֖ה מִלִּבִּ֑י אֲשֶׁר־יְדַבֵּ֥ר יְהֹוָ֖ה אֹת֥וֹ אֲדַבֵּֽר׃</p></div><div class="heb-s"><p>אם־יתן־לי בלק מלא ביתו כסף וזהב לא אוכל לעבר את־פי יהוה לעשות טובה או רעה מלבי אשר־ידבר יהוה אתו אדבר׃</p></div></div>
+      <div class="texte-fr"><p>Quand Balak me donnerait de l’argent et de l’or plein son palais, je ne saurais désobéir à la voix de l’Éternel, en agissant bien ou mal de mon chef; ce que dira l’Éternel, je le dirai.</p></div>
+    </div><div class="seif" id="v-24-14">
+      <span class="seif-num">24:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֕ה הִנְנִ֥י הוֹלֵ֖ךְ לְעַמִּ֑י לְכָה֙ אִיעָ֣צְךָ֔ אֲשֶׁ֨ר יַעֲשֶׂ֜ה הָעָ֥ם הַזֶּ֛ה לְעַמְּךָ֖ בְּאַחֲרִ֥ית הַיָּמִֽים׃</p></div><div class="heb-s"><p>ועתה הנני הולך לעמי לכה איעצך אשר יעשה העם הזה לעמך באחרית הימים׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, je m’en retourne chez mon peuple; mais écoute, je veux t’avertir de ce que ce peuple-ci fera au tien dans la suite des jours."</p></div>
+    </div><div class="seif" id="v-24-15">
+      <span class="seif-num">24:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר נְאֻ֤ם בִּלְעָם֙ בְּנ֣וֹ בְעֹ֔ר וּנְאֻ֥ם הַגֶּ֖בֶר שְׁתֻ֥ם הָעָֽיִן׃</p></div><div class="heb-s"><p>וישא משלו ויאמר נאם בלעם בנו בער ונאם הגבר שתם העין׃</p></div></div>
+      <div class="texte-fr"><p>Et il proféra son oracle de la sorte: "Parole de Balaam, fils de Beor, parole de l’homme au lucide regard,</p></div>
+    </div><div class="seif" id="v-24-16">
+      <span class="seif-num">24:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְאֻ֗ם שֹׁמֵ֙עַ֙ אִמְרֵי־אֵ֔ל וְיֹדֵ֖עַ דַּ֣עַת עֶלְי֑וֹן מַחֲזֵ֤ה שַׁדַּי֙ יֶֽחֱזֶ֔ה נֹפֵ֖ל וּגְל֥וּי עֵינָֽיִם׃</p></div><div class="heb-s"><p>נאם שמע אמרי־אל וידע דעת עליון מחזה שדי יחזה נפל וגלוי עינים׃</p></div></div>
+      <div class="texte-fr"><p>de celui qui entend le verbe divin et connaît le secret du Très-Haut qui perçoit la vision du Tout-Puissant, qui fléchit, mais dont l’œil reste ouvert:</p></div>
+    </div><div class="seif" id="v-24-17">
+      <span class="seif-num">24:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶרְאֶ֙נּוּ֙ וְלֹ֣א עַתָּ֔ה אֲשׁוּרֶ֖נּוּ וְלֹ֣א קָר֑וֹב דָּרַ֨ךְ כּוֹכָ֜ב מִֽיַּעֲקֹ֗ב וְקָ֥ם שֵׁ֙בֶט֙ מִיִּשְׂרָאֵ֔ל וּמָחַץ֙ פַּאֲתֵ֣י מוֹאָ֔ב וְקַרְקַ֖ר כׇּל־בְּנֵי־שֵֽׁת׃</p></div><div class="heb-s"><p>אראנו ולא עתה אשורנו ולא קרוב דרך כוכב מיעקב וקם שבט מישראל ומחץ פאתי מואב וקרקר כל־בני־שת׃</p></div></div>
+      <div class="texte-fr"><p>je le vois, mais ce n’est pas encore l’heure; je le distingue; mais il n’est pas proche: un astre s’élance de Jacob, et une comète surgit du sein d’Israël, qui écrasera les sommités de Moab et renversera tous les enfants de l’orgueil,</p></div>
+    </div><div class="seif" id="v-24-18">
+      <span class="seif-num">24:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֨ה אֱד֜וֹם יְרֵשָׁ֗ה וְהָיָ֧ה יְרֵשָׁ֛ה שֵׂעִ֖יר אֹיְבָ֑יו וְיִשְׂרָאֵ֖ל עֹ֥שֶׂה חָֽיִל׃</p></div><div class="heb-s"><p>והיה אדום ירשה והיה ירשה שעיר איביו וישראל עשה חיל׃</p></div></div>
+      <div class="texte-fr"><p>fera sa proie de l’Idumée, sa proie de Séir, ses ennemis; et Israël triomphera.</p></div>
+    </div><div class="seif" id="v-24-19">
+      <span class="seif-num">24:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיֵ֖רְדְּ מִֽיַּעֲקֹ֑ב וְהֶֽאֱבִ֥יד שָׂרִ֖יד מֵעִֽיר׃</p></div><div class="heb-s"><p>וירד מיעקב והאביד שריד מעיר׃</p></div></div>
+      <div class="texte-fr"><p>Oui, un dominateur naîtra de Jacob, qui balaiera des villes leurs derniers habitants."</p></div>
+    </div><div class="seif" id="v-24-20">
+      <span class="seif-num">24:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּרְא֙ אֶת־עֲמָלֵ֔ק וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר רֵאשִׁ֤ית גּוֹיִם֙ עֲמָלֵ֔ק וְאַחֲרִית֖וֹ עֲדֵ֥י אֹבֵֽד׃</p></div><div class="heb-s"><p>וירא את־עמלק וישא משלו ויאמר ראשית גוים עמלק ואחריתו עדי אבד׃</p></div></div>
+      <div class="texte-fr"><p>Puis il vit Amalec, et il proféra son oracle en disant: "Amalec était le premier des peuples; mais son avenir est voué à la perdition."</p></div>
+    </div><div class="seif" id="v-24-21">
+      <span class="seif-num">24:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּרְא֙ אֶת־הַקֵּינִ֔י וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר אֵיתָן֙ מֽוֹשָׁבֶ֔ךָ וְשִׂ֥ים בַּסֶּ֖לַע קִנֶּֽךָ׃</p></div><div class="heb-s"><p>וירא את־הקיני וישא משלו ויאמר איתן מושבך ושים בסלע קנך׃</p></div></div>
+      <div class="texte-fr"><p>Il vit le Kénéen, et il proféra son oracle en disant: "Fortifie ta demeure! Pose ton nid sur le rocher!</p></div>
+    </div><div class="seif" id="v-24-22">
+      <span class="seif-num">24:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֥י אִם־יִהְיֶ֖ה לְבָ֣עֵֽר קָ֑יִן עַד־מָ֖ה אַשּׁ֥וּר תִּשְׁבֶּֽךָּ׃</p></div><div class="heb-s"><p>כי אם־יהיה לבער קין עד־מה אשור תשבך׃</p></div></div>
+      <div class="texte-fr"><p>Car, s’il est consumé, ô Kénéen, en combien peu de temps Assur te fera captif!"</p></div>
+    </div><div class="seif" id="v-24-23">
+      <span class="seif-num">24:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֥א מְשָׁל֖וֹ וַיֹּאמַ֑ר א֕וֹי מִ֥י יִחְיֶ֖ה מִשֻּׂמ֥וֹ אֵֽל׃</p></div><div class="heb-s"><p>וישא משלו ויאמר אוי מי יחיה משמו אל׃</p></div></div>
+      <div class="texte-fr"><p>Il proféra encore son oracle et il dit: "Hélas! Qui peut vivre quand Dieu ne l’a pas voulu?</p></div>
+    </div><div class="seif" id="v-24-24">
+      <span class="seif-num">24:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִים֙ מִיַּ֣ד כִּתִּ֔ים וְעִנּ֥וּ אַשּׁ֖וּר וְעִנּוּ־עֵ֑בֶר וְגַם־ה֖וּא עֲדֵ֥י אֹבֵֽד׃</p></div><div class="heb-s"><p>וצים מיד כתים וענו אשור וענו־עבר וגם־הוא עדי אבד׃</p></div></div>
+      <div class="texte-fr"><p>Des flottes, parties de la côte de Kitttm, subjugueront Assur, subjugueront Héber mais lui aussi est voué à la ruine."</p></div>
+    </div><div class="seif" id="v-24-25">
+      <span class="seif-num">24:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֣קׇם בִּלְעָ֔ם וַיֵּ֖לֶךְ וַיָּ֣שׇׁב לִמְקֹמ֑וֹ וְגַם־בָּלָ֖ק הָלַ֥ךְ לְדַרְכּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויקם בלעם וילך וישב למקמו וגם־בלק הלך לדרכו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Alors Balaam se leva et reprit le chemin de son pays; et Balak aussi se remit en route.</p></div>
+    </div><div class="seif" id="v-25-1">
+      <span class="seif-num">25:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥שֶׁב יִשְׂרָאֵ֖ל בַּשִּׁטִּ֑ים וַיָּ֣חֶל הָעָ֔ם לִזְנ֖וֹת אֶל־בְּנ֥וֹת מוֹאָֽב׃</p></div><div class="heb-s"><p>וישב ישראל בשטים ויחל העם לזנות אל־בנות מואב׃</p></div></div>
+      <div class="texte-fr"><p>Israël s’établit à Chittîm. Là, le peuple se livra à la débauche avec les filles de Moab.</p></div>
+    </div><div class="seif" id="v-25-2">
+      <span class="seif-num">25:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּקְרֶ֣אןָ לָעָ֔ם לְזִבְחֵ֖י אֱלֹהֵיהֶ֑ן וַיֹּ֣אכַל הָעָ֔ם וַיִּֽשְׁתַּחֲו֖וּ לֵאלֹֽהֵיהֶֽן׃</p></div><div class="heb-s"><p>ותקראן לעם לזבחי אלהיהן ויאכל העם וישתחוו לאלהיהן׃</p></div></div>
+      <div class="texte-fr"><p>Elles convièrent le peuple à leurs festins idolâtres; et le peuple mangea, et il se prosterna devant leurs dieux.</p></div>
+    </div><div class="seif" id="v-25-3">
+      <span class="seif-num">25:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּצָּ֥מֶד יִשְׂרָאֵ֖ל לְבַ֣עַל פְּע֑וֹר וַיִּֽחַר־אַ֥ף יְהֹוָ֖ה בְּיִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויצמד ישראל לבעל פעור ויחר־אף יהוה בישראל׃</p></div></div>
+      <div class="texte-fr"><p>Israël se prostitua à Baal-Peor et le courroux du Seigneur s’alluma contre Israël.</p></div>
+    </div><div class="seif" id="v-25-4">
+      <span class="seif-num">25:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה קַ֚ח אֶת־כׇּל־רָאשֵׁ֣י הָעָ֔ם וְהוֹקַ֥ע אוֹתָ֛ם לַיהֹוָ֖ה נֶ֣גֶד הַשָּׁ֑מֶשׁ וְיָשֹׁ֛ב חֲר֥וֹן אַף־יְהֹוָ֖ה מִיִּשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה קח את־כל־ראשי העם והוקע אותם ליהוה נגד השמש וישב חרון אף־יהוה מישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et le Seigneur dit à Moïse: "Prends tous les chefs du peuple et fais-les pendre au nom du Seigneur, à la face du soleil, pour que la colère divine se détourne d’Israël."</p></div>
+    </div><div class="seif" id="v-25-5">
+      <span class="seif-num">25:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר מֹשֶׁ֔ה אֶל־שֹׁפְטֵ֖י יִשְׂרָאֵ֑ל הִרְגוּ֙ אִ֣ישׁ אֲנָשָׁ֔יו הַנִּצְמָדִ֖ים לְבַ֥עַל פְּעֽוֹר׃</p></div><div class="heb-s"><p>ויאמר משה אל־שפטי ישראל הרגו איש אנשיו הנצמדים לבעל פעור׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse dit aux juges d’Israël: "Que chacun de vous immole ceux des siens qui se sont livrés à Baal-Peor!</p></div>
+    </div><div class="seif" id="v-25-6">
+      <span class="seif-num">25:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִנֵּ֡ה אִישׁ֩ מִבְּנֵ֨י יִשְׂרָאֵ֜ל בָּ֗א וַיַּקְרֵ֤ב אֶל־אֶחָיו֙ אֶת־הַמִּדְיָנִ֔ית לְעֵינֵ֣י מֹשֶׁ֔ה וּלְעֵינֵ֖י כׇּל־עֲדַ֣ת בְּנֵי־יִשְׂרָאֵ֑ל וְהֵ֣מָּה בֹכִ֔ים פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>והנה איש מבני ישראל בא ויקרב אל־אחיו את־המדינית לעיני משה ולעיני כל־עדת בני־ישראל והמה בכים פתח אהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>Cependant, quelqu’un des Israélites s’avança, amenant parmi ses frères la Madianite, à la vue de Moïse, à la vue de toute la communauté des enfants d’Israël, qui pleuraient au seuil de la tente d’assignation.</p></div>
+    </div><div class="seif" id="v-25-7">
+      <span class="seif-num">25:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֗רְא פִּֽינְחָס֙ בֶּן־אֶלְעָזָ֔ר בֶּֽן־אַהֲרֹ֖ן הַכֹּהֵ֑ן וַיָּ֙קׇם֙ מִתּ֣וֹךְ הָֽעֵדָ֔ה וַיִּקַּ֥ח רֹ֖מַח בְּיָדֽוֹ׃</p></div><div class="heb-s"><p>וירא פינחס בן־אלעזר בן־אהרן הכהן ויקם מתוך העדה ויקח רמח בידו׃</p></div></div>
+      <div class="texte-fr"><p>A cette vue, Phinéas, fils d’Eléazar, fils d’Aaron le pontife, se leva du milieu de la communauté, arma sa main d’une lance,</p></div>
+    </div><div class="seif" id="v-25-8">
+      <span class="seif-num">25:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֠יָּבֹ֠א אַחַ֨ר אִֽישׁ־יִשְׂרָאֵ֜ל אֶל־הַקֻּבָּ֗ה וַיִּדְקֹר֙ אֶת־שְׁנֵיהֶ֔ם אֵ֚ת אִ֣ישׁ יִשְׂרָאֵ֔ל וְאֶת־הָאִשָּׁ֖ה אֶל־קֳבָתָ֑הּ וַתֵּֽעָצַר֙ הַמַּגֵּפָ֔ה מֵעַ֖ל בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויבא אחר איש־ישראל אל־הקבה וידקר את־שניהם את איש ישראל ואת־האשה אל־קבתה ותעצר המגפה מעל בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>entra, sur les pas de l’Israélite, dans la tente, et les perça tous deux, l’Israélite ainsi que cette femme, qu’il frappa au flanc; et le fléau cessa de sévir parmi les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-25-9">
+      <span class="seif-num">25:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּהְי֕וּ הַמֵּתִ֖ים בַּמַּגֵּפָ֑ה אַרְבָּעָ֥ה וְעֶשְׂרִ֖ים אָֽלֶף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויהיו המתים במגפה ארבעה ועשרים אלף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ceux qui avaient péri par suite du fléau étaient au nombre de vingt-quatre mille.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Balak, fils de Cippor, ayant su tout ce qu’Israël avait fait aux Amorréens, Moab eut grand peur de ce peuple, parce qu’il était nombreux, et Moab trembla à cause des enfants d’Israël. Et Moab dit aux anciens de Madian: &quot;Bientôt cette multitude aura fourragé tous nos alentours, comme le bœuf fourrage l’herbe des champs!&quot; Or, Balak, fils de Cippor, régnait sur Moab, à cette époque. Il envoya des messagers à Balaam, fils de Beor, à Pethor qui est sur le fleuve, dans le pays de ses concitoyens, pour le mander, en ces termes: &quot;Un peuple est sorti d’Égypte; déjà il couvre la face du pays, et il est campé vis-à-vis de moi. Viens donc, je te prie, et maudis-moi ce peuple, car il est plus puissant que moi: peut-être parviendrai-je à le vaincre et le repousserai-je du pays. Car, je le sais, celui que tu bénis est béni, et celui que tu maudis est maudit.&quot; Les anciens de Moab et ceux de Madian partirent, munis des honoraires de la divination, et, arrivés chez Balaam, lui transmirent les paroles de Balak. Il leur répondit: &quot;Restez ici cette nuit, et je vous rendrai réponse selon ce que l’Éternel m’aura dit.&quot; Et les princes moabites restèrent chez Balaam. Dieu aborda Balaam, en disant: &quot;Qui sont ces hommes-là chez toi?&quot; Balaam répondit à Dieu: &quot;C’est Balak fils de Cippor, roi de Moab, qui m’envoie dire: Déjà ce peuple, sorti de l’Égypte, a couvert la face du pays. Viens donc, maudis-le moi; peut-être pourrai-je l’attaquer et l’expulserai-je.&quot; Dieu dit à Balaam: &quot;Tu n’iras point avec eux. Tu ne maudiras point ce peuple, car il est béni!&quot; Balaam, s’étant levé le matin, dit aux officiers de Balak: &quot;Retournez dans votre pays; car l’Éternel n’a pas voulu me permettre de partir avec vous.&quot; Les princes de Moab se retirèrent, revinrent auprès de Balak et lui dirent:&quot;Balaam a refusé de nous accompagner.&quot; Balak revint à la charge, en envoyant des princes plus nombreux et plus considérés que ceux-là. Arrivés chez Balaam, ils lui dirent: &quot;Ainsi parle Balak, fils de Cippor: Ne te défends pas, de grâce, de venir auprès de moi. Car je veux te combler d’honneurs, et tout ce que tu me diras je le ferai; mais viens, de grâce, maudis-moi ce peuple!&quot; Balaam répondit en ces termes aux serviteurs de Balak: &quot;Quand Balak me donnerait de l’argent et de l’or plein son palais, je ne pourrais contrevenir à l’ordre de l’Éternel mon Dieu, en aucune façon. Et maintenant, veuillez attendre ici, vous aussi, cette nuit, que je sache ce que l’Éternel doit encore me dire.&quot; Dieu aborda Balaam pendant la nuit, en lui disant: &quot;Puisque ces hommes sont venus pour te mander, va, pars avec eux! Et cependant, les ordres que je te donnerai, ceux-là seulement, tu les accompliras!&quot; Balaam se leva le matin, sangla son ânesse, et partit avec les princes de Moab. Mais Dieu étant irrité de ce qu’il partait, un ange du Seigneur se mit sur son chemin pour lui faire obstacle. Or, il était monté sur son ânesse, et ses deux jeunes esclaves l’accompagnaient. L’ânesse, voyant l’ange du Seigneur debout sur son passage et l’épée nue à la main, s’écarta de la route et alla à travers champs; Balaam frappa l’ânesse pour la ramener sur la route. Alors l’ange du Seigneur se plaça dans un chemin creux entre les vignes, clôture deçà, clôture delà. L’ânesse, voyant l’ange du Seigneur, se serra contre le mur, et froissa contre le mur le pied de Balaam, qui la frappa de nouveau. Mais de nouveau l’ange du Seigneur prit les devants, et il se plaça dans un lieu étroit, où il n’était possible de s’écarter ni à droite ni à gauche. L’ânesse, voyant encore l’ange du Seigneur, se coucha sous Balaam; enflammé de colère, Balaam la frappa de son bâton. Alors le Seigneur ouvrit la bouche de l’ânesse, qui dit à Balaam: &quot;Que t’ai-je fait, pour que tu m’aies frappée ainsi à trois reprises?&quot; Balaam répondit à l’ânesse: &quot;Parce que tu te joues de moi! Si je tenais une épée, certes, je te tuerais sur l’heure!&quot; Et l’ânesse dit à Balaam: &quot;Ne suis-je pas ton ânesse, que tu as toujours montée jusqu’à ce jour? Avais-je accoutumé d’agir ainsi avec toi?&quot; Et il répondit: &quot;Non.&quot; Soudan, le Seigneur dessilla les yeux de Balaam, et il vit l’ange du Seigneur debout sur la route; l’épée nue à la main; il s’inclina et se prosterna sur sa face. L’ange du Seigneur lui dit: &quot;Pourquoi as-tu frappé ton ânesse par trois fois? C’est moi qui suis venu me poser en obstacle, parce que ce voyage a lieu contre mon gré. Cette ânesse m’a vu, et elle s’est écartée à mon aspect, trois fois; si elle ne s’était écartée de devant moi, assurément je t’aurais fait mourir, tandis que je l’aurais laissée vivre.&quot; Balaam répondit à l’ange du Seigneur: &quot;J’ai péché, parce que je ne savais pas que tu fusses posté devant moi sur le chemin; et maintenant, si cela te déplaît, je m’en retournerai.&quot; Mais l’ange du Seigneur dit à Balaam: &quot;Va avec ces hommes! Et cependant, la parole que je te dicterai, celle-là seule tu la diras.&quot; Et Balaam poursuivit sa route avec les officiers de Balak. Balak, ayant appris que Balaam venait, alla le recevoir à Ir-Moab, qui est sur la limite de l’Arnon, au point extrême de la frontière. Et Balak dit à Balaam: &quot;Ne t’avais-je pas appelé par un premier message? Pourquoi n’es-tu pas venu près de moi? Est-ce qu’en vérité je n’ai pas le pouvoir de te faire honneur?&quot; Balaam répondit a Balak: &quot;Tu le vois, je suis venu vers toi; mais est-il en ma puissance de dire quoi que ce soit? La parole que Dieu mettra dans ma bouche, c’est celle-là que je dois dire.&quot; Balaam fit route avec Balak, et ils arrivèrent à Kiryath-Houçoth. Balak immola bœufs et brebis, dont il envoya des parts à Balaam et aux officiers qui l’accompagnaient. Et le matin venu, Balak alla prendre Balaam et le conduisit sur les hauteurs de Baal, d’où il vit jusqu’aux dernières lignes du peuple.</p>
-      <p>Alors Balaam dit à Balak: &quot;Dresse-moi ici sept autels, et prépare-moi ici sept taureaux et sept béliers.&quot; Balak fit ce qu’avait dit Balaam; puis Balak et Balaam offrirent un taureau et un bélier sur chaque autel. Balaam dit à Balak: &quot;Demeure près de ton holocauste; moi je m’en irai: peut-être l’Éternel s’offrira-t-il à ma rencontre, et, quoi qu’il me révèle, je t’en ferai part.&quot; Et il s’en alla dans la solitude. Dieu se présenta à Balaam, qui lui dit: &quot;J’ai dressé les sept autels, et j’ai offert un taureau et un bélier sur chaque autel.&quot; L’Éternel mit sa parole dans la bouche de Balaam, et lui dit: &quot;Retourne vers Balak, et tu parleras de la sorte...&quot; II retourna vers lui et le trouva debout près de son holocauste, lui et tous les princes de Moab. Et il proféra son oracle en disant: &quot;II me fait venir d’Aram, Balak roi de Moab; il m’appelle des monts de l’orient: &quot;Viens maudire pour moi Jacob! Oui, viens menacer Israël!&quot; Comment maudirais-je celui que Dieu n’a point maudit? Comment menacerai-je, quand l’Éternel est sans colère? Oui, je le vois de la cime des rochers, et du haut des collines, je le découvre: ce peuple, il vit solitaire, iI ne se confondra point avec les nations. Qui peut compter la poussière de Jacob, nombrer la multitude d’Israël? Puissé-je mourir comme meurent ces justes, et puisse ma fin ressembler à la leur!&quot;. Balak dit à Balaam: &quot;Que m’as-tu fait! J’ai eu recours à toi pour maudire mes ennemis, et voilà que tu les bénis, au contraire!&quot; Mais il répondit: &quot;Certes, ce que l’Éternel met dans ma bouche, ne dois-je pas fidèlement le redire?&quot; Balak lui dit: &quot;Viens, je te prie, avec moi dans un autre lieu, d’où tu pourras voir ce peuple: tu n’en verras que les derniers rangs, tu ne le verras pas tout entier. Et maudis-le moi de là.&quot; Il le conduisit au plateau de Çofîm, sur la crête du Pisga; il y dressa sept autels, et offrit sur chaque autel un taureau et un bélier. Balaam dit à Balak: &quot;Tiens-toi ici, près de ton holocauste, et moi, j’attendrai là-bas la rencontre.&quot; L’Éternel se présenta à Balaam, inspira un discours à ses lèvres, lui disant: &quot;Va rejoindre Balak, et tu parleras ainsi...&quot; Il revint près de lui, et le trouva debout près de son holocauste, les princes de Moab à ses côtés. Et Balak lui demanda: &quot;Qu’a dit l’Éternel?&quot; Il proféra son oracle en ces termes: &quot;Prépare-toi, Balak, à m’entendre; prête-moi _l’oreille, fils de Cippor! Dieu n’est pas un mortel, pour mentir, ni un fils d’Adam, pour qu’il se ravise; est-ce lui qui parle et ne tient point parole? Qui affirme et n’exécute point? Oui, j’ai reçu mission de bénir; il a béni, je ne puis le dédire. Il n’aperçoit point d’iniquité en Jacob, il ne voit point de mal en Israël: l’Éternel, son Dieu, est avec lui, et l’amitié d’un roi le protège. Délivré, par ce Dieu, de l’Égypte, il a le vigoureux élan du réêm. Il ne faut point de magie à Jacob, point de sortilège à Israël: ils apprennent à point nommé, Jacob et Israël, ce que Dieu a résolu. Voyez! Ce peuple se lève comme un léopard, il se dresse comme un lion; il ne se reposera qu’assouvi de carnage, qu’enivré du sang de ses victimes!&quot; Balak dit à Balaam: &quot;Ne le maudis point, soit, mais ne le bénis point non plus.&quot; Balaam répondit à Balak: &quot;Ne t’avais-je pas fait cette déclaration: tout ce que dira l’Éternel, je dois le faire?&quot; Et Balak dit à Balaam: &quot;Viens donc, que je te conduise à une autre place; peut-être ce Dieu trouvera-t-il bon que, de là, tu me les maudisses.&quot; Et Balak emmena Balaam sur la cime du Peor, qui domine la surface du désert. Balaam dit à Balak: &quot;Construis-moi ici sept autels, et prépare-moi ici sept taureaux et sept béliers.&quot; Balak fit ce qu’avait dit Balaam, et il offrit un taureau et un bélier sur chaque autel.</p>
-      <p>Balaam, voyant que l’Éternel se plaisait à bénir Israël, n’eut plus recours, comme précédemment, à des opérations magiques, mais tourna son visage du côté du désert. En y portant ses regards, Balaam vit Israël, dont les tribus s’y déployaient; et l’esprit divin s’empara de lui; et il proféra son oracle en ces termes: &quot;Parole de Balaam, fils de Beor, parole de l’homme au clairvoyant regard, de celui qui entend le verbe divin, qui perçoit la vision du Tout-Puissant il fléchit, mais son œil reste ouvert: Qu’elles sont belles tes tentes, ô Jacob! Tes demeures, ô Israël! Elles se développent comme des vallées, comme des vergers le long d’un fleuve; Dieu les a plantées comme des aloès, comme des cèdres au bord des eaux. La sève ruisselle de ses branches, et sa graine est abondamment arrosée; son roi est plus grand que n’est Agag, sa royauté est souveraine! Quand Dieu le fit sortir de l’Égypte, son élan fut celui du réêm; iI dévore les peuples qui l’attaquent, il brise leurs os, trempe ses flèches dans leur sang. Il se couche, il repose comme le lion et le léopard: qui osera le réveiller? Heureux ceux qui te bénissent! Malheur à qui te maudit:&quot; Balak, enflammé de colère contre Balaam, frappa des mains, et il dit à Balaam: &quot;C’est pour maudire mes ennemis que je t’avais appelé, et tu as persisté à les bénir, par trois fois! Eh bien donc, fuis dans ton pays; je voulais te combler d’honneurs, et voici que l’Éternel t’en a frustré!&quot; Balaam repartit à Balak: &quot;N’avais-je pas déjà, aux messagers que tu m’avais envoyés, répondu en ces termes: Quand Balak me donnerait de l’argent et de l’or plein son palais, je ne saurais désobéir à la voix de l’Éternel, en agissant bien ou mal de mon chef; ce que dira l’Éternel, je le dirai. Et maintenant, je m’en retourne chez mon peuple; mais écoute, je veux t’avertir de ce que ce peuple-ci fera au tien dans la suite des jours.&quot; Et il proféra son oracle de la sorte: &quot;Parole de Balaam, fils de Beor, parole de l’homme au lucide regard, de celui qui entend le verbe divin et connaît le secret du Très-Haut qui perçoit la vision du Tout-Puissant, qui fléchit, mais dont l’œil reste ouvert: je le vois, mais ce n’est pas encore l’heure; je le distingue; mais il n’est pas proche: un astre s’élance de Jacob, et une comète surgit du sein d’Israël, qui écrasera les sommités de Moab et renversera tous les enfants de l’orgueil, fera sa proie de l’Idumée, sa proie de Séir, ses ennemis; et Israël triomphera. Oui, un dominateur naîtra de Jacob, qui balaiera des villes leurs derniers habitants.&quot; Puis il vit Amalec, et il proféra son oracle en disant: &quot;Amalec était le premier des peuples; mais son avenir est voué à la perdition.&quot; Il vit le Kénéen, et il proféra son oracle en disant: &quot;Fortifie ta demeure! Pose ton nid sur le rocher! Car, s’il est consumé, ô Kénéen, en combien peu de temps Assur te fera captif!&quot; Il proféra encore son oracle et il dit: &quot;Hélas! Qui peut vivre quand Dieu ne l’a pas voulu? Des flottes, parties de la côte de Kitttm, subjugueront Assur, subjugueront Héber mais lui aussi est voué à la ruine.&quot; Alors Balaam se leva et reprit le chemin de son pays; et Balak aussi se remit en route.</p>
-      <p>Israël s’établit à Chittîm. Là, le peuple se livra à la débauche avec les filles de Moab. Elles convièrent le peuple à leurs festins idolâtres; et le peuple mangea, et il se prosterna devant leurs dieux. Israël se prostitua à Baal-Peor et le courroux du Seigneur s’alluma contre Israël. Et le Seigneur dit à Moïse: &quot;Prends tous les chefs du peuple et fais-les pendre au nom du Seigneur, à la face du soleil, pour que la colère divine se détourne d’Israël.&quot; Et Moïse dit aux juges d’Israël: &quot;Que chacun de vous immole ceux des siens qui se sont livrés à Baal-Peor! Cependant, quelqu’un des Israélites s’avança, amenant parmi ses frères la Madianite, à la vue de Moïse, à la vue de toute la communauté des enfants d’Israël, qui pleuraient au seuil de la tente d’assignation. A cette vue, Phinéas, fils d’Eléazar, fils d’Aaron le pontife, se leva du milieu de la communauté, arma sa main d’une lance, entra, sur les pas de l’Israélite, dans la tente, et les perça tous deux, l’Israélite ainsi que cette femme, qu’il frappa au flanc; et le fléau cessa de sévir parmi les enfants d’Israël. Ceux qui avaient péri par suite du fléau étaient au nombre de vingt-quatre mille.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -336,6 +780,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_chukat.html">← Houkat</a><a class="hbtn qcm" href="qcm_paracha_balak.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_pinchas.html">Pin&#x27;has →</a></div>
 </main>
 
 <footer>

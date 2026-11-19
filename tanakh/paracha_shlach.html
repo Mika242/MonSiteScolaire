@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bamidbar · Paracha</div>
     <h1>Shlach – Les explorateurs, la révolte et les tsitsit</h1>
     <p>Torah, Bamidbar (Numbers 13:1-15:41)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_behaalotcha.html">← Behaalotcha</a><a class="hbtn qcm" href="qcm_paracha_shlach.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_korach.html">Kora&#x27;h →</a></div>
   </div>
 </header>
 
@@ -161,29 +202,494 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'שְׁלַח־לְךָ֣ אֲנָשִׁ֗ים וְיָתֻ֙רוּ֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁר־אֲנִ֥י נֹתֵ֖ן לִבְנֵ֣י יִשְׂרָאֵ֑ל אִ֣ישׁ אֶחָד֩ אִ֨ישׁ אֶחָ֜ד לְמַטֵּ֤ה אֲבֹתָיו֙ תִּשְׁלָ֔חוּ כֹּ֖ל נָשִׂ֥יא בָהֶֽם׃', 'וַיִּשְׁלַ֨ח אֹתָ֥ם מֹשֶׁ֛ה מִמִּדְבַּ֥ר פָּארָ֖ן עַל־פִּ֣י יְהֹוָ֑ה כֻּלָּ֣ם אֲנָשִׁ֔ים רָאשֵׁ֥י בְנֵֽי־יִשְׂרָאֵ֖ל הֵֽמָּה׃', 'וְאֵ֖לֶּה שְׁמוֹתָ֑ם לְמַטֵּ֣ה רְאוּבֵ֔ן שַׁמּ֖וּעַ בֶּן־זַכּֽוּר׃', 'לְמַטֵּ֣ה שִׁמְע֔וֹן שָׁפָ֖ט בֶּן־חוֹרִֽי׃', 'לְמַטֵּ֣ה יְהוּדָ֔ה כָּלֵ֖ב בֶּן־יְפֻנֶּֽה׃', 'לְמַטֵּ֣ה יִשָּׂשכָ֔ר יִגְאָ֖ל בֶּן־יוֹסֵֽף׃', 'לְמַטֵּ֥ה אֶפְרָ֖יִם הוֹשֵׁ֥עַ בִּן־נֽוּן׃', 'לְמַטֵּ֣ה בִנְיָמִ֔ן פַּלְטִ֖י בֶּן־רָפֽוּא׃', 'לְמַטֵּ֣ה זְבוּלֻ֔ן גַּדִּיאֵ֖ל בֶּן־סוֹדִֽי׃', 'לְמַטֵּ֥ה יוֹסֵ֖ף לְמַטֵּ֣ה מְנַשֶּׁ֑ה גַּדִּ֖י בֶּן־סוּסִֽי׃', 'לְמַטֵּ֣ה דָ֔ן עַמִּיאֵ֖ל בֶּן־גְּמַלִּֽי׃', 'לְמַטֵּ֣ה אָשֵׁ֔ר סְת֖וּר בֶּן־מִיכָאֵֽל׃', 'לְמַטֵּ֣ה נַפְתָּלִ֔י נַחְבִּ֖י בֶּן־וׇפְסִֽי׃', 'לְמַטֵּ֣ה גָ֔ד גְּאוּאֵ֖ל בֶּן־מָכִֽי׃', 'אֵ֚לֶּה שְׁמ֣וֹת הָֽאֲנָשִׁ֔ים אֲשֶׁר־שָׁלַ֥ח מֹשֶׁ֖ה לָת֣וּר אֶת־הָאָ֑רֶץ וַיִּקְרָ֥א מֹשֶׁ֛ה לְהוֹשֵׁ֥עַ בִּן־נ֖וּן יְהוֹשֻֽׁעַ׃', 'וַיִּשְׁלַ֤ח אֹתָם֙ מֹשֶׁ֔ה לָת֖וּר אֶת־אֶ֣רֶץ כְּנָ֑עַן וַיֹּ֣אמֶר אֲלֵהֶ֗ם עֲל֥וּ זֶה֙ בַּנֶּ֔גֶב וַעֲלִיתֶ֖ם אֶת־הָהָֽר׃', 'וּרְאִיתֶ֥ם אֶת־הָאָ֖רֶץ מַה־הִ֑וא וְאֶת־הָעָם֙ הַיֹּשֵׁ֣ב עָלֶ֔יהָ הֶחָזָ֥ק הוּא֙ הֲרָפֶ֔ה הַמְעַ֥ט ה֖וּא אִם־רָֽב׃', 'וּמָ֣ה הָאָ֗רֶץ אֲשֶׁר־הוּא֙ יֹשֵׁ֣ב בָּ֔הּ הֲטוֹבָ֥ה הִ֖וא אִם־רָעָ֑ה וּמָ֣ה הֶֽעָרִ֗ים אֲשֶׁר־הוּא֙ יוֹשֵׁ֣ב בָּהֵ֔נָּה הַבְּמַֽחֲנִ֖ים אִ֥ם בְּמִבְצָרִֽים׃', 'וּמָ֣ה הָ֠אָ֠רֶץ הַשְּׁמֵנָ֨ה הִ֜וא אִם־רָזָ֗ה הֲיֵֽשׁ־בָּ֥הּ עֵץ֙ אִם־אַ֔יִן וְהִ֨תְחַזַּקְתֶּ֔ם וּלְקַחְתֶּ֖ם מִפְּרִ֣י הָאָ֑רֶץ וְהַ֨יָּמִ֔ים יְמֵ֖י בִּכּוּרֵ֥י עֲנָבִֽים׃', 'וַֽיַּעֲל֖וּ וַיָּתֻ֣רוּ אֶת־הָאָ֑רֶץ מִמִּדְבַּר־צִ֥ן עַד־רְחֹ֖ב לְבֹ֥א חֲמָֽת׃', 'וַיַּעֲל֣וּ בַנֶּ֘גֶב֮ וַיָּבֹ֣א עַד־חֶבְרוֹן֒ וְשָׁ֤ם אֲחִימַן֙ שֵׁשַׁ֣י וְתַלְמַ֔י יְלִידֵ֖י הָעֲנָ֑ק וְחֶבְר֗וֹן שֶׁ֤בַע שָׁנִים֙ נִבְנְתָ֔ה לִפְנֵ֖י צֹ֥עַן מִצְרָֽיִם׃', 'וַיָּבֹ֜אוּ עַד־נַ֣חַל אֶשְׁכֹּ֗ל וַיִּכְרְת֨וּ מִשָּׁ֤ם זְמוֹרָה֙ וְאֶשְׁכּ֤וֹל עֲנָבִים֙ אֶחָ֔ד וַיִּשָּׂאֻ֥הוּ בַמּ֖וֹט בִּשְׁנָ֑יִם וּמִן־הָרִמֹּנִ֖ים וּמִן־הַתְּאֵנִֽים׃', 'לַמָּק֣וֹם הַה֔וּא קָרָ֖א נַ֣חַל אֶשְׁכּ֑וֹל עַ֚ל אֹד֣וֹת הָֽאֶשְׁכּ֔וֹל אֲשֶׁר־כָּרְת֥וּ מִשָּׁ֖ם בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וַיָּשֻׁ֖בוּ מִתּ֣וּר הָאָ֑רֶץ מִקֵּ֖ץ אַרְבָּעִ֥ים יֽוֹם׃', 'וַיֵּלְכ֡וּ וַיָּבֹ֩אוּ֩ אֶל־מֹשֶׁ֨ה וְאֶֽל־אַהֲרֹ֜ן וְאֶל־כׇּל־עֲדַ֧ת בְּנֵֽי־יִשְׂרָאֵ֛ל אֶל־מִדְבַּ֥ר פָּארָ֖ן קָדֵ֑שָׁה וַיָּשִׁ֨יבוּ אֹתָ֤ם דָּבָר֙ וְאֶת־כׇּל־הָ֣עֵדָ֔ה וַיַּרְא֖וּם אֶת־פְּרִ֥י הָאָֽרֶץ׃', 'וַיְסַפְּרוּ־לוֹ֙ וַיֹּ֣אמְר֔וּ בָּ֕אנוּ אֶל־הָאָ֖רֶץ אֲשֶׁ֣ר שְׁלַחְתָּ֑נוּ וְ֠גַ֠ם זָבַ֨ת חָלָ֥ב וּדְבַ֛שׁ הִ֖וא וְזֶה־פִּרְיָֽהּ׃', 'אֶ֚פֶס כִּֽי־עַ֣ז הָעָ֔ם הַיֹּשֵׁ֖ב בָּאָ֑רֶץ וְהֶֽעָרִ֗ים בְּצֻר֤וֹת גְּדֹלֹת֙ מְאֹ֔ד וְגַם־יְלִדֵ֥י הָֽעֲנָ֖ק רָאִ֥ינוּ שָֽׁם׃', 'עֲמָלֵ֥ק יוֹשֵׁ֖ב בְּאֶ֣רֶץ הַנֶּ֑גֶב וְ֠הַֽחִתִּ֠י וְהַיְבוּסִ֤י וְהָֽאֱמֹרִי֙ יוֹשֵׁ֣ב בָּהָ֔ר וְהַֽכְּנַעֲנִי֙ יוֹשֵׁ֣ב עַל־הַיָּ֔ם וְעַ֖ל יַ֥ד הַיַּרְדֵּֽן׃', 'וַיַּ֧הַס כָּלֵ֛ב אֶת־הָעָ֖ם אֶל־מֹשֶׁ֑ה וַיֹּ֗אמֶר עָלֹ֤ה נַעֲלֶה֙ וְיָרַ֣שְׁנוּ אֹתָ֔הּ כִּֽי־יָכ֥וֹל נוּכַ֖ל לָֽהּ׃', 'וְהָ֨אֲנָשִׁ֜ים אֲשֶׁר־עָל֤וּ עִמּוֹ֙ אָֽמְר֔וּ לֹ֥א נוּכַ֖ל לַעֲל֣וֹת אֶל־הָעָ֑ם כִּֽי־חָזָ֥ק ה֖וּא מִמֶּֽנּוּ׃', 'וַיֹּצִ֜יאוּ דִּבַּ֤ת הָאָ֙רֶץ֙ אֲשֶׁ֣ר תָּר֣וּ אֹתָ֔הּ אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר הָאָ֡רֶץ אֲשֶׁר֩ עָבַ֨רְנוּ בָ֜הּ לָת֣וּר אֹתָ֗הּ אֶ֣רֶץ אֹכֶ֤לֶת יוֹשְׁבֶ֙יהָ֙ הִ֔וא וְכׇל־הָעָ֛ם אֲשֶׁר־רָאִ֥ינוּ בְתוֹכָ֖הּ אַנְשֵׁ֥י מִדּֽוֹת׃', 'וְשָׁ֣ם רָאִ֗ינוּ אֶת־הַנְּפִילִ֛ים בְּנֵ֥י עֲנָ֖ק מִן־הַנְּפִלִ֑ים וַנְּהִ֤י בְעֵינֵ֙ינוּ֙ כַּֽחֲגָבִ֔ים וְכֵ֥ן הָיִ֖ינוּ בְּעֵינֵיהֶֽם׃']</p>
-      <p>['וַתִּשָּׂא֙ כׇּל־הָ֣עֵדָ֔ה וַֽיִּתְּנ֖וּ אֶת־קוֹלָ֑ם וַיִּבְכּ֥וּ הָעָ֖ם בַּלַּ֥יְלָה הַהֽוּא׃', 'וַיִּלֹּ֙נוּ֙ עַל־מֹשֶׁ֣ה וְעַֽל־אַהֲרֹ֔ן כֹּ֖ל בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיֹּאמְר֨וּ אֲלֵהֶ֜ם כׇּל־הָעֵדָ֗ה לוּ־מַ֙תְנוּ֙ בְּאֶ֣רֶץ מִצְרַ֔יִם א֛וֹ בַּמִּדְבָּ֥ר הַזֶּ֖ה לוּ־מָֽתְנוּ׃', 'וְלָמָ֣ה יְ֠הֹוָ֠ה מֵבִ֨יא אֹתָ֜נוּ אֶל־הָאָ֤רֶץ הַזֹּאת֙ לִנְפֹּ֣ל בַּחֶ֔רֶב נָשֵׁ֥ינוּ וְטַפֵּ֖נוּ יִהְי֣וּ לָבַ֑ז הֲל֧וֹא ט֦וֹב לָ֖נוּ שׁ֥וּב מִצְרָֽיְמָה׃', 'וַיֹּאמְר֖וּ אִ֣ישׁ אֶל־אָחִ֑יו נִתְּנָ֥ה רֹ֖אשׁ וְנָשׁ֥וּבָה מִצְרָֽיְמָה׃', 'וַיִּפֹּ֥ל מֹשֶׁ֛ה וְאַהֲרֹ֖ן עַל־פְּנֵיהֶ֑ם לִפְנֵ֕י כׇּל־קְהַ֥ל עֲדַ֖ת בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וִיהוֹשֻׁ֣עַ בִּן־נ֗וּן וְכָלֵב֙ בֶּן־יְפֻנֶּ֔ה מִן־הַתָּרִ֖ים אֶת־הָאָ֑רֶץ קָרְע֖וּ בִּגְדֵיהֶֽם׃', 'וַיֹּ֣אמְר֔וּ אֶל־כׇּל־עֲדַ֥ת בְּנֵֽי־יִשְׂרָאֵ֖ל לֵאמֹ֑ר הָאָ֗רֶץ אֲשֶׁ֨ר עָבַ֤רְנוּ בָהּ֙ לָת֣וּר אֹתָ֔הּ טוֹבָ֥ה הָאָ֖רֶץ מְאֹ֥ד מְאֹֽד׃', 'אִם־חָפֵ֥ץ בָּ֙נוּ֙ יְהֹוָ֔ה וְהֵבִ֤יא אֹתָ֙נוּ֙ אֶל־הָאָ֣רֶץ הַזֹּ֔את וּנְתָנָ֖הּ לָ֑נוּ אֶ֕רֶץ אֲשֶׁר־הִ֛וא זָבַ֥ת חָלָ֖ב וּדְבָֽשׁ׃', 'אַ֣ךְ בַּיהֹוָה֮ אַל־תִּמְרֹ֒דוּ֒ וְאַתֶּ֗ם אַל־תִּֽירְאוּ֙ אֶת־עַ֣ם הָאָ֔רֶץ כִּ֥י לַחְמֵ֖נוּ הֵ֑ם סָ֣ר צִלָּ֧ם מֵעֲלֵיהֶ֛ם וַֽיהֹוָ֥ה אִתָּ֖נוּ אַל־תִּירָאֻֽם׃', 'וַיֹּֽאמְרוּ֙ כׇּל־הָ֣עֵדָ֔ה לִרְגּ֥וֹם אֹתָ֖ם בָּאֲבָנִ֑ים וּכְב֣וֹד יְהֹוָ֗ה נִרְאָה֙ בְּאֹ֣הֶל מוֹעֵ֔ד אֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה עַד־אָ֥נָה יְנַאֲצֻ֖נִי הָעָ֣ם הַזֶּ֑ה וְעַד־אָ֙נָה֙ לֹא־יַאֲמִ֣ינוּ בִ֔י בְּכֹל֙ הָֽאֹת֔וֹת אֲשֶׁ֥ר עָשִׂ֖יתִי בְּקִרְבּֽוֹ׃', 'אַכֶּ֥נּוּ בַדֶּ֖בֶר וְאוֹרִשֶׁ֑נּוּ וְאֶֽעֱשֶׂה֙ אֹֽתְךָ֔ לְגוֹי־גָּד֥וֹל וְעָצ֖וּם מִמֶּֽנּוּ׃', 'וַיֹּ֥אמֶר מֹשֶׁ֖ה אֶל־יְהֹוָ֑ה וְשָׁמְע֣וּ מִצְרַ֔יִם כִּֽי־הֶעֱלִ֧יתָ בְכֹחֲךָ֛ אֶת־הָעָ֥ם הַזֶּ֖ה מִקִּרְבּֽוֹ׃', 'וְאָמְר֗וּ אֶל־יוֹשֵׁב֮ הָאָ֣רֶץ הַזֹּאת֒ שָֽׁמְעוּ֙ כִּֽי־אַתָּ֣ה יְהֹוָ֔ה בְּקֶ֖רֶב הָעָ֣ם הַזֶּ֑ה אֲשֶׁר־עַ֨יִן בְּעַ֜יִן נִרְאָ֣ה&thinsp;<b>׀</b> אַתָּ֣ה יְהֹוָ֗ה וַעֲנָֽנְךָ֙ עֹמֵ֣ד עֲלֵהֶ֔ם וּבְעַמֻּ֣ד עָנָ֗ן אַתָּ֨ה הֹלֵ֤ךְ לִפְנֵיהֶם֙ יוֹמָ֔ם וּבְעַמּ֥וּד אֵ֖שׁ לָֽיְלָה׃', 'וְהֵמַתָּ֛ה אֶת־הָעָ֥ם הַזֶּ֖ה כְּאִ֣ישׁ אֶחָ֑ד וְאָֽמְרוּ֙ הַגּוֹיִ֔ם אֲשֶׁר־שָׁמְע֥וּ אֶֽת־שִׁמְעֲךָ֖ לֵאמֹֽר׃', 'מִבִּלְתִּ֞י יְכֹ֣לֶת יְהֹוָ֗ה לְהָבִיא֙ אֶת־הָעָ֣ם הַזֶּ֔ה אֶל־הָאָ֖רֶץ אֲשֶׁר־נִשְׁבַּ֣ע לָהֶ֑ם וַיִּשְׁחָטֵ֖ם בַּמִּדְבָּֽר׃', 'וְעַתָּ֕ה <big>יִ</big>גְדַּל־נָ֖א כֹּ֣חַ אֲדֹנָ֑י כַּאֲשֶׁ֥ר דִּבַּ֖רְתָּ לֵאמֹֽר׃', 'יְהֹוָ֗ה אֶ֤רֶךְ אַפַּ֙יִם֙ וְרַב־חֶ֔סֶד נֹשֵׂ֥א עָוֺ֖ן וָפָ֑שַׁע וְנַקֵּה֙ לֹ֣א יְנַקֶּ֔ה פֹּקֵ֞ד עֲוֺ֤ן אָבוֹת֙ עַל־בָּנִ֔ים עַל־שִׁלֵּשִׁ֖ים וְעַל־רִבֵּעִֽים׃', 'סְלַֽח־נָ֗א לַעֲוֺ֛ן הָעָ֥ם הַזֶּ֖ה כְּגֹ֣דֶל חַסְדֶּ֑ךָ וְכַאֲשֶׁ֤ר נָשָׂ֙אתָה֙ לָעָ֣ם הַזֶּ֔ה מִמִּצְרַ֖יִם וְעַד־הֵֽנָּה׃', 'וַיֹּ֣אמֶר יְהֹוָ֔ה סָלַ֖חְתִּי כִּדְבָרֶֽךָ׃', 'וְאוּלָ֖ם חַי־אָ֑נִי וְיִמָּלֵ֥א כְבוֹד־יְהֹוָ֖ה אֶת־כׇּל־הָאָֽרֶץ׃', 'כִּ֣י כׇל־הָאֲנָשִׁ֗ים הָרֹאִ֤ים אֶת־כְּבֹדִי֙ וְאֶת־אֹ֣תֹתַ֔י אֲשֶׁר־עָשִׂ֥יתִי בְמִצְרַ֖יִם וּבַמִּדְבָּ֑ר וַיְנַסּ֣וּ אֹתִ֗י זֶ֚ה עֶ֣שֶׂר פְּעָמִ֔ים וְלֹ֥א שָׁמְע֖וּ בְּקוֹלִֽי׃', 'אִם־יִרְאוּ֙ אֶת־הָאָ֔רֶץ אֲשֶׁ֥ר נִשְׁבַּ֖עְתִּי לַאֲבֹתָ֑ם וְכׇל־מְנַאֲצַ֖י לֹ֥א יִרְאֽוּהָ׃', 'וְעַבְדִּ֣י כָלֵ֗ב עֵ֣קֶב הָֽיְתָ֞ה ר֤וּחַ אַחֶ֙רֶת֙ עִמּ֔וֹ וַיְמַלֵּ֖א אַחֲרָ֑י וַהֲבִֽיאֹתִ֗יו אֶל־הָאָ֙רֶץ֙ אֲשֶׁר־בָּ֣א שָׁ֔מָּה וְזַרְע֖וֹ יוֹרִשֶֽׁנָּה׃', 'וְהָעֲמָלֵקִ֥י וְהַֽכְּנַעֲנִ֖י יוֹשֵׁ֣ב בָּעֵ֑מֶק מָחָ֗ר פְּנ֨וּ וּסְע֥וּ לָכֶ֛ם הַמִּדְבָּ֖ר דֶּ֥רֶךְ יַם־סֽוּף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'עַד־מָתַ֗י לָעֵדָ֤ה הָֽרָעָה֙ הַזֹּ֔את אֲשֶׁ֛ר הֵ֥מָּה מַלִּינִ֖ים עָלָ֑י אֶת־תְּלֻנּ֞וֹת בְּנֵ֣י יִשְׂרָאֵ֗ל אֲשֶׁ֨ר הֵ֧מָּה מַלִּינִ֛ים עָלַ֖י שָׁמָֽעְתִּי׃', 'אֱמֹ֣ר אֲלֵהֶ֗ם חַי־אָ֙נִי֙ נְאֻם־יְהֹוָ֔ה אִם־לֹ֕א כַּאֲשֶׁ֥ר דִּבַּרְתֶּ֖ם בְּאׇזְנָ֑י כֵּ֖ן אֶֽעֱשֶׂ֥ה לָכֶֽם׃', 'בַּמִּדְבָּ֣ר הַ֠זֶּ֠ה יִפְּל֨וּ פִגְרֵיכֶ֜ם וְכׇל־פְּקֻדֵיכֶם֙ לְכׇל־מִסְפַּרְכֶ֔ם מִבֶּ֛ן עֶשְׂרִ֥ים שָׁנָ֖ה וָמָ֑עְלָה אֲשֶׁ֥ר הֲלִֽינֹתֶ֖ם עָלָֽי׃', 'אִם־אַתֶּם֙ תָּבֹ֣אוּ אֶל־הָאָ֔רֶץ אֲשֶׁ֤ר נָשָׂ֙אתִי֙ אֶת־יָדִ֔י לְשַׁכֵּ֥ן אֶתְכֶ֖ם בָּ֑הּ כִּ֚י אִם־כָּלֵ֣ב בֶּן־יְפֻנֶּ֔ה וִיהוֹשֻׁ֖עַ בִּן־נֽוּן׃', 'וְטַ֨פְּכֶ֔ם אֲשֶׁ֥ר אֲמַרְתֶּ֖ם לָבַ֣ז יִהְיֶ֑ה וְהֵבֵיאתִ֣י אֹתָ֔ם וְיָֽדְעוּ֙ אֶת־הָאָ֔רֶץ אֲשֶׁ֥ר מְאַסְתֶּ֖ם בָּֽהּ׃', 'וּפִגְרֵיכֶ֖ם אַתֶּ֑ם יִפְּל֖וּ בַּמִּדְבָּ֥ר הַזֶּֽה׃', 'וּ֠בְנֵיכֶ֠ם יִהְי֨וּ רֹעִ֤ים בַּמִּדְבָּר֙ אַרְבָּעִ֣ים שָׁנָ֔ה וְנָשְׂא֖וּ אֶת־זְנוּתֵיכֶ֑ם עַד־תֹּ֥ם פִּגְרֵיכֶ֖ם בַּמִּדְבָּֽר׃', 'בְּמִסְפַּ֨ר הַיָּמִ֜ים אֲשֶׁר־תַּרְתֶּ֣ם אֶת־הָאָ֘רֶץ֮ אַרְבָּעִ֣ים יוֹם֒ י֣וֹם לַשָּׁנָ֞ה י֣וֹם לַשָּׁנָ֗ה תִּשְׂאוּ֙ אֶת־עֲוֺנֹ֣תֵיכֶ֔ם אַרְבָּעִ֖ים שָׁנָ֑ה וִֽידַעְתֶּ֖ם אֶת־תְּנוּאָתִֽי׃', 'אֲנִ֣י יְהֹוָה֮ דִּבַּ֒רְתִּי֒ אִם־לֹ֣א&thinsp;<b>׀</b> זֹ֣את אֶֽעֱשֶׂ֗ה לְכׇל־הָעֵדָ֤ה הָֽרָעָה֙ הַזֹּ֔את הַנּוֹעָדִ֖ים עָלָ֑י בַּמִּדְבָּ֥ר הַזֶּ֛ה יִתַּ֖מּוּ וְשָׁ֥ם יָמֻֽתוּ׃', 'וְהָ֣אֲנָשִׁ֔ים אֲשֶׁר־שָׁלַ֥ח מֹשֶׁ֖ה לָת֣וּר אֶת־הָאָ֑רֶץ וַיָּשֻׁ֗בוּ <span class="mam-kq"><span class="mam-kq-k">(וילונו)</span> <span class="mam-kq-q">[וַיַּלִּ֤ינוּ]</span></span> עָלָיו֙ אֶת־כׇּל־הָ֣עֵדָ֔ה לְהוֹצִ֥יא דִבָּ֖ה עַל־הָאָֽרֶץ׃', 'וַיָּמֻ֙תוּ֙ הָֽאֲנָשִׁ֔ים מוֹצִאֵ֥י דִבַּת־הָאָ֖רֶץ רָעָ֑ה בַּמַּגֵּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃', 'וִיהוֹשֻׁ֣עַ בִּן־נ֔וּן וְכָלֵ֖ב בֶּן־יְפֻנֶּ֑ה חָיוּ֙ מִן־הָאֲנָשִׁ֣ים הָהֵ֔ם הַהֹלְכִ֖ים לָת֥וּר אֶת־הָאָֽרֶץ׃', 'וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶת־הַדְּבָרִ֣ים הָאֵ֔לֶּה אֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵ֑ל וַיִּֽתְאַבְּל֥וּ הָעָ֖ם מְאֹֽד׃', 'וַיַּשְׁכִּ֣מוּ בַבֹּ֔קֶר וַיַּֽעֲל֥וּ אֶל־רֹאשׁ־הָהָ֖ר לֵאמֹ֑ר הִנֶּ֗נּוּ וְעָלִ֛ינוּ אֶל־הַמָּק֛וֹם אֲשֶׁר־אָמַ֥ר יְהֹוָ֖ה כִּ֥י חָטָֽאנוּ׃', 'וַיֹּ֣אמֶר מֹשֶׁ֔ה לָ֥מָּה זֶּ֛ה אַתֶּ֥ם עֹבְרִ֖ים אֶת־פִּ֣י יְהֹוָ֑ה וְהִ֖וא לֹ֥א תִצְלָֽח׃', 'אַֽל־תַּעֲל֔וּ כִּ֛י אֵ֥ין יְהֹוָ֖ה בְּקִרְבְּכֶ֑ם וְלֹא֙ תִּנָּ֣גְפ֔וּ לִפְנֵ֖י אֹיְבֵיכֶֽם׃', 'כִּי֩ הָעֲמָלֵקִ֨י וְהַכְּנַעֲנִ֥י שָׁם֙ לִפְנֵיכֶ֔ם וּנְפַלְתֶּ֖ם בֶּחָ֑רֶב כִּֽי־עַל־כֵּ֤ן שַׁבְתֶּם֙ מֵאַחֲרֵ֣י יְהֹוָ֔ה וְלֹא־יִהְיֶ֥ה יְהֹוָ֖ה עִמָּכֶֽם׃', 'וַיַּעְפִּ֕לוּ לַעֲל֖וֹת אֶל־רֹ֣אשׁ הָהָ֑ר וַאֲר֤וֹן בְּרִית־יְהֹוָה֙ וּמֹשֶׁ֔ה לֹא־מָ֖שׁוּ מִקֶּ֥רֶב הַֽמַּחֲנֶֽה׃', 'וַיֵּ֤רֶד הָעֲמָלֵקִי֙ וְהַֽכְּנַעֲנִ֔י הַיֹּשֵׁ֖ב בָּהָ֣ר הַה֑וּא וַיַּכּ֥וּם וַֽיַּכְּת֖וּם עַד־הַֽחׇרְמָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּר֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם כִּ֣י תָבֹ֗אוּ אֶל־אֶ֙רֶץ֙ מוֹשְׁבֹ֣תֵיכֶ֔ם אֲשֶׁ֥ר אֲנִ֖י נֹתֵ֥ן לָכֶֽם׃', 'וַעֲשִׂיתֶ֨ם אִשֶּׁ֤ה לַֽיהֹוָה֙ עֹלָ֣ה אוֹ־זֶ֔בַח לְפַלֵּא־נֶ֙דֶר֙ א֣וֹ בִנְדָבָ֔ה א֖וֹ בְּמֹעֲדֵיכֶ֑ם לַעֲשׂ֞וֹת רֵ֤יחַ נִיחֹ֙חַ֙ לַֽיהֹוָ֔ה מִן־הַבָּקָ֖ר א֥וֹ מִן־הַצֹּֽאן׃', 'וְהִקְרִ֛יב הַמַּקְרִ֥יב קׇרְבָּנ֖וֹ לַֽיהֹוָ֑ה מִנְחָה֙ סֹ֣לֶת עִשָּׂר֔וֹן בָּל֕וּל בִּרְבִעִ֥ית הַהִ֖ין שָֽׁמֶן׃', 'וְיַ֤יִן לַנֶּ֙סֶךְ֙ רְבִיעִ֣ית הַהִ֔ין תַּעֲשֶׂ֥ה עַל־הָעֹלָ֖ה א֣וֹ לַזָּ֑בַח לַכֶּ֖בֶשׂ הָאֶחָֽד׃', 'א֤וֹ לָאַ֙יִל֙ תַּעֲשֶׂ֣ה מִנְחָ֔ה סֹ֖לֶת שְׁנֵ֣י עֶשְׂרֹנִ֑ים בְּלוּלָ֥ה בַשֶּׁ֖מֶן שְׁלִשִׁ֥ית הַהִֽין׃', 'וְיַ֥יִן לַנֶּ֖סֶךְ שְׁלִשִׁ֣ית הַהִ֑ין תַּקְרִ֥יב רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃', 'וְכִֽי־תַעֲשֶׂ֥ה בֶן־בָּקָ֖ר עֹלָ֣ה אוֹ־זָ֑בַח לְפַלֵּא־נֶ֥דֶר אֽוֹ־שְׁלָמִ֖ים לַֽיהֹוָֽה׃', 'וְהִקְרִ֤יב עַל־בֶּן־הַבָּקָר֙ מִנְחָ֔ה סֹ֖לֶת שְׁלֹשָׁ֣ה עֶשְׂרֹנִ֑ים בָּל֥וּל בַּשֶּׁ֖מֶן חֲצִ֥י הַהִֽין׃', 'וְיַ֛יִן תַּקְרִ֥יב לַנֶּ֖סֶךְ חֲצִ֣י הַהִ֑ין אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃', 'כָּ֣כָה יֵעָשֶׂ֗ה לַשּׁוֹר֙ הָֽאֶחָ֔ד א֖וֹ לָאַ֣יִל הָאֶחָ֑ד אֽוֹ־לַשֶּׂ֥ה בַכְּבָשִׂ֖ים א֥וֹ בָעִזִּֽים׃', 'כַּמִּסְפָּ֖ר אֲשֶׁ֣ר תַּעֲשׂ֑וּ כָּ֛כָה תַּעֲשׂ֥וּ לָאֶחָ֖ד כְּמִסְפָּרָֽם׃', 'כׇּל־הָאֶזְרָ֥ח יַעֲשֶׂה־כָּ֖כָה אֶת־אֵ֑לֶּה לְהַקְרִ֛יב אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַֽיהֹוָֽה׃', 'וְכִֽי־יָגוּר֩ אִתְּכֶ֨ם גֵּ֜ר א֤וֹ אֲשֶׁר־בְּתֽוֹכְכֶם֙ לְדֹרֹ֣תֵיכֶ֔ם וְעָשָׂ֛ה אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָ֑ה כַּאֲשֶׁ֥ר תַּעֲשׂ֖וּ כֵּ֥ן יַעֲשֶֽׂה׃', 'הַקָּהָ֕ל חֻקָּ֥ה אַחַ֛ת לָכֶ֖ם וְלַגֵּ֣ר הַגָּ֑ר חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם כָּכֶ֛ם כַּגֵּ֥ר יִהְיֶ֖ה לִפְנֵ֥י יְהֹוָֽה׃', 'תּוֹרָ֥ה אַחַ֛ת וּמִשְׁפָּ֥ט אֶחָ֖ד יִהְיֶ֣ה לָכֶ֑ם וְלַגֵּ֖ר הַגָּ֥ר אִתְּכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּר֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם בְּבֹֽאֲכֶם֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר אֲנִ֛י מֵבִ֥יא אֶתְכֶ֖ם שָֽׁמָּה׃', 'וְהָיָ֕ה בַּאֲכׇלְכֶ֖ם מִלֶּ֣חֶם הָאָ֑רֶץ תָּרִ֥ימוּ תְרוּמָ֖ה לַיהֹוָֽה׃', 'רֵאשִׁית֙ עֲרִסֹ֣תֵכֶ֔ם חַלָּ֖ה תָּרִ֣ימוּ תְרוּמָ֑ה כִּתְרוּמַ֣ת גֹּ֔רֶן כֵּ֖ן תָּרִ֥ימוּ אֹתָֽהּ׃', 'מֵרֵאשִׁית֙ עֲרִסֹ֣תֵיכֶ֔ם תִּתְּנ֥וּ לַיהֹוָ֖ה תְּרוּמָ֑ה לְדֹרֹ֖תֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִ֣י תִשְׁגּ֔וּ וְלֹ֣א תַעֲשׂ֔וּ אֵ֥ת כׇּל־הַמִּצְוֺ֖ת הָאֵ֑לֶּה אֲשֶׁר־דִּבֶּ֥ר יְהֹוָ֖ה אֶל־מֹשֶֽׁה׃', 'אֵת֩ כׇּל־אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֲלֵיכֶ֖ם בְּיַד־מֹשֶׁ֑ה מִן־הַיּ֞וֹם אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה וָהָ֖לְאָה לְדֹרֹתֵיכֶֽם׃', 'וְהָיָ֗ה אִ֣ם מֵעֵינֵ֣י הָעֵדָה֮ נֶעֶשְׂתָ֣ה לִשְׁגָגָה֒ וְעָשׂ֣וּ כׇל־הָעֵדָ֡ה פַּ֣ר בֶּן־בָּקָר֩ אֶחָ֨ד לְעֹלָ֜ה לְרֵ֤יחַ נִיחֹ֙חַ֙ לַֽיהֹוָ֔ה וּמִנְחָת֥וֹ וְנִסְכּ֖וֹ כַּמִּשְׁפָּ֑ט וּשְׂעִיר־עִזִּ֥ים אֶחָ֖ד לְחַטָּֽת׃', 'וְכִפֶּ֣ר הַכֹּהֵ֗ן עַֽל־כׇּל־עֲדַ֛ת בְּנֵ֥י יִשְׂרָאֵ֖ל וְנִסְלַ֣ח לָהֶ֑ם כִּֽי־שְׁגָגָ֣ה הִ֔וא וְהֵם֩ הֵבִ֨יאוּ אֶת־קׇרְבָּנָ֜ם אִשֶּׁ֣ה לַֽיהֹוָ֗ה וְחַטָּאתָ֛ם לִפְנֵ֥י יְהֹוָ֖ה עַל־שִׁגְגָתָֽם׃', 'וְנִסְלַ֗ח לְכׇל־עֲדַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל וְלַגֵּ֖ר הַגָּ֣ר בְּתוֹכָ֑ם כִּ֥י לְכׇל־הָעָ֖ם בִּשְׁגָגָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִם־נֶ֥פֶשׁ אַחַ֖ת תֶּחֱטָ֣א בִשְׁגָגָ֑ה וְהִקְרִ֛יבָה עֵ֥ז בַּת־שְׁנָתָ֖הּ לְחַטָּֽאת׃', 'וְכִפֶּ֣ר הַכֹּהֵ֗ן עַל־הַנֶּ֧פֶשׁ הַשֹּׁגֶ֛גֶת בְּחֶטְאָ֥הֿ בִשְׁגָגָ֖ה לִפְנֵ֣י יְהֹוָ֑ה לְכַפֵּ֥ר עָלָ֖יו וְנִסְלַ֥ח לֽוֹ׃', 'הָֽאֶזְרָח֙ בִּבְנֵ֣י יִשְׂרָאֵ֔ל וְלַגֵּ֖ר הַגָּ֣ר בְּתוֹכָ֑ם תּוֹרָ֤ה אַחַת֙ יִהְיֶ֣ה לָכֶ֔ם לָעֹשֶׂ֖ה בִּשְׁגָגָֽה׃', 'וְהַנֶּ֜פֶשׁ אֲשֶֽׁר־תַּעֲשֶׂ֣ה&thinsp;<b>׀</b> בְּיָ֣ד רָמָ֗ה מִן־הָֽאֶזְרָח֙ וּמִן־הַגֵּ֔ר אֶת־יְהֹוָ֖ה ה֣וּא מְגַדֵּ֑ף וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִקֶּ֥רֶב עַמָּֽהּ׃', 'כִּ֤י דְבַר־יְהֹוָה֙ בָּזָ֔ה וְאֶת־מִצְוָת֖וֹ הֵפַ֑ר הִכָּרֵ֧ת&thinsp;<small>׀</small>&thinsp;תִּכָּרֵ֛ת הַנֶּ֥פֶשׁ הַהִ֖וא עֲוֺנָ֥הֿ בָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיִּהְי֥וּ בְנֵֽי־יִשְׂרָאֵ֖ל בַּמִּדְבָּ֑ר וַֽיִּמְצְא֗וּ אִ֛ישׁ מְקֹשֵׁ֥שׁ עֵצִ֖ים בְּי֥וֹם הַשַּׁבָּֽת׃', 'וַיַּקְרִ֣יבוּ אֹת֔וֹ הַמֹּצְאִ֥ים אֹת֖וֹ מְקֹשֵׁ֣שׁ עֵצִ֑ים אֶל־מֹשֶׁה֙ וְאֶֽל־אַהֲרֹ֔ן וְאֶ֖ל כׇּל־הָעֵדָֽה׃', 'וַיַּנִּ֥יחוּ אֹת֖וֹ בַּמִּשְׁמָ֑ר כִּ֚י לֹ֣א פֹרַ֔שׁ מַה־יֵּעָשֶׂ֖ה לֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה מ֥וֹת יוּמַ֖ת הָאִ֑ישׁ רָג֨וֹם אֹת֤וֹ בָֽאֲבָנִים֙ כׇּל־הָ֣עֵדָ֔ה מִח֖וּץ לַֽמַּחֲנֶֽה׃', 'וַיֹּצִ֨יאוּ אֹת֜וֹ כׇּל־הָעֵדָ֗ה אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וַיִּרְגְּמ֥וּ אֹת֛וֹ בָּאֲבָנִ֖ים וַיָּמֹ֑ת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם וְעָשׂ֨וּ לָהֶ֥ם צִיצִ֛ת עַל־כַּנְפֵ֥י בִגְדֵיהֶ֖ם לְדֹרֹתָ֑ם וְנָ֥תְנ֛וּ עַל־צִיצִ֥ת הַכָּנָ֖ף פְּתִ֥יל תְּכֵֽלֶת׃', 'וְהָיָ֣ה לָכֶם֮ לְצִיצִת֒ וּרְאִיתֶ֣ם אֹת֗וֹ וּזְכַרְתֶּם֙ אֶת־כׇּל־מִצְוֺ֣ת יְהֹוָ֔ה וַעֲשִׂיתֶ֖ם אֹתָ֑ם וְלֹֽא־תָת֜וּרוּ אַחֲרֵ֤י לְבַבְכֶם֙ וְאַחֲרֵ֣י עֵֽינֵיכֶ֔ם אֲשֶׁר־אַתֶּ֥ם זֹנִ֖ים אַחֲרֵיהֶֽם׃', 'לְמַ֣עַן תִּזְכְּר֔וּ וַעֲשִׂיתֶ֖ם אֶת־כׇּל־מִצְוֺתָ֑י וִהְיִיתֶ֥ם קְדֹשִׁ֖ים לֵאלֹֽהֵיכֶֽם׃', 'אֲנִ֞י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֗ם אֲשֶׁ֨ר הוֹצֵ֤אתִי אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִ֑ים אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-13-1">Chap. 13</a><a href="#v-14-1">Chap. 14</a><a href="#v-15-1">Chap. 15</a></div>
+  <div class="seif" id="v-13-1">
+      <span class="seif-num">13:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-13-2">
+      <span class="seif-num">13:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>שְׁלַח־לְךָ֣ אֲנָשִׁ֗ים וְיָתֻ֙רוּ֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁר־אֲנִ֥י נֹתֵ֖ן לִבְנֵ֣י יִשְׂרָאֵ֑ל אִ֣ישׁ אֶחָד֩ אִ֨ישׁ אֶחָ֜ד לְמַטֵּ֤ה אֲבֹתָיו֙ תִּשְׁלָ֔חוּ כֹּ֖ל נָשִׂ֥יא בָהֶֽם׃</p></div><div class="heb-s"><p>שלח־לך אנשים ויתרו את־ארץ כנען אשר־אני נתן לבני ישראל איש אחד איש אחד למטה אבתיו תשלחו כל נשיא בהם׃</p></div></div>
+      <div class="texte-fr"><p>"Envoie toi-même des hommes pour explorer le pays de Canaan, que je destine aux enfants d’Israël; vous enverrez un homme respectivement par tribu paternelle, tous éminents parmi eux."</p></div>
+    </div><div class="seif" id="v-13-3">
+      <span class="seif-num">13:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֨ח אֹתָ֥ם מֹשֶׁ֛ה מִמִּדְבַּ֥ר פָּארָ֖ן עַל־פִּ֣י יְהֹוָ֑ה כֻּלָּ֣ם אֲנָשִׁ֔ים רָאשֵׁ֥י בְנֵֽי־יִשְׂרָאֵ֖ל הֵֽמָּה׃</p></div><div class="heb-s"><p>וישלח אתם משה ממדבר פארן על־פי יהוה כלם אנשים ראשי בני־ישראל המה׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse les envoya du désert de Pharan, selon la parole de l’Éternel; c’étaient tous des personnages considérables entre les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-13-4">
+      <span class="seif-num">13:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֖לֶּה שְׁמוֹתָ֑ם לְמַטֵּ֣ה רְאוּבֵ֔ן שַׁמּ֖וּעַ בֶּן־זַכּֽוּר׃</p></div><div class="heb-s"><p>ואלה שמותם למטה ראובן שמוע בן־זכור׃</p></div></div>
+      <div class="texte-fr"><p>Et voici leurs noms: pour la tribu de Ruben, Chammoûa, fils de Zakkour;</p></div>
+    </div><div class="seif" id="v-13-5">
+      <span class="seif-num">13:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה שִׁמְע֔וֹן שָׁפָ֖ט בֶּן־חוֹרִֽי׃</p></div><div class="heb-s"><p>למטה שמעון שפט בן־חורי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Siméon, Chafat, fils de Hori;</p></div>
+    </div><div class="seif" id="v-13-6">
+      <span class="seif-num">13:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה יְהוּדָ֔ה כָּלֵ֖ב בֶּן־יְפֻנֶּֽה׃</p></div><div class="heb-s"><p>למטה יהודה כלב בן־יפנה׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Juda, Caleb, fils de Yefounné;</p></div>
+    </div><div class="seif" id="v-13-7">
+      <span class="seif-num">13:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה יִשָּׂשכָ֔ר יִגְאָ֖ל בֶּן־יוֹסֵֽף׃</p></div><div class="heb-s"><p>למטה יששכר יגאל בן־יוסף׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu d’Issachar, Yigal, fils de Joseph;</p></div>
+    </div><div class="seif" id="v-13-8">
+      <span class="seif-num">13:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֥ה אֶפְרָ֖יִם הוֹשֵׁ֥עַ בִּן־נֽוּן׃</p></div><div class="heb-s"><p>למטה אפרים הושע בן־נון׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu d’Ephraïm, Hochéa, fils de Noun;</p></div>
+    </div><div class="seif" id="v-13-9">
+      <span class="seif-num">13:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה בִנְיָמִ֔ן פַּלְטִ֖י בֶּן־רָפֽוּא׃</p></div><div class="heb-s"><p>למטה בנימן פלטי בן־רפוא׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Benjamin, Palti, fils de Rafou;</p></div>
+    </div><div class="seif" id="v-13-10">
+      <span class="seif-num">13:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה זְבוּלֻ֔ן גַּדִּיאֵ֖ל בֶּן־סוֹדִֽי׃</p></div><div class="heb-s"><p>למטה זבולן גדיאל בן־סודי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Zabulon, Gaddïel, fils de Sodi;</p></div>
+    </div><div class="seif" id="v-13-11">
+      <span class="seif-num">13:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֥ה יוֹסֵ֖ף לְמַטֵּ֣ה מְנַשֶּׁ֑ה גַּדִּ֖י בֶּן־סוּסִֽי׃</p></div><div class="heb-s"><p>למטה יוסף למטה מנשה גדי בן־סוסי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Joseph formant celle de Manassé, Gaddi, fils de Çouci;</p></div>
+    </div><div class="seif" id="v-13-12">
+      <span class="seif-num">13:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה דָ֔ן עַמִּיאֵ֖ל בֶּן־גְּמַלִּֽי׃</p></div><div class="heb-s"><p>למטה דן עמיאל בן־גמלי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Dan, Ammïel, fils de Ghemalli;</p></div>
+    </div><div class="seif" id="v-13-13">
+      <span class="seif-num">13:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה אָשֵׁ֔ר סְת֖וּר בֶּן־מִיכָאֵֽל׃</p></div><div class="heb-s"><p>למטה אשר סתור בן־מיכאל׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu d’Asher, Sethour, fils de Mikhaêl;</p></div>
+    </div><div class="seif" id="v-13-14">
+      <span class="seif-num">13:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה נַפְתָּלִ֔י נַחְבִּ֖י בֶּן־וׇפְסִֽי׃</p></div><div class="heb-s"><p>למטה נפתלי נחבי בן־ופסי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Nephtali, Nahbi, fils de Vofsi;</p></div>
+    </div><div class="seif" id="v-13-15">
+      <span class="seif-num">13:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַטֵּ֣ה גָ֔ד גְּאוּאֵ֖ל בֶּן־מָכִֽי׃</p></div><div class="heb-s"><p>למטה גד גאואל בן־מכי׃</p></div></div>
+      <div class="texte-fr"><p>pour la tribu de Gad, Gheouêl, fils de Makhi.</p></div>
+    </div><div class="seif" id="v-13-16">
+      <span class="seif-num">13:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֚לֶּה שְׁמ֣וֹת הָֽאֲנָשִׁ֔ים אֲשֶׁר־שָׁלַ֥ח מֹשֶׁ֖ה לָת֣וּר אֶת־הָאָ֑רֶץ וַיִּקְרָ֥א מֹשֶׁ֛ה לְהוֹשֵׁ֥עַ בִּן־נ֖וּן יְהוֹשֻֽׁעַ׃</p></div><div class="heb-s"><p>אלה שמות האנשים אשר־שלח משה לתור את־הארץ ויקרא משה להושע בן־נון יהושע׃</p></div></div>
+      <div class="texte-fr"><p>Tels sont les noms des hommes que Moïse envoya explorer la contrée. (Moïse avait nommé Hochéa, fils de Noun: Josué).</p></div>
+    </div><div class="seif" id="v-13-17">
+      <span class="seif-num">13:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֤ח אֹתָם֙ מֹשֶׁ֔ה לָת֖וּר אֶת־אֶ֣רֶץ כְּנָ֑עַן וַיֹּ֣אמֶר אֲלֵהֶ֗ם עֲל֥וּ זֶה֙ בַּנֶּ֔גֶב וַעֲלִיתֶ֖ם אֶת־הָהָֽר׃</p></div><div class="heb-s"><p>וישלח אתם משה לתור את־ארץ כנען ויאמר אלהם עלו זה בנגב ועליתם את־ההר׃</p></div></div>
+      <div class="texte-fr"><p>Moïse leur donna donc mission d’explorer le pays de Canaan, en leur disant: "Dirigez-vous de ce côté, vers le sud, et gravissez la montagne.</p></div>
+    </div><div class="seif" id="v-13-18">
+      <span class="seif-num">13:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּרְאִיתֶ֥ם אֶת־הָאָ֖רֶץ מַה־הִ֑וא וְאֶת־הָעָם֙ הַיֹּשֵׁ֣ב עָלֶ֔יהָ הֶחָזָ֥ק הוּא֙ הֲרָפֶ֔ה הַמְעַ֥ט ה֖וּא אִם־רָֽב׃</p></div><div class="heb-s"><p>וראיתם את־הארץ מה־הוא ואת־העם הישב עליה החזק הוא הרפה המעט הוא אם־רב׃</p></div></div>
+      <div class="texte-fr"><p>Vous observerez l’aspect de ce pays et le peuple qui l’occupe, s’il est robuste ou faible, peu nombreux ou considérable;</p></div>
+    </div><div class="seif" id="v-13-19">
+      <span class="seif-num">13:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָ֣ה הָאָ֗רֶץ אֲשֶׁר־הוּא֙ יֹשֵׁ֣ב בָּ֔הּ הֲטוֹבָ֥ה הִ֖וא אִם־רָעָ֑ה וּמָ֣ה הֶֽעָרִ֗ים אֲשֶׁר־הוּא֙ יוֹשֵׁ֣ב בָּהֵ֔נָּה הַבְּמַֽחֲנִ֖ים אִ֥ם בְּמִבְצָרִֽים׃</p></div><div class="heb-s"><p>ומה הארץ אשר־הוא ישב בה הטובה הוא אם־רעה ומה הערים אשר־הוא יושב בהנה הבמחנים אם במבצרים׃</p></div></div>
+      <div class="texte-fr"><p>quant au pays qu’il habite, s’il est bon ou mauvais; comment sont les villes où il demeure, des villes ouvertes ou des places fortes;</p></div>
+    </div><div class="seif" id="v-13-20">
+      <span class="seif-num">13:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָ֣ה הָ֠אָ֠רֶץ הַשְּׁמֵנָ֨ה הִ֜וא אִם־רָזָ֗ה הֲיֵֽשׁ־בָּ֥הּ עֵץ֙ אִם־אַ֔יִן וְהִ֨תְחַזַּקְתֶּ֔ם וּלְקַחְתֶּ֖ם מִפְּרִ֣י הָאָ֑רֶץ וְהַ֨יָּמִ֔ים יְמֵ֖י בִּכּוּרֵ֥י עֲנָבִֽים׃</p></div><div class="heb-s"><p>ומה הארץ השמנה הוא אם־רזה היש־בה עץ אם־אין והתחזקתם ולקחתם מפרי הארץ והימים ימי בכורי ענבים׃</p></div></div>
+      <div class="texte-fr"><p>quant au sol, s’il est gras ou maigre, s’il est boisé ou non. Tâchez aussi d’emporter quelques-uns des fruits du pays." C’était alors la saison des premiers raisins.</p></div>
+    </div><div class="seif" id="v-13-21">
+      <span class="seif-num">13:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲל֖וּ וַיָּתֻ֣רוּ אֶת־הָאָ֑רֶץ מִמִּדְבַּר־צִ֥ן עַד־רְחֹ֖ב לְבֹ֥א חֲמָֽת׃</p></div><div class="heb-s"><p>ויעלו ויתרו את־הארץ ממדבר־צן עד־רחב לבא חמת׃</p></div></div>
+      <div class="texte-fr"><p>Et ils s’en allèrent explorer le pays, depuis le désert de Cîn jusqu’à Rehob, vers Hémath.</p></div>
+    </div><div class="seif" id="v-13-22">
+      <span class="seif-num">13:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲל֣וּ בַנֶּ֘גֶב֮ וַיָּבֹ֣א עַד־חֶבְרוֹן֒ וְשָׁ֤ם אֲחִימַן֙ שֵׁשַׁ֣י וְתַלְמַ֔י יְלִידֵ֖י הָעֲנָ֑ק וְחֶבְר֗וֹן שֶׁ֤בַע שָׁנִים֙ נִבְנְתָ֔ה לִפְנֵ֖י צֹ֥עַן מִצְרָֽיִם׃</p></div><div class="heb-s"><p>ויעלו בנגב ויבא עד־חברון ושם אחימן ששי ותלמי ילידי הענק וחברון שבע שנים נבנתה לפני צען מצרים׃</p></div></div>
+      <div class="texte-fr"><p>Ils s’acheminèrent du côté du midi, et l’on parvint jusqu’à Hébrôn, où demeuraient Ahimân, Chêchaï et Talmaï, descendants d’Anak. Hébrôn avait été bâtie sept ans avant Tanis d’Égypte.</p></div>
+    </div><div class="seif" id="v-13-23">
+      <span class="seif-num">13:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֜אוּ עַד־נַ֣חַל אֶשְׁכֹּ֗ל וַיִּכְרְת֨וּ מִשָּׁ֤ם זְמוֹרָה֙ וְאֶשְׁכּ֤וֹל עֲנָבִים֙ אֶחָ֔ד וַיִּשָּׂאֻ֥הוּ בַמּ֖וֹט בִּשְׁנָ֑יִם וּמִן־הָרִמֹּנִ֖ים וּמִן־הַתְּאֵנִֽים׃</p></div><div class="heb-s"><p>ויבאו עד־נחל אשכל ויכרתו משם זמורה ואשכול ענבים אחד וישאהו במוט בשנים ומן־הרמנים ומן־התאנים׃</p></div></div>
+      <div class="texte-fr"><p>Arrivés à la vallée d’Echkol, ils y coupèrent un sarment avec une grappe de raisin, qu’ils portèrent à deux au moyen d’une perche, de plus, quelques grenades et quelques figues.</p></div>
+    </div><div class="seif" id="v-13-24">
+      <span class="seif-num">13:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>לַמָּק֣וֹם הַה֔וּא קָרָ֖א נַ֣חַל אֶשְׁכּ֑וֹל עַ֚ל אֹד֣וֹת הָֽאֶשְׁכּ֔וֹל אֲשֶׁר־כָּרְת֥וּ מִשָּׁ֖ם בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>למקום ההוא קרא נחל אשכול על אדות האשכול אשר־כרתו משם בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>On nomma ce lieu vallée d’Echkol, à cause de la grappe qu’y avaient coupée les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-13-25">
+      <span class="seif-num">13:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּשֻׁ֖בוּ מִתּ֣וּר הָאָ֑רֶץ מִקֵּ֖ץ אַרְבָּעִ֥ים יֽוֹם׃</p></div><div class="heb-s"><p>וישבו מתור הארץ מקץ ארבעים יום׃</p></div></div>
+      <div class="texte-fr"><p>Ils revinrent de cette exploration du pays, au bout de quarante jours.</p></div>
+    </div><div class="seif" id="v-13-26">
+      <span class="seif-num">13:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּלְכ֡וּ וַיָּבֹ֩אוּ֩ אֶל־מֹשֶׁ֨ה וְאֶֽל־אַהֲרֹ֜ן וְאֶל־כׇּל־עֲדַ֧ת בְּנֵֽי־יִשְׂרָאֵ֛ל אֶל־מִדְבַּ֥ר פָּארָ֖ן קָדֵ֑שָׁה וַיָּשִׁ֨יבוּ אֹתָ֤ם דָּבָר֙ וְאֶת־כׇּל־הָ֣עֵדָ֔ה וַיַּרְא֖וּם אֶת־פְּרִ֥י הָאָֽרֶץ׃</p></div><div class="heb-s"><p>וילכו ויבאו אל־משה ואל־אהרן ואל־כל־עדת בני־ישראל אל־מדבר פארן קדשה וישיבו אתם דבר ואת־כל־העדה ויראום את־פרי הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Ils allèrent trouver Moïse, Aaron et toute la communauté des enfants d’Israël, dans le désert de Pharan, à Kadêch. Ils rendirent compte à eux et à toute la communauté, leur montrèrent les fruits de la contrée,</p></div>
+    </div><div class="seif" id="v-13-27">
+      <span class="seif-num">13:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְסַפְּרוּ־לוֹ֙ וַיֹּ֣אמְר֔וּ בָּ֕אנוּ אֶל־הָאָ֖רֶץ אֲשֶׁ֣ר שְׁלַחְתָּ֑נוּ וְ֠גַ֠ם זָבַ֨ת חָלָ֥ב וּדְבַ֛שׁ הִ֖וא וְזֶה־פִּרְיָֽהּ׃</p></div><div class="heb-s"><p>ויספרו־לו ויאמרו באנו אל־הארץ אשר שלחתנו וגם זבת חלב ודבש הוא וזה־פריה׃</p></div></div>
+      <div class="texte-fr"><p>et lui firent ce récit: "Nous sommes entrés dans le pays où tu nous avais envoyés; oui, vraiment, il ruisselle de lait et de miel, et voici de ses fruits.</p></div>
+    </div><div class="seif" id="v-13-28">
+      <span class="seif-num">13:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֚פֶס כִּֽי־עַ֣ז הָעָ֔ם הַיֹּשֵׁ֖ב בָּאָ֑רֶץ וְהֶֽעָרִ֗ים בְּצֻר֤וֹת גְּדֹלֹת֙ מְאֹ֔ד וְגַם־יְלִדֵ֥י הָֽעֲנָ֖ק רָאִ֥ינוּ שָֽׁם׃</p></div><div class="heb-s"><p>אפס כי־עז העם הישב בארץ והערים בצרות גדלת מאד וגם־ילדי הענק ראינו שם׃</p></div></div>
+      <div class="texte-fr"><p>Mais il est puissant le peuple qui habite ce pays! Puis, les villes sont fortifiées et très grandes, et même nous y avons vu des descendants d’Anak!</p></div>
+    </div><div class="seif" id="v-13-29">
+      <span class="seif-num">13:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲמָלֵ֥ק יוֹשֵׁ֖ב בְּאֶ֣רֶץ הַנֶּ֑גֶב וְ֠הַֽחִתִּ֠י וְהַיְבוּסִ֤י וְהָֽאֱמֹרִי֙ יוֹשֵׁ֣ב בָּהָ֔ר וְהַֽכְּנַעֲנִי֙ יוֹשֵׁ֣ב עַל־הַיָּ֔ם וְעַ֖ל יַ֥ד הַיַּרְדֵּֽן׃</p></div><div class="heb-s"><p>עמלק יושב בארץ הנגב והחתי והיבוסי והאמרי יושב בהר והכנעני יושב על־הים ועל יד הירדן׃</p></div></div>
+      <div class="texte-fr"><p>Amalec habite la région du midi; le Héthéen, le Jébuséen et l’Amorréen habitent la montagne, et le Cananéen occupe le littoral et la rive du Jourdain."</p></div>
+    </div><div class="seif" id="v-13-30">
+      <span class="seif-num">13:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֧הַס כָּלֵ֛ב אֶת־הָעָ֖ם אֶל־מֹשֶׁ֑ה וַיֹּ֗אמֶר עָלֹ֤ה נַעֲלֶה֙ וְיָרַ֣שְׁנוּ אֹתָ֔הּ כִּֽי־יָכ֥וֹל נוּכַ֖ל לָֽהּ׃</p></div><div class="heb-s"><p>ויהס כלב את־העם אל־משה ויאמר עלה נעלה וירשנו אתה כי־יכול נוכל לה׃</p></div></div>
+      <div class="texte-fr"><p>Caleb fit taire le peuple soulevé contre Moïse, et dit: "Montons, montons-y et prenons-en possession, car certes nous en serons vainqueurs!"</p></div>
+    </div><div class="seif" id="v-13-31">
+      <span class="seif-num">13:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָ֨אֲנָשִׁ֜ים אֲשֶׁר־עָל֤וּ עִמּוֹ֙ אָֽמְר֔וּ לֹ֥א נוּכַ֖ל לַעֲל֣וֹת אֶל־הָעָ֑ם כִּֽי־חָזָ֥ק ה֖וּא מִמֶּֽנּוּ׃</p></div><div class="heb-s"><p>והאנשים אשר־עלו עמו אמרו לא נוכל לעלות אל־העם כי־חזק הוא ממנו׃</p></div></div>
+      <div class="texte-fr"><p>Mais les hommes qui étaient partis avec lui, dirent: "Nous ne pouvons marcher contre ce peuple, car il est plus fort que nous."</p></div>
+    </div><div class="seif" id="v-13-32">
+      <span class="seif-num">13:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּצִ֜יאוּ דִּבַּ֤ת הָאָ֙רֶץ֙ אֲשֶׁ֣ר תָּר֣וּ אֹתָ֔הּ אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר הָאָ֡רֶץ אֲשֶׁר֩ עָבַ֨רְנוּ בָ֜הּ לָת֣וּר אֹתָ֗הּ אֶ֣רֶץ אֹכֶ֤לֶת יוֹשְׁבֶ֙יהָ֙ הִ֔וא וְכׇל־הָעָ֛ם אֲשֶׁר־רָאִ֥ינוּ בְתוֹכָ֖הּ אַנְשֵׁ֥י מִדּֽוֹת׃</p></div><div class="heb-s"><p>ויציאו דבת הארץ אשר תרו אתה אל־בני ישראל לאמר הארץ אשר עברנו בה לתור אתה ארץ אכלת יושביה הוא וכל־העם אשר־ראינו בתוכה אנשי מדות׃</p></div></div>
+      <div class="texte-fr"><p>Et ils décrièrent le pays qu’ils avaient exploré, en disant aux enfants d’Israël: "Le pays que nous avons parcouru pour l’explorer est un pays qui dévorerait ses habitants; quant au peuple que nous y avons vu, ce sont tous gens de haute taille.</p></div>
+    </div><div class="seif" id="v-13-33">
+      <span class="seif-num">13:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁ֣ם רָאִ֗ינוּ אֶת־הַנְּפִילִ֛ים בְּנֵ֥י עֲנָ֖ק מִן־הַנְּפִלִ֑ים וַנְּהִ֤י בְעֵינֵ֙ינוּ֙ כַּֽחֲגָבִ֔ים וְכֵ֥ן הָיִ֖ינוּ בְּעֵינֵיהֶֽם׃</p></div><div class="heb-s"><p>ושם ראינו את־הנפילים בני ענק מן־הנפלים ונהי בעינינו כחגבים וכן היינו בעיניהם׃</p></div></div>
+      <div class="texte-fr"><p>Nous y avons même vu les Nefilîm, les enfants d’Anak, descendants des Nefilîm: nous étions à nos propres yeux comme des sauterelles, et ainsi étions-nous à leurs yeux."</p></div>
+    </div><div class="seif" id="v-14-1">
+      <span class="seif-num">14:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּשָּׂא֙ כׇּל־הָ֣עֵדָ֔ה וַֽיִּתְּנ֖וּ אֶת־קוֹלָ֑ם וַיִּבְכּ֥וּ הָעָ֖ם בַּלַּ֥יְלָה הַהֽוּא׃</p></div><div class="heb-s"><p>ותשא כל־העדה ויתנו את־קולם ויבכו העם בלילה ההוא׃</p></div></div>
+      <div class="texte-fr"><p>Alors toute la communauté se souleva en jetant des cris, et le peuple passa cette nuit à gémir.</p></div>
+    </div><div class="seif" id="v-14-2">
+      <span class="seif-num">14:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּלֹּ֙נוּ֙ עַל־מֹשֶׁ֣ה וְעַֽל־אַהֲרֹ֔ן כֹּ֖ל בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיֹּאמְר֨וּ אֲלֵהֶ֜ם כׇּל־הָעֵדָ֗ה לוּ־מַ֙תְנוּ֙ בְּאֶ֣רֶץ מִצְרַ֔יִם א֛וֹ בַּמִּדְבָּ֥ר הַזֶּ֖ה לוּ־מָֽתְנוּ׃</p></div><div class="heb-s"><p>וילנו על־משה ועל־אהרן כל בני ישראל ויאמרו אלהם כל־העדה לו־מתנו בארץ מצרים או במדבר הזה לו־מתנו׃</p></div></div>
+      <div class="texte-fr"><p>Tous les enfants d’Israël murmurèrent contre Moïse et Aaron, et toute la communauté leur dit: "Que ne sommes-nous morts dans le pays d’Égypte, ou que ne mourons-nous dans ce désert!</p></div>
+    </div><div class="seif" id="v-14-3">
+      <span class="seif-num">14:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָמָ֣ה יְ֠הֹוָ֠ה מֵבִ֨יא אֹתָ֜נוּ אֶל־הָאָ֤רֶץ הַזֹּאת֙ לִנְפֹּ֣ל בַּחֶ֔רֶב נָשֵׁ֥ינוּ וְטַפֵּ֖נוּ יִהְי֣וּ לָבַ֑ז הֲל֧וֹא ט֦וֹב לָ֖נוּ שׁ֥וּב מִצְרָֽיְמָה׃</p></div><div class="heb-s"><p>ולמה יהוה מביא אתנו אל־הארץ הזאת לנפל בחרב נשינו וטפנו יהיו לבז הלוא טוב לנו שוב מצרימה׃</p></div></div>
+      <div class="texte-fr"><p>Et pourquoi l’Éternel nous mène-t-il dans ce pays-là, pour y périr par le glaive, nous voir ravir nos femmes et nos enfants? Certes, il vaut mieux pour nous retourner en Égypte."</p></div>
+    </div><div class="seif" id="v-14-4">
+      <span class="seif-num">14:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֖וּ אִ֣ישׁ אֶל־אָחִ֑יו נִתְּנָ֥ה רֹ֖אשׁ וְנָשׁ֥וּבָה מִצְרָֽיְמָה׃</p></div><div class="heb-s"><p>ויאמרו איש אל־אחיו נתנה ראש ונשובה מצרימה׃</p></div></div>
+      <div class="texte-fr"><p>Et ils se dirent l’un à l’autre: "Donnons-nous un chef, et retournons en Égypte!"</p></div>
+    </div><div class="seif" id="v-14-5">
+      <span class="seif-num">14:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפֹּ֥ל מֹשֶׁ֛ה וְאַהֲרֹ֖ן עַל־פְּנֵיהֶ֑ם לִפְנֵ֕י כׇּל־קְהַ֥ל עֲדַ֖ת בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויפל משה ואהרן על־פניהם לפני כל־קהל עדת בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Moïse et Aaron tombèrent sur leur face devant toute l’assemblée réunie des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-14-6">
+      <span class="seif-num">14:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וִיהוֹשֻׁ֣עַ בִּן־נ֗וּן וְכָלֵב֙ בֶּן־יְפֻנֶּ֔ה מִן־הַתָּרִ֖ים אֶת־הָאָ֑רֶץ קָרְע֖וּ בִּגְדֵיהֶֽם׃</p></div><div class="heb-s"><p>ויהושע בן־נון וכלב בן־יפנה מן־התרים את־הארץ קרעו בגדיהם׃</p></div></div>
+      <div class="texte-fr"><p>Et Josué, fils de Noun, et Caleb, fils de Yefounné, qui avaient, eux aussi, exploré la contrée, déchirèrent leurs vêtements.</p></div>
+    </div><div class="seif" id="v-14-7">
+      <span class="seif-num">14:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמְר֔וּ אֶל־כׇּל־עֲדַ֥ת בְּנֵֽי־יִשְׂרָאֵ֖ל לֵאמֹ֑ר הָאָ֗רֶץ אֲשֶׁ֨ר עָבַ֤רְנוּ בָהּ֙ לָת֣וּר אֹתָ֔הּ טוֹבָ֥ה הָאָ֖רֶץ מְאֹ֥ד מְאֹֽד׃</p></div><div class="heb-s"><p>ויאמרו אל־כל־עדת בני־ישראל לאמר הארץ אשר עברנו בה לתור אתה טובה הארץ מאד מאד׃</p></div></div>
+      <div class="texte-fr"><p>Ils parlèrent à toute la communauté des Israélites en ces termes: "Le pays que nous avons parcouru pour l’explorer, ce pays est bon, il est excellent.</p></div>
+    </div><div class="seif" id="v-14-8">
+      <span class="seif-num">14:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־חָפֵ֥ץ בָּ֙נוּ֙ יְהֹוָ֔ה וְהֵבִ֤יא אֹתָ֙נוּ֙ אֶל־הָאָ֣רֶץ הַזֹּ֔את וּנְתָנָ֖הּ לָ֑נוּ אֶ֕רֶץ אֲשֶׁר־הִ֛וא זָבַ֥ת חָלָ֖ב וּדְבָֽשׁ׃</p></div><div class="heb-s"><p>אם־חפץ בנו יהוה והביא אתנו אל־הארץ הזאת ונתנה לנו ארץ אשר־הוא זבת חלב ודבש׃</p></div></div>
+      <div class="texte-fr"><p>Si l’Éternel nous veut du bien, il saura nous faire entrer dans ce pays et nous le livrer, ce pays qui ruisselle de lait et de miel.</p></div>
+    </div><div class="seif" id="v-14-9">
+      <span class="seif-num">14:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ בַּיהֹוָה֮ אַל־תִּמְרֹ֒דוּ֒ וְאַתֶּ֗ם אַל־תִּֽירְאוּ֙ אֶת־עַ֣ם הָאָ֔רֶץ כִּ֥י לַחְמֵ֖נוּ הֵ֑ם סָ֣ר צִלָּ֧ם מֵעֲלֵיהֶ֛ם וַֽיהֹוָ֥ה אִתָּ֖נוּ אַל־תִּירָאֻֽם׃</p></div><div class="heb-s"><p>אך ביהוה אל־תמרדו ואתם אל־תיראו את־עם הארץ כי לחמנו הם סר צלם מעליהם ויהוה אתנו אל־תיראם׃</p></div></div>
+      <div class="texte-fr"><p>Mais ne vous mutinez point contre l’Éternel; ne craignez point, vous, le peuple de ce pays, car ils seront notre pâture: leur ombre les a abandonnés et l’Éternel est avec nous, ne les craignez point!"</p></div>
+    </div><div class="seif" id="v-14-10">
+      <span class="seif-num">14:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּֽאמְרוּ֙ כׇּל־הָ֣עֵדָ֔ה לִרְגּ֥וֹם אֹתָ֖ם בָּאֲבָנִ֑ים וּכְב֣וֹד יְהֹוָ֗ה נִרְאָה֙ בְּאֹ֣הֶל מוֹעֵ֔ד אֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויאמרו כל־העדה לרגום אתם באבנים וכבוד יהוה נראה באהל מועד אל־כל־בני ישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Or, toute la communauté se disposait à les lapider, lorsque la gloire divine apparut, dans la tente d’assignation, à tous les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-14-11">
+      <span class="seif-num">14:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה עַד־אָ֥נָה יְנַאֲצֻ֖נִי הָעָ֣ם הַזֶּ֑ה וְעַד־אָ֙נָה֙ לֹא־יַאֲמִ֣ינוּ בִ֔י בְּכֹל֙ הָֽאֹת֔וֹת אֲשֶׁ֥ר עָשִׂ֖יתִי בְּקִרְבּֽוֹ׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה עד־אנה ינאצני העם הזה ועד־אנה לא־יאמינו בי בכל האתות אשר עשיתי בקרבו׃</p></div></div>
+      <div class="texte-fr"><p>Et l’Éternel dit à Moïse: "Quand cessera ce peuple de m’outrager? Combien de temps manquera-t-il de confiance en moi, malgré tant de prodiges que j’ai opérés au milieu de lui?</p></div>
+    </div><div class="seif" id="v-14-12">
+      <span class="seif-num">14:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַכֶּ֥נּוּ בַדֶּ֖בֶר וְאוֹרִשֶׁ֑נּוּ וְאֶֽעֱשֶׂה֙ אֹֽתְךָ֔ לְגוֹי־גָּד֥וֹל וְעָצ֖וּם מִמֶּֽנּוּ׃</p></div><div class="heb-s"><p>אכנו בדבר ואורשנו ואעשה אתך לגוי־גדול ועצום ממנו׃</p></div></div>
+      <div class="texte-fr"><p>Je veux le frapper de la peste et l’anéantir, et te faire devenir toi-même un peuple plus grand et plus puissant que celui-ci."</p></div>
+    </div><div class="seif" id="v-14-13">
+      <span class="seif-num">14:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר מֹשֶׁ֖ה אֶל־יְהֹוָ֑ה וְשָׁמְע֣וּ מִצְרַ֔יִם כִּֽי־הֶעֱלִ֧יתָ בְכֹחֲךָ֛ אֶת־הָעָ֥ם הַזֶּ֖ה מִקִּרְבּֽוֹ׃</p></div><div class="heb-s"><p>ויאמר משה אל־יהוה ושמעו מצרים כי־העלית בכחך את־העם הזה מקרבו׃</p></div></div>
+      <div class="texte-fr"><p>Moïse répondit à l’Éternel: "Mais les Égyptiens ont su que tu as, par ta puissance, fait sortir ce peuple du milieu d’eux,</p></div>
+    </div><div class="seif" id="v-14-14">
+      <span class="seif-num">14:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָמְר֗וּ אֶל־יוֹשֵׁב֮ הָאָ֣רֶץ הַזֹּאת֒ שָֽׁמְעוּ֙ כִּֽי־אַתָּ֣ה יְהֹוָ֔ה בְּקֶ֖רֶב הָעָ֣ם הַזֶּ֑ה אֲשֶׁר־עַ֨יִן בְּעַ֜יִן נִרְאָ֣ה&thinsp;<b>׀</b> אַתָּ֣ה יְהֹוָ֗ה וַעֲנָֽנְךָ֙ עֹמֵ֣ד עֲלֵהֶ֔ם וּבְעַמֻּ֣ד עָנָ֗ן אַתָּ֨ה הֹלֵ֤ךְ לִפְנֵיהֶם֙ יוֹמָ֔ם וּבְעַמּ֥וּד אֵ֖שׁ לָֽיְלָה׃</p></div><div class="heb-s"><p>ואמרו אל־יושב הארץ הזאת שמעו כי־אתה יהוה בקרב העם הזה אשר־עין בעין נראה&thinsp;<b>׀</b> אתה יהוה ועננך עמד עלהם ובעמד ענן אתה הלך לפניהם יומם ובעמוד אש לילה׃</p></div></div>
+      <div class="texte-fr"><p>et ils l’ont dit aux habitants de ce pays-là; ils ont appris, Seigneur, que tu es au milieu de ce peuple, que celui qu’ils ont vu face à face, c’est toi-même, Seigneur; que ta nuée plane au-dessus d’eux; que, dans une colonne nébuleuse, tu les guides le jour, et, dans une colonne de feu, la nuit.</p></div>
+    </div><div class="seif" id="v-14-15">
+      <span class="seif-num">14:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵמַתָּ֛ה אֶת־הָעָ֥ם הַזֶּ֖ה כְּאִ֣ישׁ אֶחָ֑ד וְאָֽמְרוּ֙ הַגּוֹיִ֔ם אֲשֶׁר־שָׁמְע֥וּ אֶֽת־שִׁמְעֲךָ֖ לֵאמֹֽר׃</p></div><div class="heb-s"><p>והמתה את־העם הזה כאיש אחד ואמרו הגוים אשר־שמעו את־שמעך לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Et tu ferais mourir ce peuple comme un seul homme! Mais ces nations, qui ont entendu parler de toi, diront alors:</p></div>
+    </div><div class="seif" id="v-14-16">
+      <span class="seif-num">14:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִבִּלְתִּ֞י יְכֹ֣לֶת יְהֹוָ֗ה לְהָבִיא֙ אֶת־הָעָ֣ם הַזֶּ֔ה אֶל־הָאָ֖רֶץ אֲשֶׁר־נִשְׁבַּ֣ע לָהֶ֑ם וַיִּשְׁחָטֵ֖ם בַּמִּדְבָּֽר׃</p></div><div class="heb-s"><p>מבלתי יכלת יהוה להביא את־העם הזה אל־הארץ אשר־נשבע להם וישחטם במדבר׃</p></div></div>
+      <div class="texte-fr"><p>"Parce que l’Éternel n’a pu faire entrer ce peuple dans le pays qu’il leur avait solennellement promis, il les a égorgés dans le désert."</p></div>
+    </div><div class="seif" id="v-14-17">
+      <span class="seif-num">14:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֕ה <big>יִ</big>גְדַּל־נָ֖א כֹּ֣חַ אֲדֹנָ֑י כַּאֲשֶׁ֥ר דִּבַּ֖רְתָּ לֵאמֹֽר׃</p></div><div class="heb-s"><p>ועתה <big>י</big>גדל־נא כח אדני כאשר דברת לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Maintenant donc, de grâce, que la puissance d’Adonaï se déploie, comme tu l’as déclaré en disant:</p></div>
+    </div><div class="seif" id="v-14-18">
+      <span class="seif-num">14:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֗ה אֶ֤רֶךְ אַפַּ֙יִם֙ וְרַב־חֶ֔סֶד נֹשֵׂ֥א עָוֺ֖ן וָפָ֑שַׁע וְנַקֵּה֙ לֹ֣א יְנַקֶּ֔ה פֹּקֵ֞ד עֲוֺ֤ן אָבוֹת֙ עַל־בָּנִ֔ים עַל־שִׁלֵּשִׁ֖ים וְעַל־רִבֵּעִֽים׃</p></div><div class="heb-s"><p>יהוה ארך אפים ורב־חסד נשא עון ופשע ונקה לא ינקה פקד עון אבות על־בנים על־שלשים ועל־רבעים׃</p></div></div>
+      <div class="texte-fr"><p>"L’Éternel est plein de longanimité et de bienveillance; il supporte le crime et la rébellion, sans toutefois les absoudre, faisant justice du crime des pères sur les enfants jusqu’à la troisième et à la quatrième génération."</p></div>
+    </div><div class="seif" id="v-14-19">
+      <span class="seif-num">14:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>סְלַֽח־נָ֗א לַעֲוֺ֛ן הָעָ֥ם הַזֶּ֖ה כְּגֹ֣דֶל חַסְדֶּ֑ךָ וְכַאֲשֶׁ֤ר נָשָׂ֙אתָה֙ לָעָ֣ם הַזֶּ֔ה מִמִּצְרַ֖יִם וְעַד־הֵֽנָּה׃</p></div><div class="heb-s"><p>סלח־נא לעון העם הזה כגדל חסדך וכאשר נשאתה לעם הזה ממצרים ועד־הנה׃</p></div></div>
+      <div class="texte-fr"><p>Oh! Pardonne le crime de ce peuple selon ta clémence infinie, et comme tu as pardonné à ce peuple depuis l’Égypte jusqu’ici!"</p></div>
+    </div><div class="seif" id="v-14-20">
+      <span class="seif-num">14:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר יְהֹוָ֔ה סָלַ֖חְתִּי כִּדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר יהוה סלחתי כדברך׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel répondit: "Je pardonne, selon ta demande.</p></div>
+    </div><div class="seif" id="v-14-21">
+      <span class="seif-num">14:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאוּלָ֖ם חַי־אָ֑נִי וְיִמָּלֵ֥א כְבוֹד־יְהֹוָ֖ה אֶת־כׇּל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>ואולם חי־אני וימלא כבוד־יהוה את־כל־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Mais, aussi vrai que je suis vivant et que la majesté de l’Éternel remplit toute la terre,</p></div>
+    </div><div class="seif" id="v-14-22">
+      <span class="seif-num">14:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י כׇל־הָאֲנָשִׁ֗ים הָרֹאִ֤ים אֶת־כְּבֹדִי֙ וְאֶת־אֹ֣תֹתַ֔י אֲשֶׁר־עָשִׂ֥יתִי בְמִצְרַ֖יִם וּבַמִּדְבָּ֑ר וַיְנַסּ֣וּ אֹתִ֗י זֶ֚ה עֶ֣שֶׂר פְּעָמִ֔ים וְלֹ֥א שָׁמְע֖וּ בְּקוֹלִֽי׃</p></div><div class="heb-s"><p>כי כל־האנשים הראים את־כבדי ואת־אתתי אשר־עשיתי במצרים ובמדבר וינסו אתי זה עשר פעמים ולא שמעו בקולי׃</p></div></div>
+      <div class="texte-fr"><p>tous ces hommes qui ont vu ma gloire et mes prodiges, en Égypte et dans le désert, et qui m’ont tenté dix fois déjà, et n’ont pas obéi à ma voix,</p></div>
+    </div><div class="seif" id="v-14-23">
+      <span class="seif-num">14:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־יִרְאוּ֙ אֶת־הָאָ֔רֶץ אֲשֶׁ֥ר נִשְׁבַּ֖עְתִּי לַאֲבֹתָ֑ם וְכׇל־מְנַאֲצַ֖י לֹ֥א יִרְאֽוּהָ׃</p></div><div class="heb-s"><p>אם־יראו את־הארץ אשר נשבעתי לאבתם וכל־מנאצי לא יראוה׃</p></div></div>
+      <div class="texte-fr"><p>jamais ils ne verront ce pays que j’ai promis par serment à leurs aïeux; eux tous qui m’ont outragé, ils ne le verront point!</p></div>
+    </div><div class="seif" id="v-14-24">
+      <span class="seif-num">14:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַבְדִּ֣י כָלֵ֗ב עֵ֣קֶב הָֽיְתָ֞ה ר֤וּחַ אַחֶ֙רֶת֙ עִמּ֔וֹ וַיְמַלֵּ֖א אַחֲרָ֑י וַהֲבִֽיאֹתִ֗יו אֶל־הָאָ֙רֶץ֙ אֲשֶׁר־בָּ֣א שָׁ֔מָּה וְזַרְע֖וֹ יוֹרִשֶֽׁנָּה׃</p></div><div class="heb-s"><p>ועבדי כלב עקב היתה רוח אחרת עמו וימלא אחרי והביאתיו אל־הארץ אשר־בא שמה וזרעו יורשנה׃</p></div></div>
+      <div class="texte-fr"><p>Pour mon serviteur Caleb, attendu qu’il a été animé d’un esprit différent et m’est resté pleinement fidèle, je le ferai entrer dans le pays où il a pénétré, et sa postérité le possédera.</p></div>
+    </div><div class="seif" id="v-14-25">
+      <span class="seif-num">14:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָעֲמָלֵקִ֥י וְהַֽכְּנַעֲנִ֖י יוֹשֵׁ֣ב בָּעֵ֑מֶק מָחָ֗ר פְּנ֨וּ וּסְע֥וּ לָכֶ֛ם הַמִּדְבָּ֖ר דֶּ֥רֶךְ יַם־סֽוּף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>והעמלקי והכנעני יושב בעמק מחר פנו וסעו לכם המדבר דרך ים־סוף׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Or, l’Amalécite et le Cananéen occupent la vallée: demain, changez de direction et partez pour le désert, du côté de la mer des Joncs."</p></div>
+    </div><div class="seif" id="v-14-26">
+      <span class="seif-num">14:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse et à Aaron, en disant:</p></div>
+    </div><div class="seif" id="v-14-27">
+      <span class="seif-num">14:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַד־מָתַ֗י לָעֵדָ֤ה הָֽרָעָה֙ הַזֹּ֔את אֲשֶׁ֛ר הֵ֥מָּה מַלִּינִ֖ים עָלָ֑י אֶת־תְּלֻנּ֞וֹת בְּנֵ֣י יִשְׂרָאֵ֗ל אֲשֶׁ֨ר הֵ֧מָּה מַלִּינִ֛ים עָלַ֖י שָׁמָֽעְתִּי׃</p></div><div class="heb-s"><p>עד־מתי לעדה הרעה הזאת אשר המה מלינים עלי את־תלנות בני ישראל אשר המה מלינים עלי שמעתי׃</p></div></div>
+      <div class="texte-fr"><p>"Jusqu’à quand tolérerai-je cette communauté perverse et ses murmures contre moi? Car les murmures que les enfants d’Israël profèrent contre moi, je les ai entendus.</p></div>
+    </div><div class="seif" id="v-14-28">
+      <span class="seif-num">14:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱמֹ֣ר אֲלֵהֶ֗ם חַי־אָ֙נִי֙ נְאֻם־יְהֹוָ֔ה אִם־לֹ֕א כַּאֲשֶׁ֥ר דִּבַּרְתֶּ֖ם בְּאׇזְנָ֑י כֵּ֖ן אֶֽעֱשֶׂ֥ה לָכֶֽם׃</p></div><div class="heb-s"><p>אמר אלהם חי־אני נאם־יהוה אם־לא כאשר דברתם באזני כן אעשה לכם׃</p></div></div>
+      <div class="texte-fr"><p>Dis-leur: Vrai comme je vis, a dit l’Éternel! Selon les propres paroles que j’ai entendues de vous, ainsi vous ferai-je.</p></div>
+    </div><div class="seif" id="v-14-29">
+      <span class="seif-num">14:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּמִּדְבָּ֣ר הַ֠זֶּ֠ה יִפְּל֨וּ פִגְרֵיכֶ֜ם וְכׇל־פְּקֻדֵיכֶם֙ לְכׇל־מִסְפַּרְכֶ֔ם מִבֶּ֛ן עֶשְׂרִ֥ים שָׁנָ֖ה וָמָ֑עְלָה אֲשֶׁ֥ר הֲלִֽינֹתֶ֖ם עָלָֽי׃</p></div><div class="heb-s"><p>במדבר הזה יפלו פגריכם וכל־פקדיכם לכל־מספרכם מבן עשרים שנה ומעלה אשר הלינתם עלי׃</p></div></div>
+      <div class="texte-fr"><p>Vos cadavres resteront dans ce désert, vous tous qui avez été dénombrés, tous tant que vous êtes, âgés de vingt ans et au-delà, qui avez murmuré contre moi!</p></div>
+    </div><div class="seif" id="v-14-30">
+      <span class="seif-num">14:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־אַתֶּם֙ תָּבֹ֣אוּ אֶל־הָאָ֔רֶץ אֲשֶׁ֤ר נָשָׂ֙אתִי֙ אֶת־יָדִ֔י לְשַׁכֵּ֥ן אֶתְכֶ֖ם בָּ֑הּ כִּ֚י אִם־כָּלֵ֣ב בֶּן־יְפֻנֶּ֔ה וִיהוֹשֻׁ֖עַ בִּן־נֽוּן׃</p></div><div class="heb-s"><p>אם־אתם תבאו אל־הארץ אשר נשאתי את־ידי לשכן אתכם בה כי אם־כלב בן־יפנה ויהושע בן־נון׃</p></div></div>
+      <div class="texte-fr"><p>Jamais vous n’entrerez, vous, dans ce pays où j’avais solennellement promis de vous établir! II n’y aura d’exception que pour Caleb, fils de Yefounné, et Josué, fils de Noun.</p></div>
+    </div><div class="seif" id="v-14-31">
+      <span class="seif-num">14:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְטַ֨פְּכֶ֔ם אֲשֶׁ֥ר אֲמַרְתֶּ֖ם לָבַ֣ז יִהְיֶ֑ה וְהֵבֵיאתִ֣י אֹתָ֔ם וְיָֽדְעוּ֙ אֶת־הָאָ֔רֶץ אֲשֶׁ֥ר מְאַסְתֶּ֖ם בָּֽהּ׃</p></div><div class="heb-s"><p>וטפכם אשר אמרתם לבז יהיה והביאתי אתם וידעו את־הארץ אשר מאסתם בה׃</p></div></div>
+      <div class="texte-fr"><p>Vos enfants aussi, dont vous disiez: "Ils nous seront ravis", je les y amènerai, et ils connaîtront ce pays dont vous n’avez point voulu.</p></div>
+    </div><div class="seif" id="v-14-32">
+      <span class="seif-num">14:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּפִגְרֵיכֶ֖ם אַתֶּ֑ם יִפְּל֖וּ בַּמִּדְבָּ֥ר הַזֶּֽה׃</p></div><div class="heb-s"><p>ופגריכם אתם יפלו במדבר הזה׃</p></div></div>
+      <div class="texte-fr"><p>Mais vos cadavres, à vous, pourriront dans ce désert.</p></div>
+    </div><div class="seif" id="v-14-33">
+      <span class="seif-num">14:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּ֠בְנֵיכֶ֠ם יִהְי֨וּ רֹעִ֤ים בַּמִּדְבָּר֙ אַרְבָּעִ֣ים שָׁנָ֔ה וְנָשְׂא֖וּ אֶת־זְנוּתֵיכֶ֑ם עַד־תֹּ֥ם פִּגְרֵיכֶ֖ם בַּמִּדְבָּֽר׃</p></div><div class="heb-s"><p>ובניכם יהיו רעים במדבר ארבעים שנה ונשאו את־זנותיכם עד־תם פגריכם במדבר׃</p></div></div>
+      <div class="texte-fr"><p>Vos enfants iront errant dans le désert, quarante années, expiant vos infidélités, jusqu’à ce que le désert ait reçu toutes vos dépouilles.</p></div>
+    </div><div class="seif" id="v-14-34">
+      <span class="seif-num">14:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּמִסְפַּ֨ר הַיָּמִ֜ים אֲשֶׁר־תַּרְתֶּ֣ם אֶת־הָאָ֘רֶץ֮ אַרְבָּעִ֣ים יוֹם֒ י֣וֹם לַשָּׁנָ֞ה י֣וֹם לַשָּׁנָ֗ה תִּשְׂאוּ֙ אֶת־עֲוֺנֹ֣תֵיכֶ֔ם אַרְבָּעִ֖ים שָׁנָ֑ה וִֽידַעְתֶּ֖ם אֶת־תְּנוּאָתִֽי׃</p></div><div class="heb-s"><p>במספר הימים אשר־תרתם את־הארץ ארבעים יום יום לשנה יום לשנה תשאו את־עונתיכם ארבעים שנה וידעתם את־תנואתי׃</p></div></div>
+      <div class="texte-fr"><p>Selon le nombre de jours que vous avez exploré le pays, autant de jours autant d’années vous porterez la peine de vos crimes, partant quarante années; et vous connaîtrez les effets de mon hostilité.</p></div>
+    </div><div class="seif" id="v-14-35">
+      <span class="seif-num">14:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲנִ֣י יְהֹוָה֮ דִּבַּ֒רְתִּי֒ אִם־לֹ֣א&thinsp;<b>׀</b> זֹ֣את אֶֽעֱשֶׂ֗ה לְכׇל־הָעֵדָ֤ה הָֽרָעָה֙ הַזֹּ֔את הַנּוֹעָדִ֖ים עָלָ֑י בַּמִּדְבָּ֥ר הַזֶּ֛ה יִתַּ֖מּוּ וְשָׁ֥ם יָמֻֽתוּ׃</p></div><div class="heb-s"><p>אני יהוה דברתי אם־לא&thinsp;<b>׀</b> זאת אעשה לכל־העדה הרעה הזאת הנועדים עלי במדבר הזה יתמו ושם ימתו׃</p></div></div>
+      <div class="texte-fr"><p>Moi, l’Éternel, je le déclare: oui, c’est ainsi que j’en userai avec toute cette communauté perverse, ameutée contre moi. C’est dans ce désert qu’elle prendra fin, c’est là qu’elle doit mourir."</p></div>
+    </div><div class="seif" id="v-14-36">
+      <span class="seif-num">14:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָ֣אֲנָשִׁ֔ים אֲשֶׁר־שָׁלַ֥ח מֹשֶׁ֖ה לָת֣וּר אֶת־הָאָ֑רֶץ וַיָּשֻׁ֗בוּ <span class="mam-kq"><span class="mam-kq-k">(וילונו)</span> <span class="mam-kq-q">[וַיַּלִּ֤ינוּ]</span></span> עָלָיו֙ אֶת־כׇּל־הָ֣עֵדָ֔ה לְהוֹצִ֥יא דִבָּ֖ה עַל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>והאנשים אשר־שלח משה לתור את־הארץ וישבו <span class="mam-kq"><span class="mam-kq-k">(וילונו)</span> <span class="mam-kq-q">[וילינו]</span></span> עליו את־כל־העדה להוציא דבה על־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>De fait, les hommes que Moïse avait envoyés explorer le pays, et qui, de retour, avaient fait murmurer contre lui toute la communauté en décriant ce pays,</p></div>
+    </div><div class="seif" id="v-14-37">
+      <span class="seif-num">14:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּמֻ֙תוּ֙ הָֽאֲנָשִׁ֔ים מוֹצִאֵ֥י דִבַּת־הָאָ֖רֶץ רָעָ֑ה בַּמַּגֵּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>וימתו האנשים מוצאי דבת־הארץ רעה במגפה לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>ces hommes, qui avaient débité de méchants propos sur le pays, périrent frappés par le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-38">
+      <span class="seif-num">14:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וִיהוֹשֻׁ֣עַ בִּן־נ֔וּן וְכָלֵ֖ב בֶּן־יְפֻנֶּ֑ה חָיוּ֙ מִן־הָאֲנָשִׁ֣ים הָהֵ֔ם הַהֹלְכִ֖ים לָת֥וּר אֶת־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>ויהושע בן־נון וכלב בן־יפנה חיו מן־האנשים ההם ההלכים לתור את־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Josué, fils de Noun, et Caleb, fils de Yefounné, furent seuls épargnés, entre ces hommes qui étaient allés explorer le pays.</p></div>
+    </div><div class="seif" id="v-14-39">
+      <span class="seif-num">14:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶת־הַדְּבָרִ֣ים הָאֵ֔לֶּה אֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵ֑ל וַיִּֽתְאַבְּל֥וּ הָעָ֖ם מְאֹֽד׃</p></div><div class="heb-s"><p>וידבר משה את־הדברים האלה אל־כל־בני ישראל ויתאבלו העם מאד׃</p></div></div>
+      <div class="texte-fr"><p>Moïse rapporta ces paroles à tous les enfants d’Israël; et le peuple s’en affligea fort.</p></div>
+    </div><div class="seif" id="v-14-40">
+      <span class="seif-num">14:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּשְׁכִּ֣מוּ בַבֹּ֔קֶר וַיַּֽעֲל֥וּ אֶל־רֹאשׁ־הָהָ֖ר לֵאמֹ֑ר הִנֶּ֗נּוּ וְעָלִ֛ינוּ אֶל־הַמָּק֛וֹם אֲשֶׁר־אָמַ֥ר יְהֹוָ֖ה כִּ֥י חָטָֽאנוּ׃</p></div><div class="heb-s"><p>וישכמו בבקר ויעלו אל־ראש־ההר לאמר הננו ועלינו אל־המקום אשר־אמר יהוה כי חטאנו׃</p></div></div>
+      <div class="texte-fr"><p>Puis, le lendemain de bon matin, ils se dirigèrent vers le sommet de la montagne, disant: "Nous sommes prêts à marcher vers le lieu que l’Éternel a désigné, car nous avons péché."</p></div>
+    </div><div class="seif" id="v-14-41">
+      <span class="seif-num">14:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר מֹשֶׁ֔ה לָ֥מָּה זֶּ֛ה אַתֶּ֥ם עֹבְרִ֖ים אֶת־פִּ֣י יְהֹוָ֑ה וְהִ֖וא לֹ֥א תִצְלָֽח׃</p></div><div class="heb-s"><p>ויאמר משה למה זה אתם עברים את־פי יהוה והוא לא תצלח׃</p></div></div>
+      <div class="texte-fr"><p>Moïse leur dit: "Pourquoi transgressez-vous la parole de l’Éternel? Cela ne vous réussira point!</p></div>
+    </div><div class="seif" id="v-14-42">
+      <span class="seif-num">14:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַֽל־תַּעֲל֔וּ כִּ֛י אֵ֥ין יְהֹוָ֖ה בְּקִרְבְּכֶ֑ם וְלֹא֙ תִּנָּ֣גְפ֔וּ לִפְנֵ֖י אֹיְבֵיכֶֽם׃</p></div><div class="heb-s"><p>אל־תעלו כי אין יהוה בקרבכם ולא תנגפו לפני איביכם׃</p></div></div>
+      <div class="texte-fr"><p>N’y montez pas, car l’Éternel n’est pas au milieu de vous; ne vous livrez pas aux coups de vos ennemis.</p></div>
+    </div><div class="seif" id="v-14-43">
+      <span class="seif-num">14:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי֩ הָעֲמָלֵקִ֨י וְהַכְּנַעֲנִ֥י שָׁם֙ לִפְנֵיכֶ֔ם וּנְפַלְתֶּ֖ם בֶּחָ֑רֶב כִּֽי־עַל־כֵּ֤ן שַׁבְתֶּם֙ מֵאַחֲרֵ֣י יְהֹוָ֔ה וְלֹא־יִהְיֶ֥ה יְהֹוָ֖ה עִמָּכֶֽם׃</p></div><div class="heb-s"><p>כי העמלקי והכנעני שם לפניכם ונפלתם בחרב כי־על־כן שבתם מאחרי יהוה ולא־יהיה יהוה עמכם׃</p></div></div>
+      <div class="texte-fr"><p>Car l’Amalécite et le Cananéen sont là sur votre chemin, et vous tomberiez sous leur glaive; aussi bien, vous vous êtes éloignés de l’Éternel, l’Éternel ne sera point avec vous!"</p></div>
+    </div><div class="seif" id="v-14-44">
+      <span class="seif-num">14:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעְפִּ֕לוּ לַעֲל֖וֹת אֶל־רֹ֣אשׁ הָהָ֑ר וַאֲר֤וֹן בְּרִית־יְהֹוָה֙ וּמֹשֶׁ֔ה לֹא־מָ֖שׁוּ מִקֶּ֥רֶב הַֽמַּחֲנֶֽה׃</p></div><div class="heb-s"><p>ויעפלו לעלות אל־ראש ההר וארון ברית־יהוה ומשה לא־משו מקרב המחנה׃</p></div></div>
+      <div class="texte-fr"><p>Mais ils s’obstinèrent à monter au sommet de la montagne; cependant, ni l’arche d’alliance du Seigneur ni Moïse ne bougèrent du milieu du camp.</p></div>
+    </div><div class="seif" id="v-14-45">
+      <span class="seif-num">14:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֤רֶד הָעֲמָלֵקִי֙ וְהַֽכְּנַעֲנִ֔י הַיֹּשֵׁ֖ב בָּהָ֣ר הַה֑וּא וַיַּכּ֥וּם וַֽיַּכְּת֖וּם עַד־הַֽחׇרְמָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וירד העמלקי והכנעני הישב בהר ההוא ויכום ויכתום עד־החרמה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>L’Amalécite et le Cananéen, qui habitaient sur cette montagne, en descendirent, les battirent et les taillèrent en pièces jusqu’à Horma.</p></div>
+    </div><div class="seif" id="v-15-1">
+      <span class="seif-num">15:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-15-2">
+      <span class="seif-num">15:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּר֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם כִּ֣י תָבֹ֗אוּ אֶל־אֶ֙רֶץ֙ מוֹשְׁבֹ֣תֵיכֶ֔ם אֲשֶׁ֥ר אֲנִ֖י נֹתֵ֥ן לָכֶֽם׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם כי תבאו אל־ארץ מושבתיכם אשר אני נתן לכם׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur: Quand vous serez arrivés dans le pays que je vous destine pour votre établissement,</p></div>
+    </div><div class="seif" id="v-15-3">
+      <span class="seif-num">15:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשִׂיתֶ֨ם אִשֶּׁ֤ה לַֽיהֹוָה֙ עֹלָ֣ה אוֹ־זֶ֔בַח לְפַלֵּא־נֶ֙דֶר֙ א֣וֹ בִנְדָבָ֔ה א֖וֹ בְּמֹעֲדֵיכֶ֑ם לַעֲשׂ֞וֹת רֵ֤יחַ נִיחֹ֙חַ֙ לַֽיהֹוָ֔ה מִן־הַבָּקָ֖ר א֥וֹ מִן־הַצֹּֽאן׃</p></div><div class="heb-s"><p>ועשיתם אשה ליהוה עלה או־זבח לפלא־נדר או בנדבה או במעדיכם לעשות ריח ניחח ליהוה מן־הבקר או מן־הצאן׃</p></div></div>
+      <div class="texte-fr"><p>et que vous ferez un sacrifice à l’Éternel, holocauste ou autre victime, à l’occasion d’un vœu spécial ou d’un don spontané, ou lors de vos solennités, voulant offrir, en odeur agréable au Seigneur, une pièce de gros ou de menu bétail,</p></div>
+    </div><div class="seif" id="v-15-4">
+      <span class="seif-num">15:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרִ֛יב הַמַּקְרִ֥יב קׇרְבָּנ֖וֹ לַֽיהֹוָ֑ה מִנְחָה֙ סֹ֣לֶת עִשָּׂר֔וֹן בָּל֕וּל בִּרְבִעִ֥ית הַהִ֖ין שָֽׁמֶן׃</p></div><div class="heb-s"><p>והקריב המקריב קרבנו ליהוה מנחה סלת עשרון בלול ברבעית ההין שמן׃</p></div></div>
+      <div class="texte-fr"><p>celui qui offrira ce sacrifice à l’Éternel y joindra, comme oblation, un dixième de fleur de farine, pétrie avec un quart de hîn d’huile;</p></div>
+    </div><div class="seif" id="v-15-5">
+      <span class="seif-num">15:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיַ֤יִן לַנֶּ֙סֶךְ֙ רְבִיעִ֣ית הַהִ֔ין תַּעֲשֶׂ֥ה עַל־הָעֹלָ֖ה א֣וֹ לַזָּ֑בַח לַכֶּ֖בֶשׂ הָאֶחָֽד׃</p></div><div class="heb-s"><p>ויין לנסך רביעית ההין תעשה על־העלה או לזבח לכבש האחד׃</p></div></div>
+      <div class="texte-fr"><p>plus, du vin, comme libation, un quart de hîn, que tu joindras à l’holocauste ou au sacrifice, pour chaque agneau.</p></div>
+    </div><div class="seif" id="v-15-6">
+      <span class="seif-num">15:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֤וֹ לָאַ֙יִל֙ תַּעֲשֶׂ֣ה מִנְחָ֔ה סֹ֖לֶת שְׁנֵ֣י עֶשְׂרֹנִ֑ים בְּלוּלָ֥ה בַשֶּׁ֖מֶן שְׁלִשִׁ֥ית הַהִֽין׃</p></div><div class="heb-s"><p>או לאיל תעשה מנחה סלת שני עשרנים בלולה בשמן שלשית ההין׃</p></div></div>
+      <div class="texte-fr"><p>Si c’est un bélier, tu offriras comme oblation deux dixièmes de fleur de farine, pétrie avec un tiers de hîn d’huile;</p></div>
+    </div><div class="seif" id="v-15-7">
+      <span class="seif-num">15:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיַ֥יִן לַנֶּ֖סֶךְ שְׁלִשִׁ֣ית הַהִ֑ין תַּקְרִ֥יב רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>ויין לנסך שלשית ההין תקריב ריח־ניחח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>plus, du vin pour libation, un tiers de hîn, que tu offriras, comme odeur délectable, au Seigneur.</p></div>
+    </div><div class="seif" id="v-15-8">
+      <span class="seif-num">15:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־תַעֲשֶׂ֥ה בֶן־בָּקָ֖ר עֹלָ֣ה אוֹ־זָ֑בַח לְפַלֵּא־נֶ֥דֶר אֽוֹ־שְׁלָמִ֖ים לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>וכי־תעשה בן־בקר עלה או־זבח לפלא־נדר או־שלמים ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et si c’est une pièce de gros bétail que tu offres comme holocauste ou autre sacrifice, à l’occasion d’un vœu particulier ou comme rémunératoire au Seigneur,</p></div>
+    </div><div class="seif" id="v-15-9">
+      <span class="seif-num">15:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרִ֤יב עַל־בֶּן־הַבָּקָר֙ מִנְחָ֔ה סֹ֖לֶת שְׁלֹשָׁ֣ה עֶשְׂרֹנִ֑ים בָּל֥וּל בַּשֶּׁ֖מֶן חֲצִ֥י הַהִֽין׃</p></div><div class="heb-s"><p>והקריב על־בן־הבקר מנחה סלת שלשה עשרנים בלול בשמן חצי ההין׃</p></div></div>
+      <div class="texte-fr"><p>on ajoutera à cette victime, comme oblation, trois dixièmes de fleur de farine, pétrie avec un demi-hîn d’huile;</p></div>
+    </div><div class="seif" id="v-15-10">
+      <span class="seif-num">15:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיַ֛יִן תַּקְרִ֥יב לַנֶּ֖סֶךְ חֲצִ֣י הַהִ֑ין אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>ויין תקריב לנסך חצי ההין אשה ריח־ניחח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>et tu offriras, comme libation, un demi-hîn de vin: sacrifice d’odeur agréable à l’Éternel.</p></div>
+    </div><div class="seif" id="v-15-11">
+      <span class="seif-num">15:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כָּ֣כָה יֵעָשֶׂ֗ה לַשּׁוֹר֙ הָֽאֶחָ֔ד א֖וֹ לָאַ֣יִל הָאֶחָ֑ד אֽוֹ־לַשֶּׂ֥ה בַכְּבָשִׂ֖ים א֥וֹ בָעִזִּֽים׃</p></div><div class="heb-s"><p>ככה יעשה לשור האחד או לאיל האחד או־לשה בכבשים או בעזים׃</p></div></div>
+      <div class="texte-fr"><p>C’est ainsi qu’on en usera pour chaque taureau, pour chaque bélier, pour chaque animal de l’espèce des brebis ou des chèvres;</p></div>
+    </div><div class="seif" id="v-15-12">
+      <span class="seif-num">15:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>כַּמִּסְפָּ֖ר אֲשֶׁ֣ר תַּעֲשׂ֑וּ כָּ֛כָה תַּעֲשׂ֥וּ לָאֶחָ֖ד כְּמִסְפָּרָֽם׃</p></div><div class="heb-s"><p>כמספר אשר תעשו ככה תעשו לאחד כמספרם׃</p></div></div>
+      <div class="texte-fr"><p>selon le nombre des victimes que vous offrirez, vous suivrez ces prescriptions pour chacune, en nombre égal.</p></div>
+    </div><div class="seif" id="v-15-13">
+      <span class="seif-num">15:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־הָאֶזְרָ֥ח יַעֲשֶׂה־כָּ֖כָה אֶת־אֵ֑לֶּה לְהַקְרִ֛יב אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>כל־האזרח יעשה־ככה את־אלה להקריב אשה ריח־ניחח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Tout indigène pratiquera ainsi ces rites, lorsqu’il offrira un sacrifice d’odeur agréable au Seigneur.</p></div>
+    </div><div class="seif" id="v-15-14">
+      <span class="seif-num">15:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יָגוּר֩ אִתְּכֶ֨ם גֵּ֜ר א֤וֹ אֲשֶׁר־בְּתֽוֹכְכֶם֙ לְדֹרֹ֣תֵיכֶ֔ם וְעָשָׂ֛ה אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָ֑ה כַּאֲשֶׁ֥ר תַּעֲשׂ֖וּ כֵּ֥ן יַעֲשֶֽׂה׃</p></div><div class="heb-s"><p>וכי־יגור אתכם גר או אשר־בתוככם לדרתיכם ועשה אשה ריח־ניחח ליהוה כאשר תעשו כן יעשה׃</p></div></div>
+      <div class="texte-fr"><p>Et si un étranger émigre chez vous ou se trouve parmi vous, dans les âges ultérieurs, et qu’il offre à l’Éternel un sacrifice d’odeur agréable, comme vous procéderez, ainsi procédera-t-il.</p></div>
+    </div><div class="seif" id="v-15-15">
+      <span class="seif-num">15:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַקָּהָ֕ל חֻקָּ֥ה אַחַ֛ת לָכֶ֖ם וְלַגֵּ֣ר הַגָּ֑ר חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם כָּכֶ֛ם כַּגֵּ֥ר יִהְיֶ֖ה לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>הקהל חקה אחת לכם ולגר הגר חקת עולם לדרתיכם ככם כגר יהיה לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Peuple, une même loi vous régira, vous et l’étranger domicilié. Règle absolue pour vos générations: vous et l’étranger, vous serez égaux devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-15-16">
+      <span class="seif-num">15:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>תּוֹרָ֥ה אַחַ֛ת וּמִשְׁפָּ֥ט אֶחָ֖ד יִהְיֶ֣ה לָכֶ֑ם וְלַגֵּ֖ר הַגָּ֥ר אִתְּכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>תורה אחת ומשפט אחד יהיה לכם ולגר הגר אתכם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Même loi et même droit existeront pour vous et pour l’étranger habitant parmi vous."</p></div>
+    </div><div class="seif" id="v-15-17">
+      <span class="seif-num">15:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-15-18">
+      <span class="seif-num">15:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּר֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם בְּבֹֽאֲכֶם֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר אֲנִ֛י מֵבִ֥יא אֶתְכֶ֖ם שָֽׁמָּה׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם בבאכם אל־הארץ אשר אני מביא אתכם שמה׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur: A votre arrivée dans le pays où je vous conduirai,</p></div>
+    </div><div class="seif" id="v-15-19">
+      <span class="seif-num">15:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֕ה בַּאֲכׇלְכֶ֖ם מִלֶּ֣חֶם הָאָ֑רֶץ תָּרִ֥ימוּ תְרוּמָ֖ה לַיהֹוָֽה׃</p></div><div class="heb-s"><p>והיה באכלכם מלחם הארץ תרימו תרומה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>lorsque vous mangerez du pain de la contrée, vous en prélèverez un tribut au Seigneur.</p></div>
+    </div><div class="seif" id="v-15-20">
+      <span class="seif-num">15:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>רֵאשִׁית֙ עֲרִסֹ֣תֵכֶ֔ם חַלָּ֖ה תָּרִ֣ימוּ תְרוּמָ֑ה כִּתְרוּמַ֣ת גֹּ֔רֶן כֵּ֖ן תָּרִ֥ימוּ אֹתָֽהּ׃</p></div><div class="heb-s"><p>ראשית ערסתכם חלה תרימו תרומה כתרומת גרן כן תרימו אתה׃</p></div></div>
+      <div class="texte-fr"><p>Comme prémices de votre pâte, vous prélèverez un gâteau en tribut; à l’instar du tribut de la grange, ainsi vous le prélèverez.</p></div>
+    </div><div class="seif" id="v-15-21">
+      <span class="seif-num">15:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵרֵאשִׁית֙ עֲרִסֹ֣תֵיכֶ֔ם תִּתְּנ֥וּ לַיהֹוָ֖ה תְּרוּמָ֑ה לְדֹרֹ֖תֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>מראשית ערסתיכם תתנו ליהוה תרומה לדרתיכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Des prémices de votre pâte vous ferez hommage à l’Éternel dans vos générations futures.</p></div>
+    </div><div class="seif" id="v-15-22">
+      <span class="seif-num">15:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֣י תִשְׁגּ֔וּ וְלֹ֣א תַעֲשׂ֔וּ אֵ֥ת כׇּל־הַמִּצְוֺ֖ת הָאֵ֑לֶּה אֲשֶׁר־דִּבֶּ֥ר יְהֹוָ֖ה אֶל־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>וכי תשגו ולא תעשו את כל־המצות האלה אשר־דבר יהוה אל־משה׃</p></div></div>
+      <div class="texte-fr"><p>Si, par suite d’une erreur, vous n’observez pas tous ces commandements que l’Éternel a communiqués à Moïse,</p></div>
+    </div><div class="seif" id="v-15-23">
+      <span class="seif-num">15:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵת֩ כׇּל־אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֲלֵיכֶ֖ם בְּיַד־מֹשֶׁ֑ה מִן־הַיּ֞וֹם אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה וָהָ֖לְאָה לְדֹרֹתֵיכֶֽם׃</p></div><div class="heb-s"><p>את כל־אשר צוה יהוה אליכם ביד־משה מן־היום אשר צוה יהוה והלאה לדרתיכם׃</p></div></div>
+      <div class="texte-fr"><p>tout ce que l’Éternel a prescrit à votre intention par l’organe de Moïse, et cela depuis l’époque où l’Éternel l’a prescrit jusqu’à vos générations ultérieures;</p></div>
+    </div><div class="seif" id="v-15-24">
+      <span class="seif-num">15:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֗ה אִ֣ם מֵעֵינֵ֣י הָעֵדָה֮ נֶעֶשְׂתָ֣ה לִשְׁגָגָה֒ וְעָשׂ֣וּ כׇל־הָעֵדָ֡ה פַּ֣ר בֶּן־בָּקָר֩ אֶחָ֨ד לְעֹלָ֜ה לְרֵ֤יחַ נִיחֹ֙חַ֙ לַֽיהֹוָ֔ה וּמִנְחָת֥וֹ וְנִסְכּ֖וֹ כַּמִּשְׁפָּ֑ט וּשְׂעִיר־עִזִּ֥ים אֶחָ֖ד לְחַטָּֽת׃</p></div><div class="heb-s"><p>והיה אם מעיני העדה נעשתה לשגגה ועשו כל־העדה פר בן־בקר אחד לעלה לריח ניחח ליהוה ומנחתו ונסכו כמשפט ושעיר־עזים אחד לחטת׃</p></div></div>
+      <div class="texte-fr"><p>si c’est par l’inadvertance de la communauté qu’a eu lieu cette erreur, la communauté entière offrira un jeune taureau comme holocauste, en odeur agréable à l’Éternel, avec son oblation et sa libation selon la règle; plus un bouc, comme expiatoire.</p></div>
+    </div><div class="seif" id="v-15-25">
+      <span class="seif-num">15:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִפֶּ֣ר הַכֹּהֵ֗ן עַֽל־כׇּל־עֲדַ֛ת בְּנֵ֥י יִשְׂרָאֵ֖ל וְנִסְלַ֣ח לָהֶ֑ם כִּֽי־שְׁגָגָ֣ה הִ֔וא וְהֵם֩ הֵבִ֨יאוּ אֶת־קׇרְבָּנָ֜ם אִשֶּׁ֣ה לַֽיהֹוָ֗ה וְחַטָּאתָ֛ם לִפְנֵ֥י יְהֹוָ֖ה עַל־שִׁגְגָתָֽם׃</p></div><div class="heb-s"><p>וכפר הכהן על־כל־עדת בני ישראל ונסלח להם כי־שגגה הוא והם הביאו את־קרבנם אשה ליהוה וחטאתם לפני יהוה על־שגגתם׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife effacera la faute de toute la communauté des enfants d’Israël, et elle leur sera remise, parce que c’était une erreur, et qu’ils ont apporté devant Dieu leur offrande, un sacrifice destiné au feu pour le Seigneur, ainsi que leur expiatoire, pour réparer cette erreur.</p></div>
+    </div><div class="seif" id="v-15-26">
+      <span class="seif-num">15:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנִסְלַ֗ח לְכׇל־עֲדַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל וְלַגֵּ֖ר הַגָּ֣ר בְּתוֹכָ֑ם כִּ֥י לְכׇל־הָעָ֖ם בִּשְׁגָגָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ונסלח לכל־עדת בני ישראל ולגר הגר בתוכם כי לכל־העם בשגגה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et il sera pardonné à toute la communauté des enfants d’Israël et à l’étranger qui séjourne parmi eux; car l’erreur a été commune à tout le peuple.</p></div>
+    </div><div class="seif" id="v-15-27">
+      <span class="seif-num">15:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־נֶ֥פֶשׁ אַחַ֖ת תֶּחֱטָ֣א בִשְׁגָגָ֑ה וְהִקְרִ֛יבָה עֵ֥ז בַּת־שְׁנָתָ֖הּ לְחַטָּֽאת׃</p></div><div class="heb-s"><p>ואם־נפש אחת תחטא בשגגה והקריבה עז בת־שנתה לחטאת׃</p></div></div>
+      <div class="texte-fr"><p>Que si c’est une seule personne qui a péché par erreur, elle offrira une chèvre, âgée d’un an pour expiatoire.</p></div>
+    </div><div class="seif" id="v-15-28">
+      <span class="seif-num">15:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִפֶּ֣ר הַכֹּהֵ֗ן עַל־הַנֶּ֧פֶשׁ הַשֹּׁגֶ֛גֶת בְּחֶטְאָ֥הֿ בִשְׁגָגָ֖ה לִפְנֵ֣י יְהֹוָ֑ה לְכַפֵּ֥ר עָלָ֖יו וְנִסְלַ֥ח לֽוֹ׃</p></div><div class="heb-s"><p>וכפר הכהן על־הנפש השגגת בחטאה בשגגה לפני יהוה לכפר עליו ונסלח לו׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife fera expiation pour la personne imprudente (car elle n’a péché que par imprudence) devant le Seigneur; afin qu’étant expiée, sa faute lui soit remise.</p></div>
+    </div><div class="seif" id="v-15-29">
+      <span class="seif-num">15:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָֽאֶזְרָח֙ בִּבְנֵ֣י יִשְׂרָאֵ֔ל וְלַגֵּ֖ר הַגָּ֣ר בְּתוֹכָ֑ם תּוֹרָ֤ה אַחַת֙ יִהְיֶ֣ה לָכֶ֔ם לָעֹשֶׂ֖ה בִּשְׁגָגָֽה׃</p></div><div class="heb-s"><p>האזרח בבני ישראל ולגר הגר בתוכם תורה אחת יהיה לכם לעשה בשגגה׃</p></div></div>
+      <div class="texte-fr"><p>Indigène entre les enfants d’Israël ou étranger résidant parmi eux, une même règle sera la vôtre, si l’on a agi par erreur.</p></div>
+    </div><div class="seif" id="v-15-30">
+      <span class="seif-num">15:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנֶּ֜פֶשׁ אֲשֶֽׁר־תַּעֲשֶׂ֣ה&thinsp;<b>׀</b> בְּיָ֣ד רָמָ֗ה מִן־הָֽאֶזְרָח֙ וּמִן־הַגֵּ֔ר אֶת־יְהֹוָ֖ה ה֣וּא מְגַדֵּ֑ף וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִקֶּ֥רֶב עַמָּֽהּ׃</p></div><div class="heb-s"><p>והנפש אשר־תעשה&thinsp;<b>׀</b> ביד רמה מן־האזרח ומן־הגר את־יהוה הוא מגדף ונכרתה הנפש ההוא מקרב עמה׃</p></div></div>
+      <div class="texte-fr"><p>Mais celui qui aurait agi ainsi de propos délibéré, parmi les nationaux ou parmi les étrangers, celui-là outrage le Seigneur! Cette personne sera retranchée du milieu de son peuple.</p></div>
+    </div><div class="seif" id="v-15-31">
+      <span class="seif-num">15:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י דְבַר־יְהֹוָה֙ בָּזָ֔ה וְאֶת־מִצְוָת֖וֹ הֵפַ֑ר הִכָּרֵ֧ת&thinsp;<small>׀</small>&thinsp;תִּכָּרֵ֛ת הַנֶּ֥פֶשׁ הַהִ֖וא עֲוֺנָ֥הֿ בָֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי דבר־יהוה בזה ואת־מצותו הפר הכרת&thinsp;<small>׀</small>&thinsp;תכרת הנפש ההוא עונה בה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Pour avoir méprisé la parole du Seigneur, pour avoir violé sa loi, cette personne sera certainement retranchée: elle est coupable!"</p></div>
+    </div><div class="seif" id="v-15-32">
+      <span class="seif-num">15:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּהְי֥וּ בְנֵֽי־יִשְׂרָאֵ֖ל בַּמִּדְבָּ֑ר וַֽיִּמְצְא֗וּ אִ֛ישׁ מְקֹשֵׁ֥שׁ עֵצִ֖ים בְּי֥וֹם הַשַּׁבָּֽת׃</p></div><div class="heb-s"><p>ויהיו בני־ישראל במדבר וימצאו איש מקשש עצים ביום השבת׃</p></div></div>
+      <div class="texte-fr"><p>Pendant leur séjour au désert, les enfants d’Israël trouvèrent un homme ramassant du bois le jour du Sabbat.</p></div>
+    </div><div class="seif" id="v-15-33">
+      <span class="seif-num">15:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְרִ֣יבוּ אֹת֔וֹ הַמֹּצְאִ֥ים אֹת֖וֹ מְקֹשֵׁ֣שׁ עֵצִ֑ים אֶל־מֹשֶׁה֙ וְאֶֽל־אַהֲרֹ֔ן וְאֶ֖ל כׇּל־הָעֵדָֽה׃</p></div><div class="heb-s"><p>ויקריבו אתו המצאים אתו מקשש עצים אל־משה ואל־אהרן ואל כל־העדה׃</p></div></div>
+      <div class="texte-fr"><p>Ceux qui l’avaient trouvé ramassant du bois le conduisirent devant Moïse et Aaron, et devant toute la communauté.</p></div>
+    </div><div class="seif" id="v-15-34">
+      <span class="seif-num">15:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּנִּ֥יחוּ אֹת֖וֹ בַּמִּשְׁמָ֑ר כִּ֚י לֹ֣א פֹרַ֔שׁ מַה־יֵּעָשֶׂ֖ה לֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויניחו אתו במשמר כי לא פרש מה־יעשה לו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>On le mit en lieu sûr, parce qu’il n’avait pas été expliqué comment il fallait agir à son égard.</p></div>
+    </div><div class="seif" id="v-15-35">
+      <span class="seif-num">15:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה מ֥וֹת יוּמַ֖ת הָאִ֑ישׁ רָג֨וֹם אֹת֤וֹ בָֽאֲבָנִים֙ כׇּל־הָ֣עֵדָ֔ה מִח֖וּץ לַֽמַּחֲנֶֽה׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה מות יומת האיש רגום אתו באבנים כל־העדה מחוץ למחנה׃</p></div></div>
+      <div class="texte-fr"><p>Alors l’Éternel dit à Moïse: "Cet homme doit être mis à mort; que toute la communauté le lapide hors du camp."</p></div>
+    </div><div class="seif" id="v-15-36">
+      <span class="seif-num">15:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּצִ֨יאוּ אֹת֜וֹ כׇּל־הָעֵדָ֗ה אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וַיִּרְגְּמ֥וּ אֹת֛וֹ בָּאֲבָנִ֖ים וַיָּמֹ֑ת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויציאו אתו כל־העדה אל־מחוץ למחנה וירגמו אתו באבנים וימת כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et toute la communauté l’emmena hors du camp, et on le fit mourir à coups de pierres, comme l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-15-37">
+      <span class="seif-num">15:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-15-38">
+      <span class="seif-num">15:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם וְעָשׂ֨וּ לָהֶ֥ם צִיצִ֛ת עַל־כַּנְפֵ֥י בִגְדֵיהֶ֖ם לְדֹרֹתָ֑ם וְנָ֥תְנ֛וּ עַל־צִיצִ֥ת הַכָּנָ֖ף פְּתִ֥יל תְּכֵֽלֶת׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם ועשו להם ציצת על־כנפי בגדיהם לדרתם ונתנו על־ציצת הכנף פתיל תכלת׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël, et dis-leur de se faire des franges aux coins de leurs vêtements, dans toutes leurs générations, et d’ajouter à la frange de chaque coin un cordon d’azur.</p></div>
+    </div><div class="seif" id="v-15-39">
+      <span class="seif-num">15:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֣ה לָכֶם֮ לְצִיצִת֒ וּרְאִיתֶ֣ם אֹת֗וֹ וּזְכַרְתֶּם֙ אֶת־כׇּל־מִצְוֺ֣ת יְהֹוָ֔ה וַעֲשִׂיתֶ֖ם אֹתָ֑ם וְלֹֽא־תָת֜וּרוּ אַחֲרֵ֤י לְבַבְכֶם֙ וְאַחֲרֵ֣י עֵֽינֵיכֶ֔ם אֲשֶׁר־אַתֶּ֥ם זֹנִ֖ים אַחֲרֵיהֶֽם׃</p></div><div class="heb-s"><p>והיה לכם לציצת וראיתם אתו וזכרתם את־כל־מצות יהוה ועשיתם אתם ולא־תתורו אחרי לבבכם ואחרי עיניכם אשר־אתם זנים אחריהם׃</p></div></div>
+      <div class="texte-fr"><p>Cela formera pour vous des franges dont la vue vous rappellera tous les commandements de l’Éternel, afin que vous les exécutiez et ne vous égariez pas à la suite de votre cœur et de vos yeux, qui vous entraînent à l’infidélité.</p></div>
+    </div><div class="seif" id="v-15-40">
+      <span class="seif-num">15:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֣עַן תִּזְכְּר֔וּ וַעֲשִׂיתֶ֖ם אֶת־כׇּל־מִצְוֺתָ֑י וִהְיִיתֶ֥ם קְדֹשִׁ֖ים לֵאלֹֽהֵיכֶֽם׃</p></div><div class="heb-s"><p>למען תזכרו ועשיתם את־כל־מצותי והייתם קדשים לאלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>Vous vous rappellerez ainsi et vous accomplirez tous mes commandements, et vous serez saints pour votre Dieu.</p></div>
+    </div><div class="seif" id="v-15-41">
+      <span class="seif-num">15:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲנִ֞י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֗ם אֲשֶׁ֨ר הוֹצֵ֤אתִי אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִ֑ים אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אני יהוה אלהיכם אשר הוצאתי אתכם מארץ מצרים להיות לכם לאלהים אני יהוה אלהיכם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je suis l’Éternel votre Dieu, qui vous ai fait sortir du pays d’Égypte pour devenir votre Dieu, moi, l’Éternel votre Dieu!"</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel parla ainsi à Moïse: &quot;Envoie toi-même des hommes pour explorer le pays de Canaan, que je destine aux enfants d’Israël; vous enverrez un homme respectivement par tribu paternelle, tous éminents parmi eux.&quot; Et Moïse les envoya du désert de Pharan, selon la parole de l’Éternel; c’étaient tous des personnages considérables entre les enfants d’Israël. Et voici leurs noms: pour la tribu de Ruben, Chammoûa, fils de Zakkour; pour la tribu de Siméon, Chafat, fils de Hori; pour la tribu de Juda, Caleb, fils de Yefounné; pour la tribu d’Issachar, Yigal, fils de Joseph; pour la tribu d’Ephraïm, Hochéa, fils de Noun; pour la tribu de Benjamin, Palti, fils de Rafou; pour la tribu de Zabulon, Gaddïel, fils de Sodi; pour la tribu de Joseph formant celle de Manassé, Gaddi, fils de Çouci; pour la tribu de Dan, Ammïel, fils de Ghemalli; pour la tribu d’Asher, Sethour, fils de Mikhaêl; pour la tribu de Nephtali, Nahbi, fils de Vofsi; pour la tribu de Gad, Gheouêl, fils de Makhi. Tels sont les noms des hommes que Moïse envoya explorer la contrée. (Moïse avait nommé Hochéa, fils de Noun: Josué). Moïse leur donna donc mission d’explorer le pays de Canaan, en leur disant: &quot;Dirigez-vous de ce côté, vers le sud, et gravissez la montagne. Vous observerez l’aspect de ce pays et le peuple qui l’occupe, s’il est robuste ou faible, peu nombreux ou considérable; quant au pays qu’il habite, s’il est bon ou mauvais; comment sont les villes où il demeure, des villes ouvertes ou des places fortes; quant au sol, s’il est gras ou maigre, s’il est boisé ou non. Tâchez aussi d’emporter quelques-uns des fruits du pays.&quot; C’était alors la saison des premiers raisins. Et ils s’en allèrent explorer le pays, depuis le désert de Cîn jusqu’à Rehob, vers Hémath. Ils s’acheminèrent du côté du midi, et l’on parvint jusqu’à Hébrôn, où demeuraient Ahimân, Chêchaï et Talmaï, descendants d’Anak. Hébrôn avait été bâtie sept ans avant Tanis d’Égypte. Arrivés à la vallée d’Echkol, ils y coupèrent un sarment avec une grappe de raisin, qu’ils portèrent à deux au moyen d’une perche, de plus, quelques grenades et quelques figues. On nomma ce lieu vallée d’Echkol, à cause de la grappe qu’y avaient coupée les enfants d’Israël. Ils revinrent de cette exploration du pays, au bout de quarante jours. Ils allèrent trouver Moïse, Aaron et toute la communauté des enfants d’Israël, dans le désert de Pharan, à Kadêch. Ils rendirent compte à eux et à toute la communauté, leur montrèrent les fruits de la contrée, et lui firent ce récit: &quot;Nous sommes entrés dans le pays où tu nous avais envoyés; oui, vraiment, il ruisselle de lait et de miel, et voici de ses fruits. Mais il est puissant le peuple qui habite ce pays! Puis, les villes sont fortifiées et très grandes, et même nous y avons vu des descendants d’Anak! Amalec habite la région du midi; le Héthéen, le Jébuséen et l’Amorréen habitent la montagne, et le Cananéen occupe le littoral et la rive du Jourdain.&quot; Caleb fit taire le peuple soulevé contre Moïse, et dit: &quot;Montons, montons-y et prenons-en possession, car certes nous en serons vainqueurs!&quot; Mais les hommes qui étaient partis avec lui, dirent: &quot;Nous ne pouvons marcher contre ce peuple, car il est plus fort que nous.&quot; Et ils décrièrent le pays qu’ils avaient exploré, en disant aux enfants d’Israël: &quot;Le pays que nous avons parcouru pour l’explorer est un pays qui dévorerait ses habitants; quant au peuple que nous y avons vu, ce sont tous gens de haute taille. Nous y avons même vu les Nefilîm, les enfants d’Anak, descendants des Nefilîm: nous étions à nos propres yeux comme des sauterelles, et ainsi étions-nous à leurs yeux.&quot;</p>
-      <p>Alors toute la communauté se souleva en jetant des cris, et le peuple passa cette nuit à gémir. Tous les enfants d’Israël murmurèrent contre Moïse et Aaron, et toute la communauté leur dit: &quot;Que ne sommes-nous morts dans le pays d’Égypte, ou que ne mourons-nous dans ce désert! Et pourquoi l’Éternel nous mène-t-il dans ce pays-là, pour y périr par le glaive, nous voir ravir nos femmes et nos enfants? Certes, il vaut mieux pour nous retourner en Égypte.&quot; Et ils se dirent l’un à l’autre: &quot;Donnons-nous un chef, et retournons en Égypte!&quot; Moïse et Aaron tombèrent sur leur face devant toute l’assemblée réunie des enfants d’Israël. Et Josué, fils de Noun, et Caleb, fils de Yefounné, qui avaient, eux aussi, exploré la contrée, déchirèrent leurs vêtements. Ils parlèrent à toute la communauté des Israélites en ces termes: &quot;Le pays que nous avons parcouru pour l’explorer, ce pays est bon, il est excellent. Si l’Éternel nous veut du bien, il saura nous faire entrer dans ce pays et nous le livrer, ce pays qui ruisselle de lait et de miel. Mais ne vous mutinez point contre l’Éternel; ne craignez point, vous, le peuple de ce pays, car ils seront notre pâture: leur ombre les a abandonnés et l’Éternel est avec nous, ne les craignez point!&quot; Or, toute la communauté se disposait à les lapider, lorsque la gloire divine apparut, dans la tente d’assignation, à tous les enfants d’Israël. Et l’Éternel dit à Moïse: &quot;Quand cessera ce peuple de m’outrager? Combien de temps manquera-t-il de confiance en moi, malgré tant de prodiges que j’ai opérés au milieu de lui? Je veux le frapper de la peste et l’anéantir, et te faire devenir toi-même un peuple plus grand et plus puissant que celui-ci.&quot; Moïse répondit à l’Éternel: &quot;Mais les Égyptiens ont su que tu as, par ta puissance, fait sortir ce peuple du milieu d’eux, et ils l’ont dit aux habitants de ce pays-là; ils ont appris, Seigneur, que tu es au milieu de ce peuple, que celui qu’ils ont vu face à face, c’est toi-même, Seigneur; que ta nuée plane au-dessus d’eux; que, dans une colonne nébuleuse, tu les guides le jour, et, dans une colonne de feu, la nuit. Et tu ferais mourir ce peuple comme un seul homme! Mais ces nations, qui ont entendu parler de toi, diront alors: &quot;Parce que l’Éternel n’a pu faire entrer ce peuple dans le pays qu’il leur avait solennellement promis, il les a égorgés dans le désert.&quot; Maintenant donc, de grâce, que la puissance d’Adonaï se déploie, comme tu l’as déclaré en disant: &quot;L’Éternel est plein de longanimité et de bienveillance; il supporte le crime et la rébellion, sans toutefois les absoudre, faisant justice du crime des pères sur les enfants jusqu’à la troisième et à la quatrième génération.&quot; Oh! Pardonne le crime de ce peuple selon ta clémence infinie, et comme tu as pardonné à ce peuple depuis l’Égypte jusqu’ici!&quot; L’Éternel répondit: &quot;Je pardonne, selon ta demande. Mais, aussi vrai que je suis vivant et que la majesté de l’Éternel remplit toute la terre, tous ces hommes qui ont vu ma gloire et mes prodiges, en Égypte et dans le désert, et qui m’ont tenté dix fois déjà, et n’ont pas obéi à ma voix, jamais ils ne verront ce pays que j’ai promis par serment à leurs aïeux; eux tous qui m’ont outragé, ils ne le verront point! Pour mon serviteur Caleb, attendu qu’il a été animé d’un esprit différent et m’est resté pleinement fidèle, je le ferai entrer dans le pays où il a pénétré, et sa postérité le possédera. Or, l’Amalécite et le Cananéen occupent la vallée: demain, changez de direction et partez pour le désert, du côté de la mer des Joncs.&quot; L’Éternel parla à Moïse et à Aaron, en disant: &quot;Jusqu’à quand tolérerai-je cette communauté perverse et ses murmures contre moi? Car les murmures que les enfants d’Israël profèrent contre moi, je les ai entendus. Dis-leur: Vrai comme je vis, a dit l’Éternel! Selon les propres paroles que j’ai entendues de vous, ainsi vous ferai-je. Vos cadavres resteront dans ce désert, vous tous qui avez été dénombrés, tous tant que vous êtes, âgés de vingt ans et au-delà, qui avez murmuré contre moi! Jamais vous n’entrerez, vous, dans ce pays où j’avais solennellement promis de vous établir! II n’y aura d’exception que pour Caleb, fils de Yefounné, et Josué, fils de Noun. Vos enfants aussi, dont vous disiez: &quot;Ils nous seront ravis&quot;, je les y amènerai, et ils connaîtront ce pays dont vous n’avez point voulu. Mais vos cadavres, à vous, pourriront dans ce désert. Vos enfants iront errant dans le désert, quarante années, expiant vos infidélités, jusqu’à ce que le désert ait reçu toutes vos dépouilles. Selon le nombre de jours que vous avez exploré le pays, autant de jours autant d’années vous porterez la peine de vos crimes, partant quarante années; et vous connaîtrez les effets de mon hostilité. Moi, l’Éternel, je le déclare: oui, c’est ainsi que j’en userai avec toute cette communauté perverse, ameutée contre moi. C’est dans ce désert qu’elle prendra fin, c’est là qu’elle doit mourir.&quot; De fait, les hommes que Moïse avait envoyés explorer le pays, et qui, de retour, avaient fait murmurer contre lui toute la communauté en décriant ce pays, ces hommes, qui avaient débité de méchants propos sur le pays, périrent frappés par le Seigneur. Josué, fils de Noun, et Caleb, fils de Yefounné, furent seuls épargnés, entre ces hommes qui étaient allés explorer le pays. Moïse rapporta ces paroles à tous les enfants d’Israël; et le peuple s’en affligea fort. Puis, le lendemain de bon matin, ils se dirigèrent vers le sommet de la montagne, disant: &quot;Nous sommes prêts à marcher vers le lieu que l’Éternel a désigné, car nous avons péché.&quot; Moïse leur dit: &quot;Pourquoi transgressez-vous la parole de l’Éternel? Cela ne vous réussira point! N’y montez pas, car l’Éternel n’est pas au milieu de vous; ne vous livrez pas aux coups de vos ennemis. Car l’Amalécite et le Cananéen sont là sur votre chemin, et vous tomberiez sous leur glaive; aussi bien, vous vous êtes éloignés de l’Éternel, l’Éternel ne sera point avec vous!&quot; Mais ils s’obstinèrent à monter au sommet de la montagne; cependant, ni l’arche d’alliance du Seigneur ni Moïse ne bougèrent du milieu du camp. L’Amalécite et le Cananéen, qui habitaient sur cette montagne, en descendirent, les battirent et les taillèrent en pièces jusqu’à Horma.</p>
-      <p>L’Éternel parla à Moïse en ces termes: &quot;Parle aux enfants d’Israël et dis-leur: Quand vous serez arrivés dans le pays que je vous destine pour votre établissement, et que vous ferez un sacrifice à l’Éternel, holocauste ou autre victime, à l’occasion d’un vœu spécial ou d’un don spontané, ou lors de vos solennités, voulant offrir, en odeur agréable au Seigneur, une pièce de gros ou de menu bétail, celui qui offrira ce sacrifice à l’Éternel y joindra, comme oblation, un dixième de fleur de farine, pétrie avec un quart de hîn d’huile; plus, du vin, comme libation, un quart de hîn, que tu joindras à l’holocauste ou au sacrifice, pour chaque agneau. Si c’est un bélier, tu offriras comme oblation deux dixièmes de fleur de farine, pétrie avec un tiers de hîn d’huile; plus, du vin pour libation, un tiers de hîn, que tu offriras, comme odeur délectable, au Seigneur. Et si c’est une pièce de gros bétail que tu offres comme holocauste ou autre sacrifice, à l’occasion d’un vœu particulier ou comme rémunératoire au Seigneur, on ajoutera à cette victime, comme oblation, trois dixièmes de fleur de farine, pétrie avec un demi-hîn d’huile; et tu offriras, comme libation, un demi-hîn de vin: sacrifice d’odeur agréable à l’Éternel. C’est ainsi qu’on en usera pour chaque taureau, pour chaque bélier, pour chaque animal de l’espèce des brebis ou des chèvres; selon le nombre des victimes que vous offrirez, vous suivrez ces prescriptions pour chacune, en nombre égal. Tout indigène pratiquera ainsi ces rites, lorsqu’il offrira un sacrifice d’odeur agréable au Seigneur. Et si un étranger émigre chez vous ou se trouve parmi vous, dans les âges ultérieurs, et qu’il offre à l’Éternel un sacrifice d’odeur agréable, comme vous procéderez, ainsi procédera-t-il. Peuple, une même loi vous régira, vous et l’étranger domicilié. Règle absolue pour vos générations: vous et l’étranger, vous serez égaux devant l’Éternel. Même loi et même droit existeront pour vous et pour l’étranger habitant parmi vous.&quot; L’Éternel parla à Moïse en ces termes: &quot;Parle aux enfants d’Israël et dis-leur: A votre arrivée dans le pays où je vous conduirai, lorsque vous mangerez du pain de la contrée, vous en prélèverez un tribut au Seigneur. Comme prémices de votre pâte, vous prélèverez un gâteau en tribut; à l’instar du tribut de la grange, ainsi vous le prélèverez. Des prémices de votre pâte vous ferez hommage à l’Éternel dans vos générations futures. Si, par suite d’une erreur, vous n’observez pas tous ces commandements que l’Éternel a communiqués à Moïse, tout ce que l’Éternel a prescrit à votre intention par l’organe de Moïse, et cela depuis l’époque où l’Éternel l’a prescrit jusqu’à vos générations ultérieures; si c’est par l’inadvertance de la communauté qu’a eu lieu cette erreur, la communauté entière offrira un jeune taureau comme holocauste, en odeur agréable à l’Éternel, avec son oblation et sa libation selon la règle; plus un bouc, comme expiatoire. Le pontife effacera la faute de toute la communauté des enfants d’Israël, et elle leur sera remise, parce que c’était une erreur, et qu’ils ont apporté devant Dieu leur offrande, un sacrifice destiné au feu pour le Seigneur, ainsi que leur expiatoire, pour réparer cette erreur. Et il sera pardonné à toute la communauté des enfants d’Israël et à l’étranger qui séjourne parmi eux; car l’erreur a été commune à tout le peuple. Que si c’est une seule personne qui a péché par erreur, elle offrira une chèvre, âgée d’un an pour expiatoire. Le pontife fera expiation pour la personne imprudente (car elle n’a péché que par imprudence) devant le Seigneur; afin qu’étant expiée, sa faute lui soit remise. Indigène entre les enfants d’Israël ou étranger résidant parmi eux, une même règle sera la vôtre, si l’on a agi par erreur. Mais celui qui aurait agi ainsi de propos délibéré, parmi les nationaux ou parmi les étrangers, celui-là outrage le Seigneur! Cette personne sera retranchée du milieu de son peuple. Pour avoir méprisé la parole du Seigneur, pour avoir violé sa loi, cette personne sera certainement retranchée: elle est coupable!&quot; Pendant leur séjour au désert, les enfants d’Israël trouvèrent un homme ramassant du bois le jour du Sabbat. Ceux qui l’avaient trouvé ramassant du bois le conduisirent devant Moïse et Aaron, et devant toute la communauté. On le mit en lieu sûr, parce qu’il n’avait pas été expliqué comment il fallait agir à son égard. Alors l’Éternel dit à Moïse: &quot;Cet homme doit être mis à mort; que toute la communauté le lapide hors du camp.&quot; Et toute la communauté l’emmena hors du camp, et on le fit mourir à coups de pierres, comme l’Éternel l’avait ordonné à Moïse. L’Éternel parla à Moïse en ces termes: &quot;Parle aux enfants d’Israël, et dis-leur de se faire des franges aux coins de leurs vêtements, dans toutes leurs générations, et d’ajouter à la frange de chaque coin un cordon d’azur. Cela formera pour vous des franges dont la vue vous rappellera tous les commandements de l’Éternel, afin que vous les exécutiez et ne vous égariez pas à la suite de votre cœur et de vos yeux, qui vous entraînent à l’infidélité. Vous vous rappellerez ainsi et vous accomplirez tous mes commandements, et vous serez saints pour votre Dieu. Je suis l’Éternel votre Dieu, qui vous ai fait sortir du pays d’Égypte pour devenir votre Dieu, moi, l’Éternel votre Dieu!&quot;</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -330,6 +836,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_behaalotcha.html">← Behaalotcha</a><a class="hbtn qcm" href="qcm_paracha_shlach.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_korach.html">Kora&#x27;h →</a></div>
 </main>
 
 <footer>

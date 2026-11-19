@@ -102,6 +102,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -121,6 +151,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -135,6 +175,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Tazria – La naissance, la tsaraat et les signes de pureté</h1>
     <p>Torah, Vayikra (Leviticus 12:1-13:59)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_shemini.html">← Shemini</a><a class="hbtn qcm" href="qcm_paracha_tazria.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_metzora.html">Metzora →</a></div>
   </div>
 </header>
 
@@ -154,27 +195,286 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ לֵאמֹ֔ר אִשָּׁה֙ כִּ֣י תַזְרִ֔יעַ וְיָלְדָ֖ה זָכָ֑ר וְטָֽמְאָה֙ שִׁבְעַ֣ת יָמִ֔ים כִּימֵ֛י נִדַּ֥ת דְּוֺתָ֖הּ תִּטְמָֽא׃', 'וּבַיּ֖וֹם הַשְּׁמִינִ֑י יִמּ֖וֹל בְּשַׂ֥ר עׇרְלָתֽוֹ׃', 'וּשְׁלֹשִׁ֥ים יוֹם֙ וּשְׁלֹ֣שֶׁת יָמִ֔ים תֵּשֵׁ֖ב בִּדְמֵ֣י טׇהֳרָ֑הֿ בְּכׇל־קֹ֣דֶשׁ לֹֽא־תִגָּ֗ע וְאֶל־הַמִּקְדָּשׁ֙ לֹ֣א תָבֹ֔א עַד־מְלֹ֖את יְמֵ֥י טׇהֳרָֽהּ׃', 'וְאִם־נְקֵבָ֣ה תֵלֵ֔ד וְטָמְאָ֥ה שְׁבֻעַ֖יִם כְּנִדָּתָ֑הּ וְשִׁשִּׁ֥ים יוֹם֙ וְשֵׁ֣שֶׁת יָמִ֔ים תֵּשֵׁ֖ב עַל־דְּמֵ֥י טׇהֳרָֽהֿ׃', 'וּבִמְלֹ֣את&thinsp;<b>׀</b> יְמֵ֣י טׇהֳרָ֗הּ לְבֵן֮ א֣וֹ לְבַת֒ תָּבִ֞יא כֶּ֤בֶשׂ בֶּן־שְׁנָתוֹ֙ לְעֹלָ֔ה וּבֶן־יוֹנָ֥ה אוֹ־תֹ֖ר לְחַטָּ֑את אֶל־פֶּ֥תַח אֹֽהֶל־מוֹעֵ֖ד אֶל־הַכֹּהֵֽן׃', 'וְהִקְרִיב֞וֹ לִפְנֵ֤י יְהֹוָה֙ וְכִפֶּ֣ר עָלֶ֔יהָ וְטָהֲרָ֖הֿ מִמְּקֹ֣ר דָּמֶ֑יהָ זֹ֤את תּוֹרַת֙ הַיֹּלֶ֔דֶת לַזָּכָ֖ר א֥וֹ לַנְּקֵבָֽה׃', 'וְאִם־לֹ֨א תִמְצָ֣א יָדָהּ֮ דֵּ֣י שֶׂה֒ וְלָקְחָ֣ה שְׁתֵּֽי־תֹרִ֗ים א֤וֹ שְׁנֵי֙ בְּנֵ֣י יוֹנָ֔ה אֶחָ֥ד לְעֹלָ֖ה וְאֶחָ֣ד לְחַטָּ֑את וְכִפֶּ֥ר עָלֶ֛יהָ הַכֹּהֵ֖ן וְטָהֵֽרָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'אָדָ֗ם כִּֽי־יִהְיֶ֤ה בְעוֹר־בְּשָׂרוֹ֙ שְׂאֵ֤ת אֽוֹ־סַפַּ֙חַת֙ א֣וֹ בַהֶ֔רֶת וְהָיָ֥ה בְעוֹר־בְּשָׂר֖וֹ לְנֶ֣גַע צָרָ֑עַת וְהוּבָא֙ אֶל־אַהֲרֹ֣ן הַכֹּהֵ֔ן א֛וֹ אֶל־אַחַ֥ד מִבָּנָ֖יו הַכֹּהֲנִֽים׃', 'וְרָאָ֣ה הַכֹּהֵ֣ן אֶת־הַנֶּ֣גַע בְּעֽוֹר־הַ֠בָּשָׂ֠ר וְשֵׂעָ֨ר בַּנֶּ֜גַע הָפַ֣ךְ&thinsp;<b>׀</b> לָבָ֗ן וּמַרְאֵ֤ה הַנֶּ֙גַע֙ עָמֹק֙ מֵע֣וֹר בְּשָׂר֔וֹ נֶ֥גַע צָרַ֖עַת ה֑וּא וְרָאָ֥הוּ הַכֹּהֵ֖ן וְטִמֵּ֥א אֹתֽוֹ׃', 'וְאִם־בַּהֶ֩רֶת֩ לְבָנָ֨ה הִ֜וא בְּע֣וֹר בְּשָׂר֗וֹ וְעָמֹק֙ אֵין־מַרְאֶ֣הָ מִן־הָע֔וֹר וּשְׂעָרָ֖הֿ לֹא־הָפַ֣ךְ לָבָ֑ן וְהִסְגִּ֧יר הַכֹּהֵ֛ן אֶת־הַנֶּ֖גַע שִׁבְעַ֥ת יָמִֽים׃', 'וְרָאָ֣הוּ הַכֹּהֵן֮ בַּיּ֣וֹם הַשְּׁבִיעִי֒ וְהִנֵּ֤ה הַנֶּ֙גַע֙ עָמַ֣ד בְּעֵינָ֔יו לֹֽא־פָשָׂ֥ה הַנֶּ֖גַע בָּע֑וֹר וְהִסְגִּיר֧וֹ הַכֹּהֵ֛ן שִׁבְעַ֥ת יָמִ֖ים שֵׁנִֽית׃', 'וְרָאָה֩ הַכֹּהֵ֨ן אֹת֜וֹ בַּיּ֣וֹם הַשְּׁבִיעִי֮ שֵׁנִית֒ וְהִנֵּה֙ כֵּהָ֣ה הַנֶּ֔גַע וְלֹא־פָשָׂ֥ה הַנֶּ֖גַע בָּע֑וֹר וְטִהֲר֤וֹ הַכֹּהֵן֙ מִסְפַּ֣חַת הִ֔וא וְכִבֶּ֥ס בְּגָדָ֖יו וְטָהֵֽר׃', 'וְאִם־פָּשֹׂ֨ה תִפְשֶׂ֤ה הַמִּסְפַּ֙חַת֙ בָּע֔וֹר אַחֲרֵ֧י הֵרָאֹת֛וֹ אֶל־הַכֹּהֵ֖ן לְטׇהֳרָת֑וֹ וְנִרְאָ֥ה שֵׁנִ֖ית אֶל־הַכֹּהֵֽן׃', 'וְרָאָה֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה פָּשְׂתָ֥ה הַמִּסְפַּ֖חַת בָּע֑וֹר וְטִמְּא֥וֹ הַכֹּהֵ֖ן צָרַ֥עַת הִֽוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'נֶ֣גַע צָרַ֔עַת כִּ֥י תִהְיֶ֖ה בְּאָדָ֑ם וְהוּבָ֖א אֶל־הַכֹּהֵֽן׃', 'וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֤ה שְׂאֵת־לְבָנָה֙ בָּע֔וֹר וְהִ֕יא הָפְכָ֖ה שֵׂעָ֣ר לָבָ֑ן וּמִֽחְיַ֛ת בָּשָׂ֥ר חַ֖י בַּשְׂאֵֽת׃', 'צָרַ֨עַת נוֹשֶׁ֤נֶת הִוא֙ בְּע֣וֹר בְּשָׂר֔וֹ וְטִמְּא֖וֹ הַכֹּהֵ֑ן לֹ֣א יַסְגִּרֶ֔נּוּ כִּ֥י טָמֵ֖א הֽוּא׃', 'וְאִם־פָּר֨וֹחַ תִּפְרַ֤ח הַצָּרַ֙עַת֙ בָּע֔וֹר וְכִסְּתָ֣ה הַצָּרַ֗עַת אֵ֚ת כׇּל־ע֣וֹר הַנֶּ֔גַע מֵרֹאשׁ֖וֹ וְעַד־רַגְלָ֑יו לְכׇל־מַרְאֵ֖ה עֵינֵ֥י הַכֹּהֵֽן׃', 'וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֨ה כִסְּתָ֤ה הַצָּרַ֙עַת֙ אֶת־כׇּל־בְּשָׂר֔וֹ וְטִהַ֖ר אֶת־הַנָּ֑גַע כֻּלּ֛וֹ הָפַ֥ךְ לָבָ֖ן טָה֥וֹר הֽוּא׃', 'וּבְי֨וֹם הֵרָא֥וֹת בּ֛וֹ בָּשָׂ֥ר חַ֖י יִטְמָֽא׃', 'וְרָאָ֧ה הַכֹּהֵ֛ן אֶת־הַבָּשָׂ֥ר הַחַ֖י וְטִמְּא֑וֹ הַבָּשָׂ֥ר הַחַ֛י טָמֵ֥א ה֖וּא צָרַ֥עַת הֽוּא׃', 'א֣וֹ כִ֥י יָשׁ֛וּב הַבָּשָׂ֥ר הַחַ֖י וְנֶהְפַּ֣ךְ לְלָבָ֑ן וּבָ֖א אֶל־הַכֹּהֵֽן׃', 'וְרָאָ֙הוּ֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה נֶהְפַּ֥ךְ הַנֶּ֖גַע לְלָבָ֑ן וְטִהַ֧ר הַכֹּהֵ֛ן אֶת־הַנֶּ֖גַע טָה֥וֹר הֽוּא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וּבָשָׂ֕ר כִּֽי־יִהְיֶ֥ה בֽוֹ־בְעֹר֖וֹ שְׁחִ֑ין וְנִרְפָּֽא׃', 'וְהָיָ֞ה בִּמְק֤וֹם הַשְּׁחִין֙ שְׂאֵ֣ת לְבָנָ֔ה א֥וֹ בַהֶ֖רֶת לְבָנָ֣ה אֲדַמְדָּ֑מֶת וְנִרְאָ֖ה אֶל־הַכֹּהֵֽן׃', 'וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֤ה מַרְאֶ֙הָ֙ שָׁפָ֣ל מִן־הָע֔וֹר וּשְׂעָרָ֖הּ הָפַ֣ךְ לָבָ֑ן וְטִמְּא֧וֹ הַכֹּהֵ֛ן נֶֽגַע־צָרַ֥עַת הִ֖וא בַּשְּׁחִ֥ין פָּרָֽחָה׃', 'וְאִ֣ם&thinsp;<b>׀</b> יִרְאֶ֣נָּה הַכֹּהֵ֗ן וְהִנֵּ֤ה אֵֽין־בָּהּ֙ שֵׂעָ֣ר לָבָ֔ן וּשְׁפָלָ֥הֿ אֵינֶ֛נָּה מִן־הָע֖וֹר וְהִ֣יא כֵהָ֑ה וְהִסְגִּיר֥וֹ הַכֹּהֵ֖ן שִׁבְעַ֥ת יָמִֽים׃', 'וְאִם־פָּשֹׂ֥ה תִפְשֶׂ֖ה בָּע֑וֹר וְטִמֵּ֧א הַכֹּהֵ֛ן אֹת֖וֹ נֶ֥גַע הִֽוא׃', 'וְאִם־תַּחְתֶּ֜יהָ תַּעֲמֹ֤ד הַבַּהֶ֙רֶת֙ לֹ֣א פָשָׂ֔תָה צָרֶ֥בֶת הַשְּׁחִ֖ין הִ֑וא וְטִהֲר֖וֹ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'א֣וֹ בָשָׂ֔ר כִּֽי־יִהְיֶ֥ה בְעֹר֖וֹ מִכְוַת־אֵ֑שׁ וְֽהָיְתָ֞ה מִֽחְיַ֣ת הַמִּכְוָ֗ה בַּהֶ֛רֶת לְבָנָ֥ה אֲדַמְדֶּ֖מֶת א֥וֹ לְבָנָֽה׃', 'וְרָאָ֣ה אֹתָ֣הּ הַכֹּהֵ֡ן וְהִנֵּ֣ה נֶהְפַּךְ֩ שֵׂעָ֨ר לָבָ֜ן בַּבַּהֶ֗רֶת וּמַרְאֶ֙הָ֙ עָמֹ֣ק מִן־הָע֔וֹר צָרַ֣עַת הִ֔וא בַּמִּכְוָ֖ה פָּרָ֑חָה וְטִמֵּ֤א אֹתוֹ֙ הַכֹּהֵ֔ן נֶ֥גַע צָרַ֖עַת הִֽוא׃', 'וְאִ֣ם&thinsp;<b>׀</b> יִרְאֶ֣נָּה הַכֹּהֵ֗ן וְהִנֵּ֤ה אֵֽין־בַּבַּהֶ֙רֶת֙ שֵׂעָ֣ר לָבָ֔ן וּשְׁפָלָ֥הֿ אֵינֶ֛נָּה מִן־הָע֖וֹר וְהִ֣וא כֵהָ֑ה וְהִסְגִּיר֥וֹ הַכֹּהֵ֖ן שִׁבְעַ֥ת יָמִֽים׃', 'וְרָאָ֥הוּ הַכֹּהֵ֖ן בַּיּ֣וֹם הַשְּׁבִיעִ֑י אִם־פָּשֹׂ֤ה תִפְשֶׂה֙ בָּע֔וֹר וְטִמֵּ֤א הַכֹּהֵן֙ אֹת֔וֹ נֶ֥גַע צָרַ֖עַת הִֽוא׃', 'וְאִם־תַּחְתֶּ֩יהָ֩ תַעֲמֹ֨ד הַבַּהֶ֜רֶת לֹא־פָשְׂתָ֤ה בָעוֹר֙ וְהִ֣וא כֵהָ֔ה שְׂאֵ֥ת הַמִּכְוָ֖ה הִ֑וא וְטִֽהֲרוֹ֙ הַכֹּהֵ֔ן כִּֽי־צָרֶ֥בֶת הַמִּכְוָ֖ה הִֽוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וְאִישׁ֙ א֣וֹ אִשָּׁ֔ה כִּֽי־יִהְיֶ֥ה ב֖וֹ נָ֑גַע בְּרֹ֖אשׁ א֥וֹ בְזָקָֽן׃', 'וְרָאָ֨ה הַכֹּהֵ֜ן אֶת־הַנֶּ֗גַע וְהִנֵּ֤ה מַרְאֵ֙הוּ֙ עָמֹ֣ק מִן־הָע֔וֹר וּב֛וֹ שֵׂעָ֥ר צָהֹ֖ב דָּ֑ק וְטִמֵּ֨א אֹת֤וֹ הַכֹּהֵן֙ נֶ֣תֶק ה֔וּא צָרַ֧עַת הָרֹ֛אשׁ א֥וֹ הַזָּקָ֖ן הֽוּא׃', 'וְכִֽי־יִרְאֶ֨ה הַכֹּהֵ֜ן אֶת־נֶ֣גַע הַנֶּ֗תֶק וְהִנֵּ֤ה אֵין־מַרְאֵ֙הוּ֙ עָמֹ֣ק מִן־הָע֔וֹר וְשֵׂעָ֥ר שָׁחֹ֖ר אֵ֣ין בּ֑וֹ וְהִסְגִּ֧יר הַכֹּהֵ֛ן אֶת־נֶ֥גַע הַנֶּ֖תֶק שִׁבְעַ֥ת יָמִֽים׃', 'וְרָאָ֨ה הַכֹּהֵ֣ן אֶת־הַנֶּ֘גַע֮ בַּיּ֣וֹם הַשְּׁבִיעִי֒ וְהִנֵּה֙ לֹא־פָשָׂ֣ה הַנֶּ֔תֶק וְלֹא־הָ֥יָה ב֖וֹ שֵׂעָ֣ר צָהֹ֑ב וּמַרְאֵ֣ה הַנֶּ֔תֶק אֵ֥ין עָמֹ֖ק מִן־הָעֽוֹר׃', 'וְהִ֨תְ<big>גַּ</big>לָּ֔ח וְאֶת־הַנֶּ֖תֶק לֹ֣א יְגַלֵּ֑חַ וְהִסְגִּ֨יר הַכֹּהֵ֧ן אֶת־הַנֶּ֛תֶק שִׁבְעַ֥ת יָמִ֖ים שֵׁנִֽית׃', 'וְרָאָה֩ הַכֹּהֵ֨ן אֶת־הַנֶּ֜תֶק בַּיּ֣וֹם הַשְּׁבִיעִ֗י וְ֠הִנֵּ֠ה לֹא־פָשָׂ֤ה הַנֶּ֙תֶק֙ בָּע֔וֹר וּמַרְאֵ֕הוּ אֵינֶ֥נּוּ עָמֹ֖ק מִן־הָע֑וֹר וְטִהַ֤ר אֹתוֹ֙ הַכֹּהֵ֔ן וְכִבֶּ֥ס בְּגָדָ֖יו וְטָהֵֽר׃', 'וְאִם־פָּשֹׂ֥ה יִפְשֶׂ֛ה הַנֶּ֖תֶק בָּע֑וֹר אַחֲרֵ֖י טׇהֳרָתֽוֹ׃', 'וְרָאָ֙הוּ֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖תֶק בָּע֑וֹר לֹֽא־יְבַקֵּ֧ר הַכֹּהֵ֛ן לַשֵּׂעָ֥ר הַצָּהֹ֖ב טָמֵ֥א הֽוּא׃', 'וְאִם־בְּעֵינָיו֩ עָמַ֨ד הַנֶּ֜תֶק וְשֵׂעָ֨ר שָׁחֹ֧ר צָֽמַח־בּ֛וֹ נִרְפָּ֥א הַנֶּ֖תֶק טָה֣וֹר ה֑וּא וְטִהֲר֖וֹ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִישׁ֙ אֽוֹ־אִשָּׁ֔ה כִּֽי־יִהְיֶ֥ה בְעוֹר־בְּשָׂרָ֖ם בֶּהָרֹ֑ת בֶּהָרֹ֖ת לְבָנֹֽת׃', 'וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֧ה בְעוֹר־בְּשָׂרָ֛ם בֶּהָרֹ֖ת כֵּה֣וֹת לְבָנֹ֑ת בֹּ֥הַק ה֛וּא פָּרַ֥ח בָּע֖וֹר טָה֥וֹר הֽוּא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִ֕ישׁ כִּ֥י יִמָּרֵ֖ט רֹאשׁ֑וֹ קֵרֵ֥חַ ה֖וּא טָה֥וֹר הֽוּא׃', 'וְאִם֙ מִפְּאַ֣ת פָּנָ֔יו יִמָּרֵ֖ט רֹאשׁ֑וֹ גִּבֵּ֥חַ ה֖וּא טָה֥וֹר הֽוּא׃', 'וְכִֽי־יִהְיֶ֤ה בַקָּרַ֙חַת֙ א֣וֹ בַגַּבַּ֔חַת נֶ֖גַע לָבָ֣ן אֲדַמְדָּ֑ם צָרַ֤עַת פֹּרַ֙חַת֙ הִ֔וא בְּקָרַחְתּ֖וֹ א֥וֹ בְגַבַּחְתּֽוֹ׃', 'וְרָאָ֨ה אֹת֜וֹ הַכֹּהֵ֗ן וְהִנֵּ֤ה שְׂאֵת־הַנֶּ֙גַע֙ לְבָנָ֣ה אֲדַמְדֶּ֔מֶת בְּקָרַחְתּ֖וֹ א֣וֹ בְגַבַּחְתּ֑וֹ כְּמַרְאֵ֥ה צָרַ֖עַת ע֥וֹר בָּשָֽׂר׃', 'אִישׁ־צָר֥וּעַ ה֖וּא טָמֵ֣א ה֑וּא טַמֵּ֧א יְטַמְּאֶ֛נּוּ הַכֹּהֵ֖ן בְּרֹאשׁ֥וֹ נִגְעֽוֹ׃', 'וְהַצָּר֜וּעַ אֲשֶׁר־בּ֣וֹ הַנֶּ֗גַע בְּגָדָ֞יו יִהְי֤וּ פְרֻמִים֙ וְרֹאשׁוֹ֙ יִהְיֶ֣ה פָר֔וּעַ וְעַל־שָׂפָ֖ם יַעְטֶ֑ה וְטָמֵ֥א&thinsp;<small>׀</small>&thinsp;טָמֵ֖א יִקְרָֽא׃', 'כׇּל־יְמֵ֞י אֲשֶׁ֨ר הַנֶּ֥גַע בּ֛וֹ יִטְמָ֖א טָמֵ֣א ה֑וּא בָּדָ֣ד יֵשֵׁ֔ב מִח֥וּץ לַֽמַּחֲנֶ֖ה מוֹשָׁבֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְהַבֶּ֕גֶד כִּֽי־יִהְיֶ֥ה ב֖וֹ נֶ֣גַע צָרָ֑עַת בְּבֶ֣גֶד צֶ֔מֶר א֖וֹ בְּבֶ֥גֶד פִּשְׁתִּֽים׃', 'א֤וֹ בִֽשְׁתִי֙ א֣וֹ בְעֵ֔רֶב לַפִּשְׁתִּ֖ים וְלַצָּ֑מֶר א֣וֹ בְע֔וֹר א֖וֹ בְּכׇל־מְלֶ֥אכֶת עֽוֹר׃', 'וְהָיָ֨ה הַנֶּ֜גַע יְרַקְרַ֣ק&thinsp;<b>׀</b> א֣וֹ אֲדַמְדָּ֗ם בַּבֶּ֩גֶד֩ א֨וֹ בָע֜וֹר אֽוֹ־בַשְּׁתִ֤י אוֹ־בָעֵ֙רֶב֙ א֣וֹ בְכׇל־כְּלִי־ע֔וֹר נֶ֥גַע צָרַ֖עַת ה֑וּא וְהׇרְאָ֖ה אֶת־הַכֹּהֵֽן׃', 'וְרָאָ֥ה הַכֹּהֵ֖ן אֶת־הַנָּ֑גַע וְהִסְגִּ֥יר אֶת־הַנֶּ֖גַע שִׁבְעַ֥ת יָמִֽים׃', 'וְרָאָ֨ה אֶת־הַנֶּ֜גַע בַּיּ֣וֹם הַשְּׁבִיעִ֗י כִּֽי־פָשָׂ֤ה הַנֶּ֙גַע֙ בַּ֠בֶּ֠גֶד אֽוֹ־בַשְּׁתִ֤י אֽוֹ־בָעֵ֙רֶב֙ א֣וֹ בָע֔וֹר לְכֹ֛ל אֲשֶׁר־יֵעָשֶׂ֥ה הָע֖וֹר לִמְלָאכָ֑ה צָרַ֧עַת מַמְאֶ֛רֶת הַנֶּ֖גַע טָמֵ֥א הֽוּא׃', 'וְשָׂרַ֨ף אֶת־הַבֶּ֜גֶד א֥וֹ אֶֽת־הַשְּׁתִ֣י&thinsp;<b>׀</b> א֣וֹ אֶת־הָעֵ֗רֶב בַּצֶּ֙מֶר֙ א֣וֹ בַפִּשְׁתִּ֔ים א֚וֹ אֶת־כׇּל־כְּלִ֣י הָע֔וֹר אֲשֶׁר־יִהְיֶ֥ה ב֖וֹ הַנָּ֑גַע כִּֽי־צָרַ֤עַת מַמְאֶ֙רֶת֙ הִ֔וא בָּאֵ֖שׁ תִּשָּׂרֵֽף׃', 'וְאִם֮ יִרְאֶ֣ה הַכֹּהֵן֒ וְהִנֵּה֙ לֹא־פָשָׂ֣ה הַנֶּ֔גַע בַּבֶּ֕גֶד א֥וֹ בַשְּׁתִ֖י א֣וֹ בָעֵ֑רֶב א֖וֹ בְּכׇל־כְּלִי־עֽוֹר׃', 'וְצִוָּה֙ הַכֹּהֵ֔ן וְכִ֨בְּס֔וּ אֵ֥ת אֲשֶׁר־בּ֖וֹ הַנָּ֑גַע וְהִסְגִּיר֥וֹ שִׁבְעַת־יָמִ֖ים שֵׁנִֽית׃', 'וְרָאָ֨ה הַכֹּהֵ֜ן אַחֲרֵ֣י&thinsp;<b>׀</b> הֻכַּבֵּ֣ס אֶת־הַנֶּ֗גַע וְ֠הִנֵּ֠ה לֹֽא־הָפַ֨ךְ הַנֶּ֤גַע אֶת־עֵינוֹ֙ וְהַנֶּ֣גַע לֹֽא־פָשָׂ֔ה טָמֵ֣א ה֔וּא בָּאֵ֖שׁ תִּשְׂרְפֶ֑נּוּ פְּחֶ֣תֶת הִ֔וא בְּקָרַחְתּ֖וֹ א֥וֹ בְגַבַּחְתּֽוֹ׃', 'וְאִם֮ רָאָ֣ה הַכֹּהֵן֒ וְהִנֵּה֙ כֵּהָ֣ה הַנֶּ֔גַע אַחֲרֵ֖י הֻכַּבֵּ֣ס אֹת֑וֹ וְקָרַ֣ע אֹת֗וֹ מִן־הַבֶּ֙גֶד֙ א֣וֹ מִן־הָע֔וֹר א֥וֹ מִן־הַשְּׁתִ֖י א֥וֹ מִן־הָעֵֽרֶב׃', 'וְאִם־תֵּרָאֶ֨ה ע֜וֹד בַּ֠בֶּ֠גֶד אֽוֹ־בַשְּׁתִ֤י אֽוֹ־בָעֵ֙רֶב֙ א֣וֹ בְכׇל־כְּלִי־ע֔וֹר פֹּרַ֖חַת הִ֑וא בָּאֵ֣שׁ תִּשְׂרְפֶ֔נּוּ אֵ֥ת אֲשֶׁר־בּ֖וֹ הַנָּֽגַע׃', 'וְהַבֶּ֡גֶד אֽוֹ־הַשְּׁתִ֨י אוֹ־הָעֵ֜רֶב אֽוֹ־כׇל־כְּלִ֤י הָעוֹר֙ אֲשֶׁ֣ר תְּכַבֵּ֔ס וְסָ֥ר מֵהֶ֖ם הַנָּ֑גַע וְכֻבַּ֥ס שֵׁנִ֖ית וְטָהֵֽר׃', 'זֹ֠את תּוֹרַ֨ת נֶֽגַע־צָרַ֜עַת בֶּ֥גֶד הַצֶּ֣מֶר&thinsp;<b>׀</b> א֣וֹ הַפִּשְׁתִּ֗ים א֤וֹ הַשְּׁתִי֙ א֣וֹ הָעֵ֔רֶב א֖וֹ כׇּל־כְּלִי־ע֑וֹר לְטַהֲר֖וֹ א֥וֹ לְטַמְּאֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-12-1">Chap. 12</a><a href="#v-13-1">Chap. 13</a></div>
+  <div class="seif" id="v-12-1">
+      <span class="seif-num">12:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-12-2">
+      <span class="seif-num">12:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ לֵאמֹ֔ר אִשָּׁה֙ כִּ֣י תַזְרִ֔יעַ וְיָלְדָ֖ה זָכָ֑ר וְטָֽמְאָה֙ שִׁבְעַ֣ת יָמִ֔ים כִּימֵ֛י נִדַּ֥ת דְּוֺתָ֖הּ תִּטְמָֽא׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל לאמר אשה כי תזריע וילדה זכר וטמאה שבעת ימים כימי נדת דותה תטמא׃</p></div></div>
+      <div class="texte-fr"><p>"Parle ainsi aux enfants d’Israël: lorsqu’une femme, ayant conçu, enfantera un mâle, elle sera impure durant sept jours, comme lorsqu’elle est isolée à cause de sa souffrance.</p></div>
+    </div><div class="seif" id="v-12-3">
+      <span class="seif-num">12:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַיּ֖וֹם הַשְּׁמִינִ֑י יִמּ֖וֹל בְּשַׂ֥ר עׇרְלָתֽוֹ׃</p></div><div class="heb-s"><p>וביום השמיני ימול בשר ערלתו׃</p></div></div>
+      <div class="texte-fr"><p>Au huitième jour, on circoncira l’excroissance de l’enfant.</p></div>
+    </div><div class="seif" id="v-12-4">
+      <span class="seif-num">12:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּשְׁלֹשִׁ֥ים יוֹם֙ וּשְׁלֹ֣שֶׁת יָמִ֔ים תֵּשֵׁ֖ב בִּדְמֵ֣י טׇהֳרָ֑הֿ בְּכׇל־קֹ֣דֶשׁ לֹֽא־תִגָּ֗ע וְאֶל־הַמִּקְדָּשׁ֙ לֹ֣א תָבֹ֔א עַד־מְלֹ֖את יְמֵ֥י טׇהֳרָֽהּ׃</p></div><div class="heb-s"><p>ושלשים יום ושלשת ימים תשב בדמי טהרה בכל־קדש לא־תגע ואל־המקדש לא תבא עד־מלאת ימי טהרה׃</p></div></div>
+      <div class="texte-fr"><p>Puis, trente-trois jours durant, la femme restera dans le sang de purification: elle ne touchera à rien de consacré, elle n’entrera point dans le saint lieu, que les jours de sa purification ne soient accomplis.</p></div>
+    </div><div class="seif" id="v-12-5">
+      <span class="seif-num">12:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־נְקֵבָ֣ה תֵלֵ֔ד וְטָמְאָ֥ה שְׁבֻעַ֖יִם כְּנִדָּתָ֑הּ וְשִׁשִּׁ֥ים יוֹם֙ וְשֵׁ֣שֶׁת יָמִ֔ים תֵּשֵׁ֖ב עַל־דְּמֵ֥י טׇהֳרָֽהֿ׃</p></div><div class="heb-s"><p>ואם־נקבה תלד וטמאה שבעים כנדתה וששים יום וששת ימים תשב על־דמי טהרה׃</p></div></div>
+      <div class="texte-fr"><p>Si c’est une fille qu’elle met au monde, elle sera impure deux semaines, comme lors de son isolement; puis, durant soixante-six jours, elle restera dans le sang de purification.</p></div>
+    </div><div class="seif" id="v-12-6">
+      <span class="seif-num">12:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבִמְלֹ֣את&thinsp;<b>׀</b> יְמֵ֣י טׇהֳרָ֗הּ לְבֵן֮ א֣וֹ לְבַת֒ תָּבִ֞יא כֶּ֤בֶשׂ בֶּן־שְׁנָתוֹ֙ לְעֹלָ֔ה וּבֶן־יוֹנָ֥ה אוֹ־תֹ֖ר לְחַטָּ֑את אֶל־פֶּ֥תַח אֹֽהֶל־מוֹעֵ֖ד אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>ובמלאת&thinsp;<b>׀</b> ימי טהרה לבן או לבת תביא כבש בן־שנתו לעלה ובן־יונה או־תר לחטאת אל־פתח אהל־מועד אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Quand sera accompli le temps de sa purification, pour un garçon ou pour une fille, elle apportera un agneau d’un an comme holocauste, et une jeune colombe ou une tourterelle comme expiatoire, à l’entrée de la Tente d’assignation, et les remettra au pontife.</p></div>
+    </div><div class="seif" id="v-12-7">
+      <span class="seif-num">12:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרִיב֞וֹ לִפְנֵ֤י יְהֹוָה֙ וְכִפֶּ֣ר עָלֶ֔יהָ וְטָהֲרָ֖הֿ מִמְּקֹ֣ר דָּמֶ֑יהָ זֹ֤את תּוֹרַת֙ הַיֹּלֶ֔דֶת לַזָּכָ֖ר א֥וֹ לַנְּקֵבָֽה׃</p></div><div class="heb-s"><p>והקריבו לפני יהוה וכפר עליה וטהרה ממקר דמיה זאת תורת הילדת לזכר או לנקבה׃</p></div></div>
+      <div class="texte-fr"><p>Celui-ci les offrira devant le Seigneur, fera expiation pour elle, et elle sera purifiée du flux de son sang. Telle est la règle de la femme qui enfante, qu’il s’agisse d’un garçon ou qu’il s’agisse d’une fille.</p></div>
+    </div><div class="seif" id="v-12-8">
+      <span class="seif-num">12:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֨א תִמְצָ֣א יָדָהּ֮ דֵּ֣י שֶׂה֒ וְלָקְחָ֣ה שְׁתֵּֽי־תֹרִ֗ים א֤וֹ שְׁנֵי֙ בְּנֵ֣י יוֹנָ֔ה אֶחָ֥ד לְעֹלָ֖ה וְאֶחָ֣ד לְחַטָּ֑את וְכִפֶּ֥ר עָלֶ֛יהָ הַכֹּהֵ֖ן וְטָהֵֽרָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואם־לא תמצא ידה די שה ולקחה שתי־תרים או שני בני יונה אחד לעלה ואחד לחטאת וכפר עליה הכהן וטהרה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Si ses moyens ne lui permettent pas d’offrir un agneau, elle prendra deux tourterelles ou deux jeunes colombes, l’une pour holocauste, l’autre pour expiatoire; et le pontife fera expiation pour elle, et elle sera purifiée."</p></div>
+    </div><div class="seif" id="v-13-1">
+      <span class="seif-num">13:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse et à Aaron:</p></div>
+    </div><div class="seif" id="v-13-2">
+      <span class="seif-num">13:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָדָ֗ם כִּֽי־יִהְיֶ֤ה בְעוֹר־בְּשָׂרוֹ֙ שְׂאֵ֤ת אֽוֹ־סַפַּ֙חַת֙ א֣וֹ בַהֶ֔רֶת וְהָיָ֥ה בְעוֹר־בְּשָׂר֖וֹ לְנֶ֣גַע צָרָ֑עַת וְהוּבָא֙ אֶל־אַהֲרֹ֣ן הַכֹּהֵ֔ן א֛וֹ אֶל־אַחַ֥ד מִבָּנָ֖יו הַכֹּהֲנִֽים׃</p></div><div class="heb-s"><p>אדם כי־יהיה בעור־בשרו שאת או־ספחת או בהרת והיה בעור־בשרו לנגע צרעת והובא אל־אהרן הכהן או אל־אחד מבניו הכהנים׃</p></div></div>
+      <div class="texte-fr"><p>"S’il se forme sur la peau d’un homme une tumeur, ou une dartre ou une tache, pouvant dégénérer sur cette peau en affection lépreuse, il sera présenté à Aaron le pontife ou à quelqu’un des pontifes, ses fils.</p></div>
+    </div><div class="seif" id="v-13-3">
+      <span class="seif-num">13:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה הַכֹּהֵ֣ן אֶת־הַנֶּ֣גַע בְּעֽוֹר־הַ֠בָּשָׂ֠ר וְשֵׂעָ֨ר בַּנֶּ֜גַע הָפַ֣ךְ&thinsp;<b>׀</b> לָבָ֗ן וּמַרְאֵ֤ה הַנֶּ֙גַע֙ עָמֹק֙ מֵע֣וֹר בְּשָׂר֔וֹ נֶ֥גַע צָרַ֖עַת ה֑וּא וְרָאָ֥הוּ הַכֹּהֵ֖ן וְטִמֵּ֥א אֹתֽוֹ׃</p></div><div class="heb-s"><p>וראה הכהן את־הנגע בעור־הבשר ושער בנגע הפך&thinsp;<b>׀</b> לבן ומראה הנגע עמק מעור בשרו נגע צרעת הוא וראהו הכהן וטמא אתו׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife examinera cette affection de la peau: si le poil qui s’y trouve est devenu blanc, et que la plaie paraisse plus profonde que la peau du corps, c’est une plaie de lèpre. Cela constaté, le pontife le déclarera impur.</p></div>
+    </div><div class="seif" id="v-13-4">
+      <span class="seif-num">13:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בַּהֶ֩רֶת֩ לְבָנָ֨ה הִ֜וא בְּע֣וֹר בְּשָׂר֗וֹ וְעָמֹק֙ אֵין־מַרְאֶ֣הָ מִן־הָע֔וֹר וּשְׂעָרָ֖הֿ לֹא־הָפַ֣ךְ לָבָ֑ן וְהִסְגִּ֧יר הַכֹּהֵ֛ן אֶת־הַנֶּ֖גַע שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ואם־בהרת לבנה הוא בעור בשרו ועמק אין־מראה מן־העור ושערה לא־הפך לבן והסגיר הכהן את־הנגע שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Si c’est une tache blanche qu’on voit à la peau, mais qui ne paraisse pas plus profonde que la peau, et qu’elle n’ait pas fait blanchir le poil, le pontife séquestrera la plaie pendant sept jours.</p></div>
+    </div><div class="seif" id="v-13-5">
+      <span class="seif-num">13:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣הוּ הַכֹּהֵן֮ בַּיּ֣וֹם הַשְּׁבִיעִי֒ וְהִנֵּ֤ה הַנֶּ֙גַע֙ עָמַ֣ד בְּעֵינָ֔יו לֹֽא־פָשָׂ֥ה הַנֶּ֖גַע בָּע֑וֹר וְהִסְגִּיר֧וֹ הַכֹּהֵ֛ן שִׁבְעַ֥ת יָמִ֖ים שֵׁנִֽית׃</p></div><div class="heb-s"><p>וראהו הכהן ביום השביעי והנה הנגע עמד בעיניו לא־פשה הנגע בעור והסגירו הכהן שבעת ימים שנית׃</p></div></div>
+      <div class="texte-fr"><p>Puis il l’examinera le septième jour: si la plaie lui présente le même aspect, si elle n’a pas fait de progrès sur la peau, le pontife la séquestrera une seconde fois pour sept jours.</p></div>
+    </div><div class="seif" id="v-13-6">
+      <span class="seif-num">13:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָה֩ הַכֹּהֵ֨ן אֹת֜וֹ בַּיּ֣וֹם הַשְּׁבִיעִי֮ שֵׁנִית֒ וְהִנֵּה֙ כֵּהָ֣ה הַנֶּ֔גַע וְלֹא־פָשָׂ֥ה הַנֶּ֖גַע בָּע֑וֹר וְטִהֲר֤וֹ הַכֹּהֵן֙ מִסְפַּ֣חַת הִ֔וא וְכִבֶּ֥ס בְּגָדָ֖יו וְטָהֵֽר׃</p></div><div class="heb-s"><p>וראה הכהן אתו ביום השביעי שנית והנה כהה הנגע ולא־פשה הנגע בעור וטהרו הכהן מספחת הוא וכבס בגדיו וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Et le pontife, au septième jour, l’examinera de nouveau: si cette plaie s’est affaiblie et qu’elfe n’ait fait aucun progrès sur la peau, le pontife la déclarera pure, c’est une simple dartre: l’homme lavera ses vêtements et sera pur.</p></div>
+    </div><div class="seif" id="v-13-7">
+      <span class="seif-num">13:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־פָּשֹׂ֨ה תִפְשֶׂ֤ה הַמִּסְפַּ֙חַת֙ בָּע֔וֹר אַחֲרֵ֧י הֵרָאֹת֛וֹ אֶל־הַכֹּהֵ֖ן לְטׇהֳרָת֑וֹ וְנִרְאָ֥ה שֵׁנִ֖ית אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>ואם־פשה תפשה המספחת בעור אחרי הראתו אל־הכהן לטהרתו ונראה שנית אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Mais si cette dartre venait à s’étendre sur la peau après qu’il s’est présenté au pontife et a été déclaré pur, il se fera visiter de nouveau par le pontife.</p></div>
+    </div><div class="seif" id="v-13-8">
+      <span class="seif-num">13:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָה֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה פָּשְׂתָ֥ה הַמִּסְפַּ֖חַת בָּע֑וֹר וְטִמְּא֥וֹ הַכֹּהֵ֖ן צָרַ֥עַת הִֽוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וראה הכהן והנה פשתה המספחת בעור וטמאו הכהן צרעת הוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Celui-ci constatera que la dartre s’est étendue sur la peau, et alors il le déclarera impur: c’est la lèpre.</p></div>
+    </div><div class="seif" id="v-13-9">
+      <span class="seif-num">13:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>נֶ֣גַע צָרַ֔עַת כִּ֥י תִהְיֶ֖ה בְּאָדָ֑ם וְהוּבָ֖א אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>נגע צרעת כי תהיה באדם והובא אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Lorsqu’une affection lépreuse sera observée sur un individu, il sera amené devant le pontife.</p></div>
+    </div><div class="seif" id="v-13-10">
+      <span class="seif-num">13:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֤ה שְׂאֵת־לְבָנָה֙ בָּע֔וֹר וְהִ֕יא הָפְכָ֖ה שֵׂעָ֣ר לָבָ֑ן וּמִֽחְיַ֛ת בָּשָׂ֥ר חַ֖י בַּשְׂאֵֽת׃</p></div><div class="heb-s"><p>וראה הכהן והנה שאת־לבנה בעור והיא הפכה שער לבן ומחית בשר חי בשאת׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife remarque qu’il existe sur la peau une tumeur blanche, laquelle ait fait blanchir le poil, ou qu’une chair vive et saine existe au milieu de la tumeur,</p></div>
+    </div><div class="seif" id="v-13-11">
+      <span class="seif-num">13:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>צָרַ֨עַת נוֹשֶׁ֤נֶת הִוא֙ בְּע֣וֹר בְּשָׂר֔וֹ וְטִמְּא֖וֹ הַכֹּהֵ֑ן לֹ֣א יַסְגִּרֶ֔נּוּ כִּ֥י טָמֵ֖א הֽוּא׃</p></div><div class="heb-s"><p>צרעת נושנת הוא בעור בשרו וטמאו הכהן לא יסגרנו כי טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>c’est une lèpre invétérée dans la peau du corps, et le pontife le déclarera impur; Il ne le séquestrera point, car il est impur.</p></div>
+    </div><div class="seif" id="v-13-12">
+      <span class="seif-num">13:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־פָּר֨וֹחַ תִּפְרַ֤ח הַצָּרַ֙עַת֙ בָּע֔וֹר וְכִסְּתָ֣ה הַצָּרַ֗עַת אֵ֚ת כׇּל־ע֣וֹר הַנֶּ֔גַע מֵרֹאשׁ֖וֹ וְעַד־רַגְלָ֑יו לְכׇל־מַרְאֵ֖ה עֵינֵ֥י הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>ואם־פרוח תפרח הצרעת בעור וכסתה הצרעת את כל־עור הנגע מראשו ועד־רגליו לכל־מראה עיני הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Que st la lèpre va se développant sur la peau, et qu’elle couvre toute la peau affectée, depuis la tête jusqu’aux pieds, partout où atteint le regard du pontife,</p></div>
+    </div><div class="seif" id="v-13-13">
+      <span class="seif-num">13:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֨ה כִסְּתָ֤ה הַצָּרַ֙עַת֙ אֶת־כׇּל־בְּשָׂר֔וֹ וְטִהַ֖ר אֶת־הַנָּ֑גַע כֻּלּ֛וֹ הָפַ֥ךְ לָבָ֖ן טָה֥וֹר הֽוּא׃</p></div><div class="heb-s"><p>וראה הכהן והנה כסתה הצרעת את־כל־בשרו וטהר את־הנגע כלו הפך לבן טהור הוא׃</p></div></div>
+      <div class="texte-fr"><p>celui-ci constatera que la lèpre a gagné tout le corps, et il déclarera cette plaie pure: elle a complètement blanchi la peau, elle est pure.</p></div>
+    </div><div class="seif" id="v-13-14">
+      <span class="seif-num">13:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְי֨וֹם הֵרָא֥וֹת בּ֛וֹ בָּשָׂ֥ר חַ֖י יִטְמָֽא׃</p></div><div class="heb-s"><p>וביום הראות בו בשר חי יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Mais, du moment qu’il s’y manifeste une chair vive, elle est impure.</p></div>
+    </div><div class="seif" id="v-13-15">
+      <span class="seif-num">13:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֧ה הַכֹּהֵ֛ן אֶת־הַבָּשָׂ֥ר הַחַ֖י וְטִמְּא֑וֹ הַבָּשָׂ֥ר הַחַ֛י טָמֵ֥א ה֖וּא צָרַ֥עַת הֽוּא׃</p></div><div class="heb-s"><p>וראה הכהן את־הבשר החי וטמאו הבשר החי טמא הוא צרעת הוא׃</p></div></div>
+      <div class="texte-fr"><p>Quand le pontife observera cette chair vive, il la déclarera impure: la chair vive est impure, il y a lèpre.</p></div>
+    </div><div class="seif" id="v-13-16">
+      <span class="seif-num">13:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֣וֹ כִ֥י יָשׁ֛וּב הַבָּשָׂ֥ר הַחַ֖י וְנֶהְפַּ֣ךְ לְלָבָ֑ן וּבָ֖א אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>או כי ישוב הבשר החי ונהפך ללבן ובא אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Toutefois, si cette chair vive redevient blanche, on se présentera au pontife;</p></div>
+    </div><div class="seif" id="v-13-17">
+      <span class="seif-num">13:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֙הוּ֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה נֶהְפַּ֥ךְ הַנֶּ֖גַע לְלָבָ֑ן וְטִהַ֧ר הַכֹּהֵ֛ן אֶת־הַנֶּ֖גַע טָה֥וֹר הֽוּא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וראהו הכהן והנה נהפך הנגע ללבן וטהר הכהן את־הנגע טהור הוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>le pontife constatera que la plaie a tourné au blanc, et il déclarera cette plaie pure: elle est pure.</p></div>
+    </div><div class="seif" id="v-13-18">
+      <span class="seif-num">13:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָשָׂ֕ר כִּֽי־יִהְיֶ֥ה בֽוֹ־בְעֹר֖וֹ שְׁחִ֑ין וְנִרְפָּֽא׃</p></div><div class="heb-s"><p>ובשר כי־יהיה בו־בערו שחין ונרפא׃</p></div></div>
+      <div class="texte-fr"><p>S’il s’est formé sur un corps, à la peau, un ulcère, et qu’il se soit guéri,</p></div>
+    </div><div class="seif" id="v-13-19">
+      <span class="seif-num">13:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֞ה בִּמְק֤וֹם הַשְּׁחִין֙ שְׂאֵ֣ת לְבָנָ֔ה א֥וֹ בַהֶ֖רֶת לְבָנָ֣ה אֲדַמְדָּ֑מֶת וְנִרְאָ֖ה אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>והיה במקום השחין שאת לבנה או בהרת לבנה אדמדמת ונראה אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>mais qu’au siège de cet ulcère il survienne une tumeur blanche ou une tache blanche-vermeille, on se fera visiter par le pontife.</p></div>
+    </div><div class="seif" id="v-13-20">
+      <span class="seif-num">13:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֤ה מַרְאֶ֙הָ֙ שָׁפָ֣ל מִן־הָע֔וֹר וּשְׂעָרָ֖הּ הָפַ֣ךְ לָבָ֑ן וְטִמְּא֧וֹ הַכֹּהֵ֛ן נֶֽגַע־צָרַ֥עַת הִ֖וא בַּשְּׁחִ֥ין פָּרָֽחָה׃</p></div><div class="heb-s"><p>וראה הכהן והנה מראה שפל מן־העור ושערה הפך לבן וטמאו הכהן נגע־צרעת הוא בשחין פרחה׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife observe qu’elle paraît plus basse que la peau et que le poil y est devenu blanc, le pontife déclarera l’homme impur: c’est une plaie de lèpre, qui s’est développée sur l’ulcère.</p></div>
+    </div><div class="seif" id="v-13-21">
+      <span class="seif-num">13:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֣ם&thinsp;<b>׀</b> יִרְאֶ֣נָּה הַכֹּהֵ֗ן וְהִנֵּ֤ה אֵֽין־בָּהּ֙ שֵׂעָ֣ר לָבָ֔ן וּשְׁפָלָ֥הֿ אֵינֶ֛נָּה מִן־הָע֖וֹר וְהִ֣יא כֵהָ֑ה וְהִסְגִּיר֥וֹ הַכֹּהֵ֖ן שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ואם&thinsp;<b>׀</b> יראנה הכהן והנה אין־בה שער לבן ושפלה איננה מן־העור והיא כהה והסגירו הכהן שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife constate qu’elle ne renferme pas de poil blanc, qu’elle n’est pas plus basse que la peau et qu’elle est terne, il séquestrera l’homme durant sept jours.</p></div>
+    </div><div class="seif" id="v-13-22">
+      <span class="seif-num">13:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־פָּשֹׂ֥ה תִפְשֶׂ֖ה בָּע֑וֹר וְטִמֵּ֧א הַכֹּהֵ֛ן אֹת֖וֹ נֶ֥גַע הִֽוא׃</p></div><div class="heb-s"><p>ואם־פשה תפשה בעור וטמא הכהן אתו נגע הוא׃</p></div></div>
+      <div class="texte-fr"><p>Si alors elle s’est étendue sur la peau, le pontife le déclarera impur, c’est une plaie.</p></div>
+    </div><div class="seif" id="v-13-23">
+      <span class="seif-num">13:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־תַּחְתֶּ֜יהָ תַּעֲמֹ֤ד הַבַּהֶ֙רֶת֙ לֹ֣א פָשָׂ֔תָה צָרֶ֥בֶת הַשְּׁחִ֖ין הִ֑וא וְטִהֲר֖וֹ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואם־תחתיה תעמד הבהרת לא פשתה צרבת השחין הוא וטהרו הכהן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Mais la tache demeure-t-elle où elle était, sans accroissement, c’est la cicatrice de l’ulcère, et le pontife le déclarera pur.</p></div>
+    </div><div class="seif" id="v-13-24">
+      <span class="seif-num">13:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֣וֹ בָשָׂ֔ר כִּֽי־יִהְיֶ֥ה בְעֹר֖וֹ מִכְוַת־אֵ֑שׁ וְֽהָיְתָ֞ה מִֽחְיַ֣ת הַמִּכְוָ֗ה בַּהֶ֛רֶת לְבָנָ֥ה אֲדַמְדֶּ֖מֶת א֥וֹ לְבָנָֽה׃</p></div><div class="heb-s"><p>או בשר כי־יהיה בערו מכות־אש והיתה מחית המכוה בהרת לבנה אדמדמת או לבנה׃</p></div></div>
+      <div class="texte-fr"><p>Pareillement, s’il existe une brûlure à la peau d’une personne, et que cette brûlure, en se guérissant, forme une tache blanche-vermeille, ou blanche,</p></div>
+    </div><div class="seif" id="v-13-25">
+      <span class="seif-num">13:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה אֹתָ֣הּ הַכֹּהֵ֡ן וְהִנֵּ֣ה נֶהְפַּךְ֩ שֵׂעָ֨ר לָבָ֜ן בַּבַּהֶ֗רֶת וּמַרְאֶ֙הָ֙ עָמֹ֣ק מִן־הָע֔וֹר צָרַ֣עַת הִ֔וא בַּמִּכְוָ֖ה פָּרָ֑חָה וְטִמֵּ֤א אֹתוֹ֙ הַכֹּהֵ֔ן נֶ֥גַע צָרַ֖עַת הִֽוא׃</p></div><div class="heb-s"><p>וראה אתה הכהן והנה נהפך שער לבן בבהרת ומראה עמק מן־העור צרעת הוא במכוה פרחה וטמא אתו הכהן נגע צרעת הוא׃</p></div></div>
+      <div class="texte-fr"><p>si le pontife, en l’examinant, constate que le poil, à l’endroit de la tache, est devenu blanc, et qu’elle paraît plus profonde que la peau, c’est une lèpre qui s’est développée sur la brûlure; le pontife le déclarera impur, c’est une plaie de lèpre.</p></div>
+    </div><div class="seif" id="v-13-26">
+      <span class="seif-num">13:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֣ם&thinsp;<b>׀</b> יִרְאֶ֣נָּה הַכֹּהֵ֗ן וְהִנֵּ֤ה אֵֽין־בַּבַּהֶ֙רֶת֙ שֵׂעָ֣ר לָבָ֔ן וּשְׁפָלָ֥הֿ אֵינֶ֛נָּה מִן־הָע֖וֹר וְהִ֣וא כֵהָ֑ה וְהִסְגִּיר֥וֹ הַכֹּהֵ֖ן שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ואם&thinsp;<b>׀</b> יראנה הכהן והנה אין־בבהרת שער לבן ושפלה איננה מן־העור והוא כהה והסגירו הכהן שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife observe que la tache n’a pas de poil blanc, qu’elle n’est pas plus basse que la peau et qu’elle est terne, il séquestrera l’homme durant sept jours,</p></div>
+    </div><div class="seif" id="v-13-27">
+      <span class="seif-num">13:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֥הוּ הַכֹּהֵ֖ן בַּיּ֣וֹם הַשְּׁבִיעִ֑י אִם־פָּשֹׂ֤ה תִפְשֶׂה֙ בָּע֔וֹר וְטִמֵּ֤א הַכֹּהֵן֙ אֹת֔וֹ נֶ֥גַע צָרַ֖עַת הִֽוא׃</p></div><div class="heb-s"><p>וראהו הכהן ביום השביעי אם־פשה תפשה בעור וטמא הכהן אתו נגע צרעת הוא׃</p></div></div>
+      <div class="texte-fr"><p>puis il l’examinera le septième jour. Si elle s’est étendue sur la peau, le pontife le déclarera impur, c’est une plaie de lèpre.</p></div>
+    </div><div class="seif" id="v-13-28">
+      <span class="seif-num">13:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־תַּחְתֶּ֩יהָ֩ תַעֲמֹ֨ד הַבַּהֶ֜רֶת לֹא־פָשְׂתָ֤ה בָעוֹר֙ וְהִ֣וא כֵהָ֔ה שְׂאֵ֥ת הַמִּכְוָ֖ה הִ֑וא וְטִֽהֲרוֹ֙ הַכֹּהֵ֔ן כִּֽי־צָרֶ֥בֶת הַמִּכְוָ֖ה הִֽוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואם־תחתיה תעמד הבהרת לא־פשתה בעור והוא כהה שאת המכוה הוא וטהרו הכהן כי־צרבת המכוה הוא׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Mais si la tache est restée stationnaire, sans s’étendre sur la peau, et est demeurée terne, ce n’est que la tumeur de la brûlure: le pontife le déclarera pur, car c’est la cicatrice de la brûlure.</p></div>
+    </div><div class="seif" id="v-13-29">
+      <span class="seif-num">13:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִישׁ֙ א֣וֹ אִשָּׁ֔ה כִּֽי־יִהְיֶ֥ה ב֖וֹ נָ֑גַע בְּרֹ֖אשׁ א֥וֹ בְזָקָֽן׃</p></div><div class="heb-s"><p>ואיש או אשה כי־יהיה בו נגע בראש או בזקן׃</p></div></div>
+      <div class="texte-fr"><p>Quand un homme ou une femme aura une plaie à la tête ou au menton,</p></div>
+    </div><div class="seif" id="v-13-30">
+      <span class="seif-num">13:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֨ה הַכֹּהֵ֜ן אֶת־הַנֶּ֗גַע וְהִנֵּ֤ה מַרְאֵ֙הוּ֙ עָמֹ֣ק מִן־הָע֔וֹר וּב֛וֹ שֵׂעָ֥ר צָהֹ֖ב דָּ֑ק וְטִמֵּ֨א אֹת֤וֹ הַכֹּהֵן֙ נֶ֣תֶק ה֔וּא צָרַ֧עַת הָרֹ֛אשׁ א֥וֹ הַזָּקָ֖ן הֽוּא׃</p></div><div class="heb-s"><p>וראה הכהן את־הנגע והנה מראהו עמק מן־העור ובו שער צהב דק וטמא אתו הכהן נתק הוא צרעת הראש או הזקן הוא׃</p></div></div>
+      <div class="texte-fr"><p>si le pontife observe que cette plaie paraît plus profonde que la peau et qu’il s’y trouve du poil jaune ténu, le pontife déclarera la personne impure: c’est une teigne, c’est la lèpre de la tête ou du menton.</p></div>
+    </div><div class="seif" id="v-13-31">
+      <span class="seif-num">13:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יִרְאֶ֨ה הַכֹּהֵ֜ן אֶת־נֶ֣גַע הַנֶּ֗תֶק וְהִנֵּ֤ה אֵין־מַרְאֵ֙הוּ֙ עָמֹ֣ק מִן־הָע֔וֹר וְשֵׂעָ֥ר שָׁחֹ֖ר אֵ֣ין בּ֑וֹ וְהִסְגִּ֧יר הַכֹּהֵ֛ן אֶת־נֶ֥גַע הַנֶּ֖תֶק שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>וכי־יראה הכהן את־נגע הנתק והנה אין־מראהו עמק מן־העור ושער שחר אין בו והסגיר הכהן את־נגע הנתק שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Mais si le pontife observe que cette plaie teigneuse ne paraît pas plus profonde que la peau, sans toutefois qu’il y ait du poil noir, il séquestrera la plaie teigneuse durant sept jours.</p></div>
+    </div><div class="seif" id="v-13-32">
+      <span class="seif-num">13:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֨ה הַכֹּהֵ֣ן אֶת־הַנֶּ֘גַע֮ בַּיּ֣וֹם הַשְּׁבִיעִי֒ וְהִנֵּה֙ לֹא־פָשָׂ֣ה הַנֶּ֔תֶק וְלֹא־הָ֥יָה ב֖וֹ שֵׂעָ֣ר צָהֹ֑ב וּמַרְאֵ֣ה הַנֶּ֔תֶק אֵ֥ין עָמֹ֖ק מִן־הָעֽוֹר׃</p></div><div class="heb-s"><p>וראה הכהן את־הנגע ביום השביעי והנה לא־פשה הנתק ולא־היה בו שער צהב ומראה הנתק אין עמק מן־העור׃</p></div></div>
+      <div class="texte-fr"><p>Et il visitera la plaie au septième jour: si la teigne n’a pas fait de progrès, si elle ne renferme pas de poil jaune, et que la teigne ne semble pas plus profonde que la peau,</p></div>
+    </div><div class="seif" id="v-13-33">
+      <span class="seif-num">13:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִ֨תְ<big>גַּ</big>לָּ֔ח וְאֶת־הַנֶּ֖תֶק לֹ֣א יְגַלֵּ֑חַ וְהִסְגִּ֨יר הַכֹּהֵ֧ן אֶת־הַנֶּ֛תֶק שִׁבְעַ֥ת יָמִ֖ים שֵׁנִֽית׃</p></div><div class="heb-s"><p>והת<big>ג</big>לח ואת־הנתק לא יגלח והסגיר הכהן את־הנתק שבעת ימים שנית׃</p></div></div>
+      <div class="texte-fr"><p>la personne se rasera, mais elle ne rasera point la partie teigneuse; et le pontife séquestrera cette plaie pour sept jours, une seconde fois.</p></div>
+    </div><div class="seif" id="v-13-34">
+      <span class="seif-num">13:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָה֩ הַכֹּהֵ֨ן אֶת־הַנֶּ֜תֶק בַּיּ֣וֹם הַשְּׁבִיעִ֗י וְ֠הִנֵּ֠ה לֹא־פָשָׂ֤ה הַנֶּ֙תֶק֙ בָּע֔וֹר וּמַרְאֵ֕הוּ אֵינֶ֥נּוּ עָמֹ֖ק מִן־הָע֑וֹר וְטִהַ֤ר אֹתוֹ֙ הַכֹּהֵ֔ן וְכִבֶּ֥ס בְּגָדָ֖יו וְטָהֵֽר׃</p></div><div class="heb-s"><p>וראה הכהן את־הנתק ביום השביעי והנה לא־פשה הנתק בעור ומראהו איננו עמק מן־העור וטהר אתו הכהן וכבס בגדיו וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Puis le pontife visitera la teigne au septième jour: si elle ne s’est pas étendue sur la peau et qu’elle ne paraisse pas plus profonde que celle-ci, le pontife déclarera pur l’individu, qui lavera ses vêtements et sera pur.</p></div>
+    </div><div class="seif" id="v-13-35">
+      <span class="seif-num">13:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־פָּשֹׂ֥ה יִפְשֶׂ֛ה הַנֶּ֖תֶק בָּע֑וֹר אַחֲרֵ֖י טׇהֳרָתֽוֹ׃</p></div><div class="heb-s"><p>ואם־פשה יפשה הנתק בעור אחרי טהרתו׃</p></div></div>
+      <div class="texte-fr"><p>Mais si la teigne vient à s’étendre sur la peau après cette déclaration de pureté,</p></div>
+    </div><div class="seif" id="v-13-36">
+      <span class="seif-num">13:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֙הוּ֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖תֶק בָּע֑וֹר לֹֽא־יְבַקֵּ֧ר הַכֹּהֵ֛ן לַשֵּׂעָ֥ר הַצָּהֹ֖ב טָמֵ֥א הֽוּא׃</p></div><div class="heb-s"><p>וראהו הכהן והנה פשה הנתק בעור לא־יבקר הכהן לשער הצהב טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>le pontife constatera que la teigne s’est étendue sur la peau; il n’a pas à s’enquérir du poil jaune: la personne est impure.</p></div>
+    </div><div class="seif" id="v-13-37">
+      <span class="seif-num">13:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בְּעֵינָיו֩ עָמַ֨ד הַנֶּ֜תֶק וְשֵׂעָ֨ר שָׁחֹ֧ר צָֽמַח־בּ֛וֹ נִרְפָּ֥א הַנֶּ֖תֶק טָה֣וֹר ה֑וּא וְטִהֲר֖וֹ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואם־בעיניו עמד הנתק ושער שחר צמח־בו נרפא הנתק טהור הוא וטהרו הכהן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Que si la teigne lui montre encore le même aspect, et qu’il y soit venu du poil noir, c’est la guérison de la teigne: elle est pure, le pontife la déclarera pure.</p></div>
+    </div><div class="seif" id="v-13-38">
+      <span class="seif-num">13:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִישׁ֙ אֽוֹ־אִשָּׁ֔ה כִּֽי־יִהְיֶ֥ה בְעוֹר־בְּשָׂרָ֖ם בֶּהָרֹ֑ת בֶּהָרֹ֖ת לְבָנֹֽת׃</p></div><div class="heb-s"><p>ואיש או־אשה כי־יהיה בעור־בשרם בהרת בהרת לבנת׃</p></div></div>
+      <div class="texte-fr"><p>Si un homme ou une femme a la peau du corps parsemée de taches blanches,</p></div>
+    </div><div class="seif" id="v-13-39">
+      <span class="seif-num">13:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה הַכֹּהֵ֗ן וְהִנֵּ֧ה בְעוֹר־בְּשָׂרָ֛ם בֶּהָרֹ֖ת כֵּה֣וֹת לְבָנֹ֑ת בֹּ֥הַק ה֛וּא פָּרַ֥ח בָּע֖וֹר טָה֥וֹר הֽוּא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וראה הכהן והנה בעור־בשרם בהרת כהות לבנת בהק הוא פרח בעור טהור הוא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et que le pontife, examinant, constate sur leur peau des taches d’un blanc obscur, c’est un exanthème qui s’est développé sur la peau: Il est pur.</p></div>
+    </div><div class="seif" id="v-13-40">
+      <span class="seif-num">13:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּ֥י יִמָּרֵ֖ט רֹאשׁ֑וֹ קֵרֵ֥חַ ה֖וּא טָה֥וֹר הֽוּא׃</p></div><div class="heb-s"><p>ואיש כי ימרט ראשו קרח הוא טהור הוא׃</p></div></div>
+      <div class="texte-fr"><p>Si la tête d’un homme se dégarnit de cheveux, celui-là n’est que chauve, il est pur.</p></div>
+    </div><div class="seif" id="v-13-41">
+      <span class="seif-num">13:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם֙ מִפְּאַ֣ת פָּנָ֔יו יִמָּרֵ֖ט רֹאשׁ֑וֹ גִּבֵּ֥חַ ה֖וּא טָה֥וֹר הֽוּא׃</p></div><div class="heb-s"><p>ואם מפאת פניו ימרט ראשו גבח הוא טהור הוא׃</p></div></div>
+      <div class="texte-fr"><p>Sa tête se dégarnit-elle du côté de sa face, il est demi-chauve, il est encore pur.</p></div>
+    </div><div class="seif" id="v-13-42">
+      <span class="seif-num">13:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יִהְיֶ֤ה בַקָּרַ֙חַת֙ א֣וֹ בַגַּבַּ֔חַת נֶ֖גַע לָבָ֣ן אֲדַמְדָּ֑ם צָרַ֤עַת פֹּרַ֙חַת֙ הִ֔וא בְּקָרַחְתּ֖וֹ א֥וֹ בְגַבַּחְתּֽוֹ׃</p></div><div class="heb-s"><p>וכי־יהיה בקרחת או בגבחת נגע לבן אדמדם צרעת פרחת הוא בקרחתו או בגבחתו׃</p></div></div>
+      <div class="texte-fr"><p>Mais s’il survient, sur le derrière ou le devant de cette tête chauve, une plaie blanche-vermeille, c’est une lèpre qui se développe sur la calvitie postérieure ou antérieure.</p></div>
+    </div><div class="seif" id="v-13-43">
+      <span class="seif-num">13:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֨ה אֹת֜וֹ הַכֹּהֵ֗ן וְהִנֵּ֤ה שְׂאֵת־הַנֶּ֙גַע֙ לְבָנָ֣ה אֲדַמְדֶּ֔מֶת בְּקָרַחְתּ֖וֹ א֣וֹ בְגַבַּחְתּ֑וֹ כְּמַרְאֵ֥ה צָרַ֖עַת ע֥וֹר בָּשָֽׂר׃</p></div><div class="heb-s"><p>וראה אתו הכהן והנה שאת־הנגע לבנה אדמדמת בקרחתו או בגבחתו כמראה צרעת עור בשר׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife, en l’inspectant, observe que la tumeur de la plaie, sur le derrière ou le devant de la tête, est blanche-vermeille, comme l’aspect de la lèpre sur la peau du corps,</p></div>
+    </div><div class="seif" id="v-13-44">
+      <span class="seif-num">13:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִישׁ־צָר֥וּעַ ה֖וּא טָמֵ֣א ה֑וּא טַמֵּ֧א יְטַמְּאֶ֛נּוּ הַכֹּהֵ֖ן בְּרֹאשׁ֥וֹ נִגְעֽוֹ׃</p></div><div class="heb-s"><p>איש־צרוע הוא טמא הוא טמא יטמאנו הכהן בראשו נגעו׃</p></div></div>
+      <div class="texte-fr"><p>c’est un individu lépreux, il est impur: le pontife doit le déclarer impur, sa tête est le siège de la plaie.</p></div>
+    </div><div class="seif" id="v-13-45">
+      <span class="seif-num">13:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַצָּר֜וּעַ אֲשֶׁר־בּ֣וֹ הַנֶּ֗גַע בְּגָדָ֞יו יִהְי֤וּ פְרֻמִים֙ וְרֹאשׁוֹ֙ יִהְיֶ֣ה פָר֔וּעַ וְעַל־שָׂפָ֖ם יַעְטֶ֑ה וְטָמֵ֥א&thinsp;<small>׀</small>&thinsp;טָמֵ֖א יִקְרָֽא׃</p></div><div class="heb-s"><p>והצרוע אשר־בו הנגע בגדיו יהיו פרמים וראשו יהיה פרוע ועל־שפם יעטה וטמא&thinsp;<small>׀</small>&thinsp;טמא יקרא׃</p></div></div>
+      <div class="texte-fr"><p>Or, le lépreux chez qui l’affection est constatée, doit avoir les vêtements déchirés, la tête découverte, s’envelopper jusqu’à la moustache et crier: impur! Impur!</p></div>
+    </div><div class="seif" id="v-13-46">
+      <span class="seif-num">13:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־יְמֵ֞י אֲשֶׁ֨ר הַנֶּ֥גַע בּ֛וֹ יִטְמָ֖א טָמֵ֣א ה֑וּא בָּדָ֣ד יֵשֵׁ֔ב מִח֥וּץ לַֽמַּחֲנֶ֖ה מוֹשָׁבֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כל־ימי אשר הנגע בו יטמא טמא הוא בדד ישב מחוץ למחנה מושבו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Tant qu’il gardera cette plaie, il sera impur, parce qu’elle est impure; il demeurera Isolé, sa résidence sera hors du camp.</p></div>
+    </div><div class="seif" id="v-13-47">
+      <span class="seif-num">13:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַבֶּ֕גֶד כִּֽי־יִהְיֶ֥ה ב֖וֹ נֶ֣גַע צָרָ֑עַת בְּבֶ֣גֶד צֶ֔מֶר א֖וֹ בְּבֶ֥גֶד פִּשְׁתִּֽים׃</p></div><div class="heb-s"><p>והבגד כי־יהיה בו נגע צרעת בבגד צמר או בבגד פשתים׃</p></div></div>
+      <div class="texte-fr"><p>Si une altération lépreuse a lieu dans une étoffe, étoffe de laine ou étoffe de lin,</p></div>
+    </div><div class="seif" id="v-13-48">
+      <span class="seif-num">13:48</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֤וֹ בִֽשְׁתִי֙ א֣וֹ בְעֵ֔רֶב לַפִּשְׁתִּ֖ים וְלַצָּ֑מֶר א֣וֹ בְע֔וֹר א֖וֹ בְּכׇל־מְלֶ֥אכֶת עֽוֹר׃</p></div><div class="heb-s"><p>או בשתי או בערב לפשתים ולצמר או בעור או בכל־מלאכת עור׃</p></div></div>
+      <div class="texte-fr"><p>ou seulement dans la chaîne ou dans la trame du lin ou de la laine, ou dans une peau, ou dans quelque ouvrage en peau;</p></div>
+    </div><div class="seif" id="v-13-49">
+      <span class="seif-num">13:49</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֨ה הַנֶּ֜גַע יְרַקְרַ֣ק&thinsp;<b>׀</b> א֣וֹ אֲדַמְדָּ֗ם בַּבֶּ֩גֶד֩ א֨וֹ בָע֜וֹר אֽוֹ־בַשְּׁתִ֤י אוֹ־בָעֵ֙רֶב֙ א֣וֹ בְכׇל־כְּלִי־ע֔וֹר נֶ֥גַע צָרַ֖עַת ה֑וּא וְהׇרְאָ֖ה אֶת־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>והיה הנגע ירקרק&thinsp;<b>׀</b> או אדמדם בבגד או בעור או־בשתי או־בערב או בכל־כלי־עור נגע צרעת הוא והראה את־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>si la partie attaquée est d’un vert ou d’un rouge foncé, dans l’étoffe ou dans la peau, dans la chaîne ou dans la trame, ou dans l’objet quelconque fait de peau, c’est une plaie de lèpre, et elle sera montrée au pontife.</p></div>
+    </div><div class="seif" id="v-13-50">
+      <span class="seif-num">13:50</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֥ה הַכֹּהֵ֖ן אֶת־הַנָּ֑גַע וְהִסְגִּ֥יר אֶת־הַנֶּ֖גַע שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>וראה הכהן את־הנגע והסגיר את־הנגע שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife examinera la plaie et la fera enfermer durant sept jours.</p></div>
+    </div><div class="seif" id="v-13-51">
+      <span class="seif-num">13:51</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֨ה אֶת־הַנֶּ֜גַע בַּיּ֣וֹם הַשְּׁבִיעִ֗י כִּֽי־פָשָׂ֤ה הַנֶּ֙גַע֙ בַּ֠בֶּ֠גֶד אֽוֹ־בַשְּׁתִ֤י אֽוֹ־בָעֵ֙רֶב֙ א֣וֹ בָע֔וֹר לְכֹ֛ל אֲשֶׁר־יֵעָשֶׂ֥ה הָע֖וֹר לִמְלָאכָ֑ה צָרַ֧עַת מַמְאֶ֛רֶת הַנֶּ֖גַע טָמֵ֥א הֽוּא׃</p></div><div class="heb-s"><p>וראה את־הנגע ביום השביעי כי־פשה הנגע בבגד או־בשתי או־בערב או בעור לכל אשר־יעשה העור למלאכה צרעת ממארת הנגע טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>S’il constate, en visitant la plaie au septième jour, qu’elle a grandi dans l’étoffe, ou dans la chaîne ou la trame, ou dans la peau, à quelque ouvrage que cette peau ait été employée, c’est une lèpre corrosive que cette plaie: elle est impure.</p></div>
+    </div><div class="seif" id="v-13-52">
+      <span class="seif-num">13:52</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׂרַ֨ף אֶת־הַבֶּ֜גֶד א֥וֹ אֶֽת־הַשְּׁתִ֣י&thinsp;<b>׀</b> א֣וֹ אֶת־הָעֵ֗רֶב בַּצֶּ֙מֶר֙ א֣וֹ בַפִּשְׁתִּ֔ים א֚וֹ אֶת־כׇּל־כְּלִ֣י הָע֔וֹר אֲשֶׁר־יִהְיֶ֥ה ב֖וֹ הַנָּ֑גַע כִּֽי־צָרַ֤עַת מַמְאֶ֙רֶת֙ הִ֔וא בָּאֵ֖שׁ תִּשָּׂרֵֽף׃</p></div><div class="heb-s"><p>ושרף את־הבגד או את־השתי&thinsp;<b>׀</b> או את־הערב בצמר או בפשתים או את־כל־כלי העור אשר־יהיה בו הנגע כי־צרעת ממארת הוא באש תשרף׃</p></div></div>
+      <div class="texte-fr"><p>On brûlera l’étoffe, ou la chaîne ou la trame, soit de laine soit de lin, ou l’objet quelconque fait de peau, qui est atteint de cette plaie; car c’est une lèpre corrosive, elle doit être consumée par le feu.</p></div>
+    </div><div class="seif" id="v-13-53">
+      <span class="seif-num">13:53</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם֮ יִרְאֶ֣ה הַכֹּהֵן֒ וְהִנֵּה֙ לֹא־פָשָׂ֣ה הַנֶּ֔גַע בַּבֶּ֕גֶד א֥וֹ בַשְּׁתִ֖י א֣וֹ בָעֵ֑רֶב א֖וֹ בְּכׇל־כְּלִי־עֽוֹר׃</p></div><div class="heb-s"><p>ואם יראה הכהן והנה לא־פשה הנגע בבגד או בשתי או בערב או בכל־כלי־עור׃</p></div></div>
+      <div class="texte-fr"><p>Mais si le pontife observe que la plaie n’a pas grandi dans l’étoffe, dans la chaîne ou la trame, ou dans l’objet fait de peau,</p></div>
+    </div><div class="seif" id="v-13-54">
+      <span class="seif-num">13:54</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוָּה֙ הַכֹּהֵ֔ן וְכִ֨בְּס֔וּ אֵ֥ת אֲשֶׁר־בּ֖וֹ הַנָּ֑גַע וְהִסְגִּיר֥וֹ שִׁבְעַת־יָמִ֖ים שֵׁנִֽית׃</p></div><div class="heb-s"><p>וצוה הכהן וכבסו את אשר־בו הנגע והסגירו שבעת־ימים שנית׃</p></div></div>
+      <div class="texte-fr"><p>il ordonnera qu’on lave la partie altérée; puis il la fera de nouveau enfermer pour sept jours.</p></div>
+    </div><div class="seif" id="v-13-55">
+      <span class="seif-num">13:55</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֨ה הַכֹּהֵ֜ן אַחֲרֵ֣י&thinsp;<b>׀</b> הֻכַּבֵּ֣ס אֶת־הַנֶּ֗גַע וְ֠הִנֵּ֠ה לֹֽא־הָפַ֨ךְ הַנֶּ֤גַע אֶת־עֵינוֹ֙ וְהַנֶּ֣גַע לֹֽא־פָשָׂ֔ה טָמֵ֣א ה֔וּא בָּאֵ֖שׁ תִּשְׂרְפֶ֑נּוּ פְּחֶ֣תֶת הִ֔וא בְּקָרַחְתּ֖וֹ א֥וֹ בְגַבַּחְתּֽוֹ׃</p></div><div class="heb-s"><p>וראה הכהן אחרי&thinsp;<b>׀</b> הכבס את־הנגע והנה לא־הפך הנגע את־עינו והנגע לא־פשה טמא הוא באש תשרפנו פחתת הוא בקרחתו או בגבחתו׃</p></div></div>
+      <div class="texte-fr"><p>Si le pontife observe que cette plaie, après avoir été lavée, n’a pas changé d’aspect et qu’elle ne s’est pas agrandie, elle est impure, tu la consumeras par le feu: il y a érosion sur l’envers ou sur l’endroit de l’étoffe.</p></div>
+    </div><div class="seif" id="v-13-56">
+      <span class="seif-num">13:56</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם֮ רָאָ֣ה הַכֹּהֵן֒ וְהִנֵּה֙ כֵּהָ֣ה הַנֶּ֔גַע אַחֲרֵ֖י הֻכַּבֵּ֣ס אֹת֑וֹ וְקָרַ֣ע אֹת֗וֹ מִן־הַבֶּ֙גֶד֙ א֣וֹ מִן־הָע֔וֹר א֥וֹ מִן־הַשְּׁתִ֖י א֥וֹ מִן־הָעֵֽרֶב׃</p></div><div class="heb-s"><p>ואם ראה הכהן והנה כהה הנגע אחרי הכבס אתו וקרע אתו מן־הבגד או מן־העור או מן־השתי או מן־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Mais le pontife observe-t-il que la plaie a pâli après avoir été lavée, il déchirera cette partie de l’étoffe ou de la peau, ou de la chaîne ou de la trame;</p></div>
+    </div><div class="seif" id="v-13-57">
+      <span class="seif-num">13:57</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־תֵּרָאֶ֨ה ע֜וֹד בַּ֠בֶּ֠גֶד אֽוֹ־בַשְּׁתִ֤י אֽוֹ־בָעֵ֙רֶב֙ א֣וֹ בְכׇל־כְּלִי־ע֔וֹר פֹּרַ֖חַת הִ֑וא בָּאֵ֣שׁ תִּשְׂרְפֶ֔נּוּ אֵ֥ת אֲשֶׁר־בּ֖וֹ הַנָּֽגַע׃</p></div><div class="heb-s"><p>ואם־תראה עוד בבגד או־בשתי או־בערב או בכל־כלי־עור פרחת הוא באש תשרפנו את אשר־בו הנגע׃</p></div></div>
+      <div class="texte-fr"><p>et si la plaie reparaît dans l’étoffe, dans la chaîne ou dans la trame, ou dans l’objet fait de peau, c’est une recrudescence: tu dois le brûler, cet objet où gît la plaie.</p></div>
+    </div><div class="seif" id="v-13-58">
+      <span class="seif-num">13:58</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַבֶּ֡גֶד אֽוֹ־הַשְּׁתִ֨י אוֹ־הָעֵ֜רֶב אֽוֹ־כׇל־כְּלִ֤י הָעוֹר֙ אֲשֶׁ֣ר תְּכַבֵּ֔ס וְסָ֥ר מֵהֶ֖ם הַנָּ֑גַע וְכֻבַּ֥ס שֵׁנִ֖ית וְטָהֵֽר׃</p></div><div class="heb-s"><p>והבגד או־השתי או־הערב או־כל־כלי העור אשר תכבס וסר מהם הנגע וכבס שנית וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Pour l’étoffe, la chaîne ou la trame, ou l’objet fait de peau, que tu auras lavé et d’où la plaie aura disparu, il sera lavé une seconde fois et sera pur.</p></div>
+    </div><div class="seif" id="v-13-59">
+      <span class="seif-num">13:59</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֠את תּוֹרַ֨ת נֶֽגַע־צָרַ֜עַת בֶּ֥גֶד הַצֶּ֣מֶר&thinsp;<b>׀</b> א֣וֹ הַפִּשְׁתִּ֗ים א֤וֹ הַשְּׁתִי֙ א֣וֹ הָעֵ֔רֶב א֖וֹ כׇּל־כְּלִי־ע֑וֹר לְטַהֲר֖וֹ א֥וֹ לְטַמְּאֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>זאת תורת נגע־צרעת בגד הצמר&thinsp;<b>׀</b> או הפשתים או השתי או הערב או כל־כלי־עור לטהרו או לטמאו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Telle est la règle concernant l’altération lépreuse sur l’étoffe de laine ou de lin, ou sur la chaîne ou la trame, ou sur tout objet en peau, qu’il s’agira de déclarer purs ou impurs."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel parla à Moïse en ces termes: &quot;Parle ainsi aux enfants d’Israël: lorsqu’une femme, ayant conçu, enfantera un mâle, elle sera impure durant sept jours, comme lorsqu’elle est isolée à cause de sa souffrance. Au huitième jour, on circoncira l’excroissance de l’enfant. Puis, trente-trois jours durant, la femme restera dans le sang de purification: elle ne touchera à rien de consacré, elle n’entrera point dans le saint lieu, que les jours de sa purification ne soient accomplis. Si c’est une fille qu’elle met au monde, elle sera impure deux semaines, comme lors de son isolement; puis, durant soixante-six jours, elle restera dans le sang de purification. Quand sera accompli le temps de sa purification, pour un garçon ou pour une fille, elle apportera un agneau d’un an comme holocauste, et une jeune colombe ou une tourterelle comme expiatoire, à l’entrée de la Tente d’assignation, et les remettra au pontife. Celui-ci les offrira devant le Seigneur, fera expiation pour elle, et elle sera purifiée du flux de son sang. Telle est la règle de la femme qui enfante, qu’il s’agisse d’un garçon ou qu’il s’agisse d’une fille. Si ses moyens ne lui permettent pas d’offrir un agneau, elle prendra deux tourterelles ou deux jeunes colombes, l’une pour holocauste, l’autre pour expiatoire; et le pontife fera expiation pour elle, et elle sera purifiée.&quot;</p>
-      <p>L’Éternel parla ainsi à Moïse et à Aaron: &quot;S’il se forme sur la peau d’un homme une tumeur, ou une dartre ou une tache, pouvant dégénérer sur cette peau en affection lépreuse, il sera présenté à Aaron le pontife ou à quelqu’un des pontifes, ses fils. Le pontife examinera cette affection de la peau: si le poil qui s’y trouve est devenu blanc, et que la plaie paraisse plus profonde que la peau du corps, c’est une plaie de lèpre. Cela constaté, le pontife le déclarera impur. Si c’est une tache blanche qu’on voit à la peau, mais qui ne paraisse pas plus profonde que la peau, et qu’elle n’ait pas fait blanchir le poil, le pontife séquestrera la plaie pendant sept jours. Puis il l’examinera le septième jour: si la plaie lui présente le même aspect, si elle n’a pas fait de progrès sur la peau, le pontife la séquestrera une seconde fois pour sept jours. Et le pontife, au septième jour, l’examinera de nouveau: si cette plaie s’est affaiblie et qu’elfe n’ait fait aucun progrès sur la peau, le pontife la déclarera pure, c’est une simple dartre: l’homme lavera ses vêtements et sera pur. Mais si cette dartre venait à s’étendre sur la peau après qu’il s’est présenté au pontife et a été déclaré pur, il se fera visiter de nouveau par le pontife. Celui-ci constatera que la dartre s’est étendue sur la peau, et alors il le déclarera impur: c’est la lèpre. Lorsqu’une affection lépreuse sera observée sur un individu, il sera amené devant le pontife. Si le pontife remarque qu’il existe sur la peau une tumeur blanche, laquelle ait fait blanchir le poil, ou qu’une chair vive et saine existe au milieu de la tumeur, c’est une lèpre invétérée dans la peau du corps, et le pontife le déclarera impur; Il ne le séquestrera point, car il est impur. Que st la lèpre va se développant sur la peau, et qu’elle couvre toute la peau affectée, depuis la tête jusqu’aux pieds, partout où atteint le regard du pontife, celui-ci constatera que la lèpre a gagné tout le corps, et il déclarera cette plaie pure: elle a complètement blanchi la peau, elle est pure. Mais, du moment qu’il s’y manifeste une chair vive, elle est impure. Quand le pontife observera cette chair vive, il la déclarera impure: la chair vive est impure, il y a lèpre. Toutefois, si cette chair vive redevient blanche, on se présentera au pontife; le pontife constatera que la plaie a tourné au blanc, et il déclarera cette plaie pure: elle est pure. S’il s’est formé sur un corps, à la peau, un ulcère, et qu’il se soit guéri, mais qu’au siège de cet ulcère il survienne une tumeur blanche ou une tache blanche-vermeille, on se fera visiter par le pontife. Si le pontife observe qu’elle paraît plus basse que la peau et que le poil y est devenu blanc, le pontife déclarera l’homme impur: c’est une plaie de lèpre, qui s’est développée sur l’ulcère. Si le pontife constate qu’elle ne renferme pas de poil blanc, qu’elle n’est pas plus basse que la peau et qu’elle est terne, il séquestrera l’homme durant sept jours. Si alors elle s’est étendue sur la peau, le pontife le déclarera impur, c’est une plaie. Mais la tache demeure-t-elle où elle était, sans accroissement, c’est la cicatrice de l’ulcère, et le pontife le déclarera pur. Pareillement, s’il existe une brûlure à la peau d’une personne, et que cette brûlure, en se guérissant, forme une tache blanche-vermeille, ou blanche, si le pontife, en l’examinant, constate que le poil, à l’endroit de la tache, est devenu blanc, et qu’elle paraît plus profonde que la peau, c’est une lèpre qui s’est développée sur la brûlure; le pontife le déclarera impur, c’est une plaie de lèpre. Si le pontife observe que la tache n’a pas de poil blanc, qu’elle n’est pas plus basse que la peau et qu’elle est terne, il séquestrera l’homme durant sept jours, puis il l’examinera le septième jour. Si elle s’est étendue sur la peau, le pontife le déclarera impur, c’est une plaie de lèpre. Mais si la tache est restée stationnaire, sans s’étendre sur la peau, et est demeurée terne, ce n’est que la tumeur de la brûlure: le pontife le déclarera pur, car c’est la cicatrice de la brûlure. Quand un homme ou une femme aura une plaie à la tête ou au menton, si le pontife observe que cette plaie paraît plus profonde que la peau et qu’il s’y trouve du poil jaune ténu, le pontife déclarera la personne impure: c’est une teigne, c’est la lèpre de la tête ou du menton. Mais si le pontife observe que cette plaie teigneuse ne paraît pas plus profonde que la peau, sans toutefois qu’il y ait du poil noir, il séquestrera la plaie teigneuse durant sept jours. Et il visitera la plaie au septième jour: si la teigne n’a pas fait de progrès, si elle ne renferme pas de poil jaune, et que la teigne ne semble pas plus profonde que la peau, la personne se rasera, mais elle ne rasera point la partie teigneuse; et le pontife séquestrera cette plaie pour sept jours, une seconde fois. Puis le pontife visitera la teigne au septième jour: si elle ne s’est pas étendue sur la peau et qu’elle ne paraisse pas plus profonde que celle-ci, le pontife déclarera pur l’individu, qui lavera ses vêtements et sera pur. Mais si la teigne vient à s’étendre sur la peau après cette déclaration de pureté, le pontife constatera que la teigne s’est étendue sur la peau; il n’a pas à s’enquérir du poil jaune: la personne est impure. Que si la teigne lui montre encore le même aspect, et qu’il y soit venu du poil noir, c’est la guérison de la teigne: elle est pure, le pontife la déclarera pure. Si un homme ou une femme a la peau du corps parsemée de taches blanches, et que le pontife, examinant, constate sur leur peau des taches d’un blanc obscur, c’est un exanthème qui s’est développé sur la peau: Il est pur. Si la tête d’un homme se dégarnit de cheveux, celui-là n’est que chauve, il est pur. Sa tête se dégarnit-elle du côté de sa face, il est demi-chauve, il est encore pur. Mais s’il survient, sur le derrière ou le devant de cette tête chauve, une plaie blanche-vermeille, c’est une lèpre qui se développe sur la calvitie postérieure ou antérieure. Si le pontife, en l’inspectant, observe que la tumeur de la plaie, sur le derrière ou le devant de la tête, est blanche-vermeille, comme l’aspect de la lèpre sur la peau du corps, c’est un individu lépreux, il est impur: le pontife doit le déclarer impur, sa tête est le siège de la plaie. Or, le lépreux chez qui l’affection est constatée, doit avoir les vêtements déchirés, la tête découverte, s’envelopper jusqu’à la moustache et crier: impur! Impur! Tant qu’il gardera cette plaie, il sera impur, parce qu’elle est impure; il demeurera Isolé, sa résidence sera hors du camp. Si une altération lépreuse a lieu dans une étoffe, étoffe de laine ou étoffe de lin, ou seulement dans la chaîne ou dans la trame du lin ou de la laine, ou dans une peau, ou dans quelque ouvrage en peau; si la partie attaquée est d’un vert ou d’un rouge foncé, dans l’étoffe ou dans la peau, dans la chaîne ou dans la trame, ou dans l’objet quelconque fait de peau, c’est une plaie de lèpre, et elle sera montrée au pontife. Le pontife examinera la plaie et la fera enfermer durant sept jours. S’il constate, en visitant la plaie au septième jour, qu’elle a grandi dans l’étoffe, ou dans la chaîne ou la trame, ou dans la peau, à quelque ouvrage que cette peau ait été employée, c’est une lèpre corrosive que cette plaie: elle est impure. On brûlera l’étoffe, ou la chaîne ou la trame, soit de laine soit de lin, ou l’objet quelconque fait de peau, qui est atteint de cette plaie; car c’est une lèpre corrosive, elle doit être consumée par le feu. Mais si le pontife observe que la plaie n’a pas grandi dans l’étoffe, dans la chaîne ou la trame, ou dans l’objet fait de peau, il ordonnera qu’on lave la partie altérée; puis il la fera de nouveau enfermer pour sept jours. Si le pontife observe que cette plaie, après avoir été lavée, n’a pas changé d’aspect et qu’elle ne s’est pas agrandie, elle est impure, tu la consumeras par le feu: il y a érosion sur l’envers ou sur l’endroit de l’étoffe. Mais le pontife observe-t-il que la plaie a pâli après avoir été lavée, il déchirera cette partie de l’étoffe ou de la peau, ou de la chaîne ou de la trame; et si la plaie reparaît dans l’étoffe, dans la chaîne ou dans la trame, ou dans l’objet fait de peau, c’est une recrudescence: tu dois le brûler, cet objet où gît la plaie. Pour l’étoffe, la chaîne ou la trame, ou l’objet fait de peau, que tu auras lavé et d’où la plaie aura disparu, il sera lavé une seconde fois et sera pur. Telle est la règle concernant l’altération lépreuse sur l’étoffe de laine ou de lin, ou sur la chaîne ou la trame, ou sur tout objet en peau, qu’il s’agira de déclarer purs ou impurs.&quot;</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -277,6 +577,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Le Rambam (Michné Torah, Hilkhot Mila 1:9) écrit que la circoncision faite à son moment, au huitième jour, repousse l'interdiction de travail du Chabbat. Faite hors de son temps, elle ne repousse ni le Chabbat ni les fêtes. Le Choulhan Aroukh (Yoré Déa 262:1) précise que l'on ne circoncit qu'à partir du lever du soleil du huitième jour, et que toute la journée est valable, mais que l'on s'empresse de faire la mitsva et que le moment idéal est le matin.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_shemini.html">← Shemini</a><a class="hbtn qcm" href="qcm_paracha_tazria.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_metzora.html">Metzora →</a></div>
 </main>
 
 <footer>

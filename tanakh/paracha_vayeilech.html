@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Devarim · Paracha</div>
     <h1>Vayélèkh – Les adieux de Moïse, Josué et le Hakhel</h1>
     <p>Torah, Devarim (Deuteronomy 31:1-30)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_nitzavim.html">← Nitsavim</a><a class="hbtn qcm" href="qcm_paracha_vayeilech.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_haazinu.html">Haazinou →</a></div>
   </div>
 </header>
 
@@ -161,83 +202,138 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>וַיֵּ֖לֶךְ מֹשֶׁ֑ה וַיְדַבֵּ֛ר אֶת־הַדְּבָרִ֥ים הָאֵ֖לֶּה אֶל־כׇּל־יִשְׂרָאֵֽל׃</p>
-      <p>וַיֹּ֣אמֶר אֲלֵהֶ֗ם בֶּן־מֵאָה֩ וְעֶשְׂרִ֨ים שָׁנָ֤ה אָנֹכִי֙ הַיּ֔וֹם לֹא־אוּכַ֥ל ע֖וֹד לָצֵ֣את וְלָב֑וֹא וַֽיהֹוָה֙ אָמַ֣ר אֵלַ֔י לֹ֥א תַעֲבֹ֖ר אֶת־הַיַּרְדֵּ֥ן הַזֶּֽה׃</p>
-      <p>יְהֹוָ֨ה אֱלֹהֶ֜יךָ ה֣וּא&thinsp;<b>׀</b> עֹבֵ֣ר לְפָנֶ֗יךָ הֽוּא־יַשְׁמִ֞יד אֶת־הַגּוֹיִ֥ם הָאֵ֛לֶּה מִלְּפָנֶ֖יךָ וִירִשְׁתָּ֑ם יְהוֹשֻׁ֗עַ ה֚וּא עֹבֵ֣ר לְפָנֶ֔יךָ כַּאֲשֶׁ֖ר דִּבֶּ֥ר יְהֹוָֽה׃</p>
-      <p>וְעָשָׂ֤ה יְהֹוָה֙ לָהֶ֔ם כַּאֲשֶׁ֣ר עָשָׂ֗ה לְסִיח֥וֹן וּלְע֛וֹג מַלְכֵ֥י הָאֱמֹרִ֖י וּלְאַרְצָ֑ם אֲשֶׁ֥ר הִשְׁמִ֖יד אֹתָֽם׃</p>
-      <p>וּנְתָנָ֥ם יְהֹוָ֖ה לִפְנֵיכֶ֑ם וַעֲשִׂיתֶ֣ם לָהֶ֔ם כְּכׇ֨ל־הַמִּצְוָ֔ה אֲשֶׁ֥ר צִוִּ֖יתִי אֶתְכֶֽם׃</p>
-      <p>חִזְק֣וּ וְאִמְצ֔וּ אַל־תִּֽירְא֥וּ וְאַל־תַּעַרְצ֖וּ מִפְּנֵיהֶ֑ם כִּ֣י&thinsp;<b>׀</b> יְהֹוָ֣ה אֱלֹהֶ֗יךָ ה֚וּא הַהֹלֵ֣ךְ עִמָּ֔ךְ לֹ֥א יַרְפְּךָ֖ וְלֹ֥א יַעַזְבֶֽךָּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>וַיִּקְרָ֨א מֹשֶׁ֜ה לִיהוֹשֻׁ֗עַ וַיֹּ֨אמֶר אֵלָ֜יו לְעֵינֵ֣י כׇל־יִשְׂרָאֵל֮ חֲזַ֣ק וֶאֱמָץ֒ כִּ֣י אַתָּ֗ה תָּבוֹא֙ אֶת־הָעָ֣ם הַזֶּ֔ה אֶל־הָאָ֕רֶץ אֲשֶׁ֨ר נִשְׁבַּ֧ע יְהֹוָ֛ה לַאֲבֹתָ֖ם לָתֵ֣ת לָהֶ֑ם וְאַתָּ֖ה תַּנְחִילֶ֥נָּה אוֹתָֽם׃</p>
-      <p>וַיהֹוָ֞ה ה֣וּא&thinsp;<b>׀</b> הַהֹלֵ֣ךְ לְפָנֶ֗יךָ ה֚וּא יִהְיֶ֣ה עִמָּ֔ךְ לֹ֥א יַרְפְּךָ֖ וְלֹ֣א יַעַזְבֶ֑ךָּ לֹ֥א תִירָ֖א וְלֹ֥א תֵחָֽת׃</p>
-      <p>וַיִּכְתֹּ֣ב מֹשֶׁה֮ אֶת־הַתּוֹרָ֣ה הַזֹּאת֒ וַֽיִּתְּנָ֗הּ אֶל־הַכֹּֽהֲנִים֙ בְּנֵ֣י לֵוִ֔י הַנֹּ֣שְׂאִ֔ים אֶת־אֲר֖וֹן בְּרִ֣ית יְהֹוָ֑ה וְאֶל־כׇּל־זִקְנֵ֖י יִשְׂרָאֵֽל׃</p>
-      <p>וַיְצַ֥ו מֹשֶׁ֖ה אוֹתָ֣ם לֵאמֹ֑ר מִקֵּ֣ץ&thinsp;<b>׀</b> שֶׁ֣בַע שָׁנִ֗ים בְּמֹעֵ֛ד שְׁנַ֥ת הַשְּׁמִטָּ֖ה בְּחַ֥ג הַסֻּכּֽוֹת׃</p>
-      <p>בְּב֣וֹא כׇל־יִשְׂרָאֵ֗ל לֵֽרָאוֹת֙ אֶת־פְּנֵי֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ בַּמָּק֖וֹם אֲשֶׁ֣ר יִבְחָ֑ר תִּקְרָ֞א אֶת־הַתּוֹרָ֥ה הַזֹּ֛את נֶ֥גֶד כׇּל־יִשְׂרָאֵ֖ל בְּאׇזְנֵיהֶֽם׃</p>
-      <p>הַקְהֵ֣ל אֶת־הָעָ֗ם הָֽאֲנָשִׁ֤ים וְהַנָּשִׁים֙ וְהַטַּ֔ף וְגֵרְךָ֖ אֲשֶׁ֣ר בִּשְׁעָרֶ֑יךָ לְמַ֨עַן יִשְׁמְע֜וּ וּלְמַ֣עַן יִלְמְד֗וּ וְיָֽרְאוּ֙ אֶת־יְהֹוָ֣ה אֱלֹהֵיכֶ֔ם וְשָׁמְר֣וּ לַעֲשׂ֔וֹת אֶת־כׇּל־דִּבְרֵ֖י הַתּוֹרָ֥ה הַזֹּֽאת׃</p>
-      <p>וּבְנֵיהֶ֞ם אֲשֶׁ֣ר לֹא־יָדְע֗וּ יִשְׁמְעוּ֙ וְלָ֣מְד֔וּ לְיִרְאָ֖ה אֶת־יְהֹוָ֣ה אֱלֹהֵיכֶ֑ם כׇּל־הַיָּמִ֗ים אֲשֶׁ֨ר אַתֶּ֤ם חַיִּים֙ עַל־הָ֣אֲדָמָ֔ה אֲשֶׁ֨ר אַתֶּ֜ם עֹבְרִ֧ים אֶת־הַיַּרְדֵּ֛ן שָׁ֖מָּה לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה הֵ֣ן קָרְב֣וּ יָמֶ֘יךָ֮ לָמוּת֒ קְרָ֣א אֶת־יְהוֹשֻׁ֗עַ וְהִֽתְיַצְּב֛וּ בְּאֹ֥הֶל מוֹעֵ֖ד וַאֲצַוֶּ֑נּוּ וַיֵּ֤לֶךְ מֹשֶׁה֙ וִיהוֹשֻׁ֔עַ וַיִּֽתְיַצְּב֖וּ בְּאֹ֥הֶל מוֹעֵֽד׃</p>
-      <p>וַיֵּרָ֧א יְהֹוָ֛ה בָּאֹ֖הֶל בְּעַמּ֣וּד עָנָ֑ן וַֽיַּעֲמֹ֛ד עַמּ֥וּד הֶעָנָ֖ן עַל־פֶּ֥תַח הָאֹֽהֶל׃</p>
-      <p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה הִנְּךָ֥ שֹׁכֵ֖ב עִם־אֲבֹתֶ֑יךָ וְקָם֩ הָעָ֨ם הַזֶּ֜ה וְזָנָ֣ה&thinsp;<b>׀</b> אַחֲרֵ֣י&thinsp;<b>׀</b> אֱלֹהֵ֣י נֵכַר־הָאָ֗רֶץ אֲשֶׁ֨ר ה֤וּא בָא־שָׁ֙מָּה֙ בְּקִרְבּ֔וֹ וַעֲזָבַ֕נִי וְהֵפֵר֙ אֶת־בְּרִיתִ֔י אֲשֶׁ֥ר כָּרַ֖תִּי אִתּֽוֹ׃</p>
-      <p>וְחָרָ֣ה אַפִּ֣י ב֣וֹ בַיּוֹם־הַ֠ה֠וּא וַעֲזַבְתִּ֞ים וְהִסְתַּרְתִּ֨י פָנַ֤י מֵהֶם֙ וְהָיָ֣ה לֶאֱכֹ֔ל וּמְצָאֻ֛הוּ רָע֥וֹת רַבּ֖וֹת וְצָר֑וֹת וְאָמַר֙ בַּיּ֣וֹם הַה֔וּא הֲלֹ֗א עַ֣ל כִּי־אֵ֤ין אֱלֹהַי֙ בְּקִרְבִּ֔י מְצָא֖וּנִי הָרָע֥וֹת הָאֵֽלֶּה׃</p>
-      <p>וְאָנֹכִ֗י הַסְתֵּ֨ר אַסְתִּ֤יר פָּנַי֙ בַּיּ֣וֹם הַה֔וּא עַ֥ל כׇּל־הָרָעָ֖ה אֲשֶׁ֣ר עָשָׂ֑ה כִּ֣י פָנָ֔ה אֶל־אֱלֹהִ֖ים אֲחֵרִֽים׃</p>
-      <p>וְעַתָּ֗ה כִּתְב֤וּ לָכֶם֙ אֶת־הַשִּׁירָ֣ה הַזֹּ֔את וְלַמְּדָ֥הּ אֶת־בְּנֵֽי־יִשְׂרָאֵ֖ל שִׂימָ֣הּ בְּפִיהֶ֑ם לְמַ֨עַן תִּֽהְיֶה־לִּ֜י הַשִּׁירָ֥ה הַזֹּ֛את לְעֵ֖ד בִּבְנֵ֥י יִשְׂרָאֵֽל׃</p>
-      <p>כִּֽי־אֲבִיאֶ֜נּוּ אֶֽל־הָאֲדָמָ֣ה&thinsp;<b>׀</b> אֲשֶׁר־נִשְׁבַּ֣עְתִּי לַאֲבֹתָ֗יו זָבַ֤ת חָלָב֙ וּדְבַ֔שׁ וְאָכַ֥ל וְשָׂבַ֖ע וְדָשֵׁ֑ן וּפָנָ֞ה אֶל־אֱלֹהִ֤ים אֲחֵרִים֙ וַעֲבָד֔וּם וְנִ֣אֲצ֔וּנִי וְהֵפֵ֖ר אֶת־בְּרִיתִֽי׃</p>
-      <p>וְ֠הָיָ֠ה כִּי־תִמְצֶ֨אןָ אֹת֜וֹ רָע֣וֹת רַבּוֹת֮ וְצָרוֹת֒ וְ֠עָנְתָ֠ה הַשִּׁירָ֨ה הַזֹּ֤את לְפָנָיו֙ לְעֵ֔ד כִּ֛י לֹ֥א תִשָּׁכַ֖ח מִפִּ֣י זַרְע֑וֹ כִּ֧י יָדַ֣עְתִּי אֶת־יִצְר֗וֹ אֲשֶׁ֨ר ה֤וּא עֹשֶׂה֙ הַיּ֔וֹם בְּטֶ֣רֶם אֲבִיאֶ֔נּוּ אֶל־הָאָ֖רֶץ אֲשֶׁ֥ר נִשְׁבַּֽעְתִּי׃</p>
-      <p>וַיִּכְתֹּ֥ב מֹשֶׁ֛ה אֶת־הַשִּׁירָ֥ה הַזֹּ֖את בַּיּ֣וֹם הַה֑וּא וַֽיְלַמְּדָ֖הּ אֶת־בְּנֵ֥י יִשְׂרָאֵֽל׃</p>
-      <p>וַיְצַ֞ו אֶת־יְהוֹשֻׁ֣עַ בִּן־נ֗וּן וַיֹּ֘אמֶר֮ חֲזַ֣ק וֶאֱמָץ֒ כִּ֣י אַתָּ֗ה תָּבִיא֙ אֶת־בְּנֵ֣י יִשְׂרָאֵ֔ל אֶל־הָאָ֖רֶץ אֲשֶׁר־נִשְׁבַּ֣עְתִּי לָהֶ֑ם וְאָנֹכִ֖י אֶהְיֶ֥ה עִמָּֽךְ׃</p>
-      <p>וַיְהִ֣י&thinsp;<b>׀</b> כְּכַלּ֣וֹת מֹשֶׁ֗ה לִכְתֹּ֛ב אֶת־דִּבְרֵ֥י הַתּוֹרָֽה־הַזֹּ֖את עַל־סֵ֑פֶר עַ֖ד תֻּמָּֽם׃</p>
-      <p>וַיְצַ֤ו מֹשֶׁה֙ אֶת־הַלְוִיִּ֔ם נֹ֥שְׂאֵ֛י אֲר֥וֹן בְּרִית־יְהֹוָ֖ה לֵאמֹֽר׃</p>
-      <p>לָקֹ֗חַ אֵ֣ת סֵ֤פֶר הַתּוֹרָה֙ הַזֶּ֔ה וְשַׂמְתֶּ֣ם אֹת֔וֹ מִצַּ֛ד אֲר֥וֹן בְּרִית־יְהֹוָ֖ה אֱלֹהֵיכֶ֑ם וְהָיָה־שָׁ֥ם בְּךָ֖ לְעֵֽד׃</p>
-      <p>כִּ֣י אָנֹכִ֤י יָדַ֙עְתִּי֙ אֶֽת־מֶרְיְךָ֔ וְאֶֽת־עׇרְפְּךָ֖ הַקָּשֶׁ֑ה הֵ֣ן בְּעוֹדֶ֩נִּי֩ חַ֨י עִמָּכֶ֜ם הַיּ֗וֹם מַמְרִ֤ים הֱיִתֶם֙ עִם־יְהֹוָ֔ה וְאַ֖ף כִּי־אַחֲרֵ֥י מוֹתִֽי׃</p>
-      <p>הַקְהִ֧ילוּ אֵלַ֛י אֶת־כׇּל־זִקְנֵ֥י שִׁבְטֵיכֶ֖ם וְשֹׁטְרֵיכֶ֑ם וַאֲדַבְּרָ֣ה בְאׇזְנֵיהֶ֗ם אֵ֚ת הַדְּבָרִ֣ים הָאֵ֔לֶּה וְאָעִ֣ידָה בָּ֔ם אֶת־הַשָּׁמַ֖יִם וְאֶת־הָאָֽרֶץ׃</p>
-      <p>כִּ֣י יָדַ֗עְתִּי אַחֲרֵ֤י מוֹתִי֙ כִּֽי־הַשְׁחֵ֣ת תַּשְׁחִת֔וּן וְסַרְתֶּ֣ם מִן־הַדֶּ֔רֶךְ אֲשֶׁ֥ר צִוִּ֖יתִי אֶתְכֶ֑ם וְקָרָ֨את אֶתְכֶ֤ם הָרָעָה֙ בְּאַחֲרִ֣ית הַיָּמִ֔ים כִּֽי־תַעֲשׂ֤וּ אֶת־הָרַע֙ בְּעֵינֵ֣י יְהֹוָ֔ה לְהַכְעִיס֖וֹ בְּמַעֲשֵׂ֥ה יְדֵיכֶֽם׃</p>
-      <p>וַיְדַבֵּ֣ר מֹשֶׁ֗ה בְּאׇזְנֵי֙ כׇּל־קְהַ֣ל יִשְׂרָאֵ֔ל אֶת־דִּבְרֵ֥י הַשִּׁירָ֖ה הַזֹּ֑את עַ֖ד תֻּמָּֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-31-1">
+      <span class="seif-num">31:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֖לֶךְ מֹשֶׁ֑ה וַיְדַבֵּ֛ר אֶת־הַדְּבָרִ֥ים הָאֵ֖לֶּה אֶל־כׇּל־יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>וילך משה וידבר את־הדברים האלה אל־כל־ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Moïse alla ensuite adresser les paroles suivantes à tout Israël,</p></div>
+    </div><div class="seif" id="v-31-2">
+      <span class="seif-num">31:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֲלֵהֶ֗ם בֶּן־מֵאָה֩ וְעֶשְׂרִ֨ים שָׁנָ֤ה אָנֹכִי֙ הַיּ֔וֹם לֹא־אוּכַ֥ל ע֖וֹד לָצֵ֣את וְלָב֑וֹא וַֽיהֹוָה֙ אָמַ֣ר אֵלַ֔י לֹ֥א תַעֲבֹ֖ר אֶת־הַיַּרְדֵּ֥ן הַזֶּֽה׃</p></div><div class="heb-s"><p>ויאמר אלהם בן־מאה ועשרים שנה אנכי היום לא־אוכל עוד לצאת ולבוא ויהוה אמר אלי לא תעבר את־הירדן הזה׃</p></div></div>
+      <div class="texte-fr"><p>leur disant: "J’ai cent vingt ans aujourd’hui, je ne peux plus vous servir de guide; d’ailleurs, l’Éternel m’a dit: "Tu ne traverseras pas ce Jourdain."</p></div>
+    </div><div class="seif" id="v-31-3">
+      <span class="seif-num">31:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֨ה אֱלֹהֶ֜יךָ ה֣וּא&thinsp;<b>׀</b> עֹבֵ֣ר לְפָנֶ֗יךָ הֽוּא־יַשְׁמִ֞יד אֶת־הַגּוֹיִ֥ם הָאֵ֛לֶּה מִלְּפָנֶ֖יךָ וִירִשְׁתָּ֑ם יְהוֹשֻׁ֗עַ ה֚וּא עֹבֵ֣ר לְפָנֶ֔יךָ כַּאֲשֶׁ֖ר דִּבֶּ֥ר יְהֹוָֽה׃</p></div><div class="heb-s"><p>יהוה אלהיך הוא&thinsp;<b>׀</b> עבר לפניך הוא־ישמיד את־הגוים האלה מלפניך וירשתם יהושע הוא עבר לפניך כאשר דבר יהוה׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel, ton Dieu, marche lui-même devant toi; c’est lui qui anéantira ces peuples devant toi pour que tu les dépossèdes. Josué sera ton guide, comme l’Éternel l’a déclaré.</p></div>
+    </div><div class="seif" id="v-31-4">
+      <span class="seif-num">31:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשָׂ֤ה יְהֹוָה֙ לָהֶ֔ם כַּאֲשֶׁ֣ר עָשָׂ֗ה לְסִיח֥וֹן וּלְע֛וֹג מַלְכֵ֥י הָאֱמֹרִ֖י וּלְאַרְצָ֑ם אֲשֶׁ֥ר הִשְׁמִ֖יד אֹתָֽם׃</p></div><div class="heb-s"><p>ועשה יהוה להם כאשר עשה לסיחון ולעוג מלכי האמרי ולארצם אשר השמיד אתם׃</p></div></div>
+      <div class="texte-fr"><p>Et le Seigneur les traitera comme il a traité Sihôn et Og, rois des Amorréens, et leur pays, qu’il a condamné à la ruine.</p></div>
+    </div><div class="seif" id="v-31-5">
+      <span class="seif-num">31:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּנְתָנָ֥ם יְהֹוָ֖ה לִפְנֵיכֶ֑ם וַעֲשִׂיתֶ֣ם לָהֶ֔ם כְּכׇ֨ל־הַמִּצְוָ֔ה אֲשֶׁ֥ר צִוִּ֖יתִי אֶתְכֶֽם׃</p></div><div class="heb-s"><p>ונתנם יהוה לפניכם ועשיתם להם ככל־המצוה אשר צויתי אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Il mettra ces peuples à votre merci; et vous procéderez à leur égard, en tout, selon l’ordre que je vous ai donné.</p></div>
+    </div><div class="seif" id="v-31-6">
+      <span class="seif-num">31:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>חִזְק֣וּ וְאִמְצ֔וּ אַל־תִּֽירְא֥וּ וְאַל־תַּעַרְצ֖וּ מִפְּנֵיהֶ֑ם כִּ֣י&thinsp;<b>׀</b> יְהֹוָ֣ה אֱלֹהֶ֗יךָ ה֚וּא הַהֹלֵ֣ךְ עִמָּ֔ךְ לֹ֥א יַרְפְּךָ֖ וְלֹ֥א יַעַזְבֶֽךָּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>חזקו ואמצו אל־תיראו ואל־תערצו מפניהם כי&thinsp;<b>׀</b> יהוה אלהיך הוא ההלך עמך לא ירפך ולא יעזבך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Soyez forts et vaillants! Ne vous laissez effrayer ni intimider par eux! Car l’Éternel, ton Dieu, marche lui-même avec toi; il ne te laissera pas succomber, il ne t’abandonnera point!"</p></div>
+    </div><div class="seif" id="v-31-7">
+      <span class="seif-num">31:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֨א מֹשֶׁ֜ה לִיהוֹשֻׁ֗עַ וַיֹּ֨אמֶר אֵלָ֜יו לְעֵינֵ֣י כׇל־יִשְׂרָאֵל֮ חֲזַ֣ק וֶאֱמָץ֒ כִּ֣י אַתָּ֗ה תָּבוֹא֙ אֶת־הָעָ֣ם הַזֶּ֔ה אֶל־הָאָ֕רֶץ אֲשֶׁ֨ר נִשְׁבַּ֧ע יְהֹוָ֛ה לַאֲבֹתָ֖ם לָתֵ֣ת לָהֶ֑ם וְאַתָּ֖ה תַּנְחִילֶ֥נָּה אוֹתָֽם׃</p></div><div class="heb-s"><p>ויקרא משה ליהושע ויאמר אליו לעיני כל־ישראל חזק ואמץ כי אתה תבוא את־העם הזה אל־הארץ אשר נשבע יהוה לאבתם לתת להם ואתה תנחילנה אותם׃</p></div></div>
+      <div class="texte-fr"><p>Alors Moïse appela Josué, et lui dit en présence de tout Israël: "Sois fort et vaillant! Car c’est toi qui entreras avec ce peuple dans le pays que l’Éternel a juré à leurs pères de leur donner, et c’est toi qui leur en feras le partage.</p></div>
+    </div><div class="seif" id="v-31-8">
+      <span class="seif-num">31:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיהֹוָ֞ה ה֣וּא&thinsp;<b>׀</b> הַהֹלֵ֣ךְ לְפָנֶ֗יךָ ה֚וּא יִהְיֶ֣ה עִמָּ֔ךְ לֹ֥א יַרְפְּךָ֖ וְלֹ֣א יַעַזְבֶ֑ךָּ לֹ֥א תִירָ֖א וְלֹ֥א תֵחָֽת׃</p></div><div class="heb-s"><p>ויהוה הוא&thinsp;<b>׀</b> ההלך לפניך הוא יהיה עמך לא ירפך ולא יעזבך לא תירא ולא תחת׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel lui-même marchera devant toi, lui-même sera à tes côtés, il ne te laissera fléchir ni ne t’abandonnera: sois donc sans peur et sans faiblesse!"</p></div>
+    </div><div class="seif" id="v-31-9">
+      <span class="seif-num">31:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּכְתֹּ֣ב מֹשֶׁה֮ אֶת־הַתּוֹרָ֣ה הַזֹּאת֒ וַֽיִּתְּנָ֗הּ אֶל־הַכֹּֽהֲנִים֙ בְּנֵ֣י לֵוִ֔י הַנֹּ֣שְׂאִ֔ים אֶת־אֲר֖וֹן בְּרִ֣ית יְהֹוָ֑ה וְאֶל־כׇּל־זִקְנֵ֖י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויכתב משה את־התורה הזאת ויתנה אל־הכהנים בני לוי הנשאים את־ארון ברית יהוה ואל־כל־זקני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Moïse mit par écrit cette doctrine et la confia aux pontifes, descendants de Lévi, chargés de porter l’arche d’alliance du Seigneur, et à tous les anciens d’Israël.</p></div>
+    </div><div class="seif" id="v-31-10">
+      <span class="seif-num">31:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֥ו מֹשֶׁ֖ה אוֹתָ֣ם לֵאמֹ֑ר מִקֵּ֣ץ&thinsp;<b>׀</b> שֶׁ֣בַע שָׁנִ֗ים בְּמֹעֵ֛ד שְׁנַ֥ת הַשְּׁמִטָּ֖ה בְּחַ֥ג הַסֻּכּֽוֹת׃</p></div><div class="heb-s"><p>ויצו משה אותם לאמר מקץ&thinsp;<b>׀</b> שבע שנים במעד שנת השמטה בחג הסכות׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse leur ordonna ce qui suit: "A la fin de chaque septième année, à l’époque de l’année de relâche, lors de la fête des tentes,</p></div>
+    </div><div class="seif" id="v-31-11">
+      <span class="seif-num">31:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּב֣וֹא כׇל־יִשְׂרָאֵ֗ל לֵֽרָאוֹת֙ אֶת־פְּנֵי֙ יְהֹוָ֣ה אֱלֹהֶ֔יךָ בַּמָּק֖וֹם אֲשֶׁ֣ר יִבְחָ֑ר תִּקְרָ֞א אֶת־הַתּוֹרָ֥ה הַזֹּ֛את נֶ֥גֶד כׇּל־יִשְׂרָאֵ֖ל בְּאׇזְנֵיהֶֽם׃</p></div><div class="heb-s"><p>בבוא כל־ישראל לראות את־פני יהוה אלהיך במקום אשר יבחר תקרא את־התורה הזאת נגד כל־ישראל באזניהם׃</p></div></div>
+      <div class="texte-fr"><p>alors que tout Israël vient comparaître devant l’Éternel, ton Dieu, dans l’endroit qu’il aura élu, tu feras lecture de cette doctrine en présence de tout Israël, qui écoutera attentivement.</p></div>
+    </div><div class="seif" id="v-31-12">
+      <span class="seif-num">31:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַקְהֵ֣ל אֶת־הָעָ֗ם הָֽאֲנָשִׁ֤ים וְהַנָּשִׁים֙ וְהַטַּ֔ף וְגֵרְךָ֖ אֲשֶׁ֣ר בִּשְׁעָרֶ֑יךָ לְמַ֨עַן יִשְׁמְע֜וּ וּלְמַ֣עַן יִלְמְד֗וּ וְיָֽרְאוּ֙ אֶת־יְהֹוָ֣ה אֱלֹהֵיכֶ֔ם וְשָׁמְר֣וּ לַעֲשׂ֔וֹת אֶת־כׇּל־דִּבְרֵ֖י הַתּוֹרָ֥ה הַזֹּֽאת׃</p></div><div class="heb-s"><p>הקהל את־העם האנשים והנשים והטף וגרך אשר בשעריך למען ישמעו ולמען ילמדו ויראו את־יהוה אלהיכם ושמרו לעשות את־כל־דברי התורה הזאת׃</p></div></div>
+      <div class="texte-fr"><p>Convoques-y le peuple entier, hommes, femmes et enfants, ainsi que l’étranger qui est dans tes murs, afin qu’ils entendent et s’instruisent, et révèrent l’Éternel, votre Dieu, et s’appliquent à pratiquer toutes les paroles de cette doctrine;</p></div>
+    </div><div class="seif" id="v-31-13">
+      <span class="seif-num">31:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְנֵיהֶ֞ם אֲשֶׁ֣ר לֹא־יָדְע֗וּ יִשְׁמְעוּ֙ וְלָ֣מְד֔וּ לְיִרְאָ֖ה אֶת־יְהֹוָ֣ה אֱלֹהֵיכֶ֑ם כׇּל־הַיָּמִ֗ים אֲשֶׁ֨ר אַתֶּ֤ם חַיִּים֙ עַל־הָ֣אֲדָמָ֔ה אֲשֶׁ֨ר אַתֶּ֜ם עֹבְרִ֧ים אֶת־הַיַּרְדֵּ֛ן שָׁ֖מָּה לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ובניהם אשר לא־ידעו ישמעו ולמדו ליראה את־יהוה אלהיכם כל־הימים אשר אתם חיים על־האדמה אשר אתם עברים את־הירדן שמה לרשתה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>et que leurs enfants, qui ne savent pas encore, entendent aussi, et qu’ils apprennent à révérer l’Éternel, votre Dieu, tant que vous vivrez sur le sol pour la possession duquel vous allez passer le Jourdain."</p></div>
+    </div><div class="seif" id="v-31-14">
+      <span class="seif-num">31:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה הֵ֣ן קָרְב֣וּ יָמֶ֘יךָ֮ לָמוּת֒ קְרָ֣א אֶת־יְהוֹשֻׁ֗עַ וְהִֽתְיַצְּב֛וּ בְּאֹ֥הֶל מוֹעֵ֖ד וַאֲצַוֶּ֑נּוּ וַיֵּ֤לֶךְ מֹשֶׁה֙ וִיהוֹשֻׁ֔עַ וַיִּֽתְיַצְּב֖וּ בְּאֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה הן קרבו ימיך למות קרא את־יהושע והתיצבו באהל מועד ואצונו וילך משה ויהושע ויתיצבו באהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur dit à Moïse: "Voici que tes jours approchent de leur terme. Appelle Josué, et présentez-vous dans la tente d’assignation, pour que je lui donne mes ordres." Et Moïse alla, avec Josué, se placer dans la tente d’assignation.</p></div>
+    </div><div class="seif" id="v-31-15">
+      <span class="seif-num">31:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּרָ֧א יְהֹוָ֛ה בָּאֹ֖הֶל בְּעַמּ֣וּד עָנָ֑ן וַֽיַּעֲמֹ֛ד עַמּ֥וּד הֶעָנָ֖ן עַל־פֶּ֥תַח הָאֹֽהֶל׃</p></div><div class="heb-s"><p>וירא יהוה באהל בעמוד ענן ויעמד עמוד הענן על־פתח האהל׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur apparut dans la tente, par une colonne de nuée, et cette colonne de nuée s’arrêta à l’entrée de la tente.</p></div>
+    </div><div class="seif" id="v-31-16">
+      <span class="seif-num">31:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה הִנְּךָ֥ שֹׁכֵ֖ב עִם־אֲבֹתֶ֑יךָ וְקָם֩ הָעָ֨ם הַזֶּ֜ה וְזָנָ֣ה&thinsp;<b>׀</b> אַחֲרֵ֣י&thinsp;<b>׀</b> אֱלֹהֵ֣י נֵכַר־הָאָ֗רֶץ אֲשֶׁ֨ר ה֤וּא בָא־שָׁ֙מָּה֙ בְּקִרְבּ֔וֹ וַעֲזָבַ֕נִי וְהֵפֵר֙ אֶת־בְּרִיתִ֔י אֲשֶׁ֥ר כָּרַ֖תִּי אִתּֽוֹ׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה הנך שכב עם־אבתיך וקם העם הזה וזנה&thinsp;<b>׀</b> אחרי&thinsp;<b>׀</b> אלהי נכר־הארץ אשר הוא בא־שמה בקרבו ועזבני והפר את־בריתי אשר כרתי אתו׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur dit à Moïse: "Tandis que tu reposeras avec tes pères, ce peuple se laissera débaucher par les divinités du pays barbare où il va pénétrer; et il m’abandonnera, et il brisera l’alliance que j’ai conclue avec lui.</p></div>
+    </div><div class="seif" id="v-31-17">
+      <span class="seif-num">31:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחָרָ֣ה אַפִּ֣י ב֣וֹ בַיּוֹם־הַ֠ה֠וּא וַעֲזַבְתִּ֞ים וְהִסְתַּרְתִּ֨י פָנַ֤י מֵהֶם֙ וְהָיָ֣ה לֶאֱכֹ֔ל וּמְצָאֻ֛הוּ רָע֥וֹת רַבּ֖וֹת וְצָר֑וֹת וְאָמַר֙ בַּיּ֣וֹם הַה֔וּא הֲלֹ֗א עַ֣ל כִּי־אֵ֤ין אֱלֹהַי֙ בְּקִרְבִּ֔י מְצָא֖וּנִי הָרָע֥וֹת הָאֵֽלֶּה׃</p></div><div class="heb-s"><p>וחרה אפי בו ביום־ההוא ועזבתים והסתרתי פני מהם והיה לאכל ומצאהו רעות רבות וצרות ואמר ביום ההוא הלא על כי־אין אלהי בקרבי מצאוני הרעות האלה׃</p></div></div>
+      <div class="texte-fr"><p>Ce jour-là, ma colère s’enflammera contre lui, je les abandonnerai, je leur déroberai ma face, et il deviendra la pâture de chacun, et nombre de maux et d’angoisses viendront l’assaillir. Alors il se dira: "En vérité, c’est parce que mon Dieu n’est plus au milieu de moi que je suis en butte à ces malheurs."</p></div>
+    </div><div class="seif" id="v-31-18">
+      <span class="seif-num">31:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָנֹכִ֗י הַסְתֵּ֨ר אַסְתִּ֤יר פָּנַי֙ בַּיּ֣וֹם הַה֔וּא עַ֥ל כׇּל־הָרָעָ֖ה אֲשֶׁ֣ר עָשָׂ֑ה כִּ֣י פָנָ֔ה אֶל־אֱלֹהִ֖ים אֲחֵרִֽים׃</p></div><div class="heb-s"><p>ואנכי הסתר אסתיר פני ביום ההוא על כל־הרעה אשר עשה כי פנה אל־אלהים אחרים׃</p></div></div>
+      <div class="texte-fr"><p>Mais alors même, je persisterai, moi, à dérober ma face, à cause du grave méfait qu’il aura commis en se tournant vers des dieux étrangers.</p></div>
+    </div><div class="seif" id="v-31-19">
+      <span class="seif-num">31:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֗ה כִּתְב֤וּ לָכֶם֙ אֶת־הַשִּׁירָ֣ה הַזֹּ֔את וְלַמְּדָ֥הּ אֶת־בְּנֵֽי־יִשְׂרָאֵ֖ל שִׂימָ֣הּ בְּפִיהֶ֑ם לְמַ֨עַן תִּֽהְיֶה־לִּ֜י הַשִּׁירָ֥ה הַזֹּ֛את לְעֵ֖ד בִּבְנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ועתה כתבו לכם את־השירה הזאת ולמדה את־בני־ישראל שימה בפיהם למען תהיה־לי השירה הזאת לעד בבני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, écrivez pour vous ce cantique, qu’on l’enseigne aux enfants d’Israël et qu’on le mette dans leur bouche, afin que ce cantique me serve de témoignage à l’encontre des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-31-20">
+      <span class="seif-num">31:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־אֲבִיאֶ֜נּוּ אֶֽל־הָאֲדָמָ֣ה&thinsp;<b>׀</b> אֲשֶׁר־נִשְׁבַּ֣עְתִּי לַאֲבֹתָ֗יו זָבַ֤ת חָלָב֙ וּדְבַ֔שׁ וְאָכַ֥ל וְשָׂבַ֖ע וְדָשֵׁ֑ן וּפָנָ֞ה אֶל־אֱלֹהִ֤ים אֲחֵרִים֙ וַעֲבָד֔וּם וְנִ֣אֲצ֔וּנִי וְהֵפֵ֖ר אֶת־בְּרִיתִֽי׃</p></div><div class="heb-s"><p>כי־אביאנו אל־האדמה&thinsp;<b>׀</b> אשר־נשבעתי לאבתיו זבת חלב ודבש ואכל ושבע ודשן ופנה אל־אלהים אחרים ועבדום ונאצוני והפר את־בריתי׃</p></div></div>
+      <div class="texte-fr"><p>Quand j’aurai introduit ce peuple dans le pays que j’ai promis par serment à ses pères et où ruissellent le lait et le miel; vivant dans l’abondance et gorgé de délices, il s’adressera à des dieux étrangers, il les servira, me témoignera du mépris et rompra mon alliance.</p></div>
+    </div><div class="seif" id="v-31-21">
+      <span class="seif-num">31:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠הָיָ֠ה כִּי־תִמְצֶ֨אןָ אֹת֜וֹ רָע֣וֹת רַבּוֹת֮ וְצָרוֹת֒ וְ֠עָנְתָ֠ה הַשִּׁירָ֨ה הַזֹּ֤את לְפָנָיו֙ לְעֵ֔ד כִּ֛י לֹ֥א תִשָּׁכַ֖ח מִפִּ֣י זַרְע֑וֹ כִּ֧י יָדַ֣עְתִּי אֶת־יִצְר֗וֹ אֲשֶׁ֨ר ה֤וּא עֹשֶׂה֙ הַיּ֔וֹם בְּטֶ֣רֶם אֲבִיאֶ֔נּוּ אֶל־הָאָ֖רֶץ אֲשֶׁ֥ר נִשְׁבַּֽעְתִּי׃</p></div><div class="heb-s"><p>והיה כי־תמצאן אתו רעות רבות וצרות וענתה השירה הזאת לפניו לעד כי לא תשכח מפי זרעו כי ידעתי את־יצרו אשר הוא עשה היום בטרם אביאנו אל־הארץ אשר נשבעתי׃</p></div></div>
+      <div class="texte-fr"><p>Vienne alors la multitude de maux et d’angoisses qui doivent l’atteindre, le présent cantique portera témoignage en face de lui (car la bouche de sa postérité ne l’oubliera point), parce que je sais ce qu’aujourd’hui déjà son penchant le porte à faire, avant même que je l’aie introduit dans la terre par moi promise!"</p></div>
+    </div><div class="seif" id="v-31-22">
+      <span class="seif-num">31:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּכְתֹּ֥ב מֹשֶׁ֛ה אֶת־הַשִּׁירָ֥ה הַזֹּ֖את בַּיּ֣וֹם הַה֑וּא וַֽיְלַמְּדָ֖הּ אֶת־בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויכתב משה את־השירה הזאת ביום ההוא וילמדה את־בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse écrivit le cantique suivant, ce jour même, et le fit apprendre aux enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-31-23">
+      <span class="seif-num">31:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֞ו אֶת־יְהוֹשֻׁ֣עַ בִּן־נ֗וּן וַיֹּ֘אמֶר֮ חֲזַ֣ק וֶאֱמָץ֒ כִּ֣י אַתָּ֗ה תָּבִיא֙ אֶת־בְּנֵ֣י יִשְׂרָאֵ֔ל אֶל־הָאָ֖רֶץ אֲשֶׁר־נִשְׁבַּ֣עְתִּי לָהֶ֑ם וְאָנֹכִ֖י אֶהְיֶ֥ה עִמָּֽךְ׃</p></div><div class="heb-s"><p>ויצו את־יהושע בן־נון ויאמר חזק ואמץ כי אתה תביא את־בני ישראל אל־הארץ אשר־נשבעתי להם ואנכי אהיה עמך׃</p></div></div>
+      <div class="texte-fr"><p>Et l’Éternel donna ses ordres à Josué, fils de Noun, et lui dit: "Sois ferme et courageux! Car c’est toi qui introduiras les Israélites dans la terre que je leur ai promise, et moi je t’assisterai."</p></div>
+    </div><div class="seif" id="v-31-24">
+      <span class="seif-num">31:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> כְּכַלּ֣וֹת מֹשֶׁ֗ה לִכְתֹּ֛ב אֶת־דִּבְרֵ֥י הַתּוֹרָֽה־הַזֹּ֖את עַל־סֵ֑פֶר עַ֖ד תֻּמָּֽם׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> ככלות משה לכתב את־דברי התורה־הזאת על־ספר עד תמם׃</p></div></div>
+      <div class="texte-fr"><p>Or, lorsque Moïse eut achevé de transcrire les paroles de cette loi sur un livre, jusqu’au bout,</p></div>
+    </div><div class="seif" id="v-31-25">
+      <span class="seif-num">31:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֤ו מֹשֶׁה֙ אֶת־הַלְוִיִּ֔ם נֹ֥שְׂאֵ֛י אֲר֥וֹן בְּרִית־יְהֹוָ֖ה לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויצו משה את־הלוים נשאי ארון ברית־יהוה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>il ordonna aux Lévites, porteurs de l’arche d’alliance du Seigneur, ce qui suit:</p></div>
+    </div><div class="seif" id="v-31-26">
+      <span class="seif-num">31:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>לָקֹ֗חַ אֵ֣ת סֵ֤פֶר הַתּוֹרָה֙ הַזֶּ֔ה וְשַׂמְתֶּ֣ם אֹת֔וֹ מִצַּ֛ד אֲר֥וֹן בְּרִית־יְהֹוָ֖ה אֱלֹהֵיכֶ֑ם וְהָיָה־שָׁ֥ם בְּךָ֖ לְעֵֽד׃</p></div><div class="heb-s"><p>לקח את ספר התורה הזה ושמתם אתו מצד ארון ברית־יהוה אלהיכם והיה־שם בך לעד׃</p></div></div>
+      <div class="texte-fr"><p>"Prenez ce livre de la loi et déposez-le à côté de l’arche d’alliance de l’Éternel, votre Dieu; il y restera comme un témoin contre toi.</p></div>
+    </div><div class="seif" id="v-31-27">
+      <span class="seif-num">31:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י אָנֹכִ֤י יָדַ֙עְתִּי֙ אֶֽת־מֶרְיְךָ֔ וְאֶֽת־עׇרְפְּךָ֖ הַקָּשֶׁ֑ה הֵ֣ן בְּעוֹדֶ֩נִּי֩ חַ֨י עִמָּכֶ֜ם הַיּ֗וֹם מַמְרִ֤ים הֱיִתֶם֙ עִם־יְהֹוָ֔ה וְאַ֖ף כִּי־אַחֲרֵ֥י מוֹתִֽי׃</p></div><div class="heb-s"><p>כי אנכי ידעתי את־מריך ואת־ערפך הקשה הן בעודני חי עמכם היום ממרים היתם עם־יהוה ואף כי־אחרי מותי׃</p></div></div>
+      <div class="texte-fr"><p>Car je connais ton indocilité et ton caractère obstiné: certes, si, moi vivant encore, étant avec vous à cette heure, vous vous êtes insurgés contre l’Éternel, que sera-ce après ma mort!</p></div>
+    </div><div class="seif" id="v-31-28">
+      <span class="seif-num">31:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַקְהִ֧ילוּ אֵלַ֛י אֶת־כׇּל־זִקְנֵ֥י שִׁבְטֵיכֶ֖ם וְשֹׁטְרֵיכֶ֑ם וַאֲדַבְּרָ֣ה בְאׇזְנֵיהֶ֗ם אֵ֚ת הַדְּבָרִ֣ים הָאֵ֔לֶּה וְאָעִ֣ידָה בָּ֔ם אֶת־הַשָּׁמַ֖יִם וְאֶת־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>הקהילו אלי את־כל־זקני שבטיכם ושטריכם ואדברה באזניהם את הדברים האלה ואעידה בם את־השמים ואת־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Faites réunir autour de moi tous les anciens de vos tribus et vos magistrats: je veux faire parvenir ces paroles à leurs oreilles, et prendre à témoin contre eux les cieux et la terre.</p></div>
+    </div><div class="seif" id="v-31-29">
+      <span class="seif-num">31:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י יָדַ֗עְתִּי אַחֲרֵ֤י מוֹתִי֙ כִּֽי־הַשְׁחֵ֣ת תַּשְׁחִת֔וּן וְסַרְתֶּ֣ם מִן־הַדֶּ֔רֶךְ אֲשֶׁ֥ר צִוִּ֖יתִי אֶתְכֶ֑ם וְקָרָ֨את אֶתְכֶ֤ם הָרָעָה֙ בְּאַחֲרִ֣ית הַיָּמִ֔ים כִּֽי־תַעֲשׂ֤וּ אֶת־הָרַע֙ בְּעֵינֵ֣י יְהֹוָ֔ה לְהַכְעִיס֖וֹ בְּמַעֲשֵׂ֥ה יְדֵיכֶֽם׃</p></div><div class="heb-s"><p>כי ידעתי אחרי מותי כי־השחת תשחתון וסרתם מן־הדרך אשר צויתי אתכם וקראת אתכם הרעה באחרית הימים כי־תעשו את־הרע בעיני יהוה להכעיסו במעשה ידיכם׃</p></div></div>
+      <div class="texte-fr"><p>Car je sais qu’après ma mort vous irez dégénérant, et que vous dévierez du chemin que je vous ai prescrit; mais il vous arrivera malheur dans la suite des temps, pour avoir fait ce qui déplaît au Seigneur, pour l’avoir offensé par l’œuvre de vos mains!"</p></div>
+    </div><div class="seif" id="v-31-30">
+      <span class="seif-num">31:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר מֹשֶׁ֗ה בְּאׇזְנֵי֙ כׇּל־קְהַ֣ל יִשְׂרָאֵ֔ל אֶת־דִּבְרֵ֥י הַשִּׁירָ֖ה הַזֹּ֑את עַ֖ד תֻּמָּֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וידבר משה באזני כל־קהל ישראל את־דברי השירה הזאת עד תמם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et Moïse fit entendre à toute l’assemblée d’Israël les paroles du cantique suivant, jusqu’à la fin:</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Moïse alla ensuite adresser les paroles suivantes à tout Israël,</p>
-      <p>leur disant: "J’ai cent vingt ans aujourd’hui, je ne peux plus vous servir de guide; d’ailleurs, l’Éternel m’a dit: "Tu ne traverseras pas ce Jourdain."</p>
-      <p>L’Éternel, ton Dieu, marche lui-même devant toi; c’est lui qui anéantira ces peuples devant toi pour que tu les dépossèdes. Josué sera ton guide, comme l’Éternel l’a déclaré.</p>
-      <p>Et le Seigneur les traitera comme il a traité Sihôn et Og, rois des Amorréens, et leur pays, qu’il a condamné à la ruine.</p>
-      <p>Il mettra ces peuples à votre merci; et vous procéderez à leur égard, en tout, selon l’ordre que je vous ai donné.</p>
-      <p>Soyez forts et vaillants! Ne vous laissez effrayer ni intimider par eux! Car l’Éternel, ton Dieu, marche lui-même avec toi; il ne te laissera pas succomber, il ne t’abandonnera point!"</p>
-      <p>Alors Moïse appela Josué, et lui dit en présence de tout Israël: "Sois fort et vaillant! Car c’est toi qui entreras avec ce peuple dans le pays que l’Éternel a juré à leurs pères de leur donner, et c’est toi qui leur en feras le partage.</p>
-      <p>L’Éternel lui-même marchera devant toi, lui-même sera à tes côtés, il ne te laissera fléchir ni ne t’abandonnera: sois donc sans peur et sans faiblesse!"</p>
-      <p>Moïse mit par écrit cette doctrine et la confia aux pontifes, descendants de Lévi, chargés de porter l’arche d’alliance du Seigneur, et à tous les anciens d’Israël.</p>
-      <p>Et Moïse leur ordonna ce qui suit: "A la fin de chaque septième année, à l’époque de l’année de relâche, lors de la fête des tentes,</p>
-      <p>alors que tout Israël vient comparaître devant l’Éternel, ton Dieu, dans l’endroit qu’il aura élu, tu feras lecture de cette doctrine en présence de tout Israël, qui écoutera attentivement.</p>
-      <p>Convoques-y le peuple entier, hommes, femmes et enfants, ainsi que l’étranger qui est dans tes murs, afin qu’ils entendent et s’instruisent, et révèrent l’Éternel, votre Dieu, et s’appliquent à pratiquer toutes les paroles de cette doctrine;</p>
-      <p>et que leurs enfants, qui ne savent pas encore, entendent aussi, et qu’ils apprennent à révérer l’Éternel, votre Dieu, tant que vous vivrez sur le sol pour la possession duquel vous allez passer le Jourdain."</p>
-      <p>Le Seigneur dit à Moïse: "Voici que tes jours approchent de leur terme. Appelle Josué, et présentez-vous dans la tente d’assignation, pour que je lui donne mes ordres." Et Moïse alla, avec Josué, se placer dans la tente d’assignation.</p>
-      <p>Le Seigneur apparut dans la tente, par une colonne de nuée, et cette colonne de nuée s’arrêta à l’entrée de la tente.</p>
-      <p>Le Seigneur dit à Moïse: "Tandis que tu reposeras avec tes pères, ce peuple se laissera débaucher par les divinités du pays barbare où il va pénétrer; et il m’abandonnera, et il brisera l’alliance que j’ai conclue avec lui.</p>
-      <p>Ce jour-là, ma colère s’enflammera contre lui, je les abandonnerai, je leur déroberai ma face, et il deviendra la pâture de chacun, et nombre de maux et d’angoisses viendront l’assaillir. Alors il se dira: "En vérité, c’est parce que mon Dieu n’est plus au milieu de moi que je suis en butte à ces malheurs."</p>
-      <p>Mais alors même, je persisterai, moi, à dérober ma face, à cause du grave méfait qu’il aura commis en se tournant vers des dieux étrangers.</p>
-      <p>Et maintenant, écrivez pour vous ce cantique, qu’on l’enseigne aux enfants d’Israël et qu’on le mette dans leur bouche, afin que ce cantique me serve de témoignage à l’encontre des enfants d’Israël.</p>
-      <p>Quand j’aurai introduit ce peuple dans le pays que j’ai promis par serment à ses pères et où ruissellent le lait et le miel; vivant dans l’abondance et gorgé de délices, il s’adressera à des dieux étrangers, il les servira, me témoignera du mépris et rompra mon alliance.</p>
-      <p>Vienne alors la multitude de maux et d’angoisses qui doivent l’atteindre, le présent cantique portera témoignage en face de lui (car la bouche de sa postérité ne l’oubliera point), parce que je sais ce qu’aujourd’hui déjà son penchant le porte à faire, avant même que je l’aie introduit dans la terre par moi promise!"</p>
-      <p>Et Moïse écrivit le cantique suivant, ce jour même, et le fit apprendre aux enfants d’Israël.</p>
-      <p>Et l’Éternel donna ses ordres à Josué, fils de Noun, et lui dit: "Sois ferme et courageux! Car c’est toi qui introduiras les Israélites dans la terre que je leur ai promise, et moi je t’assisterai."</p>
-      <p>Or, lorsque Moïse eut achevé de transcrire les paroles de cette loi sur un livre, jusqu’au bout,</p>
-      <p>il ordonna aux Lévites, porteurs de l’arche d’alliance du Seigneur, ce qui suit:</p>
-      <p>"Prenez ce livre de la loi et déposez-le à côté de l’arche d’alliance de l’Éternel, votre Dieu; il y restera comme un témoin contre toi.</p>
-      <p>Car je connais ton indocilité et ton caractère obstiné: certes, si, moi vivant encore, étant avec vous à cette heure, vous vous êtes insurgés contre l’Éternel, que sera-ce après ma mort!</p>
-      <p>Faites réunir autour de moi tous les anciens de vos tribus et vos magistrats: je veux faire parvenir ces paroles à leurs oreilles, et prendre à témoin contre eux les cieux et la terre.</p>
-      <p>Car je sais qu’après ma mort vous irez dégénérant, et que vous dévierez du chemin que je vous ai prescrit; mais il vous arrivera malheur dans la suite des temps, pour avoir fait ce qui déplaît au Seigneur, pour l’avoir offensé par l’œuvre de vos mains!"</p>
-      <p>Et Moïse fit entendre à toute l’assemblée d’Israël les paroles du cantique suivant, jusqu’à la fin:</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -324,6 +420,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_nitzavim.html">← Nitsavim</a><a class="hbtn qcm" href="qcm_paracha_vayeilech.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_haazinu.html">Haazinou →</a></div>
 </main>
 
 <footer>

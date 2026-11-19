@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Emor – Sainteté des prêtres, fêtes de l&#x27;année et blasphème</h1>
     <p>Torah, Vayikra (Leviticus 21:1-24:23)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_kedoshim.html">← Kedoshim</a><a class="hbtn qcm" href="qcm_paracha_emor.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_behar.html">Behar →</a></div>
   </div>
 </header>
 
@@ -161,31 +202,514 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה אֱמֹ֥ר אֶל־הַכֹּהֲנִ֖ים בְּנֵ֣י אַהֲרֹ֑ן וְאָמַרְתָּ֣ אֲלֵהֶ֔ם לְנֶ֥פֶשׁ לֹֽא־יִטַּמָּ֖א בְּעַמָּֽיו׃', 'כִּ֚י אִם־לִשְׁאֵר֔וֹ הַקָּרֹ֖ב אֵלָ֑יו לְאִמּ֣וֹ וּלְאָבִ֔יו וְלִבְנ֥וֹ וּלְבִתּ֖וֹ וּלְאָחִֽיו׃', 'וְלַאֲחֹת֤וֹ הַבְּתוּלָה֙ הַקְּרוֹבָ֣ה אֵלָ֔יו אֲשֶׁ֥ר לֹֽא־הָיְתָ֖ה לְאִ֑ישׁ לָ֖הּ יִטַּמָּֽא׃', 'לֹ֥א יִטַּמָּ֖א בַּ֣עַל בְּעַמָּ֑יו לְהֵ֖חַלּֽוֹ׃', 'לֹֽא־<span class="mam-kq"><span class="mam-kq-q">[יִקְרְח֤וּ]</span> <span class="mam-kq-k">(יקרחה)</span></span> קׇרְחָה֙ בְּרֹאשָׁ֔ם וּפְאַ֥ת זְקָנָ֖ם לֹ֣א יְגַלֵּ֑חוּ וּבִ֨בְשָׂרָ֔ם לֹ֥א יִשְׂרְט֖וּ שָׂרָֽטֶת׃', 'קְדֹשִׁ֤ים יִהְיוּ֙ לֵאלֹ֣הֵיהֶ֔ם וְלֹ֣א יְחַלְּל֔וּ שֵׁ֖ם אֱלֹהֵיהֶ֑ם כִּי֩ אֶת־אִשֵּׁ֨י יְהֹוָ֜ה לֶ֧חֶם אֱלֹהֵיהֶ֛ם הֵ֥ם מַקְרִיבִ֖ם וְהָ֥יוּ קֹֽדֶשׁ׃', 'אִשָּׁ֨ה זֹנָ֤ה וַחֲלָלָה֙ לֹ֣א יִקָּ֔חוּ וְאִשָּׁ֛ה גְּרוּשָׁ֥ה מֵאִישָׁ֖הּ לֹ֣א יִקָּ֑חוּ כִּֽי־קָדֹ֥שׁ ה֖וּא לֵאלֹהָֽיו׃', 'וְקִ֨דַּשְׁתּ֔וֹ כִּֽי־אֶת־לֶ֥חֶם אֱלֹהֶ֖יךָ ה֣וּא מַקְרִ֑יב קָדֹשׁ֙ יִֽהְיֶה־לָּ֔ךְ כִּ֣י קָד֔וֹשׁ אֲנִ֥י יְהֹוָ֖ה מְקַדִּשְׁכֶֽם׃', 'וּבַת֙ אִ֣ישׁ כֹּהֵ֔ן כִּ֥י תֵחֵ֖ל לִזְנ֑וֹת אֶת־אָבִ֙יהָ֙ הִ֣יא מְחַלֶּ֔לֶת בָּאֵ֖שׁ תִּשָּׂרֵֽף׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְהַכֹּהֵן֩ הַגָּד֨וֹל מֵאֶחָ֜יו אֲֽשֶׁר־יוּצַ֥ק עַל־רֹאשׁ֣וֹ&thinsp;<b>׀</b> שֶׁ֤מֶן הַמִּשְׁחָה֙ וּמִלֵּ֣א אֶת־יָד֔וֹ לִלְבֹּ֖שׁ אֶת־הַבְּגָדִ֑ים אֶת־רֹאשׁוֹ֙ לֹ֣א יִפְרָ֔ע וּבְגָדָ֖יו לֹ֥א יִפְרֹֽם׃', 'וְעַ֛ל כׇּל־נַפְשֹׁ֥ת מֵ֖ת לֹ֣א יָבֹ֑א לְאָבִ֥יו וּלְאִמּ֖וֹ לֹ֥א יִטַּמָּֽא׃', 'וּמִן־הַמִּקְדָּשׁ֙ לֹ֣א יֵצֵ֔א וְלֹ֣א יְחַלֵּ֔ל אֵ֖ת מִקְדַּ֣שׁ אֱלֹהָ֑יו כִּ֡י נֵ֠זֶר שֶׁ֣מֶן מִשְׁחַ֧ת אֱלֹהָ֛יו עָלָ֖יו אֲנִ֥י יְהֹוָֽה׃', 'וְה֕וּא אִשָּׁ֥ה בִבְתוּלֶ֖יהָ יִקָּֽח׃', 'אַלְמָנָ֤ה וּגְרוּשָׁה֙ וַחֲלָלָ֣ה זֹנָ֔ה אֶת־אֵ֖לֶּה לֹ֣א יִקָּ֑ח כִּ֛י אִם־בְּתוּלָ֥ה מֵעַמָּ֖יו יִקַּ֥ח אִשָּֽׁה׃', 'וְלֹֽא־יְחַלֵּ֥ל זַרְע֖וֹ בְּעַמָּ֑יו כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשֽׁוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֥ר אֶֽל־אַהֲרֹ֖ן לֵאמֹ֑ר אִ֣ישׁ מִֽזַּרְעֲךָ֞ לְדֹרֹתָ֗ם אֲשֶׁ֨ר יִהְיֶ֥ה בוֹ֙ מ֔וּם לֹ֣א יִקְרַ֔ב לְהַקְרִ֖יב לֶ֥חֶם אֱלֹהָֽיו׃', 'כִּ֥י כׇל־אִ֛ישׁ אֲשֶׁר־בּ֥וֹ מ֖וּם לֹ֣א יִקְרָ֑ב אִ֤ישׁ עִוֵּר֙ א֣וֹ פִסֵּ֔חַ א֥וֹ חָרֻ֖ם א֥וֹ שָׂרֽוּעַ׃', 'א֣וֹ אִ֔ישׁ אֲשֶׁר־יִהְיֶ֥ה ב֖וֹ שֶׁ֣בֶר רָ֑גֶל א֖וֹ שֶׁ֥בֶר יָֽד׃', 'אֽוֹ־גִבֵּ֣ן אוֹ־דַ֔ק א֖וֹ תְּבַלֻּ֣ל בְּעֵינ֑וֹ א֤וֹ גָרָב֙ א֣וֹ יַלֶּ֔פֶת א֖וֹ מְר֥וֹחַ אָֽשֶׁךְ׃', 'כׇּל־אִ֞ישׁ אֲשֶׁר־בּ֣וֹ מ֗וּם מִזֶּ֙רַע֙ אַהֲרֹ֣ן הַכֹּהֵ֔ן לֹ֣א יִגַּ֔שׁ לְהַקְרִ֖יב אֶת־אִשֵּׁ֣י יְהֹוָ֑ה מ֣וּם בּ֔וֹ אֵ֚ת לֶ֣חֶם אֱלֹהָ֔יו לֹ֥א יִגַּ֖שׁ לְהַקְרִֽיב׃', 'לֶ֣חֶם אֱלֹהָ֔יו מִקׇּדְשֵׁ֖י הַקֳּדָשִׁ֑ים וּמִן־הַקֳּדָשִׁ֖ים יֹאכֵֽל׃', 'אַ֣ךְ אֶל־הַפָּרֹ֜כֶת לֹ֣א יָבֹ֗א וְאֶל־הַמִּזְבֵּ֛חַ לֹ֥א יִגַּ֖שׁ כִּֽי־מ֣וּם בּ֑וֹ וְלֹ֤א יְחַלֵּל֙ אֶת־מִקְדָּשַׁ֔י כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃', 'וַיְדַבֵּ֣ר מֹשֶׁ֔ה אֶֽל־אַהֲרֹ֖ן וְאֶל־בָּנָ֑יו וְאֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֨ר אֶֽל־אַהֲרֹ֜ן וְאֶל־בָּנָ֗יו וְיִנָּֽזְרוּ֙ מִקׇּדְשֵׁ֣י בְנֵֽי־יִשְׂרָאֵ֔ל וְלֹ֥א יְחַלְּל֖וּ אֶת־שֵׁ֣ם קׇדְשִׁ֑י אֲשֶׁ֨ר הֵ֧ם מַקְדִּשִׁ֛ים לִ֖י אֲנִ֥י יְהֹוָֽה׃', 'אֱמֹ֣ר אֲלֵהֶ֗ם לְדֹרֹ֨תֵיכֶ֜ם כׇּל־אִ֣ישׁ&thinsp;<b>׀</b> אֲשֶׁר־יִקְרַ֣ב מִכׇּל־זַרְעֲכֶ֗ם אֶל־הַקֳּדָשִׁים֙ אֲשֶׁ֨ר יַקְדִּ֤ישׁוּ בְנֵֽי־יִשְׂרָאֵל֙ לַֽיהֹוָ֔ה וְטֻמְאָת֖וֹ עָלָ֑יו וְנִכְרְתָ֞ה הַנֶּ֧פֶשׁ הַהִ֛וא מִלְּפָנַ֖י אֲנִ֥י יְהֹוָֽה׃', 'אִ֣ישׁ אִ֞ישׁ מִזֶּ֣רַע אַהֲרֹ֗ן וְה֤וּא צָר֙וּעַ֙ א֣וֹ זָ֔ב בַּקֳּדָשִׁים֙ לֹ֣א יֹאכַ֔ל עַ֖ד אֲשֶׁ֣ר יִטְהָ֑ר וְהַנֹּגֵ֙עַ֙ בְּכׇל־טְמֵא־נֶ֔פֶשׁ א֣וֹ אִ֔ישׁ אֲשֶׁר־תֵּצֵ֥א מִמֶּ֖נּוּ שִׁכְבַת־זָֽרַע׃', 'אוֹ־אִישׁ֙ אֲשֶׁ֣ר יִגַּ֔ע בְּכׇל־שֶׁ֖רֶץ אֲשֶׁ֣ר יִטְמָא־ל֑וֹ א֤וֹ בְאָדָם֙ אֲשֶׁ֣ר יִטְמָא־ל֔וֹ לְכֹ֖ל טֻמְאָתֽוֹ׃', 'נֶ֚פֶשׁ אֲשֶׁ֣ר תִּגַּע־בּ֔וֹ וְטָמְאָ֖ה עַד־הָעָ֑רֶב וְלֹ֤א יֹאכַל֙ מִן־הַקֳּדָשִׁ֔ים כִּ֛י אִם־רָחַ֥ץ בְּשָׂר֖וֹ בַּמָּֽיִם׃', 'וּבָ֥א הַשֶּׁ֖מֶשׁ וְטָהֵ֑ר וְאַחַר֙ יֹאכַ֣ל מִן־הַקֳּדָשִׁ֔ים כִּ֥י לַחְמ֖וֹ הֽוּא׃', 'נְבֵלָ֧ה וּטְרֵפָ֛ה לֹ֥א יֹאכַ֖ל לְטׇמְאָה־בָ֑הּ אֲנִ֖י יְהֹוָֽה׃', 'וְשָׁמְר֣וּ אֶת־מִשְׁמַרְתִּ֗י וְלֹֽא־יִשְׂא֤וּ עָלָיו֙ חֵ֔טְא וּמֵ֥תוּ ב֖וֹ כִּ֣י יְחַלְּלֻ֑הוּ אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃', 'וְכׇל־זָ֖ר לֹא־יֹ֣אכַל קֹ֑דֶשׁ תּוֹשַׁ֥ב כֹּהֵ֛ן וְשָׂכִ֖יר לֹא־יֹ֥אכַל קֹֽדֶשׁ׃', 'וְכֹהֵ֗ן כִּֽי־יִקְנֶ֥ה נֶ֙פֶשׁ֙ קִנְיַ֣ן כַּסְפּ֔וֹ ה֖וּא יֹ֣אכַל בּ֑וֹ וִילִ֣יד בֵּית֔וֹ הֵ֖ם יֹאכְל֥וּ בְלַחְמֽוֹ׃', 'וּבַ֨ת־כֹּהֵ֔ן כִּ֥י תִהְיֶ֖ה לְאִ֣ישׁ זָ֑ר הִ֕וא בִּתְרוּמַ֥ת הַקֳּדָשִׁ֖ים לֹ֥א תֹאכֵֽל׃', 'וּבַת־כֹּהֵן֩ כִּ֨י תִהְיֶ֜ה אַלְמָנָ֣ה וּגְרוּשָׁ֗ה וְזֶ֘רַע֮ אֵ֣ין לָהּ֒ וְשָׁבָ֞ה אֶל־בֵּ֤ית אָבִ֙יהָ֙ כִּנְעוּרֶ֔יהָ מִלֶּ֥חֶם אָבִ֖יהָ תֹּאכֵ֑ל וְכׇל־זָ֖ר לֹא־יֹ֥אכַל בּֽוֹ׃', 'וְאִ֕ישׁ כִּֽי־יֹאכַ֥ל קֹ֖דֶשׁ בִּשְׁגָגָ֑ה וְיָסַ֤ף חֲמִֽשִׁיתוֹ֙ עָלָ֔יו וְנָתַ֥ן לַכֹּהֵ֖ן אֶת־הַקֹּֽדֶשׁ׃', 'וְלֹ֣א יְחַלְּל֔וּ אֶת־קׇדְשֵׁ֖י בְּנֵ֣י יִשְׂרָאֵ֑ל אֵ֥ת אֲשֶׁר־יָרִ֖ימוּ לַיהֹוָֽה׃', 'וְהִשִּׂ֤יאוּ אוֹתָם֙ עֲוֺ֣ן אַשְׁמָ֔ה בְּאׇכְלָ֖ם אֶת־קׇדְשֵׁיהֶ֑ם כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֨ר אֶֽל־אַהֲרֹ֜ן וְאֶל־בָּנָ֗יו וְאֶל֙ כׇּל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם אִ֣ישׁ אִישׁ֩ מִבֵּ֨ית יִשְׂרָאֵ֜ל וּמִן־הַגֵּ֣ר בְּיִשְׂרָאֵ֗ל אֲשֶׁ֨ר יַקְרִ֤יב קׇרְבָּנוֹ֙ לְכׇל־נִדְרֵיהֶם֙ וּלְכׇל־נִדְבוֹתָ֔ם אֲשֶׁר־יַקְרִ֥יבוּ לַיהֹוָ֖ה לְעֹלָֽה׃', 'לִֽרְצֹנְכֶ֑ם תָּמִ֣ים זָכָ֔ר בַּבָּקָ֕ר בַּכְּשָׂבִ֖ים וּבָֽעִזִּֽים׃', 'כֹּ֛ל אֲשֶׁר־בּ֥וֹ מ֖וּם לֹ֣א תַקְרִ֑יבוּ כִּי־לֹ֥א לְרָצ֖וֹן יִהְיֶ֥ה לָכֶֽם׃', 'וְאִ֗ישׁ כִּֽי־יַקְרִ֤יב זֶֽבַח־שְׁלָמִים֙ לַיהֹוָ֔ה לְפַלֵּא־נֶ֙דֶר֙ א֣וֹ לִנְדָבָ֔ה בַּבָּקָ֖ר א֣וֹ בַצֹּ֑אן תָּמִ֤ים יִֽהְיֶה֙ לְרָצ֔וֹן כׇּל־מ֖וּם לֹ֥א יִהְיֶה־בּֽוֹ׃', 'עַוֶּ֩רֶת֩ א֨וֹ שָׁב֜וּר אוֹ־חָר֣וּץ אֽוֹ־יַבֶּ֗לֶת א֤וֹ גָרָב֙ א֣וֹ יַלֶּ֔פֶת לֹא־תַקְרִ֥יבוּ אֵ֖לֶּה לַיהֹוָ֑ה וְאִשֶּׁ֗ה לֹא־תִתְּנ֥וּ מֵהֶ֛ם עַל־הַמִּזְבֵּ֖חַ לַיהֹוָֽה׃', 'וְשׁ֥וֹר וָשֶׂ֖ה שָׂר֣וּעַ וְקָל֑וּט נְדָבָה֙ תַּעֲשֶׂ֣ה אֹת֔וֹ וּלְנֵ֖דֶר לֹ֥א יֵרָצֶֽה׃', 'וּמָע֤וּךְ וְכָתוּת֙ וְנָת֣וּק וְכָר֔וּת לֹ֥א תַקְרִ֖יבוּ לַֽיהֹוָ֑ה וּֽבְאַרְצְכֶ֖ם לֹ֥א תַעֲשֽׂוּ׃', 'וּמִיַּ֣ד בֶּן־נֵכָ֗ר לֹ֥א תַקְרִ֛יבוּ אֶת־לֶ֥חֶם אֱלֹהֵיכֶ֖ם מִכׇּל־אֵ֑לֶּה כִּ֣י מׇשְׁחָתָ֤ם בָּהֶם֙ מ֣וּם בָּ֔ם לֹ֥א יֵרָצ֖וּ לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'שׁ֣וֹר אוֹ־כֶ֤שֶׂב אוֹ־עֵז֙ כִּ֣י יִוָּלֵ֔ד וְהָיָ֛ה שִׁבְעַ֥ת יָמִ֖ים תַּ֣חַת אִמּ֑וֹ וּמִיּ֤וֹם הַשְּׁמִינִי֙ וָהָ֔לְאָה יֵרָצֶ֕ה לְקׇרְבַּ֥ן אִשֶּׁ֖ה לַיהֹוָֽה׃', 'וְשׁ֖וֹר אוֹ־שֶׂ֑ה אֹת֣וֹ וְאֶת־בְּנ֔וֹ לֹ֥א תִשְׁחֲט֖וּ בְּי֥וֹם אֶחָֽד׃', 'וְכִֽי־תִזְבְּח֥וּ זֶֽבַח־תּוֹדָ֖ה לַיהֹוָ֑ה לִֽרְצֹנְכֶ֖ם תִּזְבָּֽחוּ׃', 'בַּיּ֤וֹם הַהוּא֙ יֵאָכֵ֔ל לֹֽא־תוֹתִ֥ירוּ מִמֶּ֖נּוּ עַד־בֹּ֑קֶר אֲנִ֖י יְהֹוָֽה׃', 'וּשְׁמַרְתֶּם֙ מִצְוֺתַ֔י וַעֲשִׂיתֶ֖ם אֹתָ֑ם אֲנִ֖י יְהֹוָֽה׃', 'וְלֹ֤א תְחַלְּלוּ֙ אֶת־שֵׁ֣ם קׇדְשִׁ֔י וְנִ֨קְדַּשְׁתִּ֔י בְּת֖וֹךְ בְּנֵ֣י יִשְׂרָאֵ֑ל אֲנִ֥י יְהֹוָ֖ה מְקַדִּשְׁכֶֽם׃', 'הַמּוֹצִ֤יא אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִ֑ים אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם מוֹעֲדֵ֣י יְהֹוָ֔ה אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם מִקְרָאֵ֣י קֹ֑דֶשׁ אֵ֥לֶּה הֵ֖ם מוֹעֲדָֽי׃', 'שֵׁ֣שֶׁת יָמִים֮ תֵּעָשֶׂ֣ה מְלָאכָה֒ וּבַיּ֣וֹם הַשְּׁבִיעִ֗י שַׁבַּ֤ת שַׁבָּתוֹן֙ מִקְרָא־קֹ֔דֶשׁ כׇּל־מְלָאכָ֖ה לֹ֣א תַעֲשׂ֑וּ שַׁבָּ֥ת הִוא֙ לַֽיהֹוָ֔ה בְּכֹ֖ל מוֹשְׁבֹֽתֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'אֵ֚לֶּה מוֹעֲדֵ֣י יְהֹוָ֔ה מִקְרָאֵ֖י קֹ֑דֶשׁ אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם בְּמוֹעֲדָֽם׃', 'בַּחֹ֣דֶשׁ הָרִאשׁ֗וֹן בְּאַרְבָּעָ֥ה עָשָׂ֛ר לַחֹ֖דֶשׁ בֵּ֣ין הָעַרְבָּ֑יִם פֶּ֖סַח לַיהֹוָֽה׃', 'וּבַחֲמִשָּׁ֨ה עָשָׂ֥ר יוֹם֙ לַחֹ֣דֶשׁ הַזֶּ֔ה חַ֥ג הַמַּצּ֖וֹת לַיהֹוָ֑ה שִׁבְעַ֥ת יָמִ֖ים מַצּ֥וֹת תֹּאכֵֽלוּ׃', 'בַּיּוֹם֙ הָֽרִאשׁ֔וֹן מִקְרָא־קֹ֖דֶשׁ יִהְיֶ֣ה לָכֶ֑ם כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃', 'וְהִקְרַבְתֶּ֥ם אִשֶּׁ֛ה לַיהֹוָ֖ה שִׁבְעַ֣ת יָמִ֑ים בַּיּ֤וֹם הַשְּׁבִיעִי֙ מִקְרָא־קֹ֔דֶשׁ כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם כִּֽי־תָבֹ֣אוּ אֶל־הָאָ֗רֶץ אֲשֶׁ֤ר אֲנִי֙ נֹתֵ֣ן לָכֶ֔ם וּקְצַרְתֶּ֖ם אֶת־קְצִירָ֑הּ וַהֲבֵאתֶ֥ם אֶת־עֹ֛מֶר רֵאשִׁ֥ית קְצִירְכֶ֖ם אֶל־הַכֹּהֵֽן׃', 'וְהֵנִ֧יף אֶת־הָעֹ֛מֶר לִפְנֵ֥י יְהֹוָ֖ה לִֽרְצֹנְכֶ֑ם מִֽמׇּחֳרַת֙ הַשַּׁבָּ֔ת יְנִיפֶ֖נּוּ הַכֹּהֵֽן׃', 'וַעֲשִׂיתֶ֕ם בְּי֥וֹם הֲנִֽיפְכֶ֖ם אֶת־הָעֹ֑מֶר כֶּ֣בֶשׂ תָּמִ֧ים בֶּן־שְׁנָת֛וֹ לְעֹלָ֖ה לַיהֹוָֽה׃', 'וּמִנְחָתוֹ֩ שְׁנֵ֨י עֶשְׂרֹנִ֜ים סֹ֣לֶת בְּלוּלָ֥ה בַשֶּׁ֛מֶן אִשֶּׁ֥ה לַיהֹוָ֖ה רֵ֣יחַ נִיחֹ֑חַ וְנִסְכֹּ֥ה יַ֖יִן רְבִיעִ֥ת הַהִֽין׃', 'וְלֶ֩חֶם֩ וְקָלִ֨י וְכַרְמֶ֜ל לֹ֣א תֹֽאכְל֗וּ עַד־עֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה עַ֚ד הֲבִ֣יאֲכֶ֔ם אֶת־קׇרְבַּ֖ן אֱלֹהֵיכֶ֑ם חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בְּכֹ֖ל מֹשְׁבֹֽתֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וּסְפַרְתֶּ֤ם לָכֶם֙ מִמׇּחֳרַ֣ת הַשַּׁבָּ֔ת מִיּוֹם֙ הֲבִ֣יאֲכֶ֔ם אֶת־עֹ֖מֶר הַתְּנוּפָ֑ה שֶׁ֥בַע שַׁבָּת֖וֹת תְּמִימֹ֥ת תִּהְיֶֽינָה׃', 'עַ֣ד מִֽמׇּחֳרַ֤ת הַשַּׁבָּת֙ הַשְּׁבִיעִ֔ת תִּסְפְּר֖וּ חֲמִשִּׁ֣ים י֑וֹם וְהִקְרַבְתֶּ֛ם מִנְחָ֥ה חֲדָשָׁ֖ה לַיהֹוָֽה׃', 'מִמּוֹשְׁבֹ֨תֵיכֶ֜ם תָּבִ֣יאּוּ&thinsp;<b>׀</b> לֶ֣חֶם תְּנוּפָ֗ה שְׁ֚תַּיִם שְׁנֵ֣י עֶשְׂרֹנִ֔ים סֹ֣לֶת תִּהְיֶ֔ינָה חָמֵ֖ץ תֵּאָפֶ֑ינָה בִּכּוּרִ֖ים לַֽיהֹוָֽה׃', 'וְהִקְרַבְתֶּ֣ם עַל־הַלֶּ֗חֶם שִׁבְעַ֨ת כְּבָשִׂ֤ים תְּמִימִם֙ בְּנֵ֣י שָׁנָ֔ה וּפַ֧ר בֶּן־בָּקָ֛ר אֶחָ֖ד וְאֵילִ֣ם שְׁנָ֑יִם יִהְי֤וּ עֹלָה֙ לַֽיהֹוָ֔ה וּמִנְחָתָם֙ וְנִסְכֵּיהֶ֔ם אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃', 'וַעֲשִׂיתֶ֛ם שְׂעִיר־עִזִּ֥ים אֶחָ֖ד לְחַטָּ֑את וּשְׁנֵ֧י כְבָשִׂ֛ים בְּנֵ֥י שָׁנָ֖ה לְזֶ֥בַח שְׁלָמִֽים׃', 'וְהֵנִ֣יף הַכֹּהֵ֣ן&thinsp;<small>׀</small>&thinsp;אֹתָ֡ם עַל֩ לֶ֨חֶם הַבִּכֻּרִ֤ים תְּנוּפָה֙ לִפְנֵ֣י יְהֹוָ֔ה עַל־שְׁנֵ֖י כְּבָשִׂ֑ים קֹ֛דֶשׁ יִהְי֥וּ לַיהֹוָ֖ה לַכֹּהֵֽן׃', 'וּקְרָאתֶ֞ם בְּעֶ֣צֶם&thinsp;<b>׀</b> הַיּ֣וֹם הַזֶּ֗ה מִֽקְרָא־קֹ֙דֶשׁ֙ יִהְיֶ֣ה לָכֶ֔ם כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֣א תַעֲשׂ֑וּ חֻקַּ֥ת עוֹלָ֛ם בְּכׇל־מוֹשְׁבֹ֥תֵיכֶ֖ם לְדֹרֹֽתֵיכֶֽם׃', 'וּֽבְקֻצְרְכֶ֞ם אֶת־קְצִ֣יר אַרְצְכֶ֗ם לֹֽא־תְכַלֶּ֞ה פְּאַ֤ת שָֽׂדְךָ֙ בְּקֻצְרֶ֔ךָ וְלֶ֥קֶט קְצִירְךָ֖ לֹ֣א תְלַקֵּ֑ט לֶֽעָנִ֤י וְלַגֵּר֙ תַּעֲזֹ֣ב אֹתָ֔ם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֛ר אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר בַּחֹ֨דֶשׁ הַשְּׁבִיעִ֜י בְּאֶחָ֣ד לַחֹ֗דֶשׁ יִהְיֶ֤ה לָכֶם֙ שַׁבָּת֔וֹן זִכְר֥וֹן תְּרוּעָ֖ה מִקְרָא־קֹֽדֶשׁ׃', 'כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֣א תַעֲשׂ֑וּ וְהִקְרַבְתֶּ֥ם אִשֶּׁ֖ה לַיהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'אַ֡ךְ בֶּעָשׂ֣וֹר לַחֹ֩דֶשׁ֩ הַשְּׁבִיעִ֨י הַזֶּ֜ה י֧וֹם הַכִּפֻּרִ֣ים ה֗וּא מִֽקְרָא־קֹ֙דֶשׁ֙ יִהְיֶ֣ה לָכֶ֔ם וְעִנִּיתֶ֖ם אֶת־נַפְשֹׁתֵיכֶ֑ם וְהִקְרַבְתֶּ֥ם אִשֶּׁ֖ה לַיהֹוָֽה׃', 'וְכׇל־מְלָאכָה֙ לֹ֣א תַעֲשׂ֔וּ בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה כִּ֣י י֤וֹם כִּפֻּרִים֙ ה֔וּא לְכַפֵּ֣ר עֲלֵיכֶ֔ם לִפְנֵ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃', 'כִּ֤י כׇל־הַנֶּ֙פֶשׁ֙ אֲשֶׁ֣ר לֹֽא־תְעֻנֶּ֔ה בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה וְנִכְרְתָ֖ה מֵֽעַמֶּֽיהָ׃', 'וְכׇל־הַנֶּ֗פֶשׁ אֲשֶׁ֤ר תַּעֲשֶׂה֙ כׇּל־מְלָאכָ֔ה בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה וְהַֽאֲבַדְתִּ֛י אֶת־הַנֶּ֥פֶשׁ הַהִ֖וא מִקֶּ֥רֶב עַמָּֽהּ׃', 'כׇּל־מְלָאכָ֖ה לֹ֣א תַעֲשׂ֑וּ חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בְּכֹ֖ל מֹשְׁבֹֽתֵיכֶֽם׃', 'שַׁבַּ֨ת שַׁבָּת֥וֹן הוּא֙ לָכֶ֔ם וְעִנִּיתֶ֖ם אֶת־נַפְשֹׁתֵיכֶ֑ם בְּתִשְׁעָ֤ה לַחֹ֙דֶשׁ֙ בָּעֶ֔רֶב מֵעֶ֣רֶב עַד־עֶ֔רֶב תִּשְׁבְּת֖וּ שַׁבַּתְּכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֛ר אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר בַּחֲמִשָּׁ֨ה עָשָׂ֜ר י֗וֹם לַחֹ֤דֶשׁ הַשְּׁבִיעִי֙ הַזֶּ֔ה חַ֧ג הַסֻּכּ֛וֹת שִׁבְעַ֥ת יָמִ֖ים לַיהֹוָֽה׃', 'בַּיּ֥וֹם הָרִאשׁ֖וֹן מִקְרָא־קֹ֑דֶשׁ כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃', 'שִׁבְעַ֣ת יָמִ֔ים תַּקְרִ֥יבוּ אִשֶּׁ֖ה לַיהֹוָ֑ה בַּיּ֣וֹם הַשְּׁמִינִ֡י מִקְרָא־קֹ֩דֶשׁ֩ יִהְיֶ֨ה לָכֶ֜ם וְהִקְרַבְתֶּ֨ם אִשֶּׁ֤ה לַֽיהֹוָה֙ עֲצֶ֣רֶת הִ֔וא כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃', 'אֵ֚לֶּה מוֹעֲדֵ֣י יְהֹוָ֔ה אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם מִקְרָאֵ֣י קֹ֑דֶשׁ לְהַקְרִ֨יב אִשֶּׁ֜ה לַיהֹוָ֗ה עֹלָ֧ה וּמִנְחָ֛ה זֶ֥בַח וּנְסָכִ֖ים דְּבַר־י֥וֹם בְּיוֹמֽוֹ׃', 'מִלְּבַ֖ד שַׁבְּתֹ֣ת יְהֹוָ֑ה וּמִלְּבַ֣ד מַתְּנֽוֹתֵיכֶ֗ם וּמִלְּבַ֤ד כׇּל־נִדְרֵיכֶם֙ וּמִלְּבַד֙ כׇּל־נִדְבֹ֣תֵיכֶ֔ם אֲשֶׁ֥ר תִּתְּנ֖וּ לַיהֹוָֽה׃', 'אַ֡ךְ בַּחֲמִשָּׁה֩ עָשָׂ֨ר י֜וֹם לַחֹ֣דֶשׁ הַשְּׁבִיעִ֗י בְּאׇסְפְּכֶם֙ אֶת־תְּבוּאַ֣ת הָאָ֔רֶץ תָּחֹ֥גּוּ אֶת־חַג־יְהֹוָ֖ה שִׁבְעַ֣ת יָמִ֑ים בַּיּ֤וֹם הָֽרִאשׁוֹן֙ שַׁבָּת֔וֹן וּבַיּ֥וֹם הַשְּׁמִינִ֖י שַׁבָּתֽוֹן׃', 'וּלְקַחְתֶּ֨ם לָכֶ֜ם בַּיּ֣וֹם הָרִאשׁ֗וֹן פְּרִ֨י עֵ֤ץ הָדָר֙ כַּפֹּ֣ת תְּמָרִ֔ים וַעֲנַ֥ף עֵץ־עָבֹ֖ת וְעַרְבֵי־נָ֑חַל וּשְׂמַחְתֶּ֗ם לִפְנֵ֛י יְהֹוָ֥ה אֱלֹהֵיכֶ֖ם שִׁבְעַ֥ת יָמִֽים׃', 'וְחַגֹּתֶ֤ם אֹתוֹ֙ חַ֣ג לַֽיהֹוָ֔ה שִׁבְעַ֥ת יָמִ֖ים בַּשָּׁנָ֑ה חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בַּחֹ֥דֶשׁ הַשְּׁבִיעִ֖י תָּחֹ֥גּוּ אֹתֽוֹ׃', 'בַּסֻּכֹּ֥ת תֵּשְׁב֖וּ שִׁבְעַ֣ת יָמִ֑ים כׇּל־הָֽאֶזְרָח֙ בְּיִשְׂרָאֵ֔ל יֵשְׁב֖וּ בַּסֻּכֹּֽת׃', 'לְמַ֘עַן֮ יֵדְע֣וּ דֹרֹֽתֵיכֶם֒ כִּ֣י בַסֻּכּ֗וֹת הוֹשַׁ֙בְתִּי֙ אֶת־בְּנֵ֣י יִשְׂרָאֵ֔ל בְּהוֹצִיאִ֥י אוֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃', 'וַיְדַבֵּ֣ר מֹשֶׁ֔ה אֶֽת־מֹעֲדֵ֖י יְהֹוָ֑ה אֶל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'צַ֞ו אֶת־בְּנֵ֣י יִשְׂרָאֵ֗ל וְיִקְח֨וּ אֵלֶ֜יךָ שֶׁ֣מֶן זַ֥יִת זָ֛ךְ כָּתִ֖ית לַמָּא֑וֹר לְהַעֲלֹ֥ת נֵ֖ר תָּמִֽיד׃', 'מִחוּץ֩ לְפָרֹ֨כֶת הָעֵדֻ֜ת בְּאֹ֣הֶל מוֹעֵ֗ד יַעֲרֹךְ֩ אֹת֨וֹ אַהֲרֹ֜ן מֵעֶ֧רֶב עַד־בֹּ֛קֶר לִפְנֵ֥י יְהֹוָ֖ה תָּמִ֑יד חֻקַּ֥ת עוֹלָ֖ם לְדֹרֹֽתֵיכֶֽם׃', 'עַ֚ל הַמְּנֹרָ֣ה הַטְּהֹרָ֔ה יַעֲרֹ֖ךְ אֶת־הַנֵּר֑וֹת לִפְנֵ֥י יְהֹוָ֖ה תָּמִֽיד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וְלָקַחְתָּ֣ סֹ֔לֶת וְאָפִיתָ֣ אֹתָ֔הּ שְׁתֵּ֥ים עֶשְׂרֵ֖ה חַלּ֑וֹת שְׁנֵי֙ עֶשְׂרֹנִ֔ים יִהְיֶ֖ה הַֽחַלָּ֥ה הָאֶחָֽת׃', 'וְשַׂמְתָּ֥ אוֹתָ֛ם שְׁתַּ֥יִם מַֽעֲרָכ֖וֹת שֵׁ֣שׁ הַֽמַּעֲרָ֑כֶת עַ֛ל הַשֻּׁלְחָ֥ן הַטָּהֹ֖ר לִפְנֵ֥י יְהֹוָֽה׃', 'וְנָתַתָּ֥ עַל־הַֽמַּעֲרֶ֖כֶת לְבֹנָ֣ה זַכָּ֑ה וְהָיְתָ֤ה לַלֶּ֙חֶם֙ לְאַזְכָּרָ֔ה אִשֶּׁ֖ה לַֽיהֹוָֽה׃', 'בְּי֨וֹם הַשַּׁבָּ֜ת בְּי֣וֹם הַשַּׁבָּ֗ת יַֽעַרְכֶ֛נּוּ לִפְנֵ֥י יְהֹוָ֖ה תָּמִ֑יד מֵאֵ֥ת בְּנֵֽי־יִשְׂרָאֵ֖ל בְּרִ֥ית עוֹלָֽם׃', 'וְהָֽיְתָה֙ לְאַהֲרֹ֣ן וּלְבָנָ֔יו וַאֲכָלֻ֖הוּ בְּמָק֣וֹם קָדֹ֑שׁ כִּ֡י קֹ֩דֶשׁ֩ קׇֽדָשִׁ֨ים ה֥וּא ל֛וֹ מֵאִשֵּׁ֥י יְהֹוָ֖ה חׇק־עוֹלָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֵּצֵא֙ בֶּן־אִשָּׁ֣ה יִשְׂרְאֵלִ֔ית וְהוּא֙ בֶּן־אִ֣ישׁ מִצְרִ֔י בְּת֖וֹךְ בְּנֵ֣י יִשְׂרָאֵ֑ל וַיִּנָּצוּ֙ בַּֽמַּחֲנֶ֔ה בֶּ֚ן הַיִּשְׂרְאֵלִ֔ית וְאִ֖ישׁ הַיִּשְׂרְאֵלִֽי׃', 'וַ֠יִּקֹּ֠ב בֶּן־הָֽאִשָּׁ֨ה הַיִּשְׂרְאֵלִ֤ית אֶת־הַשֵּׁם֙ וַיְקַלֵּ֔ל וַיָּבִ֥יאוּ אֹת֖וֹ אֶל־מֹשֶׁ֑ה וְשֵׁ֥ם אִמּ֛וֹ שְׁלֹמִ֥ית בַּת־דִּבְרִ֖י לְמַטֵּה־דָֽן׃', 'וַיַּנִּיחֻ֖הוּ בַּמִּשְׁמָ֑ר לִפְרֹ֥שׁ לָהֶ֖ם עַל־פִּ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'הוֹצֵ֣א אֶת־הַֽמְקַלֵּ֗ל אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וְסָמְכ֧וּ כׇֽל־הַשֹּׁמְעִ֛ים אֶת־יְדֵיהֶ֖ם עַל־רֹאשׁ֑וֹ וְרָגְמ֥וּ אֹת֖וֹ כׇּל־הָעֵדָֽה׃', 'וְאֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל תְּדַבֵּ֣ר לֵאמֹ֑ר אִ֥ישׁ אִ֛ישׁ כִּֽי־יְקַלֵּ֥ל אֱלֹהָ֖יו וְנָשָׂ֥א חֶטְאֽוֹ׃', 'וְנֹקֵ֤ב שֵׁם־יְהֹוָה֙ מ֣וֹת יוּמָ֔ת רָג֥וֹם יִרְגְּמוּ־ב֖וֹ כׇּל־הָעֵדָ֑ה כַּגֵּר֙ כָּֽאֶזְרָ֔ח בְּנׇקְבוֹ־שֵׁ֖ם יוּמָֽת׃', 'וְאִ֕ישׁ כִּ֥י יַכֶּ֖ה כׇּל־נֶ֣פֶשׁ אָדָ֑ם מ֖וֹת יוּמָֽת׃', 'וּמַכֵּ֥ה נֶֽפֶשׁ־בְּהֵמָ֖ה יְשַׁלְּמֶ֑נָּה נֶ֖פֶשׁ תַּ֥חַת נָֽפֶשׁ׃', 'וְאִ֕ישׁ כִּֽי־יִתֵּ֥ן מ֖וּם בַּעֲמִית֑וֹ כַּאֲשֶׁ֣ר עָשָׂ֔ה כֵּ֖ן יֵעָ֥שֶׂה לּֽוֹ׃', 'שֶׁ֚בֶר תַּ֣חַת שֶׁ֔בֶר עַ֚יִן תַּ֣חַת עַ֔יִן שֵׁ֖ן תַּ֣חַת שֵׁ֑ן כַּאֲשֶׁ֨ר יִתֵּ֥ן מוּם֙ בָּֽאָדָ֔ם כֵּ֖ן יִנָּ֥תֶן בּֽוֹ׃', 'וּמַכֵּ֥ה בְהֵמָ֖ה יְשַׁלְּמֶ֑נָּה וּמַכֵּ֥ה אָדָ֖ם יוּמָֽת׃', 'מִשְׁפַּ֤ט אֶחָד֙ יִהְיֶ֣ה לָכֶ֔ם כַּגֵּ֥ר כָּאֶזְרָ֖ח יִהְיֶ֑ה כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃', 'וַיְדַבֵּ֣ר מֹשֶׁה֮ אֶל־בְּנֵ֣י יִשְׂרָאֵל֒ וַיּוֹצִ֣יאוּ אֶת־הַֽמְקַלֵּ֗ל אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וַיִּרְגְּמ֥וּ אֹת֖וֹ אָ֑בֶן וּבְנֵֽי־יִשְׂרָאֵ֣ל עָשׂ֔וּ כַּֽאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-21-1">Chap. 21</a><a href="#v-22-1">Chap. 22</a><a href="#v-23-1">Chap. 23</a><a href="#v-24-1">Chap. 24</a></div>
+  <div class="seif" id="v-21-1">
+      <span class="seif-num">21:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה אֱמֹ֥ר אֶל־הַכֹּהֲנִ֖ים בְּנֵ֣י אַהֲרֹ֑ן וְאָמַרְתָּ֣ אֲלֵהֶ֔ם לְנֶ֥פֶשׁ לֹֽא־יִטַּמָּ֖א בְּעַמָּֽיו׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה אמר אל־הכהנים בני אהרן ואמרת אלהם לנפש לא־יטמא בעמיו׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel dit à Moïse: "Parle aux pontifes, fils d’Aaron, et dis-leur: Nul ne doit se souiller par le cadavre d’un de ses concitoyens,</p></div>
+    </div><div class="seif" id="v-21-2">
+      <span class="seif-num">21:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֚י אִם־לִשְׁאֵר֔וֹ הַקָּרֹ֖ב אֵלָ֑יו לְאִמּ֣וֹ וּלְאָבִ֔יו וְלִבְנ֥וֹ וּלְבִתּ֖וֹ וּלְאָחִֽיו׃</p></div><div class="heb-s"><p>כי אם־לשארו הקרב אליו לאמו ולאביו ולבנו ולבתו ולאחיו׃</p></div></div>
+      <div class="texte-fr"><p>si ce n’est pour ses parents les plus proches: pour sa mère ou son père, pour son fils ou sa fille, ou pour son frère;</p></div>
+    </div><div class="seif" id="v-21-3">
+      <span class="seif-num">21:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלַאֲחֹת֤וֹ הַבְּתוּלָה֙ הַקְּרוֹבָ֣ה אֵלָ֔יו אֲשֶׁ֥ר לֹֽא־הָיְתָ֖ה לְאִ֑ישׁ לָ֖הּ יִטַּמָּֽא׃</p></div><div class="heb-s"><p>ולאחתו הבתולה הקרובה אליו אשר לא־היתה לאיש לה יטמא׃</p></div></div>
+      <div class="texte-fr"><p>pour sa sœur aussi, si elle est vierge, habitant près de lui, et n’a pas encore appartenu à un homme, pour elle il peut se souiller.</p></div>
+    </div><div class="seif" id="v-21-4">
+      <span class="seif-num">21:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֥א יִטַּמָּ֖א בַּ֣עַל בְּעַמָּ֑יו לְהֵ֖חַלּֽוֹ׃</p></div><div class="heb-s"><p>לא יטמא בעל בעמיו להחלו׃</p></div></div>
+      <div class="texte-fr"><p>Il ne doit pas se rendre impur, lui qui est maître parmi les siens, de manière à s’avilir.</p></div>
+    </div><div class="seif" id="v-21-5">
+      <span class="seif-num">21:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־<span class="mam-kq"><span class="mam-kq-q">[יִקְרְח֤וּ]</span> <span class="mam-kq-k">(יקרחה)</span></span> קׇרְחָה֙ בְּרֹאשָׁ֔ם וּפְאַ֥ת זְקָנָ֖ם לֹ֣א יְגַלֵּ֑חוּ וּבִ֨בְשָׂרָ֔ם לֹ֥א יִשְׂרְט֖וּ שָׂרָֽטֶת׃</p></div><div class="heb-s"><p>לא־<span class="mam-kq"><span class="mam-kq-q">[יקרחו]</span> <span class="mam-kq-k">(יקרחה)</span></span> קרחה בראשם ופאת זקנם לא יגלחו ובבשרם לא ישרטו שרטת׃</p></div></div>
+      <div class="texte-fr"><p>ils ne feront point de tonsure à leur tête, ne raseront point l’extrémité de leur barbe, et ne pratiqueront point d’incision sur leur chair.</p></div>
+    </div><div class="seif" id="v-21-6">
+      <span class="seif-num">21:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>קְדֹשִׁ֤ים יִהְיוּ֙ לֵאלֹ֣הֵיהֶ֔ם וְלֹ֣א יְחַלְּל֔וּ שֵׁ֖ם אֱלֹהֵיהֶ֑ם כִּי֩ אֶת־אִשֵּׁ֨י יְהֹוָ֜ה לֶ֧חֶם אֱלֹהֵיהֶ֛ם הֵ֥ם מַקְרִיבִ֖ם וְהָ֥יוּ קֹֽדֶשׁ׃</p></div><div class="heb-s"><p>קדשים יהיו לאלהיהם ולא יחללו שם אלהיהם כי את־אשי יהוה לחם אלהיהם הם מקריבם והיו קדש׃</p></div></div>
+      <div class="texte-fr"><p>Ils doivent rester saints pour leur Dieu, et ne pas profaner le nom de leur Dieu; car ce sont les sacrifices de l’Éternel, c’est le pain de leur Dieu qu’ils ont à offrir: ils doivent être saints.</p></div>
+    </div><div class="seif" id="v-21-7">
+      <span class="seif-num">21:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִשָּׁ֨ה זֹנָ֤ה וַחֲלָלָה֙ לֹ֣א יִקָּ֔חוּ וְאִשָּׁ֛ה גְּרוּשָׁ֥ה מֵאִישָׁ֖הּ לֹ֣א יִקָּ֑חוּ כִּֽי־קָדֹ֥שׁ ה֖וּא לֵאלֹהָֽיו׃</p></div><div class="heb-s"><p>אשה זנה וחללה לא יקחו ואשה גרושה מאישה לא יקחו כי־קדש הוא לאלהיו׃</p></div></div>
+      <div class="texte-fr"><p>Une femme prostituée ou déshonorée, ils ne l’épouseront point; une femme répudiée par son mari, ils ne l’épouseront point: car le pontife est consacré à son Dieu.</p></div>
+    </div><div class="seif" id="v-21-8">
+      <span class="seif-num">21:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְקִ֨דַּשְׁתּ֔וֹ כִּֽי־אֶת־לֶ֥חֶם אֱלֹהֶ֖יךָ ה֣וּא מַקְרִ֑יב קָדֹשׁ֙ יִֽהְיֶה־לָּ֔ךְ כִּ֣י קָד֔וֹשׁ אֲנִ֥י יְהֹוָ֖ה מְקַדִּשְׁכֶֽם׃</p></div><div class="heb-s"><p>וקדשתו כי־את־לחם אלהיך הוא מקריב קדש יהיה־לך כי קדוש אני יהוה מקדשכם׃</p></div></div>
+      <div class="texte-fr"><p>Tiens-le pour saint, car c’est lui qui offre le pain de ton Dieu; qu’il soit saint pour toi, parce que je suis saint, moi l’Éternel, qui vous sanctifie.</p></div>
+    </div><div class="seif" id="v-21-9">
+      <span class="seif-num">21:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַת֙ אִ֣ישׁ כֹּהֵ֔ן כִּ֥י תֵחֵ֖ל לִזְנ֑וֹת אֶת־אָבִ֙יהָ֙ הִ֣יא מְחַלֶּ֔לֶת בָּאֵ֖שׁ תִּשָּׂרֵֽף׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ובת איש כהן כי תחל לזנות את־אביה היא מחללת באש תשרף׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et si la fille de quelque pontife se déshonore par la prostitution, c’est son père qu’elle déshonore: elle périra par le feu.</p></div>
+    </div><div class="seif" id="v-21-10">
+      <span class="seif-num">21:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַכֹּהֵן֩ הַגָּד֨וֹל מֵאֶחָ֜יו אֲֽשֶׁר־יוּצַ֥ק עַל־רֹאשׁ֣וֹ&thinsp;<b>׀</b> שֶׁ֤מֶן הַמִּשְׁחָה֙ וּמִלֵּ֣א אֶת־יָד֔וֹ לִלְבֹּ֖שׁ אֶת־הַבְּגָדִ֑ים אֶת־רֹאשׁוֹ֙ לֹ֣א יִפְרָ֔ע וּבְגָדָ֖יו לֹ֥א יִפְרֹֽם׃</p></div><div class="heb-s"><p>והכהן הגדול מאחיו אשר־יוצק על־ראשו&thinsp;<b>׀</b> שמן המשחה ומלא את־ידו ללבש את־הבגדים את־ראשו לא יפרע ובגדיו לא יפרם׃</p></div></div>
+      <div class="texte-fr"><p>Quant au pontife supérieur à ses frères, sur la tête duquel aura coulé l’huile d’onction, et qu’on aura investi du droit de revêtir les insignes, il ne doit point découvrir sa tête ni déchirer ses vêtements;</p></div>
+    </div><div class="seif" id="v-21-11">
+      <span class="seif-num">21:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַ֛ל כׇּל־נַפְשֹׁ֥ת מֵ֖ת לֹ֣א יָבֹ֑א לְאָבִ֥יו וּלְאִמּ֖וֹ לֹ֥א יִטַּמָּֽא׃</p></div><div class="heb-s"><p>ועל כל־נפשת מת לא יבא לאביו ולאמו לא יטמא׃</p></div></div>
+      <div class="texte-fr"><p>il n’approchera d’aucun corps mort; pour son père même et pour sa mère il ne se souillera point;</p></div>
+    </div><div class="seif" id="v-21-12">
+      <span class="seif-num">21:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִן־הַמִּקְדָּשׁ֙ לֹ֣א יֵצֵ֔א וְלֹ֣א יְחַלֵּ֔ל אֵ֖ת מִקְדַּ֣שׁ אֱלֹהָ֑יו כִּ֡י נֵ֠זֶר שֶׁ֣מֶן מִשְׁחַ֧ת אֱלֹהָ֛יו עָלָ֖יו אֲנִ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ומן־המקדש לא יצא ולא יחלל את מקדש אלהיו כי נזר שמן משחת אלהיו עליו אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>et il ne quittera point le sanctuaire, pour ne pas ravaler le sanctuaire de son Dieu, car il porte le sacre de l’huile d’onction de son Dieu: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-21-13">
+      <span class="seif-num">21:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְה֕וּא אִשָּׁ֥ה בִבְתוּלֶ֖יהָ יִקָּֽח׃</p></div><div class="heb-s"><p>והוא אשה בבתוליה יקח׃</p></div></div>
+      <div class="texte-fr"><p>De plus, il devra épouser une femme qui soit vierge.</p></div>
+    </div><div class="seif" id="v-21-14">
+      <span class="seif-num">21:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַלְמָנָ֤ה וּגְרוּשָׁה֙ וַחֲלָלָ֣ה זֹנָ֔ה אֶת־אֵ֖לֶּה לֹ֣א יִקָּ֑ח כִּ֛י אִם־בְּתוּלָ֥ה מֵעַמָּ֖יו יִקַּ֥ח אִשָּֽׁה׃</p></div><div class="heb-s"><p>אלמנה וגרושה וחללה זנה את־אלה לא יקח כי אם־בתולה מעמיו יקח אשה׃</p></div></div>
+      <div class="texte-fr"><p>Une veuve, une femme répudiée ou déshonorée, une courtisane, il ne l’épousera point: il ne peut prendre pour femme qu’une vierge d’entre son peuple,</p></div>
+    </div><div class="seif" id="v-21-15">
+      <span class="seif-num">21:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹֽא־יְחַלֵּ֥ל זַרְע֖וֹ בְּעַמָּ֑יו כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשֽׁוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ולא־יחלל זרעו בעמיו כי אני יהוה מקדשו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et ne doit point dégrader sa race au milieu de son peuple: je suis l’Éternel, qui l’ai consacré!"</p></div>
+    </div><div class="seif" id="v-21-16">
+      <span class="seif-num">21:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-21-17">
+      <span class="seif-num">21:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֥ר אֶֽל־אַהֲרֹ֖ן לֵאמֹ֑ר אִ֣ישׁ מִֽזַּרְעֲךָ֞ לְדֹרֹתָ֗ם אֲשֶׁ֨ר יִהְיֶ֥ה בוֹ֙ מ֔וּם לֹ֣א יִקְרַ֔ב לְהַקְרִ֖יב לֶ֥חֶם אֱלֹהָֽיו׃</p></div><div class="heb-s"><p>דבר אל־אהרן לאמר איש מזרעך לדרתם אשר יהיה בו מום לא יקרב להקריב לחם אלהיו׃</p></div></div>
+      <div class="texte-fr"><p>"Parle ainsi à Aaron: Quelqu’un de ta postérité, dans les âges futurs, qui serait atteint d’une infirmité, ne sera pas admis à offrir le pain de son Dieu.</p></div>
+    </div><div class="seif" id="v-21-18">
+      <span class="seif-num">21:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֥י כׇל־אִ֛ישׁ אֲשֶׁר־בּ֥וֹ מ֖וּם לֹ֣א יִקְרָ֑ב אִ֤ישׁ עִוֵּר֙ א֣וֹ פִסֵּ֔חַ א֥וֹ חָרֻ֖ם א֥וֹ שָׂרֽוּעַ׃</p></div><div class="heb-s"><p>כי כל־איש אשר־בו מום לא יקרב איש עור או פסח או חרם או שרוע׃</p></div></div>
+      <div class="texte-fr"><p>Car quiconque a une infirmité ne saurait être admis: un individu aveugle ou boiteux, ayant le nez écrasé ou des organes inégaux;</p></div>
+    </div><div class="seif" id="v-21-19">
+      <span class="seif-num">21:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>א֣וֹ אִ֔ישׁ אֲשֶׁר־יִהְיֶ֥ה ב֖וֹ שֶׁ֣בֶר רָ֑גֶל א֖וֹ שֶׁ֥בֶר יָֽד׃</p></div><div class="heb-s"><p>או איש אשר־יהיה בו שבר רגל או שבר יד׃</p></div></div>
+      <div class="texte-fr"><p>ou celui qui serait estropié, soit du pied, soit de la main;</p></div>
+    </div><div class="seif" id="v-21-20">
+      <span class="seif-num">21:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֽוֹ־גִבֵּ֣ן אוֹ־דַ֔ק א֖וֹ תְּבַלֻּ֣ל בְּעֵינ֑וֹ א֤וֹ גָרָב֙ א֣וֹ יַלֶּ֔פֶת א֖וֹ מְר֥וֹחַ אָֽשֶׁךְ׃</p></div><div class="heb-s"><p>או־גבן או־דק או תבלל בעינו או גרב או ילפת או מרוח אשך׃</p></div></div>
+      <div class="texte-fr"><p>ou un bossu, ou un nain; celui qui a une taie sur l’œil, la gale sèche ou humide, ou les testicules broyés.</p></div>
+    </div><div class="seif" id="v-21-21">
+      <span class="seif-num">21:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־אִ֞ישׁ אֲשֶׁר־בּ֣וֹ מ֗וּם מִזֶּ֙רַע֙ אַהֲרֹ֣ן הַכֹּהֵ֔ן לֹ֣א יִגַּ֔שׁ לְהַקְרִ֖יב אֶת־אִשֵּׁ֣י יְהֹוָ֑ה מ֣וּם בּ֔וֹ אֵ֚ת לֶ֣חֶם אֱלֹהָ֔יו לֹ֥א יִגַּ֖שׁ לְהַקְרִֽיב׃</p></div><div class="heb-s"><p>כל־איש אשר־בו מום מזרע אהרן הכהן לא יגש להקריב את־אשי יהוה מום בו את לחם אלהיו לא יגש להקריב׃</p></div></div>
+      <div class="texte-fr"><p>Tout individu infirme, de la race d’Aaron le pontife, ne se présentera pas pour offrir les sacrifices de l’Éternel. Atteint d’une infirmité, il ne peut se présenter pour offrir le pain de son Dieu.</p></div>
+    </div><div class="seif" id="v-21-22">
+      <span class="seif-num">21:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֶ֣חֶם אֱלֹהָ֔יו מִקׇּדְשֵׁ֖י הַקֳּדָשִׁ֑ים וּמִן־הַקֳּדָשִׁ֖ים יֹאכֵֽל׃</p></div><div class="heb-s"><p>לחם אלהיו מקדשי הקדשים ומן־הקדשים יאכל׃</p></div></div>
+      <div class="texte-fr"><p>Le pain de son Dieu, provenant des offrandes très-saintes comme des offrandes saintes, il peut s’en nourrir;</p></div>
+    </div><div class="seif" id="v-21-23">
+      <span class="seif-num">21:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ אֶל־הַפָּרֹ֜כֶת לֹ֣א יָבֹ֗א וְאֶל־הַמִּזְבֵּ֛חַ לֹ֥א יִגַּ֖שׁ כִּֽי־מ֣וּם בּ֑וֹ וְלֹ֤א יְחַלֵּל֙ אֶת־מִקְדָּשַׁ֔י כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃</p></div><div class="heb-s"><p>אך אל־הפרכת לא יבא ואל־המזבח לא יגש כי־מום בו ולא יחלל את־מקדשי כי אני יהוה מקדשם׃</p></div></div>
+      <div class="texte-fr"><p>mais qu’il ne pénètre point jusqu’au voile, et qu’il n’approche point de l’autel, car il a une infirmité, et il ne doit point profaner mes choses saintes, car c’est moi, l’Éternel, qui les sanctifie."</p></div>
+    </div><div class="seif" id="v-21-24">
+      <span class="seif-num">21:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר מֹשֶׁ֔ה אֶֽל־אַהֲרֹ֖ן וְאֶל־בָּנָ֑יו וְאֶֽל־כׇּל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וידבר משה אל־אהרן ואל־בניו ואל־כל־בני ישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et Moïse le redit à Aaron et à ses fils, et à tous les enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-22-1">
+      <span class="seif-num">22:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-22-2">
+      <span class="seif-num">22:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֨ר אֶֽל־אַהֲרֹ֜ן וְאֶל־בָּנָ֗יו וְיִנָּֽזְרוּ֙ מִקׇּדְשֵׁ֣י בְנֵֽי־יִשְׂרָאֵ֔ל וְלֹ֥א יְחַלְּל֖וּ אֶת־שֵׁ֣ם קׇדְשִׁ֑י אֲשֶׁ֨ר הֵ֧ם מַקְדִּשִׁ֛ים לִ֖י אֲנִ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>דבר אל־אהרן ואל־בניו וינזרו מקדשי בני־ישראל ולא יחללו את־שם קדשי אשר הם מקדשים לי אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Avertis Aaron et ses fils d’être circonspects à l’égard des saintetés des enfants d’Israël, pour ne pas profaner mon saint nom en profanant ce que ceux-ci me consacrent: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-3">
+      <span class="seif-num">22:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֱמֹ֣ר אֲלֵהֶ֗ם לְדֹרֹ֨תֵיכֶ֜ם כׇּל־אִ֣ישׁ&thinsp;<b>׀</b> אֲשֶׁר־יִקְרַ֣ב מִכׇּל־זַרְעֲכֶ֗ם אֶל־הַקֳּדָשִׁים֙ אֲשֶׁ֨ר יַקְדִּ֤ישׁוּ בְנֵֽי־יִשְׂרָאֵל֙ לַֽיהֹוָ֔ה וְטֻמְאָת֖וֹ עָלָ֑יו וְנִכְרְתָ֞ה הַנֶּ֧פֶשׁ הַהִ֛וא מִלְּפָנַ֖י אֲנִ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>אמר אלהם לדרתיכם כל־איש&thinsp;<b>׀</b> אשר־יקרב מכל־זרעכם אל־הקדשים אשר יקדישו בני־ישראל ליהוה וטמאתו עליו ונכרתה הנפש ההוא מלפני אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Dis-leur: à l’avenir, quiconque de toute votre famille, étant en état de souillure, s’approcherait des saintetés que les enfants d’Israël consacrent à l’Éternel, cette personne sera retranchée de devant moi: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-4">
+      <span class="seif-num">22:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִ֣ישׁ אִ֞ישׁ מִזֶּ֣רַע אַהֲרֹ֗ן וְה֤וּא צָר֙וּעַ֙ א֣וֹ זָ֔ב בַּקֳּדָשִׁים֙ לֹ֣א יֹאכַ֔ל עַ֖ד אֲשֶׁ֣ר יִטְהָ֑ר וְהַנֹּגֵ֙עַ֙ בְּכׇל־טְמֵא־נֶ֔פֶשׁ א֣וֹ אִ֔ישׁ אֲשֶׁר־תֵּצֵ֥א מִמֶּ֖נּוּ שִׁכְבַת־זָֽרַע׃</p></div><div class="heb-s"><p>איש איש מזרע אהרן והוא צרוע או זב בקדשים לא יאכל עד אשר יטהר והנגע בכל־טמא־נפש או איש אשר־תצא ממנו שכבת־זרע׃</p></div></div>
+      <div class="texte-fr"><p>Tout individu de la race d’Aaron, atteint de lèpre ou de flux, ne mangera pas de choses saintes qu’il ne soit devenu pur. De même, celui qui touche à une personne souillée par un cadavre, ou celui qui a laissé échapper de la matière séminale,</p></div>
+    </div><div class="seif" id="v-22-5">
+      <span class="seif-num">22:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹ־אִישׁ֙ אֲשֶׁ֣ר יִגַּ֔ע בְּכׇל־שֶׁ֖רֶץ אֲשֶׁ֣ר יִטְמָא־ל֑וֹ א֤וֹ בְאָדָם֙ אֲשֶׁ֣ר יִטְמָא־ל֔וֹ לְכֹ֖ל טֻמְאָתֽוֹ׃</p></div><div class="heb-s"><p>או־איש אשר יגע בכל־שרץ אשר יטמא־לו או באדם אשר יטמא־לו לכל טמאתו׃</p></div></div>
+      <div class="texte-fr"><p>ou celui qui aurait touché à quelque reptile de nature à le souiller, ou à un homme qui lui aurait communiqué une impureté quelconque:</p></div>
+    </div><div class="seif" id="v-22-6">
+      <span class="seif-num">22:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>נֶ֚פֶשׁ אֲשֶׁ֣ר תִּגַּע־בּ֔וֹ וְטָמְאָ֖ה עַד־הָעָ֑רֶב וְלֹ֤א יֹאכַל֙ מִן־הַקֳּדָשִׁ֔ים כִּ֛י אִם־רָחַ֥ץ בְּשָׂר֖וֹ בַּמָּֽיִם׃</p></div><div class="heb-s"><p>נפש אשר תגע־בו וטמאה עד־הערב ולא יאכל מן־הקדשים כי אם־רחץ בשרו במים׃</p></div></div>
+      <div class="texte-fr"><p>la personne qui y touche devant rester souillée jusqu’au soir, le pontife ne mangera rien des choses saintes qu’il n’ait baigné son corps dans l’eau.</p></div>
+    </div><div class="seif" id="v-22-7">
+      <span class="seif-num">22:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָ֥א הַשֶּׁ֖מֶשׁ וְטָהֵ֑ר וְאַחַר֙ יֹאכַ֣ל מִן־הַקֳּדָשִׁ֔ים כִּ֥י לַחְמ֖וֹ הֽוּא׃</p></div><div class="heb-s"><p>ובא השמש וטהר ואחר יאכל מן־הקדשים כי לחמו הוא׃</p></div></div>
+      <div class="texte-fr"><p>Après le soleil couché, il deviendra pur; et alors il pourra jouir des choses saintes, car elles sont sa subsistance.</p></div>
+    </div><div class="seif" id="v-22-8">
+      <span class="seif-num">22:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְבֵלָ֧ה וּטְרֵפָ֛ה לֹ֥א יֹאכַ֖ל לְטׇמְאָה־בָ֑הּ אֲנִ֖י יְהֹוָֽה׃</p></div><div class="heb-s"><p>נבלה וטרפה לא יאכל לטמאה־בה אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Une bête morte ou déchirée, il n’en mangera point, elle le rendrait impur: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-9">
+      <span class="seif-num">22:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁמְר֣וּ אֶת־מִשְׁמַרְתִּ֗י וְלֹֽא־יִשְׂא֤וּ עָלָיו֙ חֵ֔טְא וּמֵ֥תוּ ב֖וֹ כִּ֣י יְחַלְּלֻ֑הוּ אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃</p></div><div class="heb-s"><p>ושמרו את־משמרתי ולא־ישאו עליו חטא ומתו בו כי יחללהו אני יהוה מקדשם׃</p></div></div>
+      <div class="texte-fr"><p>Qu’ils respectent mon observance et ne s’exposent pas, à cause d’elle, à un péché, car ils mourraient pour l’avoir violée: je suis l’Éternel qui les sanctifie.</p></div>
+    </div><div class="seif" id="v-22-10">
+      <span class="seif-num">22:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־זָ֖ר לֹא־יֹ֣אכַל קֹ֑דֶשׁ תּוֹשַׁ֥ב כֹּהֵ֛ן וְשָׂכִ֖יר לֹא־יֹ֥אכַל קֹֽדֶשׁ׃</p></div><div class="heb-s"><p>וכל־זר לא־יאכל קדש תושב כהן ושכיר לא־יאכל קדש׃</p></div></div>
+      <div class="texte-fr"><p>Nul profane ne mangera d’une chose sainte; celui qui habite chez un pontife ou est salarié par lui, ne mangera point d’une chose sainte.</p></div>
+    </div><div class="seif" id="v-22-11">
+      <span class="seif-num">22:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹהֵ֗ן כִּֽי־יִקְנֶ֥ה נֶ֙פֶשׁ֙ קִנְיַ֣ן כַּסְפּ֔וֹ ה֖וּא יֹ֣אכַל בּ֑וֹ וִילִ֣יד בֵּית֔וֹ הֵ֖ם יֹאכְל֥וּ בְלַחְמֽוֹ׃</p></div><div class="heb-s"><p>וכהן כי־יקנה נפש קנין כספו הוא יאכל בו ויליד ביתו הם יאכלו בלחמו׃</p></div></div>
+      <div class="texte-fr"><p>Mais si un pontife a acheté une personne à prix d’argent, elle pourra en manger; et les esclaves nés chez lui, ceux-là aussi mangeront de son pain.</p></div>
+    </div><div class="seif" id="v-22-12">
+      <span class="seif-num">22:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַ֨ת־כֹּהֵ֔ן כִּ֥י תִהְיֶ֖ה לְאִ֣ישׁ זָ֑ר הִ֕וא בִּתְרוּמַ֥ת הַקֳּדָשִׁ֖ים לֹ֥א תֹאכֵֽל׃</p></div><div class="heb-s"><p>ובת־כהן כי תהיה לאיש זר הוא בתרומת הקדשים לא תאכל׃</p></div></div>
+      <div class="texte-fr"><p>Si la fille d’un prêtre est mariée à un profane, elle ne mangera point des saintes offrandes.</p></div>
+    </div><div class="seif" id="v-22-13">
+      <span class="seif-num">22:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַת־כֹּהֵן֩ כִּ֨י תִהְיֶ֜ה אַלְמָנָ֣ה וּגְרוּשָׁ֗ה וְזֶ֘רַע֮ אֵ֣ין לָהּ֒ וְשָׁבָ֞ה אֶל־בֵּ֤ית אָבִ֙יהָ֙ כִּנְעוּרֶ֔יהָ מִלֶּ֥חֶם אָבִ֖יהָ תֹּאכֵ֑ל וְכׇל־זָ֖ר לֹא־יֹ֥אכַל בּֽוֹ׃</p></div><div class="heb-s"><p>ובת־כהן כי תהיה אלמנה וגרושה וזרע אין לה ושבה אל־בית אביה כנעוריה מלחם אביה תאכל וכל־זר לא־יאכל בו׃</p></div></div>
+      <div class="texte-fr"><p>Si cette fille de pontife devient veuve ou est divorcée, qu’elle n’ait point de postérité, et qu’elle retourne à la maison de son père comme en sa jeunesse, elle mangera du pain de son père; mais aucun profane n’en mangera.</p></div>
+    </div><div class="seif" id="v-22-14">
+      <span class="seif-num">22:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּֽי־יֹאכַ֥ל קֹ֖דֶשׁ בִּשְׁגָגָ֑ה וְיָסַ֤ף חֲמִֽשִׁיתוֹ֙ עָלָ֔יו וְנָתַ֥ן לַכֹּהֵ֖ן אֶת־הַקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>ואיש כי־יאכל קדש בשגגה ויסף חמשיתו עליו ונתן לכהן את־הקדש׃</p></div></div>
+      <div class="texte-fr"><p>Si quelqu’un avait, par inadvertance, mangé une chose sainte, il en ajoutera le cinquième en sus, qu’il donnera au pontife avec la chose sainte.</p></div>
+    </div><div class="seif" id="v-22-15">
+      <span class="seif-num">22:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֣א יְחַלְּל֔וּ אֶת־קׇדְשֵׁ֖י בְּנֵ֣י יִשְׂרָאֵ֑ל אֵ֥ת אֲשֶׁר־יָרִ֖ימוּ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>ולא יחללו את־קדשי בני ישראל את אשר־ירימו ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Ils ne doivent pas laisser profaner les saintetés des enfants d’Israël, ce dont ils font hommage à l’Éternel,</p></div>
+    </div><div class="seif" id="v-22-16">
+      <span class="seif-num">22:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִשִּׂ֤יאוּ אוֹתָם֙ עֲוֺ֣ן אַשְׁמָ֔ה בְּאׇכְלָ֖ם אֶת־קׇדְשֵׁיהֶ֑ם כִּ֛י אֲנִ֥י יְהֹוָ֖ה מְקַדְּשָֽׁם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>והשיאו אותם עון אשמה באכלם את־קדשיהם כי אני יהוה מקדשם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>et faire peser sur eux un délit punissable, alors qu’ils consommeraient leurs propres saintetés; car c’est moi, l’Éternel, qui les sanctifie."</p></div>
+    </div><div class="seif" id="v-22-17">
+      <span class="seif-num">22:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-22-18">
+      <span class="seif-num">22:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֨ר אֶֽל־אַהֲרֹ֜ן וְאֶל־בָּנָ֗יו וְאֶל֙ כׇּל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאָמַרְתָּ֖ אֲלֵהֶ֑ם אִ֣ישׁ אִישׁ֩ מִבֵּ֨ית יִשְׂרָאֵ֜ל וּמִן־הַגֵּ֣ר בְּיִשְׂרָאֵ֗ל אֲשֶׁ֨ר יַקְרִ֤יב קׇרְבָּנוֹ֙ לְכׇל־נִדְרֵיהֶם֙ וּלְכׇל־נִדְבוֹתָ֔ם אֲשֶׁר־יַקְרִ֥יבוּ לַיהֹוָ֖ה לְעֹלָֽה׃</p></div><div class="heb-s"><p>דבר אל־אהרן ואל־בניו ואל כל־בני ישראל ואמרת אלהם איש איש מבית ישראל ומן־הגר בישראל אשר יקריב קרבנו לכל־נדריהם ולכל־נדבותם אשר־יקריבו ליהוה לעלה׃</p></div></div>
+      <div class="texte-fr"><p>"parie à Aaron et à ses fils, ainsi qu’à tous les enfants d’Israël, et dis-leur: qui que ce soit de la maison d’Israël, ou parmi les étrangers en Israël, qui voudra présenter son offrande, par suite de quelque vœu ou don volontaire de leur part; s’ils l’offrent à l’Éternel comme holocauste,</p></div>
+    </div><div class="seif" id="v-22-19">
+      <span class="seif-num">22:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִֽרְצֹנְכֶ֑ם תָּמִ֣ים זָכָ֔ר בַּבָּקָ֕ר בַּכְּשָׂבִ֖ים וּבָֽעִזִּֽים׃</p></div><div class="heb-s"><p>לרצנכם תמים זכר בבקר בכשבים ובעזים׃</p></div></div>
+      <div class="texte-fr"><p>pour être agréés, prenez-la sans défaut, mâle, parmi le gros bétail, les brebis ou les chèvres.</p></div>
+    </div><div class="seif" id="v-22-20">
+      <span class="seif-num">22:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּ֛ל אֲשֶׁר־בּ֥וֹ מ֖וּם לֹ֣א תַקְרִ֑יבוּ כִּי־לֹ֥א לְרָצ֖וֹן יִהְיֶ֥ה לָכֶֽם׃</p></div><div class="heb-s"><p>כל אשר־בו מום לא תקריבו כי־לא לרצון יהיה לכם׃</p></div></div>
+      <div class="texte-fr"><p>Tout animal qui aurait un défaut, ne l’offrez point; car il ne sera pas agréé de votre part.</p></div>
+    </div><div class="seif" id="v-22-21">
+      <span class="seif-num">22:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֗ישׁ כִּֽי־יַקְרִ֤יב זֶֽבַח־שְׁלָמִים֙ לַיהֹוָ֔ה לְפַלֵּא־נֶ֙דֶר֙ א֣וֹ לִנְדָבָ֔ה בַּבָּקָ֖ר א֣וֹ בַצֹּ֑אן תָּמִ֤ים יִֽהְיֶה֙ לְרָצ֔וֹן כׇּל־מ֖וּם לֹ֥א יִהְיֶה־בּֽוֹ׃</p></div><div class="heb-s"><p>ואיש כי־יקריב זבח־שלמים ליהוה לפלא־נדר או לנדבה בבקר או בצאן תמים יהיה לרצון כל־מום לא יהיה־בו׃</p></div></div>
+      <div class="texte-fr"><p>De même, si quelqu’un veut offrir une victime rémunératoire à l’Éternel, par suite d’un vœu particulier ou d’un don volontaire, dans le gros ou dans le menu bétail, cette victime, pour être agréée, doit être irréprochable, n’avoir aucun défaut.</p></div>
+    </div><div class="seif" id="v-22-22">
+      <span class="seif-num">22:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַוֶּ֩רֶת֩ א֨וֹ שָׁב֜וּר אוֹ־חָר֣וּץ אֽוֹ־יַבֶּ֗לֶת א֤וֹ גָרָב֙ א֣וֹ יַלֶּ֔פֶת לֹא־תַקְרִ֥יבוּ אֵ֖לֶּה לַיהֹוָ֑ה וְאִשֶּׁ֗ה לֹא־תִתְּנ֥וּ מֵהֶ֛ם עַל־הַמִּזְבֵּ֖חַ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>עורת או שבור או־חרוץ או־יבלת או גרב או ילפת לא־תקריבו אלה ליהוה ואשה לא־תתנו מהם על־המזבח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Une bête aveugle, estropiée ou mutilée, affectée de verrues, de gale sèche ou humide, vous ne les offrirez point à l’Éternel, et vous n’en ferez rien brûler sur l’autel en son honneur.</p></div>
+    </div><div class="seif" id="v-22-23">
+      <span class="seif-num">22:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשׁ֥וֹר וָשֶׂ֖ה שָׂר֣וּעַ וְקָל֑וּט נְדָבָה֙ תַּעֲשֶׂ֣ה אֹת֔וֹ וּלְנֵ֖דֶר לֹ֥א יֵרָצֶֽה׃</p></div><div class="heb-s"><p>ושור ושה שרוע וקלוט נדבה תעשה אתו ולנדר לא ירצה׃</p></div></div>
+      <div class="texte-fr"><p>Si une grosse ou une menue bête a un membre trop long ou trop court, tu pourras l’employer comme offrande volontaire, mais comme offrande votive elle ne serait point agréée.</p></div>
+    </div><div class="seif" id="v-22-24">
+      <span class="seif-num">22:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָע֤וּךְ וְכָתוּת֙ וְנָת֣וּק וְכָר֔וּת לֹ֥א תַקְרִ֖יבוּ לַֽיהֹוָ֑ה וּֽבְאַרְצְכֶ֖ם לֹ֥א תַעֲשֽׂוּ׃</p></div><div class="heb-s"><p>ומעוך וכתות ונתוק וכרות לא תקריבו ליהוה ובארצכם לא תעשו׃</p></div></div>
+      <div class="texte-fr"><p>Celle qui a les testicules froissés, écrasés, rompus ou coupés, ne l’offrez point à l’Éternel, et dans votre pays ne faites point pareille chose.</p></div>
+    </div><div class="seif" id="v-22-25">
+      <span class="seif-num">22:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִיַּ֣ד בֶּן־נֵכָ֗ר לֹ֥א תַקְרִ֛יבוּ אֶת־לֶ֥חֶם אֱלֹהֵיכֶ֖ם מִכׇּל־אֵ֑לֶּה כִּ֣י מׇשְׁחָתָ֤ם בָּהֶם֙ מ֣וּם בָּ֔ם לֹ֥א יֵרָצ֖וּ לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ומיד בן־נכר לא תקריבו את־לחם אלהיכם מכל־אלה כי משחתם בהם מום בם לא ירצו לכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>De la part même d’un étranger vous n’offrirez aucun de ces animaux comme aliment à votre Dieu; car ils ont subi une mutilation, ils sont défectueux, vous ne les feriez point agréer."</p></div>
+    </div><div class="seif" id="v-22-26">
+      <span class="seif-num">22:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-22-27">
+      <span class="seif-num">22:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>שׁ֣וֹר אוֹ־כֶ֤שֶׂב אוֹ־עֵז֙ כִּ֣י יִוָּלֵ֔ד וְהָיָ֛ה שִׁבְעַ֥ת יָמִ֖ים תַּ֣חַת אִמּ֑וֹ וּמִיּ֤וֹם הַשְּׁמִינִי֙ וָהָ֔לְאָה יֵרָצֶ֕ה לְקׇרְבַּ֥ן אִשֶּׁ֖ה לַיהֹוָֽה׃</p></div><div class="heb-s"><p>שור או־כשב או־עז כי יולד והיה שבעת ימים תחת אמו ומיום השמיני והלאה ירצה לקרבן אשה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Lorsqu’un veau, un agneau ou un chevreau vient de naître, il doit rester sept jours auprès de sa mère; à partir du huitième jour seulement, il sera propre à être offert en sacrifice à l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-28">
+      <span class="seif-num">22:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשׁ֖וֹר אוֹ־שֶׂ֑ה אֹת֣וֹ וְאֶת־בְּנ֔וֹ לֹ֥א תִשְׁחֲט֖וּ בְּי֥וֹם אֶחָֽד׃</p></div><div class="heb-s"><p>ושור או־שה אתו ואת־בנו לא תשחטו ביום אחד׃</p></div></div>
+      <div class="texte-fr"><p>Crosse ou menue bête, vous n’égorgerez point ranimai avec son petit le même jour.</p></div>
+    </div><div class="seif" id="v-22-29">
+      <span class="seif-num">22:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־תִזְבְּח֥וּ זֶֽבַח־תּוֹדָ֖ה לַיהֹוָ֑ה לִֽרְצֹנְכֶ֖ם תִּזְבָּֽחוּ׃</p></div><div class="heb-s"><p>וכי־תזבחו זבח־תודה ליהוה לרצנכם תזבחו׃</p></div></div>
+      <div class="texte-fr"><p>Quand vous ferez un sacrifice de reconnaissance à l’Éternel, faites ce sacrifice de manière à être agréés.</p></div>
+    </div><div class="seif" id="v-22-30">
+      <span class="seif-num">22:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּיּ֤וֹם הַהוּא֙ יֵאָכֵ֔ל לֹֽא־תוֹתִ֥ירוּ מִמֶּ֖נּוּ עַד־בֹּ֑קֶר אֲנִ֖י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ביום ההוא יאכל לא־תותירו ממנו עד־בקר אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Il devra être consommé le jour même, vous n’en laisserez rien pour le lendemain: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-31">
+      <span class="seif-num">22:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּשְׁמַרְתֶּם֙ מִצְוֺתַ֔י וַעֲשִׂיתֶ֖ם אֹתָ֑ם אֲנִ֖י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ושמרתם מצותי ועשיתם אתם אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Gardez mes commandements et pratiquez-les: je suis l’Éternel.</p></div>
+    </div><div class="seif" id="v-22-32">
+      <span class="seif-num">22:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֤א תְחַלְּלוּ֙ אֶת־שֵׁ֣ם קׇדְשִׁ֔י וְנִ֨קְדַּשְׁתִּ֔י בְּת֖וֹךְ בְּנֵ֣י יִשְׂרָאֵ֑ל אֲנִ֥י יְהֹוָ֖ה מְקַדִּשְׁכֶֽם׃</p></div><div class="heb-s"><p>ולא תחללו את־שם קדשי ונקדשתי בתוך בני ישראל אני יהוה מקדשכם׃</p></div></div>
+      <div class="texte-fr"><p>Ne déshonorez point mon saint nom, afin que je sois sanctifié au milieu des enfants d’Israël, moi, l’Éternel, qui vous sanctifie,</p></div>
+    </div><div class="seif" id="v-22-33">
+      <span class="seif-num">22:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַמּוֹצִ֤יא אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְי֥וֹת לָכֶ֖ם לֵאלֹהִ֑ים אֲנִ֖י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>המוציא אתכם מארץ מצרים להיות לכם לאלהים אני יהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>qui vous ai fait sortir du pays d’Égypte pour devenir votre Dieu: je suis l’Éternel."</p></div>
+    </div><div class="seif" id="v-23-1">
+      <span class="seif-num">23:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-23-2">
+      <span class="seif-num">23:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם מוֹעֲדֵ֣י יְהֹוָ֔ה אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם מִקְרָאֵ֣י קֹ֑דֶשׁ אֵ֥לֶּה הֵ֖ם מוֹעֲדָֽי׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם מועדי יהוה אשר־תקראו אתם מקראי קדש אלה הם מועדי׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur les solennités de l’Éternel, que vous devez célébrer comme convocations saintes. Les voici, mes solennités:</p></div>
+    </div><div class="seif" id="v-23-3">
+      <span class="seif-num">23:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֵׁ֣שֶׁת יָמִים֮ תֵּעָשֶׂ֣ה מְלָאכָה֒ וּבַיּ֣וֹם הַשְּׁבִיעִ֗י שַׁבַּ֤ת שַׁבָּתוֹן֙ מִקְרָא־קֹ֔דֶשׁ כׇּל־מְלָאכָ֖ה לֹ֣א תַעֲשׂ֑וּ שַׁבָּ֥ת הִוא֙ לַֽיהֹוָ֔ה בְּכֹ֖ל מוֹשְׁבֹֽתֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ששת ימים תעשה מלאכה וביום השביעי שבת שבתון מקרא־קדש כל־מלאכה לא תעשו שבת הוא ליהוה בכל מושבתיכם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>pendant six jours on se livrera au travail, mais le septième jour il y aura repos, repos solennel pour une sainte convocation: vous ne ferez aucun travail. Ce sera le Sabbat de l’Éternel, dans toutes vos habitations.</p></div>
+    </div><div class="seif" id="v-23-4">
+      <span class="seif-num">23:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֚לֶּה מוֹעֲדֵ֣י יְהֹוָ֔ה מִקְרָאֵ֖י קֹ֑דֶשׁ אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם בְּמוֹעֲדָֽם׃</p></div><div class="heb-s"><p>אלה מועדי יהוה מקראי קדש אשר־תקראו אתם במועדם׃</p></div></div>
+      <div class="texte-fr"><p>Voici les solennités de l’Éternel, convocations saintes, que vous célébrerez en leur saison.</p></div>
+    </div><div class="seif" id="v-23-5">
+      <span class="seif-num">23:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּחֹ֣דֶשׁ הָרִאשׁ֗וֹן בְּאַרְבָּעָ֥ה עָשָׂ֛ר לַחֹ֖דֶשׁ בֵּ֣ין הָעַרְבָּ֑יִם פֶּ֖סַח לַיהֹוָֽה׃</p></div><div class="heb-s"><p>בחדש הראשון בארבעה עשר לחדש בין הערבים פסח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Au premier mois, le quatorze du mois, vers le soir, la Pâque sera offerte au Seigneur;</p></div>
+    </div><div class="seif" id="v-23-6">
+      <span class="seif-num">23:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַחֲמִשָּׁ֨ה עָשָׂ֥ר יוֹם֙ לַחֹ֣דֶשׁ הַזֶּ֔ה חַ֥ג הַמַּצּ֖וֹת לַיהֹוָ֑ה שִׁבְעַ֥ת יָמִ֖ים מַצּ֥וֹת תֹּאכֵֽלוּ׃</p></div><div class="heb-s"><p>ובחמשה עשר יום לחדש הזה חג המצות ליהוה שבעת ימים מצות תאכלו׃</p></div></div>
+      <div class="texte-fr"><p>et au quinzième jour de ce mois, ce sera la fête des Azymes pour le Seigneur: durant sept jours vous mangerez des azymes.</p></div>
+    </div><div class="seif" id="v-23-7">
+      <span class="seif-num">23:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּיּוֹם֙ הָֽרִאשׁ֔וֹן מִקְרָא־קֹ֖דֶשׁ יִהְיֶ֣ה לָכֶ֑ם כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃</p></div><div class="heb-s"><p>ביום הראשון מקרא־קדש יהיה לכם כל־מלאכת עבדה לא תעשו׃</p></div></div>
+      <div class="texte-fr"><p>Le premier jour, il y aura pour vous convocation sainte: vous ne ferez aucune œuvre servile.</p></div>
+    </div><div class="seif" id="v-23-8">
+      <span class="seif-num">23:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרַבְתֶּ֥ם אִשֶּׁ֛ה לַיהֹוָ֖ה שִׁבְעַ֣ת יָמִ֑ים בַּיּ֤וֹם הַשְּׁבִיעִי֙ מִקְרָא־קֹ֔דֶשׁ כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>והקרבתם אשה ליהוה שבעת ימים ביום השביעי מקרא־קדש כל־מלאכת עבדה לא תעשו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Vous offrirez un sacrifice au Seigneur sept jours de suite. Le septième jour, il y aura convocation sainte: vous ne ferez aucune œuvre servile."</p></div>
+    </div><div class="seif" id="v-23-9">
+      <span class="seif-num">23:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-23-10">
+      <span class="seif-num">23:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם כִּֽי־תָבֹ֣אוּ אֶל־הָאָ֗רֶץ אֲשֶׁ֤ר אֲנִי֙ נֹתֵ֣ן לָכֶ֔ם וּקְצַרְתֶּ֖ם אֶת־קְצִירָ֑הּ וַהֲבֵאתֶ֥ם אֶת־עֹ֛מֶר רֵאשִׁ֥ית קְצִירְכֶ֖ם אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם כי־תבאו אל־הארץ אשר אני נתן לכם וקצרתם את־קצירה והבאתם את־עמר ראשית קצירכם אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur: quand vous serez arrivés dans le pays que je vous accorde, et que vous y ferez la moisson, vous apporterez un ômer des prémices de votre moisson au pontife,</p></div>
+    </div><div class="seif" id="v-23-11">
+      <span class="seif-num">23:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵנִ֧יף אֶת־הָעֹ֛מֶר לִפְנֵ֥י יְהֹוָ֖ה לִֽרְצֹנְכֶ֑ם מִֽמׇּחֳרַת֙ הַשַּׁבָּ֔ת יְנִיפֶ֖נּוּ הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>והניף את־העמר לפני יהוה לרצנכם ממחרת השבת יניפנו הכהן׃</p></div></div>
+      <div class="texte-fr"><p>lequel balancera cet ômer devant le Seigneur, pour vous le rendre propice; c’est le lendemain de la fête que le pontife le balancera.</p></div>
+    </div><div class="seif" id="v-23-12">
+      <span class="seif-num">23:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשִׂיתֶ֕ם בְּי֥וֹם הֲנִֽיפְכֶ֖ם אֶת־הָעֹ֑מֶר כֶּ֣בֶשׂ תָּמִ֧ים בֶּן־שְׁנָת֛וֹ לְעֹלָ֖ה לַיהֹוָֽה׃</p></div><div class="heb-s"><p>ועשיתם ביום הניפכם את־העמר כבש תמים בן־שנתו לעלה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Vous offrirez, le jour du balancement de l’ômer, un agneau sans défaut, âgé d’un an, en holocauste à l’Éternel.</p></div>
+    </div><div class="seif" id="v-23-13">
+      <span class="seif-num">23:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִנְחָתוֹ֩ שְׁנֵ֨י עֶשְׂרֹנִ֜ים סֹ֣לֶת בְּלוּלָ֥ה בַשֶּׁ֛מֶן אִשֶּׁ֥ה לַיהֹוָ֖ה רֵ֣יחַ נִיחֹ֑חַ וְנִסְכֹּ֥ה יַ֖יִן רְבִיעִ֥ת הַהִֽין׃</p></div><div class="heb-s"><p>ומנחתו שני עשרנים סלת בלולה בשמן אשה ליהוה ריח ניחח ונסכה יין רביעת ההין׃</p></div></div>
+      <div class="texte-fr"><p>Son oblation: deux dixièmes de fleur de farine pétrie à l’huile, à brûler en l’honneur de l’Éternel comme odeur agréable; et sa libation: un quart de hîn de vin.</p></div>
+    </div><div class="seif" id="v-23-14">
+      <span class="seif-num">23:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֶ֩חֶם֩ וְקָלִ֨י וְכַרְמֶ֜ל לֹ֣א תֹֽאכְל֗וּ עַד־עֶ֙צֶם֙ הַיּ֣וֹם הַזֶּ֔ה עַ֚ד הֲבִ֣יאֲכֶ֔ם אֶת־קׇרְבַּ֖ן אֱלֹהֵיכֶ֑ם חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בְּכֹ֖ל מֹשְׁבֹֽתֵיכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ולחם וקלי וכרמל לא תאכלו עד־עצם היום הזה עד הביאכם את־קרבן אלהיכם חקת עולם לדרתיכם בכל משבתיכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Vous ne mangerez ni pain, ni grains torréfiés, ni gruau, jusqu’à ce jour même, jusqu’à ce que vous ayez apporté l’offrande de votre Dieu; statut perpétuel pour vos générations, dans toutes vos demeures.</p></div>
+    </div><div class="seif" id="v-23-15">
+      <span class="seif-num">23:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּסְפַרְתֶּ֤ם לָכֶם֙ מִמׇּחֳרַ֣ת הַשַּׁבָּ֔ת מִיּוֹם֙ הֲבִ֣יאֲכֶ֔ם אֶת־עֹ֖מֶר הַתְּנוּפָ֑ה שֶׁ֥בַע שַׁבָּת֖וֹת תְּמִימֹ֥ת תִּהְיֶֽינָה׃</p></div><div class="heb-s"><p>וספרתם לכם ממחרת השבת מיום הביאכם את־עמר התנופה שבע שבתות תמימת תהיינה׃</p></div></div>
+      <div class="texte-fr"><p>Puis, vous compterez chacun, depuis le lendemain de la fête, depuis le jour où vous aurez offert l’ômer du balancement, sept semaines, qui doivent être entières;</p></div>
+    </div><div class="seif" id="v-23-16">
+      <span class="seif-num">23:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַ֣ד מִֽמׇּחֳרַ֤ת הַשַּׁבָּת֙ הַשְּׁבִיעִ֔ת תִּסְפְּר֖וּ חֲמִשִּׁ֣ים י֑וֹם וְהִקְרַבְתֶּ֛ם מִנְחָ֥ה חֲדָשָׁ֖ה לַיהֹוָֽה׃</p></div><div class="heb-s"><p>עד ממחרת השבת השביעת תספרו חמשים יום והקרבתם מנחה חדשה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>vous compterez jusqu’au lendemain de la septième semaine, soit cinquante jours, et vous offrirez à l’Éternel une oblation nouvelle.</p></div>
+    </div><div class="seif" id="v-23-17">
+      <span class="seif-num">23:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִמּוֹשְׁבֹ֨תֵיכֶ֜ם תָּבִ֣יאּוּ&thinsp;<b>׀</b> לֶ֣חֶם תְּנוּפָ֗ה שְׁ֚תַּיִם שְׁנֵ֣י עֶשְׂרֹנִ֔ים סֹ֣לֶת תִּהְיֶ֔ינָה חָמֵ֖ץ תֵּאָפֶ֑ינָה בִּכּוּרִ֖ים לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>ממושבתיכם תביאו&thinsp;<b>׀</b> לחם תנופה שתים שני עשרנים סלת תהיינה חמץ תאפינה בכורים ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Devos habitations, vous apporterez deux pains destinés au balancement, qui seront faits de deux dixièmes de farine fine et cuits à pâte levée: ce seront des prémices pour l’Éternel.</p></div>
+    </div><div class="seif" id="v-23-18">
+      <span class="seif-num">23:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרַבְתֶּ֣ם עַל־הַלֶּ֗חֶם שִׁבְעַ֨ת כְּבָשִׂ֤ים תְּמִימִם֙ בְּנֵ֣י שָׁנָ֔ה וּפַ֧ר בֶּן־בָּקָ֛ר אֶחָ֖ד וְאֵילִ֣ם שְׁנָ֑יִם יִהְי֤וּ עֹלָה֙ לַֽיהֹוָ֔ה וּמִנְחָתָם֙ וְנִסְכֵּיהֶ֔ם אִשֵּׁ֥ה רֵֽיחַ־נִיחֹ֖חַ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>והקרבתם על־הלחם שבעת כבשים תמימם בני שנה ופר בן־בקר אחד ואילם שנים יהיו עלה ליהוה ומנחתם ונסכיהם אשה ריח־ניחח ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Vous offrirez, avec ces pains, sept agneaux sans défaut, âgés d’un an, un jeune taureau et deux béliers; ils formeront un holocauste pour le Seigneur, avec leurs oblations et leurs libations, sacrifice d’une odeur agréable à l’Éternel.</p></div>
+    </div><div class="seif" id="v-23-19">
+      <span class="seif-num">23:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשִׂיתֶ֛ם שְׂעִיר־עִזִּ֥ים אֶחָ֖ד לְחַטָּ֑את וּשְׁנֵ֧י כְבָשִׂ֛ים בְּנֵ֥י שָׁנָ֖ה לְזֶ֥בַח שְׁלָמִֽים׃</p></div><div class="heb-s"><p>ועשיתם שעיר־עזים אחד לחטאת ושני כבשים בני שנה לזבח שלמים׃</p></div></div>
+      <div class="texte-fr"><p>Vous ajouterez un bouc pour le péché, et deux agneaux d’un an comme sacrifice rémunératoire.</p></div>
+    </div><div class="seif" id="v-23-20">
+      <span class="seif-num">23:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵנִ֣יף הַכֹּהֵ֣ן&thinsp;<small>׀</small>&thinsp;אֹתָ֡ם עַל֩ לֶ֨חֶם הַבִּכֻּרִ֤ים תְּנוּפָה֙ לִפְנֵ֣י יְהֹוָ֔ה עַל־שְׁנֵ֖י כְּבָשִׂ֑ים קֹ֛דֶשׁ יִהְי֥וּ לַיהֹוָ֖ה לַכֹּהֵֽן׃</p></div><div class="heb-s"><p>והניף הכהן&thinsp;<small>׀</small>&thinsp;אתם על לחם הבכרים תנופה לפני יהוה על־שני כבשים קדש יהיו ליהוה לכהן׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife les balancera, avec le pain des prémices, devant l’Éternel, ainsi que deux des agneaux: ils seront consacrés à l’Éternel, au profit du pontife.</p></div>
+    </div><div class="seif" id="v-23-21">
+      <span class="seif-num">23:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּקְרָאתֶ֞ם בְּעֶ֣צֶם&thinsp;<b>׀</b> הַיּ֣וֹם הַזֶּ֗ה מִֽקְרָא־קֹ֙דֶשׁ֙ יִהְיֶ֣ה לָכֶ֔ם כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֣א תַעֲשׂ֑וּ חֻקַּ֥ת עוֹלָ֛ם בְּכׇל־מוֹשְׁבֹ֥תֵיכֶ֖ם לְדֹרֹֽתֵיכֶֽם׃</p></div><div class="heb-s"><p>וקראתם בעצם&thinsp;<b>׀</b> היום הזה מקרא־קדש יהיה לכם כל־מלאכת עבדה לא תעשו חקת עולם בכל־מושבתיכם לדרתיכם׃</p></div></div>
+      <div class="texte-fr"><p>Et vous célébrerez ce même jour: ce sera pour vous une convocation sainte, où vous ne ferez aucune œuvre servile; statut invariable, dans toutes vos demeures, pour vos générations.</p></div>
+    </div><div class="seif" id="v-23-22">
+      <span class="seif-num">23:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּֽבְקֻצְרְכֶ֞ם אֶת־קְצִ֣יר אַרְצְכֶ֗ם לֹֽא־תְכַלֶּ֞ה פְּאַ֤ת שָֽׂדְךָ֙ בְּקֻצְרֶ֔ךָ וְלֶ֥קֶט קְצִירְךָ֖ לֹ֣א תְלַקֵּ֑ט לֶֽעָנִ֤י וְלַגֵּר֙ תַּעֲזֹ֣ב אֹתָ֔ם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ובקצרכם את־קציר ארצכם לא־תכלה פאת שדך בקצרך ולקט קצירך לא תלקט לעני ולגר תעזב אתם אני יהוה אלהיכם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et quand vous ferez la moisson dans votre pays, tu laisseras la Benda inachevée au bout de ton champ, et tu ne ramasseras point les glanes de ta moisson. Abandonne-les au pauvre et à l’étranger: je suis l’Éternel votre Dieu."</p></div>
+    </div><div class="seif" id="v-23-23">
+      <span class="seif-num">23:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-23-24">
+      <span class="seif-num">23:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֛ר אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר בַּחֹ֨דֶשׁ הַשְּׁבִיעִ֜י בְּאֶחָ֣ד לַחֹ֗דֶשׁ יִהְיֶ֤ה לָכֶם֙ שַׁבָּת֔וֹן זִכְר֥וֹן תְּרוּעָ֖ה מִקְרָא־קֹֽדֶשׁ׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל לאמר בחדש השביעי באחד לחדש יהיה לכם שבתון זכרון תרועה מקרא־קדש׃</p></div></div>
+      <div class="texte-fr"><p>"Parle ainsi aux enfants d’Israël: au septième mois, le premier jour du mois, aura lieu pour vous un repos solennel; commémoration par une fanfare, convocation sainte.</p></div>
+    </div><div class="seif" id="v-23-25">
+      <span class="seif-num">23:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֣א תַעֲשׂ֑וּ וְהִקְרַבְתֶּ֥ם אִשֶּׁ֖ה לַיהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כל־מלאכת עבדה לא תעשו והקרבתם אשה ליהוה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Vous ne ferez aucune œuvre servile, et vous offrirez un sacrifice à l’Éternel."</p></div>
+    </div><div class="seif" id="v-23-26">
+      <span class="seif-num">23:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-23-27">
+      <span class="seif-num">23:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֡ךְ בֶּעָשׂ֣וֹר לַחֹ֩דֶשׁ֩ הַשְּׁבִיעִ֨י הַזֶּ֜ה י֧וֹם הַכִּפֻּרִ֣ים ה֗וּא מִֽקְרָא־קֹ֙דֶשׁ֙ יִהְיֶ֣ה לָכֶ֔ם וְעִנִּיתֶ֖ם אֶת־נַפְשֹׁתֵיכֶ֑ם וְהִקְרַבְתֶּ֥ם אִשֶּׁ֖ה לַיהֹוָֽה׃</p></div><div class="heb-s"><p>אך בעשור לחדש השביעי הזה יום הכפרים הוא מקרא־קדש יהיה לכם ועניתם את־נפשתיכם והקרבתם אשה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Mais au dixième jour de ce septième mois, qui est le jour des Expiations, il y aura pour vous convocation sainte: vous mortifierez vos personnes, vous offrirez un sacrifice à l’Éternel,</p></div>
+    </div><div class="seif" id="v-23-28">
+      <span class="seif-num">23:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־מְלָאכָה֙ לֹ֣א תַעֲשׂ֔וּ בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה כִּ֣י י֤וֹם כִּפֻּרִים֙ ה֔וּא לְכַפֵּ֣ר עֲלֵיכֶ֔ם לִפְנֵ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>וכל־מלאכה לא תעשו בעצם היום הזה כי יום כפרים הוא לכפר עליכם לפני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>et vous ne ferez aucun travail en ce même jour; car c’est un jour d’expiation, destiné à vous réhabiliter devant l’Éternel votre Dieu.</p></div>
+    </div><div class="seif" id="v-23-29">
+      <span class="seif-num">23:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י כׇל־הַנֶּ֙פֶשׁ֙ אֲשֶׁ֣ר לֹֽא־תְעֻנֶּ֔ה בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה וְנִכְרְתָ֖ה מֵֽעַמֶּֽיהָ׃</p></div><div class="heb-s"><p>כי כל־הנפש אשר לא־תענה בעצם היום הזה ונכרתה מעמיה׃</p></div></div>
+      <div class="texte-fr"><p>Aussi, toute personne qui ne se mortifiera pas en ce même jour, sera supprimée de son peuple;</p></div>
+    </div><div class="seif" id="v-23-30">
+      <span class="seif-num">23:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַנֶּ֗פֶשׁ אֲשֶׁ֤ר תַּעֲשֶׂה֙ כׇּל־מְלָאכָ֔ה בְּעֶ֖צֶם הַיּ֣וֹם הַזֶּ֑ה וְהַֽאֲבַדְתִּ֛י אֶת־הַנֶּ֥פֶשׁ הַהִ֖וא מִקֶּ֥רֶב עַמָּֽהּ׃</p></div><div class="heb-s"><p>וכל־הנפש אשר תעשה כל־מלאכה בעצם היום הזה והאבדתי את־הנפש ההוא מקרב עמה׃</p></div></div>
+      <div class="texte-fr"><p>et toute personne qui fera un travail quelconque en ce même jour, j’anéantirai cette personne-là du milieu de son peuple.</p></div>
+    </div><div class="seif" id="v-23-31">
+      <span class="seif-num">23:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־מְלָאכָ֖ה לֹ֣א תַעֲשׂ֑וּ חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בְּכֹ֖ל מֹשְׁבֹֽתֵיכֶֽם׃</p></div><div class="heb-s"><p>כל־מלאכה לא תעשו חקת עולם לדרתיכם בכל משבתיכם׃</p></div></div>
+      <div class="texte-fr"><p>Ne faites donc aucune sorte de travail: loi perpétuelle pour vos générations, dans toutes vos demeures.</p></div>
+    </div><div class="seif" id="v-23-32">
+      <span class="seif-num">23:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>שַׁבַּ֨ת שַׁבָּת֥וֹן הוּא֙ לָכֶ֔ם וְעִנִּיתֶ֖ם אֶת־נַפְשֹׁתֵיכֶ֑ם בְּתִשְׁעָ֤ה לַחֹ֙דֶשׁ֙ בָּעֶ֔רֶב מֵעֶ֣רֶב עַד־עֶ֔רֶב תִּשְׁבְּת֖וּ שַׁבַּתְּכֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>שבת שבתון הוא לכם ועניתם את־נפשתיכם בתשעה לחדש בערב מערב עד־ערב תשבתו שבתכם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ce jour est pour vous un chômage absolu, où vous mortifierez vos personnes; dès le neuf du mois au soir, depuis un soir jusqu’à l’autre, vous observerez votre chômage."</p></div>
+    </div><div class="seif" id="v-23-33">
+      <span class="seif-num">23:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-23-34">
+      <span class="seif-num">23:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֛ר אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר בַּחֲמִשָּׁ֨ה עָשָׂ֜ר י֗וֹם לַחֹ֤דֶשׁ הַשְּׁבִיעִי֙ הַזֶּ֔ה חַ֧ג הַסֻּכּ֛וֹת שִׁבְעַ֥ת יָמִ֖ים לַיהֹוָֽה׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל לאמר בחמשה עשר יום לחדש השביעי הזה חג הסכות שבעת ימים ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Parle ainsi aux enfants d’Israël: le quinzième jour de ce septième mois aura lieu la fête des Tentes, durant sept jours, en l’honneur de l’Éternel.</p></div>
+    </div><div class="seif" id="v-23-35">
+      <span class="seif-num">23:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּיּ֥וֹם הָרִאשׁ֖וֹן מִקְרָא־קֹ֑דֶשׁ כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃</p></div><div class="heb-s"><p>ביום הראשון מקרא־קדש כל־מלאכת עבדה לא תעשו׃</p></div></div>
+      <div class="texte-fr"><p>Le premier jour, convocation sainte: vous ne ferez aucune œuvre servile.</p></div>
+    </div><div class="seif" id="v-23-36">
+      <span class="seif-num">23:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁבְעַ֣ת יָמִ֔ים תַּקְרִ֥יבוּ אִשֶּׁ֖ה לַיהֹוָ֑ה בַּיּ֣וֹם הַשְּׁמִינִ֡י מִקְרָא־קֹ֩דֶשׁ֩ יִהְיֶ֨ה לָכֶ֜ם וְהִקְרַבְתֶּ֨ם אִשֶּׁ֤ה לַֽיהֹוָה֙ עֲצֶ֣רֶת הִ֔וא כׇּל־מְלֶ֥אכֶת עֲבֹדָ֖ה לֹ֥א תַעֲשֽׂוּ׃</p></div><div class="heb-s"><p>שבעת ימים תקריבו אשה ליהוה ביום השמיני מקרא־קדש יהיה לכם והקרבתם אשה ליהוה עצרת הוא כל־מלאכת עבדה לא תעשו׃</p></div></div>
+      <div class="texte-fr"><p>Sept jours durant, vous offrirez des sacrifices à l’Éternel. Le huitième jour, vous aurez encore une convocation sainte, et vous offrirez un sacrifice à l’Éternel: c’est une fête de clôture, vous n’y ferez aucune œuvre servile.</p></div>
+    </div><div class="seif" id="v-23-37">
+      <span class="seif-num">23:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֚לֶּה מוֹעֲדֵ֣י יְהֹוָ֔ה אֲשֶׁר־תִּקְרְא֥וּ אֹתָ֖ם מִקְרָאֵ֣י קֹ֑דֶשׁ לְהַקְרִ֨יב אִשֶּׁ֜ה לַיהֹוָ֗ה עֹלָ֧ה וּמִנְחָ֛ה זֶ֥בַח וּנְסָכִ֖ים דְּבַר־י֥וֹם בְּיוֹמֽוֹ׃</p></div><div class="heb-s"><p>אלה מועדי יהוה אשר־תקראו אתם מקראי קדש להקריב אשה ליהוה עלה ומנחה זבח ונסכים דבר־יום ביומו׃</p></div></div>
+      <div class="texte-fr"><p>Ce sont là les solennités de l’Éternel, que vous célébrerez comme convocations saintes, en offrant des sacrifices à l’Éternel, holocaustes et oblations, victimes et libations, selon le rite de chaque jour,</p></div>
+    </div><div class="seif" id="v-23-38">
+      <span class="seif-num">23:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִלְּבַ֖ד שַׁבְּתֹ֣ת יְהֹוָ֑ה וּמִלְּבַ֣ד מַתְּנֽוֹתֵיכֶ֗ם וּמִלְּבַ֤ד כׇּל־נִדְרֵיכֶם֙ וּמִלְּבַד֙ כׇּל־נִדְבֹ֣תֵיכֶ֔ם אֲשֶׁ֥ר תִּתְּנ֖וּ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>מלבד שבתת יהוה ומלבד מתנותיכם ומלבד כל־נדריכם ומלבד כל־נדבתיכם אשר תתנו ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>indépendamment des sabbats de l’Éternel; indépendamment aussi de vos dons, et de toutes vos offrandes votives ou volontaires, dont vous ferez hommage à l’Éternel.</p></div>
+    </div><div class="seif" id="v-23-39">
+      <span class="seif-num">23:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֡ךְ בַּחֲמִשָּׁה֩ עָשָׂ֨ר י֜וֹם לַחֹ֣דֶשׁ הַשְּׁבִיעִ֗י בְּאׇסְפְּכֶם֙ אֶת־תְּבוּאַ֣ת הָאָ֔רֶץ תָּחֹ֥גּוּ אֶת־חַג־יְהֹוָ֖ה שִׁבְעַ֣ת יָמִ֑ים בַּיּ֤וֹם הָֽרִאשׁוֹן֙ שַׁבָּת֔וֹן וּבַיּ֥וֹם הַשְּׁמִינִ֖י שַׁבָּתֽוֹן׃</p></div><div class="heb-s"><p>אך בחמשה עשר יום לחדש השביעי באספכם את־תבואת הארץ תחגו את־חג־יהוה שבעת ימים ביום הראשון שבתון וביום השמיני שבתון׃</p></div></div>
+      <div class="texte-fr"><p>Mais le quinzième jour du septième mois, quand vous aurez rentré la récolte de la terre, vous fêterez la fête du Seigneur, qui durera sept jours; le premier jour il y aura chômage, et chômage le huitième jour.</p></div>
+    </div><div class="seif" id="v-23-40">
+      <span class="seif-num">23:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְקַחְתֶּ֨ם לָכֶ֜ם בַּיּ֣וֹם הָרִאשׁ֗וֹן פְּרִ֨י עֵ֤ץ הָדָר֙ כַּפֹּ֣ת תְּמָרִ֔ים וַעֲנַ֥ף עֵץ־עָבֹ֖ת וְעַרְבֵי־נָ֑חַל וּשְׂמַחְתֶּ֗ם לִפְנֵ֛י יְהֹוָ֥ה אֱלֹהֵיכֶ֖ם שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ולקחתם לכם ביום הראשון פרי עץ הדר כפת תמרים וענף עץ־עבת וערבי־נחל ושמחתם לפני יהוה אלהיכם שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Vous prendrez, le premier jour, du fruit de l’arbre hadar, des branches de palmier, des rameaux de l’arbre aboth et des saules de rivière; et vous vous réjouirez, en présence de l’Éternel votre Dieu, pendant sept jours.</p></div>
+    </div><div class="seif" id="v-23-41">
+      <span class="seif-num">23:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחַגֹּתֶ֤ם אֹתוֹ֙ חַ֣ג לַֽיהֹוָ֔ה שִׁבְעַ֥ת יָמִ֖ים בַּשָּׁנָ֑ה חֻקַּ֤ת עוֹלָם֙ לְדֹרֹ֣תֵיכֶ֔ם בַּחֹ֥דֶשׁ הַשְּׁבִיעִ֖י תָּחֹ֥גּוּ אֹתֽוֹ׃</p></div><div class="heb-s"><p>וחגתם אתו חג ליהוה שבעת ימים בשנה חקת עולם לדרתיכם בחדש השביעי תחגו אתו׃</p></div></div>
+      <div class="texte-fr"><p>Vous la fêterez, cette fête du Seigneur, sept jours chaque année, règle immuable pour vos générations; c’est au septième mois que vous la solenniserez.</p></div>
+    </div><div class="seif" id="v-23-42">
+      <span class="seif-num">23:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּסֻּכֹּ֥ת תֵּשְׁב֖וּ שִׁבְעַ֣ת יָמִ֑ים כׇּל־הָֽאֶזְרָח֙ בְּיִשְׂרָאֵ֔ל יֵשְׁב֖וּ בַּסֻּכֹּֽת׃</p></div><div class="heb-s"><p>בסכת תשבו שבעת ימים כל־האזרח בישראל ישבו בסכת׃</p></div></div>
+      <div class="texte-fr"><p>Vous demeurerez dans des tentes durant sept jours; tout indigène en Israël demeurera sous la tente,</p></div>
+    </div><div class="seif" id="v-23-43">
+      <span class="seif-num">23:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְמַ֘עַן֮ יֵדְע֣וּ דֹרֹֽתֵיכֶם֒ כִּ֣י בַסֻּכּ֗וֹת הוֹשַׁ֙בְתִּי֙ אֶת־בְּנֵ֣י יִשְׂרָאֵ֔ל בְּהוֹצִיאִ֥י אוֹתָ֖ם מֵאֶ֣רֶץ מִצְרָ֑יִם אֲנִ֖י יְהֹוָ֥ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>למען ידעו דרתיכם כי בסכות הושבתי את־בני ישראל בהוציאי אותם מארץ מצרים אני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>afin que vos générations sachent que j’ai donné des tentes pour demeure aux enfants d’Israël, quand je les ai fait sortir du pays d’Égypte, moi, l’Éternel, votre Dieu!"</p></div>
+    </div><div class="seif" id="v-23-44">
+      <span class="seif-num">23:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר מֹשֶׁ֔ה אֶֽת־מֹעֲדֵ֖י יְהֹוָ֑ה אֶל־בְּנֵ֖י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וידבר משה את־מעדי יהוה אל־בני ישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et Moïse exposa les solennités de l’Éternel aux enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-24-1">
+      <span class="seif-num">24:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-24-2">
+      <span class="seif-num">24:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>צַ֞ו אֶת־בְּנֵ֣י יִשְׂרָאֵ֗ל וְיִקְח֨וּ אֵלֶ֜יךָ שֶׁ֣מֶן זַ֥יִת זָ֛ךְ כָּתִ֖ית לַמָּא֑וֹר לְהַעֲלֹ֥ת נֵ֖ר תָּמִֽיד׃</p></div><div class="heb-s"><p>צו את־בני ישראל ויקחו אליך שמן זית זך כתית למאור להעלת נר תמיד׃</p></div></div>
+      <div class="texte-fr"><p>"Ordonne aux enfants d’Israël de te choisir une huile pure d’olives concassées, pour le luminaire, afin d’alimenter les lampes en permanence.</p></div>
+    </div><div class="seif" id="v-24-3">
+      <span class="seif-num">24:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִחוּץ֩ לְפָרֹ֨כֶת הָעֵדֻ֜ת בְּאֹ֣הֶל מוֹעֵ֗ד יַעֲרֹךְ֩ אֹת֨וֹ אַהֲרֹ֜ן מֵעֶ֧רֶב עַד־בֹּ֛קֶר לִפְנֵ֥י יְהֹוָ֖ה תָּמִ֑יד חֻקַּ֥ת עוֹלָ֖ם לְדֹרֹֽתֵיכֶֽם׃</p></div><div class="heb-s"><p>מחוץ לפרכת העדת באהל מועד יערך אתו אהרן מערב עד־בקר לפני יהוה תמיד חקת עולם לדרתיכם׃</p></div></div>
+      <div class="texte-fr"><p>C’est en dehors du voile qui abrite le Statut, dans la Tente d’assignation, qu’Aaron les entretiendra depuis le soir jusqu’au matin, devant l’Éternel, constamment: règle perpétuelle pour vos générations.</p></div>
+    </div><div class="seif" id="v-24-4">
+      <span class="seif-num">24:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַ֚ל הַמְּנֹרָ֣ה הַטְּהֹרָ֔ה יַעֲרֹ֖ךְ אֶת־הַנֵּר֑וֹת לִפְנֵ֥י יְהֹוָ֖ה תָּמִֽיד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>על המנרה הטהרה יערך את־הנרות לפני יהוה תמיד׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>C’est sur le candélabre d’or pur qu’il entretiendra ces lampes, devant l’Éternel, constamment.</p></div>
+    </div><div class="seif" id="v-24-5">
+      <span class="seif-num">24:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַחְתָּ֣ סֹ֔לֶת וְאָפִיתָ֣ אֹתָ֔הּ שְׁתֵּ֥ים עֶשְׂרֵ֖ה חַלּ֑וֹת שְׁנֵי֙ עֶשְׂרֹנִ֔ים יִהְיֶ֖ה הַֽחַלָּ֥ה הָאֶחָֽת׃</p></div><div class="heb-s"><p>ולקחת סלת ואפית אתה שתים עשרה חלות שני עשרנים יהיה החלה האחת׃</p></div></div>
+      <div class="texte-fr"><p>Tu prendras aussi de la fleur de farine, et tu en cuiras douze gâteaux, chaque gâteau contenant deux dixièmes.</p></div>
+    </div><div class="seif" id="v-24-6">
+      <span class="seif-num">24:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשַׂמְתָּ֥ אוֹתָ֛ם שְׁתַּ֥יִם מַֽעֲרָכ֖וֹת שֵׁ֣שׁ הַֽמַּעֲרָ֑כֶת עַ֛ל הַשֻּׁלְחָ֥ן הַטָּהֹ֖ר לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ושמת אותם שתים מערכות שש המערכת על השלחן הטהר לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Tu les disposeras en deux rangées, six par rangée, sur la table d’or pur, devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-24-7">
+      <span class="seif-num">24:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתָּ֥ עַל־הַֽמַּעֲרֶ֖כֶת לְבֹנָ֣ה זַכָּ֑ה וְהָיְתָ֤ה לַלֶּ֙חֶם֙ לְאַזְכָּרָ֔ה אִשֶּׁ֖ה לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>ונתת על־המערכת לבנה זכה והיתה ללחם לאזכרה אשה ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Tu mettras sur chaque rangée de l’encens pur, qui servira de mémorial aux pains, pour être brûlé en l’honneur de l’Éternel.</p></div>
+    </div><div class="seif" id="v-24-8">
+      <span class="seif-num">24:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּי֨וֹם הַשַּׁבָּ֜ת בְּי֣וֹם הַשַּׁבָּ֗ת יַֽעַרְכֶ֛נּוּ לִפְנֵ֥י יְהֹוָ֖ה תָּמִ֑יד מֵאֵ֥ת בְּנֵֽי־יִשְׂרָאֵ֖ל בְּרִ֥ית עוֹלָֽם׃</p></div><div class="heb-s"><p>ביום השבת ביום השבת יערכנו לפני יהוה תמיד מאת בני־ישראל ברית עולם׃</p></div></div>
+      <div class="texte-fr"><p>Régulièrement chaque jour de sabbat, on les disposera devant l’Éternel, en permanence, de la part des enfants d’Israël: c’est une alliance perpétuelle.</p></div>
+    </div><div class="seif" id="v-24-9">
+      <span class="seif-num">24:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָֽיְתָה֙ לְאַהֲרֹ֣ן וּלְבָנָ֔יו וַאֲכָלֻ֖הוּ בְּמָק֣וֹם קָדֹ֑שׁ כִּ֡י קֹ֩דֶשׁ֩ קׇֽדָשִׁ֨ים ה֥וּא ל֛וֹ מֵאִשֵּׁ֥י יְהֹוָ֖ה חׇק־עוֹלָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>והיתה לאהרן ולבניו ואכלהו במקום קדש כי קדש קדשים הוא לו מאשי יהוה חק־עולם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ce pain appartiendra à Aaron et à ses fils, qui le mangeront en lieu saint; car c’est une chose éminemment sainte, qui lui revient sur les offrandes de l’Éternel, comme portion invariable."</p></div>
+    </div><div class="seif" id="v-24-10">
+      <span class="seif-num">24:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּצֵא֙ בֶּן־אִשָּׁ֣ה יִשְׂרְאֵלִ֔ית וְהוּא֙ בֶּן־אִ֣ישׁ מִצְרִ֔י בְּת֖וֹךְ בְּנֵ֣י יִשְׂרָאֵ֑ל וַיִּנָּצוּ֙ בַּֽמַּחֲנֶ֔ה בֶּ֚ן הַיִּשְׂרְאֵלִ֔ית וְאִ֖ישׁ הַיִּשְׂרְאֵלִֽי׃</p></div><div class="heb-s"><p>ויצא בן־אשה ישראלית והוא בן־איש מצרי בתוך בני ישראל וינצו במחנה בן הישראלית ואיש הישראלי׃</p></div></div>
+      <div class="texte-fr"><p>Il arriva que le fils d’une femme israélite, lequel avait pour père un Égyptien, était allé se mêler aux enfants d’Israël; une querelle s’éleva dans le camp, entre ce fils d’une Israélite et un homme d’Israël.</p></div>
+    </div><div class="seif" id="v-24-11">
+      <span class="seif-num">24:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֠יִּקֹּ֠ב בֶּן־הָֽאִשָּׁ֨ה הַיִּשְׂרְאֵלִ֤ית אֶת־הַשֵּׁם֙ וַיְקַלֵּ֔ל וַיָּבִ֥יאוּ אֹת֖וֹ אֶל־מֹשֶׁ֑ה וְשֵׁ֥ם אִמּ֛וֹ שְׁלֹמִ֥ית בַּת־דִּבְרִ֖י לְמַטֵּה־דָֽן׃</p></div><div class="heb-s"><p>ויקב בן־האשה הישראלית את־השם ויקלל ויביאו אתו אל־משה ושם אמו שלמית בת־דברי למטה־דן׃</p></div></div>
+      <div class="texte-fr"><p>Le fils de la femme israélite proféra, en blasphémant, le Nom sacré; on le conduisit devant Moïse. Le nom de sa mère était Chelomith, fille de Dibri, de la tribu de Dan.</p></div>
+    </div><div class="seif" id="v-24-12">
+      <span class="seif-num">24:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּנִּיחֻ֖הוּ בַּמִּשְׁמָ֑ר לִפְרֹ֥שׁ לָהֶ֖ם עַל־פִּ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויניחהו במשמר לפרש להם על־פי יהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>On le mit en lieu sûr, jusqu’à ce qu’une décision intervînt de la part de l’Éternel.</p></div>
+    </div><div class="seif" id="v-24-13">
+      <span class="seif-num">24:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Et l’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-24-14">
+      <span class="seif-num">24:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>הוֹצֵ֣א אֶת־הַֽמְקַלֵּ֗ל אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וְסָמְכ֧וּ כׇֽל־הַשֹּׁמְעִ֛ים אֶת־יְדֵיהֶ֖ם עַל־רֹאשׁ֑וֹ וְרָגְמ֥וּ אֹת֖וֹ כׇּל־הָעֵדָֽה׃</p></div><div class="heb-s"><p>הוצא את־המקלל אל־מחוץ למחנה וסמכו כל־השמעים את־ידיהם על־ראשו ורגמו אתו כל־העדה׃</p></div></div>
+      <div class="texte-fr"><p>"Qu’on emmène le blasphémateur hors du camp; que tous ceux qui l’ont entendu imposent leurs mains sur sa tête, et que toute la communauté le lapide.</p></div>
+    </div><div class="seif" id="v-24-15">
+      <span class="seif-num">24:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל תְּדַבֵּ֣ר לֵאמֹ֑ר אִ֥ישׁ אִ֛ישׁ כִּֽי־יְקַלֵּ֥ל אֱלֹהָ֖יו וְנָשָׂ֥א חֶטְאֽוֹ׃</p></div><div class="heb-s"><p>ואל־בני ישראל תדבר לאמר איש איש כי־יקלל אלהיו ונשא חטאו׃</p></div></div>
+      <div class="texte-fr"><p>Parle aussi aux enfants d’Israël en ces termes: quiconque outrage son Dieu portera la peine de son crime.</p></div>
+    </div><div class="seif" id="v-24-16">
+      <span class="seif-num">24:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֹקֵ֤ב שֵׁם־יְהֹוָה֙ מ֣וֹת יוּמָ֔ת רָג֥וֹם יִרְגְּמוּ־ב֖וֹ כׇּל־הָעֵדָ֑ה כַּגֵּר֙ כָּֽאֶזְרָ֔ח בְּנׇקְבוֹ־שֵׁ֖ם יוּמָֽת׃</p></div><div class="heb-s"><p>ונקב שם־יהוה מות יומת רגום ירגמו־בו כל־העדה כגר כאזרח בנקבו־שם יומת׃</p></div></div>
+      <div class="texte-fr"><p>Pour celui qui blasphème nominativement l’Éternel, il doit être mis à mort, toute la communauté devra le lapider; étranger comme indigène, s’il a blasphémé nominativement, il sera puni de mort.</p></div>
+    </div><div class="seif" id="v-24-17">
+      <span class="seif-num">24:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּ֥י יַכֶּ֖ה כׇּל־נֶ֣פֶשׁ אָדָ֑ם מ֖וֹת יוּמָֽת׃</p></div><div class="heb-s"><p>ואיש כי יכה כל־נפש אדם מות יומת׃</p></div></div>
+      <div class="texte-fr"><p>Si quelqu’un fait périr une créature humaine, il sera mis à mort.</p></div>
+    </div><div class="seif" id="v-24-18">
+      <span class="seif-num">24:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמַכֵּ֥ה נֶֽפֶשׁ־בְּהֵמָ֖ה יְשַׁלְּמֶ֑נָּה נֶ֖פֶשׁ תַּ֥חַת נָֽפֶשׁ׃</p></div><div class="heb-s"><p>ומכה נפש־בהמה ישלמנה נפש תחת נפש׃</p></div></div>
+      <div class="texte-fr"><p>S’il fait périr un animal, il le paiera, corps pour corps.</p></div>
+    </div><div class="seif" id="v-24-19">
+      <span class="seif-num">24:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּֽי־יִתֵּ֥ן מ֖וּם בַּעֲמִית֑וֹ כַּאֲשֶׁ֣ר עָשָׂ֔ה כֵּ֖ן יֵעָ֥שֶׂה לּֽוֹ׃</p></div><div class="heb-s"><p>ואיש כי־יתן מום בעמיתו כאשר עשה כן יעשה לו׃</p></div></div>
+      <div class="texte-fr"><p>Et si quelqu’un fait une blessure à son prochain, comme il a agi lui-même on agira à son égard:</p></div>
+    </div><div class="seif" id="v-24-20">
+      <span class="seif-num">24:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>שֶׁ֚בֶר תַּ֣חַת שֶׁ֔בֶר עַ֚יִן תַּ֣חַת עַ֔יִן שֵׁ֖ן תַּ֣חַת שֵׁ֑ן כַּאֲשֶׁ֨ר יִתֵּ֥ן מוּם֙ בָּֽאָדָ֔ם כֵּ֖ן יִנָּ֥תֶן בּֽוֹ׃</p></div><div class="heb-s"><p>שבר תחת שבר עין תחת עין שן תחת שן כאשר יתן מום באדם כן ינתן בו׃</p></div></div>
+      <div class="texte-fr"><p>fracture pour fracture, œil pour œil, dent pour dent; selon la lésion qu’il aura faite à autrui, ainsi lui sera-t-il fait.</p></div>
+    </div><div class="seif" id="v-24-21">
+      <span class="seif-num">24:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמַכֵּ֥ה בְהֵמָ֖ה יְשַׁלְּמֶ֑נָּה וּמַכֵּ֥ה אָדָ֖ם יוּמָֽת׃</p></div><div class="heb-s"><p>ומכה בהמה ישלמנה ומכה אדם יומת׃</p></div></div>
+      <div class="texte-fr"><p>Qui tue un animal doit le payer, et qui tue un homme doit mourir.</p></div>
+    </div><div class="seif" id="v-24-22">
+      <span class="seif-num">24:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִשְׁפַּ֤ט אֶחָד֙ יִהְיֶ֣ה לָכֶ֔ם כַּגֵּ֥ר כָּאֶזְרָ֖ח יִהְיֶ֑ה כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיכֶֽם׃</p></div><div class="heb-s"><p>משפט אחד יהיה לכם כגר כאזרח יהיה כי אני יהוה אלהיכם׃</p></div></div>
+      <div class="texte-fr"><p>Même législation vous régira, étrangers comme nationaux; car je suis l’Éternel, votre Dieu à tous."</p></div>
+    </div><div class="seif" id="v-24-23">
+      <span class="seif-num">24:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר מֹשֶׁה֮ אֶל־בְּנֵ֣י יִשְׂרָאֵל֒ וַיּוֹצִ֣יאוּ אֶת־הַֽמְקַלֵּ֗ל אֶל־מִחוּץ֙ לַֽמַּחֲנֶ֔ה וַיִּרְגְּמ֥וּ אֹת֖וֹ אָ֑בֶן וּבְנֵֽי־יִשְׂרָאֵ֣ל עָשׂ֔וּ כַּֽאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וידבר משה אל־בני ישראל ויוציאו את־המקלל אל־מחוץ למחנה וירגמו אתו אבן ובני־ישראל עשו כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Moïse le redit aux enfants d’Israël. On emmena le blasphémateur hors du camp, et on le tua à coups de pierres; et les enfants d’Israël firent comme l’Éternel avait ordonné à Moïse.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel dit à Moïse: &quot;Parle aux pontifes, fils d’Aaron, et dis-leur: Nul ne doit se souiller par le cadavre d’un de ses concitoyens, si ce n’est pour ses parents les plus proches: pour sa mère ou son père, pour son fils ou sa fille, ou pour son frère; pour sa sœur aussi, si elle est vierge, habitant près de lui, et n’a pas encore appartenu à un homme, pour elle il peut se souiller. Il ne doit pas se rendre impur, lui qui est maître parmi les siens, de manière à s’avilir. ils ne feront point de tonsure à leur tête, ne raseront point l’extrémité de leur barbe, et ne pratiqueront point d’incision sur leur chair. Ils doivent rester saints pour leur Dieu, et ne pas profaner le nom de leur Dieu; car ce sont les sacrifices de l’Éternel, c’est le pain de leur Dieu qu’ils ont à offrir: ils doivent être saints. Une femme prostituée ou déshonorée, ils ne l’épouseront point; une femme répudiée par son mari, ils ne l’épouseront point: car le pontife est consacré à son Dieu. Tiens-le pour saint, car c’est lui qui offre le pain de ton Dieu; qu’il soit saint pour toi, parce que je suis saint, moi l’Éternel, qui vous sanctifie. Et si la fille de quelque pontife se déshonore par la prostitution, c’est son père qu’elle déshonore: elle périra par le feu. Quant au pontife supérieur à ses frères, sur la tête duquel aura coulé l’huile d’onction, et qu’on aura investi du droit de revêtir les insignes, il ne doit point découvrir sa tête ni déchirer ses vêtements; il n’approchera d’aucun corps mort; pour son père même et pour sa mère il ne se souillera point; et il ne quittera point le sanctuaire, pour ne pas ravaler le sanctuaire de son Dieu, car il porte le sacre de l’huile d’onction de son Dieu: je suis l’Éternel. De plus, il devra épouser une femme qui soit vierge. Une veuve, une femme répudiée ou déshonorée, une courtisane, il ne l’épousera point: il ne peut prendre pour femme qu’une vierge d’entre son peuple, et ne doit point dégrader sa race au milieu de son peuple: je suis l’Éternel, qui l’ai consacré!&quot; L’Éternel parla à Moïse en ces termes: &quot;Parle ainsi à Aaron: Quelqu’un de ta postérité, dans les âges futurs, qui serait atteint d’une infirmité, ne sera pas admis à offrir le pain de son Dieu. Car quiconque a une infirmité ne saurait être admis: un individu aveugle ou boiteux, ayant le nez écrasé ou des organes inégaux; ou celui qui serait estropié, soit du pied, soit de la main; ou un bossu, ou un nain; celui qui a une taie sur l’œil, la gale sèche ou humide, ou les testicules broyés. Tout individu infirme, de la race d’Aaron le pontife, ne se présentera pas pour offrir les sacrifices de l’Éternel. Atteint d’une infirmité, il ne peut se présenter pour offrir le pain de son Dieu. Le pain de son Dieu, provenant des offrandes très-saintes comme des offrandes saintes, il peut s’en nourrir; mais qu’il ne pénètre point jusqu’au voile, et qu’il n’approche point de l’autel, car il a une infirmité, et il ne doit point profaner mes choses saintes, car c’est moi, l’Éternel, qui les sanctifie.&quot; Et Moïse le redit à Aaron et à ses fils, et à tous les enfants d’Israël.</p>
-      <p>L’Éternel parla ainsi à Moïse: &quot;Avertis Aaron et ses fils d’être circonspects à l’égard des saintetés des enfants d’Israël, pour ne pas profaner mon saint nom en profanant ce que ceux-ci me consacrent: je suis l’Éternel. Dis-leur: à l’avenir, quiconque de toute votre famille, étant en état de souillure, s’approcherait des saintetés que les enfants d’Israël consacrent à l’Éternel, cette personne sera retranchée de devant moi: je suis l’Éternel. Tout individu de la race d’Aaron, atteint de lèpre ou de flux, ne mangera pas de choses saintes qu’il ne soit devenu pur. De même, celui qui touche à une personne souillée par un cadavre, ou celui qui a laissé échapper de la matière séminale, ou celui qui aurait touché à quelque reptile de nature à le souiller, ou à un homme qui lui aurait communiqué une impureté quelconque: la personne qui y touche devant rester souillée jusqu’au soir, le pontife ne mangera rien des choses saintes qu’il n’ait baigné son corps dans l’eau. Après le soleil couché, il deviendra pur; et alors il pourra jouir des choses saintes, car elles sont sa subsistance. Une bête morte ou déchirée, il n’en mangera point, elle le rendrait impur: je suis l’Éternel. Qu’ils respectent mon observance et ne s’exposent pas, à cause d’elle, à un péché, car ils mourraient pour l’avoir violée: je suis l’Éternel qui les sanctifie. Nul profane ne mangera d’une chose sainte; celui qui habite chez un pontife ou est salarié par lui, ne mangera point d’une chose sainte. Mais si un pontife a acheté une personne à prix d’argent, elle pourra en manger; et les esclaves nés chez lui, ceux-là aussi mangeront de son pain. Si la fille d’un prêtre est mariée à un profane, elle ne mangera point des saintes offrandes. Si cette fille de pontife devient veuve ou est divorcée, qu’elle n’ait point de postérité, et qu’elle retourne à la maison de son père comme en sa jeunesse, elle mangera du pain de son père; mais aucun profane n’en mangera. Si quelqu’un avait, par inadvertance, mangé une chose sainte, il en ajoutera le cinquième en sus, qu’il donnera au pontife avec la chose sainte. Ils ne doivent pas laisser profaner les saintetés des enfants d’Israël, ce dont ils font hommage à l’Éternel, et faire peser sur eux un délit punissable, alors qu’ils consommeraient leurs propres saintetés; car c’est moi, l’Éternel, qui les sanctifie.&quot; L’Éternel parla à Moïse en ces termes: &quot;parie à Aaron et à ses fils, ainsi qu’à tous les enfants d’Israël, et dis-leur: qui que ce soit de la maison d’Israël, ou parmi les étrangers en Israël, qui voudra présenter son offrande, par suite de quelque vœu ou don volontaire de leur part; s’ils l’offrent à l’Éternel comme holocauste, pour être agréés, prenez-la sans défaut, mâle, parmi le gros bétail, les brebis ou les chèvres. Tout animal qui aurait un défaut, ne l’offrez point; car il ne sera pas agréé de votre part. De même, si quelqu’un veut offrir une victime rémunératoire à l’Éternel, par suite d’un vœu particulier ou d’un don volontaire, dans le gros ou dans le menu bétail, cette victime, pour être agréée, doit être irréprochable, n’avoir aucun défaut. Une bête aveugle, estropiée ou mutilée, affectée de verrues, de gale sèche ou humide, vous ne les offrirez point à l’Éternel, et vous n’en ferez rien brûler sur l’autel en son honneur. Si une grosse ou une menue bête a un membre trop long ou trop court, tu pourras l’employer comme offrande volontaire, mais comme offrande votive elle ne serait point agréée. Celle qui a les testicules froissés, écrasés, rompus ou coupés, ne l’offrez point à l’Éternel, et dans votre pays ne faites point pareille chose. De la part même d’un étranger vous n’offrirez aucun de ces animaux comme aliment à votre Dieu; car ils ont subi une mutilation, ils sont défectueux, vous ne les feriez point agréer.&quot; L’Éternel parla à Moïse en ces termes: &quot;Lorsqu’un veau, un agneau ou un chevreau vient de naître, il doit rester sept jours auprès de sa mère; à partir du huitième jour seulement, il sera propre à être offert en sacrifice à l’Éternel. Crosse ou menue bête, vous n’égorgerez point ranimai avec son petit le même jour. Quand vous ferez un sacrifice de reconnaissance à l’Éternel, faites ce sacrifice de manière à être agréés. Il devra être consommé le jour même, vous n’en laisserez rien pour le lendemain: je suis l’Éternel. Gardez mes commandements et pratiquez-les: je suis l’Éternel. Ne déshonorez point mon saint nom, afin que je sois sanctifié au milieu des enfants d’Israël, moi, l’Éternel, qui vous sanctifie, qui vous ai fait sortir du pays d’Égypte pour devenir votre Dieu: je suis l’Éternel.&quot;</p>
-      <p>L’Éternel parla ainsi à Moïse: &quot;Parle aux enfants d’Israël et dis-leur les solennités de l’Éternel, que vous devez célébrer comme convocations saintes. Les voici, mes solennités: pendant six jours on se livrera au travail, mais le septième jour il y aura repos, repos solennel pour une sainte convocation: vous ne ferez aucun travail. Ce sera le Sabbat de l’Éternel, dans toutes vos habitations. Voici les solennités de l’Éternel, convocations saintes, que vous célébrerez en leur saison. Au premier mois, le quatorze du mois, vers le soir, la Pâque sera offerte au Seigneur; et au quinzième jour de ce mois, ce sera la fête des Azymes pour le Seigneur: durant sept jours vous mangerez des azymes. Le premier jour, il y aura pour vous convocation sainte: vous ne ferez aucune œuvre servile. Vous offrirez un sacrifice au Seigneur sept jours de suite. Le septième jour, il y aura convocation sainte: vous ne ferez aucune œuvre servile.&quot; L’Éternel parla ainsi à Moïse: &quot;Parle aux enfants d’Israël et dis-leur: quand vous serez arrivés dans le pays que je vous accorde, et que vous y ferez la moisson, vous apporterez un ômer des prémices de votre moisson au pontife, lequel balancera cet ômer devant le Seigneur, pour vous le rendre propice; c’est le lendemain de la fête que le pontife le balancera. Vous offrirez, le jour du balancement de l’ômer, un agneau sans défaut, âgé d’un an, en holocauste à l’Éternel. Son oblation: deux dixièmes de fleur de farine pétrie à l’huile, à brûler en l’honneur de l’Éternel comme odeur agréable; et sa libation: un quart de hîn de vin. Vous ne mangerez ni pain, ni grains torréfiés, ni gruau, jusqu’à ce jour même, jusqu’à ce que vous ayez apporté l’offrande de votre Dieu; statut perpétuel pour vos générations, dans toutes vos demeures. Puis, vous compterez chacun, depuis le lendemain de la fête, depuis le jour où vous aurez offert l’ômer du balancement, sept semaines, qui doivent être entières; vous compterez jusqu’au lendemain de la septième semaine, soit cinquante jours, et vous offrirez à l’Éternel une oblation nouvelle. Devos habitations, vous apporterez deux pains destinés au balancement, qui seront faits de deux dixièmes de farine fine et cuits à pâte levée: ce seront des prémices pour l’Éternel. Vous offrirez, avec ces pains, sept agneaux sans défaut, âgés d’un an, un jeune taureau et deux béliers; ils formeront un holocauste pour le Seigneur, avec leurs oblations et leurs libations, sacrifice d’une odeur agréable à l’Éternel. Vous ajouterez un bouc pour le péché, et deux agneaux d’un an comme sacrifice rémunératoire. Le pontife les balancera, avec le pain des prémices, devant l’Éternel, ainsi que deux des agneaux: ils seront consacrés à l’Éternel, au profit du pontife. Et vous célébrerez ce même jour: ce sera pour vous une convocation sainte, où vous ne ferez aucune œuvre servile; statut invariable, dans toutes vos demeures, pour vos générations. Et quand vous ferez la moisson dans votre pays, tu laisseras la Benda inachevée au bout de ton champ, et tu ne ramasseras point les glanes de ta moisson. Abandonne-les au pauvre et à l’étranger: je suis l’Éternel votre Dieu.&quot; L’Éternel parla à Moïse en ces termes: &quot;Parle ainsi aux enfants d’Israël: au septième mois, le premier jour du mois, aura lieu pour vous un repos solennel; commémoration par une fanfare, convocation sainte. Vous ne ferez aucune œuvre servile, et vous offrirez un sacrifice à l’Éternel.&quot; L’Éternel parla à Moïse en ces termes: &quot;Mais au dixième jour de ce septième mois, qui est le jour des Expiations, il y aura pour vous convocation sainte: vous mortifierez vos personnes, vous offrirez un sacrifice à l’Éternel, et vous ne ferez aucun travail en ce même jour; car c’est un jour d’expiation, destiné à vous réhabiliter devant l’Éternel votre Dieu. Aussi, toute personne qui ne se mortifiera pas en ce même jour, sera supprimée de son peuple; et toute personne qui fera un travail quelconque en ce même jour, j’anéantirai cette personne-là du milieu de son peuple. Ne faites donc aucune sorte de travail: loi perpétuelle pour vos générations, dans toutes vos demeures. Ce jour est pour vous un chômage absolu, où vous mortifierez vos personnes; dès le neuf du mois au soir, depuis un soir jusqu’à l’autre, vous observerez votre chômage.&quot; L’Éternel parla à Moïse en ces termes: &quot;Parle ainsi aux enfants d’Israël: le quinzième jour de ce septième mois aura lieu la fête des Tentes, durant sept jours, en l’honneur de l’Éternel. Le premier jour, convocation sainte: vous ne ferez aucune œuvre servile. Sept jours durant, vous offrirez des sacrifices à l’Éternel. Le huitième jour, vous aurez encore une convocation sainte, et vous offrirez un sacrifice à l’Éternel: c’est une fête de clôture, vous n’y ferez aucune œuvre servile. Ce sont là les solennités de l’Éternel, que vous célébrerez comme convocations saintes, en offrant des sacrifices à l’Éternel, holocaustes et oblations, victimes et libations, selon le rite de chaque jour, indépendamment des sabbats de l’Éternel; indépendamment aussi de vos dons, et de toutes vos offrandes votives ou volontaires, dont vous ferez hommage à l’Éternel. Mais le quinzième jour du septième mois, quand vous aurez rentré la récolte de la terre, vous fêterez la fête du Seigneur, qui durera sept jours; le premier jour il y aura chômage, et chômage le huitième jour. Vous prendrez, le premier jour, du fruit de l’arbre hadar, des branches de palmier, des rameaux de l’arbre aboth et des saules de rivière; et vous vous réjouirez, en présence de l’Éternel votre Dieu, pendant sept jours. Vous la fêterez, cette fête du Seigneur, sept jours chaque année, règle immuable pour vos générations; c’est au septième mois que vous la solenniserez. Vous demeurerez dans des tentes durant sept jours; tout indigène en Israël demeurera sous la tente, afin que vos générations sachent que j’ai donné des tentes pour demeure aux enfants d’Israël, quand je les ai fait sortir du pays d’Égypte, moi, l’Éternel, votre Dieu!&quot; Et Moïse exposa les solennités de l’Éternel aux enfants d’Israël.</p>
-      <p>L’Éternel parla à Moïse en ces termes: &quot;Ordonne aux enfants d’Israël de te choisir une huile pure d’olives concassées, pour le luminaire, afin d’alimenter les lampes en permanence. C’est en dehors du voile qui abrite le Statut, dans la Tente d’assignation, qu’Aaron les entretiendra depuis le soir jusqu’au matin, devant l’Éternel, constamment: règle perpétuelle pour vos générations. C’est sur le candélabre d’or pur qu’il entretiendra ces lampes, devant l’Éternel, constamment. Tu prendras aussi de la fleur de farine, et tu en cuiras douze gâteaux, chaque gâteau contenant deux dixièmes. Tu les disposeras en deux rangées, six par rangée, sur la table d’or pur, devant l’Éternel. Tu mettras sur chaque rangée de l’encens pur, qui servira de mémorial aux pains, pour être brûlé en l’honneur de l’Éternel. Régulièrement chaque jour de sabbat, on les disposera devant l’Éternel, en permanence, de la part des enfants d’Israël: c’est une alliance perpétuelle. Ce pain appartiendra à Aaron et à ses fils, qui le mangeront en lieu saint; car c’est une chose éminemment sainte, qui lui revient sur les offrandes de l’Éternel, comme portion invariable.&quot; Il arriva que le fils d’une femme israélite, lequel avait pour père un Égyptien, était allé se mêler aux enfants d’Israël; une querelle s’éleva dans le camp, entre ce fils d’une Israélite et un homme d’Israël. Le fils de la femme israélite proféra, en blasphémant, le Nom sacré; on le conduisit devant Moïse. Le nom de sa mère était Chelomith, fille de Dibri, de la tribu de Dan. On le mit en lieu sûr, jusqu’à ce qu’une décision intervînt de la part de l’Éternel. Et l’Éternel parla ainsi à Moïse: &quot;Qu’on emmène le blasphémateur hors du camp; que tous ceux qui l’ont entendu imposent leurs mains sur sa tête, et que toute la communauté le lapide. Parle aussi aux enfants d’Israël en ces termes: quiconque outrage son Dieu portera la peine de son crime. Pour celui qui blasphème nominativement l’Éternel, il doit être mis à mort, toute la communauté devra le lapider; étranger comme indigène, s’il a blasphémé nominativement, il sera puni de mort. Si quelqu’un fait périr une créature humaine, il sera mis à mort. S’il fait périr un animal, il le paiera, corps pour corps. Et si quelqu’un fait une blessure à son prochain, comme il a agi lui-même on agira à son égard: fracture pour fracture, œil pour œil, dent pour dent; selon la lésion qu’il aura faite à autrui, ainsi lui sera-t-il fait. Qui tue un animal doit le payer, et qui tue un homme doit mourir. Même législation vous régira, étrangers comme nationaux; car je suis l’Éternel, votre Dieu à tous.&quot; Moïse le redit aux enfants d’Israël. On emmena le blasphémateur hors du camp, et on le tua à coups de pierres; et les enfants d’Israël firent comme l’Éternel avait ordonné à Moïse.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -311,6 +835,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_kedoshim.html">← Kedoshim</a><a class="hbtn qcm" href="qcm_paracha_emor.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_behar.html">Behar →</a></div>
 </main>
 
 <footer>

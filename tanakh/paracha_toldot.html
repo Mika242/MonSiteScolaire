@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bereshit · Paracha</div>
     <h1>Toldot — Jacob, Ésaü et les bénédictions</h1>
     <p>Torah, Bereshit (Genesis 25:19-28:9)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_chayei-sarah.html">← Chayei Sarah</a><a class="hbtn qcm" href="qcm_paracha_toldot.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayetzei.html">Vayetzei →</a></div>
   </div>
 </header>
 
@@ -161,31 +202,442 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וְאֵ֛לֶּה תּוֹלְדֹ֥ת יִצְחָ֖ק בֶּן־אַבְרָהָ֑ם אַבְרָהָ֖ם הוֹלִ֥יד אֶת־יִצְחָֽק׃', 'וַיְהִ֤י יִצְחָק֙ בֶּן־אַרְבָּעִ֣ים שָׁנָ֔ה בְּקַחְתּ֣וֹ אֶת־רִבְקָ֗ה בַּת־בְּתוּאֵל֙ הָֽאֲרַמִּ֔י מִפַּדַּ֖ן אֲרָ֑ם אֲח֛וֹת לָבָ֥ן הָאֲרַמִּ֖י ל֥וֹ לְאִשָּֽׁה׃', 'וַיֶּעְתַּ֨ר יִצְחָ֤ק לַֽיהֹוָה֙ לְנֹ֣כַח אִשְׁתּ֔וֹ כִּ֥י עֲקָרָ֖ה הִ֑וא וַיֵּעָ֤תֶר לוֹ֙ יְהֹוָ֔ה וַתַּ֖הַר רִבְקָ֥ה אִשְׁתּֽוֹ׃', 'וַיִּתְרֹֽצְצ֤וּ הַבָּנִים֙ בְּקִרְבָּ֔הּ וַתֹּ֣אמֶר אִם־כֵּ֔ן לָ֥מָּה זֶּ֖ה אָנֹ֑כִי וַתֵּ֖לֶךְ לִדְרֹ֥שׁ אֶת־יְהֹוָֽה׃', 'וַיֹּ֨אמֶר יְהֹוָ֜ה לָ֗הּ שְׁנֵ֤י <span class="mam-kq"><span class="mam-kq-k">(גיים)</span> <span class="mam-kq-q">[גוֹיִם֙]</span></span> בְּבִטְנֵ֔ךְ וּשְׁנֵ֣י לְאֻמִּ֔ים מִמֵּעַ֖יִךְ יִפָּרֵ֑דוּ וּלְאֹם֙ מִלְאֹ֣ם יֶֽאֱמָ֔ץ וְרַ֖ב יַעֲבֹ֥ד צָעִֽיר׃', 'וַיִּמְלְא֥וּ יָמֶ֖יהָ לָלֶ֑דֶת וְהִנֵּ֥ה תוֹמִ֖ם בְּבִטְנָֽהּ׃', 'וַיֵּצֵ֤א הָרִאשׁוֹן֙ אַדְמוֹנִ֔י כֻּלּ֖וֹ כְּאַדֶּ֣רֶת שֵׂעָ֑ר וַיִּקְרְא֥וּ שְׁמ֖וֹ עֵשָֽׂו׃', 'וְאַֽחֲרֵי־כֵ֞ן יָצָ֣א אָחִ֗יו וְיָד֤וֹ אֹחֶ֙זֶת֙ בַּעֲקֵ֣ב עֵשָׂ֔ו וַיִּקְרָ֥א שְׁמ֖וֹ יַעֲקֹ֑ב וְיִצְחָ֛ק בֶּן־שִׁשִּׁ֥ים שָׁנָ֖ה בְּלֶ֥דֶת אֹתָֽם׃', 'וַֽיִּגְדְּלוּ֙ הַנְּעָרִ֔ים וַיְהִ֣י עֵשָׂ֗ו אִ֛ישׁ יֹדֵ֥עַ צַ֖יִד אִ֣ישׁ שָׂדֶ֑ה וְיַעֲקֹב֙ אִ֣ישׁ תָּ֔ם יֹשֵׁ֖ב אֹהָלִֽים׃', 'וַיֶּאֱהַ֥ב יִצְחָ֛ק אֶת־עֵשָׂ֖ו כִּי־צַ֣יִד בְּפִ֑יו וְרִבְקָ֖ה אֹהֶ֥בֶת אֶֽת־יַעֲקֹֽב׃', 'וַיָּ֥זֶד יַעֲקֹ֖ב נָזִ֑יד וַיָּבֹ֥א עֵשָׂ֛ו מִן־הַשָּׂדֶ֖ה וְה֥וּא עָיֵֽף׃', 'וַיֹּ֨אמֶר עֵשָׂ֜ו אֶֽל־יַעֲקֹ֗ב הַלְעִיטֵ֤נִי נָא֙ מִן־הָאָדֹ֤ם הָאָדֹם֙ הַזֶּ֔ה כִּ֥י עָיֵ֖ף אָנֹ֑כִי עַל־כֵּ֥ן קָרָֽא־שְׁמ֖וֹ אֱדֽוֹם׃', 'וַיֹּ֖אמֶר יַעֲקֹ֑ב מִכְרָ֥ה כַיּ֛וֹם אֶת־בְּכֹרָתְךָ֖ לִֽי׃', 'וַיֹּ֣אמֶר עֵשָׂ֔ו הִנֵּ֛ה אָנֹכִ֥י הוֹלֵ֖ךְ לָמ֑וּת וְלָמָּה־זֶּ֥ה לִ֖י בְּכֹרָֽה׃', 'וַיֹּ֣אמֶר יַעֲקֹ֗ב הִשָּׁ֤בְעָה לִּי֙ כַּיּ֔וֹם וַיִּשָּׁבַ֖ע ל֑וֹ וַיִּמְכֹּ֥ר אֶת־בְּכֹרָת֖וֹ לְיַעֲקֹֽב׃', 'וְיַעֲקֹ֞ב נָתַ֣ן לְעֵשָׂ֗ו לֶ֚חֶם וּנְזִ֣יד עֲדָשִׁ֔ים וַיֹּ֣אכַל וַיֵּ֔שְׁתְּ וַיָּ֖קׇם וַיֵּלַ֑ךְ וַיִּ֥בֶז עֵשָׂ֖ו אֶת־הַבְּכֹרָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְהִ֤י רָעָב֙ בָּאָ֔רֶץ מִלְּבַד֙ הָרָעָ֣ב הָרִאשׁ֔וֹן אֲשֶׁ֥ר הָיָ֖ה בִּימֵ֣י אַבְרָהָ֑ם וַיֵּ֧לֶךְ יִצְחָ֛ק אֶל־אֲבִימֶ֥לֶךְ מֶֽלֶךְ־פְּלִשְׁתִּ֖ים גְּרָֽרָה׃', 'וַיֵּרָ֤א אֵלָיו֙ יְהֹוָ֔ה וַיֹּ֖אמֶר אַל־תֵּרֵ֣ד מִצְרָ֑יְמָה שְׁכֹ֣ן בָּאָ֔רֶץ אֲשֶׁ֖ר אֹמַ֥ר אֵלֶֽיךָ׃', 'גּ֚וּר בָּאָ֣רֶץ הַזֹּ֔את וְאֶֽהְיֶ֥ה עִמְּךָ֖ וַאֲבָרְכֶ֑ךָּ כִּֽי־לְךָ֣ וּֽלְזַרְעֲךָ֗ אֶתֵּן֙ אֶת־כׇּל־הָֽאֲרָצֹ֣ת הָאֵ֔ל וַהֲקִֽמֹתִי֙ אֶת־הַשְּׁבֻעָ֔ה אֲשֶׁ֥ר נִשְׁבַּ֖עְתִּי לְאַבְרָהָ֥ם אָבִֽיךָ׃', 'וְהִרְבֵּיתִ֤י אֶֽת־זַרְעֲךָ֙ כְּכוֹכְבֵ֣י הַשָּׁמַ֔יִם וְנָתַתִּ֣י לְזַרְעֲךָ֔ אֵ֥ת כׇּל־הָאֲרָצֹ֖ת הָאֵ֑ל וְהִתְבָּרְכ֣וּ בְזַרְעֲךָ֔ כֹּ֖ל גּוֹיֵ֥י הָאָֽרֶץ׃', 'עֵ֕קֶב אֲשֶׁר־שָׁמַ֥ע אַבְרָהָ֖ם בְּקֹלִ֑י וַיִּשְׁמֹר֙ מִשְׁמַרְתִּ֔י מִצְוֺתַ֖י חֻקּוֹתַ֥י וְתוֹרֹתָֽי׃', 'וַיֵּ֥שֶׁב יִצְחָ֖ק בִּגְרָֽר׃', 'וַֽיִּשְׁאֲל֞וּ אַנְשֵׁ֤י הַמָּקוֹם֙ לְאִשְׁתּ֔וֹ וַיֹּ֖אמֶר אֲחֹ֣תִי הִ֑וא כִּ֤י יָרֵא֙ לֵאמֹ֣ר אִשְׁתִּ֔י פֶּן־יַֽהַרְגֻ֜נִי אַנְשֵׁ֤י הַמָּקוֹם֙ עַל־רִבְקָ֔ה כִּֽי־טוֹבַ֥ת מַרְאֶ֖ה הִֽוא׃', 'וַיְהִ֗י כִּ֣י אָֽרְכוּ־ל֥וֹ שָׁם֙ הַיָּמִ֔ים וַיַּשְׁקֵ֗ף אֲבִימֶ֙לֶךְ֙ מֶ֣לֶךְ פְּלִשְׁתִּ֔ים בְּעַ֖ד הַֽחַלּ֑וֹן וַיַּ֗רְא וְהִנֵּ֤ה יִצְחָק֙ מְצַחֵ֔ק אֵ֖ת רִבְקָ֥ה אִשְׁתּֽוֹ׃', 'וַיִּקְרָ֨א אֲבִימֶ֜לֶךְ לְיִצְחָ֗ק וַיֹּ֙אמֶר֙ אַ֣ךְ הִנֵּ֤ה אִשְׁתְּךָ֙ הִ֔וא וְאֵ֥יךְ אָמַ֖רְתָּ אֲחֹ֣תִי הִ֑וא וַיֹּ֤אמֶר אֵלָיו֙ יִצְחָ֔ק כִּ֣י אָמַ֔רְתִּי פֶּן־אָמ֖וּת עָלֶֽיהָ׃', 'וַיֹּ֣אמֶר אֲבִימֶ֔לֶךְ מַה־זֹּ֖את עָשִׂ֣יתָ לָּ֑נוּ כִּ֠מְעַ֠ט שָׁכַ֞ב אַחַ֤ד הָעָם֙ אֶת־אִשְׁתֶּ֔ךָ וְהֵבֵאתָ֥ עָלֵ֖ינוּ אָשָֽׁם׃', 'וַיְצַ֣ו אֲבִימֶ֔לֶךְ אֶת־כׇּל־הָעָ֖ם לֵאמֹ֑ר הַנֹּגֵ֜עַ בָּאִ֥ישׁ הַזֶּ֛ה וּבְאִשְׁתּ֖וֹ מ֥וֹת יוּמָֽת׃', 'וַיִּזְרַ֤ע יִצְחָק֙ בָּאָ֣רֶץ הַהִ֔וא וַיִּמְצָ֛א בַּשָּׁנָ֥ה הַהִ֖וא מֵאָ֣ה שְׁעָרִ֑ים וַֽיְבָרְכֵ֖הוּ יְהֹוָֽה׃', 'וַיִּגְדַּ֖ל הָאִ֑ישׁ וַיֵּ֤לֶךְ הָלוֹךְ֙ וְגָדֵ֔ל עַ֥ד כִּֽי־גָדַ֖ל מְאֹֽד׃', 'וַֽיְהִי־ל֤וֹ מִקְנֵה־צֹאן֙ וּמִקְנֵ֣ה בָקָ֔ר וַעֲבֻדָּ֖ה רַבָּ֑ה וַיְקַנְא֥וּ אֹת֖וֹ פְּלִשְׁתִּֽים׃', 'וְכׇל־הַבְּאֵרֹ֗ת אֲשֶׁ֤ר חָֽפְרוּ֙ עַבְדֵ֣י אָבִ֔יו בִּימֵ֖י אַבְרָהָ֣ם אָבִ֑יו סִתְּמ֣וּם פְּלִשְׁתִּ֔ים וַיְמַלְא֖וּם עָפָֽר׃', 'וַיֹּ֥אמֶר אֲבִימֶ֖לֶךְ אֶל־יִצְחָ֑ק לֵ֚ךְ מֵֽעִמָּ֔נוּ כִּֽי־עָצַ֥מְתָּ מִמֶּ֖נּוּ מְאֹֽד׃', 'וַיֵּ֥לֶךְ מִשָּׁ֖ם יִצְחָ֑ק וַיִּ֥חַן בְּנַֽחַל־גְּרָ֖ר וַיֵּ֥שֶׁב שָֽׁם׃', 'וַיָּ֨שׇׁב יִצְחָ֜ק וַיַּחְפֹּ֣ר&thinsp;<b>׀</b> אֶת־בְּאֵרֹ֣ת הַמַּ֗יִם אֲשֶׁ֤ר חָֽפְרוּ֙ בִּימֵי֙ אַבְרָהָ֣ם אָבִ֔יו וַיְסַתְּמ֣וּם פְּלִשְׁתִּ֔ים אַחֲרֵ֖י מ֣וֹת אַבְרָהָ֑ם וַיִּקְרָ֤א לָהֶן֙ שֵׁמ֔וֹת כַּשֵּׁמֹ֕ת אֲשֶׁר־קָרָ֥א לָהֶ֖ן אָבִֽיו׃', 'וַיַּחְפְּר֥וּ עַבְדֵֽי־יִצְחָ֖ק בַּנָּ֑חַל וַיִּ֨מְצְאוּ־שָׁ֔ם בְּאֵ֖ר מַ֥יִם חַיִּֽים׃', 'וַיָּרִ֜יבוּ רֹעֵ֣י גְרָ֗ר עִם־רֹעֵ֥י יִצְחָ֛ק לֵאמֹ֖ר לָ֣נוּ הַמָּ֑יִם וַיִּקְרָ֤א שֵֽׁם־הַבְּאֵר֙ עֵ֔שֶׂק כִּ֥י הִֽתְעַשְּׂק֖וּ עִמּֽוֹ׃', 'וַֽיַּחְפְּרוּ֙ בְּאֵ֣ר אַחֶ֔רֶת וַיָּרִ֖יבוּ גַּם־עָלֶ֑יהָ וַיִּקְרָ֥א שְׁמָ֖הּ שִׂטְנָֽה׃', 'וַיַּעְתֵּ֣ק מִשָּׁ֗ם וַיַּחְפֹּר֙ בְּאֵ֣ר אַחֶ֔רֶת וְלֹ֥א רָב֖וּ עָלֶ֑יהָ וַיִּקְרָ֤א שְׁמָהּ֙ רְחֹב֔וֹת וַיֹּ֗אמֶר כִּֽי־עַתָּ֞ה הִרְחִ֧יב יְהֹוָ֛ה לָ֖נוּ וּפָרִ֥ינוּ בָאָֽרֶץ׃', 'וַיַּ֥עַל מִשָּׁ֖ם בְּאֵ֥ר שָֽׁבַע׃', 'וַיֵּרָ֨א אֵלָ֤יו יְהֹוָה֙ בַּלַּ֣יְלָה הַה֔וּא וַיֹּ֕אמֶר אָנֹכִ֕י אֱלֹהֵ֖י אַבְרָהָ֣ם אָבִ֑יךָ אַל־תִּירָא֙ כִּֽי־אִתְּךָ֣ אָנֹ֔כִי וּבֵֽרַכְתִּ֙יךָ֙ וְהִרְבֵּיתִ֣י אֶֽת־זַרְעֲךָ֔ בַּעֲב֖וּר אַבְרָהָ֥ם עַבְדִּֽי׃', 'וַיִּ֧בֶן שָׁ֣ם מִזְבֵּ֗חַ וַיִּקְרָא֙ בְּשֵׁ֣ם יְהֹוָ֔ה וַיֶּט־שָׁ֖ם אׇהֳל֑וֹ וַיִּכְרוּ־שָׁ֥ם עַבְדֵי־יִצְחָ֖ק בְּאֵֽר׃', 'וַאֲבִימֶ֕לֶךְ הָלַ֥ךְ אֵלָ֖יו מִגְּרָ֑ר וַאֲחֻזַּת֙ מֵֽרֵעֵ֔הוּ וּפִיכֹ֖ל שַׂר־צְבָאֽוֹ׃', 'וַיֹּ֤אמֶר אֲלֵהֶם֙ יִצְחָ֔ק מַדּ֖וּעַ בָּאתֶ֣ם אֵלָ֑י וְאַתֶּם֙ שְׂנֵאתֶ֣ם אֹתִ֔י וַתְּשַׁלְּח֖וּנִי מֵאִתְּכֶֽם׃', 'וַיֹּאמְר֗וּ רָא֣וֹ רָאִ֘ינוּ֮ כִּֽי־הָיָ֣ה יְהֹוָ֣ה&thinsp;<small>׀</small>&thinsp;עִמָּךְ֒ וַנֹּ֗אמֶר תְּהִ֨י נָ֥א אָלָ֛ה בֵּינוֹתֵ֖ינוּ בֵּינֵ֣ינוּ וּבֵינֶ֑ךָ וְנִכְרְתָ֥ה בְרִ֖ית עִמָּֽךְ׃', 'אִם־תַּעֲשֵׂ֨ה עִמָּ֜נוּ רָעָ֗ה כַּאֲשֶׁר֙ לֹ֣א נְגַֽעֲנ֔וּךָ וְכַאֲשֶׁ֨ר עָשִׂ֤ינוּ עִמְּךָ֙ רַק־ט֔וֹב וַנְּשַׁלֵּֽחֲךָ֖ בְּשָׁל֑וֹם אַתָּ֥ה עַתָּ֖ה בְּר֥וּךְ יְהֹוָֽה׃', 'וַיַּ֤עַשׂ לָהֶם֙ מִשְׁתֶּ֔ה וַיֹּאכְל֖וּ וַיִּשְׁתּֽוּ׃', 'וַיַּשְׁכִּ֣ימוּ בַבֹּ֔קֶר וַיִּשָּׁבְע֖וּ אִ֣ישׁ לְאָחִ֑יו וַיְשַׁלְּחֵ֣ם יִצְחָ֔ק וַיֵּלְכ֥וּ מֵאִתּ֖וֹ בְּשָׁלֽוֹם׃', 'וַיְהִ֣י&thinsp;<b>׀</b> בַּיּ֣וֹם הַה֗וּא וַיָּבֹ֙אוּ֙ עַבְדֵ֣י יִצְחָ֔ק וַיַּגִּ֣דוּ ל֔וֹ עַל־אֹד֥וֹת הַבְּאֵ֖ר אֲשֶׁ֣ר חָפָ֑רוּ וַיֹּ֥אמְרוּ ל֖וֹ מָצָ֥אנוּ מָֽיִם׃', 'וַיִּקְרָ֥א אֹתָ֖הּ שִׁבְעָ֑ה עַל־כֵּ֤ן שֵׁם־הָעִיר֙ בְּאֵ֣ר שֶׁ֔בַע עַ֖ד הַיּ֥וֹם הַזֶּֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיְהִ֤י עֵשָׂו֙ בֶּן־אַרְבָּעִ֣ים שָׁנָ֔ה וַיִּקַּ֤ח אִשָּׁה֙ אֶת־יְהוּדִ֔ית בַּת־בְּאֵרִ֖י הַֽחִתִּ֑י וְאֶת־בָּ֣שְׂמַ֔ת בַּת־אֵילֹ֖ן הַֽחִתִּֽי׃', 'וַתִּהְיֶ֖יןָ מֹ֣רַת ר֑וּחַ לְיִצְחָ֖ק וּלְרִבְקָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['וַֽיְהִי֙ כִּֽי־זָקֵ֣ן יִצְחָ֔ק וַתִּכְהֶ֥יןָ עֵינָ֖יו מֵרְאֹ֑ת וַיִּקְרָ֞א אֶת־עֵשָׂ֣ו&thinsp;<b>׀</b> בְּנ֣וֹ הַגָּדֹ֗ל וַיֹּ֤אמֶר אֵלָיו֙ בְּנִ֔י וַיֹּ֥אמֶר אֵלָ֖יו הִנֵּֽנִי׃', 'וַיֹּ֕אמֶר הִנֵּה־נָ֖א זָקַ֑נְתִּי לֹ֥א יָדַ֖עְתִּי י֥וֹם מוֹתִֽי׃', 'וְעַתָּה֙ שָׂא־נָ֣א כֵלֶ֔יךָ תֶּלְיְךָ֖ וְקַשְׁתֶּ֑ךָ וְצֵא֙ הַשָּׂדֶ֔ה וְצ֥וּדָה לִּ֖י <span class="mam-kq"><span class="mam-kq-k">(צידה)</span> <span class="mam-kq-q">[צָֽיִד]</span></span>׃', 'וַעֲשֵׂה־לִ֨י מַטְעַמִּ֜ים כַּאֲשֶׁ֥ר אָהַ֛בְתִּי וְהָבִ֥יאָה לִּ֖י וְאֹכֵ֑לָה בַּעֲב֛וּר תְּבָרֶכְךָ֥ נַפְשִׁ֖י בְּטֶ֥רֶם אָמֽוּת׃', 'וְרִבְקָ֣ה שֹׁמַ֔עַת בְּדַבֵּ֣ר יִצְחָ֔ק אֶל־עֵשָׂ֖ו בְּנ֑וֹ וַיֵּ֤לֶךְ עֵשָׂו֙ הַשָּׂדֶ֔ה לָצ֥וּד צַ֖יִד לְהָבִֽיא׃', 'וְרִבְקָה֙ אָֽמְרָ֔ה אֶל־יַעֲקֹ֥ב בְּנָ֖הּ לֵאמֹ֑ר הִנֵּ֤ה שָׁמַ֙עְתִּי֙ אֶת־אָבִ֔יךָ מְדַבֵּ֛ר אֶל־עֵשָׂ֥ו אָחִ֖יךָ לֵאמֹֽר׃', 'הָבִ֨יאָה לִּ֥י צַ֛יִד וַעֲשֵׂה־לִ֥י מַטְעַמִּ֖ים וְאֹכֵ֑לָה וַאֲבָרֶכְכָ֛ה לִפְנֵ֥י יְהֹוָ֖ה לִפְנֵ֥י מוֹתִֽי׃', 'וְעַתָּ֥ה בְנִ֖י שְׁמַ֣ע בְּקֹלִ֑י לַאֲשֶׁ֥ר אֲנִ֖י מְצַוָּ֥ה אֹתָֽךְ׃', 'לֶךְ־נָא֙ אֶל־הַצֹּ֔אן וְקַֽח־לִ֣י מִשָּׁ֗ם שְׁנֵ֛י גְּדָיֵ֥י עִזִּ֖ים טֹבִ֑ים וְאֶֽעֱשֶׂ֨ה אֹתָ֧ם מַטְעַמִּ֛ים לְאָבִ֖יךָ כַּאֲשֶׁ֥ר אָהֵֽב׃', 'וְהֵבֵאתָ֥ לְאָבִ֖יךָ וְאָכָ֑ל בַּעֲבֻ֛ר אֲשֶׁ֥ר יְבָרֶכְךָ֖ לִפְנֵ֥י מוֹתֽוֹ׃', 'וַיֹּ֣אמֶר יַעֲקֹ֔ב אֶל־רִבְקָ֖ה אִמּ֑וֹ הֵ֣ן עֵשָׂ֤ו אָחִי֙ אִ֣ישׁ שָׂעִ֔ר וְאָנֹכִ֖י אִ֥ישׁ חָלָֽק׃', 'אוּלַ֤י יְמֻשֵּׁ֙נִי֙ אָבִ֔י וְהָיִ֥יתִי בְעֵינָ֖יו כִּמְתַעְתֵּ֑עַ וְהֵבֵאתִ֥י עָלַ֛י קְלָלָ֖ה וְלֹ֥א בְרָכָֽה׃', 'וַתֹּ֤אמֶר לוֹ֙ אִמּ֔וֹ עָלַ֥י קִלְלָתְךָ֖ בְּנִ֑י אַ֛ךְ שְׁמַ֥ע בְּקֹלִ֖י וְלֵ֥ךְ קַֽח־לִֽי׃', 'וַיֵּ֙לֶךְ֙ וַיִּקַּ֔ח וַיָּבֵ֖א לְאִמּ֑וֹ וַתַּ֤עַשׂ אִמּוֹ֙ מַטְעַמִּ֔ים כַּאֲשֶׁ֖ר אָהֵ֥ב אָבִֽיו׃', 'וַתִּקַּ֣ח רִ֠בְקָ֠ה אֶת־בִּגְדֵ֨י עֵשָׂ֜ו בְּנָ֤הּ הַגָּדֹל֙ הַחֲמֻדֹ֔ת אֲשֶׁ֥ר אִתָּ֖הּ בַּבָּ֑יִת וַתַּלְבֵּ֥שׁ אֶֽת־יַעֲקֹ֖ב בְּנָ֥הּ הַקָּטָֽן׃', 'וְאֵ֗ת עֹרֹת֙ גְּדָיֵ֣י הָֽעִזִּ֔ים הִלְבִּ֖ישָׁה עַל־יָדָ֑יו וְעַ֖ל חֶלְקַ֥ת צַוָּארָֽיו׃', 'וַתִּתֵּ֧ן אֶת־הַמַּטְעַמִּ֛ים וְאֶת־הַלֶּ֖חֶם אֲשֶׁ֣ר עָשָׂ֑תָה בְּיַ֖ד יַעֲקֹ֥ב בְּנָֽהּ׃', 'וַיָּבֹ֥א אֶל־אָבִ֖יו וַיֹּ֣אמֶר אָבִ֑י וַיֹּ֣אמֶר הִנֶּ֔נִּי מִ֥י אַתָּ֖ה בְּנִֽי׃', 'וַיֹּ֨אמֶר יַעֲקֹ֜ב אֶל־אָבִ֗יו אָנֹכִי֙ עֵשָׂ֣ו בְּכֹרֶ֔ךָ עָשִׂ֕יתִי כַּאֲשֶׁ֥ר דִּבַּ֖רְתָּ אֵלָ֑י קֽוּם־נָ֣א שְׁבָ֗ה וְאׇכְלָה֙ מִצֵּידִ֔י בַּעֲב֖וּר תְּבָרְכַ֥נִּי נַפְשֶֽׁךָ׃', 'וַיֹּ֤אמֶר יִצְחָק֙ אֶל־בְּנ֔וֹ מַה־זֶּ֛ה מִהַ֥רְתָּ לִמְצֹ֖א בְּנִ֑י וַיֹּ֕אמֶר כִּ֥י הִקְרָ֛ה יְהֹוָ֥ה אֱלֹהֶ֖יךָ לְפָנָֽי׃', 'וַיֹּ֤אמֶר יִצְחָק֙ אֶֽל־יַעֲקֹ֔ב גְּשָׁה־נָּ֥א וַאֲמֻֽשְׁךָ֖ בְּנִ֑י הַֽאַתָּ֥ה זֶ֛ה בְּנִ֥י עֵשָׂ֖ו אִם־לֹֽא׃', 'וַיִּגַּ֧שׁ יַעֲקֹ֛ב אֶל־יִצְחָ֥ק אָבִ֖יו וַיְמֻשֵּׁ֑הוּ וַיֹּ֗אמֶר הַקֹּל֙ ק֣וֹל יַעֲקֹ֔ב וְהַיָּדַ֖יִם יְדֵ֥י עֵשָֽׂו׃', 'וְלֹ֣א הִכִּיר֔וֹ כִּֽי־הָי֣וּ יָדָ֗יו כִּידֵ֛י עֵשָׂ֥ו אָחִ֖יו שְׂעִרֹ֑ת וַֽיְבָרְכֵֽהוּ׃', 'וַיֹּ֕אמֶר אַתָּ֥ה זֶ֖ה בְּנִ֣י עֵשָׂ֑ו וַיֹּ֖אמֶר אָֽנִי׃', 'וַיֹּ֗אמֶר הַגִּ֤שָׁה לִּי֙ וְאֹֽכְלָה֙ מִצֵּ֣יד בְּנִ֔י לְמַ֥עַן תְּבָֽרֶכְךָ֖ נַפְשִׁ֑י וַיַּגֶּשׁ־לוֹ֙ וַיֹּאכַ֔ל וַיָּ֧בֵא ל֦וֹ יַ֖יִן וַיֵּֽשְׁתְּ׃', 'וַיֹּ֥אמֶר אֵלָ֖יו יִצְחָ֣ק אָבִ֑יו גְּשָׁה־נָּ֥א וּשְׁקָה־לִּ֖י בְּנִֽי׃', 'וַיִּגַּשׁ֙ וַיִּשַּׁק־ל֔וֹ וַיָּ֛רַח אֶת־רֵ֥יחַ בְּגָדָ֖יו וַֽיְבָרְכֵ֑הוּ וַיֹּ֗אמֶר רְאֵה֙ רֵ֣יחַ בְּנִ֔י כְּרֵ֣יחַ שָׂדֶ֔ה אֲשֶׁ֥ר בֵּרְכ֖וֹ יְהֹוָֽה׃', 'וְיִֽתֶּן־לְךָ֙ הָאֱלֹהִ֔ים מִטַּל֙ הַשָּׁמַ֔יִם וּמִשְׁמַנֵּ֖י הָאָ֑רֶץ וְרֹ֥ב דָּגָ֖ן וְתִירֹֽשׁ׃', 'יַֽעַבְד֣וּךָ עַמִּ֗ים <span class="mam-kq"><span class="mam-kq-k">(וישתחו)</span> <span class="mam-kq-q">[וְיִֽשְׁתַּחֲו֤וּ]</span></span> לְךָ֙ לְאֻמִּ֔ים הֱוֵ֤ה גְבִיר֙ לְאַחֶ֔יךָ וְיִשְׁתַּחֲו֥וּ לְךָ֖ בְּנֵ֣י אִמֶּ֑ךָ אֹרְרֶ֣יךָ אָר֔וּר וּֽמְבָרְכֶ֖יךָ בָּרֽוּךְ׃', 'וַיְהִ֗י כַּאֲשֶׁ֨ר כִּלָּ֣ה יִצְחָק֮ לְבָרֵ֣ךְ אֶֽת־יַעֲקֹב֒ וַיְהִ֗י אַ֣ךְ יָצֹ֤א יָצָא֙ יַעֲקֹ֔ב מֵאֵ֥ת פְּנֵ֖י יִצְחָ֣ק אָבִ֑יו וְעֵשָׂ֣ו אָחִ֔יו בָּ֖א מִצֵּידֽוֹ׃', 'וַיַּ֤עַשׂ גַּם־הוּא֙ מַטְעַמִּ֔ים וַיָּבֵ֖א לְאָבִ֑יו וַיֹּ֣אמֶר לְאָבִ֗יו יָקֻ֤ם אָבִי֙ וְיֹאכַל֙ מִצֵּ֣יד בְּנ֔וֹ בַּעֲבֻ֖ר תְּבָרְכַ֥נִּי נַפְשֶֽׁךָ׃', 'וַיֹּ֥אמֶר ל֛וֹ יִצְחָ֥ק אָבִ֖יו מִי־אָ֑תָּה וַיֹּ֕אמֶר אֲנִ֛י בִּנְךָ֥ בְכֹֽרְךָ֖ עֵשָֽׂו׃', 'וַיֶּחֱרַ֨ד יִצְחָ֣ק חֲרָדָה֮ גְּדֹלָ֣ה עַד־מְאֹד֒ וַיֹּ֡אמֶר מִֽי־אֵפ֡וֹא ה֣וּא הַצָּֽד־צַ֩יִד֩ וַיָּ֨בֵא לִ֜י וָאֹכַ֥ל מִכֹּ֛ל בְּטֶ֥רֶם תָּב֖וֹא וָאֲבָרְכֵ֑הוּ גַּם־בָּר֖וּךְ יִהְיֶֽה׃', 'כִּשְׁמֹ֤עַ עֵשָׂו֙ אֶת־דִּבְרֵ֣י אָבִ֔יו וַיִּצְעַ֣ק צְעָקָ֔ה גְּדֹלָ֥ה וּמָרָ֖ה עַד־מְאֹ֑ד וַיֹּ֣אמֶר לְאָבִ֔יו בָּרְכֵ֥נִי גַם־אָ֖נִי אָבִֽי׃', 'וַיֹּ֕אמֶר בָּ֥א אָחִ֖יךָ בְּמִרְמָ֑ה וַיִּקַּ֖ח בִּרְכָתֶֽךָ׃', 'וַיֹּ֡אמֶר הֲכִי֩ קָרָ֨א שְׁמ֜וֹ יַעֲקֹ֗ב וַֽיַּעְקְבֵ֙נִי֙ זֶ֣ה פַעֲמַ֔יִם אֶת־בְּכֹרָתִ֣י לָקָ֔ח וְהִנֵּ֥ה עַתָּ֖ה לָקַ֣ח בִּרְכָתִ֑י וַיֹּאמַ֕ר הֲלֹא־אָצַ֥לְתָּ לִּ֖י בְּרָכָֽה׃', 'וַיַּ֨עַן יִצְחָ֜ק וַיֹּ֣אמֶר לְעֵשָׂ֗ו הֵ֣ן גְּבִ֞יר שַׂמְתִּ֥יו לָךְ֙ וְאֶת־כׇּל־אֶחָ֗יו נָתַ֤תִּי לוֹ֙ לַעֲבָדִ֔ים וְדָגָ֥ן וְתִירֹ֖שׁ סְמַכְתִּ֑יו וּלְכָ֣ה אֵפ֔וֹא מָ֥ה אֶֽעֱשֶׂ֖ה בְּנִֽי׃', 'וַיֹּ֨אמֶר עֵשָׂ֜ו אֶל־אָבִ֗יו הַֽבְרָכָ֨ה אַחַ֤ת הִֽוא־לְךָ֙ אָבִ֔י בָּרְכֵ֥נִי גַם־אָ֖נִי אָבִ֑י וַיִּשָּׂ֥א עֵשָׂ֛ו קֹל֖וֹ וַיֵּֽבְךְּ׃', 'וַיַּ֛עַן יִצְחָ֥ק אָבִ֖יו וַיֹּ֣אמֶר אֵלָ֑יו הִנֵּ֞ה מִשְׁמַנֵּ֤י הָאָ֙רֶץ֙ יִהְיֶ֣ה מֽוֹשָׁבֶ֔ךָ וּמִטַּ֥ל הַשָּׁמַ֖יִם מֵעָֽל׃', 'וְעַל־חַרְבְּךָ֣ תִֽחְיֶ֔ה וְאֶת־אָחִ֖יךָ תַּעֲבֹ֑ד וְהָיָה֙ כַּאֲשֶׁ֣ר תָּרִ֔יד וּפָרַקְתָּ֥ עֻלּ֖וֹ מֵעַ֥ל צַוָּארֶֽךָ׃', 'וַיִּשְׂטֹ֤ם עֵשָׂו֙ אֶֽת־יַעֲקֹ֔ב עַ֨ל־הַבְּרָכָ֔ה אֲשֶׁ֥ר בֵּרְכ֖וֹ אָבִ֑יו וַיֹּ֨אמֶר עֵשָׂ֜ו בְּלִבּ֗וֹ יִקְרְבוּ֙ יְמֵי֙ אֵ֣בֶל אָבִ֔י וְאַֽהַרְגָ֖ה אֶת־יַעֲקֹ֥ב אָחִֽי׃', 'וַיֻּגַּ֣ד לְרִבְקָ֔ה אֶת־דִּבְרֵ֥י עֵשָׂ֖ו בְּנָ֣הּ הַגָּדֹ֑ל וַתִּשְׁלַ֞ח וַתִּקְרָ֤א לְיַעֲקֹב֙ בְּנָ֣הּ הַקָּטָ֔ן וַתֹּ֣אמֶר אֵלָ֔יו הִנֵּה֙ עֵשָׂ֣ו אָחִ֔יךָ מִתְנַחֵ֥ם לְךָ֖ לְהׇרְגֶֽךָ׃', 'וְעַתָּ֥ה בְנִ֖י שְׁמַ֣ע בְּקֹלִ֑י וְק֧וּם בְּרַח־לְךָ֛ אֶל־לָבָ֥ן אָחִ֖י חָרָֽנָה׃', 'וְיָשַׁבְתָּ֥ עִמּ֖וֹ יָמִ֣ים אֲחָדִ֑ים עַ֥ד אֲשֶׁר־תָּשׁ֖וּב חֲמַ֥ת אָחִֽיךָ׃', 'עַד־שׁ֨וּב אַף־אָחִ֜יךָ מִמְּךָ֗ וְשָׁכַח֙ אֵ֣ת אֲשֶׁר־עָשִׂ֣יתָ לּ֔וֹ וְשָׁלַחְתִּ֖י וּלְקַחְתִּ֣יךָ מִשָּׁ֑ם לָמָ֥ה אֶשְׁכַּ֛ל גַּם־שְׁנֵיכֶ֖ם י֥וֹם אֶחָֽד׃', 'וַתֹּ֤אמֶר רִבְקָה֙ אֶל־יִצְחָ֔ק <small>קַ֣</small>צְתִּי בְחַיַּ֔י מִפְּנֵ֖י בְּנ֣וֹת חֵ֑ת אִם־לֹקֵ֣חַ יַ֠עֲקֹ֠ב אִשָּׁ֨ה מִבְּנֽוֹת־חֵ֤ת כָּאֵ֙לֶּה֙ מִבְּנ֣וֹת הָאָ֔רֶץ לָ֥מָּה לִּ֖י חַיִּֽים׃']</p>
-      <p>['וַיִּקְרָ֥א יִצְחָ֛ק אֶֽל־יַעֲקֹ֖ב וַיְבָ֣רֶךְ אֹת֑וֹ וַיְצַוֵּ֙הוּ֙ וַיֹּ֣אמֶר ל֔וֹ לֹֽא־תִקַּ֥ח אִשָּׁ֖ה מִבְּנ֥וֹת כְּנָֽעַן׃', 'ק֥וּם לֵךְ֙ פַּדֶּ֣נָֽה אֲרָ֔ם בֵּ֥יתָה בְתוּאֵ֖ל אֲבִ֣י אִמֶּ֑ךָ וְקַח־לְךָ֤ מִשָּׁם֙ אִשָּׁ֔ה מִבְּנ֥וֹת לָבָ֖ן אֲחִ֥י אִמֶּֽךָ׃', 'וְאֵ֤ל שַׁדַּי֙ יְבָרֵ֣ךְ אֹֽתְךָ֔ וְיַפְרְךָ֖ וְיַרְבֶּ֑ךָ וְהָיִ֖יתָ לִקְהַ֥ל עַמִּֽים׃', 'וְיִֽתֶּן־לְךָ֙ אֶת־בִּרְכַּ֣ת אַבְרָהָ֔ם לְךָ֖ וּלְזַרְעֲךָ֣ אִתָּ֑ךְ לְרִשְׁתְּךָ֙ אֶת־אֶ֣רֶץ מְגֻרֶ֔יךָ אֲשֶׁר־נָתַ֥ן אֱלֹהִ֖ים לְאַבְרָהָֽם׃', 'וַיִּשְׁלַ֤ח יִצְחָק֙ אֶֽת־יַעֲקֹ֔ב וַיֵּ֖לֶךְ פַּדֶּ֣נָֽה אֲרָ֑ם אֶל־לָבָ֤ן בֶּן־בְּתוּאֵל֙ הָֽאֲרַמִּ֔י אֲחִ֣י רִבְקָ֔ה אֵ֥ם יַעֲקֹ֖ב וְעֵשָֽׂו׃', 'וַיַּ֣רְא עֵשָׂ֗ו כִּֽי־בֵרַ֣ךְ יִצְחָק֮ אֶֽת־יַעֲקֹב֒ וְשִׁלַּ֤ח אֹתוֹ֙ פַּדֶּ֣נָֽה אֲרָ֔ם לָקַֽחַת־ל֥וֹ מִשָּׁ֖ם אִשָּׁ֑ה בְּבָרְכ֣וֹ אֹת֔וֹ וַיְצַ֤ו עָלָיו֙ לֵאמֹ֔ר לֹֽא־תִקַּ֥ח אִשָּׁ֖ה מִבְּנ֥וֹת כְּנָֽעַן׃', 'וַיִּשְׁמַ֣ע יַעֲקֹ֔ב אֶל־אָבִ֖יו וְאֶל־אִמּ֑וֹ וַיֵּ֖לֶךְ פַּדֶּ֥נָֽה אֲרָֽם׃', 'וַיַּ֣רְא עֵשָׂ֔ו כִּ֥י רָע֖וֹת בְּנ֣וֹת כְּנָ֑עַן בְּעֵינֵ֖י יִצְחָ֥ק אָבִֽיו׃', 'וַיֵּ֥לֶךְ עֵשָׂ֖ו אֶל־יִשְׁמָעֵ֑אל וַיִּקַּ֡ח אֶֽת־מָחֲלַ֣ת&thinsp;<b>׀</b> בַּת־יִשְׁמָעֵ֨אל בֶּן־אַבְרָהָ֜ם אֲח֧וֹת נְבָי֛וֹת עַל־נָשָׁ֖יו ל֥וֹ לְאִשָּֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-25-19">Chap. 25</a><a href="#v-26-1">Chap. 26</a><a href="#v-27-1">Chap. 27</a><a href="#v-28-1">Chap. 28</a></div>
+  <div class="seif" id="v-25-19">
+      <span class="seif-num">25:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֛לֶּה תּוֹלְדֹ֥ת יִצְחָ֖ק בֶּן־אַבְרָהָ֑ם אַבְרָהָ֖ם הוֹלִ֥יד אֶת־יִצְחָֽק׃</p></div><div class="heb-s"><p>ואלה תולדת יצחק בן־אברהם אברהם הוליד את־יצחק׃</p></div></div>
+      <div class="texte-fr"><p>Ceci est l’histoire d’Isaac, fils d’Abraham: Abraham engendra Isaac.</p></div>
+    </div><div class="seif" id="v-25-20">
+      <span class="seif-num">25:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י יִצְחָק֙ בֶּן־אַרְבָּעִ֣ים שָׁנָ֔ה בְּקַחְתּ֣וֹ אֶת־רִבְקָ֗ה בַּת־בְּתוּאֵל֙ הָֽאֲרַמִּ֔י מִפַּדַּ֖ן אֲרָ֑ם אֲח֛וֹת לָבָ֥ן הָאֲרַמִּ֖י ל֥וֹ לְאִשָּֽׁה׃</p></div><div class="heb-s"><p>ויהי יצחק בן־ארבעים שנה בקחתו את־רבקה בת־בתואל הארמי מפדן ארם אחות לבן הארמי לו לאשה׃</p></div></div>
+      <div class="texte-fr"><p>Isaac avait quarante ans lorsqu’il prit pour épouse Rébecca, fille de Bathuel, l’Araméen, du territoire d’Aram, sœur de Laban, l’Araméen.</p></div>
+    </div><div class="seif" id="v-25-21">
+      <span class="seif-num">25:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּעְתַּ֨ר יִצְחָ֤ק לַֽיהֹוָה֙ לְנֹ֣כַח אִשְׁתּ֔וֹ כִּ֥י עֲקָרָ֖ה הִ֑וא וַיֵּעָ֤תֶר לוֹ֙ יְהֹוָ֔ה וַתַּ֖הַר רִבְקָ֥ה אִשְׁתּֽוֹ׃</p></div><div class="heb-s"><p>ויעתר יצחק ליהוה לנכח אשתו כי עקרה הוא ויעתר לו יהוה ותהר רבקה אשתו׃</p></div></div>
+      <div class="texte-fr"><p>Isaac implora l’Éternel au sujet de sa femme parce qu’elle était stérile; l’Éternel accueillit sa prière et Rébecca, sa femme, devint enceinte.</p></div>
+    </div><div class="seif" id="v-25-22">
+      <span class="seif-num">25:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתְרֹֽצְצ֤וּ הַבָּנִים֙ בְּקִרְבָּ֔הּ וַתֹּ֣אמֶר אִם־כֵּ֔ן לָ֥מָּה זֶּ֖ה אָנֹ֑כִי וַתֵּ֖לֶךְ לִדְרֹ֥שׁ אֶת־יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויתרצצו הבנים בקרבה ותאמר אם־כן למה זה אנכי ותלך לדרש את־יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Comme les enfants s’entre poussaient dans son sein, elle dit"Si cela est ainsi, à quoi suis-je destinée!" Et elle alla consulter le Seigneur.</p></div>
+    </div><div class="seif" id="v-25-23">
+      <span class="seif-num">25:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יְהֹוָ֜ה לָ֗הּ שְׁנֵ֤י <span class="mam-kq"><span class="mam-kq-k">(גיים)</span> <span class="mam-kq-q">[גוֹיִם֙]</span></span> בְּבִטְנֵ֔ךְ וּשְׁנֵ֣י לְאֻמִּ֔ים מִמֵּעַ֖יִךְ יִפָּרֵ֑דוּ וּלְאֹם֙ מִלְאֹ֣ם יֶֽאֱמָ֔ץ וְרַ֖ב יַעֲבֹ֥ד צָעִֽיר׃</p></div><div class="heb-s"><p>ויאמר יהוה לה שני <span class="mam-kq"><span class="mam-kq-k">(גיים)</span> <span class="mam-kq-q">[גוים]</span></span> בבטנך ושני לאמים ממעיך יפרדו ולאם מלאם יאמץ ורב יעבד צעיר׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur lui dit: "Deux nations sont dans ton sein et deux peuples sortiront de tes entrailles; un peuple sera plus puissant que l’autre et l’aîné obéira au plus jeune."</p></div>
+    </div><div class="seif" id="v-25-24">
+      <span class="seif-num">25:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּמְלְא֥וּ יָמֶ֖יהָ לָלֶ֑דֶת וְהִנֵּ֥ה תוֹמִ֖ם בְּבִטְנָֽהּ׃</p></div><div class="heb-s"><p>וימלאו ימיה ללדת והנה תומם בבטנה׃</p></div></div>
+      <div class="texte-fr"><p>L’époque de sa délivrance arrivée, il se trouva qu’elle portait des jumeaux.</p></div>
+    </div><div class="seif" id="v-25-25">
+      <span class="seif-num">25:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּצֵ֤א הָרִאשׁוֹן֙ אַדְמוֹנִ֔י כֻּלּ֖וֹ כְּאַדֶּ֣רֶת שֵׂעָ֑ר וַיִּקְרְא֥וּ שְׁמ֖וֹ עֵשָֽׂו׃</p></div><div class="heb-s"><p>ויצא הראשון אדמוני כלו כאדרת שער ויקראו שמו עשו׃</p></div></div>
+      <div class="texte-fr"><p>Le premier qui sortit était roux et tout son corps pareil à une pelisse; on lui donna le nom d’Ésaü.</p></div>
+    </div><div class="seif" id="v-25-26">
+      <span class="seif-num">25:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַֽחֲרֵי־כֵ֞ן יָצָ֣א אָחִ֗יו וְיָד֤וֹ אֹחֶ֙זֶת֙ בַּעֲקֵ֣ב עֵשָׂ֔ו וַיִּקְרָ֥א שְׁמ֖וֹ יַעֲקֹ֑ב וְיִצְחָ֛ק בֶּן־שִׁשִּׁ֥ים שָׁנָ֖ה בְּלֶ֥דֶת אֹתָֽם׃</p></div><div class="heb-s"><p>ואחרי־כן יצא אחיו וידו אחזת בעקב עשו ויקרא שמו יעקב ויצחק בן־ששים שנה בלדת אתם׃</p></div></div>
+      <div class="texte-fr"><p>Ensuite naquit son frère tenant de la main le talon d’Ésaü et on le nomma Jacob. Isaac avait soixante ans lors de leur naissance.</p></div>
+    </div><div class="seif" id="v-25-27">
+      <span class="seif-num">25:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּגְדְּלוּ֙ הַנְּעָרִ֔ים וַיְהִ֣י עֵשָׂ֗ו אִ֛ישׁ יֹדֵ֥עַ צַ֖יִד אִ֣ישׁ שָׂדֶ֑ה וְיַעֲקֹב֙ אִ֣ישׁ תָּ֔ם יֹשֵׁ֖ב אֹהָלִֽים׃</p></div><div class="heb-s"><p>ויגדלו הנערים ויהי עשו איש ידע ציד איש שדה ויעקב איש תם ישב אהלים׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants ayant grandi, Ésaü devint un habile chasseur, un homme des champs, tandis que Jacob, homme inoffensif, vécut sous la tente.</p></div>
+    </div><div class="seif" id="v-25-28">
+      <span class="seif-num">25:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּאֱהַ֥ב יִצְחָ֛ק אֶת־עֵשָׂ֖ו כִּי־צַ֣יִד בְּפִ֑יו וְרִבְקָ֖ה אֹהֶ֥בֶת אֶֽת־יַעֲקֹֽב׃</p></div><div class="heb-s"><p>ויאהב יצחק את־עשו כי־ציד בפיו ורבקה אהבת את־יעקב׃</p></div></div>
+      <div class="texte-fr"><p>lsaac préférait Ésaü parce qu’il mettait du gibier dans sa bouche; mais Rébecca préférait Jacob.</p></div>
+    </div><div class="seif" id="v-25-29">
+      <span class="seif-num">25:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֥זֶד יַעֲקֹ֖ב נָזִ֑יד וַיָּבֹ֥א עֵשָׂ֛ו מִן־הַשָּׂדֶ֖ה וְה֥וּא עָיֵֽף׃</p></div><div class="heb-s"><p>ויזד יעקב נזיד ויבא עשו מן־השדה והוא עיף׃</p></div></div>
+      <div class="texte-fr"><p>Un jour Jacob faisait cuire un potage quand Ésaü revint des champs, fatigué.</p></div>
+    </div><div class="seif" id="v-25-30">
+      <span class="seif-num">25:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר עֵשָׂ֜ו אֶֽל־יַעֲקֹ֗ב הַלְעִיטֵ֤נִי נָא֙ מִן־הָאָדֹ֤ם הָאָדֹם֙ הַזֶּ֔ה כִּ֥י עָיֵ֖ף אָנֹ֑כִי עַל־כֵּ֥ן קָרָֽא־שְׁמ֖וֹ אֱדֽוֹם׃</p></div><div class="heb-s"><p>ויאמר עשו אל־יעקב הלעיטני נא מן־האדם האדם הזה כי עיף אנכי על־כן קרא־שמו אדום׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü dit à Jacob: "Laisse-moi avaler, je te prie, de ce rouge, de ce mets rouge, car je suis fatigué." C’est à ce propos qu’on le nomma Édom.</p></div>
+    </div><div class="seif" id="v-25-31">
+      <span class="seif-num">25:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֖אמֶר יַעֲקֹ֑ב מִכְרָ֥ה כַיּ֛וֹם אֶת־בְּכֹרָתְךָ֖ לִֽי׃</p></div><div class="heb-s"><p>ויאמר יעקב מכרה כיום את־בכרתך לי׃</p></div></div>
+      <div class="texte-fr"><p>Jacob dit: "Vends-moi d’abord ton droit d’aînesse."</p></div>
+    </div><div class="seif" id="v-25-32">
+      <span class="seif-num">25:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר עֵשָׂ֔ו הִנֵּ֛ה אָנֹכִ֥י הוֹלֵ֖ךְ לָמ֑וּת וְלָמָּה־זֶּ֥ה לִ֖י בְּכֹרָֽה׃</p></div><div class="heb-s"><p>ויאמר עשו הנה אנכי הולך למות ולמה־זה לי בכרה׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü répondit: "Certes! Je marche à la mort; à quoi me sert donc le droit d’aînesse?"</p></div>
+    </div><div class="seif" id="v-25-33">
+      <span class="seif-num">25:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר יַעֲקֹ֗ב הִשָּׁ֤בְעָה לִּי֙ כַּיּ֔וֹם וַיִּשָּׁבַ֖ע ל֑וֹ וַיִּמְכֹּ֥ר אֶת־בְּכֹרָת֖וֹ לְיַעֲקֹֽב׃</p></div><div class="heb-s"><p>ויאמר יעקב השבעה לי כיום וישבע לו וימכר את־בכרתו ליעקב׃</p></div></div>
+      <div class="texte-fr"><p>Jacob dit: "Jure le moi dès à présent." Et il lui fit serment et il vendit son droit d’aînesse à Jacob.</p></div>
+    </div><div class="seif" id="v-25-34">
+      <span class="seif-num">25:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיַעֲקֹ֞ב נָתַ֣ן לְעֵשָׂ֗ו לֶ֚חֶם וּנְזִ֣יד עֲדָשִׁ֔ים וַיֹּ֣אכַל וַיֵּ֔שְׁתְּ וַיָּ֖קׇם וַיֵּלַ֑ךְ וַיִּ֥בֶז עֵשָׂ֖ו אֶת־הַבְּכֹרָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויעקב נתן לעשו לחם ונזיד עדשים ויאכל וישת ויקם וילך ויבז עשו את־הבכרה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Jacob servit à Ésaü du pain et un plat de lentilles; il mangea et but, se leva et ressortit. C’est ainsi qu’Ésaü dédaigna le droit d’aînesse.</p></div>
+    </div><div class="seif" id="v-26-1">
+      <span class="seif-num">26:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י רָעָב֙ בָּאָ֔רֶץ מִלְּבַד֙ הָרָעָ֣ב הָרִאשׁ֔וֹן אֲשֶׁ֥ר הָיָ֖ה בִּימֵ֣י אַבְרָהָ֑ם וַיֵּ֧לֶךְ יִצְחָ֛ק אֶל־אֲבִימֶ֥לֶךְ מֶֽלֶךְ־פְּלִשְׁתִּ֖ים גְּרָֽרָה׃</p></div><div class="heb-s"><p>ויהי רעב בארץ מלבד הרעב הראשון אשר היה בימי אברהם וילך יצחק אל־אבימלך מלך־פלשתים גררה׃</p></div></div>
+      <div class="texte-fr"><p>Il y eut une famine dans le pays, outre la première famine qui avait sévi du temps d’Abraham. Isaac alla chez Abimélec, roi des Philistins, à Gherar.</p></div>
+    </div><div class="seif" id="v-26-2">
+      <span class="seif-num">26:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּרָ֤א אֵלָיו֙ יְהֹוָ֔ה וַיֹּ֖אמֶר אַל־תֵּרֵ֣ד מִצְרָ֑יְמָה שְׁכֹ֣ן בָּאָ֔רֶץ אֲשֶׁ֖ר אֹמַ֥ר אֵלֶֽיךָ׃</p></div><div class="heb-s"><p>וירא אליו יהוה ויאמר אל־תרד מצרימה שכן בארץ אשר אמר אליך׃</p></div></div>
+      <div class="texte-fr"><p>Le Seigneur lui apparut et dit: "Ne descends pas en Egypte; fixe ta demeure dans le pays que je te désignerai.</p></div>
+    </div><div class="seif" id="v-26-3">
+      <span class="seif-num">26:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>גּ֚וּר בָּאָ֣רֶץ הַזֹּ֔את וְאֶֽהְיֶ֥ה עִמְּךָ֖ וַאֲבָרְכֶ֑ךָּ כִּֽי־לְךָ֣ וּֽלְזַרְעֲךָ֗ אֶתֵּן֙ אֶת־כׇּל־הָֽאֲרָצֹ֣ת הָאֵ֔ל וַהֲקִֽמֹתִי֙ אֶת־הַשְּׁבֻעָ֔ה אֲשֶׁ֥ר נִשְׁבַּ֖עְתִּי לְאַבְרָהָ֥ם אָבִֽיךָ׃</p></div><div class="heb-s"><p>גור בארץ הזאת ואהיה עמך ואברכך כי־לך ולזרעך אתן את־כל־הארצת האל והקמתי את־השבעה אשר נשבעתי לאברהם אביך׃</p></div></div>
+      <div class="texte-fr"><p>Arrête-toi dans ce pays ci, je serai avec toi et je te bénirai; car à toi et à ta postérité je donnerai toutes ces provinces, accomplissant ainsi le serment que j’ai fait à ton père Abraham.</p></div>
+    </div><div class="seif" id="v-26-4">
+      <span class="seif-num">26:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִרְבֵּיתִ֤י אֶֽת־זַרְעֲךָ֙ כְּכוֹכְבֵ֣י הַשָּׁמַ֔יִם וְנָתַתִּ֣י לְזַרְעֲךָ֔ אֵ֥ת כׇּל־הָאֲרָצֹ֖ת הָאֵ֑ל וְהִתְבָּרְכ֣וּ בְזַרְעֲךָ֔ כֹּ֖ל גּוֹיֵ֥י הָאָֽרֶץ׃</p></div><div class="heb-s"><p>והרביתי את־זרעך ככוכבי השמים ונתתי לזרעך את כל־הארצת האל והתברכו בזרעך כל גויי הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Je multiplierai ta race comme les astres du ciel; je lui donnerai toutes ces provinces et en ta race s’estimeront bénies toutes les nations du monde:</p></div>
+    </div><div class="seif" id="v-26-5">
+      <span class="seif-num">26:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֵ֕קֶב אֲשֶׁר־שָׁמַ֥ע אַבְרָהָ֖ם בְּקֹלִ֑י וַיִּשְׁמֹר֙ מִשְׁמַרְתִּ֔י מִצְוֺתַ֖י חֻקּוֹתַ֥י וְתוֹרֹתָֽי׃</p></div><div class="heb-s"><p>עקב אשר־שמע אברהם בקלי וישמר משמרתי מצותי חקותי ותורתי׃</p></div></div>
+      <div class="texte-fr"><p>En récompense de ce qu’Abraham a écouté ma voix et suivi mon observance, exécutant mes préceptes, mes lois et mes doctrines."</p></div>
+    </div><div class="seif" id="v-26-6">
+      <span class="seif-num">26:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥שֶׁב יִצְחָ֖ק בִּגְרָֽר׃</p></div><div class="heb-s"><p>וישב יצחק בגרר׃</p></div></div>
+      <div class="texte-fr"><p>Et Isaac demeura à Gherar.</p></div>
+    </div><div class="seif" id="v-26-7">
+      <span class="seif-num">26:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּשְׁאֲל֞וּ אַנְשֵׁ֤י הַמָּקוֹם֙ לְאִשְׁתּ֔וֹ וַיֹּ֖אמֶר אֲחֹ֣תִי הִ֑וא כִּ֤י יָרֵא֙ לֵאמֹ֣ר אִשְׁתִּ֔י פֶּן־יַֽהַרְגֻ֜נִי אַנְשֵׁ֤י הַמָּקוֹם֙ עַל־רִבְקָ֔ה כִּֽי־טוֹבַ֥ת מַרְאֶ֖ה הִֽוא׃</p></div><div class="heb-s"><p>וישאלו אנשי המקום לאשתו ויאמר אחתי הוא כי ירא לאמר אשתי פן־יהרגני אנשי המקום על־רבקה כי־טובת מראה הוא׃</p></div></div>
+      <div class="texte-fr"><p>Les habitants du lieu s’enquérant au sujet de sa femme, il dit: "Elle est ma sœur" car il n’osait dire ma femme: "les gens du lieu pourraient me tuer à cause de Rébecca, car elle est d’une grande beauté."</p></div>
+    </div><div class="seif" id="v-26-8">
+      <span class="seif-num">26:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י כִּ֣י אָֽרְכוּ־ל֥וֹ שָׁם֙ הַיָּמִ֔ים וַיַּשְׁקֵ֗ף אֲבִימֶ֙לֶךְ֙ מֶ֣לֶךְ פְּלִשְׁתִּ֔ים בְּעַ֖ד הַֽחַלּ֑וֹן וַיַּ֗רְא וְהִנֵּ֤ה יִצְחָק֙ מְצַחֵ֔ק אֵ֖ת רִבְקָ֥ה אִשְׁתּֽוֹ׃</p></div><div class="heb-s"><p>ויהי כי ארכו־לו שם הימים וישקף אבימלך מלך פלשתים בעד החלון וירא והנה יצחק מצחק את רבקה אשתו׃</p></div></div>
+      <div class="texte-fr"><p>Or, il y demeurait depuis longtemps lorsque Abimélec, roi des Philistins, regardant par la fenêtre, vit Isaac caresser Rébecca sa femme.</p></div>
+    </div><div class="seif" id="v-26-9">
+      <span class="seif-num">26:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֨א אֲבִימֶ֜לֶךְ לְיִצְחָ֗ק וַיֹּ֙אמֶר֙ אַ֣ךְ הִנֵּ֤ה אִשְׁתְּךָ֙ הִ֔וא וְאֵ֥יךְ אָמַ֖רְתָּ אֲחֹ֣תִי הִ֑וא וַיֹּ֤אמֶר אֵלָיו֙ יִצְחָ֔ק כִּ֣י אָמַ֔רְתִּי פֶּן־אָמ֖וּת עָלֶֽיהָ׃</p></div><div class="heb-s"><p>ויקרא אבימלך ליצחק ויאמר אך הנה אשתך הוא ואיך אמרת אחתי הוא ויאמר אליו יצחק כי אמרתי פן־אמות עליה׃</p></div></div>
+      <div class="texte-fr"><p>Abimélec manda Isaac et dit: "Assurément, c’est ta femme; comment donc as tu pu dire: Elle est ma sœur!" Isaac lui répondit: "Parce que je me disais: Je pourrais périr à cause d’elle."</p></div>
+    </div><div class="seif" id="v-26-10">
+      <span class="seif-num">26:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֲבִימֶ֔לֶךְ מַה־זֹּ֖את עָשִׂ֣יתָ לָּ֑נוּ כִּ֠מְעַ֠ט שָׁכַ֞ב אַחַ֤ד הָעָם֙ אֶת־אִשְׁתֶּ֔ךָ וְהֵבֵאתָ֥ עָלֵ֖ינוּ אָשָֽׁם׃</p></div><div class="heb-s"><p>ויאמר אבימלך מה־זאת עשית לנו כמעט שכב אחד העם את־אשתך והבאת עלינו אשם׃</p></div></div>
+      <div class="texte-fr"><p>Abimélec dit: "Que nous as tu fait là! Peu s’en est fallu que l’un de nous n’eut commencé commerce avec ta femme et tu nous aurais rendu coupables."</p></div>
+    </div><div class="seif" id="v-26-11">
+      <span class="seif-num">26:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֣ו אֲבִימֶ֔לֶךְ אֶת־כׇּל־הָעָ֖ם לֵאמֹ֑ר הַנֹּגֵ֜עַ בָּאִ֥ישׁ הַזֶּ֛ה וּבְאִשְׁתּ֖וֹ מ֥וֹת יוּמָֽת׃</p></div><div class="heb-s"><p>ויצו אבימלך את־כל־העם לאמר הנגע באיש הזה ובאשתו מות יומת׃</p></div></div>
+      <div class="texte-fr"><p>Abimélec fit une injonction à tout le peuple, en disant:"Quiconque touchera à cet homme ou à sa femme sera puni de mort."</p></div>
+    </div><div class="seif" id="v-26-12">
+      <span class="seif-num">26:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּזְרַ֤ע יִצְחָק֙ בָּאָ֣רֶץ הַהִ֔וא וַיִּמְצָ֛א בַּשָּׁנָ֥ה הַהִ֖וא מֵאָ֣ה שְׁעָרִ֑ים וַֽיְבָרְכֵ֖הוּ יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויזרע יצחק בארץ ההוא וימצא בשנה ההוא מאה שערים ויברכהו יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Isaac sema dans ce pays-là et recueillit, cette même année, au centuple: tant le Seigneur le bénissait.</p></div>
+    </div><div class="seif" id="v-26-13">
+      <span class="seif-num">26:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּגְדַּ֖ל הָאִ֑ישׁ וַיֵּ֤לֶךְ הָלוֹךְ֙ וְגָדֵ֔ל עַ֥ד כִּֽי־גָדַ֖ל מְאֹֽד׃</p></div><div class="heb-s"><p>ויגדל האיש וילך הלוך וגדל עד כי־גדל מאד׃</p></div></div>
+      <div class="texte-fr"><p>Cet homme devint grand; puis sa grandeur alla croissant et enfin il fut très grand.</p></div>
+    </div><div class="seif" id="v-26-14">
+      <span class="seif-num">26:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי־ל֤וֹ מִקְנֵה־צֹאן֙ וּמִקְנֵ֣ה בָקָ֔ר וַעֲבֻדָּ֖ה רַבָּ֑ה וַיְקַנְא֥וּ אֹת֖וֹ פְּלִשְׁתִּֽים׃</p></div><div class="heb-s"><p>ויהי־לו מקנה־צאן ומקנה בקר ועבדה רבה ויקנאו אתו פלשתים׃</p></div></div>
+      <div class="texte-fr"><p>Il avait des possessions en menu bétail, des possessions en gros bétail, des cultures considérables et les Philistins le jalousèrent.</p></div>
+    </div><div class="seif" id="v-26-15">
+      <span class="seif-num">26:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַבְּאֵרֹ֗ת אֲשֶׁ֤ר חָֽפְרוּ֙ עַבְדֵ֣י אָבִ֔יו בִּימֵ֖י אַבְרָהָ֣ם אָבִ֑יו סִתְּמ֣וּם פְּלִשְׁתִּ֔ים וַיְמַלְא֖וּם עָפָֽר׃</p></div><div class="heb-s"><p>וכל־הבארת אשר חפרו עבדי אביו בימי אברהם אביו סתמום פלשתים וימלאום עפר׃</p></div></div>
+      <div class="texte-fr"><p>Tous les puits qu’avaient creusés les serviteurs de son père, du temps de son père Abraham, les Philistins les comblèrent en les remplissant de terre.</p></div>
+    </div><div class="seif" id="v-26-16">
+      <span class="seif-num">26:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר אֲבִימֶ֖לֶךְ אֶל־יִצְחָ֑ק לֵ֚ךְ מֵֽעִמָּ֔נוּ כִּֽי־עָצַ֥מְתָּ מִמֶּ֖נּוּ מְאֹֽד׃</p></div><div class="heb-s"><p>ויאמר אבימלך אל־יצחק לך מעמנו כי־עצמת ממנו מאד׃</p></div></div>
+      <div class="texte-fr"><p>Abimélec dit à Isaac: "Cesse d’habiter avec nous car tu es trop puissant pour nous."</p></div>
+    </div><div class="seif" id="v-26-17">
+      <span class="seif-num">26:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥לֶךְ מִשָּׁ֖ם יִצְחָ֑ק וַיִּ֥חַן בְּנַֽחַל־גְּרָ֖ר וַיֵּ֥שֶׁב שָֽׁם׃</p></div><div class="heb-s"><p>וילך משם יצחק ויחן בנחל־גרר וישב שם׃</p></div></div>
+      <div class="texte-fr"><p>Isaac se retira de ce lieu, fit halte dans la vallée de Gherar et s’y établit.</p></div>
+    </div><div class="seif" id="v-26-18">
+      <span class="seif-num">26:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֨שׇׁב יִצְחָ֜ק וַיַּחְפֹּ֣ר&thinsp;<b>׀</b> אֶת־בְּאֵרֹ֣ת הַמַּ֗יִם אֲשֶׁ֤ר חָֽפְרוּ֙ בִּימֵי֙ אַבְרָהָ֣ם אָבִ֔יו וַיְסַתְּמ֣וּם פְּלִשְׁתִּ֔ים אַחֲרֵ֖י מ֣וֹת אַבְרָהָ֑ם וַיִּקְרָ֤א לָהֶן֙ שֵׁמ֔וֹת כַּשֵּׁמֹ֕ת אֲשֶׁר־קָרָ֥א לָהֶ֖ן אָבִֽיו׃</p></div><div class="heb-s"><p>וישב יצחק ויחפר&thinsp;<b>׀</b> את־בארת המים אשר חפרו בימי אברהם אביו ויסתמום פלשתים אחרי מות אברהם ויקרא להן שמות כשמת אשר־קרא להן אביו׃</p></div></div>
+      <div class="texte-fr"><p>Isaac se remit à creuser les puits qu’on avait creusés du temps d’Abraham son père et que les Philistins avaient comblés après la mort d’Abraham. Il leur imposa les mêmes noms que leur avait imposés son père.</p></div>
+    </div><div class="seif" id="v-26-19">
+      <span class="seif-num">26:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּחְפְּר֥וּ עַבְדֵֽי־יִצְחָ֖ק בַּנָּ֑חַל וַיִּ֨מְצְאוּ־שָׁ֔ם בְּאֵ֖ר מַ֥יִם חַיִּֽים׃</p></div><div class="heb-s"><p>ויחפרו עבדי־יצחק בנחל וימצאו־שם באר מים חיים׃</p></div></div>
+      <div class="texte-fr"><p>Les serviteurs d’Isaac, en creusant dans la vallée, y découvrirent une source d’eau vive.</p></div>
+    </div><div class="seif" id="v-26-20">
+      <span class="seif-num">26:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּרִ֜יבוּ רֹעֵ֣י גְרָ֗ר עִם־רֹעֵ֥י יִצְחָ֛ק לֵאמֹ֖ר לָ֣נוּ הַמָּ֑יִם וַיִּקְרָ֤א שֵֽׁם־הַבְּאֵר֙ עֵ֔שֶׂק כִּ֥י הִֽתְעַשְּׂק֖וּ עִמּֽוֹ׃</p></div><div class="heb-s"><p>ויריבו רעי גרר עם־רעי יצחק לאמר לנו המים ויקרא שם־הבאר עשק כי התעשקו עמו׃</p></div></div>
+      <div class="texte-fr"><p>Les pâtres de Gherar cherchèrent querelle à ceux d’Isaac, en disant: "L’eau est à nous!" Il appela ce puits Esek parce qu’on le lui avait contesté.</p></div>
+    </div><div class="seif" id="v-26-21">
+      <span class="seif-num">26:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּחְפְּרוּ֙ בְּאֵ֣ר אַחֶ֔רֶת וַיָּרִ֖יבוּ גַּם־עָלֶ֑יהָ וַיִּקְרָ֥א שְׁמָ֖הּ שִׂטְנָֽה׃</p></div><div class="heb-s"><p>ויחפרו באר אחרת ויריבו גם־עליה ויקרא שמה שטנה׃</p></div></div>
+      <div class="texte-fr"><p>lls creusèrent un nouveau puits sur lequel on se querella encore. Il lui donna le nom de Sitna.</p></div>
+    </div><div class="seif" id="v-26-22">
+      <span class="seif-num">26:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעְתֵּ֣ק מִשָּׁ֗ם וַיַּחְפֹּר֙ בְּאֵ֣ר אַחֶ֔רֶת וְלֹ֥א רָב֖וּ עָלֶ֑יהָ וַיִּקְרָ֤א שְׁמָהּ֙ רְחֹב֔וֹת וַיֹּ֗אמֶר כִּֽי־עַתָּ֞ה הִרְחִ֧יב יְהֹוָ֛ה לָ֖נוּ וּפָרִ֥ינוּ בָאָֽרֶץ׃</p></div><div class="heb-s"><p>ויעתק משם ויחפר באר אחרת ולא רבו עליה ויקרא שמה רחבות ויאמר כי־עתה הרחיב יהוה לנו ופרינו בארץ׃</p></div></div>
+      <div class="texte-fr"><p>Il délogea de là et creusa un autre puits, qu’on ne lui disputa point; il le nomma Rehoboth, disant: "Pour le coup, le Seigneur nous a élargis et nous prospérerons dans la contrée."</p></div>
+    </div><div class="seif" id="v-26-23">
+      <span class="seif-num">26:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥עַל מִשָּׁ֖ם בְּאֵ֥ר שָֽׁבַע׃</p></div><div class="heb-s"><p>ויעל משם באר שבע׃</p></div></div>
+      <div class="texte-fr"><p>Il monta de là à Beer Shava.</p></div>
+    </div><div class="seif" id="v-26-24">
+      <span class="seif-num">26:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּרָ֨א אֵלָ֤יו יְהֹוָה֙ בַּלַּ֣יְלָה הַה֔וּא וַיֹּ֕אמֶר אָנֹכִ֕י אֱלֹהֵ֖י אַבְרָהָ֣ם אָבִ֑יךָ אַל־תִּירָא֙ כִּֽי־אִתְּךָ֣ אָנֹ֔כִי וּבֵֽרַכְתִּ֙יךָ֙ וְהִרְבֵּיתִ֣י אֶֽת־זַרְעֲךָ֔ בַּעֲב֖וּר אַבְרָהָ֥ם עַבְדִּֽי׃</p></div><div class="heb-s"><p>וירא אליו יהוה בלילה ההוא ויאמר אנכי אלהי אברהם אביך אל־תירא כי־אתך אנכי וברכתיך והרביתי את־זרעך בעבור אברהם עבדי׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel se révéla à lui cette même nuit, en disant: "Je suis le Dieu d’Abraham ton père; sois sans crainte, car je suis avec toi, je te bénirai et je multiplierai ta race, pour l’amour d’Abraham mon serviteur."</p></div>
+    </div><div class="seif" id="v-26-25">
+      <span class="seif-num">26:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּ֧בֶן שָׁ֣ם מִזְבֵּ֗חַ וַיִּקְרָא֙ בְּשֵׁ֣ם יְהֹוָ֔ה וַיֶּט־שָׁ֖ם אׇהֳל֑וֹ וַיִּכְרוּ־שָׁ֥ם עַבְדֵי־יִצְחָ֖ק בְּאֵֽר׃</p></div><div class="heb-s"><p>ויבן שם מזבח ויקרא בשם יהוה ויט־שם אהלו ויכרו־שם עבדי־יצחק באר׃</p></div></div>
+      <div class="texte-fr"><p>Il érigea en ce lieu un autel et proclama le nom de l’Éternel. Il y dressa sa tente et ses serviteurs y creusèrent un puits.</p></div>
+    </div><div class="seif" id="v-26-26">
+      <span class="seif-num">26:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲבִימֶ֕לֶךְ הָלַ֥ךְ אֵלָ֖יו מִגְּרָ֑ר וַאֲחֻזַּת֙ מֵֽרֵעֵ֔הוּ וּפִיכֹ֖ל שַׂר־צְבָאֽוֹ׃</p></div><div class="heb-s"><p>ואבימלך הלך אליו מגרר ואחזת מרעהו ופיכל שר־צבאו׃</p></div></div>
+      <div class="texte-fr"><p>Or, Abimélec alla chez lui, de Gherar, avec Ahouzzath son confident et Pikol son général d’armée.</p></div>
+    </div><div class="seif" id="v-26-27">
+      <span class="seif-num">26:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֲלֵהֶם֙ יִצְחָ֔ק מַדּ֖וּעַ בָּאתֶ֣ם אֵלָ֑י וְאַתֶּם֙ שְׂנֵאתֶ֣ם אֹתִ֔י וַתְּשַׁלְּח֖וּנִי מֵאִתְּכֶֽם׃</p></div><div class="heb-s"><p>ויאמר אלהם יצחק מדוע באתם אלי ואתם שנאתם אתי ותשלחוני מאתכם׃</p></div></div>
+      <div class="texte-fr"><p>Isaac leur dit: "Pourquoi êtes vous venus à moi, alors que vous me haïssez et que vous m’avez éconduit de chez vous?"</p></div>
+    </div><div class="seif" id="v-26-28">
+      <span class="seif-num">26:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֗וּ רָא֣וֹ רָאִ֘ינוּ֮ כִּֽי־הָיָ֣ה יְהֹוָ֣ה&thinsp;<small>׀</small>&thinsp;עִמָּךְ֒ וַנֹּ֗אמֶר תְּהִ֨י נָ֥א אָלָ֛ה בֵּינוֹתֵ֖ינוּ בֵּינֵ֣ינוּ וּבֵינֶ֑ךָ וְנִכְרְתָ֥ה בְרִ֖ית עִמָּֽךְ׃</p></div><div class="heb-s"><p>ויאמרו ראו ראינו כי־היה יהוה&thinsp;<small>׀</small>&thinsp;עמך ונאמר תהי נא אלה בינותינו בינינו ובינך ונכרתה ברית עמך׃</p></div></div>
+      <div class="texte-fr"><p>Ils répondirent: "Nous avons bien vu que le Seigneur était avec toi et nous avons dit: ‘Oh! qu’il y ait un engagement réciproque entre nous et toi!’ Nous voudrions conclure ce pacte avec toi,</p></div>
+    </div><div class="seif" id="v-26-29">
+      <span class="seif-num">26:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־תַּעֲשֵׂ֨ה עִמָּ֜נוּ רָעָ֗ה כַּאֲשֶׁר֙ לֹ֣א נְגַֽעֲנ֔וּךָ וְכַאֲשֶׁ֨ר עָשִׂ֤ינוּ עִמְּךָ֙ רַק־ט֔וֹב וַנְּשַׁלֵּֽחֲךָ֖ בְּשָׁל֑וֹם אַתָּ֥ה עַתָּ֖ה בְּר֥וּךְ יְהֹוָֽה׃</p></div><div class="heb-s"><p>אם־תעשה עמנו רעה כאשר לא נגענוך וכאשר עשינו עמך רק־טוב ונשלחך בשלום אתה עתה ברוך יהוה׃</p></div></div>
+      <div class="texte-fr"><p>que tu t’abstiendras de nous nuire, de même que nous ne t’avons pas touché, que nous en avons toujours bien usé avec toi et que nous t’avons renvoyé en paix. Maintenant, sois béni de Dieu!"</p></div>
+    </div><div class="seif" id="v-26-30">
+      <span class="seif-num">26:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤עַשׂ לָהֶם֙ מִשְׁתֶּ֔ה וַיֹּאכְל֖וּ וַיִּשְׁתּֽוּ׃</p></div><div class="heb-s"><p>ויעש להם משתה ויאכלו וישתו׃</p></div></div>
+      <div class="texte-fr"><p>Il leur prépara un festin, ils mangèrent et burent.</p></div>
+    </div><div class="seif" id="v-26-31">
+      <span class="seif-num">26:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּשְׁכִּ֣ימוּ בַבֹּ֔קֶר וַיִּשָּׁבְע֖וּ אִ֣ישׁ לְאָחִ֑יו וַיְשַׁלְּחֵ֣ם יִצְחָ֔ק וַיֵּלְכ֥וּ מֵאִתּ֖וֹ בְּשָׁלֽוֹם׃</p></div><div class="heb-s"><p>וישכימו בבקר וישבעו איש לאחיו וישלחם יצחק וילכו מאתו בשלום׃</p></div></div>
+      <div class="texte-fr"><p>Le lendemain de bon matin ils se prêtèrent serment l’un à l’autre; Isaac les reconduisit et ils le quittèrent amicalement.</p></div>
+    </div><div class="seif" id="v-26-32">
+      <span class="seif-num">26:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> בַּיּ֣וֹם הַה֗וּא וַיָּבֹ֙אוּ֙ עַבְדֵ֣י יִצְחָ֔ק וַיַּגִּ֣דוּ ל֔וֹ עַל־אֹד֥וֹת הַבְּאֵ֖ר אֲשֶׁ֣ר חָפָ֑רוּ וַיֹּ֥אמְרוּ ל֖וֹ מָצָ֥אנוּ מָֽיִם׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> ביום ההוא ויבאו עבדי יצחק ויגדו לו על־אדות הבאר אשר חפרו ויאמרו לו מצאנו מים׃</p></div></div>
+      <div class="texte-fr"><p>Or ce même jour, les serviteurs d’Isaac virent lui donner des nouvelles du puits qu’ils avaient creusé; ils lui dirent: "Nous avons trouvé de l’eau."</p></div>
+    </div><div class="seif" id="v-26-33">
+      <span class="seif-num">26:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֥א אֹתָ֖הּ שִׁבְעָ֑ה עַל־כֵּ֤ן שֵׁם־הָעִיר֙ בְּאֵ֣ר שֶׁ֔בַע עַ֖ד הַיּ֥וֹם הַזֶּֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויקרא אתה שבעה על־כן שם־העיר באר שבע עד היום הזה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Il le nomma Chiba; de là cette ville s’est nommée Beer Shava, nom qu’elle porte encore.</p></div>
+    </div><div class="seif" id="v-26-34">
+      <span class="seif-num">26:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י עֵשָׂו֙ בֶּן־אַרְבָּעִ֣ים שָׁנָ֔ה וַיִּקַּ֤ח אִשָּׁה֙ אֶת־יְהוּדִ֔ית בַּת־בְּאֵרִ֖י הַֽחִתִּ֑י וְאֶת־בָּ֣שְׂמַ֔ת בַּת־אֵילֹ֖ן הַֽחִתִּֽי׃</p></div><div class="heb-s"><p>ויהי עשו בן־ארבעים שנה ויקח אשה את־יהודית בת־בארי החתי ואת־בשמת בת־אילן החתי׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü, âgé de quarante ans, prit pour femmes Judith, fille de Beéri le Héthéen et Bâsemath, fille d’Élôn le Héthéen.</p></div>
+    </div><div class="seif" id="v-26-35">
+      <span class="seif-num">26:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּהְיֶ֖יןָ מֹ֣רַת ר֑וּחַ לְיִצְחָ֖ק וּלְרִבְקָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ותהיין מרת רוח ליצחק ולרבקה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Elles furent une amère affliction pour Isaac et pour Rébecca.</p></div>
+    </div><div class="seif" id="v-27-1">
+      <span class="seif-num">27:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ כִּֽי־זָקֵ֣ן יִצְחָ֔ק וַתִּכְהֶ֥יןָ עֵינָ֖יו מֵרְאֹ֑ת וַיִּקְרָ֞א אֶת־עֵשָׂ֣ו&thinsp;<b>׀</b> בְּנ֣וֹ הַגָּדֹ֗ל וַיֹּ֤אמֶר אֵלָיו֙ בְּנִ֔י וַיֹּ֥אמֶר אֵלָ֖יו הִנֵּֽנִי׃</p></div><div class="heb-s"><p>ויהי כי־זקן יצחק ותכהין עיניו מראת ויקרא את־עשו&thinsp;<b>׀</b> בנו הגדל ויאמר אליו בני ויאמר אליו הנני׃</p></div></div>
+      <div class="texte-fr"><p>Il arriva, comme Isaac était devenu vieux, que sa vue s’obscurcit. Un jour, il appela Ésaü, son fils aîné et lui dit: "Mon fils!" Il répondit: "Me voici."</p></div>
+    </div><div class="seif" id="v-27-2">
+      <span class="seif-num">27:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֕אמֶר הִנֵּה־נָ֖א זָקַ֑נְתִּי לֹ֥א יָדַ֖עְתִּי י֥וֹם מוֹתִֽי׃</p></div><div class="heb-s"><p>ויאמר הנה־נא זקנתי לא ידעתי יום מותי׃</p></div></div>
+      <div class="texte-fr"><p>Isaac reprit "Vois, je suis devenu vieux, je ne connais point l’heure de ma mort.</p></div>
+    </div><div class="seif" id="v-27-3">
+      <span class="seif-num">27:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּה֙ שָׂא־נָ֣א כֵלֶ֔יךָ תֶּלְיְךָ֖ וְקַשְׁתֶּ֑ךָ וְצֵא֙ הַשָּׂדֶ֔ה וְצ֥וּדָה לִּ֖י <span class="mam-kq"><span class="mam-kq-k">(צידה)</span> <span class="mam-kq-q">[צָֽיִד]</span></span>׃</p></div><div class="heb-s"><p>ועתה שא־נא כליך תליך וקשתך וצא השדה וצודה לי <span class="mam-kq"><span class="mam-kq-k">(צידה)</span> <span class="mam-kq-q">[ציד]</span></span>׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, je te prie, prends tes armes, ton carquois et ton arc; va aux champs et prends du gibier pour moi.</p></div>
+    </div><div class="seif" id="v-27-4">
+      <span class="seif-num">27:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲשֵׂה־לִ֨י מַטְעַמִּ֜ים כַּאֲשֶׁ֥ר אָהַ֛בְתִּי וְהָבִ֥יאָה לִּ֖י וְאֹכֵ֑לָה בַּעֲב֛וּר תְּבָרֶכְךָ֥ נַפְשִׁ֖י בְּטֶ֥רֶם אָמֽוּת׃</p></div><div class="heb-s"><p>ועשה־לי מטעמים כאשר אהבתי והביאה לי ואכלה בעבור תברכך נפשי בטרם אמות׃</p></div></div>
+      <div class="texte-fr"><p>Fais m’en un ragoût comme je l’aime, sers-le moi et que j’en mange afin que mon cœur te bénisse avant ma mort.</p></div>
+    </div><div class="seif" id="v-27-5">
+      <span class="seif-num">27:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרִבְקָ֣ה שֹׁמַ֔עַת בְּדַבֵּ֣ר יִצְחָ֔ק אֶל־עֵשָׂ֖ו בְּנ֑וֹ וַיֵּ֤לֶךְ עֵשָׂו֙ הַשָּׂדֶ֔ה לָצ֥וּד צַ֖יִד לְהָבִֽיא׃</p></div><div class="heb-s"><p>ורבקה שמעת בדבר יצחק אל־עשו בנו וילך עשו השדה לצוד ציד להביא׃</p></div></div>
+      <div class="texte-fr"><p>Or Rébecca entendit ce qu’Isaac disait à Ésaü son fils. Ésaü alla aux champs pour chasser du gibier et le rapporter.</p></div>
+    </div><div class="seif" id="v-27-6">
+      <span class="seif-num">27:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרִבְקָה֙ אָֽמְרָ֔ה אֶל־יַעֲקֹ֥ב בְּנָ֖הּ לֵאמֹ֑ר הִנֵּ֤ה שָׁמַ֙עְתִּי֙ אֶת־אָבִ֔יךָ מְדַבֵּ֛ר אֶל־עֵשָׂ֥ו אָחִ֖יךָ לֵאמֹֽר׃</p></div><div class="heb-s"><p>ורבקה אמרה אל־יעקב בנה לאמר הנה שמעתי את־אביך מדבר אל־עשו אחיך לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Cependant Rébecca dit à Jacob, son fils: "Ecoute; j’ai entendu ton père parler ainsi à Ésaü, ton frère:</p></div>
+    </div><div class="seif" id="v-27-7">
+      <span class="seif-num">27:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָבִ֨יאָה לִּ֥י צַ֛יִד וַעֲשֵׂה־לִ֥י מַטְעַמִּ֖ים וְאֹכֵ֑לָה וַאֲבָרֶכְכָ֛ה לִפְנֵ֥י יְהֹוָ֖ה לִפְנֵ֥י מוֹתִֽי׃</p></div><div class="heb-s"><p>הביאה לי ציד ועשה־לי מטעמים ואכלה ואברככה לפני יהוה לפני מותי׃</p></div></div>
+      <div class="texte-fr"><p>‘Apporte-moi du gibier et apprête moi un ragoût que je mangerai et je te bénirai devant le Seigneur avant de mourir.’</p></div>
+    </div><div class="seif" id="v-27-8">
+      <span class="seif-num">27:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֥ה בְנִ֖י שְׁמַ֣ע בְּקֹלִ֑י לַאֲשֶׁ֥ר אֲנִ֖י מְצַוָּ֥ה אֹתָֽךְ׃</p></div><div class="heb-s"><p>ועתה בני שמע בקלי לאשר אני מצוה אתך׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, mon fils, sois docile à ma voix, sur ce que je vais t’ordonner:</p></div>
+    </div><div class="seif" id="v-27-9">
+      <span class="seif-num">27:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֶךְ־נָא֙ אֶל־הַצֹּ֔אן וְקַֽח־לִ֣י מִשָּׁ֗ם שְׁנֵ֛י גְּדָיֵ֥י עִזִּ֖ים טֹבִ֑ים וְאֶֽעֱשֶׂ֨ה אֹתָ֧ם מַטְעַמִּ֛ים לְאָבִ֖יךָ כַּאֲשֶׁ֥ר אָהֵֽב׃</p></div><div class="heb-s"><p>לך־נא אל־הצאן וקח־לי משם שני גדיי עזים טבים ואעשה אתם מטעמים לאביך כאשר אהב׃</p></div></div>
+      <div class="texte-fr"><p>va au menu bétail et prends moi deux beaux chevreaux et j’en ferai pour ton père un ragoût tel qu’il l’aime.</p></div>
+    </div><div class="seif" id="v-27-10">
+      <span class="seif-num">27:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵבֵאתָ֥ לְאָבִ֖יךָ וְאָכָ֑ל בַּעֲבֻ֛ר אֲשֶׁ֥ר יְבָרֶכְךָ֖ לִפְנֵ֥י מוֹתֽוֹ׃</p></div><div class="heb-s"><p>והבאת לאביך ואכל בעבר אשר יברכך לפני מותו׃</p></div></div>
+      <div class="texte-fr"><p>Tu le présenteras à ton père et il mangera; de sorte qu’il te bénira avant de mourir."</p></div>
+    </div><div class="seif" id="v-27-11">
+      <span class="seif-num">27:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר יַעֲקֹ֔ב אֶל־רִבְקָ֖ה אִמּ֑וֹ הֵ֣ן עֵשָׂ֤ו אָחִי֙ אִ֣ישׁ שָׂעִ֔ר וְאָנֹכִ֖י אִ֥ישׁ חָלָֽק׃</p></div><div class="heb-s"><p>ויאמר יעקב אל־רבקה אמו הן עשו אחי איש שער ואנכי איש חלק׃</p></div></div>
+      <div class="texte-fr"><p>Jacob dit à Rébecca sa mère: "Mais Ésaü, mon frère, est un homme velu et moi je ne le suis pas.</p></div>
+    </div><div class="seif" id="v-27-12">
+      <span class="seif-num">27:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוּלַ֤י יְמֻשֵּׁ֙נִי֙ אָבִ֔י וְהָיִ֥יתִי בְעֵינָ֖יו כִּמְתַעְתֵּ֑עַ וְהֵבֵאתִ֥י עָלַ֛י קְלָלָ֖ה וְלֹ֥א בְרָכָֽה׃</p></div><div class="heb-s"><p>אולי ימשני אבי והייתי בעיניו כמתעתע והבאתי עלי קללה ולא ברכה׃</p></div></div>
+      <div class="texte-fr"><p>Si par hasard mon père me tâte, je serai à ses yeux comme un trompeur, et, au lieu de bénédiction, c’est une malédiction que j’aurai attirée sur moi!"</p></div>
+    </div><div class="seif" id="v-27-13">
+      <span class="seif-num">27:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֤אמֶר לוֹ֙ אִמּ֔וֹ עָלַ֥י קִלְלָתְךָ֖ בְּנִ֑י אַ֛ךְ שְׁמַ֥ע בְּקֹלִ֖י וְלֵ֥ךְ קַֽח־לִֽי׃</p></div><div class="heb-s"><p>ותאמר לו אמו עלי קללתך בני אך שמע בקלי ולך קח־לי׃</p></div></div>
+      <div class="texte-fr"><p>Sa mère lui répondit: "Je prends sur moi ta malédiction, mon fils. Obéis seulement à ma voix et va me chercher ce que j’ai dit."</p></div>
+    </div><div class="seif" id="v-27-14">
+      <span class="seif-num">27:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֙לֶךְ֙ וַיִּקַּ֔ח וַיָּבֵ֖א לְאִמּ֑וֹ וַתַּ֤עַשׂ אִמּוֹ֙ מַטְעַמִּ֔ים כַּאֲשֶׁ֖ר אָהֵ֥ב אָבִֽיו׃</p></div><div class="heb-s"><p>וילך ויקח ויבא לאמו ותעש אמו מטעמים כאשר אהב אביו׃</p></div></div>
+      <div class="texte-fr"><p>Il alla le chercher et l’apporta à sa mère. Celle ci en fit un mets selon le goût de son père.</p></div>
+    </div><div class="seif" id="v-27-15">
+      <span class="seif-num">27:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּקַּ֣ח רִ֠בְקָ֠ה אֶת־בִּגְדֵ֨י עֵשָׂ֜ו בְּנָ֤הּ הַגָּדֹל֙ הַחֲמֻדֹ֔ת אֲשֶׁ֥ר אִתָּ֖הּ בַּבָּ֑יִת וַתַּלְבֵּ֥שׁ אֶֽת־יַעֲקֹ֖ב בְּנָ֥הּ הַקָּטָֽן׃</p></div><div class="heb-s"><p>ותקח רבקה את־בגדי עשו בנה הגדל החמדת אשר אתה בבית ותלבש את־יעקב בנה הקטן׃</p></div></div>
+      <div class="texte-fr"><p>Puis Rébecca prit les plus beaux vêtements d’Ésaü, son fils aîné, lesquels étaient sous sa main dans la maison et elle en revêtit Jacob, son plus jeune fils;</p></div>
+    </div><div class="seif" id="v-27-16">
+      <span class="seif-num">27:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֗ת עֹרֹת֙ גְּדָיֵ֣י הָֽעִזִּ֔ים הִלְבִּ֖ישָׁה עַל־יָדָ֑יו וְעַ֖ל חֶלְקַ֥ת צַוָּארָֽיו׃</p></div><div class="heb-s"><p>ואת ערת גדיי העזים הלבישה על־ידיו ועל חלקת צואריו׃</p></div></div>
+      <div class="texte-fr"><p>de la peau des chevreaux, elle enveloppa ses mains et la surface lisse de son cou,</p></div>
+    </div><div class="seif" id="v-27-17">
+      <span class="seif-num">27:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתִּתֵּ֧ן אֶת־הַמַּטְעַמִּ֛ים וְאֶת־הַלֶּ֖חֶם אֲשֶׁ֣ר עָשָׂ֑תָה בְּיַ֖ד יַעֲקֹ֥ב בְּנָֽהּ׃</p></div><div class="heb-s"><p>ותתן את־המטעמים ואת־הלחם אשר עשתה ביד יעקב בנה׃</p></div></div>
+      <div class="texte-fr"><p>et posa le mets avec le pain, qu’elle avait apprêtés, dans la main de Jacob, son fils.</p></div>
+    </div><div class="seif" id="v-27-18">
+      <span class="seif-num">27:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֥א אֶל־אָבִ֖יו וַיֹּ֣אמֶר אָבִ֑י וַיֹּ֣אמֶר הִנֶּ֔נִּי מִ֥י אַתָּ֖ה בְּנִֽי׃</p></div><div class="heb-s"><p>ויבא אל־אביו ויאמר אבי ויאמר הנני מי אתה בני׃</p></div></div>
+      <div class="texte-fr"><p>Celui-ci entra chez son père, disant: "Mon père!" Il répondit: "Me voici; qui es tu, mon fils?"</p></div>
+    </div><div class="seif" id="v-27-19">
+      <span class="seif-num">27:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יַעֲקֹ֜ב אֶל־אָבִ֗יו אָנֹכִי֙ עֵשָׂ֣ו בְּכֹרֶ֔ךָ עָשִׂ֕יתִי כַּאֲשֶׁ֥ר דִּבַּ֖רְתָּ אֵלָ֑י קֽוּם־נָ֣א שְׁבָ֗ה וְאׇכְלָה֙ מִצֵּידִ֔י בַּעֲב֖וּר תְּבָרְכַ֥נִּי נַפְשֶֽׁךָ׃</p></div><div class="heb-s"><p>ויאמר יעקב אל־אביו אנכי עשו בכרך עשיתי כאשר דברת אלי קום־נא שבה ואכלה מצידי בעבור תברכני נפשך׃</p></div></div>
+      <div class="texte-fr"><p>Jacob dit à son père: "Je suis Ésaü, ton premier né; j’ai fait ainsi que tu m’as dit. Viens donc, assieds toi et mange de ma chasse afin que ton cœur me bénisse."</p></div>
+    </div><div class="seif" id="v-27-20">
+      <span class="seif-num">27:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יִצְחָק֙ אֶל־בְּנ֔וֹ מַה־זֶּ֛ה מִהַ֥רְתָּ לִמְצֹ֖א בְּנִ֑י וַיֹּ֕אמֶר כִּ֥י הִקְרָ֛ה יְהֹוָ֥ה אֱלֹהֶ֖יךָ לְפָנָֽי׃</p></div><div class="heb-s"><p>ויאמר יצחק אל־בנו מה־זה מהרת למצא בני ויאמר כי הקרה יהוה אלהיך לפני׃</p></div></div>
+      <div class="texte-fr"><p>Isaac dit à son fils: "Qu’est ceci? tu as été prompt à faire capture mon fils!" Il répondit: "C’est que l’Éternel ton Dieu m’a donné bonne chance."</p></div>
+    </div><div class="seif" id="v-27-21">
+      <span class="seif-num">27:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יִצְחָק֙ אֶֽל־יַעֲקֹ֔ב גְּשָׁה־נָּ֥א וַאֲמֻֽשְׁךָ֖ בְּנִ֑י הַֽאַתָּ֥ה זֶ֛ה בְּנִ֥י עֵשָׂ֖ו אִם־לֹֽא׃</p></div><div class="heb-s"><p>ויאמר יצחק אל־יעקב גשה־נא ואמשך בני האתה זה בני עשו אם־לא׃</p></div></div>
+      <div class="texte-fr"><p>Isaac dit à Jacob "Approche que je te tâte, mon fils, pour savoir si tu es mon fils Ésaü ou non."</p></div>
+    </div><div class="seif" id="v-27-22">
+      <span class="seif-num">27:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּגַּ֧שׁ יַעֲקֹ֛ב אֶל־יִצְחָ֥ק אָבִ֖יו וַיְמֻשֵּׁ֑הוּ וַיֹּ֗אמֶר הַקֹּל֙ ק֣וֹל יַעֲקֹ֔ב וְהַיָּדַ֖יִם יְדֵ֥י עֵשָֽׂו׃</p></div><div class="heb-s"><p>ויגש יעקב אל־יצחק אביו וימשהו ויאמר הקל קול יעקב והידים ידי עשו׃</p></div></div>
+      <div class="texte-fr"><p>Jacob s’approcha d’Isaac, son père, qui le tâta et dit: "Cette voix, c’est la voix de Jacob; mais ces mains sont les mains d’Ésaü."</p></div>
+    </div><div class="seif" id="v-27-23">
+      <span class="seif-num">27:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹ֣א הִכִּיר֔וֹ כִּֽי־הָי֣וּ יָדָ֗יו כִּידֵ֛י עֵשָׂ֥ו אָחִ֖יו שְׂעִרֹ֑ת וַֽיְבָרְכֵֽהוּ׃</p></div><div class="heb-s"><p>ולא הכירו כי־היו ידיו כידי עשו אחיו שערת ויברכהו׃</p></div></div>
+      <div class="texte-fr"><p>Il ne le reconnut point, parce que ses mains étaient velues comme celles d’Ésaü son frère. Et il le bénit.</p></div>
+    </div><div class="seif" id="v-27-24">
+      <span class="seif-num">27:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֕אמֶר אַתָּ֥ה זֶ֖ה בְּנִ֣י עֵשָׂ֑ו וַיֹּ֖אמֶר אָֽנִי׃</p></div><div class="heb-s"><p>ויאמר אתה זה בני עשו ויאמר אני׃</p></div></div>
+      <div class="texte-fr"><p>Il dit encore: "Tu es bien mon fils Ésaü?" Il répondit: "Je le suis."</p></div>
+    </div><div class="seif" id="v-27-25">
+      <span class="seif-num">27:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֗אמֶר הַגִּ֤שָׁה לִּי֙ וְאֹֽכְלָה֙ מִצֵּ֣יד בְּנִ֔י לְמַ֥עַן תְּבָֽרֶכְךָ֖ נַפְשִׁ֑י וַיַּגֶּשׁ־לוֹ֙ וַיֹּאכַ֔ל וַיָּ֧בֵא ל֦וֹ יַ֖יִן וַיֵּֽשְׁתְּ׃</p></div><div class="heb-s"><p>ויאמר הגשה לי ואכלה מציד בני למען תברכך נפשי ויגש־לו ויאכל ויבא לו יין וישת׃</p></div></div>
+      <div class="texte-fr"><p>Il reprit: "Donne, que je mange de la chasse de mon fils afin que mon cœur te bénisse!" Il le servit et il mangea; lui présenta du vin et il but.</p></div>
+    </div><div class="seif" id="v-27-26">
+      <span class="seif-num">27:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר אֵלָ֖יו יִצְחָ֣ק אָבִ֑יו גְּשָׁה־נָּ֥א וּשְׁקָה־לִּ֖י בְּנִֽי׃</p></div><div class="heb-s"><p>ויאמר אליו יצחק אביו גשה־נא ושקה־לי בני׃</p></div></div>
+      <div class="texte-fr"><p>Isaac son père lui dit: "Approche, je te prie et embrasse moi, mon fils."</p></div>
+    </div><div class="seif" id="v-27-27">
+      <span class="seif-num">27:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּגַּשׁ֙ וַיִּשַּׁק־ל֔וֹ וַיָּ֛רַח אֶת־רֵ֥יחַ בְּגָדָ֖יו וַֽיְבָרְכֵ֑הוּ וַיֹּ֗אמֶר רְאֵה֙ רֵ֣יחַ בְּנִ֔י כְּרֵ֣יחַ שָׂדֶ֔ה אֲשֶׁ֥ר בֵּרְכ֖וֹ יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויגש וישק־לו וירח את־ריח בגדיו ויברכהו ויאמר ראה ריח בני כריח שדה אשר ברכו יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Il s’approcha et l’embrassa. Isaac aspira l’odeur de ses vêtements; il le bénit et dit: "Voyez! le parfum de mon fils est comme le parfum d’une terre favorisée du Seigneur!</p></div>
+    </div><div class="seif" id="v-27-28">
+      <span class="seif-num">27:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִֽתֶּן־לְךָ֙ הָאֱלֹהִ֔ים מִטַּל֙ הַשָּׁמַ֔יִם וּמִשְׁמַנֵּ֖י הָאָ֑רֶץ וְרֹ֥ב דָּגָ֖ן וְתִירֹֽשׁ׃</p></div><div class="heb-s"><p>ויתן־לך האלהים מטל השמים ומשמני הארץ ורב דגן ותירש׃</p></div></div>
+      <div class="texte-fr"><p>Puisse-t-il t’enrichir, le Seigneur, de la rosée des cieux et des sucs de la terre, d’une abondance de moissons et de vendanges!</p></div>
+    </div><div class="seif" id="v-27-29">
+      <span class="seif-num">27:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַֽעַבְד֣וּךָ עַמִּ֗ים <span class="mam-kq"><span class="mam-kq-k">(וישתחו)</span> <span class="mam-kq-q">[וְיִֽשְׁתַּחֲו֤וּ]</span></span> לְךָ֙ לְאֻמִּ֔ים הֱוֵ֤ה גְבִיר֙ לְאַחֶ֔יךָ וְיִשְׁתַּחֲו֥וּ לְךָ֖ בְּנֵ֣י אִמֶּ֑ךָ אֹרְרֶ֣יךָ אָר֔וּר וּֽמְבָרְכֶ֖יךָ בָּרֽוּךְ׃</p></div><div class="heb-s"><p>יעבדוך עמים <span class="mam-kq"><span class="mam-kq-k">(וישתחו)</span> <span class="mam-kq-q">[וישתחוו]</span></span> לך לאמים הוה גביר לאחיך וישתחוו לך בני אמך ארריך ארור ומברכיך ברוך׃</p></div></div>
+      <div class="texte-fr"><p>Que des peuples t’obéissent! Que des nations tombent à tes pieds! Sois le chef de tes frères et que les fils de ta mère se prosternent devant toi! Malédiction à qui te maudira et qui te bénira soit béni!"</p></div>
+    </div><div class="seif" id="v-27-30">
+      <span class="seif-num">27:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י כַּאֲשֶׁ֨ר כִּלָּ֣ה יִצְחָק֮ לְבָרֵ֣ךְ אֶֽת־יַעֲקֹב֒ וַיְהִ֗י אַ֣ךְ יָצֹ֤א יָצָא֙ יַעֲקֹ֔ב מֵאֵ֥ת פְּנֵ֖י יִצְחָ֣ק אָבִ֑יו וְעֵשָׂ֣ו אָחִ֔יו בָּ֖א מִצֵּידֽוֹ׃</p></div><div class="heb-s"><p>ויהי כאשר כלה יצחק לברך את־יעקב ויהי אך יצא יצא יעקב מאת פני יצחק אביו ועשו אחיו בא מצידו׃</p></div></div>
+      <div class="texte-fr"><p>Or, comme Isaac avait achevé de bénir Jacob, il arriva que Jacob sortait précisément de devant Isaac son père, lorsque son frère Ésaü revint de la chasse.</p></div>
+    </div><div class="seif" id="v-27-31">
+      <span class="seif-num">27:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤עַשׂ גַּם־הוּא֙ מַטְעַמִּ֔ים וַיָּבֵ֖א לְאָבִ֑יו וַיֹּ֣אמֶר לְאָבִ֗יו יָקֻ֤ם אָבִי֙ וְיֹאכַל֙ מִצֵּ֣יד בְּנ֔וֹ בַּעֲבֻ֖ר תְּבָרְכַ֥נִּי נַפְשֶֽׁךָ׃</p></div><div class="heb-s"><p>ויעש גם־הוא מטעמים ויבא לאביו ויאמר לאביו יקם אבי ויאכל מציד בנו בעבר תברכני נפשך׃</p></div></div>
+      <div class="texte-fr"><p>Il apprêta, lui aussi, un ragoût et le présenta à son père en lui disant: "Que mon père se dispose à manger de la chasse de son fils, afin que ton cœur me bénisse.</p></div>
+    </div><div class="seif" id="v-27-32">
+      <span class="seif-num">27:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר ל֛וֹ יִצְחָ֥ק אָבִ֖יו מִי־אָ֑תָּה וַיֹּ֕אמֶר אֲנִ֛י בִּנְךָ֥ בְכֹֽרְךָ֖ עֵשָֽׂו׃</p></div><div class="heb-s"><p>ויאמר לו יצחק אביו מי־אתה ויאמר אני בנך בכרך עשו׃</p></div></div>
+      <div class="texte-fr"><p>lsaac, son père, lui demanda: "Qui es-tu?" Il répondit: "Je suis ton fils, ton premier-né, Ésaü."</p></div>
+    </div><div class="seif" id="v-27-33">
+      <span class="seif-num">27:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֶּחֱרַ֨ד יִצְחָ֣ק חֲרָדָה֮ גְּדֹלָ֣ה עַד־מְאֹד֒ וַיֹּ֡אמֶר מִֽי־אֵפ֡וֹא ה֣וּא הַצָּֽד־צַ֩יִד֩ וַיָּ֨בֵא לִ֜י וָאֹכַ֥ל מִכֹּ֛ל בְּטֶ֥רֶם תָּב֖וֹא וָאֲבָרְכֵ֑הוּ גַּם־בָּר֖וּךְ יִהְיֶֽה׃</p></div><div class="heb-s"><p>ויחרד יצחק חרדה גדלה עד־מאד ויאמר מי־אפוא הוא הצד־ציד ויבא לי ואכל מכל בטרם תבוא ואברכהו גם־ברוך יהיה׃</p></div></div>
+      <div class="texte-fr"><p>Isaac fut saisi d’une frayeur extrême et il dit: "Quel est donc cet autre, qui avait pris du gibier et me l’avait apporté? J’ai mangé de tout avant ton arrivée et je l’ai béni. Eh bien! Il restera béni!"</p></div>
+    </div><div class="seif" id="v-27-34">
+      <span class="seif-num">27:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּשְׁמֹ֤עַ עֵשָׂו֙ אֶת־דִּבְרֵ֣י אָבִ֔יו וַיִּצְעַ֣ק צְעָקָ֔ה גְּדֹלָ֥ה וּמָרָ֖ה עַד־מְאֹ֑ד וַיֹּ֣אמֶר לְאָבִ֔יו בָּרְכֵ֥נִי גַם־אָ֖נִי אָבִֽי׃</p></div><div class="heb-s"><p>כשמע עשו את־דברי אביו ויצעק צעקה גדלה ומרה עד־מאד ויאמר לאביו ברכני גם־אני אבי׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü, entendant les paroles de son père, poussa des cris bruyants et douloureux et il dit à son père "Moi aussi bénis-moi, mon père!"</p></div>
+    </div><div class="seif" id="v-27-35">
+      <span class="seif-num">27:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֕אמֶר בָּ֥א אָחִ֖יךָ בְּמִרְמָ֑ה וַיִּקַּ֖ח בִּרְכָתֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר בא אחיך במרמה ויקח ברכתך׃</p></div></div>
+      <div class="texte-fr"><p>Il répondit: "Ton frère a usé de ruse et il a enlevé ta bénédiction."</p></div>
+    </div><div class="seif" id="v-27-36">
+      <span class="seif-num">27:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֡אמֶר הֲכִי֩ קָרָ֨א שְׁמ֜וֹ יַעֲקֹ֗ב וַֽיַּעְקְבֵ֙נִי֙ זֶ֣ה פַעֲמַ֔יִם אֶת־בְּכֹרָתִ֣י לָקָ֔ח וְהִנֵּ֥ה עַתָּ֖ה לָקַ֣ח בִּרְכָתִ֑י וַיֹּאמַ֕ר הֲלֹא־אָצַ֥לְתָּ לִּ֖י בְּרָכָֽה׃</p></div><div class="heb-s"><p>ויאמר הכי קרא שמו יעקב ויעקבני זה פעמים את־בכרתי לקח והנה עתה לקח ברכתי ויאמר הלא־אצלת לי ברכה׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü dit alors: "Est ce parce qu’on l’a nommé Jacob qu’il m’a supplanté deux fois déjà? Il m’a enlevé mon droit d’aînesse et voici que maintenant il m’enlève ma bénédiction!" Et il ajouta: "N’as tu pas réservé une bénédiction pour moi?"</p></div>
+    </div><div class="seif" id="v-27-37">
+      <span class="seif-num">27:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֨עַן יִצְחָ֜ק וַיֹּ֣אמֶר לְעֵשָׂ֗ו הֵ֣ן גְּבִ֞יר שַׂמְתִּ֥יו לָךְ֙ וְאֶת־כׇּל־אֶחָ֗יו נָתַ֤תִּי לוֹ֙ לַעֲבָדִ֔ים וְדָגָ֥ן וְתִירֹ֖שׁ סְמַכְתִּ֑יו וּלְכָ֣ה אֵפ֔וֹא מָ֥ה אֶֽעֱשֶׂ֖ה בְּנִֽי׃</p></div><div class="heb-s"><p>ויען יצחק ויאמר לעשו הן גביר שמתיו לך ואת־כל־אחיו נתתי לו לעבדים ודגן ותירש סמכתיו ולכה אפוא מה אעשה בני׃</p></div></div>
+      <div class="texte-fr"><p>Isaac répondit en ces termes à Ésaü: "Certes! je l’ai institué ton supérieur, j’ai fait de tous ses frères ses serviteurs, je lai gratifié de la moisson et de la vendange: pour toi, dès lors, que puis je faire, mon fils?"</p></div>
+    </div><div class="seif" id="v-27-38">
+      <span class="seif-num">27:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר עֵשָׂ֜ו אֶל־אָבִ֗יו הַֽבְרָכָ֨ה אַחַ֤ת הִֽוא־לְךָ֙ אָבִ֔י בָּרְכֵ֥נִי גַם־אָ֖נִי אָבִ֑י וַיִּשָּׂ֥א עֵשָׂ֛ו קֹל֖וֹ וַיֵּֽבְךְּ׃</p></div><div class="heb-s"><p>ויאמר עשו אל־אביו הברכה אחת הוא־לך אבי ברכני גם־אני אבי וישא עשו קלו ויבך׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü dit à son père: "Ne possèdes tu qu’une seule bénédiction, mon père? Mon père, bénis moi aussi!" Et Esaü éclata en pleurs.</p></div>
+    </div><div class="seif" id="v-27-39">
+      <span class="seif-num">27:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֛עַן יִצְחָ֥ק אָבִ֖יו וַיֹּ֣אמֶר אֵלָ֑יו הִנֵּ֞ה מִשְׁמַנֵּ֤י הָאָ֙רֶץ֙ יִהְיֶ֣ה מֽוֹשָׁבֶ֔ךָ וּמִטַּ֥ל הַשָּׁמַ֖יִם מֵעָֽל׃</p></div><div class="heb-s"><p>ויען יצחק אביו ויאמר אליו הנה משמני הארץ יהיה מושבך ומטל השמים מעל׃</p></div></div>
+      <div class="texte-fr"><p>Pour réponse, Isaac son père lui dit: "Eh bien! une grasse contrée sera ton domaine et les cieux t’enverront leur rosée.</p></div>
+    </div><div class="seif" id="v-27-40">
+      <span class="seif-num">27:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַל־חַרְבְּךָ֣ תִֽחְיֶ֔ה וְאֶת־אָחִ֖יךָ תַּעֲבֹ֑ד וְהָיָה֙ כַּאֲשֶׁ֣ר תָּרִ֔יד וּפָרַקְתָּ֥ עֻלּ֖וֹ מֵעַ֥ל צַוָּארֶֽךָ׃</p></div><div class="heb-s"><p>ועל־חרבך תחיה ואת־אחיך תעבד והיה כאשר תריד ופרקת עלו מעל צוארך׃</p></div></div>
+      <div class="texte-fr"><p>Mais tu ne vivras qu’à la pointe de ton épée; tu seras tributaire de ton frère. Pourtant, après avoir plié sous le joug, ton cou s’en affranchira."</p></div>
+    </div><div class="seif" id="v-27-41">
+      <span class="seif-num">27:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׂטֹ֤ם עֵשָׂו֙ אֶֽת־יַעֲקֹ֔ב עַ֨ל־הַבְּרָכָ֔ה אֲשֶׁ֥ר בֵּרְכ֖וֹ אָבִ֑יו וַיֹּ֨אמֶר עֵשָׂ֜ו בְּלִבּ֗וֹ יִקְרְבוּ֙ יְמֵי֙ אֵ֣בֶל אָבִ֔י וְאַֽהַרְגָ֖ה אֶת־יַעֲקֹ֥ב אָחִֽי׃</p></div><div class="heb-s"><p>וישטם עשו את־יעקב על־הברכה אשר ברכו אביו ויאמר עשו בלבו יקרבו ימי אבל אבי ואהרגה את־יעקב אחי׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü prit Jacob en haine à cause de la bénédiction que son père lui avait donnée. Et Ésaü se dit en lui même: "Le temps du deuil de mon père approche; je ferai périr Jacob mon frère."</p></div>
+    </div><div class="seif" id="v-27-42">
+      <span class="seif-num">27:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֻּגַּ֣ד לְרִבְקָ֔ה אֶת־דִּבְרֵ֥י עֵשָׂ֖ו בְּנָ֣הּ הַגָּדֹ֑ל וַתִּשְׁלַ֞ח וַתִּקְרָ֤א לְיַעֲקֹב֙ בְּנָ֣הּ הַקָּטָ֔ן וַתֹּ֣אמֶר אֵלָ֔יו הִנֵּה֙ עֵשָׂ֣ו אָחִ֔יךָ מִתְנַחֵ֥ם לְךָ֖ לְהׇרְגֶֽךָ׃</p></div><div class="heb-s"><p>ויגד לרבקה את־דברי עשו בנה הגדל ותשלח ותקרא ליעקב בנה הקטן ותאמר אליו הנה עשו אחיך מתנחם לך להרגך׃</p></div></div>
+      <div class="texte-fr"><p>Et Rébecca fut informée des desseins d’Ésaü son fils aîné. Elle fit appeler Jacob, son plus jeune fils et lui dit "Écoute, Ésaü ton frère veut se venger de toi en te faisant mourir.</p></div>
+    </div><div class="seif" id="v-27-43">
+      <span class="seif-num">27:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֥ה בְנִ֖י שְׁמַ֣ע בְּקֹלִ֑י וְק֧וּם בְּרַח־לְךָ֛ אֶל־לָבָ֥ן אָחִ֖י חָרָֽנָה׃</p></div><div class="heb-s"><p>ועתה בני שמע בקלי וקום ברח־לך אל־לבן אחי חרנה׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, mon fils, obéis à ma voix: pars, va te réfugier auprès de Laban, mon frère, à Haràn.</p></div>
+    </div><div class="seif" id="v-27-44">
+      <span class="seif-num">27:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָשַׁבְתָּ֥ עִמּ֖וֹ יָמִ֣ים אֲחָדִ֑ים עַ֥ד אֲשֶׁר־תָּשׁ֖וּב חֲמַ֥ת אָחִֽיךָ׃</p></div><div class="heb-s"><p>וישבת עמו ימים אחדים עד אשר־תשוב חמת אחיך׃</p></div></div>
+      <div class="texte-fr"><p>Tu resteras chez lui quelque temps, jusqu’à ce que s’apaise la fureur de ton frère.</p></div>
+    </div><div class="seif" id="v-27-45">
+      <span class="seif-num">27:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַד־שׁ֨וּב אַף־אָחִ֜יךָ מִמְּךָ֗ וְשָׁכַח֙ אֵ֣ת אֲשֶׁר־עָשִׂ֣יתָ לּ֔וֹ וְשָׁלַחְתִּ֖י וּלְקַחְתִּ֣יךָ מִשָּׁ֑ם לָמָ֥ה אֶשְׁכַּ֛ל גַּם־שְׁנֵיכֶ֖ם י֥וֹם אֶחָֽד׃</p></div><div class="heb-s"><p>עד־שוב אף־אחיך ממך ושכח את אשר־עשית לו ושלחתי ולקחתיך משם למה אשכל גם־שניכם יום אחד׃</p></div></div>
+      <div class="texte-fr"><p>Lorsque l’animosité de ton frère ne te menacera plus et qu’il aura oublié ce que tu lui as fait, je t’enverrai ramener de là bas: pourquoi m’exposer à vous perdre tous deux à la fois?"</p></div>
+    </div><div class="seif" id="v-27-46">
+      <span class="seif-num">27:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֤אמֶר רִבְקָה֙ אֶל־יִצְחָ֔ק <small>קַ֣</small>צְתִּי בְחַיַּ֔י מִפְּנֵ֖י בְּנ֣וֹת חֵ֑ת אִם־לֹקֵ֣חַ יַ֠עֲקֹ֠ב אִשָּׁ֨ה מִבְּנֽוֹת־חֵ֤ת כָּאֵ֙לֶּה֙ מִבְּנ֣וֹת הָאָ֔רֶץ לָ֥מָּה לִּ֖י חַיִּֽים׃</p></div><div class="heb-s"><p>ותאמר רבקה אל־יצחק <small>ק</small>צתי בחיי מפני בנות חת אם־לקח יעקב אשה מבנות־חת כאלה מבנות הארץ למה לי חיים׃</p></div></div>
+      <div class="texte-fr"><p>Rébecca dit à Isaac: "La vie m’est à charge, à cause des filles de Heth. Si Jacob choisit une épouse parmi les filles de Heth, telle que celles-ci, parmi les filles de cette contrée, que m’importe la vie?"</p></div>
+    </div><div class="seif" id="v-28-1">
+      <span class="seif-num">28:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֥א יִצְחָ֛ק אֶֽל־יַעֲקֹ֖ב וַיְבָ֣רֶךְ אֹת֑וֹ וַיְצַוֵּ֙הוּ֙ וַיֹּ֣אמֶר ל֔וֹ לֹֽא־תִקַּ֥ח אִשָּׁ֖ה מִבְּנ֥וֹת כְּנָֽעַן׃</p></div><div class="heb-s"><p>ויקרא יצחק אל־יעקב ויברך אתו ויצוהו ויאמר לו לא־תקח אשה מבנות כנען׃</p></div></div>
+      <div class="texte-fr"><p>Isaac appela Jacob et le bénit, puis lui fit cette recommandation: "Ne prends pas femme parmi les filles de Canaan.</p></div>
+    </div><div class="seif" id="v-28-2">
+      <span class="seif-num">28:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>ק֥וּם לֵךְ֙ פַּדֶּ֣נָֽה אֲרָ֔ם בֵּ֥יתָה בְתוּאֵ֖ל אֲבִ֣י אִמֶּ֑ךָ וְקַח־לְךָ֤ מִשָּׁם֙ אִשָּׁ֔ה מִבְּנ֥וֹת לָבָ֖ן אֲחִ֥י אִמֶּֽךָ׃</p></div><div class="heb-s"><p>קום לך פדנה ארם ביתה בתואל אבי אמך וקח־לך משם אשה מבנות לבן אחי אמך׃</p></div></div>
+      <div class="texte-fr"><p>Lève toi, va dans le territoire d’Aram, dans la demeure de Bathuel, père de ta mère; et choisis toi là une femme parmi les filles de Laban, le frère de ta mère.</p></div>
+    </div><div class="seif" id="v-28-3">
+      <span class="seif-num">28:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֤ל שַׁדַּי֙ יְבָרֵ֣ךְ אֹֽתְךָ֔ וְיַפְרְךָ֖ וְיַרְבֶּ֑ךָ וְהָיִ֖יתָ לִקְהַ֥ל עַמִּֽים׃</p></div><div class="heb-s"><p>ואל שדי יברך אתך ויפרך וירבך והיית לקהל עמים׃</p></div></div>
+      <div class="texte-fr"><p>Le Dieu tout puissant te bénira, te fera croître et multiplier et tu deviendras une congrégation de peuples.</p></div>
+    </div><div class="seif" id="v-28-4">
+      <span class="seif-num">28:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיִֽתֶּן־לְךָ֙ אֶת־בִּרְכַּ֣ת אַבְרָהָ֔ם לְךָ֖ וּלְזַרְעֲךָ֣ אִתָּ֑ךְ לְרִשְׁתְּךָ֙ אֶת־אֶ֣רֶץ מְגֻרֶ֔יךָ אֲשֶׁר־נָתַ֥ן אֱלֹהִ֖ים לְאַבְרָהָֽם׃</p></div><div class="heb-s"><p>ויתן־לך את־ברכת אברהם לך ולזרעך אתך לרשתך את־ארץ מגריך אשר־נתן אלהים לאברהם׃</p></div></div>
+      <div class="texte-fr"><p>Et il t’attribuera la bénédiction d’Abraham, à toi et à ta postérité avec toi, en te faisant possesseur de la terre de tes pérégrinations, que Dieu a donnée à Abraham."</p></div>
+    </div><div class="seif" id="v-28-5">
+      <span class="seif-num">28:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֤ח יִצְחָק֙ אֶֽת־יַעֲקֹ֔ב וַיֵּ֖לֶךְ פַּדֶּ֣נָֽה אֲרָ֑ם אֶל־לָבָ֤ן בֶּן־בְּתוּאֵל֙ הָֽאֲרַמִּ֔י אֲחִ֣י רִבְקָ֔ה אֵ֥ם יַעֲקֹ֖ב וְעֵשָֽׂו׃</p></div><div class="heb-s"><p>וישלח יצחק את־יעקב וילך פדנה ארם אל־לבן בן־בתואל הארמי אחי רבקה אם יעקב ועשו׃</p></div></div>
+      <div class="texte-fr"><p>Isaac envoya ainsi Jacob au territoire d’Aram, chez Laban, fils de Bathuel, l’Araméen, frère de Rébecca, mère de Jacob et d’Ésaü.</p></div>
+    </div><div class="seif" id="v-28-6">
+      <span class="seif-num">28:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣רְא עֵשָׂ֗ו כִּֽי־בֵרַ֣ךְ יִצְחָק֮ אֶֽת־יַעֲקֹב֒ וְשִׁלַּ֤ח אֹתוֹ֙ פַּדֶּ֣נָֽה אֲרָ֔ם לָקַֽחַת־ל֥וֹ מִשָּׁ֖ם אִשָּׁ֑ה בְּבָרְכ֣וֹ אֹת֔וֹ וַיְצַ֤ו עָלָיו֙ לֵאמֹ֔ר לֹֽא־תִקַּ֥ח אִשָּׁ֖ה מִבְּנ֥וֹת כְּנָֽעַן׃</p></div><div class="heb-s"><p>וירא עשו כי־ברך יצחק את־יעקב ושלח אתו פדנה ארם לקחת־לו משם אשה בברכו אתו ויצו עליו לאמר לא־תקח אשה מבנות כנען׃</p></div></div>
+      <div class="texte-fr"><p>Ésaü vit qu’Isaac avait béni Jacob, qu’il l’avait envoyé au territoire d’Aram pour s’y choisir une épouse; qu’en le bénissant il lui avait donné cet ordre: "Ne prends point femme parmi les filles de Canaan";</p></div>
+    </div><div class="seif" id="v-28-7">
+      <span class="seif-num">28:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֣ע יַעֲקֹ֔ב אֶל־אָבִ֖יו וְאֶל־אִמּ֑וֹ וַיֵּ֖לֶךְ פַּדֶּ֥נָֽה אֲרָֽם׃</p></div><div class="heb-s"><p>וישמע יעקב אל־אביו ואל־אמו וילך פדנה ארם׃</p></div></div>
+      <div class="texte-fr"><p>que Jacob, obéissant à son père et à sa mère, était allé au territoire d’Aram:</p></div>
+    </div><div class="seif" id="v-28-8">
+      <span class="seif-num">28:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣רְא עֵשָׂ֔ו כִּ֥י רָע֖וֹת בְּנ֣וֹת כְּנָ֑עַן בְּעֵינֵ֖י יִצְחָ֥ק אָבִֽיו׃</p></div><div class="heb-s"><p>וירא עשו כי רעות בנות כנען בעיני יצחק אביו׃</p></div></div>
+      <div class="texte-fr"><p>et Ésaü comprit que les filles de Canaan déplaisaient à Isaac son père.</p></div>
+    </div><div class="seif" id="v-28-9">
+      <span class="seif-num">28:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֥לֶךְ עֵשָׂ֖ו אֶל־יִשְׁמָעֵ֑אל וַיִּקַּ֡ח אֶֽת־מָחֲלַ֣ת&thinsp;<b>׀</b> בַּת־יִשְׁמָעֵ֨אל בֶּן־אַבְרָהָ֜ם אֲח֧וֹת נְבָי֛וֹת עַל־נָשָׁ֖יו ל֥וֹ לְאִשָּֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וילך עשו אל־ישמעאל ויקח את־מחלת&thinsp;<b>׀</b> בת־ישמעאל בן־אברהם אחות נביות על־נשיו לו לאשה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Alors Ésaü alla vers Ismaël et prit pour femme Mahalath, fille d’Ismaël, fils d’Abraham, sœur de Nebaïoth, en outre de ses premières femmes.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Ceci est l’histoire d’Isaac, fils d’Abraham: Abraham engendra Isaac. Isaac avait quarante ans lorsqu’il prit pour épouse Rébecca, fille de Bathuel, l’Araméen, du territoire d’Aram, sœur de Laban, l’Araméen. Isaac implora l’Éternel au sujet de sa femme parce qu’elle était stérile; l’Éternel accueillit sa prière et Rébecca, sa femme, devint enceinte. Comme les enfants s’entre poussaient dans son sein, elle dit&quot;Si cela est ainsi, à quoi suis-je destinée!&quot; Et elle alla consulter le Seigneur. Le Seigneur lui dit: &quot;Deux nations sont dans ton sein et deux peuples sortiront de tes entrailles; un peuple sera plus puissant que l’autre et l’aîné obéira au plus jeune.&quot; L’époque de sa délivrance arrivée, il se trouva qu’elle portait des jumeaux. Le premier qui sortit était roux et tout son corps pareil à une pelisse; on lui donna le nom d’Ésaü. Ensuite naquit son frère tenant de la main le talon d’Ésaü et on le nomma Jacob. Isaac avait soixante ans lors de leur naissance. Les enfants ayant grandi, Ésaü devint un habile chasseur, un homme des champs, tandis que Jacob, homme inoffensif, vécut sous la tente. lsaac préférait Ésaü parce qu’il mettait du gibier dans sa bouche; mais Rébecca préférait Jacob. Un jour Jacob faisait cuire un potage quand Ésaü revint des champs, fatigué. Ésaü dit à Jacob: &quot;Laisse-moi avaler, je te prie, de ce rouge, de ce mets rouge, car je suis fatigué.&quot; C’est à ce propos qu’on le nomma Édom. Jacob dit: &quot;Vends-moi d’abord ton droit d’aînesse.&quot; Ésaü répondit: &quot;Certes! Je marche à la mort; à quoi me sert donc le droit d’aînesse?&quot; Jacob dit: &quot;Jure le moi dès à présent.&quot; Et il lui fit serment et il vendit son droit d’aînesse à Jacob. Jacob servit à Ésaü du pain et un plat de lentilles; il mangea et but, se leva et ressortit. C’est ainsi qu’Ésaü dédaigna le droit d’aînesse.</p>
-      <p>Il y eut une famine dans le pays, outre la première famine qui avait sévi du temps d’Abraham. Isaac alla chez Abimélec, roi des Philistins, à Gherar. Le Seigneur lui apparut et dit: &quot;Ne descends pas en Egypte; fixe ta demeure dans le pays que je te désignerai. Arrête-toi dans ce pays ci, je serai avec toi et je te bénirai; car à toi et à ta postérité je donnerai toutes ces provinces, accomplissant ainsi le serment que j’ai fait à ton père Abraham. Je multiplierai ta race comme les astres du ciel; je lui donnerai toutes ces provinces et en ta race s’estimeront bénies toutes les nations du monde: En récompense de ce qu’Abraham a écouté ma voix et suivi mon observance, exécutant mes préceptes, mes lois et mes doctrines.&quot; Et Isaac demeura à Gherar. Les habitants du lieu s’enquérant au sujet de sa femme, il dit: &quot;Elle est ma sœur&quot; car il n’osait dire ma femme: &quot;les gens du lieu pourraient me tuer à cause de Rébecca, car elle est d’une grande beauté.&quot; Or, il y demeurait depuis longtemps lorsque Abimélec, roi des Philistins, regardant par la fenêtre, vit Isaac caresser Rébecca sa femme. Abimélec manda Isaac et dit: &quot;Assurément, c’est ta femme; comment donc as tu pu dire: Elle est ma sœur!&quot; Isaac lui répondit: &quot;Parce que je me disais: Je pourrais périr à cause d’elle.&quot; Abimélec dit: &quot;Que nous as tu fait là! Peu s’en est fallu que l’un de nous n’eut commencé commerce avec ta femme et tu nous aurais rendu coupables.&quot; Abimélec fit une injonction à tout le peuple, en disant:&quot;Quiconque touchera à cet homme ou à sa femme sera puni de mort.&quot; Isaac sema dans ce pays-là et recueillit, cette même année, au centuple: tant le Seigneur le bénissait. Cet homme devint grand; puis sa grandeur alla croissant et enfin il fut très grand. Il avait des possessions en menu bétail, des possessions en gros bétail, des cultures considérables et les Philistins le jalousèrent. Tous les puits qu’avaient creusés les serviteurs de son père, du temps de son père Abraham, les Philistins les comblèrent en les remplissant de terre. Abimélec dit à Isaac: &quot;Cesse d’habiter avec nous car tu es trop puissant pour nous.&quot; Isaac se retira de ce lieu, fit halte dans la vallée de Gherar et s’y établit. Isaac se remit à creuser les puits qu’on avait creusés du temps d’Abraham son père et que les Philistins avaient comblés après la mort d’Abraham. Il leur imposa les mêmes noms que leur avait imposés son père. Les serviteurs d’Isaac, en creusant dans la vallée, y découvrirent une source d’eau vive. Les pâtres de Gherar cherchèrent querelle à ceux d’Isaac, en disant: &quot;L’eau est à nous!&quot; Il appela ce puits Esek parce qu’on le lui avait contesté. lls creusèrent un nouveau puits sur lequel on se querella encore. Il lui donna le nom de Sitna. Il délogea de là et creusa un autre puits, qu’on ne lui disputa point; il le nomma Rehoboth, disant: &quot;Pour le coup, le Seigneur nous a élargis et nous prospérerons dans la contrée.&quot; Il monta de là à Beer Shava. L’Éternel se révéla à lui cette même nuit, en disant: &quot;Je suis le Dieu d’Abraham ton père; sois sans crainte, car je suis avec toi, je te bénirai et je multiplierai ta race, pour l’amour d’Abraham mon serviteur.&quot; Il érigea en ce lieu un autel et proclama le nom de l’Éternel. Il y dressa sa tente et ses serviteurs y creusèrent un puits. Or, Abimélec alla chez lui, de Gherar, avec Ahouzzath son confident et Pikol son général d’armée. Isaac leur dit: &quot;Pourquoi êtes vous venus à moi, alors que vous me haïssez et que vous m’avez éconduit de chez vous?&quot; Ils répondirent: &quot;Nous avons bien vu que le Seigneur était avec toi et nous avons dit: ‘Oh! qu’il y ait un engagement réciproque entre nous et toi!’ Nous voudrions conclure ce pacte avec toi, que tu t’abstiendras de nous nuire, de même que nous ne t’avons pas touché, que nous en avons toujours bien usé avec toi et que nous t’avons renvoyé en paix. Maintenant, sois béni de Dieu!&quot; Il leur prépara un festin, ils mangèrent et burent. Le lendemain de bon matin ils se prêtèrent serment l’un à l’autre; Isaac les reconduisit et ils le quittèrent amicalement. Or ce même jour, les serviteurs d’Isaac virent lui donner des nouvelles du puits qu’ils avaient creusé; ils lui dirent: &quot;Nous avons trouvé de l’eau.&quot; Il le nomma Chiba; de là cette ville s’est nommée Beer Shava, nom qu’elle porte encore. Ésaü, âgé de quarante ans, prit pour femmes Judith, fille de Beéri le Héthéen et Bâsemath, fille d’Élôn le Héthéen. Elles furent une amère affliction pour Isaac et pour Rébecca.</p>
-      <p>Il arriva, comme Isaac était devenu vieux, que sa vue s’obscurcit. Un jour, il appela Ésaü, son fils aîné et lui dit: &quot;Mon fils!&quot; Il répondit: &quot;Me voici.&quot; Isaac reprit &quot;Vois, je suis devenu vieux, je ne connais point l’heure de ma mort. Et maintenant, je te prie, prends tes armes, ton carquois et ton arc; va aux champs et prends du gibier pour moi. Fais m’en un ragoût comme je l’aime, sers-le moi et que j’en mange afin que mon cœur te bénisse avant ma mort. Or Rébecca entendit ce qu’Isaac disait à Ésaü son fils. Ésaü alla aux champs pour chasser du gibier et le rapporter. Cependant Rébecca dit à Jacob, son fils: &quot;Ecoute; j’ai entendu ton père parler ainsi à Ésaü, ton frère: ‘Apporte-moi du gibier et apprête moi un ragoût que je mangerai et je te bénirai devant le Seigneur avant de mourir.’ Et maintenant, mon fils, sois docile à ma voix, sur ce que je vais t’ordonner: va au menu bétail et prends moi deux beaux chevreaux et j’en ferai pour ton père un ragoût tel qu’il l’aime. Tu le présenteras à ton père et il mangera; de sorte qu’il te bénira avant de mourir.&quot; Jacob dit à Rébecca sa mère: &quot;Mais Ésaü, mon frère, est un homme velu et moi je ne le suis pas. Si par hasard mon père me tâte, je serai à ses yeux comme un trompeur, et, au lieu de bénédiction, c’est une malédiction que j’aurai attirée sur moi!&quot; Sa mère lui répondit: &quot;Je prends sur moi ta malédiction, mon fils. Obéis seulement à ma voix et va me chercher ce que j’ai dit.&quot; Il alla le chercher et l’apporta à sa mère. Celle ci en fit un mets selon le goût de son père. Puis Rébecca prit les plus beaux vêtements d’Ésaü, son fils aîné, lesquels étaient sous sa main dans la maison et elle en revêtit Jacob, son plus jeune fils; de la peau des chevreaux, elle enveloppa ses mains et la surface lisse de son cou, et posa le mets avec le pain, qu’elle avait apprêtés, dans la main de Jacob, son fils. Celui-ci entra chez son père, disant: &quot;Mon père!&quot; Il répondit: &quot;Me voici; qui es tu, mon fils?&quot; Jacob dit à son père: &quot;Je suis Ésaü, ton premier né; j’ai fait ainsi que tu m’as dit. Viens donc, assieds toi et mange de ma chasse afin que ton cœur me bénisse.&quot; Isaac dit à son fils: &quot;Qu’est ceci? tu as été prompt à faire capture mon fils!&quot; Il répondit: &quot;C’est que l’Éternel ton Dieu m’a donné bonne chance.&quot; Isaac dit à Jacob &quot;Approche que je te tâte, mon fils, pour savoir si tu es mon fils Ésaü ou non.&quot; Jacob s’approcha d’Isaac, son père, qui le tâta et dit: &quot;Cette voix, c’est la voix de Jacob; mais ces mains sont les mains d’Ésaü.&quot; Il ne le reconnut point, parce que ses mains étaient velues comme celles d’Ésaü son frère. Et il le bénit. Il dit encore: &quot;Tu es bien mon fils Ésaü?&quot; Il répondit: &quot;Je le suis.&quot; Il reprit: &quot;Donne, que je mange de la chasse de mon fils afin que mon cœur te bénisse!&quot; Il le servit et il mangea; lui présenta du vin et il but. Isaac son père lui dit: &quot;Approche, je te prie et embrasse moi, mon fils.&quot; Il s’approcha et l’embrassa. Isaac aspira l’odeur de ses vêtements; il le bénit et dit: &quot;Voyez! le parfum de mon fils est comme le parfum d’une terre favorisée du Seigneur! Puisse-t-il t’enrichir, le Seigneur, de la rosée des cieux et des sucs de la terre, d’une abondance de moissons et de vendanges! Que des peuples t’obéissent! Que des nations tombent à tes pieds! Sois le chef de tes frères et que les fils de ta mère se prosternent devant toi! Malédiction à qui te maudira et qui te bénira soit béni!&quot; Or, comme Isaac avait achevé de bénir Jacob, il arriva que Jacob sortait précisément de devant Isaac son père, lorsque son frère Ésaü revint de la chasse. Il apprêta, lui aussi, un ragoût et le présenta à son père en lui disant: &quot;Que mon père se dispose à manger de la chasse de son fils, afin que ton cœur me bénisse. lsaac, son père, lui demanda: &quot;Qui es-tu?&quot; Il répondit: &quot;Je suis ton fils, ton premier-né, Ésaü.&quot; Isaac fut saisi d’une frayeur extrême et il dit: &quot;Quel est donc cet autre, qui avait pris du gibier et me l’avait apporté? J’ai mangé de tout avant ton arrivée et je l’ai béni. Eh bien! Il restera béni!&quot; Ésaü, entendant les paroles de son père, poussa des cris bruyants et douloureux et il dit à son père &quot;Moi aussi bénis-moi, mon père!&quot; Il répondit: &quot;Ton frère a usé de ruse et il a enlevé ta bénédiction.&quot; Ésaü dit alors: &quot;Est ce parce qu’on l’a nommé Jacob qu’il m’a supplanté deux fois déjà? Il m’a enlevé mon droit d’aînesse et voici que maintenant il m’enlève ma bénédiction!&quot; Et il ajouta: &quot;N’as tu pas réservé une bénédiction pour moi?&quot; Isaac répondit en ces termes à Ésaü: &quot;Certes! je l’ai institué ton supérieur, j’ai fait de tous ses frères ses serviteurs, je lai gratifié de la moisson et de la vendange: pour toi, dès lors, que puis je faire, mon fils?&quot; Ésaü dit à son père: &quot;Ne possèdes tu qu’une seule bénédiction, mon père? Mon père, bénis moi aussi!&quot; Et Esaü éclata en pleurs. Pour réponse, Isaac son père lui dit: &quot;Eh bien! une grasse contrée sera ton domaine et les cieux t’enverront leur rosée. Mais tu ne vivras qu’à la pointe de ton épée; tu seras tributaire de ton frère. Pourtant, après avoir plié sous le joug, ton cou s’en affranchira.&quot; Ésaü prit Jacob en haine à cause de la bénédiction que son père lui avait donnée. Et Ésaü se dit en lui même: &quot;Le temps du deuil de mon père approche; je ferai périr Jacob mon frère.&quot; Et Rébecca fut informée des desseins d’Ésaü son fils aîné. Elle fit appeler Jacob, son plus jeune fils et lui dit &quot;Écoute, Ésaü ton frère veut se venger de toi en te faisant mourir. Et maintenant, mon fils, obéis à ma voix: pars, va te réfugier auprès de Laban, mon frère, à Haràn. Tu resteras chez lui quelque temps, jusqu’à ce que s’apaise la fureur de ton frère. Lorsque l’animosité de ton frère ne te menacera plus et qu’il aura oublié ce que tu lui as fait, je t’enverrai ramener de là bas: pourquoi m’exposer à vous perdre tous deux à la fois?&quot; Rébecca dit à Isaac: &quot;La vie m’est à charge, à cause des filles de Heth. Si Jacob choisit une épouse parmi les filles de Heth, telle que celles-ci, parmi les filles de cette contrée, que m’importe la vie?&quot;</p>
-      <p>Isaac appela Jacob et le bénit, puis lui fit cette recommandation: &quot;Ne prends pas femme parmi les filles de Canaan. Lève toi, va dans le territoire d’Aram, dans la demeure de Bathuel, père de ta mère; et choisis toi là une femme parmi les filles de Laban, le frère de ta mère. Le Dieu tout puissant te bénira, te fera croître et multiplier et tu deviendras une congrégation de peuples. Et il t’attribuera la bénédiction d’Abraham, à toi et à ta postérité avec toi, en te faisant possesseur de la terre de tes pérégrinations, que Dieu a donnée à Abraham.&quot; Isaac envoya ainsi Jacob au territoire d’Aram, chez Laban, fils de Bathuel, l’Araméen, frère de Rébecca, mère de Jacob et d’Ésaü. Ésaü vit qu’Isaac avait béni Jacob, qu’il l’avait envoyé au territoire d’Aram pour s’y choisir une épouse; qu’en le bénissant il lui avait donné cet ordre: &quot;Ne prends point femme parmi les filles de Canaan&quot;; que Jacob, obéissant à son père et à sa mère, était allé au territoire d’Aram: et Ésaü comprit que les filles de Canaan déplaisaient à Isaac son père. Alors Ésaü alla vers Ismaël et prit pour femme Mahalath, fille d’Ismaël, fils d’Abraham, sœur de Nebaïoth, en outre de ses premières femmes.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -312,6 +764,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Rachi distingue aussi les « commandements » (ceux que la raison aurait imposés même sans écriture, comme le vol et le meurtre), les « lois » (<i>'houkim</i>, que même l'instinct du mal et les nations contestent) et les « enseignements » (<i>torot</i>, la Torah écrite et la Torah orale). Cette distinction sert de base à toute la réflexion sur la place des mitsvot rationnelles et suprarationnelles, et sur l'unité de la Torah écrite et orale. Pour l'application pratique des décrets rabbiniques, on consultera un rabbin ou un code de lois.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_chayei-sarah.html">← Chayei Sarah</a><a class="hbtn qcm" href="qcm_paracha_toldot.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayetzei.html">Vayetzei →</a></div>
 </main>
 
 <footer>

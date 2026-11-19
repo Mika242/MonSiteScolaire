@@ -102,6 +102,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -121,6 +151,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -135,6 +175,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Metzora – La purification du métsora, la tsaraat des maisons et les impuretés du corps</h1>
     <p>Torah, Vayikra (Leviticus 14:1-15:33)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_tazria.html">← Tazria</a><a class="hbtn qcm" href="qcm_paracha_metzora.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_acharei-mot.html">Aharei Mot →</a></div>
   </div>
 </header>
 
@@ -154,27 +195,378 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'זֹ֤את תִּֽהְיֶה֙ תּוֹרַ֣ת הַמְּצֹרָ֔ע בְּי֖וֹם טׇהֳרָת֑וֹ וְהוּבָ֖א אֶל־הַכֹּהֵֽן׃', 'וְיָצָא֙ הַכֹּהֵ֔ן אֶל־מִח֖וּץ לַֽמַּחֲנֶ֑ה וְרָאָה֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה נִרְפָּ֥א נֶֽגַע־הַצָּרַ֖עַת מִן־הַצָּרֽוּעַ׃', 'וְצִוָּה֙ הַכֹּהֵ֔ן וְלָקַ֧ח לַמִּטַּהֵ֛ר שְׁתֵּֽי־צִפֳּרִ֥ים חַיּ֖וֹת טְהֹר֑וֹת וְעֵ֣ץ אֶ֔רֶז וּשְׁנִ֥י תוֹלַ֖עַת וְאֵזֹֽב׃', 'וְצִוָּה֙ הַכֹּהֵ֔ן וְשָׁחַ֖ט אֶת־הַצִּפּ֣וֹר הָאֶחָ֑ת אֶל־כְּלִי־חֶ֖רֶשׂ עַל־מַ֥יִם חַיִּֽים׃', 'אֶת־הַצִּפֹּ֤ר הַֽחַיָּה֙ יִקַּ֣ח אֹתָ֔הּ וְאֶת־עֵ֥ץ הָאֶ֛רֶז וְאֶת־שְׁנִ֥י הַתּוֹלַ֖עַת וְאֶת־הָאֵזֹ֑ב וְטָבַ֨ל אוֹתָ֜ם וְאֵ֣ת&thinsp;<b>׀</b> הַצִּפֹּ֣ר הַֽחַיָּ֗ה בְּדַם֙ הַצִּפֹּ֣ר הַשְּׁחֻטָ֔ה עַ֖ל הַמַּ֥יִם הַֽחַיִּֽים׃', 'וְהִזָּ֗ה עַ֧ל הַמִּטַּהֵ֛ר מִן־הַצָּרַ֖עַת שֶׁ֣בַע פְּעָמִ֑ים וְטִ֣הֲר֔וֹ וְשִׁלַּ֛ח אֶת־הַצִּפֹּ֥ר הַֽחַיָּ֖ה עַל־פְּנֵ֥י הַשָּׂדֶֽה׃', 'וְכִבֶּס֩ הַמִּטַּהֵ֨ר אֶת־בְּגָדָ֜יו וְגִלַּ֣ח אֶת־כׇּל־שְׂעָר֗וֹ וְרָחַ֤ץ בַּמַּ֙יִם֙ וְטָהֵ֔ר וְאַחַ֖ר יָב֣וֹא אֶל־הַֽמַּחֲנֶ֑ה וְיָשַׁ֛ב מִח֥וּץ לְאׇהֳל֖וֹ שִׁבְעַ֥ת יָמִֽים׃', 'וְהָיָה֩ בַיּ֨וֹם הַשְּׁבִיעִ֜י יְגַלַּ֣ח אֶת־כׇּל־שְׂעָר֗וֹ אֶת־רֹאשׁ֤וֹ וְאֶת־זְקָנוֹ֙ וְאֵת֙ גַּבֹּ֣ת עֵינָ֔יו וְאֶת־כׇּל־שְׂעָר֖וֹ יְגַלֵּ֑חַ וְכִבֶּ֣ס אֶת־בְּגָדָ֗יו וְרָחַ֧ץ אֶת־בְּשָׂר֛וֹ בַּמַּ֖יִם וְטָהֵֽר׃', 'וּבַיּ֣וֹם הַשְּׁמִינִ֗י יִקַּ֤ח שְׁנֵֽי־כְבָשִׂים֙ תְּמִימִ֔ם וְכַבְשָׂ֥ה אַחַ֛ת בַּת־שְׁנָתָ֖הּ תְּמִימָ֑ה וּשְׁלֹשָׁ֣ה עֶשְׂרֹנִ֗ים סֹ֤לֶת מִנְחָה֙ בְּלוּלָ֣ה בַשֶּׁ֔מֶן וְלֹ֥ג אֶחָ֖ד שָֽׁמֶן׃', 'וְהֶעֱמִ֞יד הַכֹּהֵ֣ן הַֽמְטַהֵ֗ר אֵ֛ת הָאִ֥ישׁ הַמִּטַּהֵ֖ר וְאֹתָ֑ם לִפְנֵ֣י יְהֹוָ֔ה פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃', 'וְלָקַ֨ח הַכֹּהֵ֜ן אֶת־הַכֶּ֣בֶשׂ הָאֶחָ֗ד וְהִקְרִ֥יב אֹת֛וֹ לְאָשָׁ֖ם וְאֶת־לֹ֣ג הַשָּׁ֑מֶן וְהֵנִ֥יף אֹתָ֛ם תְּנוּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃', 'וְשָׁחַ֣ט אֶת־הַכֶּ֗בֶשׂ בִּ֠מְק֠וֹם אֲשֶׁ֨ר יִשְׁחַ֧ט אֶת־הַֽחַטָּ֛את וְאֶת־הָעֹלָ֖ה בִּמְק֣וֹם הַקֹּ֑דֶשׁ כִּ֡י כַּ֠חַטָּ֠את הָאָשָׁ֥ם הוּא֙ לַכֹּהֵ֔ן קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הֽוּא׃', 'וְלָקַ֣ח הַכֹּהֵן֮ מִדַּ֣ם הָאָשָׁם֒ וְנָתַן֙ הַכֹּהֵ֔ן עַל־תְּנ֛וּךְ אֹ֥זֶן הַמִּטַּהֵ֖ר הַיְמָנִ֑ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִֽית׃', 'וְלָקַ֥ח הַכֹּהֵ֖ן מִלֹּ֣ג הַשָּׁ֑מֶן וְיָצַ֛ק עַל־כַּ֥ף הַכֹּהֵ֖ן הַשְּׂמָאלִֽית׃', 'וְטָבַ֤ל הַכֹּהֵן֙ אֶת־אֶצְבָּע֣וֹ הַיְמָנִ֔ית מִן־הַשֶּׁ֕מֶן אֲשֶׁ֥ר עַל־כַּפּ֖וֹ הַשְּׂמָאלִ֑ית וְהִזָּ֨ה מִן־הַשֶּׁ֧מֶן בְּאֶצְבָּע֛וֹ שֶׁ֥בַע פְּעָמִ֖ים לִפְנֵ֥י יְהֹוָֽה׃', 'וּמִיֶּ֨תֶר הַשֶּׁ֜מֶן אֲשֶׁ֣ר עַל־כַּפּ֗וֹ יִתֵּ֤ן הַכֹּהֵן֙ עַל־תְּנ֞וּךְ אֹ֤זֶן הַמִּטַּהֵר֙ הַיְמָנִ֔ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִ֑ית עַ֖ל דַּ֥ם הָאָשָֽׁם׃', 'וְהַנּוֹתָ֗ר בַּשֶּׁ֙מֶן֙ אֲשֶׁר֙ עַל־כַּ֣ף הַכֹּהֵ֔ן יִתֵּ֖ן עַל־רֹ֣אשׁ הַמִּטַּהֵ֑ר וְכִפֶּ֥ר עָלָ֛יו הַכֹּהֵ֖ן לִפְנֵ֥י יְהֹוָֽה׃', 'וְעָשָׂ֤ה הַכֹּהֵן֙ אֶת־הַ֣חַטָּ֔את וְכִפֶּ֕ר עַל־הַמִּטַּהֵ֖ר מִטֻּמְאָת֑וֹ וְאַחַ֖ר יִשְׁחַ֥ט אֶת־הָעֹלָֽה׃', 'וְהֶעֱלָ֧ה הַכֹּהֵ֛ן אֶת־הָעֹלָ֥ה וְאֶת־הַמִּנְחָ֖ה הַמִּזְבֵּ֑חָה וְכִפֶּ֥ר עָלָ֛יו הַכֹּהֵ֖ן וְטָהֵֽר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִם־דַּ֣ל ה֗וּא וְאֵ֣ין יָדוֹ֮ מַשֶּׂ֒גֶת֒ וְ֠לָקַ֠ח כֶּ֣בֶשׂ אֶחָ֥ד אָשָׁ֛ם לִתְנוּפָ֖ה לְכַפֵּ֣ר עָלָ֑יו וְעִשָּׂר֨וֹן סֹ֜לֶת אֶחָ֨ד בָּל֥וּל בַּשֶּׁ֛מֶן לְמִנְחָ֖ה וְלֹ֥ג שָֽׁמֶן׃', 'וּשְׁתֵּ֣י תֹרִ֗ים א֤וֹ שְׁנֵי֙ בְּנֵ֣י יוֹנָ֔ה אֲשֶׁ֥ר תַּשִּׂ֖יג יָד֑וֹ וְהָיָ֤ה אֶחָד֙ חַטָּ֔את וְהָאֶחָ֖ד עֹלָֽה׃', 'וְהֵבִ֨יא אֹתָ֜ם בַּיּ֧וֹם הַשְּׁמִינִ֛י לְטׇהֳרָת֖וֹ אֶל־הַכֹּהֵ֑ן אֶל־פֶּ֥תַח אֹֽהֶל־מוֹעֵ֖ד לִפְנֵ֥י יְהֹוָֽה׃', 'וְלָקַ֧ח הַכֹּהֵ֛ן אֶת־כֶּ֥בֶשׂ הָאָשָׁ֖ם וְאֶת־לֹ֣ג הַשָּׁ֑מֶן וְהֵנִ֨יף אֹתָ֧ם הַכֹּהֵ֛ן תְּנוּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃', 'וְשָׁחַט֮ אֶת־כֶּ֣בֶשׂ הָֽאָשָׁם֒ וְלָקַ֤ח הַכֹּהֵן֙ מִדַּ֣ם הָֽאָשָׁ֔ם וְנָתַ֛ן עַל־תְּנ֥וּךְ אֹֽזֶן־הַמִּטַּהֵ֖ר הַיְמָנִ֑ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִֽית׃', 'וּמִן־הַשֶּׁ֖מֶן יִצֹ֣ק הַכֹּהֵ֑ן עַל־כַּ֥ף הַכֹּהֵ֖ן הַשְּׂמָאלִֽית׃', 'וְהִזָּ֤ה הַכֹּהֵן֙ בְּאֶצְבָּע֣וֹ הַיְמָנִ֔ית מִן־הַשֶּׁ֕מֶן אֲשֶׁ֥ר עַל־כַּפּ֖וֹ הַשְּׂמָאלִ֑ית שֶׁ֥בַע פְּעָמִ֖ים לִפְנֵ֥י יְהֹוָֽה׃', 'וְנָתַ֨ן הַכֹּהֵ֜ן מִן־הַשֶּׁ֣מֶן&thinsp;<b>׀</b> אֲשֶׁ֣ר עַל־כַּפּ֗וֹ עַל־תְּנ֞וּךְ אֹ֤זֶן הַמִּטַּהֵר֙ הַיְמָנִ֔ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִ֑ית עַל־מְק֖וֹם דַּ֥ם הָאָשָֽׁם׃', 'וְהַנּוֹתָ֗ר מִן־הַשֶּׁ֙מֶן֙ אֲשֶׁר֙ עַל־כַּ֣ף הַכֹּהֵ֔ן יִתֵּ֖ן עַל־רֹ֣אשׁ הַמִּטַּהֵ֑ר לְכַפֵּ֥ר עָלָ֖יו לִפְנֵ֥י יְהֹוָֽה׃', 'וְעָשָׂ֤ה אֶת־הָֽאֶחָד֙ מִן־הַתֹּרִ֔ים א֖וֹ מִן־בְּנֵ֣י הַיּוֹנָ֑ה מֵאֲשֶׁ֥ר תַּשִּׂ֖יג יָדֽוֹ׃', 'אֵ֣ת אֲשֶׁר־תַּשִּׂ֞יג יָד֗וֹ אֶת־הָאֶחָ֥ד חַטָּ֛את וְאֶת־הָאֶחָ֥ד עֹלָ֖ה עַל־הַמִּנְחָ֑ה וְכִפֶּ֧ר הַכֹּהֵ֛ן עַ֥ל הַמִּטַּהֵ֖ר לִפְנֵ֥י יְהֹוָֽה׃', 'זֹ֣את תּוֹרַ֔ת אֲשֶׁר־בּ֖וֹ נֶ֣גַע צָרָ֑עַת אֲשֶׁ֛ר לֹֽא־תַשִּׂ֥יג יָד֖וֹ בְּטׇהֳרָתֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'כִּ֤י תָבֹ֙אוּ֙ אֶל־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁ֥ר אֲנִ֛י נֹתֵ֥ן לָכֶ֖ם לַאֲחֻזָּ֑ה וְנָתַתִּי֙ נֶ֣גַע צָרַ֔עַת בְּבֵ֖ית אֶ֥רֶץ אֲחֻזַּתְכֶֽם׃', 'וּבָא֙ אֲשֶׁר־ל֣וֹ הַבַּ֔יִת וְהִגִּ֥יד לַכֹּהֵ֖ן לֵאמֹ֑ר כְּנֶ֕גַע נִרְאָ֥ה לִ֖י בַּבָּֽיִת׃', 'וְצִוָּ֨ה הַכֹּהֵ֜ן וּפִנּ֣וּ אֶת־הַבַּ֗יִת בְּטֶ֨רֶם יָבֹ֤א הַכֹּהֵן֙ לִרְא֣וֹת אֶת־הַנֶּ֔גַע וְלֹ֥א יִטְמָ֖א כׇּל־אֲשֶׁ֣ר בַּבָּ֑יִת וְאַ֥חַר כֵּ֛ן יָבֹ֥א הַכֹּהֵ֖ן לִרְא֥וֹת אֶת־הַבָּֽיִת׃', 'וְרָאָ֣ה אֶת־הַנֶּ֗גַע וְהִנֵּ֤ה הַנֶּ֙גַע֙ בְּקִירֹ֣ת הַבַּ֔יִת שְׁקַֽעֲרוּרֹת֙ יְרַקְרַקֹּ֔ת א֖וֹ אֲדַמְדַּמֹּ֑ת וּמַרְאֵיהֶ֥ן שָׁפָ֖ל מִן־הַקִּֽיר׃', 'וְיָצָ֧א הַכֹּהֵ֛ן מִן־הַבַּ֖יִת אֶל־פֶּ֣תַח הַבָּ֑יִת וְהִסְגִּ֥יר אֶת־הַבַּ֖יִת שִׁבְעַ֥ת יָמִֽים׃', 'וְשָׁ֥ב הַכֹּהֵ֖ן בַּיּ֣וֹם הַשְּׁבִיעִ֑י וְרָאָ֕ה וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖גַע בְּקִירֹ֥ת הַבָּֽיִת׃', 'וְצִוָּה֙ הַכֹּהֵ֔ן וְחִלְּצוּ֙ אֶת־הָ֣אֲבָנִ֔ים אֲשֶׁ֥ר בָּהֵ֖ן הַנָּ֑גַע וְהִשְׁלִ֤יכוּ אֶתְהֶן֙ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃', 'וְאֶת־הַבַּ֛יִת יַקְצִ֥עַ מִבַּ֖יִת סָבִ֑יב וְשָׁפְכ֗וּ אֶת־הֶֽעָפָר֙ אֲשֶׁ֣ר הִקְצ֔וּ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃', 'וְלָקְחוּ֙ אֲבָנִ֣ים אֲחֵר֔וֹת וְהֵבִ֖יאוּ אֶל־תַּ֣חַת הָאֲבָנִ֑ים וְעָפָ֥ר אַחֵ֛ר יִקַּ֖ח וְטָ֥ח אֶת־הַבָּֽיִת׃', 'וְאִם־יָשׁ֤וּב הַנֶּ֙גַע֙ וּפָרַ֣ח בַּבַּ֔יִת אַחַ֖ר חִלֵּ֣ץ אֶת־הָאֲבָנִ֑ים וְאַחֲרֵ֛י הִקְצ֥וֹת אֶת־הַבַּ֖יִת וְאַחֲרֵ֥י הִטּֽוֹחַ׃', 'וּבָא֙ הַכֹּהֵ֔ן וְרָאָ֕ה וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖גַע בַּבָּ֑יִת צָרַ֨עַת מַמְאֶ֥רֶת הִ֛וא בַּבַּ֖יִת טָמֵ֥א הֽוּא׃', 'וְנָתַ֣ץ אֶת־הַבַּ֗יִת אֶת־אֲבָנָיו֙ וְאֶת־עֵצָ֔יו וְאֵ֖ת כׇּל־עֲפַ֣ר הַבָּ֑יִת וְהוֹצִיא֙ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃', 'וְהַבָּא֙ אֶל־הַבַּ֔יִת כׇּל־יְמֵ֖י הִסְגִּ֣יר אֹת֑וֹ יִטְמָ֖א עַד־הָעָֽרֶב׃', 'וְהַשֹּׁכֵ֣ב בַּבַּ֔יִת יְכַבֵּ֖ס אֶת־בְּגָדָ֑יו וְהָאֹכֵ֣ל בַּבַּ֔יִת יְכַבֵּ֖ס אֶת־בְּגָדָֽיו׃', 'וְאִם־בֹּ֨א יָבֹ֜א הַכֹּהֵ֗ן וְרָאָה֙ וְ֠הִנֵּ֠ה לֹא־פָשָׂ֤ה הַנֶּ֙גַע֙ בַּבַּ֔יִת אַחֲרֵ֖י הִטֹּ֣חַ אֶת־הַבָּ֑יִת וְטִהַ֤ר הַכֹּהֵן֙ אֶת־הַבַּ֔יִת כִּ֥י נִרְפָּ֖א הַנָּֽגַע׃', 'וְלָקַ֛ח לְחַטֵּ֥א אֶת־הַבַּ֖יִת שְׁתֵּ֣י צִפֳּרִ֑ים וְעֵ֣ץ אֶ֔רֶז וּשְׁנִ֥י תוֹלַ֖עַת וְאֵזֹֽב׃', 'וְשָׁחַ֖ט אֶת־הַצִּפֹּ֣ר הָאֶחָ֑ת אֶל־כְּלִי־חֶ֖רֶשׂ עַל־מַ֥יִם חַיִּֽים׃', 'וְלָקַ֣ח אֶת־עֵֽץ־הָ֠אֶ֠רֶז וְאֶת־הָ֨אֵזֹ֜ב וְאֵ֣ת&thinsp;<b>׀</b> שְׁנִ֣י הַתּוֹלַ֗עַת וְאֵת֮ הַצִּפֹּ֣ר הַֽחַיָּה֒ וְטָבַ֣ל אֹתָ֗ם בְּדַם֙ הַצִּפֹּ֣ר הַשְּׁחוּטָ֔ה וּבַמַּ֖יִם הַֽחַיִּ֑ים וְהִזָּ֥ה אֶל־הַבַּ֖יִת שֶׁ֥בַע פְּעָמִֽים׃', 'וְחִטֵּ֣א אֶת־הַבַּ֔יִת בְּדַם֙ הַצִּפּ֔וֹר וּבַמַּ֖יִם הַֽחַיִּ֑ים וּבַצִּפֹּ֣ר הַחַיָּ֗ה וּבְעֵ֥ץ הָאֶ֛רֶז וּבָאֵזֹ֖ב וּבִשְׁנִ֥י הַתּוֹלָֽעַת׃', 'וְשִׁלַּ֞ח אֶת־הַצִּפֹּ֧ר הַֽחַיָּ֛ה אֶל־מִח֥וּץ לָעִ֖יר אֶל־פְּנֵ֣י הַשָּׂדֶ֑ה וְכִפֶּ֥ר עַל־הַבַּ֖יִת וְטָהֵֽר׃', 'זֹ֖את הַתּוֹרָ֑ה לְכׇל־נֶ֥גַע הַצָּרַ֖עַת וְלַנָּֽתֶק׃', 'וּלְצָרַ֥עַת הַבֶּ֖גֶד וְלַבָּֽיִת׃', 'וְלַשְׂאֵ֥ת וְלַסַּפַּ֖חַת וְלַבֶּהָֽרֶת׃', 'לְהוֹרֹ֕ת בְּי֥וֹם הַטָּמֵ֖א וּבְי֣וֹם הַטָּהֹ֑ר זֹ֥את תּוֹרַ֖ת הַצָּרָֽעַת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'דַּבְּרוּ֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וַאֲמַרְתֶּ֖ם אֲלֵהֶ֑ם אִ֣ישׁ אִ֗ישׁ כִּ֤י יִהְיֶה֙ זָ֣ב מִבְּשָׂר֔וֹ זוֹב֖וֹ טָמֵ֥א הֽוּא׃', 'וְזֹ֛את תִּהְיֶ֥ה טֻמְאָת֖וֹ בְּזוֹב֑וֹ רָ֣ר בְּשָׂר֞וֹ אֶת־זוֹב֗וֹ אֽוֹ־הֶחְתִּ֤ים בְּשָׂרוֹ֙ מִזּוֹב֔וֹ טֻמְאָת֖וֹ הִֽוא׃', 'כׇּל־הַמִּשְׁכָּ֗ב אֲשֶׁ֨ר יִשְׁכַּ֥ב עָלָ֛יו הַזָּ֖ב יִטְמָ֑א וְכׇֽל־הַכְּלִ֛י אֲשֶׁר־יֵשֵׁ֥ב עָלָ֖יו יִטְמָֽא׃', 'וְאִ֕ישׁ אֲשֶׁ֥ר יִגַּ֖ע בְּמִשְׁכָּב֑וֹ יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְהַיֹּשֵׁב֙ עַֽל־הַכְּלִ֔י אֲשֶׁר־יֵשֵׁ֥ב עָלָ֖יו הַזָּ֑ב יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְהַנֹּגֵ֖עַ בִּבְשַׂ֣ר הַזָּ֑ב יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכִֽי־יָרֹ֥ק הַזָּ֖ב בַּטָּה֑וֹר וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכׇל־הַמֶּרְכָּ֗ב אֲשֶׁ֨ר יִרְכַּ֥ב עָלָ֛יו הַזָּ֖ב יִטְמָֽא׃', 'וְכׇל־הַנֹּגֵ֗עַ בְּכֹל֙ אֲשֶׁ֣ר יִהְיֶ֣ה תַחְתָּ֔יו יִטְמָ֖א עַד־הָעָ֑רֶב וְהַנּוֹשֵׂ֣א אוֹתָ֔ם יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכֹ֨ל אֲשֶׁ֤ר יִגַּע־בּוֹ֙ הַזָּ֔ב וְיָדָ֖יו לֹא־שָׁטַ֣ף בַּמָּ֑יִם וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וּכְלִי־חֶ֛רֶשׂ אֲשֶׁר־יִגַּע־בּ֥וֹ הַזָּ֖ב יִשָּׁבֵ֑ר וְכׇ֨ל־כְּלִי־עֵ֔ץ יִשָּׁטֵ֖ף בַּמָּֽיִם׃', 'וְכִֽי־יִטְהַ֤ר הַזָּב֙ מִזּוֹב֔וֹ וְסָ֨פַר ל֜וֹ שִׁבְעַ֥ת יָמִ֛ים לְטׇהֳרָת֖וֹ וְכִבֶּ֣ס בְּגָדָ֑יו וְרָחַ֧ץ בְּשָׂר֛וֹ בְּמַ֥יִם חַיִּ֖ים וְטָהֵֽר׃', 'וּבַיּ֣וֹם הַשְּׁמִינִ֗י יִֽקַּֽח־לוֹ֙ שְׁתֵּ֣י תֹרִ֔ים א֥וֹ שְׁנֵ֖י בְּנֵ֣י יוֹנָ֑ה וּבָ֣א&thinsp;<b>׀</b> לִפְנֵ֣י יְהֹוָ֗ה אֶל־פֶּ֙תַח֙ אֹ֣הֶל מוֹעֵ֔ד וּנְתָנָ֖ם אֶל־הַכֹּהֵֽן׃', 'וְעָשָׂ֤ה אֹתָם֙ הַכֹּהֵ֔ן אֶחָ֣ד חַטָּ֔את וְהָאֶחָ֖ד עֹלָ֑ה וְכִפֶּ֨ר עָלָ֧יו הַכֹּהֵ֛ן לִפְנֵ֥י יְהֹוָ֖ה מִזּוֹבֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִ֕ישׁ כִּֽי־תֵצֵ֥א מִמֶּ֖נּוּ שִׁכְבַת־זָ֑רַע וְרָחַ֥ץ בַּמַּ֛יִם אֶת־כׇּל־בְּשָׂר֖וֹ וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכׇל־בֶּ֣גֶד וְכׇל־ע֔וֹר אֲשֶׁר־יִהְיֶ֥ה עָלָ֖יו שִׁכְבַת־זָ֑רַע וְכֻבַּ֥ס בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְאִשָּׁ֕ה אֲשֶׁ֨ר יִשְׁכַּ֥ב אִ֛ישׁ אֹתָ֖הּ שִׁכְבַת־זָ֑רַע וְרָחֲצ֣וּ בַמַּ֔יִם וְטָמְא֖וּ עַד־הָעָֽרֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וְאִשָּׁה֙ כִּֽי־תִהְיֶ֣ה זָבָ֔ה דָּ֛ם יִהְיֶ֥ה זֹבָ֖הּ בִּבְשָׂרָ֑הּ שִׁבְעַ֤ת יָמִים֙ תִּהְיֶ֣ה בְנִדָּתָ֔הּ וְכׇל־הַנֹּגֵ֥עַ בָּ֖הּ יִטְמָ֥א עַד־הָעָֽרֶב׃', 'וְכֹל֩ אֲשֶׁ֨ר תִּשְׁכַּ֥ב עָלָ֛יו בְּנִדָּתָ֖הּ יִטְמָ֑א וְכֹ֛ל אֲשֶׁר־תֵּשֵׁ֥ב עָלָ֖יו יִטְמָֽא׃', 'וְכׇל־הַנֹּגֵ֖עַ בְּמִשְׁכָּבָ֑הּ יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכׇ֨ל־הַנֹּגֵ֔עַ בְּכׇל־כְּלִ֖י אֲשֶׁר־תֵּשֵׁ֣ב עָלָ֑יו יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְאִ֨ם עַֽל־הַמִּשְׁכָּ֜ב ה֗וּא א֧וֹ עַֽל־הַכְּלִ֛י אֲשֶׁר־הִ֥וא יֹשֶֽׁבֶת־עָלָ֖יו בְּנׇגְעוֹ־ב֑וֹ יִטְמָ֖א עַד־הָעָֽרֶב׃', 'וְאִ֡ם שָׁכֹב֩ יִשְׁכַּ֨ב אִ֜ישׁ אֹתָ֗הּ וּתְהִ֤י נִדָּתָהּ֙ עָלָ֔יו וְטָמֵ֖א שִׁבְעַ֣ת יָמִ֑ים וְכׇל־הַמִּשְׁכָּ֛ב אֲשֶׁר־יִשְׁכַּ֥ב עָלָ֖יו יִטְמָֽא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִשָּׁ֡ה כִּֽי־יָזוּב֩ ז֨וֹב דָּמָ֜הּ יָמִ֣ים רַבִּ֗ים בְּלֹא֙ עֶת־נִדָּתָ֔הּ א֥וֹ כִֽי־תָז֖וּב עַל־נִדָּתָ֑הּ כׇּל־יְמֵ֞י ז֣וֹב טֻמְאָתָ֗הּ כִּימֵ֧י נִדָּתָ֛הּ תִּהְיֶ֖ה טְמֵאָ֥ה הִֽוא׃', 'כׇּל־הַמִּשְׁכָּ֞ב אֲשֶׁר־תִּשְׁכַּ֤ב עָלָיו֙ כׇּל־יְמֵ֣י זוֹבָ֔הּ כְּמִשְׁכַּ֥ב נִדָּתָ֖הּ יִֽהְיֶה־לָּ֑הּ וְכׇֽל־הַכְּלִי֙ אֲשֶׁ֣ר תֵּשֵׁ֣ב עָלָ֔יו טָמֵ֣א יִהְיֶ֔ה כְּטֻמְאַ֖ת נִדָּתָֽהּ׃', 'וְכׇל־הַנּוֹגֵ֥עַ בָּ֖ם יִטְמָ֑א וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְאִֽם־טָהֲרָ֖ה מִזּוֹבָ֑הּ וְסָ֥פְרָה לָּ֛הּ שִׁבְעַ֥ת יָמִ֖ים וְאַחַ֥ר תִּטְהָֽר׃', 'וּבַיּ֣וֹם הַשְּׁמִינִ֗י תִּֽקַּֽח־לָהּ֙ שְׁתֵּ֣י תֹרִ֔ים א֥וֹ שְׁנֵ֖י בְּנֵ֣י יוֹנָ֑ה וְהֵבִיאָ֤ה אוֹתָם֙ אֶל־הַכֹּהֵ֔ן אֶל־פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃', 'וְעָשָׂ֤ה הַכֹּהֵן֙ אֶת־הָאֶחָ֣ד חַטָּ֔את וְאֶת־הָאֶחָ֖ד עֹלָ֑ה וְכִפֶּ֨ר עָלֶ֤יהָ הַכֹּהֵן֙ לִפְנֵ֣י יְהֹוָ֔ה מִזּ֖וֹב טֻמְאָתָֽהּ׃', 'וְהִזַּרְתֶּ֥ם אֶת־בְּנֵי־יִשְׂרָאֵ֖ל מִטֻּמְאָתָ֑ם וְלֹ֤א יָמֻ֙תוּ֙ בְּטֻמְאָתָ֔ם בְּטַמְּאָ֥ם אֶת־מִשְׁכָּנִ֖י אֲשֶׁ֥ר בְּתוֹכָֽם׃', 'זֹ֥את תּוֹרַ֖ת הַזָּ֑ב וַאֲשֶׁ֨ר תֵּצֵ֥א מִמֶּ֛נּוּ שִׁכְבַת־זֶ֖רַע לְטׇמְאָה־בָֽהּ׃', 'וְהַדָּוָה֙ בְּנִדָּתָ֔הּ וְהַזָּב֙ אֶת־זוֹב֔וֹ לַזָּכָ֖ר וְלַנְּקֵבָ֑ה וּלְאִ֕ישׁ אֲשֶׁ֥ר יִשְׁכַּ֖ב עִם־טְמֵאָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-14-1">Chap. 14</a><a href="#v-15-1">Chap. 15</a></div>
+  <div class="seif" id="v-14-1">
+      <span class="seif-num">14:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-14-2">
+      <span class="seif-num">14:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֤את תִּֽהְיֶה֙ תּוֹרַ֣ת הַמְּצֹרָ֔ע בְּי֖וֹם טׇהֳרָת֑וֹ וְהוּבָ֖א אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>זאת תהיה תורת המצרע ביום טהרתו והובא אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>"Voici quelle sera la règle imposée au lépreux lorsqu’il redeviendra pur: il sera présenté au pontife.</p></div>
+    </div><div class="seif" id="v-14-3">
+      <span class="seif-num">14:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָצָא֙ הַכֹּהֵ֔ן אֶל־מִח֖וּץ לַֽמַּחֲנֶ֑ה וְרָאָה֙ הַכֹּהֵ֔ן וְהִנֵּ֛ה נִרְפָּ֥א נֶֽגַע־הַצָּרַ֖עַת מִן־הַצָּרֽוּעַ׃</p></div><div class="heb-s"><p>ויצא הכהן אל־מחוץ למחנה וראה הכהן והנה נרפא נגע־הצרעת מן־הצרוע׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife se transportera hors du camp, et constatera que la plaie de lèpre a quitté le lépreux.</p></div>
+    </div><div class="seif" id="v-14-4">
+      <span class="seif-num">14:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוָּה֙ הַכֹּהֵ֔ן וְלָקַ֧ח לַמִּטַּהֵ֛ר שְׁתֵּֽי־צִפֳּרִ֥ים חַיּ֖וֹת טְהֹר֑וֹת וְעֵ֣ץ אֶ֔רֶז וּשְׁנִ֥י תוֹלַ֖עַת וְאֵזֹֽב׃</p></div><div class="heb-s"><p>וצוה הכהן ולקח למטהר שתי־צפרים חיות טהרות ועץ ארז ושני תולעת ואזב׃</p></div></div>
+      <div class="texte-fr"><p>Sur l’ordre du pontife, on apportera, pour l’homme à purifier, deux oiseaux vivants, purs; du bois de cèdre, de l’écarlate et de l’hysope.</p></div>
+    </div><div class="seif" id="v-14-5">
+      <span class="seif-num">14:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוָּה֙ הַכֹּהֵ֔ן וְשָׁחַ֖ט אֶת־הַצִּפּ֣וֹר הָאֶחָ֑ת אֶל־כְּלִי־חֶ֖רֶשׂ עַל־מַ֥יִם חַיִּֽים׃</p></div><div class="heb-s"><p>וצוה הכהן ושחט את־הצפור האחת אל־כלי־חרש על־מים חיים׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife ordonnera qu’on égorge l’un des oiseaux, au-dessus d’un vaisseau d’argile, sur de l’eau vive.</p></div>
+    </div><div class="seif" id="v-14-6">
+      <span class="seif-num">14:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַצִּפֹּ֤ר הַֽחַיָּה֙ יִקַּ֣ח אֹתָ֔הּ וְאֶת־עֵ֥ץ הָאֶ֛רֶז וְאֶת־שְׁנִ֥י הַתּוֹלַ֖עַת וְאֶת־הָאֵזֹ֑ב וְטָבַ֨ל אוֹתָ֜ם וְאֵ֣ת&thinsp;<b>׀</b> הַצִּפֹּ֣ר הַֽחַיָּ֗ה בְּדַם֙ הַצִּפֹּ֣ר הַשְּׁחֻטָ֔ה עַ֖ל הַמַּ֥יִם הַֽחַיִּֽים׃</p></div><div class="heb-s"><p>את־הצפר החיה יקח אתה ואת־עץ הארז ואת־שני התולעת ואת־האזב וטבל אותם ואת&thinsp;<b>׀</b> הצפר החיה בדם הצפר השחטה על המים החיים׃</p></div></div>
+      <div class="texte-fr"><p>Pour l’oiseau vivant, il le prendra ainsi que le bois de cèdre, l’écarlate et l’hysope; il plongera ces objets, avec l’oiseau vivant, dans le sang de l’oiseau égorgé, qui s’est mêlé à l’eau vive;</p></div>
+    </div><div class="seif" id="v-14-7">
+      <span class="seif-num">14:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִזָּ֗ה עַ֧ל הַמִּטַּהֵ֛ר מִן־הַצָּרַ֖עַת שֶׁ֣בַע פְּעָמִ֑ים וְטִ֣הֲר֔וֹ וְשִׁלַּ֛ח אֶת־הַצִּפֹּ֥ר הַֽחַיָּ֖ה עַל־פְּנֵ֥י הַשָּׂדֶֽה׃</p></div><div class="heb-s"><p>והזה על המטהר מן־הצרעת שבע פעמים וטהרו ושלח את־הצפר החיה על־פני השדה׃</p></div></div>
+      <div class="texte-fr"><p>en fera sept aspersions sur celui qui se purifie de la lèpre, et, l’ayant purifié, lâchera l’oiseau vivant dans la campagne.</p></div>
+    </div><div class="seif" id="v-14-8">
+      <span class="seif-num">14:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִבֶּס֩ הַמִּטַּהֵ֨ר אֶת־בְּגָדָ֜יו וְגִלַּ֣ח אֶת־כׇּל־שְׂעָר֗וֹ וְרָחַ֤ץ בַּמַּ֙יִם֙ וְטָהֵ֔ר וְאַחַ֖ר יָב֣וֹא אֶל־הַֽמַּחֲנֶ֑ה וְיָשַׁ֛ב מִח֥וּץ לְאׇהֳל֖וֹ שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>וכבס המטהר את־בגדיו וגלח את־כל־שערו ורחץ במים וטהר ואחר יבוא אל־המחנה וישב מחוץ לאהלו שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui se purifie lavera ses vêtements, se rasera tout le poil, se baignera et deviendra pur. Il pourra alors rentrer dans le camp, mais il restera sept jours hors de sa tente.</p></div>
+    </div><div class="seif" id="v-14-9">
+      <span class="seif-num">14:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָה֩ בַיּ֨וֹם הַשְּׁבִיעִ֜י יְגַלַּ֣ח אֶת־כׇּל־שְׂעָר֗וֹ אֶת־רֹאשׁ֤וֹ וְאֶת־זְקָנוֹ֙ וְאֵת֙ גַּבֹּ֣ת עֵינָ֔יו וְאֶת־כׇּל־שְׂעָר֖וֹ יְגַלֵּ֑חַ וְכִבֶּ֣ס אֶת־בְּגָדָ֗יו וְרָחַ֧ץ אֶת־בְּשָׂר֛וֹ בַּמַּ֖יִם וְטָהֵֽר׃</p></div><div class="heb-s"><p>והיה ביום השביעי יגלח את־כל־שערו את־ראשו ואת־זקנו ואת גבת עיניו ואת־כל־שערו יגלח וכבס את־בגדיו ורחץ את־בשרו במים וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Puis, le septième jour, il se rasera tout le poil: sa chevelure, sa barbe, ses sourcils, tout son poil; il lavera ses vêtements, baignera son corps dans l’eau, et deviendra pur.</p></div>
+    </div><div class="seif" id="v-14-10">
+      <span class="seif-num">14:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַיּ֣וֹם הַשְּׁמִינִ֗י יִקַּ֤ח שְׁנֵֽי־כְבָשִׂים֙ תְּמִימִ֔ם וְכַבְשָׂ֥ה אַחַ֛ת בַּת־שְׁנָתָ֖הּ תְּמִימָ֑ה וּשְׁלֹשָׁ֣ה עֶשְׂרֹנִ֗ים סֹ֤לֶת מִנְחָה֙ בְּלוּלָ֣ה בַשֶּׁ֔מֶן וְלֹ֥ג אֶחָ֖ד שָֽׁמֶן׃</p></div><div class="heb-s"><p>וביום השמיני יקח שני־כבשים תמימם וכבשה אחת בת־שנתה תמימה ושלשה עשרנים סלת מנחה בלולה בשמן ולג אחד שמן׃</p></div></div>
+      <div class="texte-fr"><p>Le huitième jour, il prendra deux agneaux sans défaut, et une brebis âgée d’un an, sans défaut; plus, trois dixièmes de fleur de farine pétrie à l’huile, comme oblation, et un log d’huile.</p></div>
+    </div><div class="seif" id="v-14-11">
+      <span class="seif-num">14:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֶעֱמִ֞יד הַכֹּהֵ֣ן הַֽמְטַהֵ֗ר אֵ֛ת הָאִ֥ישׁ הַמִּטַּהֵ֖ר וְאֹתָ֑ם לִפְנֵ֣י יְהֹוָ֔ה פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>והעמיד הכהן המטהר את האיש המטהר ואתם לפני יהוה פתח אהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife purificateur présentera l’homme qui se purifie, ainsi que ces objets, devant le Seigneur, à l’entrée de la Tente d’assignation;</p></div>
+    </div><div class="seif" id="v-14-12">
+      <span class="seif-num">14:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֨ח הַכֹּהֵ֜ן אֶת־הַכֶּ֣בֶשׂ הָאֶחָ֗ד וְהִקְרִ֥יב אֹת֛וֹ לְאָשָׁ֖ם וְאֶת־לֹ֣ג הַשָּׁ֑מֶן וְהֵנִ֥יף אֹתָ֛ם תְּנוּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ולקח הכהן את־הכבש האחד והקריב אתו לאשם ואת־לג השמן והניף אתם תנופה לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>et le pontife prendra l’un des agneaux (qu’il doit offrir comme délictif), puis le log d’huile, et il en opérera le balancement devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-13">
+      <span class="seif-num">14:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁחַ֣ט אֶת־הַכֶּ֗בֶשׂ בִּ֠מְק֠וֹם אֲשֶׁ֨ר יִשְׁחַ֧ט אֶת־הַֽחַטָּ֛את וְאֶת־הָעֹלָ֖ה בִּמְק֣וֹם הַקֹּ֑דֶשׁ כִּ֡י כַּ֠חַטָּ֠את הָאָשָׁ֥ם הוּא֙ לַכֹּהֵ֔ן קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הֽוּא׃</p></div><div class="heb-s"><p>ושחט את־הכבש במקום אשר ישחט את־החטאת ואת־העלה במקום הקדש כי כחטאת האשם הוא לכהן קדש קדשים הוא׃</p></div></div>
+      <div class="texte-fr"><p>II immolera cet agneau à l’endroit où on immole l’expiatoire et l’holocauste: dans le saint lieu. Car le délictif doit être, pour le pontife, comme l’expiatoire: c’est une sainteté de premier ordre.</p></div>
+    </div><div class="seif" id="v-14-14">
+      <span class="seif-num">14:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֣ח הַכֹּהֵן֮ מִדַּ֣ם הָאָשָׁם֒ וְנָתַן֙ הַכֹּהֵ֔ן עַל־תְּנ֛וּךְ אֹ֥זֶן הַמִּטַּהֵ֖ר הַיְמָנִ֑ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִֽית׃</p></div><div class="heb-s"><p>ולקח הכהן מדם האשם ונתן הכהן על־תנוך אזן המטהר הימנית ועל־בהן ידו הימנית ועל־בהן רגלו הימנית׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife prendra du sang de ce délictif, et il en mettra sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit.</p></div>
+    </div><div class="seif" id="v-14-15">
+      <span class="seif-num">14:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֥ח הַכֹּהֵ֖ן מִלֹּ֣ג הַשָּׁ֑מֶן וְיָצַ֛ק עַל־כַּ֥ף הַכֹּהֵ֖ן הַשְּׂמָאלִֽית׃</p></div><div class="heb-s"><p>ולקח הכהן מלג השמן ויצק על־כף הכהן השמאלית׃</p></div></div>
+      <div class="texte-fr"><p>Puis le pontife prendra le log d’huile et en fera couler dans la main gauche du pontife.</p></div>
+    </div><div class="seif" id="v-14-16">
+      <span class="seif-num">14:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְטָבַ֤ל הַכֹּהֵן֙ אֶת־אֶצְבָּע֣וֹ הַיְמָנִ֔ית מִן־הַשֶּׁ֕מֶן אֲשֶׁ֥ר עַל־כַּפּ֖וֹ הַשְּׂמָאלִ֑ית וְהִזָּ֨ה מִן־הַשֶּׁ֧מֶן בְּאֶצְבָּע֛וֹ שֶׁ֥בַע פְּעָמִ֖ים לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>וטבל הכהן את־אצבעו הימנית מן־השמן אשר על־כפו השמאלית והזה מן־השמן באצבעו שבע פעמים לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife trempera son index droit dans l’huile qui est dans sa main gauche, et de cette huile il fera, avec l’index, sept aspersions devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-17">
+      <span class="seif-num">14:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִיֶּ֨תֶר הַשֶּׁ֜מֶן אֲשֶׁ֣ר עַל־כַּפּ֗וֹ יִתֵּ֤ן הַכֹּהֵן֙ עַל־תְּנ֞וּךְ אֹ֤זֶן הַמִּטַּהֵר֙ הַיְמָנִ֔ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִ֑ית עַ֖ל דַּ֥ם הָאָשָֽׁם׃</p></div><div class="heb-s"><p>ומיתר השמן אשר על־כפו יתן הכהן על־תנוך אזן המטהר הימנית ועל־בהן ידו הימנית ועל־בהן רגלו הימנית על דם האשם׃</p></div></div>
+      <div class="texte-fr"><p>Du surplus de l’huile qui est dans sa main, le pontife mettra une partie sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit, par-dessus le sang du délictif.</p></div>
+    </div><div class="seif" id="v-14-18">
+      <span class="seif-num">14:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנּוֹתָ֗ר בַּשֶּׁ֙מֶן֙ אֲשֶׁר֙ עַל־כַּ֣ף הַכֹּהֵ֔ן יִתֵּ֖ן עַל־רֹ֣אשׁ הַמִּטַּהֵ֑ר וְכִפֶּ֥ר עָלָ֛יו הַכֹּהֵ֖ן לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>והנותר בשמן אשר על־כף הכהן יתן על־ראש המטהר וכפר עליו הכהן לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et ce qui sera resté de l’huile contenue dans la main du pontife, il l’appliquera sur la tête de celui qui se purifie, et fera expiation pour lui devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-19">
+      <span class="seif-num">14:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשָׂ֤ה הַכֹּהֵן֙ אֶת־הַ֣חַטָּ֔את וְכִפֶּ֕ר עַל־הַמִּטַּהֵ֖ר מִטֻּמְאָת֑וֹ וְאַחַ֖ר יִשְׁחַ֥ט אֶת־הָעֹלָֽה׃</p></div><div class="heb-s"><p>ועשה הכהן את־החטאת וכפר על־המטהר מטמאתו ואחר ישחט את־העלה׃</p></div></div>
+      <div class="texte-fr"><p>Alors le pontife s’occupera de l’expiatoire, et fera expier son impureté à celui qui se purifie; puis il immolera l’holocauste.</p></div>
+    </div><div class="seif" id="v-14-20">
+      <span class="seif-num">14:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֶעֱלָ֧ה הַכֹּהֵ֛ן אֶת־הָעֹלָ֥ה וְאֶת־הַמִּנְחָ֖ה הַמִּזְבֵּ֑חָה וְכִפֶּ֥ר עָלָ֛יו הַכֹּהֵ֖ן וְטָהֵֽר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>והעלה הכהן את־העלה ואת־המנחה המזבחה וכפר עליו הכהן וטהר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Le pontife offrira cet holocauste, ainsi que l’oblation, sur l’autel, fera ainsi expiation pour lui, et il sera pur.</p></div>
+    </div><div class="seif" id="v-14-21">
+      <span class="seif-num">14:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־דַּ֣ל ה֗וּא וְאֵ֣ין יָדוֹ֮ מַשֶּׂ֒גֶת֒ וְ֠לָקַ֠ח כֶּ֣בֶשׂ אֶחָ֥ד אָשָׁ֛ם לִתְנוּפָ֖ה לְכַפֵּ֣ר עָלָ֑יו וְעִשָּׂר֨וֹן סֹ֜לֶת אֶחָ֨ד בָּל֥וּל בַּשֶּׁ֛מֶן לְמִנְחָ֖ה וְלֹ֥ג שָֽׁמֶן׃</p></div><div class="heb-s"><p>ואם־דל הוא ואין ידו משגת ולקח כבש אחד אשם לתנופה לכפר עליו ועשרון סלת אחד בלול בשמן למנחה ולג שמן׃</p></div></div>
+      <div class="texte-fr"><p>Si cet homme est pauvre et que ses moyens soient insuffisants, il prendra un agneau comme délictif destiné à être balancé, pour obtenir son expiation; plus, un dixième de fleur de farine pétrie à l’huile, pour oblation, et un log d’huile;</p></div>
+    </div><div class="seif" id="v-14-22">
+      <span class="seif-num">14:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּשְׁתֵּ֣י תֹרִ֗ים א֤וֹ שְׁנֵי֙ בְּנֵ֣י יוֹנָ֔ה אֲשֶׁ֥ר תַּשִּׂ֖יג יָד֑וֹ וְהָיָ֤ה אֶחָד֙ חַטָּ֔את וְהָאֶחָ֖ד עֹלָֽה׃</p></div><div class="heb-s"><p>ושתי תרים או שני בני יונה אשר תשיג ידו והיה אחד חטאת והאחד עלה׃</p></div></div>
+      <div class="texte-fr"><p>puis deux tourterelles ou deux jeunes colombes, selon que le permettront ses moyens; l’une sera un expiatoire, l’autre un holocauste.</p></div>
+    </div><div class="seif" id="v-14-23">
+      <span class="seif-num">14:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵבִ֨יא אֹתָ֜ם בַּיּ֧וֹם הַשְּׁמִינִ֛י לְטׇהֳרָת֖וֹ אֶל־הַכֹּהֵ֑ן אֶל־פֶּ֥תַח אֹֽהֶל־מוֹעֵ֖ד לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>והביא אתם ביום השמיני לטהרתו אל־הכהן אל־פתח אהל־מועד לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Il les apportera, le huitième jour de sa purification, au pontife, à l’entrée de la Tente d’assignation, devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-24">
+      <span class="seif-num">14:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֧ח הַכֹּהֵ֛ן אֶת־כֶּ֥בֶשׂ הָאָשָׁ֖ם וְאֶת־לֹ֣ג הַשָּׁ֑מֶן וְהֵנִ֨יף אֹתָ֧ם הַכֹּהֵ֛ן תְּנוּפָ֖ה לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ולקח הכהן את־כבש האשם ואת־לג השמן והניף אתם הכהן תנופה לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife prendra l’agneau délictif et le log d’huile, et en opérera le balancement devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-25">
+      <span class="seif-num">14:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁחַט֮ אֶת־כֶּ֣בֶשׂ הָֽאָשָׁם֒ וְלָקַ֤ח הַכֹּהֵן֙ מִדַּ֣ם הָֽאָשָׁ֔ם וְנָתַ֛ן עַל־תְּנ֥וּךְ אֹֽזֶן־הַמִּטַּהֵ֖ר הַיְמָנִ֑ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִֽית׃</p></div><div class="heb-s"><p>ושחט את־כבש האשם ולקח הכהן מדם האשם ונתן על־תנוך אזן־המטהר הימנית ועל־בהן ידו הימנית ועל־בהן רגלו הימנית׃</p></div></div>
+      <div class="texte-fr"><p>Après avoir immolé l’agneau délictif, le pontife prendra du sang de la victime, et l’appliquera sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit.</p></div>
+    </div><div class="seif" id="v-14-26">
+      <span class="seif-num">14:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִן־הַשֶּׁ֖מֶן יִצֹ֣ק הַכֹּהֵ֑ן עַל־כַּ֥ף הַכֹּהֵ֖ן הַשְּׂמָאלִֽית׃</p></div><div class="heb-s"><p>ומן־השמן יצק הכהן על־כף הכהן השמאלית׃</p></div></div>
+      <div class="texte-fr"><p>Puis le pontife versera une partie de l’huile dans la main gauche du pontife;</p></div>
+    </div><div class="seif" id="v-14-27">
+      <span class="seif-num">14:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִזָּ֤ה הַכֹּהֵן֙ בְּאֶצְבָּע֣וֹ הַיְמָנִ֔ית מִן־הַשֶּׁ֕מֶן אֲשֶׁ֥ר עַל־כַּפּ֖וֹ הַשְּׂמָאלִ֑ית שֶׁ֥בַע פְּעָמִ֖ים לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>והזה הכהן באצבעו הימנית מן־השמן אשר על־כפו השמאלית שבע פעמים לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>fera avec l’index droit, de cette huile qui est dans sa main gauche, sept aspersions devant le Seigneur,</p></div>
+    </div><div class="seif" id="v-14-28">
+      <span class="seif-num">14:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַ֨ן הַכֹּהֵ֜ן מִן־הַשֶּׁ֣מֶן&thinsp;<b>׀</b> אֲשֶׁ֣ר עַל־כַּפּ֗וֹ עַל־תְּנ֞וּךְ אֹ֤זֶן הַמִּטַּהֵר֙ הַיְמָנִ֔ית וְעַל־בֹּ֤הֶן יָדוֹ֙ הַיְמָנִ֔ית וְעַל־בֹּ֥הֶן רַגְל֖וֹ הַיְמָנִ֑ית עַל־מְק֖וֹם דַּ֥ם הָאָשָֽׁם׃</p></div><div class="heb-s"><p>ונתן הכהן מן־השמן&thinsp;<b>׀</b> אשר על־כפו על־תנוך אזן המטהר הימנית ועל־בהן ידו הימנית ועל־בהן רגלו הימנית על־מקום דם האשם׃</p></div></div>
+      <div class="texte-fr"><p>et mettra un peu de l’huile, contenue dans sa main, sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit, au même endroit que le sang du délictif.</p></div>
+    </div><div class="seif" id="v-14-29">
+      <span class="seif-num">14:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנּוֹתָ֗ר מִן־הַשֶּׁ֙מֶן֙ אֲשֶׁר֙ עַל־כַּ֣ף הַכֹּהֵ֔ן יִתֵּ֖ן עַל־רֹ֣אשׁ הַמִּטַּהֵ֑ר לְכַפֵּ֥ר עָלָ֖יו לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>והנותר מן־השמן אשר על־כף הכהן יתן על־ראש המטהר לכפר עליו לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Quant au restant de l’huile qui est dans la main du pontife, il l’appliquera sur la tête de celui qui se purifie, pour lui obtenir expiation devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-14-30">
+      <span class="seif-num">14:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשָׂ֤ה אֶת־הָֽאֶחָד֙ מִן־הַתֹּרִ֔ים א֖וֹ מִן־בְּנֵ֣י הַיּוֹנָ֑ה מֵאֲשֶׁ֥ר תַּשִּׂ֖יג יָדֽוֹ׃</p></div><div class="heb-s"><p>ועשה את־האחד מן־התרים או מן־בני היונה מאשר תשיג ידו׃</p></div></div>
+      <div class="texte-fr"><p>Puis il traitera l’une des tourterelles ou des jeunes colombes, des victimes qu’on aura pu fournir;</p></div>
+    </div><div class="seif" id="v-14-31">
+      <span class="seif-num">14:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣ת אֲשֶׁר־תַּשִּׂ֞יג יָד֗וֹ אֶת־הָאֶחָ֥ד חַטָּ֛את וְאֶת־הָאֶחָ֥ד עֹלָ֖ה עַל־הַמִּנְחָ֑ה וְכִפֶּ֧ר הַכֹּהֵ֛ן עַ֥ל הַמִּטַּהֵ֖ר לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>את אשר־תשיג ידו את־האחד חטאת ואת־האחד עלה על־המנחה וכפר הכהן על המטהר לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>offrira ce qu’on aura pu fournir, un oiseau comme expiatoire, l’autre comme holocauste, en outre de l’oblation; et ainsi le pontife procurera, à celui qui se purifie, son expiation devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-14-32">
+      <span class="seif-num">14:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֣את תּוֹרַ֔ת אֲשֶׁר־בּ֖וֹ נֶ֣גַע צָרָ֑עַת אֲשֶׁ֛ר לֹֽא־תַשִּׂ֥יג יָד֖וֹ בְּטׇהֳרָתֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>זאת תורת אשר־בו נגע צרעת אשר לא־תשיג ידו בטהרתו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Telle est la règle pour la purification de celui qui a eu une plaie de lèpre, quand ses moyens sont insuffisants."</p></div>
+    </div><div class="seif" id="v-14-33">
+      <span class="seif-num">14:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse et à Aaron en ces termes:</p></div>
+    </div><div class="seif" id="v-14-34">
+      <span class="seif-num">14:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י תָבֹ֙אוּ֙ אֶל־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁ֥ר אֲנִ֛י נֹתֵ֥ן לָכֶ֖ם לַאֲחֻזָּ֑ה וְנָתַתִּי֙ נֶ֣גַע צָרַ֔עַת בְּבֵ֖ית אֶ֥רֶץ אֲחֻזַּתְכֶֽם׃</p></div><div class="heb-s"><p>כי תבאו אל־ארץ כנען אשר אני נתן לכם לאחזה ונתתי נגע צרעת בבית ארץ אחזתכם׃</p></div></div>
+      <div class="texte-fr"><p>"Quand vous serez arrivés au pays de Canaan, dont je vous donne la possession, et que je ferai naître une altération lépreuse dans une maison du pays que vous posséderez,</p></div>
+    </div><div class="seif" id="v-14-35">
+      <span class="seif-num">14:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָא֙ אֲשֶׁר־ל֣וֹ הַבַּ֔יִת וְהִגִּ֥יד לַכֹּהֵ֖ן לֵאמֹ֑ר כְּנֶ֕גַע נִרְאָ֥ה לִ֖י בַּבָּֽיִת׃</p></div><div class="heb-s"><p>ובא אשר־לו הבית והגיד לכהן לאמר כנגע נראה לי בבית׃</p></div></div>
+      <div class="texte-fr"><p>celui a qui sera la maison ira le déclarer au pontife, en disant: "J’ai observé quelque altération à ma maison."</p></div>
+    </div><div class="seif" id="v-14-36">
+      <span class="seif-num">14:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוָּ֨ה הַכֹּהֵ֜ן וּפִנּ֣וּ אֶת־הַבַּ֗יִת בְּטֶ֨רֶם יָבֹ֤א הַכֹּהֵן֙ לִרְא֣וֹת אֶת־הַנֶּ֔גַע וְלֹ֥א יִטְמָ֖א כׇּל־אֲשֶׁ֣ר בַּבָּ֑יִת וְאַ֥חַר כֵּ֛ן יָבֹ֥א הַכֹּהֵ֖ן לִרְא֥וֹת אֶת־הַבָּֽיִת׃</p></div><div class="heb-s"><p>וצוה הכהן ופנו את־הבית בטרם יבא הכהן לראות את־הנגע ולא יטמא כל־אשר בבית ואחר כן יבא הכהן לראות את־הבית׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife ordonnera qu’on vide la maison avant qu’il y entre pour examiner l’altération, de peur que tout ce qui est dans la maison ne se trouve impur; après quoi, le pontife viendra visiter cette maison.</p></div>
+    </div><div class="seif" id="v-14-37">
+      <span class="seif-num">14:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָאָ֣ה אֶת־הַנֶּ֗גַע וְהִנֵּ֤ה הַנֶּ֙גַע֙ בְּקִירֹ֣ת הַבַּ֔יִת שְׁקַֽעֲרוּרֹת֙ יְרַקְרַקֹּ֔ת א֖וֹ אֲדַמְדַּמֹּ֑ת וּמַרְאֵיהֶ֥ן שָׁפָ֖ל מִן־הַקִּֽיר׃</p></div><div class="heb-s"><p>וראה את־הנגע והנה הנגע בקירת הבית שקערורת ירקרקת או אדמדמת ומראיהן שפל מן־הקיר׃</p></div></div>
+      <div class="texte-fr"><p>S’il constate, en examinant la plaie, que cette plaie est dans les murs de la maison, en dépressions d’un vert ou d’un rouge foncé, plus basses en apparence que le niveau du mur,</p></div>
+    </div><div class="seif" id="v-14-38">
+      <span class="seif-num">14:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָצָ֧א הַכֹּהֵ֛ן מִן־הַבַּ֖יִת אֶל־פֶּ֣תַח הַבָּ֑יִת וְהִסְגִּ֥יר אֶת־הַבַּ֖יִת שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ויצא הכהן מן־הבית אל־פתח הבית והסגיר את־הבית שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>le pontife se dirigera de la maison vers l’entrée de la maison, et la fera fermer pour sept jours.</p></div>
+    </div><div class="seif" id="v-14-39">
+      <span class="seif-num">14:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁ֥ב הַכֹּהֵ֖ן בַּיּ֣וֹם הַשְּׁבִיעִ֑י וְרָאָ֕ה וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖גַע בְּקִירֹ֥ת הַבָּֽיִת׃</p></div><div class="heb-s"><p>ושב הכהן ביום השביעי וראה והנה פשה הנגע בקירת הבית׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife y retournera le septième jour. S’il observe que la plaie a grandi sur les murs de la maison,</p></div>
+    </div><div class="seif" id="v-14-40">
+      <span class="seif-num">14:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְצִוָּה֙ הַכֹּהֵ֔ן וְחִלְּצוּ֙ אֶת־הָ֣אֲבָנִ֔ים אֲשֶׁ֥ר בָּהֵ֖ן הַנָּ֑גַע וְהִשְׁלִ֤יכוּ אֶתְהֶן֙ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃</p></div><div class="heb-s"><p>וצוה הכהן וחלצו את־האבנים אשר בהן הנגע והשליכו אתהן אל־מחוץ לעיר אל־מקום טמא׃</p></div></div>
+      <div class="texte-fr"><p>il ordonnera qu’on détache les pierres atteintes par la plaie et qu’on les jette hors de la ville, dans un lieu impur.</p></div>
+    </div><div class="seif" id="v-14-41">
+      <span class="seif-num">14:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַבַּ֛יִת יַקְצִ֥עַ מִבַּ֖יִת סָבִ֑יב וְשָׁפְכ֗וּ אֶת־הֶֽעָפָר֙ אֲשֶׁ֣ר הִקְצ֔וּ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃</p></div><div class="heb-s"><p>ואת־הבית יקצע מבית סביב ושפכו את־העפר אשר הקצו אל־מחוץ לעיר אל־מקום טמא׃</p></div></div>
+      <div class="texte-fr"><p>Puis il fera gratter la maison intérieurement, autour de la plaie, et l’on jettera la poussière qu’on aura raclée hors de la ville, dans un lieu impur.</p></div>
+    </div><div class="seif" id="v-14-42">
+      <span class="seif-num">14:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקְחוּ֙ אֲבָנִ֣ים אֲחֵר֔וֹת וְהֵבִ֖יאוּ אֶל־תַּ֣חַת הָאֲבָנִ֑ים וְעָפָ֥ר אַחֵ֛ר יִקַּ֖ח וְטָ֥ח אֶת־הַבָּֽיִת׃</p></div><div class="heb-s"><p>ולקחו אבנים אחרות והביאו אל־תחת האבנים ועפר אחר יקח וטח את־הבית׃</p></div></div>
+      <div class="texte-fr"><p>On prendra d’autres pierres, que l’on posera à la place des premières; on prendra d’autre mortier, et l’on recrépira la maison.</p></div>
+    </div><div class="seif" id="v-14-43">
+      <span class="seif-num">14:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־יָשׁ֤וּב הַנֶּ֙גַע֙ וּפָרַ֣ח בַּבַּ֔יִת אַחַ֖ר חִלֵּ֣ץ אֶת־הָאֲבָנִ֑ים וְאַחֲרֵ֛י הִקְצ֥וֹת אֶת־הַבַּ֖יִת וְאַחֲרֵ֥י הִטּֽוֹחַ׃</p></div><div class="heb-s"><p>ואם־ישוב הנגע ופרח בבית אחר חלץ את־האבנים ואחרי הקצות את־הבית ואחרי הטוח׃</p></div></div>
+      <div class="texte-fr"><p>Et si la plaie recommence à se développer dans la maison après qu’on a gratté et recrépi la maison,</p></div>
+    </div><div class="seif" id="v-14-44">
+      <span class="seif-num">14:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָא֙ הַכֹּהֵ֔ן וְרָאָ֕ה וְהִנֵּ֛ה פָּשָׂ֥ה הַנֶּ֖גַע בַּבָּ֑יִת צָרַ֨עַת מַמְאֶ֥רֶת הִ֛וא בַּבַּ֖יִת טָמֵ֥א הֽוּא׃</p></div><div class="heb-s"><p>ובא הכהן וראה והנה פשה הנגע בבית צרעת ממארת הוא בבית טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>le pontife viendra, et constatera que la plaie s’est accrue dans cette maison; c’est une lèpre corrosive qui règne dans cette maison: elle est impure.</p></div>
+    </div><div class="seif" id="v-14-45">
+      <span class="seif-num">14:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַ֣ץ אֶת־הַבַּ֗יִת אֶת־אֲבָנָיו֙ וְאֶת־עֵצָ֔יו וְאֵ֖ת כׇּל־עֲפַ֣ר הַבָּ֑יִת וְהוֹצִיא֙ אֶל־מִח֣וּץ לָעִ֔יר אֶל־מָק֖וֹם טָמֵֽא׃</p></div><div class="heb-s"><p>ונתץ את־הבית את־אבניו ואת־עציו ואת כל־עפר הבית והוציא אל־מחוץ לעיר אל־מקום טמא׃</p></div></div>
+      <div class="texte-fr"><p>On démolira la maison, les pierres, la charpente et tout l’enduit de la maison, qu’on transportera hors de la ville, dans un lieu impur.</p></div>
+    </div><div class="seif" id="v-14-46">
+      <span class="seif-num">14:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַבָּא֙ אֶל־הַבַּ֔יִת כׇּל־יְמֵ֖י הִסְגִּ֣יר אֹת֑וֹ יִטְמָ֖א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והבא אל־הבית כל־ימי הסגיר אתו יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui entrera dans la maison tout le temps qu’on l’a déclarée close, sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-14-47">
+      <span class="seif-num">14:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַשֹּׁכֵ֣ב בַּבַּ֔יִת יְכַבֵּ֖ס אֶת־בְּגָדָ֑יו וְהָאֹכֵ֣ל בַּבַּ֔יִת יְכַבֵּ֖ס אֶת־בְּגָדָֽיו׃</p></div><div class="heb-s"><p>והשכב בבית יכבס את־בגדיו והאכל בבית יכבס את־בגדיו׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui couchera dans cette maison, lavera ses vêtements, et celui qui y mangera doit les laver de même.</p></div>
+    </div><div class="seif" id="v-14-48">
+      <span class="seif-num">14:48</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בֹּ֨א יָבֹ֜א הַכֹּהֵ֗ן וְרָאָה֙ וְ֠הִנֵּ֠ה לֹא־פָשָׂ֤ה הַנֶּ֙גַע֙ בַּבַּ֔יִת אַחֲרֵ֖י הִטֹּ֣חַ אֶת־הַבָּ֑יִת וְטִהַ֤ר הַכֹּהֵן֙ אֶת־הַבַּ֔יִת כִּ֥י נִרְפָּ֖א הַנָּֽגַע׃</p></div><div class="heb-s"><p>ואם־בא יבא הכהן וראה והנה לא־פשה הנגע בבית אחרי הטח את־הבית וטהר הכהן את־הבית כי נרפא הנגע׃</p></div></div>
+      <div class="texte-fr"><p>Mais si le pontife, lorsqu’il vient, observe que la plaie n’a pas fait de progrès dans la maison après que celle-ci a été recrépie, le pontife déclarera cette maison pure, car la plaie est guérie.</p></div>
+    </div><div class="seif" id="v-14-49">
+      <span class="seif-num">14:49</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֛ח לְחַטֵּ֥א אֶת־הַבַּ֖יִת שְׁתֵּ֣י צִפֳּרִ֑ים וְעֵ֣ץ אֶ֔רֶז וּשְׁנִ֥י תוֹלַ֖עַת וְאֵזֹֽב׃</p></div><div class="heb-s"><p>ולקח לחטא את־הבית שתי צפרים ועץ ארז ושני תולעת ואזב׃</p></div></div>
+      <div class="texte-fr"><p>Il prendra, pour purifier la maison, deux oiseaux, ainsi que du bois de cèdre, de l’écarlate et de l’hysope.</p></div>
+    </div><div class="seif" id="v-14-50">
+      <span class="seif-num">14:50</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁחַ֖ט אֶת־הַצִּפֹּ֣ר הָאֶחָ֑ת אֶל־כְּלִי־חֶ֖רֶשׂ עַל־מַ֥יִם חַיִּֽים׃</p></div><div class="heb-s"><p>ושחט את־הצפר האחת אל־כלי־חרש על־מים חיים׃</p></div></div>
+      <div class="texte-fr"><p>Il égorgera l’un des oiseaux, au-dessus d’un vase d’argile, sur de l’eau vive;</p></div>
+    </div><div class="seif" id="v-14-51">
+      <span class="seif-num">14:51</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֣ח אֶת־עֵֽץ־הָ֠אֶ֠רֶז וְאֶת־הָ֨אֵזֹ֜ב וְאֵ֣ת&thinsp;<b>׀</b> שְׁנִ֣י הַתּוֹלַ֗עַת וְאֵת֮ הַצִּפֹּ֣ר הַֽחַיָּה֒ וְטָבַ֣ל אֹתָ֗ם בְּדַם֙ הַצִּפֹּ֣ר הַשְּׁחוּטָ֔ה וּבַמַּ֖יִם הַֽחַיִּ֑ים וְהִזָּ֥ה אֶל־הַבַּ֖יִת שֶׁ֥בַע פְּעָמִֽים׃</p></div><div class="heb-s"><p>ולקח את־עץ־הארז ואת־האזב ואת&thinsp;<b>׀</b> שני התולעת ואת הצפר החיה וטבל אתם בדם הצפר השחוטה ובמים החיים והזה אל־הבית שבע פעמים׃</p></div></div>
+      <div class="texte-fr"><p>prendra le bois de cèdre, l’hysope et l’écarlate avec l’oiseau vivant, les trempera dans le sang de l’oiseau égorgé et dans l’eau vive, et en aspergera la maison sept fois.</p></div>
+    </div><div class="seif" id="v-14-52">
+      <span class="seif-num">14:52</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחִטֵּ֣א אֶת־הַבַּ֔יִת בְּדַם֙ הַצִּפּ֔וֹר וּבַמַּ֖יִם הַֽחַיִּ֑ים וּבַצִּפֹּ֣ר הַחַיָּ֗ה וּבְעֵ֥ץ הָאֶ֛רֶז וּבָאֵזֹ֖ב וּבִשְׁנִ֥י הַתּוֹלָֽעַת׃</p></div><div class="heb-s"><p>וחטא את־הבית בדם הצפור ובמים החיים ובצפר החיה ובעץ הארז ובאזב ובשני התולעת׃</p></div></div>
+      <div class="texte-fr"><p>Il purifiera ainsi la maison par le sang de l’oiseau, par l’eau vive, par l’oiseau vivant, le bois de cèdre, l’hysope et l’écarlate.</p></div>
+    </div><div class="seif" id="v-14-53">
+      <span class="seif-num">14:53</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשִׁלַּ֞ח אֶת־הַצִּפֹּ֧ר הַֽחַיָּ֛ה אֶל־מִח֥וּץ לָעִ֖יר אֶל־פְּנֵ֣י הַשָּׂדֶ֑ה וְכִפֶּ֥ר עַל־הַבַּ֖יִת וְטָהֵֽר׃</p></div><div class="heb-s"><p>ושלח את־הצפר החיה אל־מחוץ לעיר אל־פני השדה וכפר על־הבית וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Il lâchera l’oiseau vivant hors de la ville, dans la campagne, et fera ainsi propitiation pour la maison, qui deviendra pure.</p></div>
+    </div><div class="seif" id="v-14-54">
+      <span class="seif-num">14:54</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֖את הַתּוֹרָ֑ה לְכׇל־נֶ֥גַע הַצָּרַ֖עַת וְלַנָּֽתֶק׃</p></div><div class="heb-s"><p>זאת התורה לכל־נגע הצרעת ולנתק׃</p></div></div>
+      <div class="texte-fr"><p>Telle est l’instruction relative à toute affection de lèpre et à la teigne;</p></div>
+    </div><div class="seif" id="v-14-55">
+      <span class="seif-num">14:55</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְצָרַ֥עַת הַבֶּ֖גֶד וְלַבָּֽיִת׃</p></div><div class="heb-s"><p>ולצרעת הבגד ולבית׃</p></div></div>
+      <div class="texte-fr"><p>à la lèpre des étoffes, à celle des maisons;</p></div>
+    </div><div class="seif" id="v-14-56">
+      <span class="seif-num">14:56</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלַשְׂאֵ֥ת וְלַסַּפַּ֖חַת וְלַבֶּהָֽרֶת׃</p></div><div class="heb-s"><p>ולשאת ולספחת ולבהרת׃</p></div></div>
+      <div class="texte-fr"><p>à la tumeur, à la dartre et à la tache,</p></div>
+    </div><div class="seif" id="v-14-57">
+      <span class="seif-num">14:57</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְהוֹרֹ֕ת בְּי֥וֹם הַטָּמֵ֖א וּבְי֣וֹם הַטָּהֹ֑ר זֹ֥את תּוֹרַ֖ת הַצָּרָֽעַת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>להורת ביום הטמא וביום הטהר זאת תורת הצרעת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>pour enseigner l’époque où l’on est impur et celle où l’on est pur. Telle est la règle de la lèpre."</p></div>
+    </div><div class="seif" id="v-15-1">
+      <span class="seif-num">15:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse et à Aaron:</p></div>
+    </div><div class="seif" id="v-15-2">
+      <span class="seif-num">15:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבְּרוּ֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וַאֲמַרְתֶּ֖ם אֲלֵהֶ֑ם אִ֣ישׁ אִ֗ישׁ כִּ֤י יִהְיֶה֙ זָ֣ב מִבְּשָׂר֔וֹ זוֹב֖וֹ טָמֵ֥א הֽוּא׃</p></div><div class="heb-s"><p>דברו אל־בני ישראל ואמרתם אלהם איש איש כי יהיה זב מבשרו זובו טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>"Parlez aux enfants d’Israël et dites-leur: Quiconque serait affligé de gonorrhée, son écoulement est impur.</p></div>
+    </div><div class="seif" id="v-15-3">
+      <span class="seif-num">15:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזֹ֛את תִּהְיֶ֥ה טֻמְאָת֖וֹ בְּזוֹב֑וֹ רָ֣ר בְּשָׂר֞וֹ אֶת־זוֹב֗וֹ אֽוֹ־הֶחְתִּ֤ים בְּשָׂרוֹ֙ מִזּוֹב֔וֹ טֻמְאָת֖וֹ הִֽוא׃</p></div><div class="heb-s"><p>וזאת תהיה טמאתו בזובו רר בשרו את־זובו או־החתים בשרו מזובו טמאתו הוא׃</p></div></div>
+      <div class="texte-fr"><p>Voici quand aura lieu cette souillure de l’écoulement: si sa chair laisse distiller le flux, ou si elle est engorgée par le flux, sa souillure aura lieu.</p></div>
+    </div><div class="seif" id="v-15-4">
+      <span class="seif-num">15:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־הַמִּשְׁכָּ֗ב אֲשֶׁ֨ר יִשְׁכַּ֥ב עָלָ֛יו הַזָּ֖ב יִטְמָ֑א וְכׇֽל־הַכְּלִ֛י אֲשֶׁר־יֵשֵׁ֥ב עָלָ֖יו יִטְמָֽא׃</p></div><div class="heb-s"><p>כל־המשכב אשר ישכב עליו הזב יטמא וכל־הכלי אשר־ישב עליו יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Toute couche sur laquelle repose celui qui a le flux, sera souillée; tout meuble sur lequel il s’assied, sera souillé.</p></div>
+    </div><div class="seif" id="v-15-5">
+      <span class="seif-num">15:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ אֲשֶׁ֥ר יִגַּ֖ע בְּמִשְׁכָּב֑וֹ יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>ואיש אשר יגע במשכבו יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque toucherait à sa couche, devra donc laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir;</p></div>
+    </div><div class="seif" id="v-15-6">
+      <span class="seif-num">15:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַיֹּשֵׁב֙ עַֽל־הַכְּלִ֔י אֲשֶׁר־יֵשֵׁ֥ב עָלָ֖יו הַזָּ֑ב יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והישב על־הכלי אשר־ישב עליו הזב יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>et qui s’assoira sur le meuble où s’assied celui qui a le flux, lavera ses vêtements, se baignera dans l’eau et sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-7">
+      <span class="seif-num">15:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנֹּגֵ֖עַ בִּבְשַׂ֣ר הַזָּ֑ב יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והנגע בבשר הזב יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Si l’on touche au corps de celui qui a le flux, on lavera ses vêtements, on se baignera dans l’eau et l’on sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-8">
+      <span class="seif-num">15:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יָרֹ֥ק הַזָּ֖ב בַּטָּה֑וֹר וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכי־ירק הזב בטהור וכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Si celui qui a le flux vient à cracher sur un individu pur, celui-ci lavera ses vêtements, se baignera dans l’eau et sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-9">
+      <span class="seif-num">15:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַמֶּרְכָּ֗ב אֲשֶׁ֨ר יִרְכַּ֥ב עָלָ֛יו הַזָּ֖ב יִטְמָֽא׃</p></div><div class="heb-s"><p>וכל־המרכב אשר ירכב עליו הזב יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Tout harnais servant à la monture de celui qui a le flux, sera souillé.</p></div>
+    </div><div class="seif" id="v-15-10">
+      <span class="seif-num">15:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַנֹּגֵ֗עַ בְּכֹל֙ אֲשֶׁ֣ר יִהְיֶ֣ה תַחְתָּ֔יו יִטְמָ֖א עַד־הָעָ֑רֶב וְהַנּוֹשֵׂ֣א אוֹתָ֔ם יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־הנגע בכל אשר יהיה תחתיו יטמא עד־הערב והנושא אותם יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque touche à un objet placé sous lui, sera souillé jusqu’au soir; et qui transporte un de ces objets lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-11">
+      <span class="seif-num">15:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֨ל אֲשֶׁ֤ר יִגַּע־בּוֹ֙ הַזָּ֔ב וְיָדָ֖יו לֹא־שָׁטַ֣ף בַּמָּ֑יִם וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל אשר יגע־בו הזב וידיו לא־שטף במים וכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque serait touché par celui qui avait le flux et qui n’a pas encore nettoyé ses mains dans l’eau, lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-12">
+      <span class="seif-num">15:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּכְלִי־חֶ֛רֶשׂ אֲשֶׁר־יִגַּע־בּ֥וֹ הַזָּ֖ב יִשָּׁבֵ֑ר וְכׇ֨ל־כְּלִי־עֵ֔ץ יִשָּׁטֵ֖ף בַּמָּֽיִם׃</p></div><div class="heb-s"><p>וכלי־חרש אשר־יגע־בו הזב ישבר וכל־כלי־עץ ישטף במים׃</p></div></div>
+      <div class="texte-fr"><p>Un vaisseau d’argile, touché par celui qui a le flux, sera brisé; un vaisseau de bois, quel qu’il soit, sera nettoyé dans d’eau.</p></div>
+    </div><div class="seif" id="v-15-13">
+      <span class="seif-num">15:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִֽי־יִטְהַ֤ר הַזָּב֙ מִזּוֹב֔וֹ וְסָ֨פַר ל֜וֹ שִׁבְעַ֥ת יָמִ֛ים לְטׇהֳרָת֖וֹ וְכִבֶּ֣ס בְּגָדָ֑יו וְרָחַ֧ץ בְּשָׂר֛וֹ בְּמַ֥יִם חַיִּ֖ים וְטָהֵֽר׃</p></div><div class="heb-s"><p>וכי־יטהר הזב מזובו וספר לו שבעת ימים לטהרתו וכבס בגדיו ורחץ בשרו במים חיים וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Quand cet homme sera délivré de sa gonorrhée, il comptera sept jours depuis son rétablissement; puis il lavera ses vêtements, baignera son corps dans une eau vive, et sera pur.</p></div>
+    </div><div class="seif" id="v-15-14">
+      <span class="seif-num">15:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַיּ֣וֹם הַשְּׁמִינִ֗י יִֽקַּֽח־לוֹ֙ שְׁתֵּ֣י תֹרִ֔ים א֥וֹ שְׁנֵ֖י בְּנֵ֣י יוֹנָ֑ה וּבָ֣א&thinsp;<b>׀</b> לִפְנֵ֣י יְהֹוָ֗ה אֶל־פֶּ֙תַח֙ אֹ֣הֶל מוֹעֵ֔ד וּנְתָנָ֖ם אֶל־הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>וביום השמיני יקח־לו שתי תרים או שני בני יונה ובא&thinsp;<b>׀</b> לפני יהוה אל־פתח אהל מועד ונתנם אל־הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Le huitième jour, il se procurera deux tourterelles ou deux jeunes colombes, se présentera devant l’Éternel, à l’entrée de la Tente d’assignation, et les remettra au pontife.</p></div>
+    </div><div class="seif" id="v-15-15">
+      <span class="seif-num">15:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשָׂ֤ה אֹתָם֙ הַכֹּהֵ֔ן אֶחָ֣ד חַטָּ֔את וְהָאֶחָ֖ד עֹלָ֑ה וְכִפֶּ֨ר עָלָ֧יו הַכֹּהֵ֛ן לִפְנֵ֥י יְהֹוָ֖ה מִזּוֹבֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ועשה אתם הכהן אחד חטאת והאחד עלה וכפר עליו הכהן לפני יהוה מזובו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Le pontife les traitera, l’une comme expiatoire, l’autre comme holocauste; et il l’absoudra, devant l’Éternel, de son écoulement.</p></div>
+    </div><div class="seif" id="v-15-16">
+      <span class="seif-num">15:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֕ישׁ כִּֽי־תֵצֵ֥א מִמֶּ֖נּוּ שִׁכְבַת־זָ֑רַע וְרָחַ֥ץ בַּמַּ֛יִם אֶת־כׇּל־בְּשָׂר֖וֹ וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>ואיש כי־תצא ממנו שכבת־זרע ורחץ במים את־כל־בשרו וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Un homme qui aura laissé échapper de la matière séminale devra baigne dans l’eau tout son corps, et sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-17">
+      <span class="seif-num">15:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־בֶּ֣גֶד וְכׇל־ע֔וֹר אֲשֶׁר־יִהְיֶ֥ה עָלָ֖יו שִׁכְבַת־זָ֑רַע וְכֻבַּ֥ס בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־בגד וכל־עור אשר־יהיה עליו שכבת־זרע וכבס במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Toute étoffe, toute peau, où il se trouverait de cette matière, sera nettoyée avec de l’eau et restera souillée jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-18">
+      <span class="seif-num">15:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִשָּׁ֕ה אֲשֶׁ֨ר יִשְׁכַּ֥ב אִ֛ישׁ אֹתָ֖הּ שִׁכְבַת־זָ֑רַע וְרָחֲצ֣וּ בַמַּ֔יִם וְטָמְא֖וּ עַד־הָעָֽרֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואשה אשר ישכב איש אתה שכבת־זרע ורחצו במים וטמאו עד־הערב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et une femme avec laquelle un homme aurait habité charnellement, tous deux se baigneront dans l’eau et seront souillés jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-19">
+      <span class="seif-num">15:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִשָּׁה֙ כִּֽי־תִהְיֶ֣ה זָבָ֔ה דָּ֛ם יִהְיֶ֥ה זֹבָ֖הּ בִּבְשָׂרָ֑הּ שִׁבְעַ֤ת יָמִים֙ תִּהְיֶ֣ה בְנִדָּתָ֔הּ וְכׇל־הַנֹּגֵ֥עַ בָּ֖הּ יִטְמָ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>ואשה כי־תהיה זבה דם יהיה זבה בבשרה שבעת ימים תהיה בנדתה וכל־הנגע בה יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Lorsqu’une femme éprouvera le flux (son flux, c’est le sang qui s’échappe de son corps), elle restera sept jours dans son isolement, et quiconque la touchera sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-20">
+      <span class="seif-num">15:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֩ אֲשֶׁ֨ר תִּשְׁכַּ֥ב עָלָ֛יו בְּנִדָּתָ֖הּ יִטְמָ֑א וְכֹ֛ל אֲשֶׁר־תֵּשֵׁ֥ב עָלָ֖יו יִטְמָֽא׃</p></div><div class="heb-s"><p>וכל אשר תשכב עליו בנדתה יטמא וכל אשר־תשב עליו יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Tout objet sur lequel elle repose lors de son isolement, sera impur; tout objet sur lequel elle s’assied, sera impur.</p></div>
+    </div><div class="seif" id="v-15-21">
+      <span class="seif-num">15:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַנֹּגֵ֖עַ בְּמִשְׁכָּבָ֑הּ יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־הנגע במשכבה יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque touchera à sa couche devra laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-22">
+      <span class="seif-num">15:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇ֨ל־הַנֹּגֵ֔עַ בְּכׇל־כְּלִ֖י אֲשֶׁר־תֵּשֵׁ֣ב עָלָ֑יו יְכַבֵּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־הנגע בכל־כלי אשר־תשב עליו יכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque touchera à quelque meuble où elle s’assoirait, lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-23">
+      <span class="seif-num">15:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם עַֽל־הַמִּשְׁכָּ֜ב ה֗וּא א֧וֹ עַֽל־הַכְּלִ֛י אֲשֶׁר־הִ֥וא יֹשֶֽׁבֶת־עָלָ֖יו בְּנׇגְעוֹ־ב֑וֹ יִטְמָ֖א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>ואם על־המשכב הוא או על־הכלי אשר־הוא ישבת־עליו בנגעו־בו יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Si, en y touchant, il était lui-même sur la couche où elle est assise, il serait souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-24">
+      <span class="seif-num">15:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֡ם שָׁכֹב֩ יִשְׁכַּ֨ב אִ֜ישׁ אֹתָ֗הּ וּתְהִ֤י נִדָּתָהּ֙ עָלָ֔יו וְטָמֵ֖א שִׁבְעַ֣ת יָמִ֑ים וְכׇל־הַמִּשְׁכָּ֛ב אֲשֶׁר־יִשְׁכַּ֥ב עָלָ֖יו יִטְמָֽא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואם שכב ישכב איש אתה ותהי נדתה עליו וטמא שבעת ימים וכל־המשכב אשר־ישכב עליו יטמא׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Mais si un homme vient à cohabiter avec elle, de sorte que son Impureté se communique à lui, il sera souillé sept jours, et toute couche sur laquelle il reposera sera souillée.</p></div>
+    </div><div class="seif" id="v-15-25">
+      <span class="seif-num">15:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִשָּׁ֡ה כִּֽי־יָזוּב֩ ז֨וֹב דָּמָ֜הּ יָמִ֣ים רַבִּ֗ים בְּלֹא֙ עֶת־נִדָּתָ֔הּ א֥וֹ כִֽי־תָז֖וּב עַל־נִדָּתָ֑הּ כׇּל־יְמֵ֞י ז֣וֹב טֻמְאָתָ֗הּ כִּימֵ֧י נִדָּתָ֛הּ תִּהְיֶ֖ה טְמֵאָ֥ה הִֽוא׃</p></div><div class="heb-s"><p>ואשה כי־יזוב זוב דמה ימים רבים בלא עת־נדתה או כי־תזוב על־נדתה כל־ימי זוב טמאתה כימי נדתה תהיה טמאה הוא׃</p></div></div>
+      <div class="texte-fr"><p>SI le flux sanguin d’une femme a lieu pendant plusieurs jours, hors de l’époque de son isolement, ou s’il se prolonge au-delà de son isolement ordinaire, tout le temps que coulera sa souillure, elle sera comme à l’époque de son Isolement: elle est Impure.</p></div>
+    </div><div class="seif" id="v-15-26">
+      <span class="seif-num">15:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־הַמִּשְׁכָּ֞ב אֲשֶׁר־תִּשְׁכַּ֤ב עָלָיו֙ כׇּל־יְמֵ֣י זוֹבָ֔הּ כְּמִשְׁכַּ֥ב נִדָּתָ֖הּ יִֽהְיֶה־לָּ֑הּ וְכׇֽל־הַכְּלִי֙ אֲשֶׁ֣ר תֵּשֵׁ֣ב עָלָ֔יו טָמֵ֣א יִהְיֶ֔ה כְּטֻמְאַ֖ת נִדָּתָֽהּ׃</p></div><div class="heb-s"><p>כל־המשכב אשר־תשכב עליו כל־ימי זובה כמשכב נדתה יהיה־לה וכל־הכלי אשר תשב עליו טמא יהיה כטמאת נדתה׃</p></div></div>
+      <div class="texte-fr"><p>Toute couche sur laquelle elle repose pendant toute la durée de cet écoulement sera, à son égard, comme la couche où elle reposait lors de son isolement; tout meuble sur lequel elle s’assied sera souillé, comme II le serait lors de son isolement.</p></div>
+    </div><div class="seif" id="v-15-27">
+      <span class="seif-num">15:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַנּוֹגֵ֥עַ בָּ֖ם יִטְמָ֑א וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־הנוגע בם יטמא וכבס בגדיו ורחץ במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque les touchera deviendra impur; il devra laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-15-28">
+      <span class="seif-num">15:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִֽם־טָהֲרָ֖ה מִזּוֹבָ֑הּ וְסָ֥פְרָה לָּ֛הּ שִׁבְעַ֥ת יָמִ֖ים וְאַחַ֥ר תִּטְהָֽר׃</p></div><div class="heb-s"><p>ואם־טהרה מזובה וספרה לה שבעת ימים ואחר תטהר׃</p></div></div>
+      <div class="texte-fr"><p>Lorsqu’elle sera délivrée de son flux, elle comptera sept jours, après quoi elle sera pure.</p></div>
+    </div><div class="seif" id="v-15-29">
+      <span class="seif-num">15:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבַיּ֣וֹם הַשְּׁמִינִ֗י תִּֽקַּֽח־לָהּ֙ שְׁתֵּ֣י תֹרִ֔ים א֥וֹ שְׁנֵ֖י בְּנֵ֣י יוֹנָ֑ה וְהֵבִיאָ֤ה אוֹתָם֙ אֶל־הַכֹּהֵ֔ן אֶל־פֶּ֖תַח אֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>וביום השמיני תקח־לה שתי תרים או שני בני יונה והביאה אותם אל־הכהן אל־פתח אהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>Au huitième jour, elle se procurera deux tourterelles ou deux jeunes colombes, qu’elle apportera au pontife, à l’entrée de la Tente d’assignation.</p></div>
+    </div><div class="seif" id="v-15-30">
+      <span class="seif-num">15:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָשָׂ֤ה הַכֹּהֵן֙ אֶת־הָאֶחָ֣ד חַטָּ֔את וְאֶת־הָאֶחָ֖ד עֹלָ֑ה וְכִפֶּ֨ר עָלֶ֤יהָ הַכֹּהֵן֙ לִפְנֵ֣י יְהֹוָ֔ה מִזּ֖וֹב טֻמְאָתָֽהּ׃</p></div><div class="heb-s"><p>ועשה הכהן את־האחד חטאת ואת־האחד עלה וכפר עליה הכהן לפני יהוה מזוב טמאתה׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife traitera l’un des oiseaux comme expiatoire, l’autre comme holocauste; et il l’absoudra, devant l’Éternel, de la souillure de son écoulement.</p></div>
+    </div><div class="seif" id="v-15-31">
+      <span class="seif-num">15:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִזַּרְתֶּ֥ם אֶת־בְּנֵי־יִשְׂרָאֵ֖ל מִטֻּמְאָתָ֑ם וְלֹ֤א יָמֻ֙תוּ֙ בְּטֻמְאָתָ֔ם בְּטַמְּאָ֥ם אֶת־מִשְׁכָּנִ֖י אֲשֶׁ֥ר בְּתוֹכָֽם׃</p></div><div class="heb-s"><p>והזרתם את־בני־ישראל מטמאתם ולא ימתו בטמאתם בטמאם את־משכני אשר בתוכם׃</p></div></div>
+      <div class="texte-fr"><p>Vous devez éloigner les enfants d’Israël de ce qui pourrait les souiller, afin qu’ils n’encourent point la mort par leur contamination, en souillant ma demeure qui est au milieu d’eux.</p></div>
+    </div><div class="seif" id="v-15-32">
+      <span class="seif-num">15:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֥את תּוֹרַ֖ת הַזָּ֑ב וַאֲשֶׁ֨ר תֵּצֵ֥א מִמֶּ֛נּוּ שִׁכְבַת־זֶ֖רַע לְטׇמְאָה־בָֽהּ׃</p></div><div class="heb-s"><p>זאת תורת הזב ואשר תצא ממנו שכבת־זרע לטמאה־בה׃</p></div></div>
+      <div class="texte-fr"><p>Telle est la règle pour celui qui a le flux, et pour celui qui aurait laissé échapper de la matière séminale, cause d’impureté;</p></div>
+    </div><div class="seif" id="v-15-33">
+      <span class="seif-num">15:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַדָּוָה֙ בְּנִדָּתָ֔הּ וְהַזָּב֙ אֶת־זוֹב֔וֹ לַזָּכָ֖ר וְלַנְּקֵבָ֑ה וּלְאִ֕ישׁ אֲשֶׁ֥ר יִשְׁכַּ֖ב עִם־טְמֵאָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>והדוה בנדתה והזב את־זובו לזכר ולנקבה ולאיש אשר ישכב עם־טמאה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>pour la femme qui souffre, lors de son isolement; pour la personne, homme ou femme, dont le flux se prolonge, et pour l’homme qui cohabite avec une femme impure."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel parla à Moïse en ces termes: &quot;Voici quelle sera la règle imposée au lépreux lorsqu’il redeviendra pur: il sera présenté au pontife. Le pontife se transportera hors du camp, et constatera que la plaie de lèpre a quitté le lépreux. Sur l’ordre du pontife, on apportera, pour l’homme à purifier, deux oiseaux vivants, purs; du bois de cèdre, de l’écarlate et de l’hysope. Le pontife ordonnera qu’on égorge l’un des oiseaux, au-dessus d’un vaisseau d’argile, sur de l’eau vive. Pour l’oiseau vivant, il le prendra ainsi que le bois de cèdre, l’écarlate et l’hysope; il plongera ces objets, avec l’oiseau vivant, dans le sang de l’oiseau égorgé, qui s’est mêlé à l’eau vive; en fera sept aspersions sur celui qui se purifie de la lèpre, et, l’ayant purifié, lâchera l’oiseau vivant dans la campagne. Celui qui se purifie lavera ses vêtements, se rasera tout le poil, se baignera et deviendra pur. Il pourra alors rentrer dans le camp, mais il restera sept jours hors de sa tente. Puis, le septième jour, il se rasera tout le poil: sa chevelure, sa barbe, ses sourcils, tout son poil; il lavera ses vêtements, baignera son corps dans l’eau, et deviendra pur. Le huitième jour, il prendra deux agneaux sans défaut, et une brebis âgée d’un an, sans défaut; plus, trois dixièmes de fleur de farine pétrie à l’huile, comme oblation, et un log d’huile. Le pontife purificateur présentera l’homme qui se purifie, ainsi que ces objets, devant le Seigneur, à l’entrée de la Tente d’assignation; et le pontife prendra l’un des agneaux (qu’il doit offrir comme délictif), puis le log d’huile, et il en opérera le balancement devant le Seigneur. II immolera cet agneau à l’endroit où on immole l’expiatoire et l’holocauste: dans le saint lieu. Car le délictif doit être, pour le pontife, comme l’expiatoire: c’est une sainteté de premier ordre. Le pontife prendra du sang de ce délictif, et il en mettra sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit. Puis le pontife prendra le log d’huile et en fera couler dans la main gauche du pontife. Le pontife trempera son index droit dans l’huile qui est dans sa main gauche, et de cette huile il fera, avec l’index, sept aspersions devant le Seigneur. Du surplus de l’huile qui est dans sa main, le pontife mettra une partie sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit, par-dessus le sang du délictif. Et ce qui sera resté de l’huile contenue dans la main du pontife, il l’appliquera sur la tête de celui qui se purifie, et fera expiation pour lui devant le Seigneur. Alors le pontife s’occupera de l’expiatoire, et fera expier son impureté à celui qui se purifie; puis il immolera l’holocauste. Le pontife offrira cet holocauste, ainsi que l’oblation, sur l’autel, fera ainsi expiation pour lui, et il sera pur. Si cet homme est pauvre et que ses moyens soient insuffisants, il prendra un agneau comme délictif destiné à être balancé, pour obtenir son expiation; plus, un dixième de fleur de farine pétrie à l’huile, pour oblation, et un log d’huile; puis deux tourterelles ou deux jeunes colombes, selon que le permettront ses moyens; l’une sera un expiatoire, l’autre un holocauste. Il les apportera, le huitième jour de sa purification, au pontife, à l’entrée de la Tente d’assignation, devant le Seigneur. Le pontife prendra l’agneau délictif et le log d’huile, et en opérera le balancement devant le Seigneur. Après avoir immolé l’agneau délictif, le pontife prendra du sang de la victime, et l’appliquera sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit. Puis le pontife versera une partie de l’huile dans la main gauche du pontife; fera avec l’index droit, de cette huile qui est dans sa main gauche, sept aspersions devant le Seigneur, et mettra un peu de l’huile, contenue dans sa main, sur le lobe de l’oreille droite de celui qui se purifie, sur le pouce de sa main droite et sur l’orteil de son pied droit, au même endroit que le sang du délictif. Quant au restant de l’huile qui est dans la main du pontife, il l’appliquera sur la tête de celui qui se purifie, pour lui obtenir expiation devant le Seigneur. Puis il traitera l’une des tourterelles ou des jeunes colombes, des victimes qu’on aura pu fournir; offrira ce qu’on aura pu fournir, un oiseau comme expiatoire, l’autre comme holocauste, en outre de l’oblation; et ainsi le pontife procurera, à celui qui se purifie, son expiation devant l’Éternel. Telle est la règle pour la purification de celui qui a eu une plaie de lèpre, quand ses moyens sont insuffisants.&quot; L’Éternel parla à Moïse et à Aaron en ces termes: &quot;Quand vous serez arrivés au pays de Canaan, dont je vous donne la possession, et que je ferai naître une altération lépreuse dans une maison du pays que vous posséderez, celui a qui sera la maison ira le déclarer au pontife, en disant: &quot;J’ai observé quelque altération à ma maison.&quot; Le pontife ordonnera qu’on vide la maison avant qu’il y entre pour examiner l’altération, de peur que tout ce qui est dans la maison ne se trouve impur; après quoi, le pontife viendra visiter cette maison. S’il constate, en examinant la plaie, que cette plaie est dans les murs de la maison, en dépressions d’un vert ou d’un rouge foncé, plus basses en apparence que le niveau du mur, le pontife se dirigera de la maison vers l’entrée de la maison, et la fera fermer pour sept jours. Le pontife y retournera le septième jour. S’il observe que la plaie a grandi sur les murs de la maison, il ordonnera qu’on détache les pierres atteintes par la plaie et qu’on les jette hors de la ville, dans un lieu impur. Puis il fera gratter la maison intérieurement, autour de la plaie, et l’on jettera la poussière qu’on aura raclée hors de la ville, dans un lieu impur. On prendra d’autres pierres, que l’on posera à la place des premières; on prendra d’autre mortier, et l’on recrépira la maison. Et si la plaie recommence à se développer dans la maison après qu’on a gratté et recrépi la maison, le pontife viendra, et constatera que la plaie s’est accrue dans cette maison; c’est une lèpre corrosive qui règne dans cette maison: elle est impure. On démolira la maison, les pierres, la charpente et tout l’enduit de la maison, qu’on transportera hors de la ville, dans un lieu impur. Celui qui entrera dans la maison tout le temps qu’on l’a déclarée close, sera souillé jusqu’au soir. Celui qui couchera dans cette maison, lavera ses vêtements, et celui qui y mangera doit les laver de même. Mais si le pontife, lorsqu’il vient, observe que la plaie n’a pas fait de progrès dans la maison après que celle-ci a été recrépie, le pontife déclarera cette maison pure, car la plaie est guérie. Il prendra, pour purifier la maison, deux oiseaux, ainsi que du bois de cèdre, de l’écarlate et de l’hysope. Il égorgera l’un des oiseaux, au-dessus d’un vase d’argile, sur de l’eau vive; prendra le bois de cèdre, l’hysope et l’écarlate avec l’oiseau vivant, les trempera dans le sang de l’oiseau égorgé et dans l’eau vive, et en aspergera la maison sept fois. Il purifiera ainsi la maison par le sang de l’oiseau, par l’eau vive, par l’oiseau vivant, le bois de cèdre, l’hysope et l’écarlate. Il lâchera l’oiseau vivant hors de la ville, dans la campagne, et fera ainsi propitiation pour la maison, qui deviendra pure. Telle est l’instruction relative à toute affection de lèpre et à la teigne; à la lèpre des étoffes, à celle des maisons; à la tumeur, à la dartre et à la tache, pour enseigner l’époque où l’on est impur et celle où l’on est pur. Telle est la règle de la lèpre.&quot;</p>
-      <p>L’Éternel parla ainsi à Moïse et à Aaron: &quot;Parlez aux enfants d’Israël et dites-leur: Quiconque serait affligé de gonorrhée, son écoulement est impur. Voici quand aura lieu cette souillure de l’écoulement: si sa chair laisse distiller le flux, ou si elle est engorgée par le flux, sa souillure aura lieu. Toute couche sur laquelle repose celui qui a le flux, sera souillée; tout meuble sur lequel il s’assied, sera souillé. Quiconque toucherait à sa couche, devra donc laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir; et qui s’assoira sur le meuble où s’assied celui qui a le flux, lavera ses vêtements, se baignera dans l’eau et sera souillé jusqu’au soir. Si l’on touche au corps de celui qui a le flux, on lavera ses vêtements, on se baignera dans l’eau et l’on sera souillé jusqu’au soir. Si celui qui a le flux vient à cracher sur un individu pur, celui-ci lavera ses vêtements, se baignera dans l’eau et sera souillé jusqu’au soir. Tout harnais servant à la monture de celui qui a le flux, sera souillé. Quiconque touche à un objet placé sous lui, sera souillé jusqu’au soir; et qui transporte un de ces objets lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir. Quiconque serait touché par celui qui avait le flux et qui n’a pas encore nettoyé ses mains dans l’eau, lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir. Un vaisseau d’argile, touché par celui qui a le flux, sera brisé; un vaisseau de bois, quel qu’il soit, sera nettoyé dans d’eau. Quand cet homme sera délivré de sa gonorrhée, il comptera sept jours depuis son rétablissement; puis il lavera ses vêtements, baignera son corps dans une eau vive, et sera pur. Le huitième jour, il se procurera deux tourterelles ou deux jeunes colombes, se présentera devant l’Éternel, à l’entrée de la Tente d’assignation, et les remettra au pontife. Le pontife les traitera, l’une comme expiatoire, l’autre comme holocauste; et il l’absoudra, devant l’Éternel, de son écoulement. Un homme qui aura laissé échapper de la matière séminale devra baigne dans l’eau tout son corps, et sera souillé jusqu’au soir. Toute étoffe, toute peau, où il se trouverait de cette matière, sera nettoyée avec de l’eau et restera souillée jusqu’au soir. Et une femme avec laquelle un homme aurait habité charnellement, tous deux se baigneront dans l’eau et seront souillés jusqu’au soir. Lorsqu’une femme éprouvera le flux (son flux, c’est le sang qui s’échappe de son corps), elle restera sept jours dans son isolement, et quiconque la touchera sera souillé jusqu’au soir. Tout objet sur lequel elle repose lors de son isolement, sera impur; tout objet sur lequel elle s’assied, sera impur. Quiconque touchera à sa couche devra laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir. Quiconque touchera à quelque meuble où elle s’assoirait, lavera ses vêtements, se baignera dans l’eau, et restera souillé jusqu’au soir. Si, en y touchant, il était lui-même sur la couche où elle est assise, il serait souillé jusqu’au soir. Mais si un homme vient à cohabiter avec elle, de sorte que son Impureté se communique à lui, il sera souillé sept jours, et toute couche sur laquelle il reposera sera souillée. SI le flux sanguin d’une femme a lieu pendant plusieurs jours, hors de l’époque de son isolement, ou s’il se prolonge au-delà de son isolement ordinaire, tout le temps que coulera sa souillure, elle sera comme à l’époque de son Isolement: elle est Impure. Toute couche sur laquelle elle repose pendant toute la durée de cet écoulement sera, à son égard, comme la couche où elle reposait lors de son isolement; tout meuble sur lequel elle s’assied sera souillé, comme II le serait lors de son isolement. Quiconque les touchera deviendra impur; il devra laver ses vêtements, se baigner dans l’eau, et restera souillé jusqu’au soir. Lorsqu’elle sera délivrée de son flux, elle comptera sept jours, après quoi elle sera pure. Au huitième jour, elle se procurera deux tourterelles ou deux jeunes colombes, qu’elle apportera au pontife, à l’entrée de la Tente d’assignation. Le pontife traitera l’un des oiseaux comme expiatoire, l’autre comme holocauste; et il l’absoudra, devant l’Éternel, de la souillure de son écoulement. Vous devez éloigner les enfants d’Israël de ce qui pourrait les souiller, afin qu’ils n’encourent point la mort par leur contamination, en souillant ma demeure qui est au milieu d’eux. Telle est la règle pour celui qui a le flux, et pour celui qui aurait laissé échapper de la matière séminale, cause d’impureté; pour la femme qui souffre, lors de son isolement; pour la personne, homme ou femme, dont le flux se prolonge, et pour l’homme qui cohabite avec une femme impure.&quot;</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -302,6 +694,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Voir aussi <a href="../choulhan-aroukh/yd_183.html">Yoré Dé'a 183</a>. Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_tazria.html">← Tazria</a><a class="hbtn qcm" href="qcm_paracha_metzora.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_acharei-mot.html">Aharei Mot →</a></div>
 </main>
 
 <footer>

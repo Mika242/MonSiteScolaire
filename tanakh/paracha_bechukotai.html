@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Bechoukotaï – Bénédictions, mise en garde et évaluations</h1>
     <p>Torah, Vayikra (Leviticus 26:3-27:34)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_behar.html">← Behar</a><a class="hbtn qcm" href="qcm_paracha_bechukotai.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_bamidbar-paracha.html">Bamidbar →</a></div>
   </div>
 </header>
 
@@ -161,27 +202,330 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['אִם־בְּחֻקֹּתַ֖י תֵּלֵ֑כוּ וְאֶת־מִצְוֺתַ֣י תִּשְׁמְר֔וּ וַעֲשִׂיתֶ֖ם אֹתָֽם׃', 'וְנָתַתִּ֥י גִשְׁמֵיכֶ֖ם בְּעִתָּ֑ם וְנָתְנָ֤ה הָאָ֙רֶץ֙ יְבוּלָ֔הּ וְעֵ֥ץ הַשָּׂדֶ֖ה יִתֵּ֥ן פִּרְיֽוֹ׃', 'וְהִשִּׂ֨יג לָכֶ֥ם דַּ֙יִשׁ֙ אֶת־בָּצִ֔יר וּבָצִ֖יר יַשִּׂ֣יג אֶת־זָ֑רַע וַאֲכַלְתֶּ֤ם לַחְמְכֶם֙ לָשֹׂ֔בַע וִֽישַׁבְתֶּ֥ם לָבֶ֖טַח בְּאַרְצְכֶֽם׃', 'וְנָתַתִּ֤י שָׁלוֹם֙ בָּאָ֔רֶץ וּשְׁכַבְתֶּ֖ם וְאֵ֣ין מַחֲרִ֑יד וְהִשְׁבַּתִּ֞י חַיָּ֤ה רָעָה֙ מִן־הָאָ֔רֶץ וְחֶ֖רֶב לֹא־תַעֲבֹ֥ר בְּאַרְצְכֶֽם׃', 'וּרְדַפְתֶּ֖ם אֶת־אֹיְבֵיכֶ֑ם וְנָפְל֥וּ לִפְנֵיכֶ֖ם לֶחָֽרֶב׃', 'וְרָדְפ֨וּ מִכֶּ֤ם חֲמִשָּׁה֙ מֵאָ֔ה וּמֵאָ֥ה מִכֶּ֖ם רְבָבָ֣ה יִרְדֹּ֑פוּ וְנָפְל֧וּ אֹיְבֵיכֶ֛ם לִפְנֵיכֶ֖ם לֶחָֽרֶב׃', 'וּפָנִ֣יתִי אֲלֵיכֶ֔ם וְהִפְרֵיתִ֣י אֶתְכֶ֔ם וְהִרְבֵּיתִ֖י אֶתְכֶ֑ם וַהֲקִימֹתִ֥י אֶת־בְּרִיתִ֖י אִתְּכֶֽם׃', 'וַאֲכַלְתֶּ֥ם יָשָׁ֖ן נוֹשָׁ֑ן וְיָשָׁ֕ן מִפְּנֵ֥י חָדָ֖שׁ תּוֹצִֽיאוּ׃', 'וְנָתַתִּ֥י מִשְׁכָּנִ֖י בְּתוֹכְכֶ֑ם וְלֹֽא־תִגְעַ֥ל נַפְשִׁ֖י אֶתְכֶֽם׃', 'וְהִתְהַלַּכְתִּי֙ בְּת֣וֹכְכֶ֔ם וְהָיִ֥יתִי לָכֶ֖ם לֵֽאלֹהִ֑ים וְאַתֶּ֖ם תִּהְיוּ־לִ֥י לְעָֽם׃', 'אֲנִ֞י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֗ם אֲשֶׁ֨ר הוֹצֵ֤אתִי אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם מִֽהְיֹ֥ת לָהֶ֖ם עֲבָדִ֑ים וָאֶשְׁבֹּר֙ מֹטֹ֣ת עֻלְּכֶ֔ם וָאוֹלֵ֥ךְ אֶתְכֶ֖ם קֽוֹמְמִיּֽוּת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וְאִם־לֹ֥א תִשְׁמְע֖וּ לִ֑י וְלֹ֣א תַעֲשׂ֔וּ אֵ֥ת כׇּל־הַמִּצְוֺ֖ת הָאֵֽלֶּה׃', 'וְאִם־בְּחֻקֹּתַ֣י תִּמְאָ֔סוּ וְאִ֥ם אֶת־מִשְׁפָּטַ֖י תִּגְעַ֣ל נַפְשְׁכֶ֑ם לְבִלְתִּ֤י עֲשׂוֹת֙ אֶת־כׇּל־מִצְוֺתַ֔י לְהַפְרְכֶ֖ם אֶת־בְּרִיתִֽי׃', 'אַף־אֲנִ֞י אֶֽעֱשֶׂה־זֹּ֣את לָכֶ֗ם וְהִפְקַדְתִּ֨י עֲלֵיכֶ֤ם בֶּֽהָלָה֙ אֶת־הַשַּׁחֶ֣פֶת וְאֶת־הַקַּדַּ֔חַת מְכַלּ֥וֹת עֵינַ֖יִם וּמְדִיבֹ֣ת נָ֑פֶשׁ וּזְרַעְתֶּ֤ם לָרִיק֙ זַרְעֲכֶ֔ם וַאֲכָלֻ֖הוּ אֹיְבֵיכֶֽם׃', 'וְנָתַתִּ֤י פָנַי֙ בָּכֶ֔ם וְנִגַּפְתֶּ֖ם לִפְנֵ֣י אֹיְבֵיכֶ֑ם וְרָד֤וּ בָכֶם֙ שֹֽׂנְאֵיכֶ֔ם וְנַסְתֶּ֖ם וְאֵין־רֹדֵ֥ף אֶתְכֶֽם׃', 'וְאִ֨ם־עַד־אֵ֔לֶּה לֹ֥א תִשְׁמְע֖וּ לִ֑י וְיָסַפְתִּי֙ לְיַסְּרָ֣ה אֶתְכֶ֔ם שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃', 'וְשָׁבַרְתִּ֖י אֶת־גְּא֣וֹן עֻזְּכֶ֑ם וְנָתַתִּ֤י אֶת־שְׁמֵיכֶם֙ כַּבַּרְזֶ֔ל וְאֶֽת־אַרְצְכֶ֖ם כַּנְּחֻשָֽׁה׃', 'וְתַ֥ם לָרִ֖יק כֹּחֲכֶ֑ם וְלֹֽא־תִתֵּ֤ן אַרְצְכֶם֙ אֶת־יְבוּלָ֔הּ וְעֵ֣ץ הָאָ֔רֶץ לֹ֥א יִתֵּ֖ן פִּרְיֽוֹ׃', 'וְאִם־תֵּֽלְכ֤וּ עִמִּי֙ קֶ֔רִי וְלֹ֥א תֹאב֖וּ לִשְׁמֹ֣עַֽ לִ֑י וְיָסַפְתִּ֤י עֲלֵיכֶם֙ מַכָּ֔ה שֶׁ֖בַע כְּחַטֹּאתֵיכֶֽם׃', 'וְהִשְׁלַחְתִּ֨י בָכֶ֜ם אֶת־חַיַּ֤ת הַשָּׂדֶה֙ וְשִׁכְּלָ֣ה אֶתְכֶ֔ם וְהִכְרִ֙יתָה֙ אֶת־בְּהֶמְתְּכֶ֔ם וְהִמְעִ֖יטָה אֶתְכֶ֑ם וְנָשַׁ֖מּוּ דַּרְכֵיכֶֽם׃', 'וְאִ֨ם־בְּאֵ֔לֶּה לֹ֥א תִוָּסְר֖וּ לִ֑י וַהֲלַכְתֶּ֥ם עִמִּ֖י קֶֽרִי׃', 'וְהָלַכְתִּ֧י אַף־אֲנִ֛י עִמָּכֶ֖ם בְּקֶ֑רִי וְהִכֵּיתִ֤י אֶתְכֶם֙ גַּם־אָ֔נִי שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃', 'וְהֵבֵאתִ֨י עֲלֵיכֶ֜ם חֶ֗רֶב נֹקֶ֙מֶת֙ נְקַם־בְּרִ֔ית וְנֶאֱסַפְתֶּ֖ם אֶל־עָרֵיכֶ֑ם וְשִׁלַּ֤חְתִּי דֶ֙בֶר֙ בְּת֣וֹכְכֶ֔ם וְנִתַּתֶּ֖ם בְּיַד־אוֹיֵֽב׃', 'בְּשִׁבְרִ֣י לָכֶם֮ מַטֵּה־לֶ֒חֶם֒ וְ֠אָפ֠וּ עֶ֣שֶׂר נָשִׁ֤ים לַחְמְכֶם֙ בְּתַנּ֣וּר אֶחָ֔ד וְהֵשִׁ֥יבוּ לַחְמְכֶ֖ם בַּמִּשְׁקָ֑ל וַאֲכַלְתֶּ֖ם וְלֹ֥א תִשְׂבָּֽעוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִ֨ם־בְּזֹ֔את לֹ֥א תִשְׁמְע֖וּ לִ֑י וַהֲלַכְתֶּ֥ם עִמִּ֖י בְּקֶֽרִי׃', 'וְהָלַכְתִּ֥י עִמָּכֶ֖ם בַּחֲמַת־קֶ֑רִי וְיִסַּרְתִּ֤י אֶתְכֶם֙ אַף־אָ֔נִי שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃', 'וַאֲכַלְתֶּ֖ם בְּשַׂ֣ר בְּנֵיכֶ֑ם וּבְשַׂ֥ר בְּנֹתֵיכֶ֖ם תֹּאכֵֽלוּ׃', 'וְהִשְׁמַדְתִּ֞י אֶת־בָּמֹֽתֵיכֶ֗ם וְהִכְרַתִּי֙ אֶת־חַמָּ֣נֵיכֶ֔ם וְנָֽתַתִּי֙ אֶת־פִּגְרֵיכֶ֔ם עַל־פִּגְרֵ֖י גִּלּוּלֵיכֶ֑ם וְגָעֲלָ֥ה נַפְשִׁ֖י אֶתְכֶֽם׃', 'וְנָתַתִּ֤י אֶת־עָֽרֵיכֶם֙ חׇרְבָּ֔ה וַהֲשִׁמּוֹתִ֖י אֶת־מִקְדְּשֵׁיכֶ֑ם וְלֹ֣א אָרִ֔יחַ בְּרֵ֖יחַ נִיחֹֽחֲכֶֽם׃', 'וַהֲשִׁמֹּתִ֥י אֲנִ֖י אֶת־הָאָ֑רֶץ וְשָֽׁמְמ֤וּ עָלֶ֙יהָ֙ אֹֽיְבֵיכֶ֔ם הַיֹּשְׁבִ֖ים בָּֽהּ׃', 'וְאֶתְכֶם֙ אֱזָרֶ֣ה בַגּוֹיִ֔ם וַהֲרִיקֹתִ֥י אַחֲרֵיכֶ֖ם חָ֑רֶב וְהָיְתָ֤ה אַרְצְכֶם֙ שְׁמָמָ֔ה וְעָרֵיכֶ֖ם יִהְי֥וּ חׇרְבָּֽה׃', 'אָז֩ תִּרְצֶ֨ה הָאָ֜רֶץ אֶת־שַׁבְּתֹתֶ֗יהָ כֹּ֚ל יְמֵ֣י הׇשַּׁמָּ֔הֿ וְאַתֶּ֖ם בְּאֶ֣רֶץ אֹיְבֵיכֶ֑ם אָ֚ז תִּשְׁבַּ֣ת הָאָ֔רֶץ וְהִרְצָ֖ת אֶת־שַׁבְּתֹתֶֽיהָ׃', 'כׇּל־יְמֵ֥י הׇשַּׁמָּ֖הֿ תִּשְׁבֹּ֑ת אֵ֣ת אֲשֶׁ֧ר לֹֽא־שָׁבְתָ֛ה בְּשַׁבְּתֹתֵיכֶ֖ם בְּשִׁבְתְּכֶ֥ם עָלֶֽיהָ׃', 'וְהַנִּשְׁאָרִ֣ים בָּכֶ֔ם וְהֵבֵ֤אתִי מֹ֙רֶךְ֙ בִּלְבָבָ֔ם בְּאַרְצֹ֖ת אֹיְבֵיהֶ֑ם וְרָדַ֣ף אֹתָ֗ם ק֚וֹל עָלֶ֣ה נִדָּ֔ף וְנָס֧וּ מְנֻֽסַת־חֶ֛רֶב וְנָפְל֖וּ וְאֵ֥ין רֹדֵֽף׃', 'וְכָשְׁל֧וּ אִישׁ־בְּאָחִ֛יו כְּמִפְּנֵי־חֶ֖רֶב וְרֹדֵ֣ף אָ֑יִן וְלֹא־תִֽהְיֶ֤ה לָכֶם֙ תְּקוּמָ֔ה לִפְנֵ֖י אֹֽיְבֵיכֶֽם׃', 'וַאֲבַדְתֶּ֖ם בַּגּוֹיִ֑ם וְאָכְלָ֣ה אֶתְכֶ֔ם אֶ֖רֶץ אֹיְבֵיכֶֽם׃', 'וְהַנִּשְׁאָרִ֣ים בָּכֶ֗ם יִמַּ֙קּוּ֙ בַּֽעֲוֺנָ֔ם בְּאַרְצֹ֖ת אֹיְבֵיכֶ֑ם וְאַ֛ף בַּעֲוֺנֹ֥ת אֲבֹתָ֖ם אִתָּ֥ם יִמָּֽקּוּ׃', 'וְהִתְוַדּ֤וּ אֶת־עֲוֺנָם֙ וְאֶת־עֲוֺ֣ן אֲבֹתָ֔ם בְּמַעֲלָ֖ם אֲשֶׁ֣ר מָֽעֲלוּ־בִ֑י וְאַ֕ף אֲשֶׁר־הָֽלְכ֥וּ עִמִּ֖י בְּקֶֽרִי׃', 'אַף־אֲנִ֗י אֵלֵ֤ךְ עִמָּם֙ בְּקֶ֔רִי וְהֵבֵאתִ֣י אֹתָ֔ם בְּאֶ֖רֶץ אֹיְבֵיהֶ֑ם אוֹ־אָ֣ז יִכָּנַ֗ע לְבָבָם֙ הֶֽעָרֵ֔ל וְאָ֖ז יִרְצ֥וּ אֶת־עֲוֺנָֽם׃', 'וְזָכַרְתִּ֖י אֶת־בְּרִיתִ֣י יַעֲק֑וֹב וְאַף֩ אֶת־בְּרִיתִ֨י יִצְחָ֜ק וְאַ֨ף אֶת־בְּרִיתִ֧י אַבְרָהָ֛ם אֶזְכֹּ֖ר וְהָאָ֥רֶץ אֶזְכֹּֽר׃', 'וְהָאָ֩רֶץ֩ תֵּעָזֵ֨ב מֵהֶ֜ם וְתִ֣רֶץ אֶת־שַׁבְּתֹתֶ֗יהָ בׇּהְשַׁמָּהֿ֙ מֵהֶ֔ם וְהֵ֖ם יִרְצ֣וּ אֶת־עֲוֺנָ֑ם יַ֣עַן וּבְיַ֔עַן בְּמִשְׁפָּטַ֣י מָאָ֔סוּ וְאֶת־חֻקֹּתַ֖י גָּעֲלָ֥ה נַפְשָֽׁם׃', 'וְאַף־גַּם־זֹ֠את בִּֽהְיוֹתָ֞ם בְּאֶ֣רֶץ אֹֽיְבֵיהֶ֗ם לֹֽא־מְאַסְתִּ֤ים וְלֹֽא־גְעַלְתִּים֙ לְכַלֹּתָ֔ם לְהָפֵ֥ר בְּרִיתִ֖י אִתָּ֑ם כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיהֶֽם׃', 'וְזָכַרְתִּ֥י לָהֶ֖ם בְּרִ֣ית רִאשֹׁנִ֑ים אֲשֶׁ֣ר הוֹצֵֽאתִי־אֹתָם֩ מֵאֶ֨רֶץ מִצְרַ֜יִם לְעֵינֵ֣י הַגּוֹיִ֗ם לִהְי֥וֹת לָהֶ֛ם לֵאלֹהִ֖ים אֲנִ֥י יְהֹוָֽה׃', 'אֵ֠לֶּה הַֽחֻקִּ֣ים וְהַמִּשְׁפָּטִים֮ וְהַתּוֹרֹת֒ אֲשֶׁר֙ נָתַ֣ן יְהֹוָ֔ה בֵּינ֕וֹ וּבֵ֖ין בְּנֵ֣י יִשְׂרָאֵ֑ל בְּהַ֥ר סִינַ֖י בְּיַד־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם אִ֕ישׁ כִּ֥י יַפְלִ֖א נֶ֑דֶר בְּעֶרְכְּךָ֥ נְפָשֹׁ֖ת לַֽיהֹוָֽה׃', 'וְהָיָ֤ה עֶרְכְּךָ֙ הַזָּכָ֔ר מִבֶּן֙ עֶשְׂרִ֣ים שָׁנָ֔ה וְעַ֖ד בֶּן־שִׁשִּׁ֣ים שָׁנָ֑ה וְהָיָ֣ה עֶרְכְּךָ֗ חֲמִשִּׁ֛ים שֶׁ֥קֶל כֶּ֖סֶף בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃', 'וְאִם־נְקֵבָ֖ה הִ֑וא וְהָיָ֥ה עֶרְכְּךָ֖ שְׁלֹשִׁ֥ים שָֽׁקֶל׃', 'וְאִ֨ם מִבֶּן־חָמֵ֜שׁ שָׁנִ֗ים וְעַד֙ בֶּן־עֶשְׂרִ֣ים שָׁנָ֔ה וְהָיָ֧ה עֶרְכְּךָ֛ הַזָּכָ֖ר עֶשְׂרִ֣ים שְׁקָלִ֑ים וְלַנְּקֵבָ֖ה עֲשֶׂ֥רֶת שְׁקָלִֽים׃', 'וְאִ֣ם מִבֶּן־חֹ֗דֶשׁ וְעַד֙ בֶּן־חָמֵ֣שׁ שָׁנִ֔ים וְהָיָ֤ה עֶרְכְּךָ֙ הַזָּכָ֔ר חֲמִשָּׁ֥ה שְׁקָלִ֖ים כָּ֑סֶף וְלַנְּקֵבָ֣ה עֶרְכְּךָ֔ שְׁלֹ֥שֶׁת שְׁקָלִ֖ים כָּֽסֶף׃', 'וְ֠אִ֠ם מִבֶּן־שִׁשִּׁ֨ים שָׁנָ֤ה וָמַ֙עְלָה֙ אִם־זָכָ֔ר וְהָיָ֣ה עֶרְכְּךָ֔ חֲמִשָּׁ֥ה עָשָׂ֖ר שָׁ֑קֶל וְלַנְּקֵבָ֖ה עֲשָׂרָ֥ה שְׁקָלִֽים׃', 'וְאִם־מָ֥ךְ הוּא֙ מֵֽעֶרְכֶּ֔ךָ וְהֶֽעֱמִידוֹ֙ לִפְנֵ֣י הַכֹּהֵ֔ן וְהֶעֱרִ֥יךְ אֹת֖וֹ הַכֹּהֵ֑ן עַל־פִּ֗י אֲשֶׁ֤ר תַּשִּׂיג֙ יַ֣ד הַנֹּדֵ֔ר יַעֲרִיכֶ֖נּוּ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְאִ֨ם־בְּהֵמָ֔ה אֲשֶׁ֨ר יַקְרִ֧יבוּ מִמֶּ֛נָּה קׇרְבָּ֖ן לַֽיהֹוָ֑ה כֹּל֩ אֲשֶׁ֨ר יִתֵּ֥ן מִמֶּ֛נּוּ לַיהֹוָ֖ה יִֽהְיֶה־קֹּֽדֶשׁ׃', 'לֹ֣א יַחֲלִיפֶ֗נּוּ וְלֹֽא־יָמִ֥יר אֹת֛וֹ ט֥וֹב בְּרָ֖ע אוֹ־רַ֣ע בְּט֑וֹב וְאִם־הָמֵ֨ר יָמִ֤יר בְּהֵמָה֙ בִּבְהֵמָ֔ה וְהָֽיָה־ה֥וּא וּתְמוּרָת֖וֹ יִֽהְיֶה־קֹּֽדֶשׁ׃', 'וְאִם֙ כׇּל־בְּהֵמָ֣ה טְמֵאָ֔ה אֲ֠שֶׁ֠ר לֹא־יַקְרִ֧יבוּ מִמֶּ֛נָּה קׇרְבָּ֖ן לַֽיהֹוָ֑ה וְהֶֽעֱמִ֥יד אֶת־הַבְּהֵמָ֖ה לִפְנֵ֥י הַכֹּהֵֽן׃', 'וְהֶעֱרִ֤יךְ הַכֹּהֵן֙ אֹתָ֔הּ בֵּ֥ין ט֖וֹב וּבֵ֣ין רָ֑ע כְּעֶרְכְּךָ֥ הַכֹּהֵ֖ן כֵּ֥ן יִהְיֶֽה׃', 'וְאִם־גָּאֹ֖ל יִגְאָלֶ֑נָּה וְיָסַ֥ף חֲמִישִׁת֖וֹ עַל־עֶרְכֶּֽךָ׃', 'וְאִ֗ישׁ כִּֽי־יַקְדִּ֨שׁ אֶת־בֵּית֥וֹ קֹ֙דֶשׁ֙ לַֽיהֹוָ֔ה וְהֶעֱרִיכוֹ֙ הַכֹּהֵ֔ן בֵּ֥ין ט֖וֹב וּבֵ֣ין רָ֑ע כַּאֲשֶׁ֨ר יַעֲרִ֥יךְ אֹת֛וֹ הַכֹּהֵ֖ן כֵּ֥ן יָקֽוּם׃', 'וְאִ֨ם־הַמַּקְדִּ֔ישׁ יִגְאַ֖ל אֶת־בֵּית֑וֹ וְ֠יָסַ֠ף חֲמִישִׁ֧ית כֶּֽסֶף־עֶרְכְּךָ֛ עָלָ֖יו וְהָ֥יָה לֽוֹ׃', 'וְאִ֣ם&thinsp;<b>׀</b> מִשְּׂדֵ֣ה אֲחֻזָּת֗וֹ יַקְדִּ֥ישׁ אִישׁ֙ לַֽיהֹוָ֔ה וְהָיָ֥ה עֶרְכְּךָ֖ לְפִ֣י זַרְע֑וֹ זֶ֚רַע חֹ֣מֶר שְׂעֹרִ֔ים בַּחֲמִשִּׁ֖ים שֶׁ֥קֶל כָּֽסֶף׃', 'אִם־מִשְּׁנַ֥ת הַיֹּבֵ֖ל יַקְדִּ֣ישׁ שָׂדֵ֑הוּ כְּעֶרְכְּךָ֖ יָקֽוּם׃', 'וְאִם־אַחַ֣ר הַיֹּבֵל֮ יַקְדִּ֣ישׁ שָׂדֵ֒הוּ֒ וְחִשַּׁב־ל֨וֹ הַכֹּהֵ֜ן אֶת־הַכֶּ֗סֶף עַל־פִּ֤י הַשָּׁנִים֙ הַנּ֣וֹתָרֹ֔ת עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְנִגְרַ֖ע מֵֽעֶרְכֶּֽךָ׃', 'וְאִם־גָּאֹ֤ל יִגְאַל֙ אֶת־הַשָּׂדֶ֔ה הַמַּקְדִּ֖ישׁ אֹת֑וֹ וְ֠יָסַ֠ף חֲמִשִׁ֧ית כֶּֽסֶף־עֶרְכְּךָ֛ עָלָ֖יו וְקָ֥ם לֽוֹ׃', 'וְאִם־לֹ֤א יִגְאַל֙ אֶת־הַשָּׂדֶ֔ה וְאִם־מָכַ֥ר אֶת־הַשָּׂדֶ֖ה לְאִ֣ישׁ אַחֵ֑ר לֹ֥א יִגָּאֵ֖ל עֽוֹד׃', 'וְהָיָ֨ה הַשָּׂדֶ֜ה בְּצֵאת֣וֹ בַיֹּבֵ֗ל קֹ֛דֶשׁ לַֽיהֹוָ֖ה כִּשְׂדֵ֣ה הַחֵ֑רֶם לַכֹּהֵ֖ן תִּהְיֶ֥ה אֲחֻזָּתֽוֹ׃', 'וְאִם֙ אֶת־שְׂדֵ֣ה מִקְנָת֔וֹ אֲשֶׁ֕ר לֹ֖א מִשְּׂדֵ֣ה אֲחֻזָּת֑וֹ יַקְדִּ֖ישׁ לַֽיהֹוָֽה׃', 'וְחִשַּׁב־ל֣וֹ הַכֹּהֵ֗ן אֵ֚ת מִכְסַ֣ת הָֽעֶרְכְּךָ֔ עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְנָתַ֤ן אֶת־הָעֶרְכְּךָ֙ בַּיּ֣וֹם הַה֔וּא קֹ֖דֶשׁ לַיהֹוָֽה׃', 'בִּשְׁנַ֤ת הַיּוֹבֵל֙ יָשׁ֣וּב הַשָּׂדֶ֔ה לַאֲשֶׁ֥ר קָנָ֖הוּ מֵאִתּ֑וֹ לַאֲשֶׁר־ל֖וֹ אֲחֻזַּ֥ת הָאָֽרֶץ׃', 'וְכׇ֨ל־עֶרְכְּךָ֔ יִהְיֶ֖ה בְּשֶׁ֣קֶל הַקֹּ֑דֶשׁ עֶשְׂרִ֥ים גֵּרָ֖ה יִהְיֶ֥ה הַשָּֽׁקֶל׃', 'אַךְ־בְּכ֞וֹר אֲשֶׁר־יְבֻכַּ֤ר לַֽיהֹוָה֙ בִּבְהֵמָ֔ה לֹֽא־יַקְדִּ֥ישׁ אִ֖ישׁ אֹת֑וֹ אִם־שׁ֣וֹר אִם־שֶׂ֔ה לַֽיהֹוָ֖ה הֽוּא׃', 'וְאִ֨ם בַּבְּהֵמָ֤ה הַטְּמֵאָה֙ וּפָדָ֣ה בְעֶרְכֶּ֔ךָ וְיָסַ֥ף חֲמִשִׁת֖וֹ עָלָ֑יו וְאִם־לֹ֥א יִגָּאֵ֖ל וְנִמְכַּ֥ר בְּעֶרְכֶּֽךָ׃', 'אַךְ־כׇּל־חֵ֡רֶם אֲשֶׁ֣ר יַחֲרִם֩ אִ֨ישׁ לַֽיהֹוָ֜ה מִכׇּל־אֲשֶׁר־ל֗וֹ מֵאָדָ֤ם וּבְהֵמָה֙ וּמִשְּׂדֵ֣ה אֲחֻזָּת֔וֹ לֹ֥א יִמָּכֵ֖ר וְלֹ֣א יִגָּאֵ֑ל כׇּל־חֵ֕רֶם קֹֽדֶשׁ־קׇדָשִׁ֥ים ה֖וּא לַיהֹוָֽה׃', 'כׇּל־חֵ֗רֶם אֲשֶׁ֧ר יׇחֳרַ֛ם מִן־הָאָדָ֖ם לֹ֣א יִפָּדֶ֑ה מ֖וֹת יוּמָֽת׃', 'וְכׇל־מַעְשַׂ֨ר הָאָ֜רֶץ מִזֶּ֤רַע הָאָ֙רֶץ֙ מִפְּרִ֣י הָעֵ֔ץ לַיהֹוָ֖ה ה֑וּא קֹ֖דֶשׁ לַֽיהֹוָֽה׃', 'וְאִם־גָּאֹ֥ל יִגְאַ֛ל אִ֖ישׁ מִמַּֽעַשְׂר֑וֹ חֲמִשִׁית֖וֹ יֹסֵ֥ף עָלָֽיו׃', 'וְכׇל־מַעְשַׂ֤ר בָּקָר֙ וָצֹ֔אן כֹּ֥ל אֲשֶׁר־יַעֲבֹ֖ר תַּ֣חַת הַשָּׁ֑בֶט הָֽעֲשִׂירִ֕י יִֽהְיֶה־קֹּ֖דֶשׁ לַֽיהֹוָֽה׃', 'לֹ֧א יְבַקֵּ֛ר בֵּֽין־ט֥וֹב לָרַ֖ע וְלֹ֣א יְמִירֶ֑נּוּ וְאִם־הָמֵ֣ר יְמִירֶ֔נּוּ וְהָֽיָה־ה֧וּא וּתְמוּרָת֛וֹ יִֽהְיֶה־קֹּ֖דֶשׁ לֹ֥א יִגָּאֵֽל׃', 'אֵ֣לֶּה הַמִּצְוֺ֗ת אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֶת־מֹשֶׁ֖ה אֶל־בְּנֵ֣י יִשְׂרָאֵ֑ל בְּהַ֖ר סִינָֽי׃']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-26-3">Chap. 26</a><a href="#v-27-1">Chap. 27</a></div>
+  <div class="seif" id="v-26-3">
+      <span class="seif-num">26:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־בְּחֻקֹּתַ֖י תֵּלֵ֑כוּ וְאֶת־מִצְוֺתַ֣י תִּשְׁמְר֔וּ וַעֲשִׂיתֶ֖ם אֹתָֽם׃</p></div><div class="heb-s"><p>אם־בחקתי תלכו ואת־מצותי תשמרו ועשיתם אתם׃</p></div></div>
+      <div class="texte-fr"><p>Si vous vous conduisez selon mes lois, si vous gardez mes préceptes et les exécutez,</p></div>
+    </div><div class="seif" id="v-26-4">
+      <span class="seif-num">26:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֥י גִשְׁמֵיכֶ֖ם בְּעִתָּ֑ם וְנָתְנָ֤ה הָאָ֙רֶץ֙ יְבוּלָ֔הּ וְעֵ֥ץ הַשָּׂדֶ֖ה יִתֵּ֥ן פִּרְיֽוֹ׃</p></div><div class="heb-s"><p>ונתתי גשמיכם בעתם ונתנה הארץ יבולה ועץ השדה יתן פריו׃</p></div></div>
+      <div class="texte-fr"><p>je vous donnerai les pluies en leur saison, et la terre livrera son produit, et l’arbre du champ donnera son fruit.</p></div>
+    </div><div class="seif" id="v-26-5">
+      <span class="seif-num">26:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִשִּׂ֨יג לָכֶ֥ם דַּ֙יִשׁ֙ אֶת־בָּצִ֔יר וּבָצִ֖יר יַשִּׂ֣יג אֶת־זָ֑רַע וַאֲכַלְתֶּ֤ם לַחְמְכֶם֙ לָשֹׂ֔בַע וִֽישַׁבְתֶּ֥ם לָבֶ֖טַח בְּאַרְצְכֶֽם׃</p></div><div class="heb-s"><p>והשיג לכם דיש את־בציר ובציר ישיג את־זרע ואכלתם לחמכם לשבע וישבתם לבטח בארצכם׃</p></div></div>
+      <div class="texte-fr"><p>Le battage de vos grains se prolongera jusqu’à la vendange, et la vendange durera jusqu’aux semailles; vous aurez du pain à manger en abondance, et vous demeurerez en sécurité dans votre pays.</p></div>
+    </div><div class="seif" id="v-26-6">
+      <span class="seif-num">26:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֤י שָׁלוֹם֙ בָּאָ֔רֶץ וּשְׁכַבְתֶּ֖ם וְאֵ֣ין מַחֲרִ֑יד וְהִשְׁבַּתִּ֞י חַיָּ֤ה רָעָה֙ מִן־הָאָ֔רֶץ וְחֶ֖רֶב לֹא־תַעֲבֹ֥ר בְּאַרְצְכֶֽם׃</p></div><div class="heb-s"><p>ונתתי שלום בארץ ושכבתם ואין מחריד והשבתי חיה רעה מן־הארץ וחרב לא־תעבר בארצכם׃</p></div></div>
+      <div class="texte-fr"><p>Je ferai régner la paix dans ce pays, et nul n’y troublera votre repos; je ferai disparaître du pays les animaux nuisibles, et le glaive ne traversera point votre territoire.</p></div>
+    </div><div class="seif" id="v-26-7">
+      <span class="seif-num">26:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּרְדַפְתֶּ֖ם אֶת־אֹיְבֵיכֶ֑ם וְנָפְל֥וּ לִפְנֵיכֶ֖ם לֶחָֽרֶב׃</p></div><div class="heb-s"><p>ורדפתם את־איביכם ונפלו לפניכם לחרב׃</p></div></div>
+      <div class="texte-fr"><p>Vous poursuivrez vos ennemis, et ils succomberont sous votre glaive.</p></div>
+    </div><div class="seif" id="v-26-8">
+      <span class="seif-num">26:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָדְפ֨וּ מִכֶּ֤ם חֲמִשָּׁה֙ מֵאָ֔ה וּמֵאָ֥ה מִכֶּ֖ם רְבָבָ֣ה יִרְדֹּ֑פוּ וְנָפְל֧וּ אֹיְבֵיכֶ֛ם לִפְנֵיכֶ֖ם לֶחָֽרֶב׃</p></div><div class="heb-s"><p>ורדפו מכם חמשה מאה ומאה מכם רבבה ירדפו ונפלו איביכם לפניכם לחרב׃</p></div></div>
+      <div class="texte-fr"><p>Cinq d’entre vous en poursuivront une centaine, et cent d’entre vous une myriade; et vos ennemis tomberont devant votre glaive.</p></div>
+    </div><div class="seif" id="v-26-9">
+      <span class="seif-num">26:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּפָנִ֣יתִי אֲלֵיכֶ֔ם וְהִפְרֵיתִ֣י אֶתְכֶ֔ם וְהִרְבֵּיתִ֖י אֶתְכֶ֑ם וַהֲקִימֹתִ֥י אֶת־בְּרִיתִ֖י אִתְּכֶֽם׃</p></div><div class="heb-s"><p>ופניתי אליכם והפריתי אתכם והרביתי אתכם והקימתי את־בריתי אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Je m’occuperai de vous, je vous ferai croître et multiplier, et je maintiendrai mon alliance avec vous.</p></div>
+    </div><div class="seif" id="v-26-10">
+      <span class="seif-num">26:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲכַלְתֶּ֥ם יָשָׁ֖ן נוֹשָׁ֑ן וְיָשָׁ֕ן מִפְּנֵ֥י חָדָ֖שׁ תּוֹצִֽיאוּ׃</p></div><div class="heb-s"><p>ואכלתם ישן נושן וישן מפני חדש תוציאו׃</p></div></div>
+      <div class="texte-fr"><p>Vous pourrez vivre longtemps sur une récolte passée, et vous devrez enlever l’ancienne pour faire place à la nouvelle.</p></div>
+    </div><div class="seif" id="v-26-11">
+      <span class="seif-num">26:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֥י מִשְׁכָּנִ֖י בְּתוֹכְכֶ֑ם וְלֹֽא־תִגְעַ֥ל נַפְשִׁ֖י אֶתְכֶֽם׃</p></div><div class="heb-s"><p>ונתתי משכני בתוככם ולא־תגעל נפשי אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Je fixerai ma résidence au milieu de vous, et mon esprit ne se lassera point d’être avec vous;</p></div>
+    </div><div class="seif" id="v-26-12">
+      <span class="seif-num">26:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִתְהַלַּכְתִּי֙ בְּת֣וֹכְכֶ֔ם וְהָיִ֥יתִי לָכֶ֖ם לֵֽאלֹהִ֑ים וְאַתֶּ֖ם תִּהְיוּ־לִ֥י לְעָֽם׃</p></div><div class="heb-s"><p>והתהלכתי בתוככם והייתי לכם לאלהים ואתם תהיו־לי לעם׃</p></div></div>
+      <div class="texte-fr"><p>mais je me complairai au milieu de vous, et je serai votre Divinité, et vous serez mon peuple.</p></div>
+    </div><div class="seif" id="v-26-13">
+      <span class="seif-num">26:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲנִ֞י יְהֹוָ֣ה אֱלֹֽהֵיכֶ֗ם אֲשֶׁ֨ר הוֹצֵ֤אתִי אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם מִֽהְיֹ֥ת לָהֶ֖ם עֲבָדִ֑ים וָאֶשְׁבֹּר֙ מֹטֹ֣ת עֻלְּכֶ֔ם וָאוֹלֵ֥ךְ אֶתְכֶ֖ם קֽוֹמְמִיּֽוּת׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אני יהוה אלהיכם אשר הוצאתי אתכם מארץ מצרים מהית להם עבדים ואשבר מטת עלכם ואולך אתכם קוממיות׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Je suis l’Éternel votre Dieu, qui vous ai tirés du pays d’Égypte pour que vous n’y fussiez plus esclaves; et j’ai brisé les barres de votre joug, et je vous ai fait marcher la tête haute.</p></div>
+    </div><div class="seif" id="v-26-14">
+      <span class="seif-num">26:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֥א תִשְׁמְע֖וּ לִ֑י וְלֹ֣א תַעֲשׂ֔וּ אֵ֥ת כׇּל־הַמִּצְוֺ֖ת הָאֵֽלֶּה׃</p></div><div class="heb-s"><p>ואם־לא תשמעו לי ולא תעשו את כל־המצות האלה׃</p></div></div>
+      <div class="texte-fr"><p>Mais si vous ne m’écoutez point, et que vous cessiez d’exécuter tous ces commandements;</p></div>
+    </div><div class="seif" id="v-26-15">
+      <span class="seif-num">26:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בְּחֻקֹּתַ֣י תִּמְאָ֔סוּ וְאִ֥ם אֶת־מִשְׁפָּטַ֖י תִּגְעַ֣ל נַפְשְׁכֶ֑ם לְבִלְתִּ֤י עֲשׂוֹת֙ אֶת־כׇּל־מִצְוֺתַ֔י לְהַפְרְכֶ֖ם אֶת־בְּרִיתִֽי׃</p></div><div class="heb-s"><p>ואם־בחקתי תמאסו ואם את־משפטי תגעל נפשכם לבלתי עשות את־כל־מצותי להפרכם את־בריתי׃</p></div></div>
+      <div class="texte-fr"><p>si vous dédaignez mes lois et que votre esprit repousse mes institutions, au point de ne plus observer mes préceptes, de rompre mon alliance,</p></div>
+    </div><div class="seif" id="v-26-16">
+      <span class="seif-num">26:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַף־אֲנִ֞י אֶֽעֱשֶׂה־זֹּ֣את לָכֶ֗ם וְהִפְקַדְתִּ֨י עֲלֵיכֶ֤ם בֶּֽהָלָה֙ אֶת־הַשַּׁחֶ֣פֶת וְאֶת־הַקַּדַּ֔חַת מְכַלּ֥וֹת עֵינַ֖יִם וּמְדִיבֹ֣ת נָ֑פֶשׁ וּזְרַעְתֶּ֤ם לָרִיק֙ זַרְעֲכֶ֔ם וַאֲכָלֻ֖הוּ אֹיְבֵיכֶֽם׃</p></div><div class="heb-s"><p>אף־אני אעשה־זאת לכם והפקדתי עליכם בהלה את־השחפת ואת־הקדחת מכלות עינים ומדיבת נפש וזרעתם לריק זרעכם ואכלהו איביכם׃</p></div></div>
+      <div class="texte-fr"><p>à mon tour, voici ce que je vous ferai: je susciterai contre vous d’effrayants fléaux, la consomption, la fièvre, qui font languir les yeux et défaillir l’âme; vous sèmerez en vain votre semence, vos ennemis la consommeront.</p></div>
+    </div><div class="seif" id="v-26-17">
+      <span class="seif-num">26:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֤י פָנַי֙ בָּכֶ֔ם וְנִגַּפְתֶּ֖ם לִפְנֵ֣י אֹיְבֵיכֶ֑ם וְרָד֤וּ בָכֶם֙ שֹֽׂנְאֵיכֶ֔ם וְנַסְתֶּ֖ם וְאֵין־רֹדֵ֥ף אֶתְכֶֽם׃</p></div><div class="heb-s"><p>ונתתי פני בכם ונגפתם לפני איביכם ורדו בכם שנאיכם ונסתם ואין־רדף אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Je dirigerai ma face contre vous, et vous serez abattus devant vos ennemis; ceux qui vous haïssent vous domineront, et vous fuirez sans qu’on vous poursuive.</p></div>
+    </div><div class="seif" id="v-26-18">
+      <span class="seif-num">26:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם־עַד־אֵ֔לֶּה לֹ֥א תִשְׁמְע֖וּ לִ֑י וְיָסַפְתִּי֙ לְיַסְּרָ֣ה אֶתְכֶ֔ם שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃</p></div><div class="heb-s"><p>ואם־עד־אלה לא תשמעו לי ויספתי ליסרה אתכם שבע על־חטאתיכם׃</p></div></div>
+      <div class="texte-fr"><p>Que si malgré cela vous ne m’obéissez pas encore, je redoublerai jusqu’au septuple le châtiment de vos fautes.</p></div>
+    </div><div class="seif" id="v-26-19">
+      <span class="seif-num">26:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁבַרְתִּ֖י אֶת־גְּא֣וֹן עֻזְּכֶ֑ם וְנָתַתִּ֤י אֶת־שְׁמֵיכֶם֙ כַּבַּרְזֶ֔ל וְאֶֽת־אַרְצְכֶ֖ם כַּנְּחֻשָֽׁה׃</p></div><div class="heb-s"><p>ושברתי את־גאון עזכם ונתתי את־שמיכם כברזל ואת־ארצכם כנחשה׃</p></div></div>
+      <div class="texte-fr"><p>Je briserai votre arrogante audace, en faisant votre ciel de fer et votre terre d’airain;</p></div>
+    </div><div class="seif" id="v-26-20">
+      <span class="seif-num">26:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְתַ֥ם לָרִ֖יק כֹּחֲכֶ֑ם וְלֹֽא־תִתֵּ֤ן אַרְצְכֶם֙ אֶת־יְבוּלָ֔הּ וְעֵ֣ץ הָאָ֔רֶץ לֹ֥א יִתֵּ֖ן פִּרְיֽוֹ׃</p></div><div class="heb-s"><p>ותם לריק כחכם ולא־תתן ארצכם את־יבולה ועץ הארץ לא יתן פריו׃</p></div></div>
+      <div class="texte-fr"><p>et vous vous épuiserez en vains efforts, votre terre refusera son tribut, et ses arbres refuseront leurs fruits.</p></div>
+    </div><div class="seif" id="v-26-21">
+      <span class="seif-num">26:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־תֵּֽלְכ֤וּ עִמִּי֙ קֶ֔רִי וְלֹ֥א תֹאב֖וּ לִשְׁמֹ֣עַֽ לִ֑י וְיָסַפְתִּ֤י עֲלֵיכֶם֙ מַכָּ֔ה שֶׁ֖בַע כְּחַטֹּאתֵיכֶֽם׃</p></div><div class="heb-s"><p>ואם־תלכו עמי קרי ולא תאבו לשמע לי ויספתי עליכם מכה שבע כחטאתיכם׃</p></div></div>
+      <div class="texte-fr"><p>Si vous agissez hostilement à mon égard, si vous persistez à ne point m’obéir, je vous frapperai de nouvelles plaies, septuples comme vos fautes.</p></div>
+    </div><div class="seif" id="v-26-22">
+      <span class="seif-num">26:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִשְׁלַחְתִּ֨י בָכֶ֜ם אֶת־חַיַּ֤ת הַשָּׂדֶה֙ וְשִׁכְּלָ֣ה אֶתְכֶ֔ם וְהִכְרִ֙יתָה֙ אֶת־בְּהֶמְתְּכֶ֔ם וְהִמְעִ֖יטָה אֶתְכֶ֑ם וְנָשַׁ֖מּוּ דַּרְכֵיכֶֽם׃</p></div><div class="heb-s"><p>והשלחתי בכם את־חית השדה ושכלה אתכם והכריתה את־בהמתכם והמעיטה אתכם ונשמו דרכיכם׃</p></div></div>
+      <div class="texte-fr"><p>Je lâcherai sur vous les bêtes sauvages, qui vous priveront de vos enfants, qui extermineront votre bétail, qui vous décimeront vous-mêmes, et vos routes deviendront solitaires.</p></div>
+    </div><div class="seif" id="v-26-23">
+      <span class="seif-num">26:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם־בְּאֵ֔לֶּה לֹ֥א תִוָּסְר֖וּ לִ֑י וַהֲלַכְתֶּ֥ם עִמִּ֖י קֶֽרִי׃</p></div><div class="heb-s"><p>ואם־באלה לא תוסרו לי והלכתם עמי קרי׃</p></div></div>
+      <div class="texte-fr"><p>Si ces châtiments ne vous ramènent pas à moi et que votre conduite reste hostile à mon égard,</p></div>
+    </div><div class="seif" id="v-26-24">
+      <span class="seif-num">26:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָלַכְתִּ֧י אַף־אֲנִ֛י עִמָּכֶ֖ם בְּקֶ֑רִי וְהִכֵּיתִ֤י אֶתְכֶם֙ גַּם־אָ֔נִי שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃</p></div><div class="heb-s"><p>והלכתי אף־אני עמכם בקרי והכיתי אתכם גם־אני שבע על־חטאתיכם׃</p></div></div>
+      <div class="texte-fr"><p>moi aussi je me conduirai à votre égard avec hostilité, et je vous frapperai, à mon tour, sept fois pour vos péchés.</p></div>
+    </div><div class="seif" id="v-26-25">
+      <span class="seif-num">26:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵבֵאתִ֨י עֲלֵיכֶ֜ם חֶ֗רֶב נֹקֶ֙מֶת֙ נְקַם־בְּרִ֔ית וְנֶאֱסַפְתֶּ֖ם אֶל־עָרֵיכֶ֑ם וְשִׁלַּ֤חְתִּי דֶ֙בֶר֙ בְּת֣וֹכְכֶ֔ם וְנִתַּתֶּ֖ם בְּיַד־אוֹיֵֽב׃</p></div><div class="heb-s"><p>והבאתי עליכם חרב נקמת נקם־ברית ונאספתם אל־עריכם ושלחתי דבר בתוככם ונתתם ביד־אויב׃</p></div></div>
+      <div class="texte-fr"><p>Je ferai surgir contre vous le glaive, vengeur des droits de l’Alliance, et vous vous replierez dans vos villes; puis, j’enverrai la peste au milieu de vous, et vous serez à la merci de l’ennemi,</p></div>
+    </div><div class="seif" id="v-26-26">
+      <span class="seif-num">26:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּשִׁבְרִ֣י לָכֶם֮ מַטֵּה־לֶ֒חֶם֒ וְ֠אָפ֠וּ עֶ֣שֶׂר נָשִׁ֤ים לַחְמְכֶם֙ בְּתַנּ֣וּר אֶחָ֔ד וְהֵשִׁ֥יבוּ לַחְמְכֶ֖ם בַּמִּשְׁקָ֑ל וַאֲכַלְתֶּ֖ם וְלֹ֥א תִשְׂבָּֽעוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>בשברי לכם מטה־לחם ואפו עשר נשים לחמכם בתנור אחד והשיבו לחמכם במשקל ואכלתם ולא תשבעו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>tandis que je vous couperai les vivres, de sorte que dix femmes cuiront votre pain dans un même four et vous le rapporteront au poids, et que vous le mangerez sans vous rassasier.</p></div>
+    </div><div class="seif" id="v-26-27">
+      <span class="seif-num">26:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם־בְּזֹ֔את לֹ֥א תִשְׁמְע֖וּ לִ֑י וַהֲלַכְתֶּ֥ם עִמִּ֖י בְּקֶֽרִי׃</p></div><div class="heb-s"><p>ואם־בזאת לא תשמעו לי והלכתם עמי בקרי׃</p></div></div>
+      <div class="texte-fr"><p>Si, malgré cela, au lieu de m’obéir, vous vous comportez hostilement avec moi,</p></div>
+    </div><div class="seif" id="v-26-28">
+      <span class="seif-num">26:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָלַכְתִּ֥י עִמָּכֶ֖ם בַּחֲמַת־קֶ֑רִי וְיִסַּרְתִּ֤י אֶתְכֶם֙ אַף־אָ֔נִי שֶׁ֖בַע עַל־חַטֹּאתֵיכֶֽם׃</p></div><div class="heb-s"><p>והלכתי עמכם בחמת־קרי ויסרתי אתכם אף־אני שבע על־חטאתיכם׃</p></div></div>
+      <div class="texte-fr"><p>je procéderai à votre égard avec une exaspération d’hostilité, et je vous châtierai, à mon tour, sept fois pour vos péchés.</p></div>
+    </div><div class="seif" id="v-26-29">
+      <span class="seif-num">26:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲכַלְתֶּ֖ם בְּשַׂ֣ר בְּנֵיכֶ֑ם וּבְשַׂ֥ר בְּנֹתֵיכֶ֖ם תֹּאכֵֽלוּ׃</p></div><div class="heb-s"><p>ואכלתם בשר בניכם ובשר בנתיכם תאכלו׃</p></div></div>
+      <div class="texte-fr"><p>Vous dévorerez la chair de vos fils, et la chair de vos filles vous la dévorerez.</p></div>
+    </div><div class="seif" id="v-26-30">
+      <span class="seif-num">26:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִשְׁמַדְתִּ֞י אֶת־בָּמֹֽתֵיכֶ֗ם וְהִכְרַתִּי֙ אֶת־חַמָּ֣נֵיכֶ֔ם וְנָֽתַתִּי֙ אֶת־פִּגְרֵיכֶ֔ם עַל־פִּגְרֵ֖י גִּלּוּלֵיכֶ֑ם וְגָעֲלָ֥ה נַפְשִׁ֖י אֶתְכֶֽם׃</p></div><div class="heb-s"><p>והשמדתי את־במתיכם והכרתי את־חמניכם ונתתי את־פגריכם על־פגרי גלוליכם וגעלה נפשי אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Je détruirai vos hauts-lieux, j’abattrai vos monuments solaires, puis je jetterai vos cadavres sur les cadavres de vos impures idoles; et mon esprit vous repoussera.</p></div>
+    </div><div class="seif" id="v-26-31">
+      <span class="seif-num">26:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתִּ֤י אֶת־עָֽרֵיכֶם֙ חׇרְבָּ֔ה וַהֲשִׁמּוֹתִ֖י אֶת־מִקְדְּשֵׁיכֶ֑ם וְלֹ֣א אָרִ֔יחַ בְּרֵ֖יחַ נִיחֹֽחֲכֶֽם׃</p></div><div class="heb-s"><p>ונתתי את־עריכם חרבה והשמותי את־מקדשיכם ולא אריח בריח ניחחכם׃</p></div></div>
+      <div class="texte-fr"><p>Je ferai de vos villes des ruines, de vos lieux saints une solitude, et je ne respirerai point vos pieux parfums.</p></div>
+    </div><div class="seif" id="v-26-32">
+      <span class="seif-num">26:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַהֲשִׁמֹּתִ֥י אֲנִ֖י אֶת־הָאָ֑רֶץ וְשָֽׁמְמ֤וּ עָלֶ֙יהָ֙ אֹֽיְבֵיכֶ֔ם הַיֹּשְׁבִ֖ים בָּֽהּ׃</p></div><div class="heb-s"><p>והשמתי אני את־הארץ ושממו עליה איביכם הישבים בה׃</p></div></div>
+      <div class="texte-fr"><p>Puis, moi-même je désolerai cette terre, si bien que vos ennemis, qui l’occuperont, en seront stupéfaits.</p></div>
+    </div><div class="seif" id="v-26-33">
+      <span class="seif-num">26:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶתְכֶם֙ אֱזָרֶ֣ה בַגּוֹיִ֔ם וַהֲרִיקֹתִ֥י אַחֲרֵיכֶ֖ם חָ֑רֶב וְהָיְתָ֤ה אַרְצְכֶם֙ שְׁמָמָ֔ה וְעָרֵיכֶ֖ם יִהְי֥וּ חׇרְבָּֽה׃</p></div><div class="heb-s"><p>ואתכם אזרה בגוים והריקתי אחריכם חרב והיתה ארצכם שממה ועריכם יהיו חרבה׃</p></div></div>
+      <div class="texte-fr"><p>Et vous, je vous disperserai parmi les nations, et je vous poursuivrai l’épée haute; votre pays restera solitaire, vos villes resteront ruinées.</p></div>
+    </div><div class="seif" id="v-26-34">
+      <span class="seif-num">26:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָז֩ תִּרְצֶ֨ה הָאָ֜רֶץ אֶת־שַׁבְּתֹתֶ֗יהָ כֹּ֚ל יְמֵ֣י הׇשַּׁמָּ֔הֿ וְאַתֶּ֖ם בְּאֶ֣רֶץ אֹיְבֵיכֶ֑ם אָ֚ז תִּשְׁבַּ֣ת הָאָ֔רֶץ וְהִרְצָ֖ת אֶת־שַׁבְּתֹתֶֽיהָ׃</p></div><div class="heb-s"><p>אז תרצה הארץ את־שבתתיה כל ימי השמה ואתם בארץ איביכם אז תשבת הארץ והרצת את־שבתתיה׃</p></div></div>
+      <div class="texte-fr"><p>Alors la terre acquittera la dette de ses chômages, tandis qu’elle restera désolée et que vous vivrez dans le pays de vos ennemis; alors la terre chômera, et vous fera payer ses chômages.</p></div>
+    </div><div class="seif" id="v-26-35">
+      <span class="seif-num">26:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־יְמֵ֥י הׇשַּׁמָּ֖הֿ תִּשְׁבֹּ֑ת אֵ֣ת אֲשֶׁ֧ר לֹֽא־שָׁבְתָ֛ה בְּשַׁבְּתֹתֵיכֶ֖ם בְּשִׁבְתְּכֶ֥ם עָלֶֽיהָ׃</p></div><div class="heb-s"><p>כל־ימי השמה תשבת את אשר לא־שבתה בשבתתיכם בשבתכם עליה׃</p></div></div>
+      <div class="texte-fr"><p>Dans toute cette période de désolation, elle chômera pour ce qu’elle n’aura pas chômé dans vos années sabbatiques, alors que vous l’habitiez.</p></div>
+    </div><div class="seif" id="v-26-36">
+      <span class="seif-num">26:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנִּשְׁאָרִ֣ים בָּכֶ֔ם וְהֵבֵ֤אתִי מֹ֙רֶךְ֙ בִּלְבָבָ֔ם בְּאַרְצֹ֖ת אֹיְבֵיהֶ֑ם וְרָדַ֣ף אֹתָ֗ם ק֚וֹל עָלֶ֣ה נִדָּ֔ף וְנָס֧וּ מְנֻֽסַת־חֶ֛רֶב וְנָפְל֖וּ וְאֵ֥ין רֹדֵֽף׃</p></div><div class="heb-s"><p>והנשארים בכם והבאתי מרך בלבבם בארצת איביהם ורדף אתם קול עלה נדף ונסו מנסת־חרב ונפלו ואין רדף׃</p></div></div>
+      <div class="texte-fr"><p>Pour ceux qui survivront d’entre vous, je leur mettrai la défaillance au cœur dans les pays de leurs ennemis: poursuivis par le bruit de la feuille qui tombe, ils fuiront comme on fuit devant l’épée, ils tomberont sans qu’on les poursuive,</p></div>
+    </div><div class="seif" id="v-26-37">
+      <span class="seif-num">26:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכָשְׁל֧וּ אִישׁ־בְּאָחִ֛יו כְּמִפְּנֵי־חֶ֖רֶב וְרֹדֵ֣ף אָ֑יִן וְלֹא־תִֽהְיֶ֤ה לָכֶם֙ תְּקוּמָ֔ה לִפְנֵ֖י אֹֽיְבֵיכֶֽם׃</p></div><div class="heb-s"><p>וכשלו איש־באחיו כמפני־חרב ורדף אין ולא־תהיה לכם תקומה לפני איביכם׃</p></div></div>
+      <div class="texte-fr"><p>et ils trébucheront l’un sur l’autre comme à la vue de l’épée, sans que personne les poursuive. Vous ne pourrez vous maintenir devant vos ennemis;</p></div>
+    </div><div class="seif" id="v-26-38">
+      <span class="seif-num">26:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲבַדְתֶּ֖ם בַּגּוֹיִ֑ם וְאָכְלָ֣ה אֶתְכֶ֔ם אֶ֖רֶץ אֹיְבֵיכֶֽם׃</p></div><div class="heb-s"><p>ואבדתם בגוים ואכלה אתכם ארץ איביכם׃</p></div></div>
+      <div class="texte-fr"><p>vous vous perdrez parmi les nations, et le pays de vos ennemis vous dévorera.</p></div>
+    </div><div class="seif" id="v-26-39">
+      <span class="seif-num">26:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנִּשְׁאָרִ֣ים בָּכֶ֗ם יִמַּ֙קּוּ֙ בַּֽעֲוֺנָ֔ם בְּאַרְצֹ֖ת אֹיְבֵיכֶ֑ם וְאַ֛ף בַּעֲוֺנֹ֥ת אֲבֹתָ֖ם אִתָּ֥ם יִמָּֽקּוּ׃</p></div><div class="heb-s"><p>והנשארים בכם ימקו בעונם בארצת איביכם ואף בעונת אבתם אתם ימקו׃</p></div></div>
+      <div class="texte-fr"><p>Et les survivants d’entre vous se consumeront, par leur faute, dans les pays de leurs ennemis, et même pour les méfaits de leurs pères ils se consumeront avec eux.</p></div>
+    </div><div class="seif" id="v-26-40">
+      <span class="seif-num">26:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִתְוַדּ֤וּ אֶת־עֲוֺנָם֙ וְאֶת־עֲוֺ֣ן אֲבֹתָ֔ם בְּמַעֲלָ֖ם אֲשֶׁ֣ר מָֽעֲלוּ־בִ֑י וְאַ֕ף אֲשֶׁר־הָֽלְכ֥וּ עִמִּ֖י בְּקֶֽרִי׃</p></div><div class="heb-s"><p>והתודו את־עונם ואת־עון אבתם במעלם אשר מעלו־בי ואף אשר־הלכו עמי בקרי׃</p></div></div>
+      <div class="texte-fr"><p>Puis ils confesseront leur iniquité et celle de leurs pères, leur forfaiture envers moi, et aussi leur conduite hostile à mon égard,</p></div>
+    </div><div class="seif" id="v-26-41">
+      <span class="seif-num">26:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַף־אֲנִ֗י אֵלֵ֤ךְ עִמָּם֙ בְּקֶ֔רִי וְהֵבֵאתִ֣י אֹתָ֔ם בְּאֶ֖רֶץ אֹיְבֵיהֶ֑ם אוֹ־אָ֣ז יִכָּנַ֗ע לְבָבָם֙ הֶֽעָרֵ֔ל וְאָ֖ז יִרְצ֥וּ אֶת־עֲוֺנָֽם׃</p></div><div class="heb-s"><p>אף־אני אלך עמם בקרי והבאתי אתם בארץ איביהם או־אז יכנע לבבם הערל ואז ירצו את־עונם׃</p></div></div>
+      <div class="texte-fr"><p>pour laquelle moi aussi je les aurai traités hostilement, en les déportant au pays de leurs ennemis à moins qu’alors leur cœur obtus ne s’humilie, et alors ils expieront leur iniquité.</p></div>
+    </div><div class="seif" id="v-26-42">
+      <span class="seif-num">26:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזָכַרְתִּ֖י אֶת־בְּרִיתִ֣י יַעֲק֑וֹב וְאַף֩ אֶת־בְּרִיתִ֨י יִצְחָ֜ק וְאַ֨ף אֶת־בְּרִיתִ֧י אַבְרָהָ֛ם אֶזְכֹּ֖ר וְהָאָ֥רֶץ אֶזְכֹּֽר׃</p></div><div class="heb-s"><p>וזכרתי את־בריתי יעקוב ואף את־בריתי יצחק ואף את־בריתי אברהם אזכר והארץ אזכר׃</p></div></div>
+      <div class="texte-fr"><p>Et je me ressouviendrai de mon alliance avec Jacob; mon alliance aussi avec Isaac, mon alliance aussi avec Abraham, je m’en souviendrai, et la terre aussi, je m’en souviendrai.</p></div>
+    </div><div class="seif" id="v-26-43">
+      <span class="seif-num">26:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָאָ֩רֶץ֩ תֵּעָזֵ֨ב מֵהֶ֜ם וְתִ֣רֶץ אֶת־שַׁבְּתֹתֶ֗יהָ בׇּהְשַׁמָּהֿ֙ מֵהֶ֔ם וְהֵ֖ם יִרְצ֣וּ אֶת־עֲוֺנָ֑ם יַ֣עַן וּבְיַ֔עַן בְּמִשְׁפָּטַ֣י מָאָ֔סוּ וְאֶת־חֻקֹּתַ֖י גָּעֲלָ֥ה נַפְשָֽׁם׃</p></div><div class="heb-s"><p>והארץ תעזב מהם ותרץ את־שבתתיה בהשמה מהם והם ירצו את־עונם יען וביען במשפטי מאסו ואת־חקתי געלה נפשם׃</p></div></div>
+      <div class="texte-fr"><p>Cette terre restera donc abandonnée par eux, afin que, laissée par eux déserte, elle répare ses chômages, et qu’eux-mêmes ils réparent leur iniquité; parce que, oui, parce qu’ils auront dédaigné mes statuts, et que leur esprit aura repoussé mes lois.</p></div>
+    </div><div class="seif" id="v-26-44">
+      <span class="seif-num">26:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַף־גַּם־זֹ֠את בִּֽהְיוֹתָ֞ם בְּאֶ֣רֶץ אֹֽיְבֵיהֶ֗ם לֹֽא־מְאַסְתִּ֤ים וְלֹֽא־גְעַלְתִּים֙ לְכַלֹּתָ֔ם לְהָפֵ֥ר בְּרִיתִ֖י אִתָּ֑ם כִּ֛י אֲנִ֥י יְהֹוָ֖ה אֱלֹהֵיהֶֽם׃</p></div><div class="heb-s"><p>ואף־גם־זאת בהיותם בארץ איביהם לא־מאסתים ולא־געלתים לכלתם להפר בריתי אתם כי אני יהוה אלהיהם׃</p></div></div>
+      <div class="texte-fr"><p>Et pourtant, même alors, quand ils se trouveront relégués dans le pays de leurs ennemis, je ne les aurai ni dédaignés ni repoussés au point de les anéantir, de dissoudre mon alliance avec eux; car je suis l’Éternel, leur Dieu!</p></div>
+    </div><div class="seif" id="v-26-45">
+      <span class="seif-num">26:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזָכַרְתִּ֥י לָהֶ֖ם בְּרִ֣ית רִאשֹׁנִ֑ים אֲשֶׁ֣ר הוֹצֵֽאתִי־אֹתָם֩ מֵאֶ֨רֶץ מִצְרַ֜יִם לְעֵינֵ֣י הַגּוֹיִ֗ם לִהְי֥וֹת לָהֶ֛ם לֵאלֹהִ֖ים אֲנִ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>וזכרתי להם ברית ראשנים אשר הוצאתי־אתם מארץ מצרים לעיני הגוים להיות להם לאלהים אני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et je me rappellerai, en leur faveur, le pacte des aïeux, de ceux que j’ai fait sortir du pays d’Égypte à la vue des peuples pour être leur Dieu, moi l’Éternel."</p></div>
+    </div><div class="seif" id="v-26-46">
+      <span class="seif-num">26:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֠לֶּה הַֽחֻקִּ֣ים וְהַמִּשְׁפָּטִים֮ וְהַתּוֹרֹת֒ אֲשֶׁר֙ נָתַ֣ן יְהֹוָ֔ה בֵּינ֕וֹ וּבֵ֖ין בְּנֵ֣י יִשְׂרָאֵ֑ל בְּהַ֥ר סִינַ֖י בְּיַד־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אלה החקים והמשפטים והתורת אשר נתן יהוה בינו ובין בני ישראל בהר סיני ביד־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Telles sont les ordonnances, les institutions et les doctrines que l’Éternel fit intervenir entre lui et les enfants d’Israël, au mont Sinaï, par l’organe de Moïse.</p></div>
+    </div><div class="seif" id="v-27-1">
+      <span class="seif-num">27:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-27-2">
+      <span class="seif-num">27:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבֵּ֞ר אֶל־בְּנֵ֤י יִשְׂרָאֵל֙ וְאָמַרְתָּ֣ אֲלֵהֶ֔ם אִ֕ישׁ כִּ֥י יַפְלִ֖א נֶ֑דֶר בְּעֶרְכְּךָ֥ נְפָשֹׁ֖ת לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>דבר אל־בני ישראל ואמרת אלהם איש כי יפלא נדר בערכך נפשת ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Parle aux enfants d’Israël et dis-leur: Si quelqu’un promet expressément, par un vœu, la valeur estimative d’une personne à l’Éternel,</p></div>
+    </div><div class="seif" id="v-27-3">
+      <span class="seif-num">27:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֤ה עֶרְכְּךָ֙ הַזָּכָ֔ר מִבֶּן֙ עֶשְׂרִ֣ים שָׁנָ֔ה וְעַ֖ד בֶּן־שִׁשִּׁ֣ים שָׁנָ֑ה וְהָיָ֣ה עֶרְכְּךָ֗ חֲמִשִּׁ֛ים שֶׁ֥קֶל כֶּ֖סֶף בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>והיה ערכך הזכר מבן עשרים שנה ועד בן־ששים שנה והיה ערכך חמשים שקל כסף בשקל הקדש׃</p></div></div>
+      <div class="texte-fr"><p>appliquée à un homme de l’âge de vingt à soixante ans, cette valeur sera de cinquante sicles d’argent, au poids du sanctuaire;</p></div>
+    </div><div class="seif" id="v-27-4">
+      <span class="seif-num">27:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־נְקֵבָ֖ה הִ֑וא וְהָיָ֥ה עֶרְכְּךָ֖ שְׁלֹשִׁ֥ים שָֽׁקֶל׃</p></div><div class="heb-s"><p>ואם־נקבה הוא והיה ערכך שלשים שקל׃</p></div></div>
+      <div class="texte-fr"><p>et s’il s’agit d’une femme, le taux sera de trente sicles.</p></div>
+    </div><div class="seif" id="v-27-5">
+      <span class="seif-num">27:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם מִבֶּן־חָמֵ֜שׁ שָׁנִ֗ים וְעַד֙ בֶּן־עֶשְׂרִ֣ים שָׁנָ֔ה וְהָיָ֧ה עֶרְכְּךָ֛ הַזָּכָ֖ר עֶשְׂרִ֣ים שְׁקָלִ֑ים וְלַנְּקֵבָ֖ה עֲשֶׂ֥רֶת שְׁקָלִֽים׃</p></div><div class="heb-s"><p>ואם מבן־חמש שנים ועד בן־עשרים שנה והיה ערכך הזכר עשרים שקלים ולנקבה עשרת שקלים׃</p></div></div>
+      <div class="texte-fr"><p>Depuis l’âge de cinq ans jusqu’à l’âge de vingt ans, le taux sera, pour le sexe masculin, de vingt sicles; pour le sexe féminin, de dix sicles.</p></div>
+    </div><div class="seif" id="v-27-6">
+      <span class="seif-num">27:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֣ם מִבֶּן־חֹ֗דֶשׁ וְעַד֙ בֶּן־חָמֵ֣שׁ שָׁנִ֔ים וְהָיָ֤ה עֶרְכְּךָ֙ הַזָּכָ֔ר חֲמִשָּׁ֥ה שְׁקָלִ֖ים כָּ֑סֶף וְלַנְּקֵבָ֣ה עֶרְכְּךָ֔ שְׁלֹ֥שֶׁת שְׁקָלִ֖ים כָּֽסֶף׃</p></div><div class="heb-s"><p>ואם מבן־חדש ועד בן־חמש שנים והיה ערכך הזכר חמשה שקלים כסף ולנקבה ערכך שלשת שקלים כסף׃</p></div></div>
+      <div class="texte-fr"><p>Depuis l’âge d’un mois jusqu’à l’âge de cinq ans, le taux d’un garçon sera de cinq sicles d’argent, et celui d’une fille, de trois sicles d’argent.</p></div>
+    </div><div class="seif" id="v-27-7">
+      <span class="seif-num">27:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠אִ֠ם מִבֶּן־שִׁשִּׁ֨ים שָׁנָ֤ה וָמַ֙עְלָה֙ אִם־זָכָ֔ר וְהָיָ֣ה עֶרְכְּךָ֔ חֲמִשָּׁ֥ה עָשָׂ֖ר שָׁ֑קֶל וְלַנְּקֵבָ֖ה עֲשָׂרָ֥ה שְׁקָלִֽים׃</p></div><div class="heb-s"><p>ואם מבן־ששים שנה ומעלה אם־זכר והיה ערכך חמשה עשר שקל ולנקבה עשרה שקלים׃</p></div></div>
+      <div class="texte-fr"><p>Depuis l’âge de soixante ans et au delà, si c’est un homme, le taux sera de quinze sicles et pour une femme il sera de dix sicles.</p></div>
+    </div><div class="seif" id="v-27-8">
+      <span class="seif-num">27:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־מָ֥ךְ הוּא֙ מֵֽעֶרְכֶּ֔ךָ וְהֶֽעֱמִידוֹ֙ לִפְנֵ֣י הַכֹּהֵ֔ן וְהֶעֱרִ֥יךְ אֹת֖וֹ הַכֹּהֵ֑ן עַל־פִּ֗י אֲשֶׁ֤ר תַּשִּׂיג֙ יַ֣ד הַנֹּדֵ֔ר יַעֲרִיכֶ֖נּוּ הַכֹּהֵֽן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואם־מך הוא מערכך והעמידו לפני הכהן והעריך אתו הכהן על־פי אשר תשיג יד הנדר יעריכנו הכהן׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>S’il est impuissant à payer la taxe, il mettra la personne en présence du pontife, et celui-ci l’estimera: c’est d’après les moyens du donateur que le pontife fera l’estimation.</p></div>
+    </div><div class="seif" id="v-27-9">
+      <span class="seif-num">27:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם־בְּהֵמָ֔ה אֲשֶׁ֨ר יַקְרִ֧יבוּ מִמֶּ֛נָּה קׇרְבָּ֖ן לַֽיהֹוָ֑ה כֹּל֩ אֲשֶׁ֨ר יִתֵּ֥ן מִמֶּ֛נּוּ לַיהֹוָ֖ה יִֽהְיֶה־קֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>ואם־בהמה אשר יקריבו ממנה קרבן ליהוה כל אשר יתן ממנו ליהוה יהיה־קדש׃</p></div></div>
+      <div class="texte-fr"><p>Si c’est un animal dont on puisse faire une offrande à l’Éternel, tout ce qu’on aura voué à l’Éternel deviendra une chose sainte.</p></div>
+    </div><div class="seif" id="v-27-10">
+      <span class="seif-num">27:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֣א יַחֲלִיפֶ֗נּוּ וְלֹֽא־יָמִ֥יר אֹת֛וֹ ט֥וֹב בְּרָ֖ע אוֹ־רַ֣ע בְּט֑וֹב וְאִם־הָמֵ֨ר יָמִ֤יר בְּהֵמָה֙ בִּבְהֵמָ֔ה וְהָֽיָה־ה֥וּא וּתְמוּרָת֖וֹ יִֽהְיֶה־קֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>לא יחליפנו ולא־ימיר אתו טוב ברע או־רע בטוב ואם־המר ימיר בהמה בבהמה והיה־הוא ותמורתו יהיה־קדש׃</p></div></div>
+      <div class="texte-fr"><p>On ne peut ni le changer ni le remplacer, bon, par un défectueux, défectueux, par un meilleur; si toutefois on avait remplacé cet animal par un autre, l’animal et son remplaçant seront également saints.</p></div>
+    </div><div class="seif" id="v-27-11">
+      <span class="seif-num">27:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם֙ כׇּל־בְּהֵמָ֣ה טְמֵאָ֔ה אֲ֠שֶׁ֠ר לֹא־יַקְרִ֧יבוּ מִמֶּ֛נָּה קׇרְבָּ֖ן לַֽיהֹוָ֑ה וְהֶֽעֱמִ֥יד אֶת־הַבְּהֵמָ֖ה לִפְנֵ֥י הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>ואם כל־בהמה טמאה אשר לא־יקריבו ממנה קרבן ליהוה והעמיד את־הבהמה לפני הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Si c’est quelque animal impur, dont on ne puisse faire offrande à l’Éternel, on amènera l’animal en présence du pontife:</p></div>
+    </div><div class="seif" id="v-27-12">
+      <span class="seif-num">27:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֶעֱרִ֤יךְ הַכֹּהֵן֙ אֹתָ֔הּ בֵּ֥ין ט֖וֹב וּבֵ֣ין רָ֑ע כְּעֶרְכְּךָ֥ הַכֹּהֵ֖ן כֵּ֥ן יִהְיֶֽה׃</p></div><div class="heb-s"><p>והעריך הכהן אתה בין טוב ובין רע כערכך הכהן כן יהיה׃</p></div></div>
+      <div class="texte-fr"><p>celui-ci l’estimera d’après ses qualités bonnes ou mauvaises; l’estimation du pontife fera loi.</p></div>
+    </div><div class="seif" id="v-27-13">
+      <span class="seif-num">27:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־גָּאֹ֖ל יִגְאָלֶ֑נָּה וְיָסַ֥ף חֲמִישִׁת֖וֹ עַל־עֶרְכֶּֽךָ׃</p></div><div class="heb-s"><p>ואם־גאל יגאלנה ויסף חמישתו על־ערכך׃</p></div></div>
+      <div class="texte-fr"><p>Si la personne veut ensuite le racheter, elle donnera un cinquième en sus de l’estimation.</p></div>
+    </div><div class="seif" id="v-27-14">
+      <span class="seif-num">27:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֗ישׁ כִּֽי־יַקְדִּ֨שׁ אֶת־בֵּית֥וֹ קֹ֙דֶשׁ֙ לַֽיהֹוָ֔ה וְהֶעֱרִיכוֹ֙ הַכֹּהֵ֔ן בֵּ֥ין ט֖וֹב וּבֵ֣ין רָ֑ע כַּאֲשֶׁ֨ר יַעֲרִ֥יךְ אֹת֛וֹ הַכֹּהֵ֖ן כֵּ֥ן יָקֽוּם׃</p></div><div class="heb-s"><p>ואיש כי־יקדש את־ביתו קדש ליהוה והעריכו הכהן בין טוב ובין רע כאשר יעריך אתו הכהן כן יקום׃</p></div></div>
+      <div class="texte-fr"><p>Si un homme a consacré sa maison, comme chose sainte, à l’Éternel, le pontife l’estimera selon ses avantages ou ses défauts; telle le pontife l’aura appréciée, telle elle sera acquise.</p></div>
+    </div><div class="seif" id="v-27-15">
+      <span class="seif-num">27:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם־הַמַּקְדִּ֔ישׁ יִגְאַ֖ל אֶת־בֵּית֑וֹ וְ֠יָסַ֠ף חֲמִישִׁ֧ית כֶּֽסֶף־עֶרְכְּךָ֛ עָלָ֖יו וְהָ֥יָה לֽוֹ׃</p></div><div class="heb-s"><p>ואם־המקדיש יגאל את־ביתו ויסף חמישית כסף־ערכך עליו והיה לו׃</p></div></div>
+      <div class="texte-fr"><p>Mais si le consécrateur veut racheter sa maison, il ajoutera un cinquième en sus du prix estimé, et elle sera à lui.</p></div>
+    </div><div class="seif" id="v-27-16">
+      <span class="seif-num">27:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֣ם&thinsp;<b>׀</b> מִשְּׂדֵ֣ה אֲחֻזָּת֗וֹ יַקְדִּ֥ישׁ אִישׁ֙ לַֽיהֹוָ֔ה וְהָיָ֥ה עֶרְכְּךָ֖ לְפִ֣י זַרְע֑וֹ זֶ֚רַע חֹ֣מֶר שְׂעֹרִ֔ים בַּחֲמִשִּׁ֖ים שֶׁ֥קֶל כָּֽסֶף׃</p></div><div class="heb-s"><p>ואם&thinsp;<b>׀</b> משדה אחזתו יקדיש איש ליהוה והיה ערכך לפי זרעו זרע חמר שערים בחמשים שקל כסף׃</p></div></div>
+      <div class="texte-fr"><p>Si un homme a consacré à l’Éternel une partie de sa terre patrimoniale, l’estimation s’en fera d’après la contenance en grains: la contenance d’un hômer d’orge valant cinquante sicles d’argent.</p></div>
+    </div><div class="seif" id="v-27-17">
+      <span class="seif-num">27:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־מִשְּׁנַ֥ת הַיֹּבֵ֖ל יַקְדִּ֣ישׁ שָׂדֵ֑הוּ כְּעֶרְכְּךָ֖ יָקֽוּם׃</p></div><div class="heb-s"><p>אם־משנת היבל יקדיש שדהו כערכך יקום׃</p></div></div>
+      <div class="texte-fr"><p>Si donc il a consacré sa terre dès l’année du Jubilé, c’est à ce taux qu’elle sera acquise;</p></div>
+    </div><div class="seif" id="v-27-18">
+      <span class="seif-num">27:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־אַחַ֣ר הַיֹּבֵל֮ יַקְדִּ֣ישׁ שָׂדֵ֒הוּ֒ וְחִשַּׁב־ל֨וֹ הַכֹּהֵ֜ן אֶת־הַכֶּ֗סֶף עַל־פִּ֤י הַשָּׁנִים֙ הַנּ֣וֹתָרֹ֔ת עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְנִגְרַ֖ע מֵֽעֶרְכֶּֽךָ׃</p></div><div class="heb-s"><p>ואם־אחר היבל יקדיש שדהו וחשב־לו הכהן את־הכסף על־פי השנים הנותרת עד שנת היבל ונגרע מערכך׃</p></div></div>
+      <div class="texte-fr"><p>s’il l’a consacrée postérieurement au Jubilé, le pontife en supputera le prix en raison des années à courir jusqu’à l’an jubilaire, et il sera fait une déduction sur le taux.</p></div>
+    </div><div class="seif" id="v-27-19">
+      <span class="seif-num">27:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־גָּאֹ֤ל יִגְאַל֙ אֶת־הַשָּׂדֶ֔ה הַמַּקְדִּ֖ישׁ אֹת֑וֹ וְ֠יָסַ֠ף חֲמִשִׁ֧ית כֶּֽסֶף־עֶרְכְּךָ֛ עָלָ֖יו וְקָ֥ם לֽוֹ׃</p></div><div class="heb-s"><p>ואם־גאל יגאל את־השדה המקדיש אתו ויסף חמשית כסף־ערכך עליו וקם לו׃</p></div></div>
+      <div class="texte-fr"><p>Que si celui-là même qui a consacré la terre veut la racheter, il paiera un cinquième en sus du prix estimé, et elle lui restera.</p></div>
+    </div><div class="seif" id="v-27-20">
+      <span class="seif-num">27:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֤א יִגְאַל֙ אֶת־הַשָּׂדֶ֔ה וְאִם־מָכַ֥ר אֶת־הַשָּׂדֶ֖ה לְאִ֣ישׁ אַחֵ֑ר לֹ֥א יִגָּאֵ֖ל עֽוֹד׃</p></div><div class="heb-s"><p>ואם־לא יגאל את־השדה ואם־מכר את־השדה לאיש אחר לא יגאל עוד׃</p></div></div>
+      <div class="texte-fr"><p>Mais s’il ne rachète point cette terre, ou qu’on l’ait vendue à quelque autre, elle ne pourra plus être rachetée;</p></div>
+    </div><div class="seif" id="v-27-21">
+      <span class="seif-num">27:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיָ֨ה הַשָּׂדֶ֜ה בְּצֵאת֣וֹ בַיֹּבֵ֗ל קֹ֛דֶשׁ לַֽיהֹוָ֖ה כִּשְׂדֵ֣ה הַחֵ֑רֶם לַכֹּהֵ֖ן תִּהְיֶ֥ה אֲחֻזָּתֽוֹ׃</p></div><div class="heb-s"><p>והיה השדה בצאתו ביבל קדש ליהוה כשדה החרם לכהן תהיה אחזתו׃</p></div></div>
+      <div class="texte-fr"><p>de sorte que cette terre, devenant libre au Jubilé, se trouvera consacrée à l’Éternel comme une terre dévouée: c’est le pontife qui en aura la propriété.</p></div>
+    </div><div class="seif" id="v-27-22">
+      <span class="seif-num">27:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם֙ אֶת־שְׂדֵ֣ה מִקְנָת֔וֹ אֲשֶׁ֕ר לֹ֖א מִשְּׂדֵ֣ה אֲחֻזָּת֑וֹ יַקְדִּ֖ישׁ לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>ואם את־שדה מקנתו אשר לא משדה אחזתו יקדיש ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Si ce qu’il a consacré à l’Éternel est une terre achetée par lui, qui ne fasse point partie de son bien patrimonial,</p></div>
+    </div><div class="seif" id="v-27-23">
+      <span class="seif-num">27:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחִשַּׁב־ל֣וֹ הַכֹּהֵ֗ן אֵ֚ת מִכְסַ֣ת הָֽעֶרְכְּךָ֔ עַ֖ד שְׁנַ֣ת הַיֹּבֵ֑ל וְנָתַ֤ן אֶת־הָעֶרְכְּךָ֙ בַּיּ֣וֹם הַה֔וּא קֹ֖דֶשׁ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>וחשב־לו הכהן את מכסת הערכך עד שנת היבל ונתן את־הערכך ביום ההוא קדש ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>le pontife supputera, à son égard, la portion du taux à payer jusqu’à l’an jubilaire, et l’on paiera ce taux, le jour même, comme chose consacrée à l’Éternel.</p></div>
+    </div><div class="seif" id="v-27-24">
+      <span class="seif-num">27:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּשְׁנַ֤ת הַיּוֹבֵל֙ יָשׁ֣וּב הַשָּׂדֶ֔ה לַאֲשֶׁ֥ר קָנָ֖הוּ מֵאִתּ֑וֹ לַאֲשֶׁר־ל֖וֹ אֲחֻזַּ֥ת הָאָֽרֶץ׃</p></div><div class="heb-s"><p>בשנת היובל ישוב השדה לאשר קנהו מאתו לאשר־לו אחזת הארץ׃</p></div></div>
+      <div class="texte-fr"><p>A l’époque du Jubilé, cette terre fera retour à celui de qui on l’avait achetée, qui la possédait comme fonds patrimonial.</p></div>
+    </div><div class="seif" id="v-27-25">
+      <span class="seif-num">27:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇ֨ל־עֶרְכְּךָ֔ יִהְיֶ֖ה בְּשֶׁ֣קֶל הַקֹּ֑דֶשׁ עֶשְׂרִ֥ים גֵּרָ֖ה יִהְיֶ֥ה הַשָּֽׁקֶל׃</p></div><div class="heb-s"><p>וכל־ערכך יהיה בשקל הקדש עשרים גרה יהיה השקל׃</p></div></div>
+      <div class="texte-fr"><p>Or, toute évaluation se fera d’après le sicle du sanctuaire, vingt ghêra formant un sicle.</p></div>
+    </div><div class="seif" id="v-27-26">
+      <span class="seif-num">27:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־בְּכ֞וֹר אֲשֶׁר־יְבֻכַּ֤ר לַֽיהֹוָה֙ בִּבְהֵמָ֔ה לֹֽא־יַקְדִּ֥ישׁ אִ֖ישׁ אֹת֑וֹ אִם־שׁ֣וֹר אִם־שֶׂ֔ה לַֽיהֹוָ֖ה הֽוּא׃</p></div><div class="heb-s"><p>אך־בכור אשר־יבכר ליהוה בבהמה לא־יקדיש איש אתו אם־שור אם־שה ליהוה הוא׃</p></div></div>
+      <div class="texte-fr"><p>Quant au premier-né d’un animal, lequel appartient par sa naissance à l’Éternel, on ne pourra le consacrer: grosse ou menue bête, il est à l’Éternel.</p></div>
+    </div><div class="seif" id="v-27-27">
+      <span class="seif-num">27:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֨ם בַּבְּהֵמָ֤ה הַטְּמֵאָה֙ וּפָדָ֣ה בְעֶרְכֶּ֔ךָ וְיָסַ֥ף חֲמִשִׁת֖וֹ עָלָ֑יו וְאִם־לֹ֥א יִגָּאֵ֖ל וְנִמְכַּ֥ר בְּעֶרְכֶּֽךָ׃</p></div><div class="heb-s"><p>ואם בבהמה הטמאה ופדה בערכך ויסף חמשתו עליו ואם־לא יגאל ונמכר בערכך׃</p></div></div>
+      <div class="texte-fr"><p>S’il s’agit d’un animal impur, on pourra le racheter au taux, ajoutant le cinquième en sus; s’il n’a pas été racheté, il sera vendu d’après le taux.</p></div>
+    </div><div class="seif" id="v-27-28">
+      <span class="seif-num">27:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַךְ־כׇּל־חֵ֡רֶם אֲשֶׁ֣ר יַחֲרִם֩ אִ֨ישׁ לַֽיהֹוָ֜ה מִכׇּל־אֲשֶׁר־ל֗וֹ מֵאָדָ֤ם וּבְהֵמָה֙ וּמִשְּׂדֵ֣ה אֲחֻזָּת֔וֹ לֹ֥א יִמָּכֵ֖ר וְלֹ֣א יִגָּאֵ֑ל כׇּל־חֵ֕רֶם קֹֽדֶשׁ־קׇדָשִׁ֥ים ה֖וּא לַיהֹוָֽה׃</p></div><div class="heb-s"><p>אך־כל־חרם אשר יחרם איש ליהוה מכל־אשר־לו מאדם ובהמה ומשדה אחזתו לא ימכר ולא יגאל כל־חרם קדש־קדשים הוא ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Mais toute chose dévouée, qu’un homme aurait dévouée à l’Éternel parmi ses propriétés, que ce soit une personne, une bête ou un champ patrimonial, elle ne pourra être ni vendue ni rachetée: toute chose dévouée devient une sainteté éminente réservée à l’Éternel.</p></div>
+    </div><div class="seif" id="v-27-29">
+      <span class="seif-num">27:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־חֵ֗רֶם אֲשֶׁ֧ר יׇחֳרַ֛ם מִן־הָאָדָ֖ם לֹ֣א יִפָּדֶ֑ה מ֖וֹת יוּמָֽת׃</p></div><div class="heb-s"><p>כל־חרם אשר יחרם מן־האדם לא יפדה מות יומת׃</p></div></div>
+      <div class="texte-fr"><p>Tout anathème qui aura été prononcé sur un homme est irrévocable: il faudra qu’il meure.</p></div>
+    </div><div class="seif" id="v-27-30">
+      <span class="seif-num">27:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־מַעְשַׂ֨ר הָאָ֜רֶץ מִזֶּ֤רַע הָאָ֙רֶץ֙ מִפְּרִ֣י הָעֵ֔ץ לַיהֹוָ֖ה ה֑וּא קֹ֖דֶשׁ לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>וכל־מעשר הארץ מזרע הארץ מפרי העץ ליהוה הוא קדש ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Toute dîme de la terre, prélevée sur la semence du sol ou sur le fruit des arbres, appartient à l’Éternel: elle lui est consacrée.</p></div>
+    </div><div class="seif" id="v-27-31">
+      <span class="seif-num">27:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־גָּאֹ֥ל יִגְאַ֛ל אִ֖ישׁ מִמַּֽעַשְׂר֑וֹ חֲמִשִׁית֖וֹ יֹסֵ֥ף עָלָֽיו׃</p></div><div class="heb-s"><p>ואם־גאל יגאל איש ממעשרו חמשיתו יסף עליו׃</p></div></div>
+      <div class="texte-fr"><p>Et si quelqu’un veut, racheter une partie de sa dîme, il y joindra le cinquième en sus.</p></div>
+    </div><div class="seif" id="v-27-32">
+      <span class="seif-num">27:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־מַעְשַׂ֤ר בָּקָר֙ וָצֹ֔אן כֹּ֥ל אֲשֶׁר־יַעֲבֹ֖ר תַּ֣חַת הַשָּׁ֑בֶט הָֽעֲשִׂירִ֕י יִֽהְיֶה־קֹּ֖דֶשׁ לַֽיהֹוָֽה׃</p></div><div class="heb-s"><p>וכל־מעשר בקר וצאן כל אשר־יעבר תחת השבט העשירי יהיה־קדש ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>Pour la dîme, quelle qu’elle soit, du gros et du menu bétail, de tous les animaux qui passeront sous la verge, le dixième sera consacré à l’Éternel.</p></div>
+    </div><div class="seif" id="v-27-33">
+      <span class="seif-num">27:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֧א יְבַקֵּ֛ר בֵּֽין־ט֥וֹב לָרַ֖ע וְלֹ֣א יְמִירֶ֑נּוּ וְאִם־הָמֵ֣ר יְמִירֶ֔נּוּ וְהָֽיָה־ה֧וּא וּתְמוּרָת֛וֹ יִֽהְיֶה־קֹּ֖דֶשׁ לֹ֥א יִגָּאֵֽל׃</p></div><div class="heb-s"><p>לא יבקר בין־טוב לרע ולא ימירנו ואם־המר ימירנו והיה־הוא ותמורתו יהיה־קדש לא יגאל׃</p></div></div>
+      <div class="texte-fr"><p>On n’examinera point s’il est bon ou vicieux, et on ne le remplacera point; si toutefois on l’a remplacé, lui et son remplaçant seront également saints: il n’y aura point de rachat."</p></div>
+    </div><div class="seif" id="v-27-34">
+      <span class="seif-num">27:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣לֶּה הַמִּצְוֺ֗ת אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֶת־מֹשֶׁ֖ה אֶל־בְּנֵ֣י יִשְׂרָאֵ֑ל בְּהַ֖ר סִינָֽי׃</p></div><div class="heb-s"><p>אלה המצות אשר צוה יהוה את־משה אל־בני ישראל בהר סיני׃</p></div></div>
+      <div class="texte-fr"><p>Tels sont les commandements que l’Éternel donna à Moïse pour les enfants d’Israël, au mont Sinaï.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Si vous vous conduisez selon mes lois, si vous gardez mes préceptes et les exécutez, je vous donnerai les pluies en leur saison, et la terre livrera son produit, et l’arbre du champ donnera son fruit. Le battage de vos grains se prolongera jusqu’à la vendange, et la vendange durera jusqu’aux semailles; vous aurez du pain à manger en abondance, et vous demeurerez en sécurité dans votre pays. Je ferai régner la paix dans ce pays, et nul n’y troublera votre repos; je ferai disparaître du pays les animaux nuisibles, et le glaive ne traversera point votre territoire. Vous poursuivrez vos ennemis, et ils succomberont sous votre glaive. Cinq d’entre vous en poursuivront une centaine, et cent d’entre vous une myriade; et vos ennemis tomberont devant votre glaive. Je m’occuperai de vous, je vous ferai croître et multiplier, et je maintiendrai mon alliance avec vous. Vous pourrez vivre longtemps sur une récolte passée, et vous devrez enlever l’ancienne pour faire place à la nouvelle. Je fixerai ma résidence au milieu de vous, et mon esprit ne se lassera point d’être avec vous; mais je me complairai au milieu de vous, et je serai votre Divinité, et vous serez mon peuple. Je suis l’Éternel votre Dieu, qui vous ai tirés du pays d’Égypte pour que vous n’y fussiez plus esclaves; et j’ai brisé les barres de votre joug, et je vous ai fait marcher la tête haute. Mais si vous ne m’écoutez point, et que vous cessiez d’exécuter tous ces commandements; si vous dédaignez mes lois et que votre esprit repousse mes institutions, au point de ne plus observer mes préceptes, de rompre mon alliance, à mon tour, voici ce que je vous ferai: je susciterai contre vous d’effrayants fléaux, la consomption, la fièvre, qui font languir les yeux et défaillir l’âme; vous sèmerez en vain votre semence, vos ennemis la consommeront. Je dirigerai ma face contre vous, et vous serez abattus devant vos ennemis; ceux qui vous haïssent vous domineront, et vous fuirez sans qu’on vous poursuive. Que si malgré cela vous ne m’obéissez pas encore, je redoublerai jusqu’au septuple le châtiment de vos fautes. Je briserai votre arrogante audace, en faisant votre ciel de fer et votre terre d’airain; et vous vous épuiserez en vains efforts, votre terre refusera son tribut, et ses arbres refuseront leurs fruits. Si vous agissez hostilement à mon égard, si vous persistez à ne point m’obéir, je vous frapperai de nouvelles plaies, septuples comme vos fautes. Je lâcherai sur vous les bêtes sauvages, qui vous priveront de vos enfants, qui extermineront votre bétail, qui vous décimeront vous-mêmes, et vos routes deviendront solitaires. Si ces châtiments ne vous ramènent pas à moi et que votre conduite reste hostile à mon égard, moi aussi je me conduirai à votre égard avec hostilité, et je vous frapperai, à mon tour, sept fois pour vos péchés. Je ferai surgir contre vous le glaive, vengeur des droits de l’Alliance, et vous vous replierez dans vos villes; puis, j’enverrai la peste au milieu de vous, et vous serez à la merci de l’ennemi, tandis que je vous couperai les vivres, de sorte que dix femmes cuiront votre pain dans un même four et vous le rapporteront au poids, et que vous le mangerez sans vous rassasier. Si, malgré cela, au lieu de m’obéir, vous vous comportez hostilement avec moi, je procéderai à votre égard avec une exaspération d’hostilité, et je vous châtierai, à mon tour, sept fois pour vos péchés. Vous dévorerez la chair de vos fils, et la chair de vos filles vous la dévorerez. Je détruirai vos hauts-lieux, j’abattrai vos monuments solaires, puis je jetterai vos cadavres sur les cadavres de vos impures idoles; et mon esprit vous repoussera. Je ferai de vos villes des ruines, de vos lieux saints une solitude, et je ne respirerai point vos pieux parfums. Puis, moi-même je désolerai cette terre, si bien que vos ennemis, qui l’occuperont, en seront stupéfaits. Et vous, je vous disperserai parmi les nations, et je vous poursuivrai l’épée haute; votre pays restera solitaire, vos villes resteront ruinées. Alors la terre acquittera la dette de ses chômages, tandis qu’elle restera désolée et que vous vivrez dans le pays de vos ennemis; alors la terre chômera, et vous fera payer ses chômages. Dans toute cette période de désolation, elle chômera pour ce qu’elle n’aura pas chômé dans vos années sabbatiques, alors que vous l’habitiez. Pour ceux qui survivront d’entre vous, je leur mettrai la défaillance au cœur dans les pays de leurs ennemis: poursuivis par le bruit de la feuille qui tombe, ils fuiront comme on fuit devant l’épée, ils tomberont sans qu’on les poursuive, et ils trébucheront l’un sur l’autre comme à la vue de l’épée, sans que personne les poursuive. Vous ne pourrez vous maintenir devant vos ennemis; vous vous perdrez parmi les nations, et le pays de vos ennemis vous dévorera. Et les survivants d’entre vous se consumeront, par leur faute, dans les pays de leurs ennemis, et même pour les méfaits de leurs pères ils se consumeront avec eux. Puis ils confesseront leur iniquité et celle de leurs pères, leur forfaiture envers moi, et aussi leur conduite hostile à mon égard, pour laquelle moi aussi je les aurai traités hostilement, en les déportant au pays de leurs ennemis à moins qu’alors leur cœur obtus ne s’humilie, et alors ils expieront leur iniquité. Et je me ressouviendrai de mon alliance avec Jacob; mon alliance aussi avec Isaac, mon alliance aussi avec Abraham, je m’en souviendrai, et la terre aussi, je m’en souviendrai. Cette terre restera donc abandonnée par eux, afin que, laissée par eux déserte, elle répare ses chômages, et qu’eux-mêmes ils réparent leur iniquité; parce que, oui, parce qu’ils auront dédaigné mes statuts, et que leur esprit aura repoussé mes lois. Et pourtant, même alors, quand ils se trouveront relégués dans le pays de leurs ennemis, je ne les aurai ni dédaignés ni repoussés au point de les anéantir, de dissoudre mon alliance avec eux; car je suis l’Éternel, leur Dieu! Et je me rappellerai, en leur faveur, le pacte des aïeux, de ceux que j’ai fait sortir du pays d’Égypte à la vue des peuples pour être leur Dieu, moi l’Éternel.&quot; Telles sont les ordonnances, les institutions et les doctrines que l’Éternel fit intervenir entre lui et les enfants d’Israël, au mont Sinaï, par l’organe de Moïse.</p>
-      <p>L’Éternel parla à Moïse en ces termes: &quot;Parle aux enfants d’Israël et dis-leur: Si quelqu’un promet expressément, par un vœu, la valeur estimative d’une personne à l’Éternel, appliquée à un homme de l’âge de vingt à soixante ans, cette valeur sera de cinquante sicles d’argent, au poids du sanctuaire; et s’il s’agit d’une femme, le taux sera de trente sicles. Depuis l’âge de cinq ans jusqu’à l’âge de vingt ans, le taux sera, pour le sexe masculin, de vingt sicles; pour le sexe féminin, de dix sicles. Depuis l’âge d’un mois jusqu’à l’âge de cinq ans, le taux d’un garçon sera de cinq sicles d’argent, et celui d’une fille, de trois sicles d’argent. Depuis l’âge de soixante ans et au delà, si c’est un homme, le taux sera de quinze sicles et pour une femme il sera de dix sicles. S’il est impuissant à payer la taxe, il mettra la personne en présence du pontife, et celui-ci l’estimera: c’est d’après les moyens du donateur que le pontife fera l’estimation. Si c’est un animal dont on puisse faire une offrande à l’Éternel, tout ce qu’on aura voué à l’Éternel deviendra une chose sainte. On ne peut ni le changer ni le remplacer, bon, par un défectueux, défectueux, par un meilleur; si toutefois on avait remplacé cet animal par un autre, l’animal et son remplaçant seront également saints. Si c’est quelque animal impur, dont on ne puisse faire offrande à l’Éternel, on amènera l’animal en présence du pontife: celui-ci l’estimera d’après ses qualités bonnes ou mauvaises; l’estimation du pontife fera loi. Si la personne veut ensuite le racheter, elle donnera un cinquième en sus de l’estimation. Si un homme a consacré sa maison, comme chose sainte, à l’Éternel, le pontife l’estimera selon ses avantages ou ses défauts; telle le pontife l’aura appréciée, telle elle sera acquise. Mais si le consécrateur veut racheter sa maison, il ajoutera un cinquième en sus du prix estimé, et elle sera à lui. Si un homme a consacré à l’Éternel une partie de sa terre patrimoniale, l’estimation s’en fera d’après la contenance en grains: la contenance d’un hômer d’orge valant cinquante sicles d’argent. Si donc il a consacré sa terre dès l’année du Jubilé, c’est à ce taux qu’elle sera acquise; s’il l’a consacrée postérieurement au Jubilé, le pontife en supputera le prix en raison des années à courir jusqu’à l’an jubilaire, et il sera fait une déduction sur le taux. Que si celui-là même qui a consacré la terre veut la racheter, il paiera un cinquième en sus du prix estimé, et elle lui restera. Mais s’il ne rachète point cette terre, ou qu’on l’ait vendue à quelque autre, elle ne pourra plus être rachetée; de sorte que cette terre, devenant libre au Jubilé, se trouvera consacrée à l’Éternel comme une terre dévouée: c’est le pontife qui en aura la propriété. Si ce qu’il a consacré à l’Éternel est une terre achetée par lui, qui ne fasse point partie de son bien patrimonial, le pontife supputera, à son égard, la portion du taux à payer jusqu’à l’an jubilaire, et l’on paiera ce taux, le jour même, comme chose consacrée à l’Éternel. A l’époque du Jubilé, cette terre fera retour à celui de qui on l’avait achetée, qui la possédait comme fonds patrimonial. Or, toute évaluation se fera d’après le sicle du sanctuaire, vingt ghêra formant un sicle. Quant au premier-né d’un animal, lequel appartient par sa naissance à l’Éternel, on ne pourra le consacrer: grosse ou menue bête, il est à l’Éternel. S’il s’agit d’un animal impur, on pourra le racheter au taux, ajoutant le cinquième en sus; s’il n’a pas été racheté, il sera vendu d’après le taux. Mais toute chose dévouée, qu’un homme aurait dévouée à l’Éternel parmi ses propriétés, que ce soit une personne, une bête ou un champ patrimonial, elle ne pourra être ni vendue ni rachetée: toute chose dévouée devient une sainteté éminente réservée à l’Éternel. Tout anathème qui aura été prononcé sur un homme est irrévocable: il faudra qu’il meure. Toute dîme de la terre, prélevée sur la semence du sol ou sur le fruit des arbres, appartient à l’Éternel: elle lui est consacrée. Et si quelqu’un veut, racheter une partie de sa dîme, il y joindra le cinquième en sus. Pour la dîme, quelle qu’elle soit, du gros et du menu bétail, de tous les animaux qui passeront sous la verge, le dixième sera consacré à l’Éternel. On n’examinera point s’il est bon ou vicieux, et on ne le remplacera point; si toutefois on l’a remplacé, lui et son remplaçant seront également saints: il n’y aura point de rachat.&quot; Tels sont les commandements que l’Éternel donna à Moïse pour les enfants d’Israël, au mont Sinaï.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -334,6 +678,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_behar.html">← Behar</a><a class="hbtn qcm" href="qcm_paracha_bechukotai.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_bamidbar-paracha.html">Bamidbar →</a></div>
 </main>
 
 <footer>

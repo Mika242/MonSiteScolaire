@@ -102,6 +102,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -121,6 +151,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -135,6 +175,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Vayikra · Paracha</div>
     <h1>Shemini – Le huitième jour, Nadav et Avihou, les animaux permis et interdits</h1>
     <p>Torah, Vayikra (Leviticus 9:1-11:47)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_tsav.html">← Tsav</a><a class="hbtn qcm" href="qcm_paracha_shemini.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_tazria.html">Tazria →</a></div>
   </div>
 </header>
 
@@ -154,29 +195,382 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַֽיְהִי֙ בַּיּ֣וֹם הַשְּׁמִינִ֔י קָרָ֣א מֹשֶׁ֔ה לְאַהֲרֹ֖ן וּלְבָנָ֑יו וּלְזִקְנֵ֖י יִשְׂרָאֵֽל׃', 'וַיֹּ֣אמֶר אֶֽל־אַהֲרֹ֗ן קַח־לְ֠ךָ֠ עֵ֣גֶל בֶּן־בָּקָ֧ר לְחַטָּ֛את וְאַ֥יִל לְעֹלָ֖ה תְּמִימִ֑ם וְהַקְרֵ֖ב לִפְנֵ֥י יְהֹוָֽה׃', 'וְאֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל תְּדַבֵּ֣ר לֵאמֹ֑ר קְח֤וּ שְׂעִיר־עִזִּים֙ לְחַטָּ֔את וְעֵ֨גֶל וָכֶ֧בֶשׂ בְּנֵי־שָׁנָ֛ה תְּמִימִ֖ם לְעֹלָֽה׃', 'וְשׁ֨וֹר וָאַ֜יִל לִשְׁלָמִ֗ים לִזְבֹּ֙חַ֙ לִפְנֵ֣י יְהֹוָ֔ה וּמִנְחָ֖ה בְּלוּלָ֣ה בַשָּׁ֑מֶן כִּ֣י הַיּ֔וֹם יְהֹוָ֖ה נִרְאָ֥ה אֲלֵיכֶֽם׃', 'וַיִּקְח֗וּ אֵ֚ת אֲשֶׁ֣ר צִוָּ֣ה מֹשֶׁ֔ה אֶל־פְּנֵ֖י אֹ֣הֶל מוֹעֵ֑ד וַֽיִּקְרְבוּ֙ כׇּל־הָ֣עֵדָ֔ה וַיַּֽעַמְד֖וּ לִפְנֵ֥י יְהֹוָֽה׃', 'וַיֹּ֣אמֶר מֹשֶׁ֔ה זֶ֧ה הַדָּבָ֛ר אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה תַּעֲשׂ֑וּ וְיֵרָ֥א אֲלֵיכֶ֖ם כְּב֥וֹד יְהֹוָֽה׃', 'וַיֹּ֨אמֶר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן קְרַ֤ב אֶל־הַמִּזְבֵּ֙חַ֙ וַעֲשֵׂ֞ה אֶת־חַטָּֽאתְךָ֙ וְאֶת־עֹ֣לָתֶ֔ךָ וְכַפֵּ֥ר בַּֽעַדְךָ֖ וּבְעַ֣ד הָעָ֑ם וַעֲשֵׂ֞ה אֶת־קׇרְבַּ֤ן הָעָם֙ וְכַפֵּ֣ר בַּֽעֲדָ֔ם כַּאֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃', 'וַיִּקְרַ֥ב אַהֲרֹ֖ן אֶל־הַמִּזְבֵּ֑חַ וַיִּשְׁחַ֛ט אֶת־עֵ֥גֶל הַחַטָּ֖את אֲשֶׁר־לֽוֹ׃', 'וַ֠יַּקְרִ֠בוּ בְּנֵ֨י אַהֲרֹ֣ן אֶת־הַדָּם֮ אֵלָיו֒ וַיִּטְבֹּ֤ל אֶצְבָּעוֹ֙ בַּדָּ֔ם וַיִּתֵּ֖ן עַל־קַרְנ֣וֹת הַמִּזְבֵּ֑חַ וְאֶת־הַדָּ֣ם יָצַ֔ק אֶל־יְס֖וֹד הַמִּזְבֵּֽחַ׃', 'וְאֶת־הַחֵ֨לֶב וְאֶת־הַכְּלָיֹ֜ת וְאֶת־הַיֹּתֶ֤רֶת מִן־הַכָּבֵד֙ מִן־הַ֣חַטָּ֔את הִקְטִ֖יר הַמִּזְבֵּ֑חָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'וְאֶת־הַבָּשָׂ֖ר וְאֶת־הָע֑וֹר שָׂרַ֣ף בָּאֵ֔שׁ מִח֖וּץ לַֽמַּחֲנֶֽה׃', 'וַיִּשְׁחַ֖ט אֶת־הָעֹלָ֑ה וַ֠יַּמְצִ֠אוּ בְּנֵ֨י אַהֲרֹ֤ן אֵלָיו֙ אֶת־הַדָּ֔ם וַיִּזְרְקֵ֥הוּ עַל־הַמִּזְבֵּ֖חַ סָבִֽיב׃', 'וְאֶת־הָעֹלָ֗ה הִמְצִ֧יאוּ אֵלָ֛יו לִנְתָחֶ֖יהָ וְאֶת־הָרֹ֑אשׁ וַיַּקְטֵ֖ר עַל־הַמִּזְבֵּֽחַ׃', 'וַיִּרְחַ֥ץ אֶת־הַקֶּ֖רֶב וְאֶת־הַכְּרָעָ֑יִם וַיַּקְטֵ֥ר עַל־הָעֹלָ֖ה הַמִּזְבֵּֽחָה׃', 'וַיַּקְרֵ֕ב אֵ֖ת קׇרְבַּ֣ן הָעָ֑ם וַיִּקַּ֞ח אֶת־שְׂעִ֤יר הַֽחַטָּאת֙ אֲשֶׁ֣ר לָעָ֔ם וַיִּשְׁחָטֵ֥הוּ וַֽיְחַטְּאֵ֖הוּ כָּרִאשֽׁוֹן׃', 'וַיַּקְרֵ֖ב אֶת־הָעֹלָ֑ה וַֽיַּעֲשֶׂ֖הָ כַּמִּשְׁפָּֽט׃', 'וַיַּקְרֵב֮ אֶת־הַמִּנְחָה֒ וַיְמַלֵּ֤א כַפּוֹ֙ מִמֶּ֔נָּה וַיַּקְטֵ֖ר עַל־הַמִּזְבֵּ֑חַ מִלְּבַ֖ד עֹלַ֥ת הַבֹּֽקֶר׃', 'וַיִּשְׁחַ֤ט אֶת־הַשּׁוֹר֙ וְאֶת־הָאַ֔יִל זֶ֥בַח הַשְּׁלָמִ֖ים אֲשֶׁ֣ר לָעָ֑ם וַ֠יַּמְצִ֠אוּ בְּנֵ֨י אַהֲרֹ֤ן אֶת־הַדָּם֙ אֵלָ֔יו וַיִּזְרְקֵ֥הוּ עַל־הַמִּזְבֵּ֖חַ סָבִֽיב׃', 'וְאֶת־הַחֲלָבִ֖ים מִן־הַשּׁ֑וֹר וּמִ֨ן־הָאַ֔יִל הָֽאַלְיָ֤ה וְהַֽמְכַסֶּה֙ וְהַכְּלָיֹ֔ת וְיֹתֶ֖רֶת הַכָּבֵֽד׃', 'וַיָּשִׂ֥ימוּ אֶת־הַחֲלָבִ֖ים עַל־הֶחָז֑וֹת וַיַּקְטֵ֥ר הַחֲלָבִ֖ים הַמִּזְבֵּֽחָה׃', 'וְאֵ֣ת הֶחָז֗וֹת וְאֵת֙ שׁ֣וֹק הַיָּמִ֔ין הֵנִ֧יף אַהֲרֹ֛ן תְּנוּפָ֖ה לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֖ר צִוָּ֥ה מֹשֶֽׁה׃', 'וַיִּשָּׂ֨א אַהֲרֹ֧ן אֶת־<span class="mam-kq-trivial">יָדָ֛ו</span> אֶל־הָעָ֖ם וַֽיְבָרְכֵ֑ם וַיֵּ֗רֶד מֵעֲשֹׂ֧ת הַֽחַטָּ֛את וְהָעֹלָ֖ה וְהַשְּׁלָמִֽים׃', 'וַיָּבֹ֨א מֹשֶׁ֤ה וְאַהֲרֹן֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד וַיֵּ֣צְא֔וּ וַֽיְבָרְכ֖וּ אֶת־הָעָ֑ם וַיֵּרָ֥א כְבוֹד־יְהֹוָ֖ה אֶל־כׇּל־הָעָֽם׃', 'וַתֵּ֤צֵא אֵשׁ֙ מִלִּפְנֵ֣י יְהֹוָ֔ה וַתֹּ֙אכַל֙ עַל־הַמִּזְבֵּ֔חַ אֶת־הָעֹלָ֖ה וְאֶת־הַחֲלָבִ֑ים וַיַּ֤רְא כׇּל־הָעָם֙ וַיָּרֹ֔נּוּ וַֽיִּפְּל֖וּ עַל־פְּנֵיהֶֽם׃']</p>
-      <p>['וַיִּקְח֣וּ בְנֵֽי־אַ֠הֲרֹ֠ן נָדָ֨ב וַאֲבִיה֜וּא אִ֣ישׁ מַחְתָּת֗וֹ וַיִּתְּנ֤וּ בָהֵן֙ אֵ֔שׁ וַיָּשִׂ֥ימוּ עָלֶ֖יהָ קְטֹ֑רֶת וַיַּקְרִ֜יבוּ לִפְנֵ֤י יְהֹוָה֙ אֵ֣שׁ זָרָ֔ה אֲשֶׁ֧ר לֹ֦א צִוָּ֖ה אֹתָֽם׃', 'וַתֵּ֥צֵא אֵ֛שׁ מִלִּפְנֵ֥י יְהֹוָ֖ה וַתֹּ֣אכַל אוֹתָ֑ם וַיָּמֻ֖תוּ לִפְנֵ֥י יְהֹוָֽה׃', 'וַיֹּ֨אמֶר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן הוּא֩ אֲשֶׁר־דִּבֶּ֨ר יְהֹוָ֤ה&thinsp;<small>׀</small>&thinsp;לֵאמֹר֙ בִּקְרֹבַ֣י אֶקָּדֵ֔שׁ וְעַל־פְּנֵ֥י כׇל־הָעָ֖ם אֶכָּבֵ֑ד וַיִּדֹּ֖ם אַהֲרֹֽן׃', 'וַיִּקְרָ֣א מֹשֶׁ֗ה אֶל־מִֽישָׁאֵל֙ וְאֶ֣ל אֶלְצָפָ֔ן בְּנֵ֥י עֻזִּיאֵ֖ל דֹּ֣ד אַהֲרֹ֑ן וַיֹּ֣אמֶר אֲלֵהֶ֗ם קִ֞֠רְב֞֠וּ שְׂא֤וּ אֶת־אֲחֵיכֶם֙ מֵאֵ֣ת פְּנֵי־הַקֹּ֔דֶשׁ אֶל־מִח֖וּץ לַֽמַּחֲנֶֽה׃', 'וַֽיִּקְרְב֗וּ וַיִּשָּׂאֻם֙ בְּכֻתֳּנֹתָ֔ם אֶל־מִח֖וּץ לַֽמַּחֲנֶ֑ה כַּאֲשֶׁ֖ר דִּבֶּ֥ר מֹשֶֽׁה׃', 'וַיֹּ֣אמֶר מֹשֶׁ֣ה אֶֽל־אַהֲרֹ֡ן וּלְאֶלְעָזָר֩ וּלְאִֽיתָמָ֨ר&thinsp;<small>׀</small>&thinsp;בָּנָ֜יו רָֽאשֵׁיכֶ֥ם אַל־תִּפְרָ֣עוּ&thinsp;<b>׀</b> וּבִגְדֵיכֶ֤ם לֹֽא־תִפְרֹ֙מוּ֙ וְלֹ֣א תָמֻ֔תוּ וְעַ֥ל כׇּל־הָעֵדָ֖ה יִקְצֹ֑ף וַאֲחֵיכֶם֙ כׇּל־בֵּ֣ית יִשְׂרָאֵ֔ל יִבְכּוּ֙ אֶת־הַשְּׂרֵפָ֔ה אֲשֶׁ֖ר שָׂרַ֥ף יְהֹוָֽה׃', 'וּמִפֶּ֩תַח֩ אֹ֨הֶל מוֹעֵ֜ד לֹ֤א תֵֽצְאוּ֙ פֶּן־תָּמֻ֔תוּ כִּי־שֶׁ֛מֶן מִשְׁחַ֥ת יְהֹוָ֖ה עֲלֵיכֶ֑ם וַֽיַּעֲשׂ֖וּ כִּדְבַ֥ר מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'יַ֣יִן וְשֵׁכָ֞ר אַל־תֵּ֣שְׁתְּ&thinsp;<b>׀</b> אַתָּ֣ה&thinsp;<b>׀</b> וּבָנֶ֣יךָ אִתָּ֗ךְ בְּבֹאֲכֶ֛ם אֶל־אֹ֥הֶל מוֹעֵ֖ד וְלֹ֣א תָמֻ֑תוּ חֻקַּ֥ת עוֹלָ֖ם לְדֹרֹתֵיכֶֽם׃', 'וּֽלְהַבְדִּ֔יל בֵּ֥ין הַקֹּ֖דֶשׁ וּבֵ֣ין הַחֹ֑ל וּבֵ֥ין הַטָּמֵ֖א וּבֵ֥ין הַטָּהֽוֹר׃', 'וּלְהוֹרֹ֖ת אֶת־בְּנֵ֣י יִשְׂרָאֵ֑ל אֵ֚ת כׇּל־הַ֣חֻקִּ֔ים אֲשֶׁ֨ר דִּבֶּ֧ר יְהֹוָ֛ה אֲלֵיהֶ֖ם בְּיַד־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֨ר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן וְאֶ֣ל אֶ֠לְעָזָ֠ר וְאֶל־אִ֨יתָמָ֥ר&thinsp;<small>׀</small>&thinsp;בָּנָיו֮ הַנּֽוֹתָרִים֒ קְח֣וּ אֶת־הַמִּנְחָ֗ה הַנּוֹתֶ֙רֶת֙ מֵאִשֵּׁ֣י יְהֹוָ֔ה וְאִכְל֥וּהָ מַצּ֖וֹת אֵ֣צֶל הַמִּזְבֵּ֑חַ כִּ֛י קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הִֽוא׃', 'וַאֲכַלְתֶּ֤ם אֹתָהּ֙ בְּמָק֣וֹם קָד֔וֹשׁ כִּ֣י חׇקְךָ֤ וְחׇק־בָּנֶ֙יךָ֙ הִ֔וא מֵאִשֵּׁ֖י יְהֹוָ֑ה כִּי־כֵ֖ן צֻוֵּֽיתִי׃', 'וְאֵת֩ חֲזֵ֨ה הַתְּנוּפָ֜ה וְאֵ֣ת&thinsp;<b>׀</b> שׁ֣וֹק הַתְּרוּמָ֗ה תֹּֽאכְלוּ֙ בְּמָק֣וֹם טָה֔וֹר אַתָּ֕ה וּבָנֶ֥יךָ וּבְנֹתֶ֖יךָ אִתָּ֑ךְ כִּֽי־חׇקְךָ֤ וְחׇק־בָּנֶ֙יךָ֙ נִתְּנ֔וּ מִזִּבְחֵ֥י שַׁלְמֵ֖י בְּנֵ֥י יִשְׂרָאֵֽל׃', 'שׁ֣וֹק הַתְּרוּמָ֞ה וַחֲזֵ֣ה הַתְּנוּפָ֗ה עַ֣ל אִשֵּׁ֤י הַחֲלָבִים֙ יָבִ֔יאוּ לְהָנִ֥יף תְּנוּפָ֖ה לִפְנֵ֣י יְהֹוָ֑ה וְהָיָ֨ה לְךָ֜ וּלְבָנֶ֤יךָ אִתְּךָ֙ לְחׇק־עוֹלָ֔ם כַּאֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃', 'וְאֵ֣ת&thinsp;<b>׀</b> שְׂעִ֣יר הַֽחַטָּ֗את דָּרֹ֥שׁ דָּרַ֛שׁ מֹשֶׁ֖ה וְהִנֵּ֣ה שֹׂרָ֑ף וַ֠יִּקְצֹ֠ף עַל־אֶלְעָזָ֤ר וְעַל־אִֽיתָמָר֙ בְּנֵ֣י אַהֲרֹ֔ן הַנּוֹתָרִ֖ם לֵאמֹֽר׃', 'מַדּ֗וּעַ לֹֽא־אֲכַלְתֶּ֤ם אֶת־הַחַטָּאת֙ בִּמְק֣וֹם הַקֹּ֔דֶשׁ כִּ֛י קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הִ֑וא וְאֹתָ֣הּ&thinsp;<b>׀</b> נָתַ֣ן לָכֶ֗ם לָשֵׂאת֙ אֶת־עֲוֺ֣ן הָעֵדָ֔ה לְכַפֵּ֥ר עֲלֵיהֶ֖ם לִפְנֵ֥י יְהֹוָֽה׃', 'הֵ֚ן לֹא־הוּבָ֣א אֶת־דָּמָ֔הּ אֶל־הַקֹּ֖דֶשׁ פְּנִ֑ימָה אָכ֨וֹל תֹּאכְל֥וּ אֹתָ֛הּ בַּקֹּ֖דֶשׁ כַּאֲשֶׁ֥ר צִוֵּֽיתִי׃', 'וַיְדַבֵּ֨ר אַהֲרֹ֜ן אֶל־מֹשֶׁ֗ה הֵ֣ן הַ֠יּ֠וֹם הִקְרִ֨יבוּ אֶת־חַטָּאתָ֤ם וְאֶת־עֹֽלָתָם֙ לִפְנֵ֣י יְהֹוָ֔ה וַתִּקְרֶ֥אנָה אֹתִ֖י כָּאֵ֑לֶּה וְאָכַ֤לְתִּי חַטָּאת֙ הַיּ֔וֹם הַיִּיטַ֖ב בְּעֵינֵ֥י יְהֹוָֽה׃', 'וַיִּשְׁמַ֣ע מֹשֶׁ֔ה וַיִּיטַ֖ב בְּעֵינָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֧ר יְהֹוָ֛ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹ֥ר אֲלֵהֶֽם׃', 'דַּבְּר֛וּ אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר זֹ֤את הַֽחַיָּה֙ אֲשֶׁ֣ר תֹּאכְל֔וּ מִכׇּל־הַבְּהֵמָ֖ה אֲשֶׁ֥ר עַל־הָאָֽרֶץ׃', 'כֹּ֣ל&thinsp;<b>׀</b> מַפְרֶ֣סֶת פַּרְסָ֗ה וְשֹׁסַ֤עַת שֶׁ֙סַע֙ פְּרָסֹ֔ת מַעֲלַ֥ת גֵּרָ֖ה בַּבְּהֵמָ֑ה אֹתָ֖הּ תֹּאכֵֽלוּ׃', 'אַ֤ךְ אֶת־זֶה֙ לֹ֣א תֹֽאכְל֔וּ מִֽמַּעֲלֵי֙ הַגֵּרָ֔ה וּמִמַּפְרִסֵ֖י הַפַּרְסָ֑ה אֶֽת־הַ֠גָּמָ֠ל כִּֽי־מַעֲלֵ֨ה גֵרָ֜ה ה֗וּא וּפַרְסָה֙ אֵינֶ֣נּוּ מַפְרִ֔יס טָמֵ֥א ה֖וּא לָכֶֽם׃', 'וְאֶת־הַשָּׁפָ֗ן כִּֽי־מַעֲלֵ֤ה גֵרָה֙ ה֔וּא וּפַרְסָ֖ה לֹ֣א יַפְרִ֑יס טָמֵ֥א ה֖וּא לָכֶֽם׃', 'וְאֶת־הָאַרְנֶ֗בֶת כִּֽי־מַעֲלַ֤ת גֵּרָה֙ הִ֔וא וּפַרְסָ֖ה לֹ֣א הִפְרִ֑יסָה טְמֵאָ֥ה הִ֖וא לָכֶֽם׃', 'וְאֶת־הַ֠חֲזִ֠יר כִּֽי־מַפְרִ֨יס פַּרְסָ֜ה ה֗וּא וְשֹׁסַ֥ע שֶׁ֙סַע֙ פַּרְסָ֔ה וְה֖וּא גֵּרָ֣ה לֹֽא־יִגָּ֑ר טָמֵ֥א ה֖וּא לָכֶֽם׃', 'מִבְּשָׂרָם֙ לֹ֣א תֹאכֵ֔לוּ וּבְנִבְלָתָ֖ם לֹ֣א תִגָּ֑עוּ טְמֵאִ֥ים הֵ֖ם לָכֶֽם׃', 'אֶת־זֶה֙ תֹּֽאכְל֔וּ מִכֹּ֖ל אֲשֶׁ֣ר בַּמָּ֑יִם כֹּ֣ל אֲשֶׁר־לוֹ֩ סְנַפִּ֨יר וְקַשְׂקֶ֜שֶׂת בַּמַּ֗יִם בַּיַּמִּ֛ים וּבַנְּחָלִ֖ים אֹתָ֥ם תֹּאכֵֽלוּ׃', 'וְכֹל֩ אֲשֶׁ֨ר אֵֽין־ל֜וֹ סְנַפִּ֣יר וְקַשְׂקֶ֗שֶׂת בַּיַּמִּים֙ וּבַנְּחָלִ֔ים מִכֹּל֙ שֶׁ֣רֶץ הַמַּ֔יִם וּמִכֹּ֛ל נֶ֥פֶשׁ הַחַיָּ֖ה אֲשֶׁ֣ר בַּמָּ֑יִם שֶׁ֥קֶץ הֵ֖ם לָכֶֽם׃', 'וְשֶׁ֖קֶץ יִהְי֣וּ לָכֶ֑ם מִבְּשָׂרָם֙ לֹ֣א תֹאכֵ֔לוּ וְאֶת־נִבְלָתָ֖ם תְּשַׁקֵּֽצוּ׃', 'כֹּ֣ל אֲשֶׁ֥ר אֵֽין־ל֛וֹ סְנַפִּ֥יר וְקַשְׂקֶ֖שֶׂת בַּמָּ֑יִם שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃', 'וְאֶת־אֵ֙לֶּה֙ תְּשַׁקְּצ֣וּ מִן־הָע֔וֹף לֹ֥א יֵאָכְל֖וּ שֶׁ֣קֶץ הֵ֑ם אֶת־הַנֶּ֙שֶׁר֙ וְאֶת־הַפֶּ֔רֶס וְאֵ֖ת הָעׇזְנִיָּֽה׃', 'וְאֶ֨ת־הַדָּאָ֔ה וְאֶת־הָאַיָּ֖ה לְמִינָֽהּ׃', 'אֵ֥ת כׇּל־עֹרֵ֖ב לְמִינֽוֹ׃', 'וְאֵת֙ בַּ֣ת הַֽיַּעֲנָ֔ה וְאֶת־הַתַּחְמָ֖ס וְאֶת־הַשָּׁ֑חַף וְאֶת־הַנֵּ֖ץ לְמִינֵֽהוּ׃', 'וְאֶת־הַכּ֥וֹס וְאֶת־הַשָּׁלָ֖ךְ וְאֶת־הַיַּנְשֽׁוּף׃', 'וְאֶת־הַתִּנְשֶׁ֥מֶת וְאֶת־הַקָּאָ֖ת וְאֶת־הָרָחָֽם׃', 'וְאֵת֙ הַחֲסִידָ֔ה הָאֲנָפָ֖ה לְמִינָ֑הּ וְאֶת־הַדּוּכִיפַ֖ת וְאֶת־הָעֲטַלֵּֽף׃', 'כֹּ֚ל שֶׁ֣רֶץ הָע֔וֹף הַהֹלֵ֖ךְ עַל־אַרְבַּ֑ע שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃', 'אַ֤ךְ אֶת־זֶה֙ תֹּֽאכְל֔וּ מִכֹּל֙ שֶׁ֣רֶץ הָע֔וֹף הַהֹלֵ֖ךְ עַל־אַרְבַּ֑ע אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[ל֤וֹ]</span> <span class="mam-kq-k">(לא)</span></span> כְרָעַ֙יִם֙ מִמַּ֣עַל לְרַגְלָ֔יו לְנַתֵּ֥ר בָּהֵ֖ן עַל־הָאָֽרֶץ׃', 'אֶת־אֵ֤לֶּה מֵהֶם֙ תֹּאכֵ֔לוּ אֶת־הָֽאַרְבֶּ֣ה לְמִינ֔וֹ וְאֶת־הַסׇּלְעָ֖ם לְמִינֵ֑הוּ וְאֶת־הַחַרְגֹּ֣ל לְמִינֵ֔הוּ וְאֶת־הֶחָגָ֖ב לְמִינֵֽהוּ׃', 'וְכֹל֙ שֶׁ֣רֶץ הָע֔וֹף אֲשֶׁר־ל֖וֹ אַרְבַּ֣ע רַגְלָ֑יִם שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃', 'וּלְאֵ֖לֶּה תִּטַּמָּ֑אוּ כׇּל־הַנֹּגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃', 'וְכׇל־הַנֹּשֵׂ֖א מִנִּבְלָתָ֑ם יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'לְֽכׇל־הַבְּהֵמָ֡ה אֲשֶׁ֣ר הִוא֩ מַפְרֶ֨סֶת פַּרְסָ֜ה וְשֶׁ֣סַע&thinsp;<b>׀</b> אֵינֶ֣נָּה שֹׁסַ֗עַת וְגֵרָה֙ אֵינֶ֣נָּה מַעֲלָ֔ה טְמֵאִ֥ים הֵ֖ם לָכֶ֑ם כׇּל־הַנֹּגֵ֥עַ בָּהֶ֖ם יִטְמָֽא׃', 'וְכֹ֣ל&thinsp;<b>׀</b> הוֹלֵ֣ךְ עַל־כַּפָּ֗יו בְּכׇל־הַֽחַיָּה֙ הַהֹלֶ֣כֶת עַל־אַרְבַּ֔ע טְמֵאִ֥ים הֵ֖ם לָכֶ֑ם כׇּל־הַנֹּגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃', 'וְהַנֹּשֵׂא֙ אֶת־נִבְלָתָ֔ם יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֣א עַד־הָעָ֑רֶב טְמֵאִ֥ים הֵ֖מָּה לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְזֶ֤ה לָכֶם֙ הַטָּמֵ֔א בַּשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ הַחֹ֥לֶד וְהָעַכְבָּ֖ר וְהַצָּ֥ב לְמִינֵֽהוּ׃', 'וְהָאֲנָקָ֥ה וְהַכֹּ֖חַ וְהַלְּטָאָ֑ה וְהַחֹ֖מֶט וְהַתִּנְשָֽׁמֶת׃', 'אֵ֛לֶּה הַטְּמֵאִ֥ים לָכֶ֖ם בְּכׇל־הַשָּׁ֑רֶץ כׇּל־הַנֹּגֵ֧עַ בָּהֶ֛ם בְּמֹתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃', 'וְכֹ֣ל אֲשֶׁר־יִפֹּל־עָלָיו֩ מֵהֶ֨ם&thinsp;<small>׀</small>&thinsp;בְּמֹתָ֜ם יִטְמָ֗א מִכׇּל־כְּלִי־עֵץ֙ א֣וֹ בֶ֤גֶד אוֹ־עוֹר֙ א֣וֹ שָׂ֔ק כׇּל־כְּלִ֕י אֲשֶׁר־יֵעָשֶׂ֥ה מְלָאכָ֖ה בָּהֶ֑ם בַּמַּ֧יִם יוּבָ֛א וְטָמֵ֥א עַד־הָעֶ֖רֶב וְטָהֵֽר׃', 'וְכׇ֨ל־כְּלִי־חֶ֔רֶשׂ אֲשֶׁר־יִפֹּ֥ל מֵהֶ֖ם אֶל־תּוֹכ֑וֹ כֹּ֣ל אֲשֶׁ֧ר בְּתוֹכ֛וֹ יִטְמָ֖א וְאֹת֥וֹ תִשְׁבֹּֽרוּ׃', 'מִכׇּל־הָאֹ֜כֶל אֲשֶׁ֣ר יֵאָכֵ֗ל אֲשֶׁ֨ר יָב֥וֹא עָלָ֛יו מַ֖יִם יִטְמָ֑א וְכׇל־מַשְׁקֶה֙ אֲשֶׁ֣ר יִשָּׁתֶ֔ה בְּכׇל־כְּלִ֖י יִטְמָֽא׃', 'וְ֠כֹ֠ל אֲשֶׁר־יִפֹּ֨ל מִנִּבְלָתָ֥ם&thinsp;<small>׀</small>&thinsp;עָלָיו֮ יִטְמָא֒ תַּנּ֧וּר וְכִירַ֛יִם יֻתָּ֖ץ טְמֵאִ֣ים הֵ֑ם וּטְמֵאִ֖ים יִהְי֥וּ לָכֶֽם׃', 'אַ֣ךְ מַעְיָ֥ן וּב֛וֹר מִקְוֵה־מַ֖יִם יִהְיֶ֣ה טָה֑וֹר וְנֹגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָֽא׃', 'וְכִ֤י יִפֹּל֙ מִנִּבְלָתָ֔ם עַל־כׇּל־זֶ֥רַע זֵר֖וּעַ אֲשֶׁ֣ר יִזָּרֵ֑עַ טָה֖וֹר הֽוּא׃', 'וְכִ֤י יֻתַּן־מַ֙יִם֙ עַל־זֶ֔רַע וְנָפַ֥ל מִנִּבְלָתָ֖ם עָלָ֑יו טָמֵ֥א ה֖וּא לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וְכִ֤י יָמוּת֙ מִן־הַבְּהֵמָ֔ה אֲשֶׁר־הִ֥יא לָכֶ֖ם לְאׇכְלָ֑ה הַנֹּגֵ֥עַ בְּנִבְלָתָ֖הּ יִטְמָ֥א עַד־הָעָֽרֶב׃', 'וְהָֽאֹכֵל֙ מִנִּבְלָתָ֔הּ יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֣א עַד־הָעָ֑רֶב וְהַנֹּשֵׂא֙ אֶת־נִבְלָתָ֔הּ יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֥א עַד־הָעָֽרֶב׃', 'וְכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ שֶׁ֥קֶץ ה֖וּא לֹ֥א יֵאָכֵֽל׃', 'כֹּל֩ הוֹלֵ֨ךְ עַל־גָּח֜<big>וֹ</big>ן וְכֹ֣ל&thinsp;<b>׀</b> הוֹלֵ֣ךְ עַל־אַרְבַּ֗ע עַ֚ד כׇּל־מַרְבֵּ֣ה רַגְלַ֔יִם לְכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ לֹ֥א תֹאכְל֖וּם כִּי־שֶׁ֥קֶץ הֵֽם׃', 'אַל־תְּשַׁקְּצוּ֙ אֶת־נַפְשֹׁ֣תֵיכֶ֔ם בְּכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֑ץ וְלֹ֤א תִֽטַּמְּאוּ֙ בָּהֶ֔ם וְנִטְמֵתֶ֖ם בָּֽם׃', 'כִּ֣י אֲנִ֣י יְהֹוָה֮ אֱלֹֽהֵיכֶם֒ וְהִתְקַדִּשְׁתֶּם֙ וִהְיִיתֶ֣ם קְדֹשִׁ֔ים כִּ֥י קָד֖וֹשׁ אָ֑נִי וְלֹ֤א תְטַמְּאוּ֙ אֶת־נַפְשֹׁ֣תֵיכֶ֔ם בְּכׇל־הַשֶּׁ֖רֶץ הָרֹמֵ֥שׂ עַל־הָאָֽרֶץ׃', 'כִּ֣י&thinsp;<b>׀</b> אֲנִ֣י יְהֹוָ֗ה הַֽמַּעֲלֶ֤ה אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְיֹ֥ת לָכֶ֖ם לֵאלֹהִ֑ים וִהְיִיתֶ֣ם קְדֹשִׁ֔ים כִּ֥י קָד֖וֹשׁ אָֽנִי׃', 'זֹ֣את תּוֹרַ֤ת הַבְּהֵמָה֙ וְהָע֔וֹף וְכֹל֙ נֶ֣פֶשׁ הַֽחַיָּ֔ה הָרֹמֶ֖שֶׂת בַּמָּ֑יִם וּלְכׇל־נֶ֖פֶשׁ הַשֹּׁרֶ֥צֶת עַל־הָאָֽרֶץ׃', 'לְהַבְדִּ֕יל בֵּ֥ין הַטָּמֵ֖א וּבֵ֣ין הַטָּהֹ֑ר וּבֵ֤ין הַֽחַיָּה֙ הַֽנֶּאֱכֶ֔לֶת וּבֵין֙ הַֽחַיָּ֔ה אֲשֶׁ֖ר לֹ֥א תֵאָכֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-9-1">Chap. 9</a><a href="#v-10-1">Chap. 10</a><a href="#v-11-1">Chap. 11</a></div>
+  <div class="seif" id="v-9-1">
+      <span class="seif-num">9:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ בַּיּ֣וֹם הַשְּׁמִינִ֔י קָרָ֣א מֹשֶׁ֔ה לְאַהֲרֹ֖ן וּלְבָנָ֑יו וּלְזִקְנֵ֖י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויהי ביום השמיני קרא משה לאהרן ולבניו ולזקני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Quand on fut au huitième jour, Moïse manda Aaron et ses fils, ainsi que les anciens d’Israël,</p></div>
+    </div><div class="seif" id="v-9-2">
+      <span class="seif-num">9:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֶֽל־אַהֲרֹ֗ן קַח־לְ֠ךָ֠ עֵ֣גֶל בֶּן־בָּקָ֧ר לְחַטָּ֛את וְאַ֥יִל לְעֹלָ֖ה תְּמִימִ֑ם וְהַקְרֵ֖ב לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויאמר אל־אהרן קח־לך עגל בן־בקר לחטאת ואיל לעלה תמימם והקרב לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>et il dit à Aaron: "Prends un veau adulte pour expiatoire et un bélier pour holocauste, tous deux sans défaut, et amène-les devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-9-3">
+      <span class="seif-num">9:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל תְּדַבֵּ֣ר לֵאמֹ֑ר קְח֤וּ שְׂעִיר־עִזִּים֙ לְחַטָּ֔את וְעֵ֨גֶל וָכֶ֧בֶשׂ בְּנֵי־שָׁנָ֛ה תְּמִימִ֖ם לְעֹלָֽה׃</p></div><div class="heb-s"><p>ואל־בני ישראל תדבר לאמר קחו שעיר־עזים לחטאת ועגל וכבש בני־שנה תמימם לעלה׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux enfants d’Israël, tu leur parleras ainsi: Prenez un bouc pour expiatoire, un veau et un agneau âgés d’un an, sans défaut, pour holocauste;</p></div>
+    </div><div class="seif" id="v-9-4">
+      <span class="seif-num">9:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשׁ֨וֹר וָאַ֜יִל לִשְׁלָמִ֗ים לִזְבֹּ֙חַ֙ לִפְנֵ֣י יְהֹוָ֔ה וּמִנְחָ֖ה בְּלוּלָ֣ה בַשָּׁ֑מֶן כִּ֣י הַיּ֔וֹם יְהֹוָ֖ה נִרְאָ֥ה אֲלֵיכֶֽם׃</p></div><div class="heb-s"><p>ושור ואיל לשלמים לזבח לפני יהוה ומנחה בלולה בשמן כי היום יהוה נראה אליכם׃</p></div></div>
+      <div class="texte-fr"><p>plus, un taureau et un bélier pour rémunératoire, à sacrifier en présence de l’Éternel, et une oblation pétrie à l’huile, car aujourd’hui l’Éternel doit vous apparaître."</p></div>
+    </div><div class="seif" id="v-9-5">
+      <span class="seif-num">9:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְח֗וּ אֵ֚ת אֲשֶׁ֣ר צִוָּ֣ה מֹשֶׁ֔ה אֶל־פְּנֵ֖י אֹ֣הֶל מוֹעֵ֑ד וַֽיִּקְרְבוּ֙ כׇּל־הָ֣עֵדָ֔ה וַיַּֽעַמְד֖וּ לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויקחו את אשר צוה משה אל־פני אהל מועד ויקרבו כל־העדה ויעמדו לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>On prit tout ce qu’avait ordonné Moïse, pour l’amener devant la Tente d’assignation; toute la communauté s’approcha, et se tint debout devant l’Éternel.</p></div>
+    </div><div class="seif" id="v-9-6">
+      <span class="seif-num">9:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר מֹשֶׁ֔ה זֶ֧ה הַדָּבָ֛ר אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה תַּעֲשׂ֑וּ וְיֵרָ֥א אֲלֵיכֶ֖ם כְּב֥וֹד יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויאמר משה זה הדבר אשר־צוה יהוה תעשו וירא אליכם כבוד יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse dit: "Ceci est la chose qu’a ordonnée l’Éternel; accomplissez-la, pour que vous apparaisse la gloire du Seigneur."</p></div>
+    </div><div class="seif" id="v-9-7">
+      <span class="seif-num">9:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן קְרַ֤ב אֶל־הַמִּזְבֵּ֙חַ֙ וַעֲשֵׂ֞ה אֶת־חַטָּֽאתְךָ֙ וְאֶת־עֹ֣לָתֶ֔ךָ וְכַפֵּ֥ר בַּֽעַדְךָ֖ וּבְעַ֣ד הָעָ֑ם וַעֲשֵׂ֞ה אֶת־קׇרְבַּ֤ן הָעָם֙ וְכַפֵּ֣ר בַּֽעֲדָ֔ם כַּאֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויאמר משה אל־אהרן קרב אל־המזבח ועשה את־חטאתך ואת־עלתך וכפר בעדך ובעד העם ועשה את־קרבן העם וכפר בעדם כאשר צוה יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse dit à Aaron: "Approche de l’autel, offre ton expiatoire et ton holocauste, obtiens propitiation pour toi et pour le peuple; puis, offre le sacrifice du peuple et obtiens-lui propitiation, comme l’a prescrit l’Éternel."</p></div>
+    </div><div class="seif" id="v-9-8">
+      <span class="seif-num">9:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרַ֥ב אַהֲרֹ֖ן אֶל־הַמִּזְבֵּ֑חַ וַיִּשְׁחַ֛ט אֶת־עֵ֥גֶל הַחַטָּ֖את אֲשֶׁר־לֽוֹ׃</p></div><div class="heb-s"><p>ויקרב אהרן אל־המזבח וישחט את־עגל החטאת אשר־לו׃</p></div></div>
+      <div class="texte-fr"><p>Et Aaron s’approcha de l’autel, et il immola le veau expiatoire destiné à lui-même.</p></div>
+    </div><div class="seif" id="v-9-9">
+      <span class="seif-num">9:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַ֠יַּקְרִ֠בוּ בְּנֵ֨י אַהֲרֹ֣ן אֶת־הַדָּם֮ אֵלָיו֒ וַיִּטְבֹּ֤ל אֶצְבָּעוֹ֙ בַּדָּ֔ם וַיִּתֵּ֖ן עַל־קַרְנ֣וֹת הַמִּזְבֵּ֑חַ וְאֶת־הַדָּ֣ם יָצַ֔ק אֶל־יְס֖וֹד הַמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויקרבו בני אהרן את־הדם אליו ויטבל אצבעו בדם ויתן על־קרנות המזבח ואת־הדם יצק אל־יסוד המזבח׃</p></div></div>
+      <div class="texte-fr"><p>Les fils d’Aaron lui présentèrent le sang, et il trempa son doigt dans ce sang, qu’il appliqua sur les cornes de l’autel; et le reste du sang, il le fit couler dans le réceptacle de l’autel.</p></div>
+    </div><div class="seif" id="v-9-10">
+      <span class="seif-num">9:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַחֵ֨לֶב וְאֶת־הַכְּלָיֹ֜ת וְאֶת־הַיֹּתֶ֤רֶת מִן־הַכָּבֵד֙ מִן־הַ֣חַטָּ֔את הִקְטִ֖יר הַמִּזְבֵּ֑חָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ואת־החלב ואת־הכלית ואת־היתרת מן־הכבד מן־החטאת הקטיר המזבחה כאשר צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Puis, la graisse, les rognons et la membrane du foie de l’expiatoire, il les fit fumer sur l’autel, ainsi que l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-9-11">
+      <span class="seif-num">9:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַבָּשָׂ֖ר וְאֶת־הָע֑וֹר שָׂרַ֣ף בָּאֵ֔שׁ מִח֖וּץ לַֽמַּחֲנֶֽה׃</p></div><div class="heb-s"><p>ואת־הבשר ואת־העור שרף באש מחוץ למחנה׃</p></div></div>
+      <div class="texte-fr"><p>Pour la chair et la peau, il les consuma par le feu en dehors du camp.</p></div>
+    </div><div class="seif" id="v-9-12">
+      <span class="seif-num">9:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁחַ֖ט אֶת־הָעֹלָ֑ה וַ֠יַּמְצִ֠אוּ בְּנֵ֨י אַהֲרֹ֤ן אֵלָיו֙ אֶת־הַדָּ֔ם וַיִּזְרְקֵ֥הוּ עַל־הַמִּזְבֵּ֖חַ סָבִֽיב׃</p></div><div class="heb-s"><p>וישחט את־העלה וימצאו בני אהרן אליו את־הדם ויזרקהו על־המזבח סביב׃</p></div></div>
+      <div class="texte-fr"><p>Il immola l’holocauste; les fils d’Aaron lui passèrent le sang, et il en arrosa le tour de l’autel.</p></div>
+    </div><div class="seif" id="v-9-13">
+      <span class="seif-num">9:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הָעֹלָ֗ה הִמְצִ֧יאוּ אֵלָ֛יו לִנְתָחֶ֖יהָ וְאֶת־הָרֹ֑אשׁ וַיַּקְטֵ֖ר עַל־הַמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ואת־העלה המציאו אליו לנתחיה ואת־הראש ויקטר על־המזבח׃</p></div></div>
+      <div class="texte-fr"><p>Ils lui passèrent l’holocauste pièce à pièce, puis la tête, et il fit fumer le tout sur l’autel.</p></div>
+    </div><div class="seif" id="v-9-14">
+      <span class="seif-num">9:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְחַ֥ץ אֶת־הַקֶּ֖רֶב וְאֶת־הַכְּרָעָ֑יִם וַיַּקְטֵ֥ר עַל־הָעֹלָ֖ה הַמִּזְבֵּֽחָה׃</p></div><div class="heb-s"><p>וירחץ את־הקרב ואת־הכרעים ויקטר על־העלה המזבחה׃</p></div></div>
+      <div class="texte-fr"><p>Il lava les intestins et les jambes, et les fit fumer avec l’holocauste sur l’autel.</p></div>
+    </div><div class="seif" id="v-9-15">
+      <span class="seif-num">9:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְרֵ֕ב אֵ֖ת קׇרְבַּ֣ן הָעָ֑ם וַיִּקַּ֞ח אֶת־שְׂעִ֤יר הַֽחַטָּאת֙ אֲשֶׁ֣ר לָעָ֔ם וַיִּשְׁחָטֵ֥הוּ וַֽיְחַטְּאֵ֖הוּ כָּרִאשֽׁוֹן׃</p></div><div class="heb-s"><p>ויקרב את קרבן העם ויקח את־שעיר החטאת אשר לעם וישחטהו ויחטאהו כראשון׃</p></div></div>
+      <div class="texte-fr"><p>Puis il présenta l’offrande du peuple. Il prit le bouc expiatoire destiné au peuple, l’égorgea et le fit servir à l’expiation comme la première victime.</p></div>
+    </div><div class="seif" id="v-9-16">
+      <span class="seif-num">9:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְרֵ֖ב אֶת־הָעֹלָ֑ה וַֽיַּעֲשֶׂ֖הָ כַּמִּשְׁפָּֽט׃</p></div><div class="heb-s"><p>ויקרב את־העלה ויעשה כמשפט׃</p></div></div>
+      <div class="texte-fr"><p>Il offrit l’holocauste, qu’il exécuta selon la règle.</p></div>
+    </div><div class="seif" id="v-9-17">
+      <span class="seif-num">9:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְרֵב֮ אֶת־הַמִּנְחָה֒ וַיְמַלֵּ֤א כַפּוֹ֙ מִמֶּ֔נָּה וַיַּקְטֵ֖ר עַל־הַמִּזְבֵּ֑חַ מִלְּבַ֖ד עֹלַ֥ת הַבֹּֽקֶר׃</p></div><div class="heb-s"><p>ויקרב את־המנחה וימלא כפו ממנה ויקטר על־המזבח מלבד עלת הבקר׃</p></div></div>
+      <div class="texte-fr"><p>Il y joignit l’oblation et en prit plein sa main, portion qu’il fit fumer sur l’autel, indépendamment de l’holocauste du matin.</p></div>
+    </div><div class="seif" id="v-9-18">
+      <span class="seif-num">9:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁחַ֤ט אֶת־הַשּׁוֹר֙ וְאֶת־הָאַ֔יִל זֶ֥בַח הַשְּׁלָמִ֖ים אֲשֶׁ֣ר לָעָ֑ם וַ֠יַּמְצִ֠אוּ בְּנֵ֨י אַהֲרֹ֤ן אֶת־הַדָּם֙ אֵלָ֔יו וַיִּזְרְקֵ֥הוּ עַל־הַמִּזְבֵּ֖חַ סָבִֽיב׃</p></div><div class="heb-s"><p>וישחט את־השור ואת־האיל זבח השלמים אשר לעם וימצאו בני אהרן את־הדם אליו ויזרקהו על־המזבח סביב׃</p></div></div>
+      <div class="texte-fr"><p>Il immola le taureau et le bélier, comme sacrifice rémunératoire du peuple; les fils d’Aaron lui passèrent le sang, dont il arrosa le tour de l’autel;</p></div>
+    </div><div class="seif" id="v-9-19">
+      <span class="seif-num">9:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַחֲלָבִ֖ים מִן־הַשּׁ֑וֹר וּמִ֨ן־הָאַ֔יִל הָֽאַלְיָ֤ה וְהַֽמְכַסֶּה֙ וְהַכְּלָיֹ֔ת וְיֹתֶ֖רֶת הַכָּבֵֽד׃</p></div><div class="heb-s"><p>ואת־החלבים מן־השור ומן־האיל האליה והמכסה והכלית ויתרת הכבד׃</p></div></div>
+      <div class="texte-fr"><p>puis les graisses du taureau; puis, du bélier, la queue, les téguments, les rognons et la membrane du foie;</p></div>
+    </div><div class="seif" id="v-9-20">
+      <span class="seif-num">9:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּשִׂ֥ימוּ אֶת־הַחֲלָבִ֖ים עַל־הֶחָז֑וֹת וַיַּקְטֵ֥ר הַחֲלָבִ֖ים הַמִּזְבֵּֽחָה׃</p></div><div class="heb-s"><p>וישימו את־החלבים על־החזות ויקטר החלבים המזבחה׃</p></div></div>
+      <div class="texte-fr"><p>ils posèrent ces graisses sur les poitrines, et il fit fumer les graisses sur l’autel.</p></div>
+    </div><div class="seif" id="v-9-21">
+      <span class="seif-num">9:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֣ת הֶחָז֗וֹת וְאֵת֙ שׁ֣וֹק הַיָּמִ֔ין הֵנִ֧יף אַהֲרֹ֛ן תְּנוּפָ֖ה לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֖ר צִוָּ֥ה מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ואת החזות ואת שוק הימין הניף אהרן תנופה לפני יהוה כאשר צוה משה׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux poitrines et à la cuisse droite, Aaron en avait opéré le balancement devant l’Éternel, selon l’ordre de Moïse.</p></div>
+    </div><div class="seif" id="v-9-22">
+      <span class="seif-num">9:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשָּׂ֨א אַהֲרֹ֧ן אֶת־<span class="mam-kq-trivial">יָדָ֛ו</span> אֶל־הָעָ֖ם וַֽיְבָרְכֵ֑ם וַיֵּ֗רֶד מֵעֲשֹׂ֧ת הַֽחַטָּ֛את וְהָעֹלָ֖ה וְהַשְּׁלָמִֽים׃</p></div><div class="heb-s"><p>וישא אהרן את־<span class="mam-kq-trivial">ידו</span> אל־העם ויברכם וירד מעשת החטאת והעלה והשלמים׃</p></div></div>
+      <div class="texte-fr"><p>Aaron étendit ses mains vers le peuple et le bénit; et il redescendit, après avoir offert l’expiatoire, l’holocauste et le rémunératoire.</p></div>
+    </div><div class="seif" id="v-9-23">
+      <span class="seif-num">9:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֨א מֹשֶׁ֤ה וְאַהֲרֹן֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד וַיֵּ֣צְא֔וּ וַֽיְבָרְכ֖וּ אֶת־הָעָ֑ם וַיֵּרָ֥א כְבוֹד־יְהֹוָ֖ה אֶל־כׇּל־הָעָֽם׃</p></div><div class="heb-s"><p>ויבא משה ואהרן אל־אהל מועד ויצאו ויברכו את־העם וירא כבוד־יהוה אל־כל־העם׃</p></div></div>
+      <div class="texte-fr"><p>Moïse et Aaron entrèrent dans la Tente d’assignation; ils ressortirent et bénirent le peuple, et la gloire du Seigneur se manifesta au peuple entier.</p></div>
+    </div><div class="seif" id="v-9-24">
+      <span class="seif-num">9:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֤צֵא אֵשׁ֙ מִלִּפְנֵ֣י יְהֹוָ֔ה וַתֹּ֙אכַל֙ עַל־הַמִּזְבֵּ֔חַ אֶת־הָעֹלָ֖ה וְאֶת־הַחֲלָבִ֑ים וַיַּ֤רְא כׇּל־הָעָם֙ וַיָּרֹ֔נּוּ וַֽיִּפְּל֖וּ עַל־פְּנֵיהֶֽם׃</p></div><div class="heb-s"><p>ותצא אש מלפני יהוה ותאכל על־המזבח את־העלה ואת־החלבים וירא כל־העם וירנו ויפלו על־פניהם׃</p></div></div>
+      <div class="texte-fr"><p>Un feu s’élança de devant le Seigneur, et consuma, sur l’autel, l’holocauste et les graisses. A cette vue, tout le peuple jeta des cris de joie, et ils tombèrent sur leurs faces.</p></div>
+    </div><div class="seif" id="v-10-1">
+      <span class="seif-num">10:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְח֣וּ בְנֵֽי־אַ֠הֲרֹ֠ן נָדָ֨ב וַאֲבִיה֜וּא אִ֣ישׁ מַחְתָּת֗וֹ וַיִּתְּנ֤וּ בָהֵן֙ אֵ֔שׁ וַיָּשִׂ֥ימוּ עָלֶ֖יהָ קְטֹ֑רֶת וַיַּקְרִ֜יבוּ לִפְנֵ֤י יְהֹוָה֙ אֵ֣שׁ זָרָ֔ה אֲשֶׁ֧ר לֹ֦א צִוָּ֖ה אֹתָֽם׃</p></div><div class="heb-s"><p>ויקחו בני־אהרן נדב ואביהוא איש מחתתו ויתנו בהן אש וישימו עליה קטרת ויקריבו לפני יהוה אש זרה אשר לא צוה אתם׃</p></div></div>
+      <div class="texte-fr"><p>Les fils d’Aaron, Nadab et Abihou, prenant chacun leur encensoir, y mirent du feu, sur lequel ils jetèrent de l’encens, et apportèrent devant le Seigneur un feu profane sans qu’il le leur eût commandé.</p></div>
+    </div><div class="seif" id="v-10-2">
+      <span class="seif-num">10:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֥צֵא אֵ֛שׁ מִלִּפְנֵ֥י יְהֹוָ֖ה וַתֹּ֣אכַל אוֹתָ֑ם וַיָּמֻ֖תוּ לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ותצא אש מלפני יהוה ותאכל אותם וימתו לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et un feu s’élança de devant le Seigneur et les dévora, et ils moururent devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-10-3">
+      <span class="seif-num">10:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן הוּא֩ אֲשֶׁר־דִּבֶּ֨ר יְהֹוָ֤ה&thinsp;<small>׀</small>&thinsp;לֵאמֹר֙ בִּקְרֹבַ֣י אֶקָּדֵ֔שׁ וְעַל־פְּנֵ֥י כׇל־הָעָ֖ם אֶכָּבֵ֑ד וַיִּדֹּ֖ם אַהֲרֹֽן׃</p></div><div class="heb-s"><p>ויאמר משה אל־אהרן הוא אשר־דבר יהוה&thinsp;<small>׀</small>&thinsp;לאמר בקרבי אקדש ועל־פני כל־העם אכבד וידם אהרן׃</p></div></div>
+      <div class="texte-fr"><p>Moïse dit à Aaron: "C’est là ce qu’avait déclaré l’Éternel en disant: Je veux être sanctifié par ceux qui m’approchent et glorifié à la face de tout le peuple!" Et Aaron garda le silence.</p></div>
+    </div><div class="seif" id="v-10-4">
+      <span class="seif-num">10:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֣א מֹשֶׁ֗ה אֶל־מִֽישָׁאֵל֙ וְאֶ֣ל אֶלְצָפָ֔ן בְּנֵ֥י עֻזִּיאֵ֖ל דֹּ֣ד אַהֲרֹ֑ן וַיֹּ֣אמֶר אֲלֵהֶ֗ם קִ֞֠רְב֞֠וּ שְׂא֤וּ אֶת־אֲחֵיכֶם֙ מֵאֵ֣ת פְּנֵי־הַקֹּ֔דֶשׁ אֶל־מִח֖וּץ לַֽמַּחֲנֶֽה׃</p></div><div class="heb-s"><p>ויקרא משה אל־מישאל ואל אלצפן בני עזיאל דד אהרן ויאמר אלהם קרבו שאו את־אחיכם מאת פני־הקדש אל־מחוץ למחנה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse appela Michaël et Elçafan, fils d’Ouzziel, oncle d’Aaron, et leur dit: "Approchez! Emportez vos frères de devant le sanctuaire, hors du camp."</p></div>
+    </div><div class="seif" id="v-10-5">
+      <span class="seif-num">10:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּקְרְב֗וּ וַיִּשָּׂאֻם֙ בְּכֻתֳּנֹתָ֔ם אֶל־מִח֖וּץ לַֽמַּחֲנֶ֑ה כַּאֲשֶׁ֖ר דִּבֶּ֥ר מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ויקרבו וישאם בכתנתם אל־מחוץ למחנה כאשר דבר משה׃</p></div></div>
+      <div class="texte-fr"><p>Ils s’avancèrent et les transportèrent dans leurs tuniques hors du camp, selon ce qu’avait dit Moïse.</p></div>
+    </div><div class="seif" id="v-10-6">
+      <span class="seif-num">10:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר מֹשֶׁ֣ה אֶֽל־אַהֲרֹ֡ן וּלְאֶלְעָזָר֩ וּלְאִֽיתָמָ֨ר&thinsp;<small>׀</small>&thinsp;בָּנָ֜יו רָֽאשֵׁיכֶ֥ם אַל־תִּפְרָ֣עוּ&thinsp;<b>׀</b> וּבִגְדֵיכֶ֤ם לֹֽא־תִפְרֹ֙מוּ֙ וְלֹ֣א תָמֻ֔תוּ וְעַ֥ל כׇּל־הָעֵדָ֖ה יִקְצֹ֑ף וַאֲחֵיכֶם֙ כׇּל־בֵּ֣ית יִשְׂרָאֵ֔ל יִבְכּוּ֙ אֶת־הַשְּׂרֵפָ֔ה אֲשֶׁ֖ר שָׂרַ֥ף יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויאמר משה אל־אהרן ולאלעזר ולאיתמר&thinsp;<small>׀</small>&thinsp;בניו ראשיכם אל־תפרעו&thinsp;<b>׀</b> ובגדיכם לא־תפרמו ולא תמתו ועל כל־העדה יקצף ואחיכם כל־בית ישראל יבכו את־השרפה אשר שרף יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse dit à Aaron, et à Eléazar et Ithamar ses fils: "Ne découvrez point vos têtes et ne déchirez point vos vêtements, si vous ne voulez mourir et attirer la colère divine sur la communauté entière; à vos frères, à toute la maison d’Israël, de pleurer ceux qu’a brûlés le Seigneur.</p></div>
+    </div><div class="seif" id="v-10-7">
+      <span class="seif-num">10:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִפֶּ֩תַח֩ אֹ֨הֶל מוֹעֵ֜ד לֹ֤א תֵֽצְאוּ֙ פֶּן־תָּמֻ֔תוּ כִּי־שֶׁ֛מֶן מִשְׁחַ֥ת יְהֹוָ֖ה עֲלֵיכֶ֑ם וַֽיַּעֲשׂ֖וּ כִּדְבַ֥ר מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ומפתח אהל מועד לא תצאו פן־תמתו כי־שמן משחת יהוה עליכם ויעשו כדבר משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Et ne quittez point le seuil de la Tente d’assignation, de peur que vous ne mouriez; car l’huile d’onction du Seigneur est sur vous." Ils se conformèrent à la parole de Moïse.</p></div>
+    </div><div class="seif" id="v-10-8">
+      <span class="seif-num">10:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Aaron:</p></div>
+    </div><div class="seif" id="v-10-9">
+      <span class="seif-num">10:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַ֣יִן וְשֵׁכָ֞ר אַל־תֵּ֣שְׁתְּ&thinsp;<b>׀</b> אַתָּ֣ה&thinsp;<b>׀</b> וּבָנֶ֣יךָ אִתָּ֗ךְ בְּבֹאֲכֶ֛ם אֶל־אֹ֥הֶל מוֹעֵ֖ד וְלֹ֣א תָמֻ֑תוּ חֻקַּ֥ת עוֹלָ֖ם לְדֹרֹתֵיכֶֽם׃</p></div><div class="heb-s"><p>יין ושכר אל־תשת&thinsp;<b>׀</b> אתה&thinsp;<b>׀</b> ובניך אתך בבאכם אל־אהל מועד ולא תמתו חקת עולם לדרתיכם׃</p></div></div>
+      <div class="texte-fr"><p>"Tu ne boiras ni vin ni liqueur forte, toi non plus que tes fils, quand vous aurez à entrer dans la Tente d’assignation, afin que vous ne mouriez pas: règle perpétuelle pour vos générations;</p></div>
+    </div><div class="seif" id="v-10-10">
+      <span class="seif-num">10:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּֽלְהַבְדִּ֔יל בֵּ֥ין הַקֹּ֖דֶשׁ וּבֵ֣ין הַחֹ֑ל וּבֵ֥ין הַטָּמֵ֖א וּבֵ֥ין הַטָּהֽוֹר׃</p></div><div class="heb-s"><p>ולהבדיל בין הקדש ובין החל ובין הטמא ובין הטהור׃</p></div></div>
+      <div class="texte-fr"><p>et afin de pouvoir distinguer entre le sacré et le profane, entre l’impur et ce qui est pur,</p></div>
+    </div><div class="seif" id="v-10-11">
+      <span class="seif-num">10:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְהוֹרֹ֖ת אֶת־בְּנֵ֣י יִשְׂרָאֵ֑ל אֵ֚ת כׇּל־הַ֣חֻקִּ֔ים אֲשֶׁ֨ר דִּבֶּ֧ר יְהֹוָ֛ה אֲלֵיהֶ֖ם בְּיַד־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ולהורת את־בני ישראל את כל־החקים אשר דבר יהוה אליהם ביד־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>et instruire les enfants d’Israël dans toutes les lois que l’Éternel leur a fait transmettre par Moïse."</p></div>
+    </div><div class="seif" id="v-10-12">
+      <span class="seif-num">10:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֨ר מֹשֶׁ֜ה אֶֽל־אַהֲרֹ֗ן וְאֶ֣ל אֶ֠לְעָזָ֠ר וְאֶל־אִ֨יתָמָ֥ר&thinsp;<small>׀</small>&thinsp;בָּנָיו֮ הַנּֽוֹתָרִים֒ קְח֣וּ אֶת־הַמִּנְחָ֗ה הַנּוֹתֶ֙רֶת֙ מֵאִשֵּׁ֣י יְהֹוָ֔ה וְאִכְל֥וּהָ מַצּ֖וֹת אֵ֣צֶל הַמִּזְבֵּ֑חַ כִּ֛י קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הִֽוא׃</p></div><div class="heb-s"><p>וידבר משה אל־אהרן ואל אלעזר ואל־איתמר&thinsp;<small>׀</small>&thinsp;בניו הנותרים קחו את־המנחה הנותרת מאשי יהוה ואכלוה מצות אצל המזבח כי קדש קדשים הוא׃</p></div></div>
+      <div class="texte-fr"><p>Moïse dit à Aaron ainsi qu’à Eléazar et à Ithamar, ses fils survivants:"Prenez la part d’oblation qui reste des combustions du Seigneur, et mangez-la en pains azymes à côté de l’autel, car elle est éminemment sainte.</p></div>
+    </div><div class="seif" id="v-10-13">
+      <span class="seif-num">10:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲכַלְתֶּ֤ם אֹתָהּ֙ בְּמָק֣וֹם קָד֔וֹשׁ כִּ֣י חׇקְךָ֤ וְחׇק־בָּנֶ֙יךָ֙ הִ֔וא מֵאִשֵּׁ֖י יְהֹוָ֑ה כִּי־כֵ֖ן צֻוֵּֽיתִי׃</p></div><div class="heb-s"><p>ואכלתם אתה במקום קדוש כי חקך וחק־בניך הוא מאשי יהוה כי־כן צויתי׃</p></div></div>
+      <div class="texte-fr"><p>Vous la mangerez donc en lieu saint, c’est ton droit et celui de tes fils sur les combustions du Seigneur; car ainsi en ai-je reçu l’ordre.</p></div>
+    </div><div class="seif" id="v-10-14">
+      <span class="seif-num">10:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֩ חֲזֵ֨ה הַתְּנוּפָ֜ה וְאֵ֣ת&thinsp;<b>׀</b> שׁ֣וֹק הַתְּרוּמָ֗ה תֹּֽאכְלוּ֙ בְּמָק֣וֹם טָה֔וֹר אַתָּ֕ה וּבָנֶ֥יךָ וּבְנֹתֶ֖יךָ אִתָּ֑ךְ כִּֽי־חׇקְךָ֤ וְחׇק־בָּנֶ֙יךָ֙ נִתְּנ֔וּ מִזִּבְחֵ֥י שַׁלְמֵ֖י בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ואת חזה התנופה ואת&thinsp;<b>׀</b> שוק התרומה תאכלו במקום טהור אתה ובניך ובנתיך אתך כי־חקך וחק־בניך נתנו מזבחי שלמי בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Quant à la poitrine qui a été balancée et à la cuisse qui a été prélevée, vous les mangerez en lieu pur, toi ainsi que tes fils et tes filles; car elles ont été assignées comme revenu à toi et à tes enfants, sur les sacrifices rémunératoires des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-10-15">
+      <span class="seif-num">10:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>שׁ֣וֹק הַתְּרוּמָ֞ה וַחֲזֵ֣ה הַתְּנוּפָ֗ה עַ֣ל אִשֵּׁ֤י הַחֲלָבִים֙ יָבִ֔יאוּ לְהָנִ֥יף תְּנוּפָ֖ה לִפְנֵ֣י יְהֹוָ֑ה וְהָיָ֨ה לְךָ֜ וּלְבָנֶ֤יךָ אִתְּךָ֙ לְחׇק־עוֹלָ֔ם כַּאֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃</p></div><div class="heb-s"><p>שוק התרומה וחזה התנופה על אשי החלבים יביאו להניף תנופה לפני יהוה והיה לך ולבניך אתך לחק־עולם כאשר צוה יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Cette cuisse à prélever et cette poitrine à balancer, ils doivent les joindre aux graisses destinées au feu, pour qu’on en opère le balancement devant le Seigneur; alors elles t’appartiendront, et de même à tes enfants, comme portion invariable, ainsi que l’a statué l’Éternel."</p></div>
+    </div><div class="seif" id="v-10-16">
+      <span class="seif-num">10:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֣ת&thinsp;<b>׀</b> שְׂעִ֣יר הַֽחַטָּ֗את דָּרֹ֥שׁ דָּרַ֛שׁ מֹשֶׁ֖ה וְהִנֵּ֣ה שֹׂרָ֑ף וַ֠יִּקְצֹ֠ף עַל־אֶלְעָזָ֤ר וְעַל־אִֽיתָמָר֙ בְּנֵ֣י אַהֲרֹ֔ן הַנּוֹתָרִ֖ם לֵאמֹֽר׃</p></div><div class="heb-s"><p>ואת&thinsp;<b>׀</b> שעיר החטאת דרש דרש משה והנה שרף ויקצף על־אלעזר ועל־איתמר בני אהרן הנותרם לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Au sujet du bouc expiatoire, Moïse fit des recherches, et il se trouva qu’on l’avait brûlé. Irrité contre Eléazar et Ithamar, les fils d’Aaron demeurés vivants, il dit:</p></div>
+    </div><div class="seif" id="v-10-17">
+      <span class="seif-num">10:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>מַדּ֗וּעַ לֹֽא־אֲכַלְתֶּ֤ם אֶת־הַחַטָּאת֙ בִּמְק֣וֹם הַקֹּ֔דֶשׁ כִּ֛י קֹ֥דֶשׁ קׇֽדָשִׁ֖ים הִ֑וא וְאֹתָ֣הּ&thinsp;<b>׀</b> נָתַ֣ן לָכֶ֗ם לָשֵׂאת֙ אֶת־עֲוֺ֣ן הָעֵדָ֔ה לְכַפֵּ֥ר עֲלֵיהֶ֖ם לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>מדוע לא־אכלתם את־החטאת במקום הקדש כי קדש קדשים הוא ואתה&thinsp;<b>׀</b> נתן לכם לשאת את־עון העדה לכפר עליהם לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>"Pourquoi n’avez-vous pas mangé l’expiatoire dans le saint lieu, alors que c’est une sainteté de premier ordre, et qu’on vous l’a donné pour assumer les fautes de la communauté, pour lui obtenir propitiation devant l’Éternel?</p></div>
+    </div><div class="seif" id="v-10-18">
+      <span class="seif-num">10:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵ֚ן לֹא־הוּבָ֣א אֶת־דָּמָ֔הּ אֶל־הַקֹּ֖דֶשׁ פְּנִ֑ימָה אָכ֨וֹל תֹּאכְל֥וּ אֹתָ֛הּ בַּקֹּ֖דֶשׁ כַּאֲשֶׁ֥ר צִוֵּֽיתִי׃</p></div><div class="heb-s"><p>הן לא־הובא את־דמה אל־הקדש פנימה אכול תאכלו אתה בקדש כאשר צויתי׃</p></div></div>
+      <div class="texte-fr"><p>Puisque le sang de cette victime n’a pas été introduit dans le sanctuaire intérieur, vous deviez la manger dans le sanctuaire, ainsi que je l’ai prescrit!"</p></div>
+    </div><div class="seif" id="v-10-19">
+      <span class="seif-num">10:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֨ר אַהֲרֹ֜ן אֶל־מֹשֶׁ֗ה הֵ֣ן הַ֠יּ֠וֹם הִקְרִ֨יבוּ אֶת־חַטָּאתָ֤ם וְאֶת־עֹֽלָתָם֙ לִפְנֵ֣י יְהֹוָ֔ה וַתִּקְרֶ֥אנָה אֹתִ֖י כָּאֵ֑לֶּה וְאָכַ֤לְתִּי חַטָּאת֙ הַיּ֔וֹם הַיִּיטַ֖ב בְּעֵינֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>וידבר אהרן אל־משה הן היום הקריבו את־חטאתם ואת־עלתם לפני יהוה ותקראנה אתי כאלה ואכלתי חטאת היום הייטב בעיני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Aaron répondit à Moïse: "Certes, aujourd’hui même ils ont offert leur expiatoire et leur holocauste devant le Seigneur, et pareille chose m’est advenue; or, si j’eusse mangé un expiatoire aujourd’hui, est-ce là ce qui plairait à l’Éternel?"</p></div>
+    </div><div class="seif" id="v-10-20">
+      <span class="seif-num">10:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֣ע מֹשֶׁ֔ה וַיִּיטַ֖ב בְּעֵינָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וישמע משה וייטב בעיניו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Moïse entendit, et il approuva.</p></div>
+    </div><div class="seif" id="v-11-1">
+      <span class="seif-num">11:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֧ר יְהֹוָ֛ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹ֥ר אֲלֵהֶֽם׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר אלהם׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse et à Aaron, en leur disant:</p></div>
+    </div><div class="seif" id="v-11-2">
+      <span class="seif-num">11:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>דַּבְּר֛וּ אֶל־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר זֹ֤את הַֽחַיָּה֙ אֲשֶׁ֣ר תֹּאכְל֔וּ מִכׇּל־הַבְּהֵמָ֖ה אֲשֶׁ֥ר עַל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>דברו אל־בני ישראל לאמר זאת החיה אשר תאכלו מכל־הבהמה אשר על־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>"Parlez ainsi aux enfants d’Israël: voici les animaux que vous pouvez manger, entre tous les quadrupèdes qui vivent sur la terre:</p></div>
+    </div><div class="seif" id="v-11-3">
+      <span class="seif-num">11:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּ֣ל&thinsp;<b>׀</b> מַפְרֶ֣סֶת פַּרְסָ֗ה וְשֹׁסַ֤עַת שֶׁ֙סַע֙ פְּרָסֹ֔ת מַעֲלַ֥ת גֵּרָ֖ה בַּבְּהֵמָ֑ה אֹתָ֖הּ תֹּאכֵֽלוּ׃</p></div><div class="heb-s"><p>כל&thinsp;<b>׀</b> מפרסת פרסה ושסעת שסע פרסת מעלת גרה בבהמה אתה תאכלו׃</p></div></div>
+      <div class="texte-fr"><p>tout ce qui a le pied corné et divisé en deux ongles, parmi les animaux ruminants, vous pouvez le manger.</p></div>
+    </div><div class="seif" id="v-11-4">
+      <span class="seif-num">11:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֤ךְ אֶת־זֶה֙ לֹ֣א תֹֽאכְל֔וּ מִֽמַּעֲלֵי֙ הַגֵּרָ֔ה וּמִמַּפְרִסֵ֖י הַפַּרְסָ֑ה אֶֽת־הַ֠גָּמָ֠ל כִּֽי־מַעֲלֵ֨ה גֵרָ֜ה ה֗וּא וּפַרְסָה֙ אֵינֶ֣נּוּ מַפְרִ֔יס טָמֵ֥א ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>אך את־זה לא תאכלו ממעלי הגרה וממפרסי הפרסה את־הגמל כי־מעלה גרה הוא ופרסה איננו מפריס טמא הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux suivants, qui ruminent ou qui ont le pied corné, vous n’en mangerez point: le chameau, parce qu’il rumine mais n’a point le pied corné: il sera immonde pour vous;</p></div>
+    </div><div class="seif" id="v-11-5">
+      <span class="seif-num">11:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַשָּׁפָ֗ן כִּֽי־מַעֲלֵ֤ה גֵרָה֙ ה֔וּא וּפַרְסָ֖ה לֹ֣א יַפְרִ֑יס טָמֵ֥א ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>ואת־השפן כי־מעלה גרה הוא ופרסה לא יפריס טמא הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>la gerboise, parce qu’elle rumine, mais n’a point le pied corné: elle sera immonde pour vous;</p></div>
+    </div><div class="seif" id="v-11-6">
+      <span class="seif-num">11:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הָאַרְנֶ֗בֶת כִּֽי־מַעֲלַ֤ת גֵּרָה֙ הִ֔וא וּפַרְסָ֖ה לֹ֣א הִפְרִ֑יסָה טְמֵאָ֥ה הִ֖וא לָכֶֽם׃</p></div><div class="heb-s"><p>ואת־הארנבת כי־מעלת גרה הוא ופרסה לא הפריסה טמאה הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>le lièvre, parce qu’il rumine, mais n’a point le pied corné: il sera immonde pour vous;</p></div>
+    </div><div class="seif" id="v-11-7">
+      <span class="seif-num">11:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַ֠חֲזִ֠יר כִּֽי־מַפְרִ֨יס פַּרְסָ֜ה ה֗וּא וְשֹׁסַ֥ע שֶׁ֙סַע֙ פַּרְסָ֔ה וְה֖וּא גֵּרָ֣ה לֹֽא־יִגָּ֑ר טָמֵ֥א ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>ואת־החזיר כי־מפריס פרסה הוא ושסע שסע פרסה והוא גרה לא־יגר טמא הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>le porc, qui a bien le pied corné, qui a même le sabot bifurqué, mais qui ne rumine point: il sera immonde pour vous.</p></div>
+    </div><div class="seif" id="v-11-8">
+      <span class="seif-num">11:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִבְּשָׂרָם֙ לֹ֣א תֹאכֵ֔לוּ וּבְנִבְלָתָ֖ם לֹ֣א תִגָּ֑עוּ טְמֵאִ֥ים הֵ֖ם לָכֶֽם׃</p></div><div class="heb-s"><p>מבשרם לא תאכלו ובנבלתם לא תגעו טמאים הם לכם׃</p></div></div>
+      <div class="texte-fr"><p>Vous ne mangerez point de leur chair, et vous ne toucherez point à leur cadavre: ils sont immondes pour vous.</p></div>
+    </div><div class="seif" id="v-11-9">
+      <span class="seif-num">11:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־זֶה֙ תֹּֽאכְל֔וּ מִכֹּ֖ל אֲשֶׁ֣ר בַּמָּ֑יִם כֹּ֣ל אֲשֶׁר־לוֹ֩ סְנַפִּ֨יר וְקַשְׂקֶ֜שֶׂת בַּמַּ֗יִם בַּיַּמִּ֛ים וּבַנְּחָלִ֖ים אֹתָ֥ם תֹּאכֵֽלוּ׃</p></div><div class="heb-s"><p>את־זה תאכלו מכל אשר במים כל אשר־לו סנפיר וקשקשת במים בימים ובנחלים אתם תאכלו׃</p></div></div>
+      <div class="texte-fr"><p>Voici ce que vous pouvez manger des divers animaux aquatiques: tout ce qui, dans les eaux, mers ou rivières, est pourvu de nageoires et d’écailles, vous pouvez en manger.</p></div>
+    </div><div class="seif" id="v-11-10">
+      <span class="seif-num">11:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֩ אֲשֶׁ֨ר אֵֽין־ל֜וֹ סְנַפִּ֣יר וְקַשְׂקֶ֗שֶׂת בַּיַּמִּים֙ וּבַנְּחָלִ֔ים מִכֹּל֙ שֶׁ֣רֶץ הַמַּ֔יִם וּמִכֹּ֛ל נֶ֥פֶשׁ הַחַיָּ֖ה אֲשֶׁ֣ר בַּמָּ֑יִם שֶׁ֥קֶץ הֵ֖ם לָכֶֽם׃</p></div><div class="heb-s"><p>וכל אשר אין־לו סנפיר וקשקשת בימים ובנחלים מכל שרץ המים ומכל נפש החיה אשר במים שקץ הם לכם׃</p></div></div>
+      <div class="texte-fr"><p>Mais tout ce qui n’est pas pourvu de nageoires et d’écailles, dans les mers ou les rivières, soit ce qui pullule dans l’eau, soit les animaux qui l’habitent, ils vous sont abominables,</p></div>
+    </div><div class="seif" id="v-11-11">
+      <span class="seif-num">11:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשֶׁ֖קֶץ יִהְי֣וּ לָכֶ֑ם מִבְּשָׂרָם֙ לֹ֣א תֹאכֵ֔לוּ וְאֶת־נִבְלָתָ֖ם תְּשַׁקֵּֽצוּ׃</p></div><div class="heb-s"><p>ושקץ יהיו לכם מבשרם לא תאכלו ואת־נבלתם תשקצו׃</p></div></div>
+      <div class="texte-fr"><p>abominables ils resteront pour vous: ne mangez point de leur chair, et ayez leurs cadavres en abomination.</p></div>
+    </div><div class="seif" id="v-11-12">
+      <span class="seif-num">11:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּ֣ל אֲשֶׁ֥ר אֵֽין־ל֛וֹ סְנַפִּ֥יר וְקַשְׂקֶ֖שֶׂת בַּמָּ֑יִם שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>כל אשר אין־לו סנפיר וקשקשת במים שקץ הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>Tout ce qui, dans les eaux, est privé de nageoires et d’écailles, vous sera une abomination.</p></div>
+    </div><div class="seif" id="v-11-13">
+      <span class="seif-num">11:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־אֵ֙לֶּה֙ תְּשַׁקְּצ֣וּ מִן־הָע֔וֹף לֹ֥א יֵאָכְל֖וּ שֶׁ֣קֶץ הֵ֑ם אֶת־הַנֶּ֙שֶׁר֙ וְאֶת־הַפֶּ֔רֶס וְאֵ֖ת הָעׇזְנִיָּֽה׃</p></div><div class="heb-s"><p>ואת־אלה תשקצו מן־העוף לא יאכלו שקץ הם את־הנשר ואת־הפרס ואת העזניה׃</p></div></div>
+      <div class="texte-fr"><p>Et voici, parmi les oiseaux, ceux que vous repousserez; on ne les mangera point, ils sont abominables: l’aigle, l’orfraie, la vallérie;</p></div>
+    </div><div class="seif" id="v-11-14">
+      <span class="seif-num">11:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶ֨ת־הַדָּאָ֔ה וְאֶת־הָאַיָּ֖ה לְמִינָֽהּ׃</p></div><div class="heb-s"><p>ואת־הדאה ואת־האיה למינה׃</p></div></div>
+      <div class="texte-fr"><p>le faucon et le vautour selon ses espèces;</p></div>
+    </div><div class="seif" id="v-11-15">
+      <span class="seif-num">11:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֥ת כׇּל־עֹרֵ֖ב לְמִינֽוֹ׃</p></div><div class="heb-s"><p>את כל־ערב למינו׃</p></div></div>
+      <div class="texte-fr"><p>tous les corbeaux selon leurs espèces;</p></div>
+    </div><div class="seif" id="v-11-16">
+      <span class="seif-num">11:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֙ בַּ֣ת הַֽיַּעֲנָ֔ה וְאֶת־הַתַּחְמָ֖ס וְאֶת־הַשָּׁ֑חַף וְאֶת־הַנֵּ֖ץ לְמִינֵֽהוּ׃</p></div><div class="heb-s"><p>ואת בת היענה ואת־התחמס ואת־השחף ואת־הנץ למינהו׃</p></div></div>
+      <div class="texte-fr"><p>l’autruche, l’hirondelle, la mouette, l’épervier selon ses espèces;</p></div>
+    </div><div class="seif" id="v-11-17">
+      <span class="seif-num">11:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַכּ֥וֹס וְאֶת־הַשָּׁלָ֖ךְ וְאֶת־הַיַּנְשֽׁוּף׃</p></div><div class="heb-s"><p>ואת־הכוס ואת־השלך ואת־הינשוף׃</p></div></div>
+      <div class="texte-fr"><p>le hibou, le cormoran, la hulotte;</p></div>
+    </div><div class="seif" id="v-11-18">
+      <span class="seif-num">11:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הַתִּנְשֶׁ֥מֶת וְאֶת־הַקָּאָ֖ת וְאֶת־הָרָחָֽם׃</p></div><div class="heb-s"><p>ואת־התנשמת ואת־הקאת ואת־הרחם׃</p></div></div>
+      <div class="texte-fr"><p>le porphyrion, le pélican, le percnoptère;</p></div>
+    </div><div class="seif" id="v-11-19">
+      <span class="seif-num">11:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֙ הַחֲסִידָ֔ה הָאֲנָפָ֖ה לְמִינָ֑הּ וְאֶת־הַדּוּכִיפַ֖ת וְאֶת־הָעֲטַלֵּֽף׃</p></div><div class="heb-s"><p>ואת החסידה האנפה למינה ואת־הדוכיפת ואת־העטלף׃</p></div></div>
+      <div class="texte-fr"><p>la cigogne, le héron selon ses espèces, le tétras et la chauve-souris.</p></div>
+    </div><div class="seif" id="v-11-20">
+      <span class="seif-num">11:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּ֚ל שֶׁ֣רֶץ הָע֔וֹף הַהֹלֵ֖ךְ עַל־אַרְבַּ֑ע שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>כל שרץ העוף ההלך על־ארבע שקץ הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>Tout insecte ailé qui marche sur quatre pieds vous sera une abomination.</p></div>
+    </div><div class="seif" id="v-11-21">
+      <span class="seif-num">11:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֤ךְ אֶת־זֶה֙ תֹּֽאכְל֔וּ מִכֹּל֙ שֶׁ֣רֶץ הָע֔וֹף הַהֹלֵ֖ךְ עַל־אַרְבַּ֑ע אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[ל֤וֹ]</span> <span class="mam-kq-k">(לא)</span></span> כְרָעַ֙יִם֙ מִמַּ֣עַל לְרַגְלָ֔יו לְנַתֵּ֥ר בָּהֵ֖ן עַל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>אך את־זה תאכלו מכל שרץ העוף ההלך על־ארבע אשר־<span class="mam-kq"><span class="mam-kq-q">[לו]</span> <span class="mam-kq-k">(לא)</span></span> כרעים ממעל לרגליו לנתר בהן על־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Toutefois, vous pourrez manger, parmi les insectes ailés marchant sur quatre pieds, celui qui a au-dessus de ses pieds des articulations au moyen desquelles il saute sur la terre.</p></div>
+    </div><div class="seif" id="v-11-22">
+      <span class="seif-num">11:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־אֵ֤לֶּה מֵהֶם֙ תֹּאכֵ֔לוּ אֶת־הָֽאַרְבֶּ֣ה לְמִינ֔וֹ וְאֶת־הַסׇּלְעָ֖ם לְמִינֵ֑הוּ וְאֶת־הַחַרְגֹּ֣ל לְמִינֵ֔הוּ וְאֶת־הֶחָגָ֖ב לְמִינֵֽהוּ׃</p></div><div class="heb-s"><p>את־אלה מהם תאכלו את־הארבה למינו ואת־הסלעם למינהו ואת־החרגל למינהו ואת־החגב למינהו׃</p></div></div>
+      <div class="texte-fr"><p>Vous pouvez donc manger les suivants: l’arbé selon ses espèces, le solam selon les siennes, le hargol selon ses espèces et le hagab selon les siennes.</p></div>
+    </div><div class="seif" id="v-11-23">
+      <span class="seif-num">11:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֙ שֶׁ֣רֶץ הָע֔וֹף אֲשֶׁר־ל֖וֹ אַרְבַּ֣ע רַגְלָ֑יִם שֶׁ֥קֶץ ה֖וּא לָכֶֽם׃</p></div><div class="heb-s"><p>וכל שרץ העוף אשר־לו ארבע רגלים שקץ הוא לכם׃</p></div></div>
+      <div class="texte-fr"><p>Mais tout autre insecte ailé qui a quatre pieds, sera pour vous chose abominable.</p></div>
+    </div><div class="seif" id="v-11-24">
+      <span class="seif-num">11:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּלְאֵ֖לֶּה תִּטַּמָּ֑אוּ כׇּל־הַנֹּגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>ולאלה תטמאו כל־הנגע בנבלתם יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Ceux qui suivent vous rendront impurs; quiconque touchera à leur cadavre sera souillé jusqu’au soir,</p></div>
+    </div><div class="seif" id="v-11-25">
+      <span class="seif-num">11:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַנֹּשֵׂ֖א מִנִּבְלָתָ֑ם יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל־הנשא מנבלתם יכבס בגדיו וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>et qui transportera quoi que ce soit de leur cadavre lavera ses vêtements, et restera souillé jusqu’au soir:</p></div>
+    </div><div class="seif" id="v-11-26">
+      <span class="seif-num">11:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְֽכׇל־הַבְּהֵמָ֡ה אֲשֶׁ֣ר הִוא֩ מַפְרֶ֨סֶת פַּרְסָ֜ה וְשֶׁ֣סַע&thinsp;<b>׀</b> אֵינֶ֣נָּה שֹׁסַ֗עַת וְגֵרָה֙ אֵינֶ֣נָּה מַעֲלָ֔ה טְמֵאִ֥ים הֵ֖ם לָכֶ֑ם כׇּל־הַנֹּגֵ֥עַ בָּהֶ֖ם יִטְמָֽא׃</p></div><div class="heb-s"><p>לכל־הבהמה אשר הוא מפרסת פרסה ושסע&thinsp;<b>׀</b> איננה שסעת וגרה איננה מעלה טמאים הם לכם כל־הנגע בהם יטמא׃</p></div></div>
+      <div class="texte-fr"><p>tout quadrupède qui a l’ongle divisé mais non fourché, ou qui ne rumine point, ceux-là sont impurs pour vous: quiconque y touchera sera souillé.</p></div>
+    </div><div class="seif" id="v-11-27">
+      <span class="seif-num">11:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֣ל&thinsp;<b>׀</b> הוֹלֵ֣ךְ עַל־כַּפָּ֗יו בְּכׇל־הַֽחַיָּה֙ הַהֹלֶ֣כֶת עַל־אַרְבַּ֔ע טְמֵאִ֥ים הֵ֖ם לָכֶ֑ם כׇּל־הַנֹּגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכל&thinsp;<b>׀</b> הולך על־כפיו בכל־החיה ההלכת על־ארבע טמאים הם לכם כל־הנגע בנבלתם יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Tous ceux d’entre les animaux quadrupèdes qui marchent à l’aide de pattes, sont impurs pour vous: quiconque touche à leur cadavre sera souillé jusqu’au soir,</p></div>
+    </div><div class="seif" id="v-11-28">
+      <span class="seif-num">11:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַנֹּשֵׂא֙ אֶת־נִבְלָתָ֔ם יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֣א עַד־הָעָ֑רֶב טְמֵאִ֥ים הֵ֖מָּה לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>והנשא את־נבלתם יכבס בגדיו וטמא עד־הערב טמאים המה לכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et qui transportera leur cadavre doit laver ses vêtements et rester souillé jusqu’au soir. Ils sont impurs pour vous.</p></div>
+    </div><div class="seif" id="v-11-29">
+      <span class="seif-num">11:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְזֶ֤ה לָכֶם֙ הַטָּמֵ֔א בַּשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ הַחֹ֥לֶד וְהָעַכְבָּ֖ר וְהַצָּ֥ב לְמִינֵֽהוּ׃</p></div><div class="heb-s"><p>וזה לכם הטמא בשרץ השרץ על־הארץ החלד והעכבר והצב למינהו׃</p></div></div>
+      <div class="texte-fr"><p>Voici ceux que vous tiendrez pour impurs, parmi les reptiles qui se traînent sur la terre: la taupe, le rat, le lézard selon ses espèces;</p></div>
+    </div><div class="seif" id="v-11-30">
+      <span class="seif-num">11:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָאֲנָקָ֥ה וְהַכֹּ֖חַ וְהַלְּטָאָ֑ה וְהַחֹ֖מֶט וְהַתִּנְשָֽׁמֶת׃</p></div><div class="heb-s"><p>והאנקה והכח והלטאה והחמט והתנשמת׃</p></div></div>
+      <div class="texte-fr"><p>le hérisson, le crocodile, la salamandre, la limace et le caméléon.</p></div>
+    </div><div class="seif" id="v-11-31">
+      <span class="seif-num">11:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֛לֶּה הַטְּמֵאִ֥ים לָכֶ֖ם בְּכׇל־הַשָּׁ֑רֶץ כׇּל־הַנֹּגֵ֧עַ בָּהֶ֛ם בְּמֹתָ֖ם יִטְמָ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>אלה הטמאים לכם בכל־השרץ כל־הנגע בהם במתם יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Ceux-là sont impurs pour vous entre tous les reptiles: quiconque les touchera après leur mort sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-11-32">
+      <span class="seif-num">11:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֣ל אֲשֶׁר־יִפֹּל־עָלָיו֩ מֵהֶ֨ם&thinsp;<small>׀</small>&thinsp;בְּמֹתָ֜ם יִטְמָ֗א מִכׇּל־כְּלִי־עֵץ֙ א֣וֹ בֶ֤גֶד אוֹ־עוֹר֙ א֣וֹ שָׂ֔ק כׇּל־כְּלִ֕י אֲשֶׁר־יֵעָשֶׂ֥ה מְלָאכָ֖ה בָּהֶ֑ם בַּמַּ֧יִם יוּבָ֛א וְטָמֵ֥א עַד־הָעֶ֖רֶב וְטָהֵֽר׃</p></div><div class="heb-s"><p>וכל אשר־יפל־עליו מהם&thinsp;<small>׀</small>&thinsp;במתם יטמא מכל־כלי־עץ או בגד או־עור או שק כל־כלי אשר־יעשה מלאכה בהם במים יובא וטמא עד־הערב וטהר׃</p></div></div>
+      <div class="texte-fr"><p>Tout objet sur lequel il en tomberait quelque chose après leur mort, deviendrait impur: soit ustensile de bois, soit vêtement, peau ou sac, tout objet destiné à un usage quelconque. Il doit être passé dans l’eau, restera souillé jusqu’au soir, et alors deviendra pur.</p></div>
+    </div><div class="seif" id="v-11-33">
+      <span class="seif-num">11:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇ֨ל־כְּלִי־חֶ֔רֶשׂ אֲשֶׁר־יִפֹּ֥ל מֵהֶ֖ם אֶל־תּוֹכ֑וֹ כֹּ֣ל אֲשֶׁ֧ר בְּתוֹכ֛וֹ יִטְמָ֖א וְאֹת֥וֹ תִשְׁבֹּֽרוּ׃</p></div><div class="heb-s"><p>וכל־כלי־חרש אשר־יפל מהם אל־תוכו כל אשר בתוכו יטמא ואתו תשברו׃</p></div></div>
+      <div class="texte-fr"><p>Que s’il en tombe quelque chose dans l’intérieur d’un vase d’argile, tout son contenu sera souillé, et le vaisseau, vous le briserez.</p></div>
+    </div><div class="seif" id="v-11-34">
+      <span class="seif-num">11:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִכׇּל־הָאֹ֜כֶל אֲשֶׁ֣ר יֵאָכֵ֗ל אֲשֶׁ֨ר יָב֥וֹא עָלָ֛יו מַ֖יִם יִטְמָ֑א וְכׇל־מַשְׁקֶה֙ אֲשֶׁ֣ר יִשָּׁתֶ֔ה בְּכׇל־כְּלִ֖י יִטְמָֽא׃</p></div><div class="heb-s"><p>מכל־האכל אשר יאכל אשר יבוא עליו מים יטמא וכל־משקה אשר ישתה בכל־כלי יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Tout aliment dont on se nourrit, une fois que l’eau l’aura touché, sera susceptible de souillure; toute liqueur potable sera susceptible de souillure dans un vase quelconque.</p></div>
+    </div><div class="seif" id="v-11-35">
+      <span class="seif-num">11:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠כֹ֠ל אֲשֶׁר־יִפֹּ֨ל מִנִּבְלָתָ֥ם&thinsp;<small>׀</small>&thinsp;עָלָיו֮ יִטְמָא֒ תַּנּ֧וּר וְכִירַ֛יִם יֻתָּ֖ץ טְמֵאִ֣ים הֵ֑ם וּטְמֵאִ֖ים יִהְי֥וּ לָכֶֽם׃</p></div><div class="heb-s"><p>וכל אשר־יפל מנבלתם&thinsp;<small>׀</small>&thinsp;עליו יטמא תנור וכירים יתץ טמאים הם וטמאים יהיו לכם׃</p></div></div>
+      <div class="texte-fr"><p>Tout objet sur lequel il sera tombé quelque chose de leur cadavre, sera souillé; fût-ce un four ou un fourneau, il sera mis en pièces. Ils sont impurs, impurs ils resteront pour vous.</p></div>
+    </div><div class="seif" id="v-11-36">
+      <span class="seif-num">11:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֣ךְ מַעְיָ֥ן וּב֛וֹר מִקְוֵה־מַ֖יִם יִהְיֶ֣ה טָה֑וֹר וְנֹגֵ֥עַ בְּנִבְלָתָ֖ם יִטְמָֽא׃</p></div><div class="heb-s"><p>אך מעין ובור מקוה־מים יהיה טהור ונגע בנבלתם יטמא׃</p></div></div>
+      <div class="texte-fr"><p>Toutefois, une source ou une citerne contenant une masse d’eau restera pure; mais ce qui touchera au cadavre sera souillé.</p></div>
+    </div><div class="seif" id="v-11-37">
+      <span class="seif-num">11:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֤י יִפֹּל֙ מִנִּבְלָתָ֔ם עַל־כׇּל־זֶ֥רַע זֵר֖וּעַ אֲשֶׁ֣ר יִזָּרֵ֑עַ טָה֖וֹר הֽוּא׃</p></div><div class="heb-s"><p>וכי יפל מנבלתם על־כל־זרע זרוע אשר יזרע טהור הוא׃</p></div></div>
+      <div class="texte-fr"><p>S’il tombe de leur cadavre sur une semence végétale quelconque que l’on sème, elle restera pure.</p></div>
+    </div><div class="seif" id="v-11-38">
+      <span class="seif-num">11:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֤י יֻתַּן־מַ֙יִם֙ עַל־זֶ֔רַע וְנָפַ֥ל מִנִּבְלָתָ֖ם עָלָ֑יו טָמֵ֥א ה֖וּא לָכֶֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וכי יתן־מים על־זרע ונפל מנבלתם עליו טמא הוא לכם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Mais si de l’eau a été jetée sur un végétal, et qu’il y tombe quelque chose de leur cadavre, il sera souillé pour vous.</p></div>
+    </div><div class="seif" id="v-11-39">
+      <span class="seif-num">11:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִ֤י יָמוּת֙ מִן־הַבְּהֵמָ֔ה אֲשֶׁר־הִ֥יא לָכֶ֖ם לְאׇכְלָ֑ה הַנֹּגֵ֥עַ בְּנִבְלָתָ֖הּ יִטְמָ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכי ימות מן־הבהמה אשר־היא לכם לאכלה הנגע בנבלתה יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Si l’un des animaux que vous pouvez manger vient à mourir, celui qui touchera à son cadavre sera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-11-40">
+      <span class="seif-num">11:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָֽאֹכֵל֙ מִנִּבְלָתָ֔הּ יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֣א עַד־הָעָ֑רֶב וְהַנֹּשֵׂא֙ אֶת־נִבְלָתָ֔הּ יְכַבֵּ֥ס בְּגָדָ֖יו וְטָמֵ֥א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והאכל מנבלתה יכבס בגדיו וטמא עד־הערב והנשא את־נבלתה יכבס בגדיו וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui mangera de cette chair morte lavera ses vêtements, et restera souillé jusqu’au soir; celui qui la transportera lavera ses vêtements, et restera souillé jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-11-41">
+      <span class="seif-num">11:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ שֶׁ֥קֶץ ה֖וּא לֹ֥א יֵאָכֵֽל׃</p></div><div class="heb-s"><p>וכל־השרץ השרץ על־הארץ שקץ הוא לא יאכל׃</p></div></div>
+      <div class="texte-fr"><p>Tout reptile, qui se traîne sur le sol, est chose abominable on n’en doit pas manger.</p></div>
+    </div><div class="seif" id="v-11-42">
+      <span class="seif-num">11:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּל֩ הוֹלֵ֨ךְ עַל־גָּח֜<big>וֹ</big>ן וְכֹ֣ל&thinsp;<b>׀</b> הוֹלֵ֣ךְ עַל־אַרְבַּ֗ע עַ֚ד כׇּל־מַרְבֵּ֣ה רַגְלַ֔יִם לְכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֣ץ עַל־הָאָ֑רֶץ לֹ֥א תֹאכְל֖וּם כִּי־שֶׁ֥קֶץ הֵֽם׃</p></div><div class="heb-s"><p>כל הולך על־גח<big>ו</big>ן וכל&thinsp;<b>׀</b> הולך על־ארבע עד כל־מרבה רגלים לכל־השרץ השרץ על־הארץ לא תאכלום כי־שקץ הם׃</p></div></div>
+      <div class="texte-fr"><p>Tout ce qui se traîne sur le ventre, ou se meut soit sur quatre pieds, soit sur un plus grand nombre de pieds, parmi les reptiles quelconques rampant sur le sol, vous n’en mangerez point, car ce sont choses abominables.</p></div>
+    </div><div class="seif" id="v-11-43">
+      <span class="seif-num">11:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַל־תְּשַׁקְּצוּ֙ אֶת־נַפְשֹׁ֣תֵיכֶ֔ם בְּכׇל־הַשֶּׁ֖רֶץ הַשֹּׁרֵ֑ץ וְלֹ֤א תִֽטַּמְּאוּ֙ בָּהֶ֔ם וְנִטְמֵתֶ֖ם בָּֽם׃</p></div><div class="heb-s"><p>אל־תשקצו את־נפשתיכם בכל־השרץ השרץ ולא תטמאו בהם ונטמתם בם׃</p></div></div>
+      <div class="texte-fr"><p>Ne vous rendez point vous-mêmes abominables par toutes ces créatures rampantes; ne vous souillez point par elles, vous en contracteriez la souillure.</p></div>
+    </div><div class="seif" id="v-11-44">
+      <span class="seif-num">11:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י אֲנִ֣י יְהֹוָה֮ אֱלֹֽהֵיכֶם֒ וְהִתְקַדִּשְׁתֶּם֙ וִהְיִיתֶ֣ם קְדֹשִׁ֔ים כִּ֥י קָד֖וֹשׁ אָ֑נִי וְלֹ֤א תְטַמְּאוּ֙ אֶת־נַפְשֹׁ֣תֵיכֶ֔ם בְּכׇל־הַשֶּׁ֖רֶץ הָרֹמֵ֥שׂ עַל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>כי אני יהוה אלהיכם והתקדשתם והייתם קדשים כי קדוש אני ולא תטמאו את־נפשתיכם בכל־השרץ הרמש על־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Car je suis l’Éternel, votre Dieu; vous devez donc vous sanctifier et rester saints, parce que je suis saint, et ne point contaminer vos personnes par tous ces reptiles qui se meuvent sur la terre.</p></div>
+    </div><div class="seif" id="v-11-45">
+      <span class="seif-num">11:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י&thinsp;<b>׀</b> אֲנִ֣י יְהֹוָ֗ה הַֽמַּעֲלֶ֤ה אֶתְכֶם֙ מֵאֶ֣רֶץ מִצְרַ֔יִם לִהְיֹ֥ת לָכֶ֖ם לֵאלֹהִ֑ים וִהְיִיתֶ֣ם קְדֹשִׁ֔ים כִּ֥י קָד֖וֹשׁ אָֽנִי׃</p></div><div class="heb-s"><p>כי&thinsp;<b>׀</b> אני יהוה המעלה אתכם מארץ מצרים להית לכם לאלהים והייתם קדשים כי קדוש אני׃</p></div></div>
+      <div class="texte-fr"><p>Car je suis l’Éternel, qui vous ai tirés du pays d’Égypte pour être votre Dieu; et vous serez saints, parce que je suis saint.</p></div>
+    </div><div class="seif" id="v-11-46">
+      <span class="seif-num">11:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֣את תּוֹרַ֤ת הַבְּהֵמָה֙ וְהָע֔וֹף וְכֹל֙ נֶ֣פֶשׁ הַֽחַיָּ֔ה הָרֹמֶ֖שֶׂת בַּמָּ֑יִם וּלְכׇל־נֶ֖פֶשׁ הַשֹּׁרֶ֥צֶת עַל־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>זאת תורת הבהמה והעוף וכל נפש החיה הרמשת במים ולכל־נפש השרצת על־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Telle est la doctrine relative aux quadrupèdes, aux volatiles, à tous les êtres animés qui se meuvent dans les eaux, et à tous ceux qui rampent sur la terre;</p></div>
+    </div><div class="seif" id="v-11-47">
+      <span class="seif-num">11:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>לְהַבְדִּ֕יל בֵּ֥ין הַטָּמֵ֖א וּבֵ֣ין הַטָּהֹ֑ר וּבֵ֤ין הַֽחַיָּה֙ הַֽנֶּאֱכֶ֔לֶת וּבֵין֙ הַֽחַיָּ֔ה אֲשֶׁ֖ר לֹ֥א תֵאָכֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>להבדיל בין הטמא ובין הטהר ובין החיה הנאכלת ובין החיה אשר לא תאכל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>afin qu’on distingue l’impur d’avec le pur, et l’animal qui peut être mangé de celui qu’on ne doit pas manger."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Quand on fut au huitième jour, Moïse manda Aaron et ses fils, ainsi que les anciens d’Israël, et il dit à Aaron: &quot;Prends un veau adulte pour expiatoire et un bélier pour holocauste, tous deux sans défaut, et amène-les devant l’Éternel. Quant aux enfants d’Israël, tu leur parleras ainsi: Prenez un bouc pour expiatoire, un veau et un agneau âgés d’un an, sans défaut, pour holocauste; plus, un taureau et un bélier pour rémunératoire, à sacrifier en présence de l’Éternel, et une oblation pétrie à l’huile, car aujourd’hui l’Éternel doit vous apparaître.&quot; On prit tout ce qu’avait ordonné Moïse, pour l’amener devant la Tente d’assignation; toute la communauté s’approcha, et se tint debout devant l’Éternel. Moïse dit: &quot;Ceci est la chose qu’a ordonnée l’Éternel; accomplissez-la, pour que vous apparaisse la gloire du Seigneur.&quot; Et Moïse dit à Aaron: &quot;Approche de l’autel, offre ton expiatoire et ton holocauste, obtiens propitiation pour toi et pour le peuple; puis, offre le sacrifice du peuple et obtiens-lui propitiation, comme l’a prescrit l’Éternel.&quot; Et Aaron s’approcha de l’autel, et il immola le veau expiatoire destiné à lui-même. Les fils d’Aaron lui présentèrent le sang, et il trempa son doigt dans ce sang, qu’il appliqua sur les cornes de l’autel; et le reste du sang, il le fit couler dans le réceptacle de l’autel. Puis, la graisse, les rognons et la membrane du foie de l’expiatoire, il les fit fumer sur l’autel, ainsi que l’Éternel l’avait ordonné à Moïse. Pour la chair et la peau, il les consuma par le feu en dehors du camp. Il immola l’holocauste; les fils d’Aaron lui passèrent le sang, et il en arrosa le tour de l’autel. Ils lui passèrent l’holocauste pièce à pièce, puis la tête, et il fit fumer le tout sur l’autel. Il lava les intestins et les jambes, et les fit fumer avec l’holocauste sur l’autel. Puis il présenta l’offrande du peuple. Il prit le bouc expiatoire destiné au peuple, l’égorgea et le fit servir à l’expiation comme la première victime. Il offrit l’holocauste, qu’il exécuta selon la règle. Il y joignit l’oblation et en prit plein sa main, portion qu’il fit fumer sur l’autel, indépendamment de l’holocauste du matin. Il immola le taureau et le bélier, comme sacrifice rémunératoire du peuple; les fils d’Aaron lui passèrent le sang, dont il arrosa le tour de l’autel; puis les graisses du taureau; puis, du bélier, la queue, les téguments, les rognons et la membrane du foie; ils posèrent ces graisses sur les poitrines, et il fit fumer les graisses sur l’autel. Quant aux poitrines et à la cuisse droite, Aaron en avait opéré le balancement devant l’Éternel, selon l’ordre de Moïse. Aaron étendit ses mains vers le peuple et le bénit; et il redescendit, après avoir offert l’expiatoire, l’holocauste et le rémunératoire. Moïse et Aaron entrèrent dans la Tente d’assignation; ils ressortirent et bénirent le peuple, et la gloire du Seigneur se manifesta au peuple entier. Un feu s’élança de devant le Seigneur, et consuma, sur l’autel, l’holocauste et les graisses. A cette vue, tout le peuple jeta des cris de joie, et ils tombèrent sur leurs faces.</p>
-      <p>Les fils d’Aaron, Nadab et Abihou, prenant chacun leur encensoir, y mirent du feu, sur lequel ils jetèrent de l’encens, et apportèrent devant le Seigneur un feu profane sans qu’il le leur eût commandé. Et un feu s’élança de devant le Seigneur et les dévora, et ils moururent devant le Seigneur. Moïse dit à Aaron: &quot;C’est là ce qu’avait déclaré l’Éternel en disant: Je veux être sanctifié par ceux qui m’approchent et glorifié à la face de tout le peuple!&quot; Et Aaron garda le silence. Moïse appela Michaël et Elçafan, fils d’Ouzziel, oncle d’Aaron, et leur dit: &quot;Approchez! Emportez vos frères de devant le sanctuaire, hors du camp.&quot; Ils s’avancèrent et les transportèrent dans leurs tuniques hors du camp, selon ce qu’avait dit Moïse. Moïse dit à Aaron, et à Eléazar et Ithamar ses fils: &quot;Ne découvrez point vos têtes et ne déchirez point vos vêtements, si vous ne voulez mourir et attirer la colère divine sur la communauté entière; à vos frères, à toute la maison d’Israël, de pleurer ceux qu’a brûlés le Seigneur. Et ne quittez point le seuil de la Tente d’assignation, de peur que vous ne mouriez; car l’huile d’onction du Seigneur est sur vous.&quot; Ils se conformèrent à la parole de Moïse. L’Éternel parla ainsi à Aaron: &quot;Tu ne boiras ni vin ni liqueur forte, toi non plus que tes fils, quand vous aurez à entrer dans la Tente d’assignation, afin que vous ne mouriez pas: règle perpétuelle pour vos générations; et afin de pouvoir distinguer entre le sacré et le profane, entre l’impur et ce qui est pur, et instruire les enfants d’Israël dans toutes les lois que l’Éternel leur a fait transmettre par Moïse.&quot; Moïse dit à Aaron ainsi qu’à Eléazar et à Ithamar, ses fils survivants:&quot;Prenez la part d’oblation qui reste des combustions du Seigneur, et mangez-la en pains azymes à côté de l’autel, car elle est éminemment sainte. Vous la mangerez donc en lieu saint, c’est ton droit et celui de tes fils sur les combustions du Seigneur; car ainsi en ai-je reçu l’ordre. Quant à la poitrine qui a été balancée et à la cuisse qui a été prélevée, vous les mangerez en lieu pur, toi ainsi que tes fils et tes filles; car elles ont été assignées comme revenu à toi et à tes enfants, sur les sacrifices rémunératoires des enfants d’Israël. Cette cuisse à prélever et cette poitrine à balancer, ils doivent les joindre aux graisses destinées au feu, pour qu’on en opère le balancement devant le Seigneur; alors elles t’appartiendront, et de même à tes enfants, comme portion invariable, ainsi que l’a statué l’Éternel.&quot; Au sujet du bouc expiatoire, Moïse fit des recherches, et il se trouva qu’on l’avait brûlé. Irrité contre Eléazar et Ithamar, les fils d’Aaron demeurés vivants, il dit: &quot;Pourquoi n’avez-vous pas mangé l’expiatoire dans le saint lieu, alors que c’est une sainteté de premier ordre, et qu’on vous l’a donné pour assumer les fautes de la communauté, pour lui obtenir propitiation devant l’Éternel? Puisque le sang de cette victime n’a pas été introduit dans le sanctuaire intérieur, vous deviez la manger dans le sanctuaire, ainsi que je l’ai prescrit!&quot; Aaron répondit à Moïse: &quot;Certes, aujourd’hui même ils ont offert leur expiatoire et leur holocauste devant le Seigneur, et pareille chose m’est advenue; or, si j’eusse mangé un expiatoire aujourd’hui, est-ce là ce qui plairait à l’Éternel?&quot; Moïse entendit, et il approuva.</p>
-      <p>L’Éternel parla à Moïse et à Aaron, en leur disant: &quot;Parlez ainsi aux enfants d’Israël: voici les animaux que vous pouvez manger, entre tous les quadrupèdes qui vivent sur la terre: tout ce qui a le pied corné et divisé en deux ongles, parmi les animaux ruminants, vous pouvez le manger. Quant aux suivants, qui ruminent ou qui ont le pied corné, vous n’en mangerez point: le chameau, parce qu’il rumine mais n’a point le pied corné: il sera immonde pour vous; la gerboise, parce qu’elle rumine, mais n’a point le pied corné: elle sera immonde pour vous; le lièvre, parce qu’il rumine, mais n’a point le pied corné: il sera immonde pour vous; le porc, qui a bien le pied corné, qui a même le sabot bifurqué, mais qui ne rumine point: il sera immonde pour vous. Vous ne mangerez point de leur chair, et vous ne toucherez point à leur cadavre: ils sont immondes pour vous. Voici ce que vous pouvez manger des divers animaux aquatiques: tout ce qui, dans les eaux, mers ou rivières, est pourvu de nageoires et d’écailles, vous pouvez en manger. Mais tout ce qui n’est pas pourvu de nageoires et d’écailles, dans les mers ou les rivières, soit ce qui pullule dans l’eau, soit les animaux qui l’habitent, ils vous sont abominables, abominables ils resteront pour vous: ne mangez point de leur chair, et ayez leurs cadavres en abomination. Tout ce qui, dans les eaux, est privé de nageoires et d’écailles, vous sera une abomination. Et voici, parmi les oiseaux, ceux que vous repousserez; on ne les mangera point, ils sont abominables: l’aigle, l’orfraie, la vallérie; le faucon et le vautour selon ses espèces; tous les corbeaux selon leurs espèces; l’autruche, l’hirondelle, la mouette, l’épervier selon ses espèces; le hibou, le cormoran, la hulotte; le porphyrion, le pélican, le percnoptère; la cigogne, le héron selon ses espèces, le tétras et la chauve-souris. Tout insecte ailé qui marche sur quatre pieds vous sera une abomination. Toutefois, vous pourrez manger, parmi les insectes ailés marchant sur quatre pieds, celui qui a au-dessus de ses pieds des articulations au moyen desquelles il saute sur la terre. Vous pouvez donc manger les suivants: l’arbé selon ses espèces, le solam selon les siennes, le hargol selon ses espèces et le hagab selon les siennes. Mais tout autre insecte ailé qui a quatre pieds, sera pour vous chose abominable. Ceux qui suivent vous rendront impurs; quiconque touchera à leur cadavre sera souillé jusqu’au soir, et qui transportera quoi que ce soit de leur cadavre lavera ses vêtements, et restera souillé jusqu’au soir: tout quadrupède qui a l’ongle divisé mais non fourché, ou qui ne rumine point, ceux-là sont impurs pour vous: quiconque y touchera sera souillé. Tous ceux d’entre les animaux quadrupèdes qui marchent à l’aide de pattes, sont impurs pour vous: quiconque touche à leur cadavre sera souillé jusqu’au soir, et qui transportera leur cadavre doit laver ses vêtements et rester souillé jusqu’au soir. Ils sont impurs pour vous. Voici ceux que vous tiendrez pour impurs, parmi les reptiles qui se traînent sur la terre: la taupe, le rat, le lézard selon ses espèces; le hérisson, le crocodile, la salamandre, la limace et le caméléon. Ceux-là sont impurs pour vous entre tous les reptiles: quiconque les touchera après leur mort sera souillé jusqu’au soir. Tout objet sur lequel il en tomberait quelque chose après leur mort, deviendrait impur: soit ustensile de bois, soit vêtement, peau ou sac, tout objet destiné à un usage quelconque. Il doit être passé dans l’eau, restera souillé jusqu’au soir, et alors deviendra pur. Que s’il en tombe quelque chose dans l’intérieur d’un vase d’argile, tout son contenu sera souillé, et le vaisseau, vous le briserez. Tout aliment dont on se nourrit, une fois que l’eau l’aura touché, sera susceptible de souillure; toute liqueur potable sera susceptible de souillure dans un vase quelconque. Tout objet sur lequel il sera tombé quelque chose de leur cadavre, sera souillé; fût-ce un four ou un fourneau, il sera mis en pièces. Ils sont impurs, impurs ils resteront pour vous. Toutefois, une source ou une citerne contenant une masse d’eau restera pure; mais ce qui touchera au cadavre sera souillé. S’il tombe de leur cadavre sur une semence végétale quelconque que l’on sème, elle restera pure. Mais si de l’eau a été jetée sur un végétal, et qu’il y tombe quelque chose de leur cadavre, il sera souillé pour vous. Si l’un des animaux que vous pouvez manger vient à mourir, celui qui touchera à son cadavre sera souillé jusqu’au soir. Celui qui mangera de cette chair morte lavera ses vêtements, et restera souillé jusqu’au soir; celui qui la transportera lavera ses vêtements, et restera souillé jusqu’au soir. Tout reptile, qui se traîne sur le sol, est chose abominable on n’en doit pas manger. Tout ce qui se traîne sur le ventre, ou se meut soit sur quatre pieds, soit sur un plus grand nombre de pieds, parmi les reptiles quelconques rampant sur le sol, vous n’en mangerez point, car ce sont choses abominables. Ne vous rendez point vous-mêmes abominables par toutes ces créatures rampantes; ne vous souillez point par elles, vous en contracteriez la souillure. Car je suis l’Éternel, votre Dieu; vous devez donc vous sanctifier et rester saints, parce que je suis saint, et ne point contaminer vos personnes par tous ces reptiles qui se meuvent sur la terre. Car je suis l’Éternel, qui vous ai tirés du pays d’Égypte pour être votre Dieu; et vous serez saints, parce que je suis saint. Telle est la doctrine relative aux quadrupèdes, aux volatiles, à tous les êtres animés qui se meuvent dans les eaux, et à tous ceux qui rampent sur la terre; afin qu’on distingue l’impur d’avec le pur, et l’animal qui peut être mangé de celui qu’on ne doit pas manger.&quot;</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -356,6 +750,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Rachi (10:9) enseigne que « ni vin ni boisson forte » vise une quantité qui enivre, et que le prêtre ivre ne peut pas servir. Le Choulhan Aroukh (Orah Haïm 99:1) en tire une loi pour tous : celui qui a bu une <i>revi'it</i> de vin ne doit pas prier tant que le vin n'est pas passé. S'il a bu davantage et peut parler devant un roi, sa prière est valable ; sinon, sa prière est « abomination » et il doit la refaire une fois dégrisé. Le Rema ajoute que la même règle vaut pour le Chéma, mais que l'on peut dire les autres bénédictions même ivre. La bénédiction des prêtres obéit à une règle proche : celui qui a bu une <i>revi'it</i> de vin d'un trait ne lève pas les mains (Orah Haïm 128:38).</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_tsav.html">← Tsav</a><a class="hbtn qcm" href="qcm_paracha_shemini.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_tazria.html">Tazria →</a></div>
 </main>
 
 <footer>

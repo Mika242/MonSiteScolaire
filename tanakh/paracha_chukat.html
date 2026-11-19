@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bamidbar · Paracha</div>
     <h1>Houkat – La vache rousse, le rocher et la mort d&#x27;Aaron</h1>
     <p>Torah, Bamidbar (Numbers 19:1-22:1)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_korach.html">← Kora&#x27;h</a><a class="hbtn qcm" href="qcm_paracha_chukat.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_balak.html">Balak →</a></div>
   </div>
 </header>
 
@@ -161,31 +202,366 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃', 'זֹ֚את חֻקַּ֣ת הַתּוֹרָ֔ה אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה לֵאמֹ֑ר דַּבֵּ֣ר&thinsp;<b>׀</b> אֶל־בְּנֵ֣י יִשְׂרָאֵ֗ל וְיִקְח֣וּ אֵלֶ֩יךָ֩ פָרָ֨ה אֲדֻמָּ֜ה תְּמִימָ֗ה אֲשֶׁ֤ר אֵֽין־בָּהּ֙ מ֔וּם אֲשֶׁ֛ר לֹא־עָלָ֥ה עָלֶ֖יהָ עֹֽל׃', 'וּנְתַתֶּ֣ם אֹתָ֔הּ אֶל־אֶלְעָזָ֖ר הַכֹּהֵ֑ן וְהוֹצִ֤יא אֹתָהּ֙ אֶל־מִח֣וּץ לַֽמַּחֲנֶ֔ה וְשָׁחַ֥ט אֹתָ֖הּ לְפָנָֽיו׃', 'וְלָקַ֞ח אֶלְעָזָ֧ר הַכֹּהֵ֛ן מִדָּמָ֖הּ בְּאֶצְבָּע֑וֹ וְהִזָּ֞ה אֶל־נֹ֨כַח פְּנֵ֧י אֹֽהֶל־מוֹעֵ֛ד מִדָּמָ֖הּ שֶׁ֥בַע פְּעָמִֽים׃', 'וְשָׂרַ֥ף אֶת־הַפָּרָ֖ה לְעֵינָ֑יו אֶת־עֹרָ֤הּ וְאֶת־בְּשָׂרָהּ֙ וְאֶת־דָּמָ֔הּ עַל־פִּרְשָׁ֖הּ יִשְׂרֹֽף׃', 'וְלָקַ֣ח הַכֹּהֵ֗ן עֵ֥ץ אֶ֛רֶז וְאֵז֖וֹב וּשְׁנִ֣י תוֹלָ֑עַת וְהִשְׁלִ֕יךְ אֶל־תּ֖וֹךְ שְׂרֵפַ֥ת הַפָּרָֽה׃', 'וְכִבֶּ֨ס בְּגָדָ֜יו הַכֹּהֵ֗ן וְרָחַ֤ץ בְּשָׂרוֹ֙ בַּמַּ֔יִם וְאַחַ֖ר יָבֹ֣א אֶל־הַֽמַּחֲנֶ֑ה וְטָמֵ֥א הַכֹּהֵ֖ן עַד־הָעָֽרֶב׃', 'וְהַשֹּׂרֵ֣ף אֹתָ֔הּ יְכַבֵּ֤ס בְּגָדָיו֙ בַּמַּ֔יִם וְרָחַ֥ץ בְּשָׂר֖וֹ בַּמָּ֑יִם וְטָמֵ֖א עַד־הָעָֽרֶב׃', 'וְאָסַ֣ף&thinsp;<b>׀</b> אִ֣ישׁ טָה֗וֹר אֵ֚ת אֵ֣פֶר הַפָּרָ֔ה וְהִנִּ֛יחַ מִח֥וּץ לַֽמַּחֲנֶ֖ה בְּמָק֣וֹם טָה֑וֹר וְ֠הָיְתָ֠ה לַעֲדַ֨ת בְּנֵֽי־יִשְׂרָאֵ֧ל לְמִשְׁמֶ֛רֶת לְמֵ֥י נִדָּ֖ה חַטָּ֥את הִֽוא׃', 'וְ֠כִבֶּ֠ס הָאֹסֵ֨ף אֶת־אֵ֤פֶר הַפָּרָה֙ אֶת־בְּגָדָ֔יו וְטָמֵ֖א עַד־הָעָ֑רֶב וְֽהָיְתָ֞ה לִבְנֵ֣י יִשְׂרָאֵ֗ל וְלַגֵּ֛ר הַגָּ֥ר בְּתוֹכָ֖ם לְחֻקַּ֥ת עוֹלָֽם׃', 'הַנֹּגֵ֥עַ בְּמֵ֖ת לְכׇל־נֶ֣פֶשׁ אָדָ֑ם וְטָמֵ֖א שִׁבְעַ֥ת יָמִֽים׃', 'ה֣וּא יִתְחַטָּא־ב֞וֹ בַּיּ֧וֹם הַשְּׁלִישִׁ֛י וּבַיּ֥וֹם הַשְּׁבִיעִ֖י יִטְהָ֑ר וְאִם־לֹ֨א יִתְחַטָּ֜א בַּיּ֧וֹם הַשְּׁלִישִׁ֛י וּבַיּ֥וֹם הַשְּׁבִיעִ֖י לֹ֥א יִטְהָֽר׃', 'כׇּֽל־הַנֹּגֵ֡עַ בְּמֵ֣ת בְּנֶ֩פֶשׁ֩ הָאָדָ֨ם אֲשֶׁר־יָמ֜וּת וְלֹ֣א יִתְחַטָּ֗א אֶת־מִשְׁכַּ֤ן יְהֹוָה֙ טִמֵּ֔א וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִיִּשְׂרָאֵ֑ל כִּי֩ מֵ֨י נִדָּ֜ה לֹא־זֹרַ֤ק עָלָיו֙ טָמֵ֣א יִהְיֶ֔ה ע֖וֹד טֻמְאָת֥וֹ בֽוֹ׃', 'זֹ֚את הַתּוֹרָ֔ה אָדָ֖ם כִּֽי־יָמ֣וּת בְּאֹ֑הֶל כׇּל־הַבָּ֤א אֶל־הָאֹ֙הֶל֙ וְכׇל־אֲשֶׁ֣ר בָּאֹ֔הֶל יִטְמָ֖א שִׁבְעַ֥ת יָמִֽים׃', 'וְכֹל֙ כְּלִ֣י פָת֔וּחַ אֲשֶׁ֛ר אֵין־צָמִ֥יד פָּתִ֖יל עָלָ֑יו טָמֵ֖א הֽוּא׃', 'וְכֹ֨ל אֲשֶׁר־יִגַּ֜ע עַל־פְּנֵ֣י הַשָּׂדֶ֗ה בַּֽחֲלַל־חֶ֙רֶב֙ א֣וֹ בְמֵ֔ת אֽוֹ־בְעֶ֥צֶם אָדָ֖ם א֣וֹ בְקָ֑בֶר יִטְמָ֖א שִׁבְעַ֥ת יָמִֽים׃', 'וְלָֽקְחוּ֙ לַטָּמֵ֔א מֵעֲפַ֖ר שְׂרֵפַ֣ת הַֽחַטָּ֑את וְנָתַ֥ן עָלָ֛יו מַ֥יִם חַיִּ֖ים אֶל־כֶּֽלִי׃', 'וְלָקַ֨ח אֵז֜וֹב וְטָבַ֣ל בַּמַּ֘יִם֮ אִ֣ישׁ טָהוֹר֒ וְהִזָּ֤ה עַל־הָאֹ֙הֶל֙ וְעַל־כׇּל־הַכֵּלִ֔ים וְעַל־הַנְּפָשׁ֖וֹת אֲשֶׁ֣ר הָֽיוּ־שָׁ֑ם וְעַל־הַנֹּגֵ֗עַ בַּעֶ֙צֶם֙ א֣וֹ בֶֽחָלָ֔ל א֥וֹ בַמֵּ֖ת א֥וֹ בַקָּֽבֶר׃', 'וְהִזָּ֤ה הַטָּהֹר֙ עַל־הַטָּמֵ֔א בַּיּ֥וֹם הַשְּׁלִישִׁ֖י וּבַיּ֣וֹם הַשְּׁבִיעִ֑י וְחִטְּאוֹ֙ בַּיּ֣וֹם הַשְּׁבִיעִ֔י וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָהֵ֥ר בָּעָֽרֶב׃', 'וְאִ֤ישׁ אֲשֶׁר־יִטְמָא֙ וְלֹ֣א יִתְחַטָּ֔א וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִתּ֣וֹךְ הַקָּהָ֑ל כִּי֩ אֶת־מִקְדַּ֨שׁ יְהֹוָ֜ה טִמֵּ֗א מֵ֥י נִדָּ֛ה לֹא־זֹרַ֥ק עָלָ֖יו טָמֵ֥א הֽוּא׃', 'וְהָיְתָ֥ה לָהֶ֖ם לְחֻקַּ֣ת עוֹלָ֑ם וּמַזֵּ֤ה מֵֽי־הַנִּדָּה֙ יְכַבֵּ֣ס בְּגָדָ֔יו וְהַנֹּגֵ֙עַ֙ בְּמֵ֣י הַנִּדָּ֔ה יִטְמָ֖א עַד־הָעָֽרֶב׃', 'וְכֹ֛ל אֲשֶׁר־יִגַּע־בּ֥וֹ הַטָּמֵ֖א יִטְמָ֑א וְהַנֶּ֥פֶשׁ הַנֹּגַ֖עַת תִּטְמָ֥א עַד־הָעָֽרֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיָּבֹ֣אוּ בְנֵֽי־יִ֠שְׂרָאֵ֠ל כׇּל־הָ֨עֵדָ֤ה מִדְבַּר־צִן֙ בַּחֹ֣דֶשׁ הָֽרִאשׁ֔וֹן וַיֵּ֥שֶׁב הָעָ֖ם בְּקָדֵ֑שׁ וַתָּ֤מׇת שָׁם֙ מִרְיָ֔ם וַתִּקָּבֵ֖ר שָֽׁם׃', 'וְלֹא־הָ֥יָה מַ֖יִם לָעֵדָ֑ה וַיִּקָּ֣הֲל֔וּ עַל־מֹשֶׁ֖ה וְעַֽל־אַהֲרֹֽן׃', 'וַיָּ֥רֶב הָעָ֖ם עִם־מֹשֶׁ֑ה וַיֹּאמְר֣וּ לֵאמֹ֔ר וְל֥וּ גָוַ֛עְנוּ בִּגְוַ֥ע אַחֵ֖ינוּ לִפְנֵ֥י יְהֹוָֽה׃', 'וְלָמָ֤ה הֲבֵאתֶם֙ אֶת־קְהַ֣ל יְהֹוָ֔ה אֶל־הַמִּדְבָּ֖ר הַזֶּ֑ה לָמ֣וּת שָׁ֔ם אֲנַ֖חְנוּ וּבְעִירֵֽנוּ׃', 'וְלָמָ֤ה הֶֽעֱלִיתֻ֙נוּ֙ מִמִּצְרַ֔יִם לְהָבִ֣יא אֹתָ֔נוּ אֶל־הַמָּק֥וֹם הָרָ֖ע הַזֶּ֑ה לֹ֣א&thinsp;<b>׀</b> מְק֣וֹם זֶ֗רַע וּתְאֵנָ֤ה וְגֶ֙פֶן֙ וְרִמּ֔וֹן וּמַ֥יִם אַ֖יִן לִשְׁתּֽוֹת׃', 'וַיָּבֹא֩ מֹשֶׁ֨ה וְאַהֲרֹ֜ן מִפְּנֵ֣י הַקָּהָ֗ל אֶל־פֶּ֙תַח֙ אֹ֣הֶל מוֹעֵ֔ד וַֽיִּפְּל֖וּ עַל־פְּנֵיהֶ֑ם וַיֵּרָ֥א כְבוֹד־יְהֹוָ֖ה אֲלֵיהֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'קַ֣ח אֶת־הַמַּטֶּ֗ה וְהַקְהֵ֤ל אֶת־הָעֵדָה֙ אַתָּה֙ וְאַהֲרֹ֣ן אָחִ֔יךָ וְדִבַּרְתֶּ֧ם אֶל־הַסֶּ֛לַע לְעֵינֵיהֶ֖ם וְנָתַ֣ן מֵימָ֑יו וְהוֹצֵאתָ֨ לָהֶ֥ם מַ֙יִם֙ מִן־הַסֶּ֔לַע וְהִשְׁקִיתָ֥ אֶת־הָעֵדָ֖ה וְאֶת־בְּעִירָֽם׃', 'וַיִּקַּ֥ח מֹשֶׁ֛ה אֶת־הַמַּטֶּ֖ה מִלִּפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֖ר צִוָּֽהוּ׃', 'וַיַּקְהִ֜לוּ מֹשֶׁ֧ה וְאַהֲרֹ֛ן אֶת־הַקָּהָ֖ל אֶל־פְּנֵ֣י הַסָּ֑לַע וַיֹּ֣אמֶר לָהֶ֗ם שִׁמְעוּ־נָא֙ הַמֹּרִ֔ים הֲמִן־הַסֶּ֣לַע הַזֶּ֔ה נוֹצִ֥יא לָכֶ֖ם מָֽיִם׃', 'וַיָּ֨רֶם מֹשֶׁ֜ה אֶת־יָד֗וֹ וַיַּ֧ךְ אֶת־הַסֶּ֛לַע בְּמַטֵּ֖הוּ פַּעֲמָ֑יִם וַיֵּצְאוּ֙ מַ֣יִם רַבִּ֔ים וַתֵּ֥שְׁתְּ הָעֵדָ֖ה וּבְעִירָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֹּ֣אמֶר יְהֹוָה֮ אֶל־מֹשֶׁ֣ה וְאֶֽל־אַהֲרֹן֒ יַ֚עַן לֹא־הֶאֱמַנְתֶּ֣ם בִּ֔י לְהַ֨קְדִּישֵׁ֔נִי לְעֵינֵ֖י בְּנֵ֣י יִשְׂרָאֵ֑ל לָכֵ֗ן לֹ֤א תָבִ֙יאוּ֙ אֶת־הַקָּהָ֣ל הַזֶּ֔ה אֶל־הָאָ֖רֶץ אֲשֶׁר־נָתַ֥תִּי לָהֶֽם׃', 'הֵ֚מָּה מֵ֣י מְרִיבָ֔ה אֲשֶׁר־רָב֥וּ בְנֵֽי־יִשְׂרָאֵ֖ל אֶת־יְהֹוָ֑ה וַיִּקָּדֵ֖שׁ בָּֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיִּשְׁלַ֨ח מֹשֶׁ֧ה מַלְאָכִ֛ים מִקָּדֵ֖שׁ אֶל־מֶ֣לֶךְ אֱד֑וֹם כֹּ֤ה אָמַר֙ אָחִ֣יךָ יִשְׂרָאֵ֔ל אַתָּ֣ה יָדַ֔עְתָּ אֵ֥ת כׇּל־הַתְּלָאָ֖ה אֲשֶׁ֥ר מְצָאָֽתְנוּ׃', 'וַיֵּרְד֤וּ אֲבֹתֵ֙ינוּ֙ מִצְרַ֔יְמָה וַנֵּ֥שֶׁב בְּמִצְרַ֖יִם יָמִ֣ים רַבִּ֑ים וַיָּרֵ֥עוּ לָ֛נוּ מִצְרַ֖יִם וְלַאֲבֹתֵֽינוּ׃', 'וַנִּצְעַ֤ק אֶל־יְהֹוָה֙ וַיִּשְׁמַ֣ע קֹלֵ֔נוּ וַיִּשְׁלַ֣ח מַלְאָ֔ךְ וַיֹּצִאֵ֖נוּ מִמִּצְרָ֑יִם וְהִנֵּה֙ אֲנַ֣חְנוּ בְקָדֵ֔שׁ עִ֖יר קְצֵ֥ה גְבוּלֶֽךָ׃', 'נַעְבְּרָה־נָּ֣א בְאַרְצֶ֗ךָ לֹ֤א נַעֲבֹר֙ בְּשָׂדֶ֣ה וּבְכֶ֔רֶם וְלֹ֥א נִשְׁתֶּ֖ה מֵ֣י בְאֵ֑ר דֶּ֧רֶךְ הַמֶּ֣לֶךְ נֵלֵ֗ךְ לֹ֤א נִטֶּה֙ יָמִ֣ין וּשְׂמֹ֔אול עַ֥ד אֲשֶֽׁר־נַעֲבֹ֖ר גְּבֻלֶֽךָ׃', 'וַיֹּ֤אמֶר אֵלָיו֙ אֱד֔וֹם לֹ֥א תַעֲבֹ֖ר בִּ֑י פֶּן־בַּחֶ֖רֶב אֵצֵ֥א לִקְרָאתֶֽךָ׃', 'וַיֹּאמְר֨וּ אֵלָ֥יו בְּנֵֽי־יִשְׂרָאֵל֮ בַּֽמְסִלָּ֣ה נַעֲלֶה֒ וְאִם־מֵימֶ֤יךָ נִשְׁתֶּה֙ אֲנִ֣י וּמִקְנַ֔י וְנָתַתִּ֖י מִכְרָ֑ם רַ֥ק אֵין־דָּבָ֖ר בְּרַגְלַ֥י אֶֽעֱבֹֽרָה׃', 'וַיֹּ֖אמֶר לֹ֣א תַעֲבֹ֑ר וַיֵּצֵ֤א אֱדוֹם֙ לִקְרָאת֔וֹ בְּעַ֥ם כָּבֵ֖ד וּבְיָ֥ד חֲזָקָֽה׃', 'וַיְמָאֵ֣ן&thinsp;<b>׀</b> אֱד֗וֹם נְתֹן֙ אֶת־יִשְׂרָאֵ֔ל עֲבֹ֖ר בִּגְבֻל֑וֹ וַיֵּ֥ט יִשְׂרָאֵ֖ל מֵעָלָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיִּסְע֖וּ מִקָּדֵ֑שׁ וַיָּבֹ֧אוּ בְנֵֽי־יִשְׂרָאֵ֛ל כׇּל־הָעֵדָ֖ה הֹ֥ר הָהָֽר׃', 'וַיֹּ֧אמֶר יְהֹוָ֛ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן בְּהֹ֣ר הָהָ֑ר עַל־גְּב֥וּל אֶֽרֶץ־אֱד֖וֹם לֵאמֹֽר׃', 'יֵאָסֵ֤ף אַהֲרֹן֙ אֶל־עַמָּ֔יו כִּ֣י לֹ֤א יָבֹא֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר נָתַ֖תִּי לִבְנֵ֣י יִשְׂרָאֵ֑ל עַ֛ל אֲשֶׁר־מְרִיתֶ֥ם אֶת־פִּ֖י לְמֵ֥י מְרִיבָֽה׃', 'קַ֚ח אֶֽת־אַהֲרֹ֔ן וְאֶת־אֶלְעָזָ֖ר בְּנ֑וֹ וְהַ֥עַל אֹתָ֖ם הֹ֥ר הָהָֽר׃', 'וְהַפְשֵׁ֤ט אֶֽת־אַהֲרֹן֙ אֶת־בְּגָדָ֔יו וְהִלְבַּשְׁתָּ֖ם אֶת־אֶלְעָזָ֣ר בְּנ֑וֹ וְאַהֲרֹ֥ן יֵאָסֵ֖ף וּמֵ֥ת שָֽׁם׃', 'וַיַּ֣עַשׂ מֹשֶׁ֔ה כַּאֲשֶׁ֖ר צִוָּ֣ה יְהֹוָ֑ה וַֽיַּעֲלוּ֙ אֶל־הֹ֣ר הָהָ֔ר לְעֵינֵ֖י כׇּל־הָעֵדָֽה׃', 'וַיַּפְשֵׁט֩ מֹשֶׁ֨ה אֶֽת־אַהֲרֹ֜ן אֶת־בְּגָדָ֗יו וַיַּלְבֵּ֤שׁ אֹתָם֙ אֶת־אֶלְעָזָ֣ר בְּנ֔וֹ וַיָּ֧מׇת אַהֲרֹ֛ן שָׁ֖ם בְּרֹ֣אשׁ הָהָ֑ר וַיֵּ֧רֶד מֹשֶׁ֛ה וְאֶלְעָזָ֖ר מִן־הָהָֽר׃', 'וַיִּרְאוּ֙ כׇּל־הָ֣עֵדָ֔ה כִּ֥י גָוַ֖ע אַהֲרֹ֑ן וַיִּבְכּ֤וּ אֶֽת־אַהֲרֹן֙ שְׁלֹשִׁ֣ים י֔וֹם כֹּ֖ל בֵּ֥ית יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
-      <p>['וַיִּשְׁמַ֞ע הַכְּנַעֲנִ֤י מֶֽלֶךְ־עֲרָד֙ יֹשֵׁ֣ב הַנֶּ֔גֶב כִּ֚י בָּ֣א יִשְׂרָאֵ֔ל דֶּ֖רֶךְ הָאֲתָרִ֑ים וַיִּלָּ֙חֶם֙ בְּיִשְׂרָאֵ֔ל וַיִּ֥שְׁבְּ&thinsp;<small>׀</small>&thinsp;מִמֶּ֖נּוּ שֶֽׁבִי׃', 'וַיִּדַּ֨ר יִשְׂרָאֵ֥ל נֶ֛דֶר לַֽיהֹוָ֖ה וַיֹּאמַ֑ר אִם־נָתֹ֨ן תִּתֵּ֜ן אֶת־הָעָ֤ם הַזֶּה֙ בְּיָדִ֔י וְהַֽחֲרַמְתִּ֖י אֶת־עָרֵיהֶֽם׃', 'וַיִּשְׁמַ֨ע יְהֹוָ֜ה בְּק֣וֹל יִשְׂרָאֵ֗ל וַיִּתֵּן֙ אֶת־הַֽכְּנַעֲנִ֔י וַיַּחֲרֵ֥ם אֶתְהֶ֖ם וְאֶת־עָרֵיהֶ֑ם וַיִּקְרָ֥א שֵׁם־הַמָּק֖וֹם חׇרְמָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיִּסְע֞וּ מֵהֹ֤ר הָהָר֙ דֶּ֣רֶךְ יַם־ס֔וּף לִסְבֹ֖ב אֶת־אֶ֣רֶץ אֱד֑וֹם וַתִּקְצַ֥ר נֶֽפֶשׁ־הָעָ֖ם בַּדָּֽרֶךְ׃', 'וַיְדַבֵּ֣ר הָעָ֗ם בֵּֽאלֹהִים֮ וּבְמֹשֶׁה֒ לָמָ֤ה הֶֽעֱלִיתֻ֙נוּ֙ מִמִּצְרַ֔יִם לָמ֖וּת בַּמִּדְבָּ֑ר כִּ֣י אֵ֥ין לֶ֙חֶם֙ וְאֵ֣ין מַ֔יִם וְנַפְשֵׁ֣נוּ קָ֔צָה בַּלֶּ֖חֶם הַקְּלֹקֵֽל׃', 'וַיְשַׁלַּ֨ח יְהֹוָ֜ה בָּעָ֗ם אֵ֚ת הַנְּחָשִׁ֣ים הַשְּׂרָפִ֔ים וַֽיְנַשְּׁכ֖וּ אֶת־הָעָ֑ם וַיָּ֥מׇת עַם־רָ֖ב מִיִּשְׂרָאֵֽל׃', 'וַיָּבֹא֩ הָעָ֨ם אֶל־מֹשֶׁ֜ה וַיֹּאמְר֣וּ חָטָ֗אנוּ כִּֽי־דִבַּ֤רְנוּ בַֽיהֹוָה֙ וָבָ֔ךְ הִתְפַּלֵּל֙ אֶל־יְהֹוָ֔ה וְיָסֵ֥ר מֵעָלֵ֖ינוּ אֶת־הַנָּחָ֑שׁ וַיִּתְפַּלֵּ֥ל מֹשֶׁ֖ה בְּעַ֥ד הָעָֽם׃', 'וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה עֲשֵׂ֤ה לְךָ֙ שָׂרָ֔ף וְשִׂ֥ים אֹת֖וֹ עַל־נֵ֑ס וְהָיָה֙ כׇּל־הַנָּשׁ֔וּךְ וְרָאָ֥ה אֹת֖וֹ וָחָֽי׃', 'וַיַּ֤עַשׂ מֹשֶׁה֙ נְחַ֣שׁ נְחֹ֔שֶׁת וַיְשִׂמֵ֖הוּ עַל־הַנֵּ֑ס וְהָיָ֗ה אִם־נָשַׁ֤ךְ הַנָּחָשׁ֙ אֶת־אִ֔ישׁ וְהִבִּ֛יט אֶל־נְחַ֥שׁ הַנְּחֹ֖שֶׁת וָחָֽי׃', 'וַיִּסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיַּחֲנ֖וּ בְּאֹבֹֽת׃', 'וַיִּסְע֖וּ מֵאֹבֹ֑ת וַֽיַּחֲנ֞וּ בְּעִיֵּ֣י הָֽעֲבָרִ֗ים בַּמִּדְבָּר֙ אֲשֶׁר֙ עַל־פְּנֵ֣י מוֹאָ֔ב מִמִּזְרַ֖ח הַשָּֽׁמֶשׁ׃', 'מִשָּׁ֖ם נָסָ֑עוּ וַֽיַּחֲנ֖וּ בְּנַ֥חַל זָֽרֶד׃', 'מִשָּׁם֮ נָסָ֒עוּ֒ וַֽיַּחֲנ֗וּ מֵעֵ֤בֶר אַרְנוֹן֙ אֲשֶׁ֣ר בַּמִּדְבָּ֔ר הַיֹּצֵ֖א מִגְּבֻ֣ל הָֽאֱמֹרִ֑י כִּ֤י אַרְנוֹן֙ גְּב֣וּל מוֹאָ֔ב בֵּ֥ין מוֹאָ֖ב וּבֵ֥ין הָאֱמֹרִֽי׃', 'עַל־כֵּן֙ יֵֽאָמַ֔ר בְּסֵ֖פֶר מִלְחֲמֹ֣ת יְהֹוָ֑ה אֶת־וָהֵ֣ב בְּסוּפָ֔ה וְאֶת־הַנְּחָלִ֖ים אַרְנֽוֹן׃', 'וְאֶ֙שֶׁד֙ הַנְּחָלִ֔ים אֲשֶׁ֥ר נָטָ֖ה לְשֶׁ֣בֶת עָ֑ר וְנִשְׁעַ֖ן לִגְב֥וּל מוֹאָֽב׃', 'וּמִשָּׁ֖ם בְּאֵ֑רָה הִ֣וא הַבְּאֵ֗ר אֲשֶׁ֨ר אָמַ֤ר יְהֹוָה֙ לְמֹשֶׁ֔ה אֱסֹף֙ אֶת־הָעָ֔ם וְאֶתְּנָ֥ה לָהֶ֖ם מָֽיִם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'אָ֚ז יָשִׁ֣יר יִשְׂרָאֵ֔ל אֶת־הַשִּׁירָ֖ה הַזֹּ֑את עֲלִ֥י בְאֵ֖ר עֱנוּ־לָֽהּ׃', 'בְּאֵ֞ר חֲפָר֣וּהָ שָׂרִ֗ים כָּר֙וּהָ֙ נְדִיבֵ֣י הָעָ֔ם בִּמְחֹקֵ֖ק בְּמִשְׁעֲנֹתָ֑ם וּמִמִּדְבָּ֖ר מַתָּנָֽה׃', 'וּמִמַּתָּנָ֖ה נַחֲלִיאֵ֑ל וּמִנַּחֲלִיאֵ֖ל בָּמֽוֹת׃', 'וּמִבָּמ֗וֹת הַגַּיְא֙ אֲשֶׁר֙ בִּשְׂדֵ֣ה מוֹאָ֔ב רֹ֖אשׁ הַפִּסְגָּ֑ה וְנִשְׁקָ֖פָה עַל־פְּנֵ֥י הַיְשִׁימֹֽן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיִּשְׁלַ֤ח יִשְׂרָאֵל֙ מַלְאָכִ֔ים אֶל־סִיחֹ֥ן מֶֽלֶךְ־הָאֱמֹרִ֖י לֵאמֹֽר׃', 'אֶעְבְּרָ֣ה בְאַרְצֶ֗ךָ לֹ֤א נִטֶּה֙ בְּשָׂדֶ֣ה וּבְכֶ֔רֶם לֹ֥א נִשְׁתֶּ֖ה מֵ֣י בְאֵ֑ר בְּדֶ֤רֶךְ הַמֶּ֙לֶךְ֙ נֵלֵ֔ךְ עַ֥ד אֲשֶֽׁר־נַעֲבֹ֖ר גְּבֻלֶֽךָ׃', 'וְלֹא־נָתַ֨ן סִיחֹ֣ן אֶת־יִשְׂרָאֵל֮ עֲבֹ֣ר בִּגְבֻלוֹ֒ וַיֶּאֱסֹ֨ף סִיחֹ֜ן אֶת־כׇּל־עַמּ֗וֹ וַיֵּצֵ֞א לִקְרַ֤את יִשְׂרָאֵל֙ הַמִּדְבָּ֔רָה וַיָּבֹ֖א יָ֑הְצָה וַיִּלָּ֖חֶם בְּיִשְׂרָאֵֽל׃', 'וַיַּכֵּ֥הוּ יִשְׂרָאֵ֖ל לְפִי־חָ֑רֶב וַיִּירַ֨שׁ אֶת־אַרְצ֜וֹ מֵֽאַרְנֹ֗ן עַד־יַבֹּק֙ עַד־בְּנֵ֣י עַמּ֔וֹן כִּ֣י עַ֔ז גְּב֖וּל בְּנֵ֥י עַמּֽוֹן׃', 'וַיִּקַּח֙ יִשְׂרָאֵ֔ל אֵ֥ת כׇּל־הֶעָרִ֖ים הָאֵ֑לֶּה וַיֵּ֤שֶׁב יִשְׂרָאֵל֙ בְּכׇל־עָרֵ֣י הָֽאֱמֹרִ֔י בְּחֶשְׁבּ֖וֹן וּבְכׇל־בְּנֹתֶֽיהָ׃', 'כִּ֣י חֶשְׁבּ֔וֹן עִ֗יר סִיחֹ֛ן מֶ֥לֶךְ הָאֱמֹרִ֖י הִ֑וא וְה֣וּא נִלְחַ֗ם בְּמֶ֤לֶךְ מוֹאָב֙ הָֽרִאשׁ֔וֹן וַיִּקַּ֧ח אֶת־כׇּל־אַרְצ֛וֹ מִיָּד֖וֹ עַד־אַרְנֹֽן׃', 'עַל־כֵּ֛ן יֹאמְר֥וּ הַמֹּשְׁלִ֖ים בֹּ֣אוּ חֶשְׁבּ֑וֹן תִּבָּנֶ֥ה וְתִכּוֹנֵ֖ן עִ֥יר סִיחֽוֹן׃', 'כִּי־אֵשׁ֙ יָֽצְאָ֣ה מֵֽחֶשְׁבּ֔וֹן לֶהָבָ֖ה מִקִּרְיַ֣ת סִיחֹ֑ן אָֽכְלָה֙ עָ֣ר מוֹאָ֔ב בַּעֲלֵ֖י בָּמ֥וֹת אַרְנֹֽן׃', 'אוֹי־לְךָ֣ מוֹאָ֔ב אָבַ֖דְתָּ עַם־כְּמ֑וֹשׁ נָתַ֨ן בָּנָ֤יו פְּלֵיטִם֙ וּבְנֹתָ֣יו בַּשְּׁבִ֔ית לְמֶ֥לֶךְ אֱמֹרִ֖י סִיחֽוֹן׃', 'וַנִּירָ֛ם אָבַ֥ד חֶשְׁבּ֖וֹן עַד־דִּיבֹ֑ן וַנַּשִּׁ֣ים עַד־נֹ֔פַח אֲשֶׁ֖רׄ עַד־מֵֽידְבָֽא׃', 'וַיֵּ֙שֶׁב֙ יִשְׂרָאֵ֔ל בְּאֶ֖רֶץ הָאֱמֹרִֽי׃', 'וַיִּשְׁלַ֤ח מֹשֶׁה֙ לְרַגֵּ֣ל אֶת־יַעְזֵ֔ר וַֽיִּלְכְּד֖וּ בְּנֹתֶ֑יהָ <span class="mam-kq"><span class="mam-kq-k">(ויירש)</span> <span class="mam-kq-q">[וַיּ֖וֹרֶשׁ]</span></span> אֶת־הָאֱמֹרִ֥י אֲשֶׁר־שָֽׁם׃', 'וַיִּפְנוּ֙ וַֽיַּעֲל֔וּ דֶּ֖רֶךְ הַבָּשָׁ֑ן וַיֵּצֵ֣א עוֹג֩ מֶֽלֶךְ־הַבָּשָׁ֨ן לִקְרָאתָ֜ם ה֧וּא וְכׇל־עַמּ֛וֹ לַמִּלְחָמָ֖ה אֶדְרֶֽעִי׃', 'וַיֹּ֨אמֶר יְהֹוָ֤ה אֶל־מֹשֶׁה֙ אַל־תִּירָ֣א אֹת֔וֹ כִּ֣י בְיָדְךָ֞ נָתַ֧תִּי אֹת֛וֹ וְאֶת־כׇּל־עַמּ֖וֹ וְאֶת־אַרְצ֑וֹ וְעָשִׂ֣יתָ לּ֔וֹ כַּאֲשֶׁ֣ר עָשִׂ֗יתָ לְסִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י אֲשֶׁ֥ר יוֹשֵׁ֖ב בְּחֶשְׁבּֽוֹן׃', 'וַיַּכּ֨וּ אֹת֤וֹ וְאֶת־בָּנָיו֙ וְאֶת־כׇּל־עַמּ֔וֹ עַד־בִּלְתִּ֥י הִשְׁאִֽיר־ל֖וֹ שָׂרִ֑יד וַיִּֽירְשׁ֖וּ אֶת־אַרְצֽוֹ׃']</p>
-      <p>['וַיִּסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיַּחֲנוּ֙ בְּעַֽרְב֣וֹת מוֹאָ֔ב מֵעֵ֖בֶר לְיַרְדֵּ֥ן יְרֵחֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-19-1">Chap. 19</a><a href="#v-20-1">Chap. 20</a><a href="#v-21-1">Chap. 21</a><a href="#v-22-1">Chap. 22</a></div>
+  <div class="seif" id="v-19-1">
+      <span class="seif-num">19:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר יְהֹוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה ואל־אהרן לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse et à Aaron en ces termes:</p></div>
+    </div><div class="seif" id="v-19-2">
+      <span class="seif-num">19:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֚את חֻקַּ֣ת הַתּוֹרָ֔ה אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה לֵאמֹ֑ר דַּבֵּ֣ר&thinsp;<b>׀</b> אֶל־בְּנֵ֣י יִשְׂרָאֵ֗ל וְיִקְח֣וּ אֵלֶ֩יךָ֩ פָרָ֨ה אֲדֻמָּ֜ה תְּמִימָ֗ה אֲשֶׁ֤ר אֵֽין־בָּהּ֙ מ֔וּם אֲשֶׁ֛ר לֹא־עָלָ֥ה עָלֶ֖יהָ עֹֽל׃</p></div><div class="heb-s"><p>זאת חקת התורה אשר־צוה יהוה לאמר דבר&thinsp;<b>׀</b> אל־בני ישראל ויקחו אליך פרה אדמה תמימה אשר אין־בה מום אשר לא־עלה עליה על׃</p></div></div>
+      <div class="texte-fr"><p>"Ceci est un statut de la loi qu’a prescrit l’Éternel, savoir: Avertis les enfants d’Israël de te choisir une vache rousse, intacte, sans aucun défaut, et qui n’ait pas encore porté le joug.</p></div>
+    </div><div class="seif" id="v-19-3">
+      <span class="seif-num">19:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּנְתַתֶּ֣ם אֹתָ֔הּ אֶל־אֶלְעָזָ֖ר הַכֹּהֵ֑ן וְהוֹצִ֤יא אֹתָהּ֙ אֶל־מִח֣וּץ לַֽמַּחֲנֶ֔ה וְשָׁחַ֥ט אֹתָ֖הּ לְפָנָֽיו׃</p></div><div class="heb-s"><p>ונתתם אתה אל־אלעזר הכהן והוציא אתה אל־מחוץ למחנה ושחט אתה לפניו׃</p></div></div>
+      <div class="texte-fr"><p>Vous la remettrez au pontife Eléazar; il la fera conduire hors du camp, et on l’immolera en sa présence.</p></div>
+    </div><div class="seif" id="v-19-4">
+      <span class="seif-num">19:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֞ח אֶלְעָזָ֧ר הַכֹּהֵ֛ן מִדָּמָ֖הּ בְּאֶצְבָּע֑וֹ וְהִזָּ֞ה אֶל־נֹ֨כַח פְּנֵ֧י אֹֽהֶל־מוֹעֵ֛ד מִדָּמָ֖הּ שֶׁ֥בַע פְּעָמִֽים׃</p></div><div class="heb-s"><p>ולקח אלעזר הכהן מדמה באצבעו והזה אל־נכח פני אהל־מועד מדמה שבע פעמים׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife Eléazar prendra du sang de l’animal avec le doigt, et il fera, en les dirigeant vers la face de la tente d’assignation, sept aspersions de ce sang.</p></div>
+    </div><div class="seif" id="v-19-5">
+      <span class="seif-num">19:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׂרַ֥ף אֶת־הַפָּרָ֖ה לְעֵינָ֑יו אֶת־עֹרָ֤הּ וְאֶת־בְּשָׂרָהּ֙ וְאֶת־דָּמָ֔הּ עַל־פִּרְשָׁ֖הּ יִשְׂרֹֽף׃</p></div><div class="heb-s"><p>ושרף את־הפרה לעיניו את־ערה ואת־בשרה ואת־דמה על־פרשה ישרף׃</p></div></div>
+      <div class="texte-fr"><p>Alors on brûlera la vache sous ses yeux: sa peau, sa chair et son sang, on les brûlera avec sa fiente.</p></div>
+    </div><div class="seif" id="v-19-6">
+      <span class="seif-num">19:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֣ח הַכֹּהֵ֗ן עֵ֥ץ אֶ֛רֶז וְאֵז֖וֹב וּשְׁנִ֣י תוֹלָ֑עַת וְהִשְׁלִ֕יךְ אֶל־תּ֖וֹךְ שְׂרֵפַ֥ת הַפָּרָֽה׃</p></div><div class="heb-s"><p>ולקח הכהן עץ ארז ואזוב ושני תולעת והשליך אל־תוך שרפת הפרה׃</p></div></div>
+      <div class="texte-fr"><p>Le pontife prendra du bois de cèdre, de l’hysope et de l’écarlate, qu’il jettera dans le feu où se consume la vache.</p></div>
+    </div><div class="seif" id="v-19-7">
+      <span class="seif-num">19:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִבֶּ֨ס בְּגָדָ֜יו הַכֹּהֵ֗ן וְרָחַ֤ץ בְּשָׂרוֹ֙ בַּמַּ֔יִם וְאַחַ֖ר יָבֹ֣א אֶל־הַֽמַּחֲנֶ֑ה וְטָמֵ֥א הַכֹּהֵ֖ן עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>וכבס בגדיו הכהן ורחץ בשרו במים ואחר יבא אל־המחנה וטמא הכהן עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Puis ce pontife lavera ses vêtements, baignera son corps dans l’eau, et alors il rentrera au camp; mais il restera impur jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-19-8">
+      <span class="seif-num">19:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַשֹּׂרֵ֣ף אֹתָ֔הּ יְכַבֵּ֤ס בְּגָדָיו֙ בַּמַּ֔יִם וְרָחַ֥ץ בְּשָׂר֖וֹ בַּמָּ֑יִם וְטָמֵ֖א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והשרף אתה יכבס בגדיו במים ורחץ בשרו במים וטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui aura brûlé la vache nettoiera ses vêtements dans l’eau, baignera dans l’eau son corps, et restera impur jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-19-9">
+      <span class="seif-num">19:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָסַ֣ף&thinsp;<b>׀</b> אִ֣ישׁ טָה֗וֹר אֵ֚ת אֵ֣פֶר הַפָּרָ֔ה וְהִנִּ֛יחַ מִח֥וּץ לַֽמַּחֲנֶ֖ה בְּמָק֣וֹם טָה֑וֹר וְ֠הָיְתָ֠ה לַעֲדַ֨ת בְּנֵֽי־יִשְׂרָאֵ֧ל לְמִשְׁמֶ֛רֶת לְמֵ֥י נִדָּ֖ה חַטָּ֥את הִֽוא׃</p></div><div class="heb-s"><p>ואסף&thinsp;<b>׀</b> איש טהור את אפר הפרה והניח מחוץ למחנה במקום טהור והיתה לעדת בני־ישראל למשמרת למי נדה חטאת הוא׃</p></div></div>
+      <div class="texte-fr"><p>Cependant un homme pur recueillera les cendres de la vache et les déposera hors du camp, en lieu pur, où elles resteront en dépôt, pour la communauté des enfants d’Israël, en vue de l’eau lustrale: c’est un purificatoire.</p></div>
+    </div><div class="seif" id="v-19-10">
+      <span class="seif-num">19:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠כִבֶּ֠ס הָאֹסֵ֨ף אֶת־אֵ֤פֶר הַפָּרָה֙ אֶת־בְּגָדָ֔יו וְטָמֵ֖א עַד־הָעָ֑רֶב וְֽהָיְתָ֞ה לִבְנֵ֣י יִשְׂרָאֵ֗ל וְלַגֵּ֛ר הַגָּ֥ר בְּתוֹכָ֖ם לְחֻקַּ֥ת עוֹלָֽם׃</p></div><div class="heb-s"><p>וכבס האסף את־אפר הפרה את־בגדיו וטמא עד־הערב והיתה לבני ישראל ולגר הגר בתוכם לחקת עולם׃</p></div></div>
+      <div class="texte-fr"><p>Celui qui aura recueilli les cendres de la vache lavera ses vêtements, et sera impur jusqu’au soir. Et ceci sera, pour les enfants d’Israël et pour l’étranger établi parmi eux, un statut invariable:</p></div>
+    </div><div class="seif" id="v-19-11">
+      <span class="seif-num">19:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַנֹּגֵ֥עַ בְּמֵ֖ת לְכׇל־נֶ֣פֶשׁ אָדָ֑ם וְטָמֵ֖א שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>הנגע במת לכל־נפש אדם וטמא שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>celui qui touchera au cadavre d’un être humain quelconque sera impur durant sept jours.</p></div>
+    </div><div class="seif" id="v-19-12">
+      <span class="seif-num">19:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>ה֣וּא יִתְחַטָּא־ב֞וֹ בַּיּ֧וֹם הַשְּׁלִישִׁ֛י וּבַיּ֥וֹם הַשְּׁבִיעִ֖י יִטְהָ֑ר וְאִם־לֹ֨א יִתְחַטָּ֜א בַּיּ֧וֹם הַשְּׁלִישִׁ֛י וּבַיּ֥וֹם הַשְּׁבִיעִ֖י לֹ֥א יִטְהָֽר׃</p></div><div class="heb-s"><p>הוא יתחטא־בו ביום השלישי וביום השביעי יטהר ואם־לא יתחטא ביום השלישי וביום השביעי לא יטהר׃</p></div></div>
+      <div class="texte-fr"><p>Qu’il se purifie au moyen de ces cendres, le troisième et le septième jour, et il sera pur; mais s’il ne s’est pas purifié, le troisième et le septième jour, il ne sera point pur.</p></div>
+    </div><div class="seif" id="v-19-13">
+      <span class="seif-num">19:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּֽל־הַנֹּגֵ֡עַ בְּמֵ֣ת בְּנֶ֩פֶשׁ֩ הָאָדָ֨ם אֲשֶׁר־יָמ֜וּת וְלֹ֣א יִתְחַטָּ֗א אֶת־מִשְׁכַּ֤ן יְהֹוָה֙ טִמֵּ֔א וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִיִּשְׂרָאֵ֑ל כִּי֩ מֵ֨י נִדָּ֜ה לֹא־זֹרַ֤ק עָלָיו֙ טָמֵ֣א יִהְיֶ֔ה ע֖וֹד טֻמְאָת֥וֹ בֽוֹ׃</p></div><div class="heb-s"><p>כל־הנגע במת בנפש האדם אשר־ימות ולא יתחטא את־משכן יהוה טמא ונכרתה הנפש ההוא מישראל כי מי נדה לא־זרק עליו טמא יהיה עוד טמאתו בו׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque a touché à un cadavre, au corps d’une personne morte, et ne se purifie point, souille la résidence du Seigneur, et cette existence sera retranchée d’Israël: parce que l’eau lustrale n’a pas été lancée sur lui, souillé qu’il est, il gardera sa souillure.</p></div>
+    </div><div class="seif" id="v-19-14">
+      <span class="seif-num">19:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>זֹ֚את הַתּוֹרָ֔ה אָדָ֖ם כִּֽי־יָמ֣וּת בְּאֹ֑הֶל כׇּל־הַבָּ֤א אֶל־הָאֹ֙הֶל֙ וְכׇל־אֲשֶׁ֣ר בָּאֹ֔הֶל יִטְמָ֖א שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>זאת התורה אדם כי־ימות באהל כל־הבא אל־האהל וכל־אשר באהל יטמא שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Voici la règle, lorsqu’il se trouve un mort dans une tente: quiconque entre dans cette tente, et tout ce qu’elle renferme, sera impur durant sept jours;</p></div>
+    </div><div class="seif" id="v-19-15">
+      <span class="seif-num">19:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֙ כְּלִ֣י פָת֔וּחַ אֲשֶׁ֛ר אֵין־צָמִ֥יד פָּתִ֖יל עָלָ֑יו טָמֵ֖א הֽוּא׃</p></div><div class="heb-s"><p>וכל כלי פתוח אשר אין־צמיד פתיל עליו טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>et tout vase découvert, qui n’est pas entièrement clos d’un couvercle, sera impur.</p></div>
+    </div><div class="seif" id="v-19-16">
+      <span class="seif-num">19:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֨ל אֲשֶׁר־יִגַּ֜ע עַל־פְּנֵ֣י הַשָּׂדֶ֗ה בַּֽחֲלַל־חֶ֙רֶב֙ א֣וֹ בְמֵ֔ת אֽוֹ־בְעֶ֥צֶם אָדָ֖ם א֣וֹ בְקָ֑בֶר יִטְמָ֖א שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>וכל אשר־יגע על־פני השדה בחלל־חרב או במת או־בעצם אדם או בקבר יטמא שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Quiconque touchera, en pleine campagne, au corps d’un homme tué par le glaive ou mort naturellement, ou à un ossement humain ou à un sépulcre, sera souillé durant sept jours.</p></div>
+    </div><div class="seif" id="v-19-17">
+      <span class="seif-num">19:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָֽקְחוּ֙ לַטָּמֵ֔א מֵעֲפַ֖ר שְׂרֵפַ֣ת הַֽחַטָּ֑את וְנָתַ֥ן עָלָ֛יו מַ֥יִם חַיִּ֖ים אֶל־כֶּֽלִי׃</p></div><div class="heb-s"><p>ולקחו לטמא מעפר שרפת החטאת ונתן עליו מים חיים אל־כלי׃</p></div></div>
+      <div class="texte-fr"><p>Pour purifier l’impur, on prendra des cendres provenant de la combustion du purificatoire, auxquelles on mêlera de l’eau vive dans un vase.</p></div>
+    </div><div class="seif" id="v-19-18">
+      <span class="seif-num">19:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַ֨ח אֵז֜וֹב וְטָבַ֣ל בַּמַּ֘יִם֮ אִ֣ישׁ טָהוֹר֒ וְהִזָּ֤ה עַל־הָאֹ֙הֶל֙ וְעַל־כׇּל־הַכֵּלִ֔ים וְעַל־הַנְּפָשׁ֖וֹת אֲשֶׁ֣ר הָֽיוּ־שָׁ֑ם וְעַל־הַנֹּגֵ֗עַ בַּעֶ֙צֶם֙ א֣וֹ בֶֽחָלָ֔ל א֥וֹ בַמֵּ֖ת א֥וֹ בַקָּֽבֶר׃</p></div><div class="heb-s"><p>ולקח אזוב וטבל במים איש טהור והזה על־האהל ועל־כל־הכלים ועל־הנפשות אשר היו־שם ועל־הנגע בעצם או בחלל או במת או בקבר׃</p></div></div>
+      <div class="texte-fr"><p>Et un homme pur prendra de l’hysope, la trempera dans l’eau et aspergera la tente, ainsi que tous les vases et les personnes qui s’y trouvaient; pareillement, celui qui aurait touché à l’ossement, à l’homme tué ou mort naturellement, ou au sépulcre.</p></div>
+    </div><div class="seif" id="v-19-19">
+      <span class="seif-num">19:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִזָּ֤ה הַטָּהֹר֙ עַל־הַטָּמֵ֔א בַּיּ֥וֹם הַשְּׁלִישִׁ֖י וּבַיּ֣וֹם הַשְּׁבִיעִ֑י וְחִטְּאוֹ֙ בַּיּ֣וֹם הַשְּׁבִיעִ֔י וְכִבֶּ֧ס בְּגָדָ֛יו וְרָחַ֥ץ בַּמַּ֖יִם וְטָהֵ֥ר בָּעָֽרֶב׃</p></div><div class="heb-s"><p>והזה הטהר על־הטמא ביום השלישי וביום השביעי וחטאו ביום השביעי וכבס בגדיו ורחץ במים וטהר בערב׃</p></div></div>
+      <div class="texte-fr"><p>L’homme pur fera donc aspersion sur l’impur, au troisième et au septième jour; et lorsqu’il l’aura purifié le septième jour, l’autre lavera ses vêtements, se baignera dans l’eau, et sera pur le soir.</p></div>
+    </div><div class="seif" id="v-19-20">
+      <span class="seif-num">19:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִ֤ישׁ אֲשֶׁר־יִטְמָא֙ וְלֹ֣א יִתְחַטָּ֔א וְנִכְרְתָ֛ה הַנֶּ֥פֶשׁ הַהִ֖וא מִתּ֣וֹךְ הַקָּהָ֑ל כִּי֩ אֶת־מִקְדַּ֨שׁ יְהֹוָ֜ה טִמֵּ֗א מֵ֥י נִדָּ֛ה לֹא־זֹרַ֥ק עָלָ֖יו טָמֵ֥א הֽוּא׃</p></div><div class="heb-s"><p>ואיש אשר־יטמא ולא יתחטא ונכרתה הנפש ההוא מתוך הקהל כי את־מקדש יהוה טמא מי נדה לא־זרק עליו טמא הוא׃</p></div></div>
+      <div class="texte-fr"><p>Mais l’individu qui, devenu impur, ne se purifierait pas, celui-là sera retranché du sein de l’assemblée, car il a souillé le sanctuaire du Seigneur: l’eau lustrale n’a pas été jetée sur lui, il reste impur.</p></div>
+    </div><div class="seif" id="v-19-21">
+      <span class="seif-num">19:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהָיְתָ֥ה לָהֶ֖ם לְחֻקַּ֣ת עוֹלָ֑ם וּמַזֵּ֤ה מֵֽי־הַנִּדָּה֙ יְכַבֵּ֣ס בְּגָדָ֔יו וְהַנֹּגֵ֙עַ֙ בְּמֵ֣י הַנִּדָּ֔ה יִטְמָ֖א עַד־הָעָֽרֶב׃</p></div><div class="heb-s"><p>והיתה להם לחקת עולם ומזה מי־הנדה יכבס בגדיו והנגע במי הנדה יטמא עד־הערב׃</p></div></div>
+      <div class="texte-fr"><p>Ce sera pour eux une règle invariable. Quant à celui qui aura fait aspersion de l’eau lustrale, il lavera ses vêtements, et celui qui touchera à l’eau lustrale sera impur jusqu’au soir.</p></div>
+    </div><div class="seif" id="v-19-22">
+      <span class="seif-num">19:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹ֛ל אֲשֶׁר־יִגַּע־בּ֥וֹ הַטָּמֵ֖א יִטְמָ֑א וְהַנֶּ֥פֶשׁ הַנֹּגַ֖עַת תִּטְמָ֥א עַד־הָעָֽרֶב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וכל אשר־יגע־בו הטמא יטמא והנפש הנגעת תטמא עד־הערב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Tout ce que touchera l’impur sera souillé; et la personne qui le touchera sera souillée jusqu’au soir."</p></div>
+    </div><div class="seif" id="v-20-1">
+      <span class="seif-num">20:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֣אוּ בְנֵֽי־יִ֠שְׂרָאֵ֠ל כׇּל־הָ֨עֵדָ֤ה מִדְבַּר־צִן֙ בַּחֹ֣דֶשׁ הָֽרִאשׁ֔וֹן וַיֵּ֥שֶׁב הָעָ֖ם בְּקָדֵ֑שׁ וַתָּ֤מׇת שָׁם֙ מִרְיָ֔ם וַתִּקָּבֵ֖ר שָֽׁם׃</p></div><div class="heb-s"><p>ויבאו בני־ישראל כל־העדה מדבר־צן בחדש הראשון וישב העם בקדש ותמת שם מרים ותקבר שם׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants d’Israël, toute la communauté, arrivèrent au désert de Cîn, dans le premier mois, et le peuple s’arrêta à Kadêch. Miryam mourut en ce lieu et y fut ensevelie.</p></div>
+    </div><div class="seif" id="v-20-2">
+      <span class="seif-num">20:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־הָ֥יָה מַ֖יִם לָעֵדָ֑ה וַיִּקָּ֣הֲל֔וּ עַל־מֹשֶׁ֖ה וְעַֽל־אַהֲרֹֽן׃</p></div><div class="heb-s"><p>ולא־היה מים לעדה ויקהלו על־משה ועל־אהרן׃</p></div></div>
+      <div class="texte-fr"><p>Or, la communauté manqua d’eau, et ils s’ameutèrent contre Moïse et Aaron;</p></div>
+    </div><div class="seif" id="v-20-3">
+      <span class="seif-num">20:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֥רֶב הָעָ֖ם עִם־מֹשֶׁ֑ה וַיֹּאמְר֣וּ לֵאמֹ֔ר וְל֥וּ גָוַ֛עְנוּ בִּגְוַ֥ע אַחֵ֖ינוּ לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>וירב העם עם־משה ויאמרו לאמר ולו גוענו בגוע אחינו לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>et le peuple chercha querelle à Moïse, et ils parlèrent ainsi: "Ah! Que ne sommes-nous morts quand sont morts nos frères devant l’Éternel!</p></div>
+    </div><div class="seif" id="v-20-4">
+      <span class="seif-num">20:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָמָ֤ה הֲבֵאתֶם֙ אֶת־קְהַ֣ל יְהֹוָ֔ה אֶל־הַמִּדְבָּ֖ר הַזֶּ֑ה לָמ֣וּת שָׁ֔ם אֲנַ֖חְנוּ וּבְעִירֵֽנוּ׃</p></div><div class="heb-s"><p>ולמה הבאתם את־קהל יהוה אל־המדבר הזה למות שם אנחנו ובעירנו׃</p></div></div>
+      <div class="texte-fr"><p>Et pourquoi avez-vous conduit le peuple de Dieu dans ce désert, pour y périr, nous et notre bétail?</p></div>
+    </div><div class="seif" id="v-20-5">
+      <span class="seif-num">20:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָמָ֤ה הֶֽעֱלִיתֻ֙נוּ֙ מִמִּצְרַ֔יִם לְהָבִ֣יא אֹתָ֔נוּ אֶל־הַמָּק֥וֹם הָרָ֖ע הַזֶּ֑ה לֹ֣א&thinsp;<b>׀</b> מְק֣וֹם זֶ֗רַע וּתְאֵנָ֤ה וְגֶ֙פֶן֙ וְרִמּ֔וֹן וּמַ֥יִם אַ֖יִן לִשְׁתּֽוֹת׃</p></div><div class="heb-s"><p>ולמה העליתנו ממצרים להביא אתנו אל־המקום הרע הזה לא&thinsp;<b>׀</b> מקום זרע ותאנה וגפן ורמון ומים אין לשתות׃</p></div></div>
+      <div class="texte-fr"><p>Et pourquoi nous avez-vous fait quitter l’Égypte pour nous amener en ce méchant pays, qui n’est pas un pays de culture, où il n’y a ni figuiers, ni vignes, ni grenadiers, ni eau à boire!"</p></div>
+    </div><div class="seif" id="v-20-6">
+      <span class="seif-num">20:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹא֩ מֹשֶׁ֨ה וְאַהֲרֹ֜ן מִפְּנֵ֣י הַקָּהָ֗ל אֶל־פֶּ֙תַח֙ אֹ֣הֶל מוֹעֵ֔ד וַֽיִּפְּל֖וּ עַל־פְּנֵיהֶ֑ם וַיֵּרָ֥א כְבוֹד־יְהֹוָ֖ה אֲלֵיהֶֽם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויבא משה ואהרן מפני הקהל אל־פתח אהל מועד ויפלו על־פניהם וירא כבוד־יהוה אליהם׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Moïse et Aaron, assaillis par la multitude, se dirigèrent vers l’entrée de la tente d’assignation et se jetèrent sur leur face; et la majesté divine leur apparut.</p></div>
+    </div><div class="seif" id="v-20-7">
+      <span class="seif-num">20:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Et l’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-20-8">
+      <span class="seif-num">20:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>קַ֣ח אֶת־הַמַּטֶּ֗ה וְהַקְהֵ֤ל אֶת־הָעֵדָה֙ אַתָּה֙ וְאַהֲרֹ֣ן אָחִ֔יךָ וְדִבַּרְתֶּ֧ם אֶל־הַסֶּ֛לַע לְעֵינֵיהֶ֖ם וְנָתַ֣ן מֵימָ֑יו וְהוֹצֵאתָ֨ לָהֶ֥ם מַ֙יִם֙ מִן־הַסֶּ֔לַע וְהִשְׁקִיתָ֥ אֶת־הָעֵדָ֖ה וְאֶת־בְּעִירָֽם׃</p></div><div class="heb-s"><p>קח את־המטה והקהל את־העדה אתה ואהרן אחיך ודברתם אל־הסלע לעיניהם ונתן מימיו והוצאת להם מים מן־הסלע והשקית את־העדה ואת־בעירם׃</p></div></div>
+      <div class="texte-fr"><p>"Prends la verge et assemble la communauté, toi ainsi qu’Aaron ton frère, et dites au rocher, en leur présence, de donner ses eaux: tu feras couler, pour eux, de l’eau de ce rocher, et tu désaltéreras la communauté et son bétail."</p></div>
+    </div><div class="seif" id="v-20-9">
+      <span class="seif-num">20:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֥ח מֹשֶׁ֛ה אֶת־הַמַּטֶּ֖ה מִלִּפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֖ר צִוָּֽהוּ׃</p></div><div class="heb-s"><p>ויקח משה את־המטה מלפני יהוה כאשר צוהו׃</p></div></div>
+      <div class="texte-fr"><p>Moïse prit la verge de devant l’Éternel, comme il le lui avait ordonné.</p></div>
+    </div><div class="seif" id="v-20-10">
+      <span class="seif-num">20:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְהִ֜לוּ מֹשֶׁ֧ה וְאַהֲרֹ֛ן אֶת־הַקָּהָ֖ל אֶל־פְּנֵ֣י הַסָּ֑לַע וַיֹּ֣אמֶר לָהֶ֗ם שִׁמְעוּ־נָא֙ הַמֹּרִ֔ים הֲמִן־הַסֶּ֣לַע הַזֶּ֔ה נוֹצִ֥יא לָכֶ֖ם מָֽיִם׃</p></div><div class="heb-s"><p>ויקהלו משה ואהרן את־הקהל אל־פני הסלע ויאמר להם שמעו־נא המרים המן־הסלע הזה נוציא לכם מים׃</p></div></div>
+      <div class="texte-fr"><p>Puis Moïse et Aaron convoquèrent l’assemblée devant le rocher, et il leur dit:"Or, écoutez, ô rebelles! Est-ce que de ce rocher nous pouvons faire sortir de l’eau pour vous?"</p></div>
+    </div><div class="seif" id="v-20-11">
+      <span class="seif-num">20:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֨רֶם מֹשֶׁ֜ה אֶת־יָד֗וֹ וַיַּ֧ךְ אֶת־הַסֶּ֛לַע בְּמַטֵּ֖הוּ פַּעֲמָ֑יִם וַיֵּצְאוּ֙ מַ֣יִם רַבִּ֔ים וַתֵּ֥שְׁתְּ הָעֵדָ֖ה וּבְעִירָֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וירם משה את־ידו ויך את־הסלע במטהו פעמים ויצאו מים רבים ותשת העדה ובעירם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et Moïse leva la main, et il frappa le rocher de sa verge par deux fois; il en sortit de l’eau en abondance, et la communauté et ses bêtes en burent.</p></div>
+    </div><div class="seif" id="v-20-12">
+      <span class="seif-num">20:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר יְהֹוָה֮ אֶל־מֹשֶׁ֣ה וְאֶֽל־אַהֲרֹן֒ יַ֚עַן לֹא־הֶאֱמַנְתֶּ֣ם בִּ֔י לְהַ֨קְדִּישֵׁ֔נִי לְעֵינֵ֖י בְּנֵ֣י יִשְׂרָאֵ֑ל לָכֵ֗ן לֹ֤א תָבִ֙יאוּ֙ אֶת־הַקָּהָ֣ל הַזֶּ֔ה אֶל־הָאָ֖רֶץ אֲשֶׁר־נָתַ֥תִּי לָהֶֽם׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה ואל־אהרן יען לא־האמנתם בי להקדישני לעיני בני ישראל לכן לא תביאו את־הקהל הזה אל־הארץ אשר־נתתי להם׃</p></div></div>
+      <div class="texte-fr"><p>Mais l’Éternel dit à Moïse et à Aaron: "Puisque vous n’avez pas assez cru en moi pour me sanctifier aux yeux des enfants d’Israël, aussi ne conduirez-vous point ce peuple dans le pays que je leur ai donné."</p></div>
+    </div><div class="seif" id="v-20-13">
+      <span class="seif-num">20:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵ֚מָּה מֵ֣י מְרִיבָ֔ה אֲשֶׁר־רָב֥וּ בְנֵֽי־יִשְׂרָאֵ֖ל אֶת־יְהֹוָ֑ה וַיִּקָּדֵ֖שׁ בָּֽם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>המה מי מריבה אשר־רבו בני־ישראל את־יהוה ויקדש בם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ce sont là les eaux de Meriba, parce que les enfants d’Israël contestèrent contre le Seigneur, qui fit éclater sa sainteté par elles.</p></div>
+    </div><div class="seif" id="v-20-14">
+      <span class="seif-num">20:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֨ח מֹשֶׁ֧ה מַלְאָכִ֛ים מִקָּדֵ֖שׁ אֶל־מֶ֣לֶךְ אֱד֑וֹם כֹּ֤ה אָמַר֙ אָחִ֣יךָ יִשְׂרָאֵ֔ל אַתָּ֣ה יָדַ֔עְתָּ אֵ֥ת כׇּל־הַתְּלָאָ֖ה אֲשֶׁ֥ר מְצָאָֽתְנוּ׃</p></div><div class="heb-s"><p>וישלח משה מלאכים מקדש אל־מלך אדום כה אמר אחיך ישראל אתה ידעת את כל־התלאה אשר מצאתנו׃</p></div></div>
+      <div class="texte-fr"><p>Moïse envoya, de Kadêch, des députés au roi d’Edom: "Ainsi parle ton frère Israël: tu connais toutes les tribulations que nous avons éprouvées.</p></div>
+    </div><div class="seif" id="v-20-15">
+      <span class="seif-num">20:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּרְד֤וּ אֲבֹתֵ֙ינוּ֙ מִצְרַ֔יְמָה וַנֵּ֥שֶׁב בְּמִצְרַ֖יִם יָמִ֣ים רַבִּ֑ים וַיָּרֵ֥עוּ לָ֛נוּ מִצְרַ֖יִם וְלַאֲבֹתֵֽינוּ׃</p></div><div class="heb-s"><p>וירדו אבתינו מצרימה ונשב במצרים ימים רבים וירעו לנו מצרים ולאבתינו׃</p></div></div>
+      <div class="texte-fr"><p>Jadis, nos pères descendirent en Égypte, et nous y avons demeuré de longs jours; puis les Égyptiens ont agi méchamment envers nous et nos pères.</p></div>
+    </div><div class="seif" id="v-20-16">
+      <span class="seif-num">20:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַנִּצְעַ֤ק אֶל־יְהֹוָה֙ וַיִּשְׁמַ֣ע קֹלֵ֔נוּ וַיִּשְׁלַ֣ח מַלְאָ֔ךְ וַיֹּצִאֵ֖נוּ מִמִּצְרָ֑יִם וְהִנֵּה֙ אֲנַ֣חְנוּ בְקָדֵ֔שׁ עִ֖יר קְצֵ֥ה גְבוּלֶֽךָ׃</p></div><div class="heb-s"><p>ונצעק אל־יהוה וישמע קלנו וישלח מלאך ויצאנו ממצרים והנה אנחנו בקדש עיר קצה גבולך׃</p></div></div>
+      <div class="texte-fr"><p>Mais nous avons Imploré l’Éternel, et il a entendu notre voix, et il a envoyé un mandataire, qui nous a fait sortir de l’Égypte. Or, nous voici à Kadêch, ville qui confine à ta frontière.</p></div>
+    </div><div class="seif" id="v-20-17">
+      <span class="seif-num">20:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַעְבְּרָה־נָּ֣א בְאַרְצֶ֗ךָ לֹ֤א נַעֲבֹר֙ בְּשָׂדֶ֣ה וּבְכֶ֔רֶם וְלֹ֥א נִשְׁתֶּ֖ה מֵ֣י בְאֵ֑ר דֶּ֧רֶךְ הַמֶּ֣לֶךְ נֵלֵ֗ךְ לֹ֤א נִטֶּה֙ יָמִ֣ין וּשְׂמֹ֔אול עַ֥ד אֲשֶֽׁר־נַעֲבֹ֖ר גְּבֻלֶֽךָ׃</p></div><div class="heb-s"><p>נעברה־נא בארצך לא נעבר בשדה ובכרם ולא נשתה מי באר דרך המלך נלך לא נטה ימין ושמאול עד אשר־נעבר גבלך׃</p></div></div>
+      <div class="texte-fr"><p>Permets-nous de traverser ton pays! Nous ne passerons pas par tes champs ni par tes vignes, et nous ne boirons point de l’eau des citernes; nous suivrons la route royale, sans nous en écarter à droite ou à gauche, jusqu’à ce que nous ayons passé ta frontière."</p></div>
+    </div><div class="seif" id="v-20-18">
+      <span class="seif-num">20:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֵלָיו֙ אֱד֔וֹם לֹ֥א תַעֲבֹ֖ר בִּ֑י פֶּן־בַּחֶ֖רֶב אֵצֵ֥א לִקְרָאתֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר אליו אדום לא תעבר בי פן־בחרב אצא לקראתך׃</p></div></div>
+      <div class="texte-fr"><p>Edom lui répondit: "Tu ne traverseras point mon pays, car je me porterais en armes à ta rencontre."</p></div>
+    </div><div class="seif" id="v-20-19">
+      <span class="seif-num">20:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֨וּ אֵלָ֥יו בְּנֵֽי־יִשְׂרָאֵל֮ בַּֽמְסִלָּ֣ה נַעֲלֶה֒ וְאִם־מֵימֶ֤יךָ נִשְׁתֶּה֙ אֲנִ֣י וּמִקְנַ֔י וְנָתַתִּ֖י מִכְרָ֑ם רַ֥ק אֵין־דָּבָ֖ר בְּרַגְלַ֥י אֶֽעֱבֹֽרָה׃</p></div><div class="heb-s"><p>ויאמרו אליו בני־ישראל במסלה נעלה ואם־מימיך נשתה אני ומקני ונתתי מכרם רק אין־דבר ברגלי אעברה׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants d’Israël lui dirent: "C’est par la chaussée que nous voulons monter, et si nous buvons de ton eau, moi ou mes bestiaux, j’en paierai le prix; mais il n’en sera rien, je ne ferai que traverser à pied."</p></div>
+    </div><div class="seif" id="v-20-20">
+      <span class="seif-num">20:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֖אמֶר לֹ֣א תַעֲבֹ֑ר וַיֵּצֵ֤א אֱדוֹם֙ לִקְרָאת֔וֹ בְּעַ֥ם כָּבֵ֖ד וּבְיָ֥ד חֲזָקָֽה׃</p></div><div class="heb-s"><p>ויאמר לא תעבר ויצא אדום לקראתו בעם כבד וביד חזקה׃</p></div></div>
+      <div class="texte-fr"><p>Il répliqua: "Tu ne passeras point!" Et Edom s’avança à sa rencontre, en grande multitude et à main armée.</p></div>
+    </div><div class="seif" id="v-20-21">
+      <span class="seif-num">20:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְמָאֵ֣ן&thinsp;<b>׀</b> אֱד֗וֹם נְתֹן֙ אֶת־יִשְׂרָאֵ֔ל עֲבֹ֖ר בִּגְבֻל֑וֹ וַיֵּ֥ט יִשְׂרָאֵ֖ל מֵעָלָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וימאן&thinsp;<b>׀</b> אדום נתן את־ישראל עבר בגבלו ויט ישראל מעליו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Edom ayant donc refusé à Israël la permission de traverser son territoire, Israël prit une autre direction.</p></div>
+    </div><div class="seif" id="v-20-22">
+      <span class="seif-num">20:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסְע֖וּ מִקָּדֵ֑שׁ וַיָּבֹ֧אוּ בְנֵֽי־יִשְׂרָאֵ֛ל כׇּל־הָעֵדָ֖ה הֹ֥ר הָהָֽר׃</p></div><div class="heb-s"><p>ויסעו מקדש ויבאו בני־ישראל כל־העדה הר ההר׃</p></div></div>
+      <div class="texte-fr"><p>Ils partirent de Kadêch, et les enfants d’Israël en masse arrivèrent à Hor-la-Montagne</p></div>
+    </div><div class="seif" id="v-20-23">
+      <span class="seif-num">20:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֧אמֶר יְהֹוָ֛ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן בְּהֹ֣ר הָהָ֑ר עַל־גְּב֥וּל אֶֽרֶץ־אֱד֖וֹם לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה ואל־אהרן בהר ההר על־גבול ארץ־אדום לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse et à Aaron, à Hor-la-Montagne, sur les confins du pays d’Edom, en ces termes:</p></div>
+    </div><div class="seif" id="v-20-24">
+      <span class="seif-num">20:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>יֵאָסֵ֤ף אַהֲרֹן֙ אֶל־עַמָּ֔יו כִּ֣י לֹ֤א יָבֹא֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֥ר נָתַ֖תִּי לִבְנֵ֣י יִשְׂרָאֵ֑ל עַ֛ל אֲשֶׁר־מְרִיתֶ֥ם אֶת־פִּ֖י לְמֵ֥י מְרִיבָֽה׃</p></div><div class="heb-s"><p>יאסף אהרן אל־עמיו כי לא יבא אל־הארץ אשר נתתי לבני ישראל על אשר־מריתם את־פי למי מריבה׃</p></div></div>
+      <div class="texte-fr"><p>"Aaron doit rejoindre ses pères; car il n’entrera point dans le pays que j’ai donné aux enfants d’Israël, attendu que vous avez dérogé à ma parole au sujet des eaux de Meriba.</p></div>
+    </div><div class="seif" id="v-20-25">
+      <span class="seif-num">20:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>קַ֚ח אֶֽת־אַהֲרֹ֔ן וְאֶת־אֶלְעָזָ֖ר בְּנ֑וֹ וְהַ֥עַל אֹתָ֖ם הֹ֥ר הָהָֽר׃</p></div><div class="heb-s"><p>קח את־אהרן ואת־אלעזר בנו והעל אתם הר ההר׃</p></div></div>
+      <div class="texte-fr"><p>Prends donc Aaron avec Eléazar, son fils, et fais-les monter sur le mont Hor;</p></div>
+    </div><div class="seif" id="v-20-26">
+      <span class="seif-num">20:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַפְשֵׁ֤ט אֶֽת־אַהֲרֹן֙ אֶת־בְּגָדָ֔יו וְהִלְבַּשְׁתָּ֖ם אֶת־אֶלְעָזָ֣ר בְּנ֑וֹ וְאַהֲרֹ֥ן יֵאָסֵ֖ף וּמֵ֥ת שָֽׁם׃</p></div><div class="heb-s"><p>והפשט את־אהרן את־בגדיו והלבשתם את־אלעזר בנו ואהרן יאסף ומת שם׃</p></div></div>
+      <div class="texte-fr"><p>dépouille Aaron de son costume, et revêts-en Eléazar, son fils: alors Aaron rejoindra ses pères et il mourra là."</p></div>
+    </div><div class="seif" id="v-20-27">
+      <span class="seif-num">20:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַשׂ מֹשֶׁ֔ה כַּאֲשֶׁ֖ר צִוָּ֣ה יְהֹוָ֑ה וַֽיַּעֲלוּ֙ אֶל־הֹ֣ר הָהָ֔ר לְעֵינֵ֖י כׇּל־הָעֵדָֽה׃</p></div><div class="heb-s"><p>ויעש משה כאשר צוה יהוה ויעלו אל־הר ההר לעיני כל־העדה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse fit comme avait ordonné l’Éternel: ils gravirent le mont Hor à la vue de toute la communauté.</p></div>
+    </div><div class="seif" id="v-20-28">
+      <span class="seif-num">20:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּפְשֵׁט֩ מֹשֶׁ֨ה אֶֽת־אַהֲרֹ֜ן אֶת־בְּגָדָ֗יו וַיַּלְבֵּ֤שׁ אֹתָם֙ אֶת־אֶלְעָזָ֣ר בְּנ֔וֹ וַיָּ֧מׇת אַהֲרֹ֛ן שָׁ֖ם בְּרֹ֣אשׁ הָהָ֑ר וַיֵּ֧רֶד מֹשֶׁ֛ה וְאֶלְעָזָ֖ר מִן־הָהָֽר׃</p></div><div class="heb-s"><p>ויפשט משה את־אהרן את־בגדיו וילבש אתם את־אלעזר בנו וימת אהרן שם בראש ההר וירד משה ואלעזר מן־ההר׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse dépouilla Aaron de son costume, le fit revêtir à Eléazar, son fils, et Aaron mourut là, au sommet de la montagne. Moïse et Eléazar redescendirent la montagne.</p></div>
+    </div><div class="seif" id="v-20-29">
+      <span class="seif-num">20:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְאוּ֙ כׇּל־הָ֣עֵדָ֔ה כִּ֥י גָוַ֖ע אַהֲרֹ֑ן וַיִּבְכּ֤וּ אֶֽת־אַהֲרֹן֙ שְׁלֹשִׁ֣ים י֔וֹם כֹּ֖ל בֵּ֥ית יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויראו כל־העדה כי גוע אהרן ויבכו את־אהרן שלשים יום כל בית ישראל׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>La communauté voyant qu’Aaron avait cessé de vivre, toute la maison d’Israël le pleura trente jours.</p></div>
+    </div><div class="seif" id="v-21-1">
+      <span class="seif-num">21:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֞ע הַכְּנַעֲנִ֤י מֶֽלֶךְ־עֲרָד֙ יֹשֵׁ֣ב הַנֶּ֔גֶב כִּ֚י בָּ֣א יִשְׂרָאֵ֔ל דֶּ֖רֶךְ הָאֲתָרִ֑ים וַיִּלָּ֙חֶם֙ בְּיִשְׂרָאֵ֔ל וַיִּ֥שְׁבְּ&thinsp;<small>׀</small>&thinsp;מִמֶּ֖נּוּ שֶֽׁבִי׃</p></div><div class="heb-s"><p>וישמע הכנעני מלך־ערד ישב הנגב כי בא ישראל דרך האתרים וילחם בישראל וישב&thinsp;<small>׀</small>&thinsp;ממנו שבי׃</p></div></div>
+      <div class="texte-fr"><p>Le Cananéen, roi d’Arad, qui habitait au midi, ayant appris qu’Israël s’acheminait par ces régions, attaqua les Israélites et en fit quelques-uns prisonniers.</p></div>
+    </div><div class="seif" id="v-21-2">
+      <span class="seif-num">21:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּדַּ֨ר יִשְׂרָאֵ֥ל נֶ֛דֶר לַֽיהֹוָ֖ה וַיֹּאמַ֑ר אִם־נָתֹ֨ן תִּתֵּ֜ן אֶת־הָעָ֤ם הַזֶּה֙ בְּיָדִ֔י וְהַֽחֲרַמְתִּ֖י אֶת־עָרֵיהֶֽם׃</p></div><div class="heb-s"><p>וידר ישראל נדר ליהוה ויאמר אם־נתן תתן את־העם הזה בידי והחרמתי את־עריהם׃</p></div></div>
+      <div class="texte-fr"><p>Mais Israël fit un vœu à l’Éternel en disant: "Si tu livres ce peuple en mon pouvoir, je vouerais ses villes à l’anathème."</p></div>
+    </div><div class="seif" id="v-21-3">
+      <span class="seif-num">21:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֨ע יְהֹוָ֜ה בְּק֣וֹל יִשְׂרָאֵ֗ל וַיִּתֵּן֙ אֶת־הַֽכְּנַעֲנִ֔י וַיַּחֲרֵ֥ם אֶתְהֶ֖ם וְאֶת־עָרֵיהֶ֑ם וַיִּקְרָ֥א שֵׁם־הַמָּק֖וֹם חׇרְמָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וישמע יהוה בקול ישראל ויתן את־הכנעני ויחרם אתהם ואת־עריהם ויקרא שם־המקום חרמה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>L’Éternel écouta la voix d’Israël et lui livra les Cananéens; et on les frappa d’anathème, eux et leurs villes, et l’on donna à ce lieu le nom de Horma.</p></div>
+    </div><div class="seif" id="v-21-4">
+      <span class="seif-num">21:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסְע֞וּ מֵהֹ֤ר הָהָר֙ דֶּ֣רֶךְ יַם־ס֔וּף לִסְבֹ֖ב אֶת־אֶ֣רֶץ אֱד֑וֹם וַתִּקְצַ֥ר נֶֽפֶשׁ־הָעָ֖ם בַּדָּֽרֶךְ׃</p></div><div class="heb-s"><p>ויסעו מהר ההר דרך ים־סוף לסבב את־ארץ אדום ותקצר נפש־העם בדרך׃</p></div></div>
+      <div class="texte-fr"><p>Ils partirent de Hor-la-Montagne dans la direction de la mer des Joncs, pour tourner le pays d’Edom. Le peuple perdit courage pendant cette marche,</p></div>
+    </div><div class="seif" id="v-21-5">
+      <span class="seif-num">21:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֣ר הָעָ֗ם בֵּֽאלֹהִים֮ וּבְמֹשֶׁה֒ לָמָ֤ה הֶֽעֱלִיתֻ֙נוּ֙ מִמִּצְרַ֔יִם לָמ֖וּת בַּמִּדְבָּ֑ר כִּ֣י אֵ֥ין לֶ֙חֶם֙ וְאֵ֣ין מַ֔יִם וְנַפְשֵׁ֣נוּ קָ֔צָה בַּלֶּ֖חֶם הַקְּלֹקֵֽל׃</p></div><div class="heb-s"><p>וידבר העם באלהים ובמשה למה העליתנו ממצרים למות במדבר כי אין לחם ואין מים ונפשנו קצה בלחם הקלקל׃</p></div></div>
+      <div class="texte-fr"><p>et il se plaignit de Dieu et de Moïse: "Pourquoi nous avez-vous tirés de l’Égypte, pour nous faire mourir dans ce désert? Car il n’y a point de pain, point d’eau, et nous sommes excédés de ce misérable aliment."</p></div>
+    </div><div class="seif" id="v-21-6">
+      <span class="seif-num">21:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְשַׁלַּ֨ח יְהֹוָ֜ה בָּעָ֗ם אֵ֚ת הַנְּחָשִׁ֣ים הַשְּׂרָפִ֔ים וַֽיְנַשְּׁכ֖וּ אֶת־הָעָ֑ם וַיָּ֥מׇת עַם־רָ֖ב מִיִּשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>וישלח יהוה בעם את הנחשים השרפים וינשכו את־העם וימת עם־רב מישראל׃</p></div></div>
+      <div class="texte-fr"><p>Alors l’Éternel suscita contre le peuple les serpents brûlants, qui mordirent le peuple, et il périt une multitude d’Israélites.</p></div>
+    </div><div class="seif" id="v-21-7">
+      <span class="seif-num">21:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹא֩ הָעָ֨ם אֶל־מֹשֶׁ֜ה וַיֹּאמְר֣וּ חָטָ֗אנוּ כִּֽי־דִבַּ֤רְנוּ בַֽיהֹוָה֙ וָבָ֔ךְ הִתְפַּלֵּל֙ אֶל־יְהֹוָ֔ה וְיָסֵ֥ר מֵעָלֵ֖ינוּ אֶת־הַנָּחָ֑שׁ וַיִּתְפַּלֵּ֥ל מֹשֶׁ֖ה בְּעַ֥ד הָעָֽם׃</p></div><div class="heb-s"><p>ויבא העם אל־משה ויאמרו חטאנו כי־דברנו ביהוה ובך התפלל אל־יהוה ויסר מעלינו את־הנחש ויתפלל משה בעד העם׃</p></div></div>
+      <div class="texte-fr"><p>Et le peuple s’adressa à Moïse, et ils dirent: "Nous avons péché en parlant contre l’Éternel et contre toi; intercède auprès de l’Éternel, pour qu’il détourne de nous ces serpents!" Et Moïse intercéda pour le peuple.</p></div>
+    </div><div class="seif" id="v-21-8">
+      <span class="seif-num">21:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יְהֹוָ֜ה אֶל־מֹשֶׁ֗ה עֲשֵׂ֤ה לְךָ֙ שָׂרָ֔ף וְשִׂ֥ים אֹת֖וֹ עַל־נֵ֑ס וְהָיָה֙ כׇּל־הַנָּשׁ֔וּךְ וְרָאָ֥ה אֹת֖וֹ וָחָֽי׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה עשה לך שרף ושים אתו על־נס והיה כל־הנשוך וראה אתו וחי׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel dit à Moïse: "Fais toi-même un serpent et place-le au haut d’une perche: quiconque aura été mordu, qu’il le regarde et il vivra!"</p></div>
+    </div><div class="seif" id="v-21-9">
+      <span class="seif-num">21:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤עַשׂ מֹשֶׁה֙ נְחַ֣שׁ נְחֹ֔שֶׁת וַיְשִׂמֵ֖הוּ עַל־הַנֵּ֑ס וְהָיָ֗ה אִם־נָשַׁ֤ךְ הַנָּחָשׁ֙ אֶת־אִ֔ישׁ וְהִבִּ֛יט אֶל־נְחַ֥שׁ הַנְּחֹ֖שֶׁת וָחָֽי׃</p></div><div class="heb-s"><p>ויעש משה נחש נחשת וישמהו על־הנס והיה אם־נשך הנחש את־איש והביט אל־נחש הנחשת וחי׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse fit un serpent d’airain, le fixa sur une perche; et alors, si quelqu’un était mordu par un serpent, il levait les yeux vers le serpent d’airain et était sauvé.</p></div>
+    </div><div class="seif" id="v-21-10">
+      <span class="seif-num">21:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיַּחֲנ֖וּ בְּאֹבֹֽת׃</p></div><div class="heb-s"><p>ויסעו בני ישראל ויחנו באבת׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants d’Israël levèrent le camp, puis campèrent à Oboth.</p></div>
+    </div><div class="seif" id="v-21-11">
+      <span class="seif-num">21:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסְע֖וּ מֵאֹבֹ֑ת וַֽיַּחֲנ֞וּ בְּעִיֵּ֣י הָֽעֲבָרִ֗ים בַּמִּדְבָּר֙ אֲשֶׁר֙ עַל־פְּנֵ֣י מוֹאָ֔ב מִמִּזְרַ֖ח הַשָּֽׁמֶשׁ׃</p></div><div class="heb-s"><p>ויסעו מאבת ויחנו בעיי העברים במדבר אשר על־פני מואב ממזרח השמש׃</p></div></div>
+      <div class="texte-fr"><p>Partis d’Oboth, ils campèrent à lyyê-Haabarîm, dans le désert situé devant Moab, vers le soleil levant.</p></div>
+    </div><div class="seif" id="v-21-12">
+      <span class="seif-num">21:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִשָּׁ֖ם נָסָ֑עוּ וַֽיַּחֲנ֖וּ בְּנַ֥חַל זָֽרֶד׃</p></div><div class="heb-s"><p>משם נסעו ויחנו בנחל זרד׃</p></div></div>
+      <div class="texte-fr"><p>De là ils repartirent et campèrent dans la vallée de Zéred.</p></div>
+    </div><div class="seif" id="v-21-13">
+      <span class="seif-num">21:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִשָּׁם֮ נָסָ֒עוּ֒ וַֽיַּחֲנ֗וּ מֵעֵ֤בֶר אַרְנוֹן֙ אֲשֶׁ֣ר בַּמִּדְבָּ֔ר הַיֹּצֵ֖א מִגְּבֻ֣ל הָֽאֱמֹרִ֑י כִּ֤י אַרְנוֹן֙ גְּב֣וּל מוֹאָ֔ב בֵּ֥ין מוֹאָ֖ב וּבֵ֥ין הָאֱמֹרִֽי׃</p></div><div class="heb-s"><p>משם נסעו ויחנו מעבר ארנון אשר במדבר היצא מגבל האמרי כי ארנון גבול מואב בין מואב ובין האמרי׃</p></div></div>
+      <div class="texte-fr"><p>De là ils repartirent et campèrent sur la rive de l’Arnon située dans le désert et partant du territoire des Amorréens; car l’Arnon est la frontière de Moab, entre Moab et le territoire amorréen.</p></div>
+    </div><div class="seif" id="v-21-14">
+      <span class="seif-num">21:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּן֙ יֵֽאָמַ֔ר בְּסֵ֖פֶר מִלְחֲמֹ֣ת יְהֹוָ֑ה אֶת־וָהֵ֣ב בְּסוּפָ֔ה וְאֶת־הַנְּחָלִ֖ים אַרְנֽוֹן׃</p></div><div class="heb-s"><p>על־כן יאמר בספר מלחמת יהוה את־והב בסופה ואת־הנחלים ארנון׃</p></div></div>
+      <div class="texte-fr"><p>C’est pourquoi l’on cite, dans l’histoire des guerres du Seigneur, "Vaheb en Soufa, et les affluents de l’Arnon;</p></div>
+    </div><div class="seif" id="v-21-15">
+      <span class="seif-num">21:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶ֙שֶׁד֙ הַנְּחָלִ֔ים אֲשֶׁ֥ר נָטָ֖ה לְשֶׁ֣בֶת עָ֑ר וְנִשְׁעַ֖ן לִגְב֥וּל מוֹאָֽב׃</p></div><div class="heb-s"><p>ואשד הנחלים אשר נטה לשבת ער ונשען לגבול מואב׃</p></div></div>
+      <div class="texte-fr"><p>et encore le bassin des rivières, qui s’étend vers Chébeth-Ar et confine à la frontière de Moab..."</p></div>
+    </div><div class="seif" id="v-21-16">
+      <span class="seif-num">21:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִשָּׁ֖ם בְּאֵ֑רָה הִ֣וא הַבְּאֵ֗ר אֲשֶׁ֨ר אָמַ֤ר יְהֹוָה֙ לְמֹשֶׁ֔ה אֱסֹף֙ אֶת־הָעָ֔ם וְאֶתְּנָ֥ה לָהֶ֖ם מָֽיִם׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ומשם בארה הוא הבאר אשר אמר יהוה למשה אסף את־העם ואתנה להם מים׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Puis, ils gagnèrent Beêr, ce puits à propos duquel le Seigneur dit à Moïse:"Assemble le peuple, je veux lui donner de l’eau."</p></div>
+    </div><div class="seif" id="v-21-17">
+      <span class="seif-num">21:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָ֚ז יָשִׁ֣יר יִשְׂרָאֵ֔ל אֶת־הַשִּׁירָ֖ה הַזֹּ֑את עֲלִ֥י בְאֵ֖ר עֱנוּ־לָֽהּ׃</p></div><div class="heb-s"><p>אז ישיר ישראל את־השירה הזאת עלי באר ענו־לה׃</p></div></div>
+      <div class="texte-fr"><p>C’est alors qu’Israël chanta ce cantique: "Jaillis, ô source! Acclamez-la!...</p></div>
+    </div><div class="seif" id="v-21-18">
+      <span class="seif-num">21:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּאֵ֞ר חֲפָר֣וּהָ שָׂרִ֗ים כָּר֙וּהָ֙ נְדִיבֵ֣י הָעָ֔ם בִּמְחֹקֵ֖ק בְּמִשְׁעֲנֹתָ֑ם וּמִמִּדְבָּ֖ר מַתָּנָֽה׃</p></div><div class="heb-s"><p>באר חפרוה שרים כרוה נדיבי העם במחקק במשענתם וממדבר מתנה׃</p></div></div>
+      <div class="texte-fr"><p>Ce puits, des princes l’ont creusé, les plus grands du peuple l’ont ouvert, avec le sceptre, avec leurs verges!..." Et de Midbar ils allèrent à Mattana;</p></div>
+    </div><div class="seif" id="v-21-19">
+      <span class="seif-num">21:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִמַּתָּנָ֖ה נַחֲלִיאֵ֑ל וּמִנַּחֲלִיאֵ֖ל בָּמֽוֹת׃</p></div><div class="heb-s"><p>וממתנה נחליאל ומנחליאל במות׃</p></div></div>
+      <div class="texte-fr"><p>de Mattana à Nahalïel; de Nahalïel à Bamoth;</p></div>
+    </div><div class="seif" id="v-21-20">
+      <span class="seif-num">21:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִבָּמ֗וֹת הַגַּיְא֙ אֲשֶׁר֙ בִּשְׂדֵ֣ה מוֹאָ֔ב רֹ֖אשׁ הַפִּסְגָּ֑ה וְנִשְׁקָ֖פָה עַל־פְּנֵ֥י הַיְשִׁימֹֽן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ומבמות הגיא אשר בשדה מואב ראש הפסגה ונשקפה על־פני הישימן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>et de Bamoth, au plateau qui est dans la campagne de Moab, au sommet du Pisga, d’où l’on découvrait l’étendue du désert.</p></div>
+    </div><div class="seif" id="v-21-21">
+      <span class="seif-num">21:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֤ח יִשְׂרָאֵל֙ מַלְאָכִ֔ים אֶל־סִיחֹ֥ן מֶֽלֶךְ־הָאֱמֹרִ֖י לֵאמֹֽר׃</p></div><div class="heb-s"><p>וישלח ישראל מלאכים אל־סיחן מלך־האמרי לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Israël envoya des députés à Sihôn, roi des Amorréens, pour lui dire:</p></div>
+    </div><div class="seif" id="v-21-22">
+      <span class="seif-num">21:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶעְבְּרָ֣ה בְאַרְצֶ֗ךָ לֹ֤א נִטֶּה֙ בְּשָׂדֶ֣ה וּבְכֶ֔רֶם לֹ֥א נִשְׁתֶּ֖ה מֵ֣י בְאֵ֑ר בְּדֶ֤רֶךְ הַמֶּ֙לֶךְ֙ נֵלֵ֔ךְ עַ֥ד אֲשֶֽׁר־נַעֲבֹ֖ר גְּבֻלֶֽךָ׃</p></div><div class="heb-s"><p>אעברה בארצך לא נטה בשדה ובכרם לא נשתה מי באר בדרך המלך נלך עד אשר־נעבר גבלך׃</p></div></div>
+      <div class="texte-fr"><p>"Je voudrais passer par ton pays. Nous ne traverserons ni champs ni vignobles, nous ne boirons point de l’eau des citernes; nous irons par la route royale, jusqu’à ce que nous ayons passé ta frontière."</p></div>
+    </div><div class="seif" id="v-21-23">
+      <span class="seif-num">21:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־נָתַ֨ן סִיחֹ֣ן אֶת־יִשְׂרָאֵל֮ עֲבֹ֣ר בִּגְבֻלוֹ֒ וַיֶּאֱסֹ֨ף סִיחֹ֜ן אֶת־כׇּל־עַמּ֗וֹ וַיֵּצֵ֞א לִקְרַ֤את יִשְׂרָאֵל֙ הַמִּדְבָּ֔רָה וַיָּבֹ֖א יָ֑הְצָה וַיִּלָּ֖חֶם בְּיִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ולא־נתן סיחן את־ישראל עבר בגבלו ויאסף סיחן את־כל־עמו ויצא לקראת ישראל המדברה ויבא יהצה וילחם בישראל׃</p></div></div>
+      <div class="texte-fr"><p>Mais Sihôn ne permit point à Israël de traverser son territoire; et Sihôn rassembla tout son peuple, marcha à la rencontre d’Israël, vers le désert et atteignit Yahça, où il livra la bataille à Israël.</p></div>
+    </div><div class="seif" id="v-21-24">
+      <span class="seif-num">21:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּכֵּ֥הוּ יִשְׂרָאֵ֖ל לְפִי־חָ֑רֶב וַיִּירַ֨שׁ אֶת־אַרְצ֜וֹ מֵֽאַרְנֹ֗ן עַד־יַבֹּק֙ עַד־בְּנֵ֣י עַמּ֔וֹן כִּ֣י עַ֔ז גְּב֖וּל בְּנֵ֥י עַמּֽוֹן׃</p></div><div class="heb-s"><p>ויכהו ישראל לפי־חרב ויירש את־ארצו מארנן עד־יבק עד־בני עמון כי עז גבול בני עמון׃</p></div></div>
+      <div class="texte-fr"><p>Israël le passa au fil de l’épée, et il conquît son pays depuis l’Arnon jusqu’au Jaboc, jusqu’aux possessions des Ammonites; car elle était forte, la frontière des enfants d’Ammon.</p></div>
+    </div><div class="seif" id="v-21-25">
+      <span class="seif-num">21:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּח֙ יִשְׂרָאֵ֔ל אֵ֥ת כׇּל־הֶעָרִ֖ים הָאֵ֑לֶּה וַיֵּ֤שֶׁב יִשְׂרָאֵל֙ בְּכׇל־עָרֵ֣י הָֽאֱמֹרִ֔י בְּחֶשְׁבּ֖וֹן וּבְכׇל־בְּנֹתֶֽיהָ׃</p></div><div class="heb-s"><p>ויקח ישראל את כל־הערים האלה וישב ישראל בכל־ערי האמרי בחשבון ובכל־בנתיה׃</p></div></div>
+      <div class="texte-fr"><p>Israël s’empara de toutes ces villes; et il s’établit dans toutes les villes des Amorréens, à Hesbon et dans toutes ses dépendances.</p></div>
+    </div><div class="seif" id="v-21-26">
+      <span class="seif-num">21:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י חֶשְׁבּ֔וֹן עִ֗יר סִיחֹ֛ן מֶ֥לֶךְ הָאֱמֹרִ֖י הִ֑וא וְה֣וּא נִלְחַ֗ם בְּמֶ֤לֶךְ מוֹאָב֙ הָֽרִאשׁ֔וֹן וַיִּקַּ֧ח אֶת־כׇּל־אַרְצ֛וֹ מִיָּד֖וֹ עַד־אַרְנֹֽן׃</p></div><div class="heb-s"><p>כי חשבון עיר סיחן מלך האמרי הוא והוא נלחם במלך מואב הראשון ויקח את־כל־ארצו מידו עד־ארנן׃</p></div></div>
+      <div class="texte-fr"><p>Car Hesbon était devenue la ville de Sihôn, roi des Amorréens, celui-ci ayant fait la guerre au précédent roi de Moab, et lui ayant pris tout son territoire jusqu’à l’Arnon.</p></div>
+    </div><div class="seif" id="v-21-27">
+      <span class="seif-num">21:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל־כֵּ֛ן יֹאמְר֥וּ הַמֹּשְׁלִ֖ים בֹּ֣אוּ חֶשְׁבּ֑וֹן תִּבָּנֶ֥ה וְתִכּוֹנֵ֖ן עִ֥יר סִיחֽוֹן׃</p></div><div class="heb-s"><p>על־כן יאמרו המשלים באו חשבון תבנה ותכונן עיר סיחון׃</p></div></div>
+      <div class="texte-fr"><p>C’est à ce propos que les poètes disaient: "Venez à Hesbon! Cité de Sihôn, qu’elle se relève et s’affermisse!</p></div>
+    </div><div class="seif" id="v-21-28">
+      <span class="seif-num">21:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־אֵשׁ֙ יָֽצְאָ֣ה מֵֽחֶשְׁבּ֔וֹן לֶהָבָ֖ה מִקִּרְיַ֣ת סִיחֹ֑ן אָֽכְלָה֙ עָ֣ר מוֹאָ֔ב בַּעֲלֵ֖י בָּמ֥וֹת אַרְנֹֽן׃</p></div><div class="heb-s"><p>כי־אש יצאה מחשבון להבה מקרית סיחן אכלה ער מואב בעלי במות ארנן׃</p></div></div>
+      <div class="texte-fr"><p>Car un feu a jailli de Hesbon, une flamme, de la ville de Sihôn, qui a dévoré Ar-en-Moab, les maîtres des hauteurs d’Arnon.</p></div>
+    </div><div class="seif" id="v-21-29">
+      <span class="seif-num">21:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>אוֹי־לְךָ֣ מוֹאָ֔ב אָבַ֖דְתָּ עַם־כְּמ֑וֹשׁ נָתַ֨ן בָּנָ֤יו פְּלֵיטִם֙ וּבְנֹתָ֣יו בַּשְּׁבִ֔ית לְמֶ֥לֶךְ אֱמֹרִ֖י סִיחֽוֹן׃</p></div><div class="heb-s"><p>אוי־לך מואב אבדת עם־כמוש נתן בניו פליטם ובנתיו בשבית למלך אמרי סיחון׃</p></div></div>
+      <div class="texte-fr"><p>C’est fait de toi. Moab! Tu es perdu, peuple de Camôs!... Ses fils, il les laisse mettre en fuite, ses filles, emmener captives, par un roi amorréen, par Sihôn!</p></div>
+    </div><div class="seif" id="v-21-30">
+      <span class="seif-num">21:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַנִּירָ֛ם אָבַ֥ד חֶשְׁבּ֖וֹן עַד־דִּיבֹ֑ן וַנַּשִּׁ֣ים עַד־נֹ֔פַח אֲשֶׁ֖רׄ עַד־מֵֽידְבָֽא׃</p></div><div class="heb-s"><p>ונירם אבד חשבון עד־דיבן ונשים עד־נפח אשר עד־מידבא׃</p></div></div>
+      <div class="texte-fr"><p>Hesbon perdu, nous les avons poursuivis de nos traits jusqu’à Dibôn; nous avons dévasté jusqu’à Nôfah, même jusqu’à Mèdeba!..."</p></div>
+    </div><div class="seif" id="v-21-31">
+      <span class="seif-num">21:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֙שֶׁב֙ יִשְׂרָאֵ֔ל בְּאֶ֖רֶץ הָאֱמֹרִֽי׃</p></div><div class="heb-s"><p>וישב ישראל בארץ האמרי׃</p></div></div>
+      <div class="texte-fr"><p>Israël s’établit donc dans le pays des Amorréens.</p></div>
+    </div><div class="seif" id="v-21-32">
+      <span class="seif-num">21:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֤ח מֹשֶׁה֙ לְרַגֵּ֣ל אֶת־יַעְזֵ֔ר וַֽיִּלְכְּד֖וּ בְּנֹתֶ֑יהָ <span class="mam-kq"><span class="mam-kq-k">(ויירש)</span> <span class="mam-kq-q">[וַיּ֖וֹרֶשׁ]</span></span> אֶת־הָאֱמֹרִ֥י אֲשֶׁר־שָֽׁם׃</p></div><div class="heb-s"><p>וישלח משה לרגל את־יעזר וילכדו בנתיה <span class="mam-kq"><span class="mam-kq-k">(ויירש)</span> <span class="mam-kq-q">[ויורש]</span></span> את־האמרי אשר־שם׃</p></div></div>
+      <div class="texte-fr"><p>Moïse envoya explorer Yazêr; on s’empara de ses dépendances, et l’on déposséda les Amorréens qui y demeuraient.</p></div>
+    </div><div class="seif" id="v-21-33">
+      <span class="seif-num">21:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפְנוּ֙ וַֽיַּעֲל֔וּ דֶּ֖רֶךְ הַבָּשָׁ֑ן וַיֵּצֵ֣א עוֹג֩ מֶֽלֶךְ־הַבָּשָׁ֨ן לִקְרָאתָ֜ם ה֧וּא וְכׇל־עַמּ֛וֹ לַמִּלְחָמָ֖ה אֶדְרֶֽעִי׃</p></div><div class="heb-s"><p>ויפנו ויעלו דרך הבשן ויצא עוג מלך־הבשן לקראתם הוא וכל־עמו למלחמה אדרעי׃</p></div></div>
+      <div class="texte-fr"><p>Puis ils se dirigèrent, en montant plus haut, vers le Basan. Og, roi du Basan, s’avança à leur rencontre avec tout son peuple, pour leur livrer bataille, à Edréi.</p></div>
+    </div><div class="seif" id="v-21-34">
+      <span class="seif-num">21:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יְהֹוָ֤ה אֶל־מֹשֶׁה֙ אַל־תִּירָ֣א אֹת֔וֹ כִּ֣י בְיָדְךָ֞ נָתַ֧תִּי אֹת֛וֹ וְאֶת־כׇּל־עַמּ֖וֹ וְאֶת־אַרְצ֑וֹ וְעָשִׂ֣יתָ לּ֔וֹ כַּאֲשֶׁ֣ר עָשִׂ֗יתָ לְסִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י אֲשֶׁ֥ר יוֹשֵׁ֖ב בְּחֶשְׁבּֽוֹן׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה אל־תירא אתו כי בידך נתתי אתו ואת־כל־עמו ואת־ארצו ועשית לו כאשר עשית לסיחן מלך האמרי אשר יושב בחשבון׃</p></div></div>
+      <div class="texte-fr"><p>Mais l’Éternel dit à Moïse: "Ne le crains point, car je le livre en tes mains, lui et tout son peuple, et son pays; et tu le traiteras comme tu as traité Sihôn, roi des Amorréens, qui résidait à Hesbon."</p></div>
+    </div><div class="seif" id="v-21-35">
+      <span class="seif-num">21:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּכּ֨וּ אֹת֤וֹ וְאֶת־בָּנָיו֙ וְאֶת־כׇּל־עַמּ֔וֹ עַד־בִּלְתִּ֥י הִשְׁאִֽיר־ל֖וֹ שָׂרִ֑יד וַיִּֽירְשׁ֖וּ אֶת־אַרְצֽוֹ׃</p></div><div class="heb-s"><p>ויכו אתו ואת־בניו ואת־כל־עמו עד־בלתי השאיר־לו שריד ויירשו את־ארצו׃</p></div></div>
+      <div class="texte-fr"><p>Et ils le battirent, ainsi que ses fils et tout son peuple, tellement qu’ils n’en laissèrent survivre aucun; et ils conquirent son territoire.</p></div>
+    </div><div class="seif" id="v-22-1">
+      <span class="seif-num">22:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל וַֽיַּחֲנוּ֙ בְּעַֽרְב֣וֹת מוֹאָ֔ב מֵעֵ֖בֶר לְיַרְדֵּ֥ן יְרֵחֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויסעו בני ישראל ויחנו בערבות מואב מעבר לירדן ירחו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Les enfants d’Israël repartirent, et ils allèrent camper dans les plaines de Moab, sur la rive du Jourdain, qui fait face à Jéricho.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>L’Éternel parla à Moïse et à Aaron en ces termes: &quot;Ceci est un statut de la loi qu’a prescrit l’Éternel, savoir: Avertis les enfants d’Israël de te choisir une vache rousse, intacte, sans aucun défaut, et qui n’ait pas encore porté le joug. Vous la remettrez au pontife Eléazar; il la fera conduire hors du camp, et on l’immolera en sa présence. Le pontife Eléazar prendra du sang de l’animal avec le doigt, et il fera, en les dirigeant vers la face de la tente d’assignation, sept aspersions de ce sang. Alors on brûlera la vache sous ses yeux: sa peau, sa chair et son sang, on les brûlera avec sa fiente. Le pontife prendra du bois de cèdre, de l’hysope et de l’écarlate, qu’il jettera dans le feu où se consume la vache. Puis ce pontife lavera ses vêtements, baignera son corps dans l’eau, et alors il rentrera au camp; mais il restera impur jusqu’au soir. Celui qui aura brûlé la vache nettoiera ses vêtements dans l’eau, baignera dans l’eau son corps, et restera impur jusqu’au soir. Cependant un homme pur recueillera les cendres de la vache et les déposera hors du camp, en lieu pur, où elles resteront en dépôt, pour la communauté des enfants d’Israël, en vue de l’eau lustrale: c’est un purificatoire. Celui qui aura recueilli les cendres de la vache lavera ses vêtements, et sera impur jusqu’au soir. Et ceci sera, pour les enfants d’Israël et pour l’étranger établi parmi eux, un statut invariable: celui qui touchera au cadavre d’un être humain quelconque sera impur durant sept jours. Qu’il se purifie au moyen de ces cendres, le troisième et le septième jour, et il sera pur; mais s’il ne s’est pas purifié, le troisième et le septième jour, il ne sera point pur. Quiconque a touché à un cadavre, au corps d’une personne morte, et ne se purifie point, souille la résidence du Seigneur, et cette existence sera retranchée d’Israël: parce que l’eau lustrale n’a pas été lancée sur lui, souillé qu’il est, il gardera sa souillure. Voici la règle, lorsqu’il se trouve un mort dans une tente: quiconque entre dans cette tente, et tout ce qu’elle renferme, sera impur durant sept jours; et tout vase découvert, qui n’est pas entièrement clos d’un couvercle, sera impur. Quiconque touchera, en pleine campagne, au corps d’un homme tué par le glaive ou mort naturellement, ou à un ossement humain ou à un sépulcre, sera souillé durant sept jours. Pour purifier l’impur, on prendra des cendres provenant de la combustion du purificatoire, auxquelles on mêlera de l’eau vive dans un vase. Et un homme pur prendra de l’hysope, la trempera dans l’eau et aspergera la tente, ainsi que tous les vases et les personnes qui s’y trouvaient; pareillement, celui qui aurait touché à l’ossement, à l’homme tué ou mort naturellement, ou au sépulcre. L’homme pur fera donc aspersion sur l’impur, au troisième et au septième jour; et lorsqu’il l’aura purifié le septième jour, l’autre lavera ses vêtements, se baignera dans l’eau, et sera pur le soir. Mais l’individu qui, devenu impur, ne se purifierait pas, celui-là sera retranché du sein de l’assemblée, car il a souillé le sanctuaire du Seigneur: l’eau lustrale n’a pas été jetée sur lui, il reste impur. Ce sera pour eux une règle invariable. Quant à celui qui aura fait aspersion de l’eau lustrale, il lavera ses vêtements, et celui qui touchera à l’eau lustrale sera impur jusqu’au soir. Tout ce que touchera l’impur sera souillé; et la personne qui le touchera sera souillée jusqu’au soir.&quot;</p>
-      <p>Les enfants d’Israël, toute la communauté, arrivèrent au désert de Cîn, dans le premier mois, et le peuple s’arrêta à Kadêch. Miryam mourut en ce lieu et y fut ensevelie. Or, la communauté manqua d’eau, et ils s’ameutèrent contre Moïse et Aaron; et le peuple chercha querelle à Moïse, et ils parlèrent ainsi: &quot;Ah! Que ne sommes-nous morts quand sont morts nos frères devant l’Éternel! Et pourquoi avez-vous conduit le peuple de Dieu dans ce désert, pour y périr, nous et notre bétail? Et pourquoi nous avez-vous fait quitter l’Égypte pour nous amener en ce méchant pays, qui n’est pas un pays de culture, où il n’y a ni figuiers, ni vignes, ni grenadiers, ni eau à boire!&quot; Moïse et Aaron, assaillis par la multitude, se dirigèrent vers l’entrée de la tente d’assignation et se jetèrent sur leur face; et la majesté divine leur apparut. Et l’Éternel parla ainsi à Moïse: &quot;Prends la verge et assemble la communauté, toi ainsi qu’Aaron ton frère, et dites au rocher, en leur présence, de donner ses eaux: tu feras couler, pour eux, de l’eau de ce rocher, et tu désaltéreras la communauté et son bétail.&quot; Moïse prit la verge de devant l’Éternel, comme il le lui avait ordonné. Puis Moïse et Aaron convoquèrent l’assemblée devant le rocher, et il leur dit:&quot;Or, écoutez, ô rebelles! Est-ce que de ce rocher nous pouvons faire sortir de l’eau pour vous?&quot; Et Moïse leva la main, et il frappa le rocher de sa verge par deux fois; il en sortit de l’eau en abondance, et la communauté et ses bêtes en burent. Mais l’Éternel dit à Moïse et à Aaron: &quot;Puisque vous n’avez pas assez cru en moi pour me sanctifier aux yeux des enfants d’Israël, aussi ne conduirez-vous point ce peuple dans le pays que je leur ai donné.&quot; Ce sont là les eaux de Meriba, parce que les enfants d’Israël contestèrent contre le Seigneur, qui fit éclater sa sainteté par elles. Moïse envoya, de Kadêch, des députés au roi d’Edom: &quot;Ainsi parle ton frère Israël: tu connais toutes les tribulations que nous avons éprouvées. Jadis, nos pères descendirent en Égypte, et nous y avons demeuré de longs jours; puis les Égyptiens ont agi méchamment envers nous et nos pères. Mais nous avons Imploré l’Éternel, et il a entendu notre voix, et il a envoyé un mandataire, qui nous a fait sortir de l’Égypte. Or, nous voici à Kadêch, ville qui confine à ta frontière. Permets-nous de traverser ton pays! Nous ne passerons pas par tes champs ni par tes vignes, et nous ne boirons point de l’eau des citernes; nous suivrons la route royale, sans nous en écarter à droite ou à gauche, jusqu’à ce que nous ayons passé ta frontière.&quot; Edom lui répondit: &quot;Tu ne traverseras point mon pays, car je me porterais en armes à ta rencontre.&quot; Les enfants d’Israël lui dirent: &quot;C’est par la chaussée que nous voulons monter, et si nous buvons de ton eau, moi ou mes bestiaux, j’en paierai le prix; mais il n’en sera rien, je ne ferai que traverser à pied.&quot; Il répliqua: &quot;Tu ne passeras point!&quot; Et Edom s’avança à sa rencontre, en grande multitude et à main armée. Edom ayant donc refusé à Israël la permission de traverser son territoire, Israël prit une autre direction. Ils partirent de Kadêch, et les enfants d’Israël en masse arrivèrent à Hor-la-Montagne L’Éternel parla à Moïse et à Aaron, à Hor-la-Montagne, sur les confins du pays d’Edom, en ces termes: &quot;Aaron doit rejoindre ses pères; car il n’entrera point dans le pays que j’ai donné aux enfants d’Israël, attendu que vous avez dérogé à ma parole au sujet des eaux de Meriba. Prends donc Aaron avec Eléazar, son fils, et fais-les monter sur le mont Hor; dépouille Aaron de son costume, et revêts-en Eléazar, son fils: alors Aaron rejoindra ses pères et il mourra là.&quot; Moïse fit comme avait ordonné l’Éternel: ils gravirent le mont Hor à la vue de toute la communauté. Et Moïse dépouilla Aaron de son costume, le fit revêtir à Eléazar, son fils, et Aaron mourut là, au sommet de la montagne. Moïse et Eléazar redescendirent la montagne. La communauté voyant qu’Aaron avait cessé de vivre, toute la maison d’Israël le pleura trente jours.</p>
-      <p>Le Cananéen, roi d’Arad, qui habitait au midi, ayant appris qu’Israël s’acheminait par ces régions, attaqua les Israélites et en fit quelques-uns prisonniers. Mais Israël fit un vœu à l’Éternel en disant: &quot;Si tu livres ce peuple en mon pouvoir, je vouerais ses villes à l’anathème.&quot; L’Éternel écouta la voix d’Israël et lui livra les Cananéens; et on les frappa d’anathème, eux et leurs villes, et l’on donna à ce lieu le nom de Horma. Ils partirent de Hor-la-Montagne dans la direction de la mer des Joncs, pour tourner le pays d’Edom. Le peuple perdit courage pendant cette marche, et il se plaignit de Dieu et de Moïse: &quot;Pourquoi nous avez-vous tirés de l’Égypte, pour nous faire mourir dans ce désert? Car il n’y a point de pain, point d’eau, et nous sommes excédés de ce misérable aliment.&quot; Alors l’Éternel suscita contre le peuple les serpents brûlants, qui mordirent le peuple, et il périt une multitude d’Israélites. Et le peuple s’adressa à Moïse, et ils dirent: &quot;Nous avons péché en parlant contre l’Éternel et contre toi; intercède auprès de l’Éternel, pour qu’il détourne de nous ces serpents!&quot; Et Moïse intercéda pour le peuple. L’Éternel dit à Moïse: &quot;Fais toi-même un serpent et place-le au haut d’une perche: quiconque aura été mordu, qu’il le regarde et il vivra!&quot; Et Moïse fit un serpent d’airain, le fixa sur une perche; et alors, si quelqu’un était mordu par un serpent, il levait les yeux vers le serpent d’airain et était sauvé. Les enfants d’Israël levèrent le camp, puis campèrent à Oboth. Partis d’Oboth, ils campèrent à lyyê-Haabarîm, dans le désert situé devant Moab, vers le soleil levant. De là ils repartirent et campèrent dans la vallée de Zéred. De là ils repartirent et campèrent sur la rive de l’Arnon située dans le désert et partant du territoire des Amorréens; car l’Arnon est la frontière de Moab, entre Moab et le territoire amorréen. C’est pourquoi l’on cite, dans l’histoire des guerres du Seigneur, &quot;Vaheb en Soufa, et les affluents de l’Arnon; et encore le bassin des rivières, qui s’étend vers Chébeth-Ar et confine à la frontière de Moab...&quot; Puis, ils gagnèrent Beêr, ce puits à propos duquel le Seigneur dit à Moïse:&quot;Assemble le peuple, je veux lui donner de l’eau.&quot; C’est alors qu’Israël chanta ce cantique: &quot;Jaillis, ô source! Acclamez-la!... Ce puits, des princes l’ont creusé, les plus grands du peuple l’ont ouvert, avec le sceptre, avec leurs verges!...&quot; Et de Midbar ils allèrent à Mattana; de Mattana à Nahalïel; de Nahalïel à Bamoth; et de Bamoth, au plateau qui est dans la campagne de Moab, au sommet du Pisga, d’où l’on découvrait l’étendue du désert. Israël envoya des députés à Sihôn, roi des Amorréens, pour lui dire: &quot;Je voudrais passer par ton pays. Nous ne traverserons ni champs ni vignobles, nous ne boirons point de l’eau des citernes; nous irons par la route royale, jusqu’à ce que nous ayons passé ta frontière.&quot; Mais Sihôn ne permit point à Israël de traverser son territoire; et Sihôn rassembla tout son peuple, marcha à la rencontre d’Israël, vers le désert et atteignit Yahça, où il livra la bataille à Israël. Israël le passa au fil de l’épée, et il conquît son pays depuis l’Arnon jusqu’au Jaboc, jusqu’aux possessions des Ammonites; car elle était forte, la frontière des enfants d’Ammon. Israël s’empara de toutes ces villes; et il s’établit dans toutes les villes des Amorréens, à Hesbon et dans toutes ses dépendances. Car Hesbon était devenue la ville de Sihôn, roi des Amorréens, celui-ci ayant fait la guerre au précédent roi de Moab, et lui ayant pris tout son territoire jusqu’à l’Arnon. C’est à ce propos que les poètes disaient: &quot;Venez à Hesbon! Cité de Sihôn, qu’elle se relève et s’affermisse! Car un feu a jailli de Hesbon, une flamme, de la ville de Sihôn, qui a dévoré Ar-en-Moab, les maîtres des hauteurs d’Arnon. C’est fait de toi. Moab! Tu es perdu, peuple de Camôs!... Ses fils, il les laisse mettre en fuite, ses filles, emmener captives, par un roi amorréen, par Sihôn! Hesbon perdu, nous les avons poursuivis de nos traits jusqu’à Dibôn; nous avons dévasté jusqu’à Nôfah, même jusqu’à Mèdeba!...&quot; Israël s’établit donc dans le pays des Amorréens. Moïse envoya explorer Yazêr; on s’empara de ses dépendances, et l’on déposséda les Amorréens qui y demeuraient. Puis ils se dirigèrent, en montant plus haut, vers le Basan. Og, roi du Basan, s’avança à leur rencontre avec tout son peuple, pour leur livrer bataille, à Edréi. Mais l’Éternel dit à Moïse: &quot;Ne le crains point, car je le livre en tes mains, lui et tout son peuple, et son pays; et tu le traiteras comme tu as traité Sihôn, roi des Amorréens, qui résidait à Hesbon.&quot; Et ils le battirent, ainsi que ses fils et tout son peuple, tellement qu’ils n’en laissèrent survivre aucun; et ils conquirent son territoire.</p>
-      <p>Les enfants d’Israël repartirent, et ils allèrent camper dans les plaines de Moab, sur la rive du Jourdain, qui fait face à Jéricho.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -340,6 +716,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_korach.html">← Kora&#x27;h</a><a class="hbtn qcm" href="qcm_paracha_chukat.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_balak.html">Balak →</a></div>
 </main>
 
 <footer>

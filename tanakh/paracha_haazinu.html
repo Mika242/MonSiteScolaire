@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Devarim · Paracha</div>
     <h1>Haazinou – Le cantique de Moïse</h1>
     <p>Torah, Devarim (Deuteronomy 32:1-52)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_vayeilech.html">← Vayélèkh</a><a class="hbtn qcm" href="qcm_paracha_haazinu.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vezot-haberakha.html">Vezot Haberakha →</a></div>
   </div>
 </header>
 
@@ -161,127 +202,226 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>הַאֲזִ֥ינוּ הַשָּׁמַ֖יִם וַאֲדַבֵּ֑רָה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְתִשְׁמַ֥ע הָאָ֖רֶץ אִמְרֵי־פִֽי׃</p>
-      <p>יַעֲרֹ֤ף כַּמָּטָר֙ לִקְחִ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;תִּזַּ֥ל כַּטַּ֖ל אִמְרָתִ֑י כִּשְׂעִירִ֣ם עֲלֵי־דֶ֔שֶׁא&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְכִרְבִיבִ֖ים עֲלֵי־עֵֽשֶׂב׃</p>
-      <p>כִּ֛י שֵׁ֥ם יְהֹוָ֖ה אֶקְרָ֑א&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;הָב֥וּ גֹ֖דֶל לֵאלֹהֵֽינוּ׃</p>
-      <p>הַצּוּר֙ תָּמִ֣ים פׇּֽעֳל֔וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֥י כׇל־דְּרָכָ֖יו מִשְׁפָּ֑ט אֵ֤ל אֱמוּנָה֙ וְאֵ֣ין עָ֔וֶל&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;צַדִּ֥יק וְיָשָׁ֖ר הֽוּא׃</p>
-      <p>שִׁחֵ֥ת ל֛וֹ לֹ֖א בָּנָ֣יו מוּמָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;דּ֥וֹר עִקֵּ֖שׁ וּפְתַלְתֹּֽל׃</p>
-      <p><big>הַ</big> לְיְהֹוָה֙<sup class="footnote-marker">*</sup><i class="footnote">(בספרי תימן <big>הַֽ</big>לְיהֹוָה֙ בתיבה אחת)</i> תִּגְמְלוּ־זֹ֔את&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עַ֥ם נָבָ֖ל וְלֹ֣א חָכָ֑ם הֲלוֹא־הוּא֙ אָבִ֣יךָ קָּנֶ֔ךָ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ה֥וּא עָשְׂךָ֖ וַֽיְכֹנְנֶֽךָ׃</p>
-      <p>זְכֹר֙ יְמ֣וֹת עוֹלָ֔ם בִּ֖ינוּ שְׁנ֣וֹת דֹּר־וָדֹ֑ר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;שְׁאַ֤ל אָבִ֙יךָ֙ וְיַגֵּ֔דְךָ זְקֵנֶ֖יךָ וְיֹ֥אמְרוּ לָֽךְ׃</p>
-      <p>בְּהַנְחֵ֤ל עֶלְיוֹן֙ גּוֹיִ֔ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;בְּהַפְרִיד֖וֹ בְּנֵ֣י אָדָ֑ם יַצֵּב֙ גְּבֻלֹ֣ת עַמִּ֔ים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;לְמִסְפַּ֖ר בְּנֵ֥י יִשְׂרָאֵֽל׃</p>
-      <p>כִּ֛י חֵ֥לֶק יְהֹוָ֖ה עַמּ֑וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יַעֲקֹ֖ב חֶ֥בֶל נַחֲלָתֽוֹ׃</p>
-      <p>יִמְצָאֵ֙הוּ֙ בְּאֶ֣רֶץ מִדְבָּ֔ר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וּבְתֹ֖הוּ יְלֵ֣ל יְשִׁמֹ֑ן יְסֹבְבֶ֙נְהוּ֙ יְב֣וֹנְנֵ֔הוּ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יִצְּרֶ֖נְהוּ כְּאִישׁ֥וֹן עֵינֽוֹ׃</p>
-      <p>כְּנֶ֙שֶׁר֙ יָעִ֣יר קִנּ֔וֹ עַל־גּוֹזָלָ֖יו יְרַחֵ֑ף&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יִפְרֹ֤שׂ כְּנָפָיו֙ יִקָּחֵ֔הוּ יִשָּׂאֵ֖הוּ עַל־אֶבְרָתֽוֹ׃</p>
-      <p>יְהֹוָ֖ה בָּדָ֣ד יַנְחֶ֑נּוּ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאֵ֥ין עִמּ֖וֹ אֵ֥ל נֵכָֽר׃</p>
-      <p>יַרְכִּבֵ֙הוּ֙ עַל־<span class="mam-kq"><span class="mam-kq-q">[בָּ֣מֳתֵי]</span> <span class="mam-kq-k">(במותי)</span></span> אָ֔רֶץ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַיֹּאכַ֖ל תְּנוּבֹ֣ת שָׂדָ֑י וַיֵּנִקֵ֤הֽוּ דְבַשׁ֙ מִסֶּ֔לַע&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְשֶׁ֖מֶן מֵחַלְמִ֥ישׁ צֽוּר׃</p>
-      <p>חֶמְאַ֨ת בָּקָ֜ר וַחֲלֵ֣ב צֹ֗אן&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עִם־חֵ֨לֶב כָּרִ֜ים וְאֵילִ֤ים בְּנֵֽי־בָשָׁן֙ וְעַתּוּדִ֔ים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עִם־חֵ֖לֶב כִּלְי֣וֹת חִטָּ֑ה וְדַם־עֵנָ֖ב תִּשְׁתֶּה־חָֽמֶר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>וַיִּשְׁמַ֤ן יְשֻׁרוּן֙ וַיִּבְעָ֔ט שָׁמַ֖נְתָּ עָבִ֣יתָ כָּשִׂ֑יתָ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַיִּטֹּשׁ֙ אֱל֣וֹהַּ עָשָׂ֔הוּ וַיְנַבֵּ֖ל צ֥וּר יְשֻׁעָתֽוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>יַקְנִאֻ֖הוּ בְּזָרִ֑ים בְּתוֹעֵבֹ֖ת יַכְעִיסֻֽהוּ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>יִזְבְּח֗וּ לַשֵּׁדִים֙ לֹ֣א אֱלֹ֔הַּ אֱלֹהִ֖ים לֹ֣א יְדָע֑וּם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;חֲדָשִׁים֙ מִקָּרֹ֣ב בָּ֔אוּ לֹ֥א שְׂעָר֖וּם אֲבֹתֵיכֶֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>צ֥וּר יְלָדְךָ֖ תֶּ֑שִׁ<small>י</small> וַתִּשְׁכַּ֖ח אֵ֥ל מְחֹלְלֶֽךָ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>וַיַּ֥רְא יְהֹוָ֖ה וַיִּנְאָ֑ץ מִכַּ֥עַס בָּנָ֖יו וּבְנֹתָֽיו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>וַיֹּ֗אמֶר אַסְתִּ֤ירָה פָנַי֙ מֵהֶ֔ם אֶרְאֶ֖ה מָ֣ה אַחֲרִיתָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֣י ד֤וֹר תַּהְפֻּכֹת֙ הֵ֔מָּה בָּנִ֖ים לֹא־אֵמֻ֥ן בָּֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>הֵ֚ם קִנְא֣וּנִי בְלֹא־אֵ֔ל כִּעֲס֖וּנִי בְּהַבְלֵיהֶ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַֽאֲנִי֙ אַקְנִיאֵ֣ם בְּלֹא־עָ֔ם בְּג֥וֹי נָבָ֖ל אַכְעִיסֵֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>כִּי־אֵשׁ֙ קָדְחָ֣ה בְאַפִּ֔י וַתִּיקַ֖ד עַד־שְׁא֣וֹל תַּחְתִּ֑ית&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַתֹּ֤אכַל אֶ֙רֶץ֙ וִֽיבֻלָ֔הּ וַתְּלַהֵ֖ט מוֹסְדֵ֥י הָרִֽים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>אַסְפֶּ֥ה עָלֵ֖ימוֹ רָע֑וֹת חִצַּ֖י אֲכַלֶּה־בָּֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>מְזֵ֥י רָעָ֛ב וּלְחֻ֥מֵי רֶ֖שֶׁף וְקֶ֣טֶב מְרִירִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְשֶׁן־בְּהֵמֹת֙ אֲשַׁלַּח־בָּ֔ם עִם־חֲמַ֖ת זֹחֲלֵ֥י עָפָֽר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>מִחוּץ֙ תְּשַׁכֶּל־חֶ֔רֶב וּמֵחֲדָרִ֖ים אֵימָ֑ה גַּם־בָּחוּר֙ גַּם־בְּתוּלָ֔ה יוֹנֵ֖ק עִם־אִ֥ישׁ שֵׂיבָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>אָמַ֖רְתִּי אַפְאֵיהֶ֑ם אַשְׁבִּ֥יתָה מֵאֱנ֖וֹשׁ זִכְרָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>לוּלֵ֗י כַּ֤עַס אוֹיֵב֙ אָג֔וּר פֶּֽן־יְנַכְּר֖וּ צָרֵ֑ימוֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;פֶּן־יֹֽאמְרוּ֙ יָדֵ֣נוּ רָ֔מָה וְלֹ֥א יְהֹוָ֖ה פָּעַ֥ל כׇּל־זֹֽאת׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>כִּי־ג֛וֹי אֹבַ֥ד עֵצ֖וֹת הֵ֑מָּה וְאֵ֥ין בָּהֶ֖ם תְּבוּנָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>ל֥וּ חָכְמ֖וּ יַשְׂכִּ֣ילוּ זֹ֑את יָבִ֖ינוּ לְאַחֲרִיתָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>אֵיכָ֞ה יִרְדֹּ֤ף אֶחָד֙ אֶ֔לֶף וּשְׁנַ֖יִם יָנִ֣יסוּ רְבָבָ֑ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אִם־לֹא֙ כִּֽי־צוּרָ֣ם מְכָרָ֔ם וַֽיהֹוָ֖ה הִסְגִּירָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>כִּ֛י לֹ֥א כְצוּרֵ֖נוּ צוּרָ֑ם וְאֹיְבֵ֖ינוּ פְּלִילִֽים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>כִּֽי־מִגֶּ֤פֶן סְדֹם֙ גַּפְנָ֔ם וּמִשַּׁדְמֹ֖ת עֲמֹרָ֑ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עֲנָבֵ֙מוֹ֙ עִנְּבֵי־ר֔וֹשׁ אַשְׁכְּלֹ֥ת מְרֹרֹ֖ת לָֽמוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>חֲמַ֥ת תַּנִּינִ֖ם יֵינָ֑ם וְרֹ֥אשׁ פְּתָנִ֖ים אַכְזָֽר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>הֲלֹא־ה֖וּא כָּמֻ֣ס עִמָּדִ֑י חָת֖וּם בְּאוֹצְרֹתָֽי׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>לִ֤י נָקָם֙ וְשִׁלֵּ֔ם לְעֵ֖ת תָּמ֣וּט רַגְלָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֤י קָרוֹב֙ י֣וֹם אֵידָ֔ם וְחָ֖שׁ עֲתִדֹ֥ת לָֽמוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>כִּֽי־יָדִ֤ין יְהֹוָה֙ עַמּ֔וֹ וְעַל־עֲבָדָ֖יו יִתְנֶחָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֤י יִרְאֶה֙ כִּֽי־אָ֣זְלַת יָ֔ד וְאֶ֖פֶס עָצ֥וּר וְעָזֽוּב׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>וְאָמַ֖ר אֵ֣י אֱלֹהֵ֑ימוֹ צ֖וּר חָסָ֥יוּ בֽוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>אֲשֶׁ֨ר חֵ֤לֶב זְבָחֵ֙ימוֹ֙ יֹאכֵ֔לוּ יִשְׁתּ֖וּ יֵ֣ין נְסִיכָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יָק֙וּמוּ֙ וְיַעְזְרֻכֶ֔ם יְהִ֥י עֲלֵיכֶ֖ם סִתְרָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-      <p>רְא֣וּ&thinsp;<b>׀</b> עַתָּ֗ה כִּ֣י אֲנִ֤י אֲנִי֙ ה֔וּא וְאֵ֥ין אֱלֹהִ֖ים עִמָּדִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אֲנִ֧י אָמִ֣ית וַאֲחַיֶּ֗ה מָחַ֙צְתִּי֙ וַאֲנִ֣י אֶרְפָּ֔א&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאֵ֥ין מִיָּדִ֖י מַצִּֽיל׃</p>
-      <p>כִּֽי־אֶשָּׂ֥א אֶל־שָׁמַ֖יִם יָדִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאָמַ֕רְתִּי חַ֥י אָנֹכִ֖י לְעֹלָֽם׃</p>
-      <p>אִם־שַׁנּוֹתִי֙ בְּרַ֣ק חַרְבִּ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְתֹאחֵ֥ז בְּמִשְׁפָּ֖ט יָדִ֑י אָשִׁ֤יב נָקָם֙ לְצָרָ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְלִמְשַׂנְאַ֖י אֲשַׁלֵּֽם׃</p>
-      <p>אַשְׁכִּ֤יר חִצַּי֙ מִדָּ֔ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְחַרְבִּ֖י תֹּאכַ֣ל בָּשָׂ֑ר מִדַּ֤ם חָלָל֙ וְשִׁבְיָ֔ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;מֵרֹ֖אשׁ פַּרְע֥וֹת אוֹיֵֽב׃</p>
-      <p>הַרְנִ֤ינוּ גוֹיִם֙ עַמּ֔וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֥י דַם־עֲבָדָ֖יו יִקּ֑וֹם וְנָקָם֙ יָשִׁ֣יב לְצָרָ֔יו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְכִפֶּ֥ר אַדְמָת֖וֹ עַמּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>וַיָּבֹ֣א מֹשֶׁ֗ה וַיְדַבֵּ֛ר אֶת־כׇּל־דִּבְרֵ֥י הַשִּׁירָֽה־הַזֹּ֖את בְּאׇזְנֵ֣י הָעָ֑ם ה֖וּא וְהוֹשֵׁ֥עַ בִּן־נֽוּן׃</p>
-      <p>וַיְכַ֣ל מֹשֶׁ֗ה לְדַבֵּ֛ר אֶת־כׇּל־הַדְּבָרִ֥ים הָאֵ֖לֶּה אֶל־כׇּל־יִשְׂרָאֵֽל׃</p>
-      <p>וַיֹּ֤אמֶר אֲלֵהֶם֙ שִׂ֣ימוּ לְבַבְכֶ֔ם לְכׇ֨ל־הַדְּבָרִ֔ים אֲשֶׁ֧ר אָנֹכִ֛י מֵעִ֥יד בָּכֶ֖ם הַיּ֑וֹם אֲשֶׁ֤ר תְּצַוֻּם֙ אֶת־בְּנֵיכֶ֔ם לִשְׁמֹ֣ר לַעֲשׂ֔וֹת אֶת־כׇּל־דִּבְרֵ֖י הַתּוֹרָ֥ה הַזֹּֽאת׃</p>
-      <p>כִּ֠י לֹא־דָבָ֨ר רֵ֥ק הוּא֙ מִכֶּ֔ם כִּי־ה֖וּא חַיֵּיכֶ֑ם וּבַדָּבָ֣ר הַזֶּ֗ה תַּאֲרִ֤יכוּ יָמִים֙ עַל־הָ֣אֲדָמָ֔ה אֲשֶׁ֨ר אַתֶּ֜ם עֹבְרִ֧ים אֶת־הַיַּרְדֵּ֛ן שָׁ֖מָּה לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
-      <p>וַיְדַבֵּ֤ר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה בְּעֶ֛צֶם הַיּ֥וֹם הַזֶּ֖ה לֵאמֹֽר׃</p>
-      <p>עֲלֵ֡ה אֶל־הַר֩ הָעֲבָרִ֨ים הַזֶּ֜ה הַר־נְב֗וֹ אֲשֶׁר֙ בְּאֶ֣רֶץ מוֹאָ֔ב אֲשֶׁ֖ר עַל־פְּנֵ֣י יְרֵח֑וֹ וּרְאֵה֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁ֨ר אֲנִ֥י נֹתֵ֛ן לִבְנֵ֥י יִשְׂרָאֵ֖ל לַאֲחֻזָּֽה׃</p>
-      <p>וּמֻ֗ת בָּהָר֙ אֲשֶׁ֤ר אַתָּה֙ עֹלֶ֣ה שָׁ֔מָּה וְהֵאָסֵ֖ף אֶל־עַמֶּ֑יךָ כַּֽאֲשֶׁר־מֵ֞ת אַהֲרֹ֤ן אָחִ֙יךָ֙ בְּהֹ֣ר הָהָ֔ר וַיֵּאָ֖סֶף אֶל־עַמָּֽיו׃</p>
-      <p>עַל֩ אֲשֶׁ֨ר מְעַלְתֶּ֜ם בִּ֗י בְּתוֹךְ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל בְּמֵֽי־מְרִיבַ֥ת קָדֵ֖שׁ מִדְבַּר־צִ֑ן עַ֣ל אֲשֶׁ֤ר לֹֽא־קִדַּשְׁתֶּם֙ אוֹתִ֔י בְּת֖וֹךְ בְּנֵ֥י יִשְׂרָאֵֽל׃</p>
-      <p>כִּ֥י מִנֶּ֖גֶד תִּרְאֶ֣ה אֶת־הָאָ֑רֶץ וְשָׁ֙מָּה֙ לֹ֣א תָב֔וֹא אֶל־הָאָ֕רֶץ אֲשֶׁר־אֲנִ֥י נֹתֵ֖ן לִבְנֵ֥י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  
+  <div class="seif" id="v-32-1">
+      <span class="seif-num">32:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַאֲזִ֥ינוּ הַשָּׁמַ֖יִם וַאֲדַבֵּ֑רָה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְתִשְׁמַ֥ע הָאָ֖רֶץ אִמְרֵי־פִֽי׃</p></div><div class="heb-s"><p>האזינו השמים ואדברה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ותשמע הארץ אמרי־פי׃</p></div></div>
+      <div class="texte-fr"><p>"Écoutez, cieux, je vais parler; et que la terre entende les paroles de ma bouche.</p></div>
+    </div><div class="seif" id="v-32-2">
+      <span class="seif-num">32:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַעֲרֹ֤ף כַּמָּטָר֙ לִקְחִ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;תִּזַּ֥ל כַּטַּ֖ל אִמְרָתִ֑י כִּשְׂעִירִ֣ם עֲלֵי־דֶ֔שֶׁא&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְכִרְבִיבִ֖ים עֲלֵי־עֵֽשֶׂב׃</p></div><div class="heb-s"><p>יערף כמטר לקחי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;תזל כטל אמרתי כשעירם עלי־דשא&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וכרביבים עלי־עשב׃</p></div></div>
+      <div class="texte-fr"><p>Que mon enseignement s’épande comme la pluie, que mon discours distille comme la rosée, comme la bruyante ondée sur les plantes, et comme les gouttes pressées sur le gazon!</p></div>
+    </div><div class="seif" id="v-32-3">
+      <span class="seif-num">32:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֛י שֵׁ֥ם יְהֹוָ֖ה אֶקְרָ֑א&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;הָב֥וּ גֹ֖דֶל לֵאלֹהֵֽינוּ׃</p></div><div class="heb-s"><p>כי שם יהוה אקרא&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;הבו גדל לאלהינו׃</p></div></div>
+      <div class="texte-fr"><p>Car c’est le nom de l’Éternel que je proclame; rendez hommage à notre Dieu!</p></div>
+    </div><div class="seif" id="v-32-4">
+      <span class="seif-num">32:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַצּוּר֙ תָּמִ֣ים פׇּֽעֳל֔וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֥י כׇל־דְּרָכָ֖יו מִשְׁפָּ֑ט אֵ֤ל אֱמוּנָה֙ וְאֵ֣ין עָ֔וֶל&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;צַדִּ֥יק וְיָשָׁ֖ר הֽוּא׃</p></div><div class="heb-s"><p>הצור תמים פעלו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כי כל־דרכיו משפט אל אמונה ואין עול&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;צדיק וישר הוא׃</p></div></div>
+      <div class="texte-fr"><p>Lui, notre rocher, son œuvre est parfaite, toutes ses voies sont la justice même; Dieu de vérité, jamais inique, constamment équitable et droit.</p></div>
+    </div><div class="seif" id="v-32-5">
+      <span class="seif-num">32:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁחֵ֥ת ל֛וֹ לֹ֖א בָּנָ֣יו מוּמָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;דּ֥וֹר עִקֵּ֖שׁ וּפְתַלְתֹּֽל׃</p></div><div class="heb-s"><p>שחת לו לא בניו מומם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;דור עקש ופתלתל׃</p></div></div>
+      <div class="texte-fr"><p>Est-ce lui qui a condamné ses enfants? Non, c’est leur propre indignité, ô race perverse et tortueuse!</p></div>
+    </div><div class="seif" id="v-32-6">
+      <span class="seif-num">32:6</span>
+      <div class="texte-heb"><div class="heb-n"><p><big>הַ</big> לְיְהֹוָה֙<sup class="footnote-marker">*</sup><i class="footnote">(בספרי תימן <big>הַֽ</big>לְיהֹוָה֙ בתיבה אחת)</i> תִּגְמְלוּ־זֹ֔את&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עַ֥ם נָבָ֖ל וְלֹ֣א חָכָ֑ם הֲלוֹא־הוּא֙ אָבִ֣יךָ קָּנֶ֔ךָ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ה֥וּא עָשְׂךָ֖ וַֽיְכֹנְנֶֽךָ׃</p></div><div class="heb-s"><p><big>ה</big> ליהוה<sup class="footnote-marker">*</sup><i class="footnote">(בספרי תימן <big>ה</big>ליהוה בתיבה אחת)</i> תגמלו־זאת&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עם נבל ולא חכם הלוא־הוא אביך קנך&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;הוא עשך ויכננך׃</p></div></div>
+      <div class="texte-fr"><p>Est-ce ainsi que vous payez Dieu de retour, peuple insensé et peu sage? N’est-il donc pas ton père, ton créateur? N’est-ce pas lui qui t’a fait et qui t’a organisé?</p></div>
+    </div><div class="seif" id="v-32-7">
+      <span class="seif-num">32:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>זְכֹר֙ יְמ֣וֹת עוֹלָ֔ם בִּ֖ינוּ שְׁנ֣וֹת דֹּר־וָדֹ֑ר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;שְׁאַ֤ל אָבִ֙יךָ֙ וְיַגֵּ֔דְךָ זְקֵנֶ֖יךָ וְיֹ֥אמְרוּ לָֽךְ׃</p></div><div class="heb-s"><p>זכר ימות עולם בינו שנות דר־ודר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;שאל אביך ויגדך זקניך ויאמרו לך׃</p></div></div>
+      <div class="texte-fr"><p>Souviens-toi des jours antiques, médite les annales de chaque siècle; interroge ton père, il te l’apprendra, tes vieillards, ils te le diront!</p></div>
+    </div><div class="seif" id="v-32-8">
+      <span class="seif-num">32:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּהַנְחֵ֤ל עֶלְיוֹן֙ גּוֹיִ֔ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;בְּהַפְרִיד֖וֹ בְּנֵ֣י אָדָ֑ם יַצֵּב֙ גְּבֻלֹ֣ת עַמִּ֔ים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;לְמִסְפַּ֖ר בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>בהנחל עליון גוים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;בהפרידו בני אדם יצב גבלת עמים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;למספר בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Quand le Souverain donna leurs lots aux nations, quand il sépara les enfants d’Adam, il fixa les limites des peuples d’après le nombre des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-32-9">
+      <span class="seif-num">32:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֛י חֵ֥לֶק יְהֹוָ֖ה עַמּ֑וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יַעֲקֹ֖ב חֶ֥בֶל נַחֲלָתֽוֹ׃</p></div><div class="heb-s"><p>כי חלק יהוה עמו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יעקב חבל נחלתו׃</p></div></div>
+      <div class="texte-fr"><p>Car ce peuple est la part du Seigneur; Jacob est le lot de son héritage.</p></div>
+    </div><div class="seif" id="v-32-10">
+      <span class="seif-num">32:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִמְצָאֵ֙הוּ֙ בְּאֶ֣רֶץ מִדְבָּ֔ר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וּבְתֹ֖הוּ יְלֵ֣ל יְשִׁמֹ֑ן יְסֹבְבֶ֙נְהוּ֙ יְב֣וֹנְנֵ֔הוּ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יִצְּרֶ֖נְהוּ כְּאִישׁ֥וֹן עֵינֽוֹ׃</p></div><div class="heb-s"><p>ימצאהו בארץ מדבר&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ובתהו ילל ישמן יסבבנהו יבוננהו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יצרנהו כאישון עינו׃</p></div></div>
+      <div class="texte-fr"><p>Il le rencontre dans une région déserte, dans les solitudes aux hurlements sauvages; il le protège, il veille sur lui, le garde comme la prunelle de son œil.</p></div>
+    </div><div class="seif" id="v-32-11">
+      <span class="seif-num">32:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּנֶ֙שֶׁר֙ יָעִ֣יר קִנּ֔וֹ עַל־גּוֹזָלָ֖יו יְרַחֵ֑ף&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יִפְרֹ֤שׂ כְּנָפָיו֙ יִקָּחֵ֔הוּ יִשָּׂאֵ֖הוּ עַל־אֶבְרָתֽוֹ׃</p></div><div class="heb-s"><p>כנשר יעיר קנו על־גוזליו ירחף&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יפרש כנפיו יקחהו ישאהו על־אברתו׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi l’aigle veille sur son nid, plane sur ses jeunes aiglons, déploie ses ailes pour les recueillir, les porte sur ses pennes robustes.</p></div>
+    </div><div class="seif" id="v-32-12">
+      <span class="seif-num">32:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהֹוָ֖ה בָּדָ֣ד יַנְחֶ֑נּוּ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאֵ֥ין עִמּ֖וֹ אֵ֥ל נֵכָֽר׃</p></div><div class="heb-s"><p>יהוה בדד ינחנו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ואין עמו אל נכר׃</p></div></div>
+      <div class="texte-fr"><p>Seul, l’Éternel le dirige, et nulle puissance étrangère ne le seconde.</p></div>
+    </div><div class="seif" id="v-32-13">
+      <span class="seif-num">32:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַרְכִּבֵ֙הוּ֙ עַל־<span class="mam-kq"><span class="mam-kq-q">[בָּ֣מֳתֵי]</span> <span class="mam-kq-k">(במותי)</span></span> אָ֔רֶץ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַיֹּאכַ֖ל תְּנוּבֹ֣ת שָׂדָ֑י וַיֵּנִקֵ֤הֽוּ דְבַשׁ֙ מִסֶּ֔לַע&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְשֶׁ֖מֶן מֵחַלְמִ֥ישׁ צֽוּר׃</p></div><div class="heb-s"><p>ירכבהו על־<span class="mam-kq"><span class="mam-kq-q">[במתי]</span> <span class="mam-kq-k">(במותי)</span></span> ארץ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ויאכל תנובת שדי וינקהו דבש מסלע&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ושמן מחלמיש צור׃</p></div></div>
+      <div class="texte-fr"><p>Il l’a fait monter victorieusement sur les hauteurs de la terre et jouir des produits des champs; l’a nourri avec le miel des rochers, avec l’huile de la roche pierreuse,</p></div>
+    </div><div class="seif" id="v-32-14">
+      <span class="seif-num">32:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֶמְאַ֨ת בָּקָ֜ר וַחֲלֵ֣ב צֹ֗אן&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עִם־חֵ֨לֶב כָּרִ֜ים וְאֵילִ֤ים בְּנֵֽי־בָשָׁן֙ וְעַתּוּדִ֔ים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עִם־חֵ֖לֶב כִּלְי֣וֹת חִטָּ֑ה וְדַם־עֵנָ֖ב תִּשְׁתֶּה־חָֽמֶר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>חמאת בקר וחלב צאן&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עם־חלב כרים ואילים בני־בשן ועתודים&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עם־חלב כליות חטה ודם־ענב תשתה־חמר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>avec la crème des vaches, le lait des brebis, les gras agneaux, les béliers de Basan et les boucs, avec la mœlle exquise du froment; et tu buvais le sang vermeil du raisin.</p></div>
+    </div><div class="seif" id="v-32-15">
+      <span class="seif-num">32:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֤ן יְשֻׁרוּן֙ וַיִּבְעָ֔ט שָׁמַ֖נְתָּ עָבִ֣יתָ כָּשִׂ֑יתָ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַיִּטֹּשׁ֙ אֱל֣וֹהַּ עָשָׂ֔הוּ וַיְנַבֵּ֖ל צ֥וּר יְשֻׁעָתֽוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וישמן ישרון ויבעט שמנת עבית כשית&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ויטש אלוה עשהו וינבל צור ישעתו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Yechouroun, engraissé, regimbe; tu étais trop gras, trop replet, trop bien nourri et il abandonne le Dieu qui l’a créé, et il méprise son rocher tutélaire!</p></div>
+    </div><div class="seif" id="v-32-16">
+      <span class="seif-num">32:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>יַקְנִאֻ֖הוּ בְּזָרִ֑ים בְּתוֹעֵבֹ֖ת יַכְעִיסֻֽהוּ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>יקנאהו בזרים בתועבת יכעיסהו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ils l’irritent par des cultes étrangers; ils l’outragent par leurs abominations.</p></div>
+    </div><div class="seif" id="v-32-17">
+      <span class="seif-num">32:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִזְבְּח֗וּ לַשֵּׁדִים֙ לֹ֣א אֱלֹ֔הַּ אֱלֹהִ֖ים לֹ֣א יְדָע֑וּם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;חֲדָשִׁים֙ מִקָּרֹ֣ב בָּ֔אוּ לֹ֥א שְׂעָר֖וּם אֲבֹתֵיכֶֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>יזבחו לשדים לא אלה אלהים לא ידעום&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;חדשים מקרב באו לא שערום אבתיכם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Ils sacrifient à des démons qui ne sont pas Dieu, à des déités qu’ils ne connaissaient point; déités nouvelles, de fraîche date, que n’avaient pas redoutées vos pères.</p></div>
+    </div><div class="seif" id="v-32-18">
+      <span class="seif-num">32:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>צ֥וּר יְלָדְךָ֖ תֶּ֑שִׁ<small>י</small> וַתִּשְׁכַּ֖ח אֵ֥ל מְחֹלְלֶֽךָ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>צור ילדך תש<small>י</small> ותשכח אל מחללך׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et le rocher qui t’engendra, tu le dédaignes, et tu oublies le Dieu qui t’a fait naître.</p></div>
+    </div><div class="seif" id="v-32-19">
+      <span class="seif-num">32:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥רְא יְהֹוָ֖ה וַיִּנְאָ֑ץ מִכַּ֥עַס בָּנָ֖יו וּבְנֹתָֽיו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וירא יהוה וינאץ מכעס בניו ובנתיו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>A cette vue, le Seigneur s’est indigné; ainsi outragé par ses fils, par ses filles,</p></div>
+    </div><div class="seif" id="v-32-20">
+      <span class="seif-num">32:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֗אמֶר אַסְתִּ֤ירָה פָנַי֙ מֵהֶ֔ם אֶרְאֶ֖ה מָ֣ה אַחֲרִיתָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֣י ד֤וֹר תַּהְפֻּכֹת֙ הֵ֔מָּה בָּנִ֖ים לֹא־אֵמֻ֥ן בָּֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויאמר אסתירה פני מהם אראה מה אחריתם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כי דור תהפכת המה בנים לא־אמן בם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>il a dit: Je veux leur dérober ma face, je verrai ce que sera leur avenir; car c’est une race aux voies obliques, des enfants sans loyauté.</p></div>
+    </div><div class="seif" id="v-32-21">
+      <span class="seif-num">32:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵ֚ם קִנְא֣וּנִי בְלֹא־אֵ֔ל כִּעֲס֖וּנִי בְּהַבְלֵיהֶ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַֽאֲנִי֙ אַקְנִיאֵ֣ם בְּלֹא־עָ֔ם בְּג֥וֹי נָבָ֖ל אַכְעִיסֵֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>הם קנאוני בלא־אל כעסוני בהבליהם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ואני אקניאם בלא־עם בגוי נבל אכעיסם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Eux m’ont irrité par des dieux nuls, m’ont contristé par leurs vaines idoles; et moi je les irriterai par un peuple nul, je les contristerai par une nation indigne.</p></div>
+    </div><div class="seif" id="v-32-22">
+      <span class="seif-num">32:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־אֵשׁ֙ קָדְחָ֣ה בְאַפִּ֔י וַתִּיקַ֖ד עַד־שְׁא֣וֹל תַּחְתִּ֑ית&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וַתֹּ֤אכַל אֶ֙רֶץ֙ וִֽיבֻלָ֔הּ וַתְּלַהֵ֖ט מוֹסְדֵ֥י הָרִֽים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי־אש קדחה באפי ותיקד עד־שאול תחתית&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ותאכל ארץ ויבלה ותלהט מוסדי הרים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Oui, un feu s’est allumé dans ma colère, dévorant jusqu’aux profondeurs de l’abîme; il a consumé la terre et ses productions, embrasé les fondements des montagnes.</p></div>
+    </div><div class="seif" id="v-32-23">
+      <span class="seif-num">32:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַסְפֶּ֥ה עָלֵ֖ימוֹ רָע֑וֹת חִצַּ֖י אֲכַלֶּה־בָּֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>אספה עלימו רעות חצי אכלה־בם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>J’entasserai sur eux tous les malheurs; contre eux j’épuiserai mes flèches.</p></div>
+    </div><div class="seif" id="v-32-24">
+      <span class="seif-num">32:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>מְזֵ֥י רָעָ֛ב וּלְחֻ֥מֵי רֶ֖שֶׁף וְקֶ֣טֶב מְרִירִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְשֶׁן־בְּהֵמֹת֙ אֲשַׁלַּח־בָּ֔ם עִם־חֲמַ֖ת זֹחֲלֵ֥י עָפָֽר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>מזי רעב ולחמי רשף וקטב מרירי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ושן־בהמת אשלח־בם עם־חמת זחלי עפר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Exténués par la famine, dévorés par la fièvre et des pestes meurtrières, j’exciterai contre eux la dent des carnassiers, et le venin brûlant des reptiles.</p></div>
+    </div><div class="seif" id="v-32-25">
+      <span class="seif-num">32:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִחוּץ֙ תְּשַׁכֶּל־חֶ֔רֶב וּמֵחֲדָרִ֖ים אֵימָ֑ה גַּם־בָּחוּר֙ גַּם־בְּתוּלָ֔ה יוֹנֵ֖ק עִם־אִ֥ישׁ שֵׂיבָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>מחוץ תשכל־חרב ומחדרים אימה גם־בחור גם־בתולה יונק עם־איש שיבה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Au dehors, l’épée fera des victimes, au dedans, ce sera la terreur: adolescent et jeune vierge, nourrisson et vieillard.</p></div>
+    </div><div class="seif" id="v-32-26">
+      <span class="seif-num">32:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָמַ֖רְתִּי אַפְאֵיהֶ֑ם אַשְׁבִּ֥יתָה מֵאֱנ֖וֹשׁ זִכְרָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>אמרתי אפאיהם אשביתה מאנוש זכרם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>J’aurais résolu de les réduire à néant, d’effacer leur souvenir de l’humanité,</p></div>
+    </div><div class="seif" id="v-32-27">
+      <span class="seif-num">32:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>לוּלֵ֗י כַּ֤עַס אוֹיֵב֙ אָג֔וּר פֶּֽן־יְנַכְּר֖וּ צָרֵ֑ימוֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;פֶּן־יֹֽאמְרוּ֙ יָדֵ֣נוּ רָ֔מָה וְלֹ֥א יְהֹוָ֖ה פָּעַ֥ל כׇּל־זֹֽאת׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לולי כעס אויב אגור פן־ינכרו צרימו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;פן־יאמרו ידנו רמה ולא יהוה פעל כל־זאת׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Si je ne craignais le dire insultant de l’ennemi et l’aveuglement de leurs persécuteurs, qui s’écrieraient: "C’est notre puissance qui triomphe, ce n’est pas l’Éternel qui en est la cause."</p></div>
+    </div><div class="seif" id="v-32-28">
+      <span class="seif-num">32:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי־ג֛וֹי אֹבַ֥ד עֵצ֖וֹת הֵ֑מָּה וְאֵ֥ין בָּהֶ֖ם תְּבוּנָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי־גוי אבד עצות המה ואין בהם תבונה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Car c’est une race aux idées fausses; ils sont dépourvus d’intelligence.</p></div>
+    </div><div class="seif" id="v-32-29">
+      <span class="seif-num">32:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>ל֥וּ חָכְמ֖וּ יַשְׂכִּ֣ילוּ זֹ֑את יָבִ֖ינוּ לְאַחֲרִיתָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לו חכמו ישכילו זאת יבינו לאחריתם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>S’ils étaient sages, ils y réfléchiraient; ils seraient frappés de ce qui finit par leur arriver:</p></div>
+    </div><div class="seif" id="v-32-30">
+      <span class="seif-num">32:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵיכָ֞ה יִרְדֹּ֤ף אֶחָד֙ אֶ֔לֶף וּשְׁנַ֖יִם יָנִ֣יסוּ רְבָבָ֑ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אִם־לֹא֙ כִּֽי־צוּרָ֣ם מְכָרָ֔ם וַֽיהֹוָ֖ה הִסְגִּירָֽם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>איכה ירדף אחד אלף ושנים יניסו רבבה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אם־לא כי־צורם מכרם ויהוה הסגירם׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>"Comment un seul homme pourrait-il en poursuivre mille, deux, mettre en fuite une myriade, si leur protecteur ne les eût vendus, si l’Éternel ne les eût livrés?</p></div>
+    </div><div class="seif" id="v-32-31">
+      <span class="seif-num">32:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֛י לֹ֥א כְצוּרֵ֖נוּ צוּרָ֑ם וְאֹיְבֵ֖ינוּ פְּלִילִֽים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי לא כצורנו צורם ואיבינו פלילים׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Car leur protecteur ne ressemble point au nôtre, et nos ennemis sont une race à part.</p></div>
+    </div><div class="seif" id="v-32-32">
+      <span class="seif-num">32:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־מִגֶּ֤פֶן סְדֹם֙ גַּפְנָ֔ם וּמִשַּׁדְמֹ֖ת עֲמֹרָ֑ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;עֲנָבֵ֙מוֹ֙ עִנְּבֵי־ר֔וֹשׁ אַשְׁכְּלֹ֥ת מְרֹרֹ֖ת לָֽמוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי־מגפן סדם גפנם ומשדמת עמרה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ענבמו ענבי־רוש אשכלת מררת למו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>De fait, leur vigne tient de la vigne de Sodome, et leur terroir, des campagnes de Gomorrhe; leurs raisins sont des baies vénéneuses, ce sont des grappes amères que les leurs.</p></div>
+    </div><div class="seif" id="v-32-33">
+      <span class="seif-num">32:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>חֲמַ֥ת תַּנִּינִ֖ם יֵינָ֑ם וְרֹ֥אשׁ פְּתָנִ֖ים אַכְזָֽר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>חמת תנינם יינם וראש פתנים אכזר׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Leur vin, c’est la bave des serpents, c’est le poison meurtrier des vipères!"</p></div>
+    </div><div class="seif" id="v-32-34">
+      <span class="seif-num">32:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֲלֹא־ה֖וּא כָּמֻ֣ס עִמָּדִ֑י חָת֖וּם בְּאוֹצְרֹתָֽי׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>הלא־הוא כמס עמדי חתום באוצרתי׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Certes, ceci est mon secret; il est scellé dans mes archives.</p></div>
+    </div><div class="seif" id="v-32-35">
+      <span class="seif-num">32:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִ֤י נָקָם֙ וְשִׁלֵּ֔ם לְעֵ֖ת תָּמ֣וּט רַגְלָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֤י קָרוֹב֙ י֣וֹם אֵידָ֔ם וְחָ֖שׁ עֲתִדֹ֥ת לָֽמוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לי נקם ושלם לעת תמוט רגלם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כי קרוב יום אידם וחש עתדת למו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>A moi la vindicte et les représailles, vienne l’heure où leur pied doit glisser; car il approche, le jour de leur catastrophe, et l’avenir accourt sur eux!</p></div>
+    </div><div class="seif" id="v-32-36">
+      <span class="seif-num">32:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־יָדִ֤ין יְהֹוָה֙ עַמּ֔וֹ וְעַל־עֲבָדָ֖יו יִתְנֶחָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֤י יִרְאֶה֙ כִּֽי־אָ֣זְלַת יָ֔ד וְאֶ֖פֶס עָצ֥וּר וְעָזֽוּב׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי־ידין יהוה עמו ועל־עבדיו יתנחם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כי יראה כי־אזלת יד ואפס עצור ועזוב׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Oui, l’Éternel prendra parti pour son peuple, pour ses serviteurs il redeviendra propice, lorsqu’il les verra à bout de forces, sans appui et sans ressources.</p></div>
+    </div><div class="seif" id="v-32-37">
+      <span class="seif-num">32:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאָמַ֖ר אֵ֣י אֱלֹהֵ֑ימוֹ צ֖וּר חָסָ֥יוּ בֽוֹ׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואמר אי אלהימו צור חסיו בו׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Alors il dira: "Où sont leurs dieux, ces rocs tutélaires, objets de leur confiance;</p></div>
+    </div><div class="seif" id="v-32-38">
+      <span class="seif-num">32:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֲשֶׁ֨ר חֵ֤לֶב זְבָחֵ֙ימוֹ֙ יֹאכֵ֔לוּ יִשְׁתּ֖וּ יֵ֣ין נְסִיכָ֑ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יָק֙וּמוּ֙ וְיַעְזְרֻכֶ֔ם יְהִ֥י עֲלֵיכֶ֖ם סִתְרָֽה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>אשר חלב זבחימו יאכלו ישתו יין נסיכם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;יקומו ויעזרכם יהי עליכם סתרה׃&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>qui consomment la graisse de leurs victimes, s’abreuvent du vin de leurs libations? Qu’ils se lèvent pour vous secourir! Qu’ils soient pour vous une sauvegarde!</p></div>
+    </div><div class="seif" id="v-32-39">
+      <span class="seif-num">32:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>רְא֣וּ&thinsp;<b>׀</b> עַתָּ֗ה כִּ֣י אֲנִ֤י אֲנִי֙ ה֔וּא וְאֵ֥ין אֱלֹהִ֖ים עִמָּדִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אֲנִ֧י אָמִ֣ית וַאֲחַיֶּ֗ה מָחַ֙צְתִּי֙ וַאֲנִ֣י אֶרְפָּ֔א&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאֵ֥ין מִיָּדִ֖י מַצִּֽיל׃</p></div><div class="heb-s"><p>ראו&thinsp;<b>׀</b> עתה כי אני אני הוא ואין אלהים עמדי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;אני אמית ואחיה מחצתי ואני ארפא&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ואין מידי מציל׃</p></div></div>
+      <div class="texte-fr"><p>Reconnaissez maintenant que c’est moi, qui suis Dieu, moi seul, et nul dieu à côté de moi! Que seul je fais mourir et vivre, je blesse et je guéris, et qu’on ne peut rien soustraire à ma puissance.</p></div>
+    </div><div class="seif" id="v-32-40">
+      <span class="seif-num">32:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־אֶשָּׂ֥א אֶל־שָׁמַ֖יִם יָדִ֑י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְאָמַ֕רְתִּי חַ֥י אָנֹכִ֖י לְעֹלָֽם׃</p></div><div class="heb-s"><p>כי־אשא אל־שמים ידי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ואמרתי חי אנכי לעלם׃</p></div></div>
+      <div class="texte-fr"><p>Oui, j’en lève la main au ciel, j’en atteste mon éternelle existence</p></div>
+    </div><div class="seif" id="v-32-41">
+      <span class="seif-num">32:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־שַׁנּוֹתִי֙ בְּרַ֣ק חַרְבִּ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְתֹאחֵ֥ז בְּמִשְׁפָּ֖ט יָדִ֑י אָשִׁ֤יב נָקָם֙ לְצָרָ֔י&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְלִמְשַׂנְאַ֖י אֲשַׁלֵּֽם׃</p></div><div class="heb-s"><p>אם־שנותי ברק חרבי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ותאחז במשפט ידי אשיב נקם לצרי&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ולמשנאי אשלם׃</p></div></div>
+      <div class="texte-fr"><p>Quand j’aiguiserai l’éclair de mon glaive, quand ma main s’armera du châtiment, je prendrai ma revanche sur mes adversaires, je paierai de retour mes ennemis.</p></div>
+    </div><div class="seif" id="v-32-42">
+      <span class="seif-num">32:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַשְׁכִּ֤יר חִצַּי֙ מִדָּ֔ם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְחַרְבִּ֖י תֹּאכַ֣ל בָּשָׂ֑ר מִדַּ֤ם חָלָל֙ וְשִׁבְיָ֔ה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;מֵרֹ֖אשׁ פַּרְע֥וֹת אוֹיֵֽב׃</p></div><div class="heb-s"><p>אשכיר חצי מדם&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וחרבי תאכל בשר מדם חלל ושביה&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;מראש פרעות אויב׃</p></div></div>
+      <div class="texte-fr"><p>J’enivrerai de sang mes flèches, et mon glaive se repaîtra de chair, du sang des mourants et des captifs, du crâne des capitaines ennemis!"</p></div>
+    </div><div class="seif" id="v-32-43">
+      <span class="seif-num">32:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַרְנִ֤ינוּ גוֹיִם֙ עַמּ֔וֹ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כִּ֥י דַם־עֲבָדָ֖יו יִקּ֑וֹם וְנָקָם֙ יָשִׁ֣יב לְצָרָ֔יו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וְכִפֶּ֥ר אַדְמָת֖וֹ עַמּֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>הרנינו גוים עמו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;כי דם־עבדיו יקום ונקם ישיב לצריו&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;וכפר אדמתו עמו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Nations, félicitez son peuple, car Dieu venge le sang de ses serviteurs; il exerce sa vindicte sur ses ennemis, réhabilite et sa terre et son peuple!"</p></div>
+    </div><div class="seif" id="v-32-44">
+      <span class="seif-num">32:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֣א מֹשֶׁ֗ה וַיְדַבֵּ֛ר אֶת־כׇּל־דִּבְרֵ֥י הַשִּׁירָֽה־הַזֹּ֖את בְּאׇזְנֵ֣י הָעָ֑ם ה֖וּא וְהוֹשֵׁ֥עַ בִּן־נֽוּן׃</p></div><div class="heb-s"><p>ויבא משה וידבר את־כל־דברי השירה־הזאת באזני העם הוא והושע בן־נון׃</p></div></div>
+      <div class="texte-fr"><p>Moïse vint faire entendre au peuple toutes les paroles de ce cantique, lui avec Hoschéa, fils de Noun.</p></div>
+    </div><div class="seif" id="v-32-45">
+      <span class="seif-num">32:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְכַ֣ל מֹשֶׁ֗ה לְדַבֵּ֛ר אֶת־כׇּל־הַדְּבָרִ֥ים הָאֵ֖לֶּה אֶל־כׇּל־יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויכל משה לדבר את־כל־הדברים האלה אל־כל־ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Lorsque Moïse eut achevé d’adresser toutes ces paroles à Israël entier,</p></div>
+    </div><div class="seif" id="v-32-46">
+      <span class="seif-num">32:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֲלֵהֶם֙ שִׂ֣ימוּ לְבַבְכֶ֔ם לְכׇ֨ל־הַדְּבָרִ֔ים אֲשֶׁ֧ר אָנֹכִ֛י מֵעִ֥יד בָּכֶ֖ם הַיּ֑וֹם אֲשֶׁ֤ר תְּצַוֻּם֙ אֶת־בְּנֵיכֶ֔ם לִשְׁמֹ֣ר לַעֲשׂ֔וֹת אֶת־כׇּל־דִּבְרֵ֖י הַתּוֹרָ֥ה הַזֹּֽאת׃</p></div><div class="heb-s"><p>ויאמר אלהם שימו לבבכם לכל־הדברים אשר אנכי מעיד בכם היום אשר תצום את־בניכם לשמר לעשות את־כל־דברי התורה הזאת׃</p></div></div>
+      <div class="texte-fr"><p>il leur dit: "Prenez à cœur toutes les paroles par lesquelles je vous admoneste en ce jour, et que vous devez recommander à vos enfants pour qu’ils observent avec soin toutes les paroles de cette doctrine.</p></div>
+    </div><div class="seif" id="v-32-47">
+      <span class="seif-num">32:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֠י לֹא־דָבָ֨ר רֵ֥ק הוּא֙ מִכֶּ֔ם כִּי־ה֖וּא חַיֵּיכֶ֑ם וּבַדָּבָ֣ר הַזֶּ֗ה תַּאֲרִ֤יכוּ יָמִים֙ עַל־הָ֣אֲדָמָ֔ה אֲשֶׁ֨ר אַתֶּ֜ם עֹבְרִ֧ים אֶת־הַיַּרְדֵּ֛ן שָׁ֖מָּה לְרִשְׁתָּֽהּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי לא־דבר רק הוא מכם כי־הוא חייכם ובדבר הזה תאריכו ימים על־האדמה אשר אתם עברים את־הירדן שמה לרשתה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Car ce n’est pas pour vous chose indifférente, c’est votre existence même! Et c’est par ce moyen seul que vous obtiendrez de longs jours sur cette terre, pour la possession de laquelle vous allez passer le Jourdain."</p></div>
+    </div><div class="seif" id="v-32-48">
+      <span class="seif-num">32:48</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֤ר יְהֹוָה֙ אֶל־מֹשֶׁ֔ה בְּעֶ֛צֶם הַיּ֥וֹם הַזֶּ֖ה לֵאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה בעצם היום הזה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse, ce même jour, en ces termes:</p></div>
+    </div><div class="seif" id="v-32-49">
+      <span class="seif-num">32:49</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲלֵ֡ה אֶל־הַר֩ הָעֲבָרִ֨ים הַזֶּ֜ה הַר־נְב֗וֹ אֲשֶׁר֙ בְּאֶ֣רֶץ מוֹאָ֔ב אֲשֶׁ֖ר עַל־פְּנֵ֣י יְרֵח֑וֹ וּרְאֵה֙ אֶת־אֶ֣רֶץ כְּנַ֔עַן אֲשֶׁ֨ר אֲנִ֥י נֹתֵ֛ן לִבְנֵ֥י יִשְׂרָאֵ֖ל לַאֲחֻזָּֽה׃</p></div><div class="heb-s"><p>עלה אל־הר העברים הזה הר־נבו אשר בארץ מואב אשר על־פני ירחו וראה את־ארץ כנען אשר אני נתן לבני ישראל לאחזה׃</p></div></div>
+      <div class="texte-fr"><p>"Monte sur cette cime des Abarîm, sur le mont Nébo, situé dans le pays de Moab en face de Jéricho, et contemple le pays de Canaan, que je donne aux enfants d’Israël en propriété;</p></div>
+    </div><div class="seif" id="v-32-50">
+      <span class="seif-num">32:50</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמֻ֗ת בָּהָר֙ אֲשֶׁ֤ר אַתָּה֙ עֹלֶ֣ה שָׁ֔מָּה וְהֵאָסֵ֖ף אֶל־עַמֶּ֑יךָ כַּֽאֲשֶׁר־מֵ֞ת אַהֲרֹ֤ן אָחִ֙יךָ֙ בְּהֹ֣ר הָהָ֔ר וַיֵּאָ֖סֶף אֶל־עַמָּֽיו׃</p></div><div class="heb-s"><p>ומת בהר אשר אתה עלה שמה והאסף אל־עמיך כאשר־מת אהרן אחיך בהר ההר ויאסף אל־עמיו׃</p></div></div>
+      <div class="texte-fr"><p>puis meurs sur la montagne où tu vas monter, et rejoins tes pères, de même que ton frère Aaron est mort à Hor-la-Montagne et est allé rejoindre ses pères.</p></div>
+    </div><div class="seif" id="v-32-51">
+      <span class="seif-num">32:51</span>
+      <div class="texte-heb"><div class="heb-n"><p>עַל֩ אֲשֶׁ֨ר מְעַלְתֶּ֜ם בִּ֗י בְּתוֹךְ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל בְּמֵֽי־מְרִיבַ֥ת קָדֵ֖שׁ מִדְבַּר־צִ֑ן עַ֣ל אֲשֶׁ֤ר לֹֽא־קִדַּשְׁתֶּם֙ אוֹתִ֔י בְּת֖וֹךְ בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>על אשר מעלתם בי בתוך בני ישראל במי־מריבת קדש מדבר־צן על אשר לא־קדשתם אותי בתוך בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Parce que vous avez été fautifs envers moi au milieu des enfants d’Israël, à l’occasion des eaux de Meriba à Kadêch, dans le désert de Cîn, en ne me sanctifiant pas au milieu des enfants d’Israël.</p></div>
+    </div><div class="seif" id="v-32-52">
+      <span class="seif-num">32:52</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֥י מִנֶּ֖גֶד תִּרְאֶ֣ה אֶת־הָאָ֑רֶץ וְשָׁ֙מָּה֙ לֹ֣א תָב֔וֹא אֶל־הָאָ֕רֶץ אֲשֶׁר־אֲנִ֥י נֹתֵ֖ן לִבְנֵ֥י יִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי מנגד תראה את־הארץ ושמה לא תבוא אל־הארץ אשר־אני נתן לבני ישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ce n’est qu’à distance que tu verras le pays: mais tu n’y entreras point, dans ce pays que je donne aux enfants d’Israël."</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>"Écoutez, cieux, je vais parler; et que la terre entende les paroles de ma bouche.</p>
-      <p>Que mon enseignement s’épande comme la pluie, que mon discours distille comme la rosée, comme la bruyante ondée sur les plantes, et comme les gouttes pressées sur le gazon!</p>
-      <p>Car c’est le nom de l’Éternel que je proclame; rendez hommage à notre Dieu!</p>
-      <p>Lui, notre rocher, son œuvre est parfaite, toutes ses voies sont la justice même; Dieu de vérité, jamais inique, constamment équitable et droit.</p>
-      <p>Est-ce lui qui a condamné ses enfants? Non, c’est leur propre indignité, ô race perverse et tortueuse!</p>
-      <p>Est-ce ainsi que vous payez Dieu de retour, peuple insensé et peu sage? N’est-il donc pas ton père, ton créateur? N’est-ce pas lui qui t’a fait et qui t’a organisé?</p>
-      <p>Souviens-toi des jours antiques, médite les annales de chaque siècle; interroge ton père, il te l’apprendra, tes vieillards, ils te le diront!</p>
-      <p>Quand le Souverain donna leurs lots aux nations, quand il sépara les enfants d’Adam, il fixa les limites des peuples d’après le nombre des enfants d’Israël.</p>
-      <p>Car ce peuple est la part du Seigneur; Jacob est le lot de son héritage.</p>
-      <p>Il le rencontre dans une région déserte, dans les solitudes aux hurlements sauvages; il le protège, il veille sur lui, le garde comme la prunelle de son œil.</p>
-      <p>Ainsi l’aigle veille sur son nid, plane sur ses jeunes aiglons, déploie ses ailes pour les recueillir, les porte sur ses pennes robustes.</p>
-      <p>Seul, l’Éternel le dirige, et nulle puissance étrangère ne le seconde.</p>
-      <p>Il l’a fait monter victorieusement sur les hauteurs de la terre et jouir des produits des champs; l’a nourri avec le miel des rochers, avec l’huile de la roche pierreuse,</p>
-      <p>avec la crème des vaches, le lait des brebis, les gras agneaux, les béliers de Basan et les boucs, avec la mœlle exquise du froment; et tu buvais le sang vermeil du raisin.</p>
-      <p>Yechouroun, engraissé, regimbe; tu étais trop gras, trop replet, trop bien nourri et il abandonne le Dieu qui l’a créé, et il méprise son rocher tutélaire!</p>
-      <p>Ils l’irritent par des cultes étrangers; ils l’outragent par leurs abominations.</p>
-      <p>Ils sacrifient à des démons qui ne sont pas Dieu, à des déités qu’ils ne connaissaient point; déités nouvelles, de fraîche date, que n’avaient pas redoutées vos pères.</p>
-      <p>Et le rocher qui t’engendra, tu le dédaignes, et tu oublies le Dieu qui t’a fait naître.</p>
-      <p>A cette vue, le Seigneur s’est indigné; ainsi outragé par ses fils, par ses filles,</p>
-      <p>il a dit: Je veux leur dérober ma face, je verrai ce que sera leur avenir; car c’est une race aux voies obliques, des enfants sans loyauté.</p>
-      <p>Eux m’ont irrité par des dieux nuls, m’ont contristé par leurs vaines idoles; et moi je les irriterai par un peuple nul, je les contristerai par une nation indigne.</p>
-      <p>Oui, un feu s’est allumé dans ma colère, dévorant jusqu’aux profondeurs de l’abîme; il a consumé la terre et ses productions, embrasé les fondements des montagnes.</p>
-      <p>J’entasserai sur eux tous les malheurs; contre eux j’épuiserai mes flèches.</p>
-      <p>Exténués par la famine, dévorés par la fièvre et des pestes meurtrières, j’exciterai contre eux la dent des carnassiers, et le venin brûlant des reptiles.</p>
-      <p>Au dehors, l’épée fera des victimes, au dedans, ce sera la terreur: adolescent et jeune vierge, nourrisson et vieillard.</p>
-      <p>J’aurais résolu de les réduire à néant, d’effacer leur souvenir de l’humanité,</p>
-      <p>Si je ne craignais le dire insultant de l’ennemi et l’aveuglement de leurs persécuteurs, qui s’écrieraient: "C’est notre puissance qui triomphe, ce n’est pas l’Éternel qui en est la cause."</p>
-      <p>Car c’est une race aux idées fausses; ils sont dépourvus d’intelligence.</p>
-      <p>S’ils étaient sages, ils y réfléchiraient; ils seraient frappés de ce qui finit par leur arriver:</p>
-      <p>"Comment un seul homme pourrait-il en poursuivre mille, deux, mettre en fuite une myriade, si leur protecteur ne les eût vendus, si l’Éternel ne les eût livrés?</p>
-      <p>Car leur protecteur ne ressemble point au nôtre, et nos ennemis sont une race à part.</p>
-      <p>De fait, leur vigne tient de la vigne de Sodome, et leur terroir, des campagnes de Gomorrhe; leurs raisins sont des baies vénéneuses, ce sont des grappes amères que les leurs.</p>
-      <p>Leur vin, c’est la bave des serpents, c’est le poison meurtrier des vipères!"</p>
-      <p>Certes, ceci est mon secret; il est scellé dans mes archives.</p>
-      <p>A moi la vindicte et les représailles, vienne l’heure où leur pied doit glisser; car il approche, le jour de leur catastrophe, et l’avenir accourt sur eux!</p>
-      <p>Oui, l’Éternel prendra parti pour son peuple, pour ses serviteurs il redeviendra propice, lorsqu’il les verra à bout de forces, sans appui et sans ressources.</p>
-      <p>Alors il dira: "Où sont leurs dieux, ces rocs tutélaires, objets de leur confiance;</p>
-      <p>qui consomment la graisse de leurs victimes, s’abreuvent du vin de leurs libations? Qu’ils se lèvent pour vous secourir! Qu’ils soient pour vous une sauvegarde!</p>
-      <p>Reconnaissez maintenant que c’est moi, qui suis Dieu, moi seul, et nul dieu à côté de moi! Que seul je fais mourir et vivre, je blesse et je guéris, et qu’on ne peut rien soustraire à ma puissance.</p>
-      <p>Oui, j’en lève la main au ciel, j’en atteste mon éternelle existence</p>
-      <p>Quand j’aiguiserai l’éclair de mon glaive, quand ma main s’armera du châtiment, je prendrai ma revanche sur mes adversaires, je paierai de retour mes ennemis.</p>
-      <p>J’enivrerai de sang mes flèches, et mon glaive se repaîtra de chair, du sang des mourants et des captifs, du crâne des capitaines ennemis!"</p>
-      <p>Nations, félicitez son peuple, car Dieu venge le sang de ses serviteurs; il exerce sa vindicte sur ses ennemis, réhabilite et sa terre et son peuple!"</p>
-      <p>Moïse vint faire entendre au peuple toutes les paroles de ce cantique, lui avec Hoschéa, fils de Noun.</p>
-      <p>Lorsque Moïse eut achevé d’adresser toutes ces paroles à Israël entier,</p>
-      <p>il leur dit: "Prenez à cœur toutes les paroles par lesquelles je vous admoneste en ce jour, et que vous devez recommander à vos enfants pour qu’ils observent avec soin toutes les paroles de cette doctrine.</p>
-      <p>Car ce n’est pas pour vous chose indifférente, c’est votre existence même! Et c’est par ce moyen seul que vous obtiendrez de longs jours sur cette terre, pour la possession de laquelle vous allez passer le Jourdain."</p>
-      <p>L’Éternel parla à Moïse, ce même jour, en ces termes:</p>
-      <p>"Monte sur cette cime des Abarîm, sur le mont Nébo, situé dans le pays de Moab en face de Jéricho, et contemple le pays de Canaan, que je donne aux enfants d’Israël en propriété;</p>
-      <p>puis meurs sur la montagne où tu vas monter, et rejoins tes pères, de même que ton frère Aaron est mort à Hor-la-Montagne et est allé rejoindre ses pères.</p>
-      <p>Parce que vous avez été fautifs envers moi au milieu des enfants d’Israël, à l’occasion des eaux de Meriba à Kadêch, dans le désert de Cîn, en ne me sanctifiant pas au milieu des enfants d’Israël.</p>
-      <p>Ce n’est qu’à distance que tu verras le pays: mais tu n’y entreras point, dans ce pays que je donne aux enfants d’Israël."</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -412,6 +552,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_vayeilech.html">← Vayélèkh</a><a class="hbtn qcm" href="qcm_paracha_haazinu.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vezot-haberakha.html">Vezot Haberakha →</a></div>
 </main>
 
 <footer>

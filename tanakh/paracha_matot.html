@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bamidbar · Paracha</div>
     <h1>Matot – Les vœux, la guerre contre Madian et Ruben et Gad</h1>
     <p>Torah, Bamidbar (Numbers 30:2-32:42)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_pinchas.html">← Pin&#x27;has</a><a class="hbtn qcm" href="qcm_paracha_matot.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_masei.html">Massé →</a></div>
   </div>
 </header>
 
@@ -161,29 +202,466 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶל־רָאשֵׁ֣י הַמַּטּ֔וֹת לִבְנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר זֶ֣ה הַדָּבָ֔ר אֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃', 'אִישׁ֩ כִּֽי־יִדֹּ֨ר נֶ֜דֶר לַֽיהֹוָ֗ה אֽוֹ־הִשָּׁ֤בַע שְׁבֻעָה֙ לֶאְסֹ֤ר אִסָּר֙ עַל־נַפְשׁ֔וֹ לֹ֥א יַחֵ֖ל דְּבָר֑וֹ כְּכׇל־הַיֹּצֵ֥א מִפִּ֖יו יַעֲשֶֽׂה׃', 'וְאִשָּׁ֕ה כִּֽי־תִדֹּ֥ר נֶ֖דֶר לַיהֹוָ֑ה וְאָסְרָ֥ה אִסָּ֛ר בְּבֵ֥ית אָבִ֖יהָ בִּנְעֻרֶֽיהָ׃', 'וְשָׁמַ֨ע אָבִ֜יהָ אֶת־נִדְרָ֗הּ וֶֽאֱסָרָהּ֙ אֲשֶׁ֣ר אָֽסְרָ֣ה עַל־נַפְשָׁ֔הּ וְהֶחֱרִ֥ישׁ לָ֖הּ אָבִ֑יהָ וְקָ֙מוּ֙ כׇּל־נְדָרֶ֔יהָ וְכׇל־אִסָּ֛ר אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֽוּם׃', 'וְאִם־הֵנִ֨יא אָבִ֣יהָ אֹתָהּ֮ בְּי֣וֹם שׇׁמְעוֹ֒ כׇּל־נְדָרֶ֗יהָ וֶֽאֱסָרֶ֛יהָ אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ לֹ֣א יָק֑וּם וַֽיהֹוָה֙ יִֽסְלַח־לָ֔הּ כִּי־הֵנִ֥יא אָבִ֖יהָ אֹתָֽהּ׃', 'וְאִם־הָי֤וֹ תִֽהְיֶה֙ לְאִ֔ישׁ וּנְדָרֶ֖יהָ עָלֶ֑יהָ א֚וֹ מִבְטָ֣א שְׂפָתֶ֔יהָ אֲשֶׁ֥ר אָסְרָ֖ה עַל־נַפְשָֽׁהּ׃', 'וְשָׁמַ֥ע אִישָׁ֛הּ בְּי֥וֹם שׇׁמְע֖וֹ וְהֶחֱרִ֣ישׁ לָ֑הּ וְקָ֣מוּ נְדָרֶ֗יהָ וֶֽאֱסָרֶ֛הָ אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֻֽמוּ׃', 'וְ֠אִ֠ם בְּי֨וֹם שְׁמֹ֣עַ אִישָׁהּ֮ יָנִ֣יא אוֹתָהּ֒ וְהֵפֵ֗ר אֶת־נִדְרָהּ֙ אֲשֶׁ֣ר עָלֶ֔יהָ וְאֵת֙ מִבְטָ֣א שְׂפָתֶ֔יהָ אֲשֶׁ֥ר אָסְרָ֖ה עַל־נַפְשָׁ֑הּ וַיהֹוָ֖ה יִֽסְלַֽח־לָֽהּ׃', 'וְנֵ֥דֶר אַלְמָנָ֖ה וּגְרוּשָׁ֑ה כֹּ֛ל אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָק֥וּם עָלֶֽיהָ׃', 'וְאִם־בֵּ֥ית אִישָׁ֖הּ נָדָ֑רָה אֽוֹ־אָסְרָ֥ה אִסָּ֛ר עַל־נַפְשָׁ֖הּ בִּשְׁבֻעָֽה׃', 'וְשָׁמַ֤ע אִישָׁהּ֙ וְהֶחֱרִ֣שׁ לָ֔הּ לֹ֥א הֵנִ֖יא אֹתָ֑הּ וְקָ֙מוּ֙ כׇּל־נְדָרֶ֔יהָ וְכׇל־אִסָּ֛ר אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֽוּם׃', 'וְאִם־הָפֵר֩ יָפֵ֨ר אֹתָ֥ם&thinsp;<small>׀</small>&thinsp;אִישָׁהּ֮ בְּי֣וֹם שׇׁמְעוֹ֒ כׇּל־מוֹצָ֨א שְׂפָתֶ֧יהָ לִנְדָרֶ֛יהָ וּלְאִסַּ֥ר נַפְשָׁ֖הּ לֹ֣א יָק֑וּם אִישָׁ֣הּ הֲפֵרָ֔ם וַיהֹוָ֖ה יִֽסְלַֽח־לָֽהּ׃', 'כׇּל־נֵ֛דֶר וְכׇל־שְׁבֻעַ֥ת אִסָּ֖ר לְעַנֹּ֣ת נָ֑פֶשׁ אִישָׁ֥הּ יְקִימֶ֖נּוּ וְאִישָׁ֥הּ יְפֵרֶֽנּוּ׃', 'וְאִם־הַחֲרֵשׁ֩ יַחֲרִ֨ישׁ לָ֥הּ אִישָׁהּ֮ מִיּ֣וֹם אֶל־יוֹם֒ וְהֵקִים֙ אֶת־כׇּל־נְדָרֶ֔יהָ א֥וֹ אֶת־כׇּל־אֱסָרֶ֖יהָ אֲשֶׁ֣ר עָלֶ֑יהָ הֵקִ֣ים אֹתָ֔ם כִּי־הֶחֱרִ֥שׁ לָ֖הּ בְּי֥וֹם שׇׁמְעֽוֹ׃', 'וְאִם־הָפֵ֥ר יָפֵ֛ר אֹתָ֖ם אַחֲרֵ֣י שׇׁמְע֑וֹ וְנָשָׂ֖א אֶת־עֲוֺנָֽהּ׃', 'אֵ֣לֶּה הַֽחֻקִּ֗ים אֲשֶׁ֨ר צִוָּ֤ה יְהֹוָה֙ אֶת־מֹשֶׁ֔ה בֵּ֥ין אִ֖ישׁ לְאִשְׁתּ֑וֹ בֵּֽין־אָ֣ב לְבִתּ֔וֹ בִּנְעֻרֶ֖יהָ בֵּ֥ית אָבִֽיהָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'נְקֹ֗ם נִקְמַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל מֵאֵ֖ת הַמִּדְיָנִ֑ים אַחַ֖ר תֵּאָסֵ֥ף אֶל־עַמֶּֽיךָ׃', 'וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶל־הָעָ֣ם לֵאמֹ֔ר הֵחָלְצ֧וּ מֵאִתְּכֶ֛ם אֲנָשִׁ֖ים לַצָּבָ֑א וְיִהְיוּ֙ עַל־מִדְיָ֔ן לָתֵ֥ת נִקְמַת־יְהֹוָ֖ה בְּמִדְיָֽן׃', 'אֶ֚לֶף לַמַּטֶּ֔ה אֶ֖לֶף לַמַּטֶּ֑ה לְכֹל֙ מַטּ֣וֹת יִשְׂרָאֵ֔ל תִּשְׁלְח֖וּ לַצָּבָֽא׃', 'וַיִּמָּֽסְרוּ֙ מֵאַלְפֵ֣י יִשְׂרָאֵ֔ל אֶ֖לֶף לַמַּטֶּ֑ה שְׁנֵים־עָשָׂ֥ר אֶ֖לֶף חֲלוּצֵ֥י צָבָֽא׃', 'וַיִּשְׁלַ֨ח אֹתָ֥ם מֹשֶׁ֛ה אֶ֥לֶף לַמַּטֶּ֖ה לַצָּבָ֑א אֹ֠תָ֠ם וְאֶת־פִּ֨ינְחָ֜ס בֶּן־אֶלְעָזָ֤ר הַכֹּהֵן֙ לַצָּבָ֔א וּכְלֵ֥י הַקֹּ֛דֶשׁ וַחֲצֹצְר֥וֹת הַתְּרוּעָ֖ה בְּיָדֽוֹ׃', 'וַֽיִּצְבְּאוּ֙ עַל־מִדְיָ֔ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶׁ֑ה וַיַּֽהַרְג֖וּ כׇּל־זָכָֽר׃', 'וְאֶת־מַלְכֵ֨י מִדְיָ֜ן הָרְג֣וּ עַל־חַלְלֵיהֶ֗ם אֶת־אֱוִ֤י וְאֶת־רֶ֙קֶם֙ וְאֶת־צ֤וּר וְאֶת־חוּר֙ וְאֶת־רֶ֔בַע חֲמֵ֖שֶׁת מַלְכֵ֣י מִדְיָ֑ן וְאֵת֙ בִּלְעָ֣ם בֶּן־בְּע֔וֹר הָרְג֖וּ בֶּחָֽרֶב׃', 'וַיִּשְׁבּ֧וּ בְנֵי־יִשְׂרָאֵ֛ל אֶת־נְשֵׁ֥י מִדְיָ֖ן וְאֶת־טַפָּ֑ם וְאֵ֨ת כׇּל־בְּהֶמְתָּ֧ם וְאֶת־כׇּל־מִקְנֵהֶ֛ם וְאֶת־כׇּל־חֵילָ֖ם בָּזָֽזוּ׃', 'וְאֵ֤ת כׇּל־עָרֵיהֶם֙ בְּמ֣וֹשְׁבֹתָ֔ם וְאֵ֖ת כׇּל־טִֽירֹתָ֑ם שָׂרְפ֖וּ בָּאֵֽשׁ׃', 'וַיִּקְחוּ֙ אֶת־כׇּל־הַשָּׁלָ֔ל וְאֵ֖ת כׇּל־הַמַּלְק֑וֹחַ בָּאָדָ֖ם וּבַבְּהֵמָֽה׃', 'וַיָּבִ֡אוּ אֶל־מֹשֶׁה֩ וְאֶל־אֶלְעָזָ֨ר הַכֹּהֵ֜ן וְאֶל־עֲדַ֣ת בְּנֵֽי־יִשְׂרָאֵ֗ל אֶת־הַשְּׁבִ֧י וְאֶת־הַמַּלְק֛וֹחַ וְאֶת־הַשָּׁלָ֖ל אֶל־הַֽמַּחֲנֶ֑ה אֶל־עַֽרְבֹ֣ת מוֹאָ֔ב אֲשֶׁ֖ר עַל־יַרְדֵּ֥ן יְרֵחֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֵּ֨צְא֜וּ מֹשֶׁ֨ה וְאֶלְעָזָ֧ר הַכֹּהֵ֛ן וְכׇל־נְשִׂיאֵ֥י הָעֵדָ֖ה לִקְרָאתָ֑ם אֶל־מִח֖וּץ לַֽמַּחֲנֶֽה׃', 'וַיִּקְצֹ֣ף מֹשֶׁ֔ה עַ֖ל פְּקוּדֵ֣י הֶחָ֑יִל שָׂרֵ֤י הָאֲלָפִים֙ וְשָׂרֵ֣י הַמֵּא֔וֹת הַבָּאִ֖ים מִצְּבָ֥א הַמִּלְחָמָֽה׃', 'וַיֹּ֥אמֶר אֲלֵיהֶ֖ם מֹשֶׁ֑ה הַֽחִיִּיתֶ֖ם כׇּל־נְקֵבָֽה׃', 'הֵ֣ן הֵ֜נָּה הָי֨וּ לִבְנֵ֤י יִשְׂרָאֵל֙ בִּדְבַ֣ר בִּלְעָ֔ם לִמְסׇר־מַ֥עַל בַּיהֹוָ֖ה עַל־דְּבַר־פְּע֑וֹר וַתְּהִ֥י הַמַּגֵּפָ֖ה בַּעֲדַ֥ת יְהֹוָֽה׃', 'וְעַתָּ֕ה הִרְג֥וּ כׇל־זָכָ֖ר בַּטָּ֑ף וְכׇל־אִשָּׁ֗ה יֹדַ֥עַת אִ֛ישׁ לְמִשְׁכַּ֥ב זָכָ֖ר הֲרֹֽגוּ׃', 'וְכֹל֙ הַטַּ֣ף בַּנָּשִׁ֔ים אֲשֶׁ֥ר לֹא־יָדְע֖וּ מִשְׁכַּ֣ב זָכָ֑ר הַחֲי֖וּ לָכֶֽם׃', 'וְאַתֶּ֗ם חֲנ֛וּ מִח֥וּץ לַֽמַּחֲנֶ֖ה שִׁבְעַ֣ת יָמִ֑ים כֹּל֩ הֹרֵ֨ג נֶ֜פֶשׁ וְכֹ֣ל&thinsp;<b>׀</b> נֹגֵ֣עַ בֶּֽחָלָ֗ל תִּֽתְחַטְּא֞וּ בַּיּ֤וֹם הַשְּׁלִישִׁי֙ וּבַיּ֣וֹם הַשְּׁבִיעִ֔י אַתֶּ֖ם וּשְׁבִיכֶֽם׃', 'וְכׇל־בֶּ֧גֶד וְכׇל־כְּלִי־ע֛וֹר וְכׇל־מַעֲשֵׂ֥ה עִזִּ֖ים וְכׇל־כְּלִי־עֵ֑ץ תִּתְחַטָּֽאוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֹּ֨אמֶר אֶלְעָזָ֤ר הַכֹּהֵן֙ אֶל־אַנְשֵׁ֣י הַצָּבָ֔א הַבָּאִ֖ים לַמִּלְחָמָ֑ה זֹ֚את חֻקַּ֣ת הַתּוֹרָ֔ה אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'אַ֥ךְ אֶת־הַזָּהָ֖ב וְאֶת־הַכָּ֑סֶף אֶֽת־הַנְּחֹ֙שֶׁת֙ אֶת־הַבַּרְזֶ֔ל אֶֽת־הַבְּדִ֖יל וְאֶת־הָעֹפָֽרֶת׃', 'כׇּל־דָּבָ֞ר אֲשֶׁר־יָבֹ֣א בָאֵ֗שׁ תַּעֲבִ֤ירוּ בָאֵשׁ֙ וְטָהֵ֔ר אַ֕ךְ בְּמֵ֥י נִדָּ֖ה יִתְחַטָּ֑א וְכֹ֨ל אֲשֶׁ֧ר לֹֽא־יָבֹ֛א בָּאֵ֖שׁ תַּעֲבִ֥ירוּ בַמָּֽיִם׃', 'וְכִבַּסְתֶּ֧ם בִּגְדֵיכֶ֛ם בַּיּ֥וֹם הַשְּׁבִיעִ֖י וּטְהַרְתֶּ֑ם וְאַחַ֖ר תָּבֹ֥אוּ אֶל־הַֽמַּחֲנֶֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'שָׂ֗א אֵ֣ת רֹ֤אשׁ מַלְק֙וֹחַ֙ הַשְּׁבִ֔י בָּאָדָ֖ם וּבַבְּהֵמָ֑ה אַתָּה֙ וְאֶלְעָזָ֣ר הַכֹּהֵ֔ן וְרָאשֵׁ֖י אֲב֥וֹת הָעֵדָֽה׃', 'וְחָצִ֙יתָ֙ אֶת־הַמַּלְק֔וֹחַ בֵּ֚ין תֹּפְשֵׂ֣י הַמִּלְחָמָ֔ה הַיֹּצְאִ֖ים לַצָּבָ֑א וּבֵ֖ין כׇּל־הָעֵדָֽה׃', 'וַהֲרֵמֹתָ֨ מֶ֜כֶס לַֽיהֹוָ֗ה מֵאֵ֞ת אַנְשֵׁ֤י הַמִּלְחָמָה֙ הַיֹּצְאִ֣ים לַצָּבָ֔א אֶחָ֣ד נֶ֔פֶשׁ מֵחֲמֵ֖שׁ הַמֵּא֑וֹת מִן־הָאָדָם֙ וּמִן־הַבָּקָ֔ר וּמִן־הַחֲמֹרִ֖ים וּמִן־הַצֹּֽאן׃', 'מִמַּֽחֲצִיתָ֖ם תִּקָּ֑חוּ וְנָתַתָּ֛ה לְאֶלְעָזָ֥ר הַכֹּהֵ֖ן תְּרוּמַ֥ת יְהֹוָֽה׃', 'וּמִמַּחֲצִ֨ת בְּנֵֽי־יִשְׂרָאֵ֜ל תִּקַּ֣ח&thinsp;<b>׀</b> אֶחָ֣ד&thinsp;<b>׀</b> אָחֻ֣ז מִן־הַחֲמִשִּׁ֗ים מִן־הָאָדָ֧ם מִן־הַבָּקָ֛ר מִן־הַחֲמֹרִ֥ים וּמִן־הַצֹּ֖אן מִכׇּל־הַבְּהֵמָ֑ה וְנָתַתָּ֤ה אֹתָם֙ לַלְוִיִּ֔ם שֹׁמְרֵ֕י מִשְׁמֶ֖רֶת מִשְׁכַּ֥ן יְהֹוָֽה׃', 'וַיַּ֣עַשׂ מֹשֶׁ֔ה וְאֶלְעָזָ֖ר הַכֹּהֵ֑ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'וַֽיְהִי֙ הַמַּלְק֔וֹחַ יֶ֣תֶר הַבָּ֔ז אֲשֶׁ֥ר בָּזְז֖וּ עַ֣ם הַצָּבָ֑א צֹ֗אן שֵׁשׁ־מֵא֥וֹת אֶ֛לֶף וְשִׁבְעִ֥ים אֶ֖לֶף וַחֲמֵ֥שֶׁת אֲלָפִֽים׃', 'וּבָקָ֕ר שְׁנַ֥יִם וְשִׁבְעִ֖ים אָֽלֶף׃', 'וַחֲמֹרִ֕ים אֶחָ֥ד וְשִׁשִּׁ֖ים אָֽלֶף׃', 'וְנֶ֣פֶשׁ אָדָ֔ם מִ֨ן־הַנָּשִׁ֔ים אֲשֶׁ֥ר לֹֽא־יָדְע֖וּ מִשְׁכַּ֣ב זָכָ֑ר כׇּל־נֶ֕פֶשׁ שְׁנַ֥יִם וּשְׁלֹשִׁ֖ים אָֽלֶף׃', 'וַתְּהִי֙ הַֽמֶּחֱצָ֔ה חֵ֕לֶק הַיֹּצְאִ֖ים בַּצָּבָ֑א מִסְפַּ֣ר הַצֹּ֗אן שְׁלֹשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹשִׁ֣ים אֶ֔לֶף וְשִׁבְעַ֥ת אֲלָפִ֖ים וַחֲמֵ֥שׁ מֵאֽוֹת׃', 'וַיְהִ֛י הַמֶּ֥כֶס לַֽיהֹוָ֖ה מִן־הַצֹּ֑אן שֵׁ֥שׁ מֵא֖וֹת חָמֵ֥שׁ וְשִׁבְעִֽים׃', 'וְהַ֨בָּקָ֔ר שִׁשָּׁ֥ה וּשְׁלֹשִׁ֖ים אָ֑לֶף וּמִכְסָ֥ם לַיהֹוָ֖ה שְׁנַ֥יִם וְשִׁבְעִֽים׃', 'וַחֲמֹרִ֕ים שְׁלֹשִׁ֥ים אֶ֖לֶף וַחֲמֵ֣שׁ מֵא֑וֹת וּמִכְסָ֥ם לַֽיהֹוָ֖ה אֶחָ֥ד וְשִׁשִּֽׁים׃', 'וְנֶ֣פֶשׁ אָדָ֔ם שִׁשָּׁ֥ה עָשָׂ֖ר אָ֑לֶף וּמִכְסָם֙ לַֽיהֹוָ֔ה שְׁנַ֥יִם וּשְׁלֹשִׁ֖ים נָֽפֶשׁ׃', 'וַיִּתֵּ֣ן מֹשֶׁ֗ה אֶת־מֶ֙כֶס֙ תְּרוּמַ֣ת יְהֹוָ֔ה לְאֶלְעָזָ֖ר הַכֹּהֵ֑ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'וּמִֽמַּחֲצִ֖ית בְּנֵ֣י יִשְׂרָאֵ֑ל אֲשֶׁר֙ חָצָ֣ה מֹשֶׁ֔ה מִן־הָאֲנָשִׁ֖ים הַצֹּבְאִֽים׃', 'וַתְּהִ֛י מֶחֱצַ֥ת הָעֵדָ֖ה מִן־הַצֹּ֑אן שְׁלֹשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹשִׁ֣ים אֶ֔לֶף שִׁבְעַ֥ת אֲלָפִ֖ים וַחֲמֵ֥שׁ מֵאֽוֹת׃', 'וּבָקָ֕ר שִׁשָּׁ֥ה וּשְׁלֹשִׁ֖ים אָֽלֶף׃', 'וַחֲמֹרִ֕ים שְׁלֹשִׁ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֽוֹת׃', 'וְנֶ֣פֶשׁ אָדָ֔ם שִׁשָּׁ֥ה עָשָׂ֖ר אָֽלֶף׃', 'וַיִּקַּ֨ח מֹשֶׁ֜ה מִמַּחֲצִ֣ת בְּנֵֽי־יִשְׂרָאֵ֗ל אֶת־הָֽאָחֻז֙ אֶחָ֣ד מִן־הַחֲמִשִּׁ֔ים מִן־הָאָדָ֖ם וּמִן־הַבְּהֵמָ֑ה וַיִּתֵּ֨ן אֹתָ֜ם לַלְוִיִּ֗ם שֹֽׁמְרֵי֙ מִשְׁמֶ֙רֶת֙ מִשְׁכַּ֣ן יְהֹוָ֔ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'וַֽיִּקְרְבוּ֙ אֶל־מֹשֶׁ֔ה הַפְּקֻדִ֕ים אֲשֶׁ֖ר לְאַלְפֵ֣י הַצָּבָ֑א שָׂרֵ֥י הָאֲלָפִ֖ים וְשָׂרֵ֥י הַמֵּאֽוֹת׃', 'וַיֹּֽאמְרוּ֙ אֶל־מֹשֶׁ֔ה עֲבָדֶ֣יךָ נָֽשְׂא֗וּ אֶת־רֹ֛אשׁ אַנְשֵׁ֥י הַמִּלְחָמָ֖ה אֲשֶׁ֣ר בְּיָדֵ֑נוּ וְלֹא־נִפְקַ֥ד מִמֶּ֖נּוּ אִֽישׁ׃', 'וַנַּקְרֵ֞ב אֶת־קׇרְבַּ֣ן יְהֹוָ֗ה אִישׁ֩ אֲשֶׁ֨ר מָצָ֤א כְלִֽי־זָהָב֙ אֶצְעָדָ֣ה וְצָמִ֔יד טַבַּ֖עַת עָגִ֣יל וְכוּמָ֑ז לְכַפֵּ֥ר עַל־נַפְשֹׁתֵ֖ינוּ לִפְנֵ֥י יְהֹוָֽה׃', 'וַיִּקַּ֨ח מֹשֶׁ֜ה וְאֶלְעָזָ֧ר הַכֹּהֵ֛ן אֶת־הַזָּהָ֖ב מֵֽאִתָּ֑ם כֹּ֖ל כְּלִ֥י מַעֲשֶֽׂה׃', 'וַיְהִ֣י&thinsp;<b>׀</b> כׇּל־זְהַ֣ב הַתְּרוּמָ֗ה אֲשֶׁ֤ר הֵרִ֙ימוּ֙ לַֽיהֹוָ֔ה שִׁשָּׁ֨ה עָשָׂ֥ר אֶ֛לֶף שְׁבַע־מֵא֥וֹת וַחֲמִשִּׁ֖ים שָׁ֑קֶל מֵאֵת֙ שָׂרֵ֣י הָֽאֲלָפִ֔ים וּמֵאֵ֖ת שָׂרֵ֥י הַמֵּאֽוֹת׃', 'אַנְשֵׁי֙ הַצָּבָ֔א בָּזְז֖וּ אִ֥ישׁ לֽוֹ׃', 'וַיִּקַּ֨ח מֹשֶׁ֜ה וְאֶלְעָזָ֤ר הַכֹּהֵן֙ אֶת־הַזָּהָ֔ב מֵאֵ֛ת שָׂרֵ֥י הָאֲלָפִ֖ים וְהַמֵּא֑וֹת וַיָּבִ֤אוּ אֹתוֹ֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד זִכָּר֥וֹן לִבְנֵֽי־יִשְׂרָאֵ֖ל לִפְנֵ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וּמִקְנֶ֣ה&thinsp;<b>׀</b> רַ֗ב הָיָ֞ה לִבְנֵ֧י רְאוּבֵ֛ן וְלִבְנֵי־גָ֖ד עָצ֣וּם מְאֹ֑ד וַיִּרְא֞וּ אֶת־אֶ֤רֶץ יַעְזֵר֙ וְאֶת־אֶ֣רֶץ גִּלְעָ֔ד וְהִנֵּ֥ה הַמָּק֖וֹם מְק֥וֹם מִקְנֶֽה׃', 'וַיָּבֹ֥אוּ בְנֵֽי־גָ֖ד וּבְנֵ֣י רְאוּבֵ֑ן וַיֹּאמְר֤וּ אֶל־מֹשֶׁה֙ וְאֶל־אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֶל־נְשִׂיאֵ֥י הָעֵדָ֖ה לֵאמֹֽר׃', 'עֲטָר֤וֹת וְדִיבֹן֙ וְיַעְזֵ֣ר וְנִמְרָ֔ה וְחֶשְׁבּ֖וֹן וְאֶלְעָלֵ֑ה וּשְׂבָ֥ם וּנְב֖וֹ וּבְעֹֽן׃', 'הָאָ֗רֶץ אֲשֶׁ֨ר הִכָּ֤ה יְהֹוָה֙ לִפְנֵי֙ עֲדַ֣ת יִשְׂרָאֵ֔ל אֶ֥רֶץ מִקְנֶ֖ה הִ֑וא וְלַֽעֲבָדֶ֖יךָ מִקְנֶֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיֹּאמְר֗וּ אִם־מָצָ֤אנוּ חֵן֙ בְּעֵינֶ֔יךָ יֻתַּ֞ן אֶת־הָאָ֧רֶץ הַזֹּ֛את לַעֲבָדֶ֖יךָ לַאֲחֻזָּ֑ה אַל־תַּעֲבִרֵ֖נוּ אֶת־הַיַּרְדֵּֽן׃', 'וַיֹּ֣אמֶר מֹשֶׁ֔ה לִבְנֵי־גָ֖ד וְלִבְנֵ֣י רְאוּבֵ֑ן הַאַֽחֵיכֶ֗ם יָבֹ֙אוּ֙ לַמִּלְחָמָ֔ה וְאַתֶּ֖ם תֵּ֥שְׁבוּ פֹֽה׃', 'וְלָ֣מָּה <span class="mam-kq"><span class="mam-kq-k">(תנואון)</span> <span class="mam-kq-q">[תְנִיא֔וּן]</span></span> אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל מֵֽעֲבֹר֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהֹוָֽה׃', 'כֹּ֥ה עָשׂ֖וּ אֲבֹתֵיכֶ֑ם בְּשׇׁלְחִ֥י אֹתָ֛ם מִקָּדֵ֥שׁ בַּרְנֵ֖עַ לִרְא֥וֹת אֶת־הָאָֽרֶץ׃', 'וַֽיַּעֲל֞וּ עַד־נַ֣חַל אֶשְׁכּ֗וֹל וַיִּרְאוּ֙ אֶת־הָאָ֔רֶץ וַיָּנִ֕יאוּ אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל לְבִלְתִּי־בֹא֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהֹוָֽה׃', 'וַיִּֽחַר־אַ֥ף יְהֹוָ֖ה בַּיּ֣וֹם הַה֑וּא וַיִּשָּׁבַ֖ע לֵאמֹֽר׃', 'אִם־יִרְא֨וּ הָאֲנָשִׁ֜ים הָעֹלִ֣ים מִמִּצְרַ֗יִם מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה אֵ֚ת הָאֲדָמָ֔ה אֲשֶׁ֥ר נִשְׁבַּ֛עְתִּי לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹ֑ב כִּ֥י לֹא־מִלְא֖וּ אַחֲרָֽי׃', 'בִּלְתִּ֞י כָּלֵ֤ב בֶּן־יְפֻנֶּה֙ הַקְּנִזִּ֔י וִיהוֹשֻׁ֖עַ בִּן־נ֑וּן כִּ֥י מִלְא֖וּ אַחֲרֵ֥י יְהֹוָֽה׃', 'וַיִּֽחַר־אַ֤ף יְהֹוָה֙ בְּיִשְׂרָאֵ֔ל וַיְנִעֵם֙ בַּמִּדְבָּ֔ר אַרְבָּעִ֖ים שָׁנָ֑ה עַד־תֹּם֙ כׇּל־הַדּ֔וֹר הָעֹשֶׂ֥ה הָרַ֖ע בְּעֵינֵ֥י יְהֹוָֽה׃', 'וְהִנֵּ֣ה קַמְתֶּ֗ם תַּ֚חַת אֲבֹ֣תֵיכֶ֔ם תַּרְבּ֖וּת אֲנָשִׁ֣ים חַטָּאִ֑ים לִסְפּ֣וֹת ע֗וֹד עַ֛ל חֲר֥וֹן אַף־יְהֹוָ֖ה אֶל־יִשְׂרָאֵֽל׃', 'כִּ֤י תְשׁוּבֻן֙ מֵֽאַחֲרָ֔יו וְיָסַ֣ף ע֔וֹד לְהַנִּיח֖וֹ בַּמִּדְבָּ֑ר וְשִֽׁחַתֶּ֖ם לְכׇל־הָעָ֥ם הַזֶּֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיִּגְּשׁ֤וּ אֵלָיו֙ וַיֹּ֣אמְר֔וּ גִּדְרֹ֥ת צֹ֛אן נִבְנֶ֥ה לְמִקְנֵ֖נוּ פֹּ֑ה וְעָרִ֖ים לְטַפֵּֽנוּ׃', 'וַאֲנַ֜חְנוּ נֵחָלֵ֣ץ חֻשִׁ֗ים לִפְנֵי֙ בְּנֵ֣י יִשְׂרָאֵ֔ל עַ֛ד אֲשֶׁ֥ר אִם־הֲבִֽיאֹנֻ֖ם אֶל־מְקוֹמָ֑ם וְיָשַׁ֤ב טַפֵּ֙נוּ֙ בְּעָרֵ֣י הַמִּבְצָ֔ר מִפְּנֵ֖י יֹשְׁבֵ֥י הָאָֽרֶץ׃', 'לֹ֥א נָשׁ֖וּב אֶל־בָּתֵּ֑ינוּ עַ֗ד הִתְנַחֵל֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אִ֖ישׁ נַחֲלָתֽוֹ׃', 'כִּ֣י לֹ֤א נִנְחַל֙ אִתָּ֔ם מֵעֵ֥בֶר לַיַּרְדֵּ֖ן וָהָ֑לְאָה כִּ֣י בָ֤אָה נַחֲלָתֵ֙נוּ֙ אֵלֵ֔ינוּ מֵעֵ֥בֶר הַיַּרְדֵּ֖ן מִזְרָֽחָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיֹּ֤אמֶר אֲלֵיהֶם֙ מֹשֶׁ֔ה אִֽם־תַּעֲשׂ֖וּן אֶת־הַדָּבָ֣ר הַזֶּ֑ה אִם־תֵּחָ֥לְצ֛וּ לִפְנֵ֥י יְהֹוָ֖ה לַמִּלְחָמָֽה׃', 'וְעָבַ֨ר לָכֶ֧ם כׇּל־חָל֛וּץ אֶת־הַיַּרְדֵּ֖ן לִפְנֵ֣י יְהֹוָ֑ה עַ֧ד הוֹרִישׁ֛וֹ אֶת־אֹיְבָ֖יו מִפָּנָֽיו׃', 'וְנִכְבְּשָׁ֨ה הָאָ֜רֶץ לִפְנֵ֤י יְהֹוָה֙ וְאַחַ֣ר תָּשֻׁ֔בוּ וִהְיִיתֶ֧ם נְקִיִּ֛ם מֵיְהֹוָ֖ה וּמִיִּשְׂרָאֵ֑ל וְ֠הָיְתָ֠ה הָאָ֨רֶץ הַזֹּ֥את לָכֶ֛ם לַאֲחֻזָּ֖ה לִפְנֵ֥י יְהֹוָֽה׃', 'וְאִם־לֹ֤א תַעֲשׂוּן֙ כֵּ֔ן הִנֵּ֥ה חֲטָאתֶ֖ם לַיהֹוָ֑ה וּדְעוּ֙ חַטַּאתְכֶ֔ם אֲשֶׁ֥ר תִּמְצָ֖א אֶתְכֶֽם׃', 'בְּנֽוּ־לָכֶ֤ם עָרִים֙ לְטַפְּכֶ֔ם וּגְדֵרֹ֖ת לְצֹנַאֲכֶ֑ם וְהַיֹּצֵ֥א מִפִּיכֶ֖ם תַּעֲשֽׂוּ׃', 'וַיֹּ֤אמֶר בְּנֵי־גָד֙ וּבְנֵ֣י רְאוּבֵ֔ן אֶל־מֹשֶׁ֖ה לֵאמֹ֑ר עֲבָדֶ֣יךָ יַעֲשׂ֔וּ כַּאֲשֶׁ֥ר אֲדֹנִ֖י מְצַוֶּֽה׃', 'טַפֵּ֣נוּ נָשֵׁ֔ינוּ מִקְנֵ֖נוּ וְכׇל־בְּהֶמְתֵּ֑נוּ יִֽהְיוּ־שָׁ֖ם בְּעָרֵ֥י הַגִּלְעָֽד׃', 'וַעֲבָדֶ֨יךָ יַֽעַבְר֜וּ כׇּל־חֲל֥וּץ צָבָ֛א לִפְנֵ֥י יְהֹוָ֖ה לַמִּלְחָמָ֑ה כַּאֲשֶׁ֥ר אֲדֹנִ֖י דֹּבֵֽר׃', 'וַיְצַ֤ו לָהֶם֙ מֹשֶׁ֔ה אֵ֚ת אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֵ֖ת יְהוֹשֻׁ֣עַ בִּן־נ֑וּן וְאֶת־רָאשֵׁ֛י אֲב֥וֹת הַמַּטּ֖וֹת לִבְנֵ֥י יִשְׂרָאֵֽל׃', 'וַיֹּ֨אמֶר מֹשֶׁ֜ה אֲלֵהֶ֗ם אִם־יַעַבְר֣וּ בְנֵי־גָ֣ד וּבְנֵי־רְאוּבֵ֣ן&thinsp;<small>׀</small>&thinsp;אִ֠תְּכֶ֠ם אֶֽת־הַיַּרְדֵּ֞ן כׇּל־חָל֤וּץ לַמִּלְחָמָה֙ לִפְנֵ֣י יְהֹוָ֔ה וְנִכְבְּשָׁ֥ה הָאָ֖רֶץ לִפְנֵיכֶ֑ם וּנְתַתֶּ֥ם לָהֶ֛ם אֶת־אֶ֥רֶץ הַגִּלְעָ֖ד לַאֲחֻזָּֽה׃', 'וְאִם־לֹ֧א יַֽעַבְר֛וּ חֲלוּצִ֖ים אִתְּכֶ֑ם וְנֹֽאחֲז֥וּ בְתֹכְכֶ֖ם בְּאֶ֥רֶץ כְּנָֽעַן׃', 'וַיַּֽעֲנ֧וּ בְנֵי־גָ֛ד וּבְנֵ֥י רְאוּבֵ֖ן לֵאמֹ֑ר אֵת֩ אֲשֶׁ֨ר דִּבֶּ֧ר יְהֹוָ֛ה אֶל־עֲבָדֶ֖יךָ כֵּ֥ן נַעֲשֶֽׂה׃', 'נַ֣חְנוּ נַעֲבֹ֧ר חֲלוּצִ֛ים לִפְנֵ֥י יְהֹוָ֖ה אֶ֣רֶץ כְּנָ֑עַן וְאִתָּ֙נוּ֙ אֲחֻזַּ֣ת נַחֲלָתֵ֔נוּ מֵעֵ֖בֶר לַיַּרְדֵּֽן׃', 'וַיִּתֵּ֣ן לָהֶ֣ם&thinsp;<small>׀</small>&thinsp;מֹשֶׁ֡ה לִבְנֵי־גָד֩ וְלִבְנֵ֨י רְאוּבֵ֜ן וְלַחֲצִ֣י&thinsp;<b>׀</b> שֵׁ֣בֶט&thinsp;<b>׀</b> מְנַשֶּׁ֣ה בֶן־יוֹסֵ֗ף אֶת־מַמְלֶ֙כֶת֙ סִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י וְאֶ֨ת־מַמְלֶ֔כֶת ע֖וֹג מֶ֣לֶךְ הַבָּשָׁ֑ן הָאָ֗רֶץ לְעָרֶ֙יהָ֙ בִּגְבֻלֹ֔ת עָרֵ֥י הָאָ֖רֶץ סָבִֽיב׃', 'וַיִּבְנ֣וּ בְנֵי־גָ֔ד אֶת־דִּיבֹ֖ן וְאֶת־עֲטָרֹ֑ת וְאֵ֖ת עֲרֹעֵֽר׃', 'וְאֶת־עַטְרֹ֥ת שׁוֹפָ֛ן וְאֶת־יַעְזֵ֖ר וְיׇגְבְּהָֽה׃', 'וְאֶת־בֵּ֥ית נִמְרָ֖ה וְאֶת־בֵּ֣ית הָרָ֑ן עָרֵ֥י מִבְצָ֖ר וְגִדְרֹ֥ת צֹֽאן׃', 'וּבְנֵ֤י רְאוּבֵן֙ בָּנ֔וּ אֶת־חֶשְׁבּ֖וֹן וְאֶת־אֶלְעָלֵ֑א וְאֵ֖ת קִרְיָתָֽיִם׃', 'וְאֶת־נְב֞וֹ וְאֶת־בַּ֧עַל מְע֛וֹן מֽוּסַבֹּ֥ת שֵׁ֖ם וְאֶת־שִׂבְמָ֑ה וַיִּקְרְא֣וּ בְשֵׁמֹ֔ת אֶת־שְׁמ֥וֹת הֶעָרִ֖ים אֲשֶׁ֥ר בָּנֽוּ׃', 'וַיֵּ֨לְכ֜וּ בְּנֵ֨י מָכִ֧יר בֶּן־מְנַשֶּׁ֛ה גִּלְעָ֖דָה וַֽיִּלְכְּדֻ֑הָ וַיּ֖וֹרֶשׁ אֶת־הָאֱמֹרִ֥י אֲשֶׁר־בָּֽהּ׃', 'וַיִּתֵּ֤ן מֹשֶׁה֙ אֶת־הַגִּלְעָ֔ד לְמָכִ֖יר בֶּן־מְנַשֶּׁ֑ה וַיֵּ֖שֶׁב בָּֽהּ׃', 'וְיָאִ֤יר בֶּן־מְנַשֶּׁה֙ הָלַ֔ךְ וַיִּלְכֹּ֖ד אֶת־חַוֺּתֵיהֶ֑ם וַיִּקְרָ֥א אֶתְהֶ֖ן חַוֺּ֥ת יָאִֽיר׃', 'וְנֹ֣בַח הָלַ֔ךְ וַיִּלְכֹּ֥ד אֶת־קְנָ֖ת וְאֶת־בְּנֹתֶ֑יהָ וַיִּקְרָ֧א לָ֦הֿ נֹ֖בַח בִּשְׁמֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-30-2">Chap. 30</a><a href="#v-31-1">Chap. 31</a><a href="#v-32-1">Chap. 32</a></div>
+  <div class="seif" id="v-30-2">
+      <span class="seif-num">30:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶל־רָאשֵׁ֣י הַמַּטּ֔וֹת לִבְנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר זֶ֣ה הַדָּבָ֔ר אֲשֶׁ֖ר צִוָּ֥ה יְהֹוָֽה׃</p></div><div class="heb-s"><p>וידבר משה אל־ראשי המטות לבני ישראל לאמר זה הדבר אשר צוה יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse parla aux chefs des tribus des enfants d’Israël, en ces termes: "Voici ce qu’a ordonné l’Éternel:</p></div>
+    </div><div class="seif" id="v-30-3">
+      <span class="seif-num">30:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִישׁ֩ כִּֽי־יִדֹּ֨ר נֶ֜דֶר לַֽיהֹוָ֗ה אֽוֹ־הִשָּׁ֤בַע שְׁבֻעָה֙ לֶאְסֹ֤ר אִסָּר֙ עַל־נַפְשׁ֔וֹ לֹ֥א יַחֵ֖ל דְּבָר֑וֹ כְּכׇל־הַיֹּצֵ֥א מִפִּ֖יו יַעֲשֶֽׂה׃</p></div><div class="heb-s"><p>איש כי־ידר נדר ליהוה או־השבע שבעה לאסר אסר על־נפשו לא יחל דברו ככל־היצא מפיו יעשה׃</p></div></div>
+      <div class="texte-fr"><p>Si un homme fait un vœu au Seigneur, ou s’impose, par un serment, quelque interdiction à lui-même, il ne peut violer sa parole: tout ce qu’a proféré sa bouche, il doit l’accomplir.</p></div>
+    </div><div class="seif" id="v-30-4">
+      <span class="seif-num">30:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִשָּׁ֕ה כִּֽי־תִדֹּ֥ר נֶ֖דֶר לַיהֹוָ֑ה וְאָסְרָ֥ה אִסָּ֛ר בְּבֵ֥ית אָבִ֖יהָ בִּנְעֻרֶֽיהָ׃</p></div><div class="heb-s"><p>ואשה כי־תדר נדר ליהוה ואסרה אסר בבית אביה בנעריה׃</p></div></div>
+      <div class="texte-fr"><p>Pour la femme, si elle fait un vœu au Seigneur ou s’impose une abstinence dans la maison de son père, pendant sa jeunesse,</p></div>
+    </div><div class="seif" id="v-30-5">
+      <span class="seif-num">30:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁמַ֨ע אָבִ֜יהָ אֶת־נִדְרָ֗הּ וֶֽאֱסָרָהּ֙ אֲשֶׁ֣ר אָֽסְרָ֣ה עַל־נַפְשָׁ֔הּ וְהֶחֱרִ֥ישׁ לָ֖הּ אָבִ֑יהָ וְקָ֙מוּ֙ כׇּל־נְדָרֶ֔יהָ וְכׇל־אִסָּ֛ר אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֽוּם׃</p></div><div class="heb-s"><p>ושמע אביה את־נדרה ואסרה אשר אסרה על־נפשה והחריש לה אביה וקמו כל־נדריה וכל־אסר אשר־אסרה על־נפשה יקום׃</p></div></div>
+      <div class="texte-fr"><p>et que son père, ayant connaissance de son vœu ou de l’abstinence qu’elle s’est imposée, garde le silence vis-à-vis d’elle, ses vœux, quels qu’ils soient, seront valables; toute abstinence qu’elle a pu s’imposer sera maintenue.</p></div>
+    </div><div class="seif" id="v-30-6">
+      <span class="seif-num">30:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־הֵנִ֨יא אָבִ֣יהָ אֹתָהּ֮ בְּי֣וֹם שׇׁמְעוֹ֒ כׇּל־נְדָרֶ֗יהָ וֶֽאֱסָרֶ֛יהָ אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ לֹ֣א יָק֑וּם וַֽיהֹוָה֙ יִֽסְלַח־לָ֔הּ כִּי־הֵנִ֥יא אָבִ֖יהָ אֹתָֽהּ׃</p></div><div class="heb-s"><p>ואם־הניא אביה אתה ביום שמעו כל־נדריה ואסריה אשר־אסרה על־נפשה לא יקום ויהוה יסלח־לה כי־הניא אביה אתה׃</p></div></div>
+      <div class="texte-fr"><p>Mais si son père la désavoue le jour où il en a eu connaissance, tous ses vœux et les interdictions qu’elle a pu s’imposer seront nuls. Le Seigneur lui pardonnera, son père l’ayant désavouée.</p></div>
+    </div><div class="seif" id="v-30-7">
+      <span class="seif-num">30:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־הָי֤וֹ תִֽהְיֶה֙ לְאִ֔ישׁ וּנְדָרֶ֖יהָ עָלֶ֑יהָ א֚וֹ מִבְטָ֣א שְׂפָתֶ֔יהָ אֲשֶׁ֥ר אָסְרָ֖ה עַל־נַפְשָֽׁהּ׃</p></div><div class="heb-s"><p>ואם־היו תהיה לאיש ונדריה עליה או מבטא שפתיה אשר אסרה על־נפשה׃</p></div></div>
+      <div class="texte-fr"><p>Que si elle passe en puissance d’époux étant soumise à des vœux ou à une promesse verbale qui lui impose une abstinence,</p></div>
+    </div><div class="seif" id="v-30-8">
+      <span class="seif-num">30:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁמַ֥ע אִישָׁ֛הּ בְּי֥וֹם שׇׁמְע֖וֹ וְהֶחֱרִ֣ישׁ לָ֑הּ וְקָ֣מוּ נְדָרֶ֗יהָ וֶֽאֱסָרֶ֛הָ אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֻֽמוּ׃</p></div><div class="heb-s"><p>ושמע אישה ביום שמעו והחריש לה וקמו נדריה ואסרה אשר־אסרה על־נפשה יקמו׃</p></div></div>
+      <div class="texte-fr"><p>que son époux l’apprenne à une époque quelconque et garde le silence à son égard, ses vœux seront valables, et les abstinences qu’elle s’est imposées subsisteront.</p></div>
+    </div><div class="seif" id="v-30-9">
+      <span class="seif-num">30:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠אִ֠ם בְּי֨וֹם שְׁמֹ֣עַ אִישָׁהּ֮ יָנִ֣יא אוֹתָהּ֒ וְהֵפֵ֗ר אֶת־נִדְרָהּ֙ אֲשֶׁ֣ר עָלֶ֔יהָ וְאֵת֙ מִבְטָ֣א שְׂפָתֶ֔יהָ אֲשֶׁ֥ר אָסְרָ֖ה עַל־נַפְשָׁ֑הּ וַיהֹוָ֖ה יִֽסְלַֽח־לָֽהּ׃</p></div><div class="heb-s"><p>ואם ביום שמע אישה יניא אותה והפר את־נדרה אשר עליה ואת מבטא שפתיה אשר אסרה על־נפשה ויהוה יסלח־לה׃</p></div></div>
+      <div class="texte-fr"><p>Mais si, le jour où il en a eu connaissance, son époux la désavoue, il annule par là le vœu qui la lie ou la parole de ses lèvres qui lui imposait l’abstinence; et le Seigneur lui pardonnera.</p></div>
+    </div><div class="seif" id="v-30-10">
+      <span class="seif-num">30:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֵ֥דֶר אַלְמָנָ֖ה וּגְרוּשָׁ֑ה כֹּ֛ל אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָק֥וּם עָלֶֽיהָ׃</p></div><div class="heb-s"><p>ונדר אלמנה וגרושה כל אשר־אסרה על־נפשה יקום עליה׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux vœux d’une femme veuve ou répudiée, tout ce qu’elle s’est imposé sera obligatoire pour elle.</p></div>
+    </div><div class="seif" id="v-30-11">
+      <span class="seif-num">30:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־בֵּ֥ית אִישָׁ֖הּ נָדָ֑רָה אֽוֹ־אָסְרָ֥ה אִסָּ֛ר עַל־נַפְשָׁ֖הּ בִּשְׁבֻעָֽה׃</p></div><div class="heb-s"><p>ואם־בית אישה נדרה או־אסרה אסר על־נפשה בשבעה׃</p></div></div>
+      <div class="texte-fr"><p>Au cas où c’est en puissance de mari qu’elle a fait un vœu ou s’est interdit quelque chose par serment;</p></div>
+    </div><div class="seif" id="v-30-12">
+      <span class="seif-num">30:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָׁמַ֤ע אִישָׁהּ֙ וְהֶחֱרִ֣שׁ לָ֔הּ לֹ֥א הֵנִ֖יא אֹתָ֑הּ וְקָ֙מוּ֙ כׇּל־נְדָרֶ֔יהָ וְכׇל־אִסָּ֛ר אֲשֶׁר־אָסְרָ֥ה עַל־נַפְשָׁ֖הּ יָקֽוּם׃</p></div><div class="heb-s"><p>ושמע אישה והחרש לה לא הניא אתה וקמו כל־נדריה וכל־אסר אשר־אסרה על־נפשה יקום׃</p></div></div>
+      <div class="texte-fr"><p>si son époux l’apprend et ne lui dit rien, ne la désavoue point, tous ses vœux et toute abstinence qu’elle a pu s’imposer restent obligatoires.</p></div>
+    </div><div class="seif" id="v-30-13">
+      <span class="seif-num">30:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־הָפֵר֩ יָפֵ֨ר אֹתָ֥ם&thinsp;<small>׀</small>&thinsp;אִישָׁהּ֮ בְּי֣וֹם שׇׁמְעוֹ֒ כׇּל־מוֹצָ֨א שְׂפָתֶ֧יהָ לִנְדָרֶ֛יהָ וּלְאִסַּ֥ר נַפְשָׁ֖הּ לֹ֣א יָק֑וּם אִישָׁ֣הּ הֲפֵרָ֔ם וַיהֹוָ֖ה יִֽסְלַֽח־לָֽהּ׃</p></div><div class="heb-s"><p>ואם־הפר יפר אתם&thinsp;<small>׀</small>&thinsp;אישה ביום שמעו כל־מוצא שפתיה לנדריה ולאסר נפשה לא יקום אישה הפרם ויהוה יסלח־לה׃</p></div></div>
+      <div class="texte-fr"><p>Si, au contraire, son époux les annule le jour où il en a eu connaissance, tout ce qu’a proféré sa bouche, soit vœux, soit interdiction personnelle, sera sans effet: son époux les a annulés, Dieu sera indulgent pour elle.</p></div>
+    </div><div class="seif" id="v-30-14">
+      <span class="seif-num">30:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־נֵ֛דֶר וְכׇל־שְׁבֻעַ֥ת אִסָּ֖ר לְעַנֹּ֣ת נָ֑פֶשׁ אִישָׁ֥הּ יְקִימֶ֖נּוּ וְאִישָׁ֥הּ יְפֵרֶֽנּוּ׃</p></div><div class="heb-s"><p>כל־נדר וכל־שבעת אסר לענת נפש אישה יקימנו ואישה יפרנו׃</p></div></div>
+      <div class="texte-fr"><p>Tout vœu, tout serment d’abstinence, tendant à mortifier la personne, l’époux peut les ratifier ou il peut les rendre nuls.</p></div>
+    </div><div class="seif" id="v-30-15">
+      <span class="seif-num">30:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־הַחֲרֵשׁ֩ יַחֲרִ֨ישׁ לָ֥הּ אִישָׁהּ֮ מִיּ֣וֹם אֶל־יוֹם֒ וְהֵקִים֙ אֶת־כׇּל־נְדָרֶ֔יהָ א֥וֹ אֶת־כׇּל־אֱסָרֶ֖יהָ אֲשֶׁ֣ר עָלֶ֑יהָ הֵקִ֣ים אֹתָ֔ם כִּי־הֶחֱרִ֥שׁ לָ֖הּ בְּי֥וֹם שׇׁמְעֽוֹ׃</p></div><div class="heb-s"><p>ואם־החרש יחריש לה אישה מיום אל־יום והקים את־כל־נדריה או את־כל־אסריה אשר עליה הקים אתם כי־החרש לה ביום שמעו׃</p></div></div>
+      <div class="texte-fr"><p>Si son époux ne s’en explique pas à elle du jour au lendemain, il sanctionne ses vœux ou les abstinences auxquelles elle s’est soumise, parce qu’il s’est tu lorsqu’il en a eu connaissance.</p></div>
+    </div><div class="seif" id="v-30-16">
+      <span class="seif-num">30:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־הָפֵ֥ר יָפֵ֛ר אֹתָ֖ם אַחֲרֵ֣י שׇׁמְע֑וֹ וְנָשָׂ֖א אֶת־עֲוֺנָֽהּ׃</p></div><div class="heb-s"><p>ואם־הפר יפר אתם אחרי שמעו ונשא את־עונה׃</p></div></div>
+      <div class="texte-fr"><p>Que s’il les invalidait après qu’il en a eu connaissance, sa faute à elle retomberait sur lui."</p></div>
+    </div><div class="seif" id="v-30-17">
+      <span class="seif-num">30:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣לֶּה הַֽחֻקִּ֗ים אֲשֶׁ֨ר צִוָּ֤ה יְהֹוָה֙ אֶת־מֹשֶׁ֔ה בֵּ֥ין אִ֖ישׁ לְאִשְׁתּ֑וֹ בֵּֽין־אָ֣ב לְבִתּ֔וֹ בִּנְעֻרֶ֖יהָ בֵּ֥ית אָבִֽיהָ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אלה החקים אשר צוה יהוה את־משה בין איש לאשתו בין־אב לבתו בנעריה בית אביה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Telles sont les règles que l’Éternel avait prescrites à Moïse sur les rapports entre l’homme et sa femme, entre le père et sa fille adolescente dans la maison paternelle.</p></div>
+    </div><div class="seif" id="v-31-1">
+      <span class="seif-num">31:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla ainsi à Moïse:</p></div>
+    </div><div class="seif" id="v-31-2">
+      <span class="seif-num">31:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>נְקֹ֗ם נִקְמַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל מֵאֵ֖ת הַמִּדְיָנִ֑ים אַחַ֖ר תֵּאָסֵ֥ף אֶל־עַמֶּֽיךָ׃</p></div><div class="heb-s"><p>נקם נקמת בני ישראל מאת המדינים אחר תאסף אל־עמיך׃</p></div></div>
+      <div class="texte-fr"><p>"Exerce sur les Madianites la vengeance due aux enfants d’Israël; après quoi tu seras réuni à tes pères."</p></div>
+    </div><div class="seif" id="v-31-3">
+      <span class="seif-num">31:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֤ר מֹשֶׁה֙ אֶל־הָעָ֣ם לֵאמֹ֔ר הֵחָלְצ֧וּ מֵאִתְּכֶ֛ם אֲנָשִׁ֖ים לַצָּבָ֑א וְיִהְיוּ֙ עַל־מִדְיָ֔ן לָתֵ֥ת נִקְמַת־יְהֹוָ֖ה בְּמִדְיָֽן׃</p></div><div class="heb-s"><p>וידבר משה אל־העם לאמר החלצו מאתכם אנשים לצבא ויהיו על־מדין לתת נקמת־יהוה במדין׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse parla ainsi au peuple: "Qu’un certain nombre d’entre vous s’apprêtent à combattre; ils marcheront contre Madian, pour exercer sur lui la vindicte de l’Éternel.</p></div>
+    </div><div class="seif" id="v-31-4">
+      <span class="seif-num">31:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶ֚לֶף לַמַּטֶּ֔ה אֶ֖לֶף לַמַּטֶּ֑ה לְכֹל֙ מַטּ֣וֹת יִשְׂרָאֵ֔ל תִּשְׁלְח֖וּ לַצָּבָֽא׃</p></div><div class="heb-s"><p>אלף למטה אלף למטה לכל מטות ישראל תשלחו לצבא׃</p></div></div>
+      <div class="texte-fr"><p>Mille par tribu, mille pour chacune des tribus d’Israël, seront désignés par vous pour cette expédition."</p></div>
+    </div><div class="seif" id="v-31-5">
+      <span class="seif-num">31:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּמָּֽסְרוּ֙ מֵאַלְפֵ֣י יִשְׂרָאֵ֔ל אֶ֖לֶף לַמַּטֶּ֑ה שְׁנֵים־עָשָׂ֥ר אֶ֖לֶף חֲלוּצֵ֥י צָבָֽא׃</p></div><div class="heb-s"><p>וימסרו מאלפי ישראל אלף למטה שנים־עשר אלף חלוצי צבא׃</p></div></div>
+      <div class="texte-fr"><p>On recruta donc, parmi les familles d’Israël, mille hommes par tribu: en tout douze mille, équipés pour le combat.</p></div>
+    </div><div class="seif" id="v-31-6">
+      <span class="seif-num">31:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֨ח אֹתָ֥ם מֹשֶׁ֛ה אֶ֥לֶף לַמַּטֶּ֖ה לַצָּבָ֑א אֹ֠תָ֠ם וְאֶת־פִּ֨ינְחָ֜ס בֶּן־אֶלְעָזָ֤ר הַכֹּהֵן֙ לַצָּבָ֔א וּכְלֵ֥י הַקֹּ֛דֶשׁ וַחֲצֹצְר֥וֹת הַתְּרוּעָ֖ה בְּיָדֽוֹ׃</p></div><div class="heb-s"><p>וישלח אתם משה אלף למטה לצבא אתם ואת־פינחס בן־אלעזר הכהן לצבא וכלי הקדש וחצצרות התרועה בידו׃</p></div></div>
+      <div class="texte-fr"><p>Moïse les envoya en campagne, mille par tribu; et avec eux, pour diriger l’expédition, Phinéas, fils d’Eléazar le pontife, muni de l’appareil sacré et des trompettes retentissantes;</p></div>
+    </div><div class="seif" id="v-31-7">
+      <span class="seif-num">31:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּצְבְּאוּ֙ עַל־מִדְיָ֔ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶׁ֑ה וַיַּֽהַרְג֖וּ כׇּל־זָכָֽר׃</p></div><div class="heb-s"><p>ויצבאו על־מדין כאשר צוה יהוה את־משה ויהרגו כל־זכר׃</p></div></div>
+      <div class="texte-fr"><p>et ils livrèrent bataille à Madian, comme l’Éternel l’avait ordonné à Moïse, et ils tuèrent tous les mâles.</p></div>
+    </div><div class="seif" id="v-31-8">
+      <span class="seif-num">31:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־מַלְכֵ֨י מִדְיָ֜ן הָרְג֣וּ עַל־חַלְלֵיהֶ֗ם אֶת־אֱוִ֤י וְאֶת־רֶ֙קֶם֙ וְאֶת־צ֤וּר וְאֶת־חוּר֙ וְאֶת־רֶ֔בַע חֲמֵ֖שֶׁת מַלְכֵ֣י מִדְיָ֑ן וְאֵת֙ בִּלְעָ֣ם בֶּן־בְּע֔וֹר הָרְג֖וּ בֶּחָֽרֶב׃</p></div><div class="heb-s"><p>ואת־מלכי מדין הרגו על־חלליהם את־אוי ואת־רקם ואת־צור ואת־חור ואת־רבע חמשת מלכי מדין ואת בלעם בן־בעור הרגו בחרב׃</p></div></div>
+      <div class="texte-fr"><p>Ils ajoutèrent à ces victimes les rois de Madian: Evi, Rékem, Cour, Heur et Réba, tous cinq rois de Madian, plus Balaam, fils de Beor, qu’ils firent périr par le glaive.</p></div>
+    </div><div class="seif" id="v-31-9">
+      <span class="seif-num">31:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁבּ֧וּ בְנֵי־יִשְׂרָאֵ֛ל אֶת־נְשֵׁ֥י מִדְיָ֖ן וְאֶת־טַפָּ֑ם וְאֵ֨ת כׇּל־בְּהֶמְתָּ֧ם וְאֶת־כׇּל־מִקְנֵהֶ֛ם וְאֶת־כׇּל־חֵילָ֖ם בָּזָֽזוּ׃</p></div><div class="heb-s"><p>וישבו בני־ישראל את־נשי מדין ואת־טפם ואת כל־בהמתם ואת־כל־מקנהם ואת־כל־חילם בזזו׃</p></div></div>
+      <div class="texte-fr"><p>Et les Israélites firent prisonnières les femmes de Madian, ainsi que leurs enfants; ils s’emparèrent de toutes leurs bêtes de somme, de tous leurs troupeaux et de tous leurs biens;</p></div>
+    </div><div class="seif" id="v-31-10">
+      <span class="seif-num">31:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֤ת כׇּל־עָרֵיהֶם֙ בְּמ֣וֹשְׁבֹתָ֔ם וְאֵ֖ת כׇּל־טִֽירֹתָ֑ם שָׂרְפ֖וּ בָּאֵֽשׁ׃</p></div><div class="heb-s"><p>ואת כל־עריהם במושבתם ואת כל־טירתם שרפו באש׃</p></div></div>
+      <div class="texte-fr"><p>et toutes les villes qu’ils habitaient et tous leurs villages, ils les incendièrent;</p></div>
+    </div><div class="seif" id="v-31-11">
+      <span class="seif-num">31:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְחוּ֙ אֶת־כׇּל־הַשָּׁלָ֔ל וְאֵ֖ת כׇּל־הַמַּלְק֑וֹחַ בָּאָדָ֖ם וּבַבְּהֵמָֽה׃</p></div><div class="heb-s"><p>ויקחו את־כל־השלל ואת כל־המלקוח באדם ובבהמה׃</p></div></div>
+      <div class="texte-fr"><p>Alors ils réunirent tout le butin, et tout ce qu’ils avaient pris d’hommes et d’animaux,</p></div>
+    </div><div class="seif" id="v-31-12">
+      <span class="seif-num">31:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבִ֡אוּ אֶל־מֹשֶׁה֩ וְאֶל־אֶלְעָזָ֨ר הַכֹּהֵ֜ן וְאֶל־עֲדַ֣ת בְּנֵֽי־יִשְׂרָאֵ֗ל אֶת־הַשְּׁבִ֧י וְאֶת־הַמַּלְק֛וֹחַ וְאֶת־הַשָּׁלָ֖ל אֶל־הַֽמַּחֲנֶ֑ה אֶל־עַֽרְבֹ֣ת מוֹאָ֔ב אֲשֶׁ֖ר עַל־יַרְדֵּ֥ן יְרֵחֽוֹ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויבאו אל־משה ואל־אלעזר הכהן ואל־עדת בני־ישראל את־השבי ואת־המלקוח ואת־השלל אל־המחנה אל־ערבת מואב אשר על־ירדן ירחו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et amenèrent le tout, prisonniers, bétail et dépouilles, devant Moïse, devant Eléazar le pontife et la communauté des enfants d’Israël, au camp, dans les plaines de Moab, qui sont près du Jourdain vers Jéricho.</p></div>
+    </div><div class="seif" id="v-31-13">
+      <span class="seif-num">31:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֨צְא֜וּ מֹשֶׁ֨ה וְאֶלְעָזָ֧ר הַכֹּהֵ֛ן וְכׇל־נְשִׂיאֵ֥י הָעֵדָ֖ה לִקְרָאתָ֑ם אֶל־מִח֖וּץ לַֽמַּחֲנֶֽה׃</p></div><div class="heb-s"><p>ויצאו משה ואלעזר הכהן וכל־נשיאי העדה לקראתם אל־מחוץ למחנה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse, le pontife Eléazar et tous les chefs de la communauté se portèrent à leur rencontre, hors du camp.</p></div>
+    </div><div class="seif" id="v-31-14">
+      <span class="seif-num">31:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְצֹ֣ף מֹשֶׁ֔ה עַ֖ל פְּקוּדֵ֣י הֶחָ֑יִל שָׂרֵ֤י הָאֲלָפִים֙ וְשָׂרֵ֣י הַמֵּא֔וֹת הַבָּאִ֖ים מִצְּבָ֥א הַמִּלְחָמָֽה׃</p></div><div class="heb-s"><p>ויקצף משה על פקודי החיל שרי האלפים ושרי המאות הבאים מצבא המלחמה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse se mit en colère contre les officiers de l’armée, chiliarques et centurions, qui revenaient de l’expédition de guerre,</p></div>
+    </div><div class="seif" id="v-31-15">
+      <span class="seif-num">31:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר אֲלֵיהֶ֖ם מֹשֶׁ֑ה הַֽחִיִּיתֶ֖ם כׇּל־נְקֵבָֽה׃</p></div><div class="heb-s"><p>ויאמר אליהם משה החייתם כל־נקבה׃</p></div></div>
+      <div class="texte-fr"><p>et Moïse leur dit: "Quoi! Vous avez laissé vivre toutes les femmes?</p></div>
+    </div><div class="seif" id="v-31-16">
+      <span class="seif-num">31:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>הֵ֣ן הֵ֜נָּה הָי֨וּ לִבְנֵ֤י יִשְׂרָאֵל֙ בִּדְבַ֣ר בִּלְעָ֔ם לִמְסׇר־מַ֥עַל בַּיהֹוָ֖ה עַל־דְּבַר־פְּע֑וֹר וַתְּהִ֥י הַמַּגֵּפָ֖ה בַּעֲדַ֥ת יְהֹוָֽה׃</p></div><div class="heb-s"><p>הן הנה היו לבני ישראל בדבר בלעם למסר־מעל ביהוה על־דבר־פעור ותהי המגפה בעדת יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Ne sont-ce pas elles qui, à l’instigation de Balaam, ont porté les enfants d’Israël à trahir l’Éternel pour Baal-Peor, de sorte que la mort a sévi dans la communauté de l’Éternel?</p></div>
+    </div><div class="seif" id="v-31-17">
+      <span class="seif-num">31:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֕ה הִרְג֥וּ כׇל־זָכָ֖ר בַּטָּ֑ף וְכׇל־אִשָּׁ֗ה יֹדַ֥עַת אִ֛ישׁ לְמִשְׁכַּ֥ב זָכָ֖ר הֲרֹֽגוּ׃</p></div><div class="heb-s"><p>ועתה הרגו כל־זכר בטף וכל־אשה ידעת איש למשכב זכר הרגו׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, tuez tous les enfants mâles; et toute femme qui a connu un homme par cohabitation, tuez-la.</p></div>
+    </div><div class="seif" id="v-31-18">
+      <span class="seif-num">31:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֙ הַטַּ֣ף בַּנָּשִׁ֔ים אֲשֶׁ֥ר לֹא־יָדְע֖וּ מִשְׁכַּ֣ב זָכָ֑ר הַחֲי֖וּ לָכֶֽם׃</p></div><div class="heb-s"><p>וכל הטף בנשים אשר לא־ידעו משכב זכר החיו לכם׃</p></div></div>
+      <div class="texte-fr"><p>Quant à celles qui, encore enfants, n’ont pas cohabité avec un homme, conservez-les pour vous.</p></div>
+    </div><div class="seif" id="v-31-19">
+      <span class="seif-num">31:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתֶּ֗ם חֲנ֛וּ מִח֥וּץ לַֽמַּחֲנֶ֖ה שִׁבְעַ֣ת יָמִ֑ים כֹּל֩ הֹרֵ֨ג נֶ֜פֶשׁ וְכֹ֣ל&thinsp;<b>׀</b> נֹגֵ֣עַ בֶּֽחָלָ֗ל תִּֽתְחַטְּא֞וּ בַּיּ֤וֹם הַשְּׁלִישִׁי֙ וּבַיּ֣וֹם הַשְּׁבִיעִ֔י אַתֶּ֖ם וּשְׁבִיכֶֽם׃</p></div><div class="heb-s"><p>ואתם חנו מחוץ למחנה שבעת ימים כל הרג נפש וכל&thinsp;<b>׀</b> נגע בחלל תתחטאו ביום השלישי וביום השביעי אתם ושביכם׃</p></div></div>
+      <div class="texte-fr"><p>De plus, restez sept jours hors du camp: vous tous qui avez tué une personne ou touché à quelque cadavre, vous devez vous purifier le troisième et le septième jour, vous et vos prisonniers.</p></div>
+    </div><div class="seif" id="v-31-20">
+      <span class="seif-num">31:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכׇל־בֶּ֧גֶד וְכׇל־כְּלִי־ע֛וֹר וְכׇל־מַעֲשֵׂ֥ה עִזִּ֖ים וְכׇל־כְּלִי־עֵ֑ץ תִּתְחַטָּֽאוּ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וכל־בגד וכל־כלי־עור וכל־מעשה עזים וכל־כלי־עץ תתחטאו׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>De même tout vêtement, tout ustensile de peau, tout objet fait de poil de chèvre et tout vaisseau de bois, ayez soin de le purifier."</p></div>
+    </div><div class="seif" id="v-31-21">
+      <span class="seif-num">31:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר אֶלְעָזָ֤ר הַכֹּהֵן֙ אֶל־אַנְשֵׁ֣י הַצָּבָ֔א הַבָּאִ֖ים לַמִּלְחָמָ֑ה זֹ֚את חֻקַּ֣ת הַתּוֹרָ֔ה אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ויאמר אלעזר הכהן אל־אנשי הצבא הבאים למלחמה זאת חקת התורה אשר־צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Eléazar le pontife dit aux hommes de la milice, qui avaient pris part au combat: "Ceci est un statut de la loi que l’Éternel a donnée à Moïse.</p></div>
+    </div><div class="seif" id="v-31-22">
+      <span class="seif-num">31:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַ֥ךְ אֶת־הַזָּהָ֖ב וְאֶת־הַכָּ֑סֶף אֶֽת־הַנְּחֹ֙שֶׁת֙ אֶת־הַבַּרְזֶ֔ל אֶֽת־הַבְּדִ֖יל וְאֶת־הָעֹפָֽרֶת׃</p></div><div class="heb-s"><p>אך את־הזהב ואת־הכסף את־הנחשת את־הברזל את־הבדיל ואת־העפרת׃</p></div></div>
+      <div class="texte-fr"><p>A la vérité, l’or et l’argent, le cuivre, le fer, l’étain et le plomb,</p></div>
+    </div><div class="seif" id="v-31-23">
+      <span class="seif-num">31:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־דָּבָ֞ר אֲשֶׁר־יָבֹ֣א בָאֵ֗שׁ תַּעֲבִ֤ירוּ בָאֵשׁ֙ וְטָהֵ֔ר אַ֕ךְ בְּמֵ֥י נִדָּ֖ה יִתְחַטָּ֑א וְכֹ֨ל אֲשֶׁ֧ר לֹֽא־יָבֹ֛א בָּאֵ֖שׁ תַּעֲבִ֥ירוּ בַמָּֽיִם׃</p></div><div class="heb-s"><p>כל־דבר אשר־יבא באש תעבירו באש וטהר אך במי נדה יתחטא וכל אשר לא־יבא באש תעבירו במים׃</p></div></div>
+      <div class="texte-fr"><p>tout ce qui supporte le feu, vous le passerez par le feu et il sera pur, après toutefois avoir été purifié par l’eau lustrale; et tout ce qui ne va pas au feu, vous le passerez par l’eau.</p></div>
+    </div><div class="seif" id="v-31-24">
+      <span class="seif-num">31:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכִבַּסְתֶּ֧ם בִּגְדֵיכֶ֛ם בַּיּ֥וֹם הַשְּׁבִיעִ֖י וּטְהַרְתֶּ֑ם וְאַחַ֖ר תָּבֹ֥אוּ אֶל־הַֽמַּחֲנֶֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וכבסתם בגדיכם ביום השביעי וטהרתם ואחר תבאו אל־המחנה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Et vous laverez vos vêtements le septième jour, et vous deviendrez purs; après quoi vous pourrez rentrer au camp."</p></div>
+    </div><div class="seif" id="v-31-25">
+      <span class="seif-num">31:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>ויאמר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-31-26">
+      <span class="seif-num">31:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׂ֗א אֵ֣ת רֹ֤אשׁ מַלְק֙וֹחַ֙ הַשְּׁבִ֔י בָּאָדָ֖ם וּבַבְּהֵמָ֑ה אַתָּה֙ וְאֶלְעָזָ֣ר הַכֹּהֵ֔ן וְרָאשֵׁ֖י אֲב֥וֹת הָעֵדָֽה׃</p></div><div class="heb-s"><p>שא את ראש מלקוח השבי באדם ובבהמה אתה ואלעזר הכהן וראשי אבות העדה׃</p></div></div>
+      <div class="texte-fr"><p>"Fais le relevé de toutes les prises en personnes et en animaux, toi avec Eléazar le pontife et les principaux membres de la communauté.</p></div>
+    </div><div class="seif" id="v-31-27">
+      <span class="seif-num">31:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחָצִ֙יתָ֙ אֶת־הַמַּלְק֔וֹחַ בֵּ֚ין תֹּפְשֵׂ֣י הַמִּלְחָמָ֔ה הַיֹּצְאִ֖ים לַצָּבָ֑א וּבֵ֖ין כׇּל־הָעֵדָֽה׃</p></div><div class="heb-s"><p>וחצית את־המלקוח בין תפשי המלחמה היצאים לצבא ובין כל־העדה׃</p></div></div>
+      <div class="texte-fr"><p>Tu partageras ces prises entre les guerriers qui ont pris part à l’expédition, et le reste de la communauté.</p></div>
+    </div><div class="seif" id="v-31-28">
+      <span class="seif-num">31:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַהֲרֵמֹתָ֨ מֶ֜כֶס לַֽיהֹוָ֗ה מֵאֵ֞ת אַנְשֵׁ֤י הַמִּלְחָמָה֙ הַיֹּצְאִ֣ים לַצָּבָ֔א אֶחָ֣ד נֶ֔פֶשׁ מֵחֲמֵ֖שׁ הַמֵּא֑וֹת מִן־הָאָדָם֙ וּמִן־הַבָּקָ֔ר וּמִן־הַחֲמֹרִ֖ים וּמִן־הַצֹּֽאן׃</p></div><div class="heb-s"><p>והרמת מכס ליהוה מאת אנשי המלחמה היצאים לצבא אחד נפש מחמש המאות מן־האדם ומן־הבקר ומן־החמרים ומן־הצאן׃</p></div></div>
+      <div class="texte-fr"><p>Puis tu prélèveras comme tribut pour le Seigneur, de la part des gens de guerre qui ont fait l’expédition, une tête sur cinq cents: individus humains, bœufs, ânes et menu bétail.</p></div>
+    </div><div class="seif" id="v-31-29">
+      <span class="seif-num">31:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִמַּֽחֲצִיתָ֖ם תִּקָּ֑חוּ וְנָתַתָּ֛ה לְאֶלְעָזָ֥ר הַכֹּהֵ֖ן תְּרוּמַ֥ת יְהֹוָֽה׃</p></div><div class="heb-s"><p>ממחציתם תקחו ונתתה לאלעזר הכהן תרומת יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Vous le prendrez sur leur moitié et tu le donneras au pontife Eléazar comme prélèvement du Seigneur.</p></div>
+    </div><div class="seif" id="v-31-30">
+      <span class="seif-num">31:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִמַּחֲצִ֨ת בְּנֵֽי־יִשְׂרָאֵ֜ל תִּקַּ֣ח&thinsp;<b>׀</b> אֶחָ֣ד&thinsp;<b>׀</b> אָחֻ֣ז מִן־הַחֲמִשִּׁ֗ים מִן־הָאָדָ֧ם מִן־הַבָּקָ֛ר מִן־הַחֲמֹרִ֥ים וּמִן־הַצֹּ֖אן מִכׇּל־הַבְּהֵמָ֑ה וְנָתַתָּ֤ה אֹתָם֙ לַלְוִיִּ֔ם שֹׁמְרֵ֕י מִשְׁמֶ֖רֶת מִשְׁכַּ֥ן יְהֹוָֽה׃</p></div><div class="heb-s"><p>וממחצת בני־ישראל תקח&thinsp;<b>׀</b> אחד&thinsp;<b>׀</b> אחז מן־החמשים מן־האדם מן־הבקר מן־החמרים ומן־הצאן מכל־הבהמה ונתתה אתם ללוים שמרי משמרת משכן יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Quant à la moitié afférente aux enfants d’Israël, tu en sépareras un cinquantième, pris au hasard, sur les personnes, sur les bœufs, les ânes et le menu bétail, sur tous les animaux; et tu les donneras aux Lévites, qui veillent à la garde de l’habitation du Seigneur."</p></div>
+    </div><div class="seif" id="v-31-31">
+      <span class="seif-num">31:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַשׂ מֹשֶׁ֔ה וְאֶלְעָזָ֖ר הַכֹּהֵ֑ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ויעש משה ואלעזר הכהן כאשר צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse et le pontife Eléazar firent ce que l’Éternel avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-31-32">
+      <span class="seif-num">31:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ הַמַּלְק֔וֹחַ יֶ֣תֶר הַבָּ֔ז אֲשֶׁ֥ר בָּזְז֖וּ עַ֣ם הַצָּבָ֑א צֹ֗אן שֵׁשׁ־מֵא֥וֹת אֶ֛לֶף וְשִׁבְעִ֥ים אֶ֖לֶף וַחֲמֵ֥שֶׁת אֲלָפִֽים׃</p></div><div class="heb-s"><p>ויהי המלקוח יתר הבז אשר בזזו עם הצבא צאן שש־מאות אלף ושבעים אלף וחמשת אלפים׃</p></div></div>
+      <div class="texte-fr"><p>Or la capture, complément de ce qu’avaient pillé les gens de guerre, se composait ainsi: menu bétail, six cent soixante-quinze mille pièces;</p></div>
+    </div><div class="seif" id="v-31-33">
+      <span class="seif-num">31:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָקָ֕ר שְׁנַ֥יִם וְשִׁבְעִ֖ים אָֽלֶף׃</p></div><div class="heb-s"><p>ובקר שנים ושבעים אלף׃</p></div></div>
+      <div class="texte-fr"><p>gros bétail, soixante-douze mille;</p></div>
+    </div><div class="seif" id="v-31-34">
+      <span class="seif-num">31:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַחֲמֹרִ֕ים אֶחָ֥ד וְשִׁשִּׁ֖ים אָֽלֶף׃</p></div><div class="heb-s"><p>וחמרים אחד וששים אלף׃</p></div></div>
+      <div class="texte-fr"><p>ânes, soixante et un mille.</p></div>
+    </div><div class="seif" id="v-31-35">
+      <span class="seif-num">31:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֶ֣פֶשׁ אָדָ֔ם מִ֨ן־הַנָּשִׁ֔ים אֲשֶׁ֥ר לֹֽא־יָדְע֖וּ מִשְׁכַּ֣ב זָכָ֑ר כׇּל־נֶ֕פֶשׁ שְׁנַ֥יִם וּשְׁלֹשִׁ֖ים אָֽלֶף׃</p></div><div class="heb-s"><p>ונפש אדם מן־הנשים אשר לא־ידעו משכב זכר כל־נפש שנים ושלשים אלף׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux créatures humaines, le nombre des femmes qui n’avaient pas cohabité avec un homme s’élevait à trente-deux mille.</p></div>
+    </div><div class="seif" id="v-31-36">
+      <span class="seif-num">31:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתְּהִי֙ הַֽמֶּחֱצָ֔ה חֵ֕לֶק הַיֹּצְאִ֖ים בַּצָּבָ֑א מִסְפַּ֣ר הַצֹּ֗אן שְׁלֹשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹשִׁ֣ים אֶ֔לֶף וְשִׁבְעַ֥ת אֲלָפִ֖ים וַחֲמֵ֥שׁ מֵאֽוֹת׃</p></div><div class="heb-s"><p>ותהי המחצה חלק היצאים בצבא מספר הצאן שלש־מאות אלף ושלשים אלף ושבעת אלפים וחמש מאות׃</p></div></div>
+      <div class="texte-fr"><p>La moitié afférente aux hommes de l’expédition fut: en menu bétail, trois cent trente-sept mille cinq cents têtes;</p></div>
+    </div><div class="seif" id="v-31-37">
+      <span class="seif-num">31:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֛י הַמֶּ֥כֶס לַֽיהֹוָ֖ה מִן־הַצֹּ֑אן שֵׁ֥שׁ מֵא֖וֹת חָמֵ֥שׁ וְשִׁבְעִֽים׃</p></div><div class="heb-s"><p>ויהי המכס ליהוה מן־הצאן שש מאות חמש ושבעים׃</p></div></div>
+      <div class="texte-fr"><p>et la quotité réservée au Seigneur sur ce bétail fut de six cent soixante-quinze.</p></div>
+    </div><div class="seif" id="v-31-38">
+      <span class="seif-num">31:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַ֨בָּקָ֔ר שִׁשָּׁ֥ה וּשְׁלֹשִׁ֖ים אָ֑לֶף וּמִכְסָ֥ם לַיהֹוָ֖ה שְׁנַ֥יִם וְשִׁבְעִֽים׃</p></div><div class="heb-s"><p>והבקר ששה ושלשים אלף ומכסם ליהוה שנים ושבעים׃</p></div></div>
+      <div class="texte-fr"><p>En gros bétail, trente-six mille têtes; quotité pour le Seigneur, soixante-douze.</p></div>
+    </div><div class="seif" id="v-31-39">
+      <span class="seif-num">31:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַחֲמֹרִ֕ים שְׁלֹשִׁ֥ים אֶ֖לֶף וַחֲמֵ֣שׁ מֵא֑וֹת וּמִכְסָ֥ם לַֽיהֹוָ֖ה אֶחָ֥ד וְשִׁשִּֽׁים׃</p></div><div class="heb-s"><p>וחמרים שלשים אלף וחמש מאות ומכסם ליהוה אחד וששים׃</p></div></div>
+      <div class="texte-fr"><p>Anes, trente mille cinq cents; quotité pour le Seigneur, soixante et un.</p></div>
+    </div><div class="seif" id="v-31-40">
+      <span class="seif-num">31:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֶ֣פֶשׁ אָדָ֔ם שִׁשָּׁ֥ה עָשָׂ֖ר אָ֑לֶף וּמִכְסָם֙ לַֽיהֹוָ֔ה שְׁנַ֥יִם וּשְׁלֹשִׁ֖ים נָֽפֶשׁ׃</p></div><div class="heb-s"><p>ונפש אדם ששה עשר אלף ומכסם ליהוה שנים ושלשים נפש׃</p></div></div>
+      <div class="texte-fr"><p>Créatures humaines, seize mille; quotité pour le Seigneur, trente-deux personnes.</p></div>
+    </div><div class="seif" id="v-31-41">
+      <span class="seif-num">31:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֣ן מֹשֶׁ֗ה אֶת־מֶ֙כֶס֙ תְּרוּמַ֣ת יְהֹוָ֔ה לְאֶלְעָזָ֖ר הַכֹּהֵ֑ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ויתן משה את־מכס תרומת יהוה לאלעזר הכהן כאשר צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse remit ce tribut, prélevé pour l’Éternel, au pontife Eléazar, ainsi que l’Éternel l’avait ordonné à Moïse,</p></div>
+    </div><div class="seif" id="v-31-42">
+      <span class="seif-num">31:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִֽמַּחֲצִ֖ית בְּנֵ֣י יִשְׂרָאֵ֑ל אֲשֶׁר֙ חָצָ֣ה מֹשֶׁ֔ה מִן־הָאֲנָשִׁ֖ים הַצֹּבְאִֽים׃</p></div><div class="heb-s"><p>וממחצית בני ישראל אשר חצה משה מן־האנשים הצבאים׃</p></div></div>
+      <div class="texte-fr"><p>A l’égard de la moitié afférente aux enfants d’Israël, part assignée par Moïse sur la prise des gens de guerre;</p></div>
+    </div><div class="seif" id="v-31-43">
+      <span class="seif-num">31:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתְּהִ֛י מֶחֱצַ֥ת הָעֵדָ֖ה מִן־הַצֹּ֑אן שְׁלֹשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹשִׁ֣ים אֶ֔לֶף שִׁבְעַ֥ת אֲלָפִ֖ים וַחֲמֵ֥שׁ מֵאֽוֹת׃</p></div><div class="heb-s"><p>ותהי מחצת העדה מן־הצאן שלש־מאות אלף ושלשים אלף שבעת אלפים וחמש מאות׃</p></div></div>
+      <div class="texte-fr"><p>cette part de la communauté fut: en menu bétail, trois cent trente-sept mille cinq cents têtes</p></div>
+    </div><div class="seif" id="v-31-44">
+      <span class="seif-num">31:44</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבָקָ֕ר שִׁשָּׁ֥ה וּשְׁלֹשִׁ֖ים אָֽלֶף׃</p></div><div class="heb-s"><p>ובקר ששה ושלשים אלף׃</p></div></div>
+      <div class="texte-fr"><p>en gros bétail, trente-six mille;</p></div>
+    </div><div class="seif" id="v-31-45">
+      <span class="seif-num">31:45</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַחֲמֹרִ֕ים שְׁלֹשִׁ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֽוֹת׃</p></div><div class="heb-s"><p>וחמרים שלשים אלף וחמש מאות׃</p></div></div>
+      <div class="texte-fr"><p>ânes, trente mille cinq cents;</p></div>
+    </div><div class="seif" id="v-31-46">
+      <span class="seif-num">31:46</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֶ֣פֶשׁ אָדָ֔ם שִׁשָּׁ֥ה עָשָׂ֖ר אָֽלֶף׃</p></div><div class="heb-s"><p>ונפש אדם ששה עשר אלף׃</p></div></div>
+      <div class="texte-fr"><p>individus humains, seize mille.</p></div>
+    </div><div class="seif" id="v-31-47">
+      <span class="seif-num">31:47</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֨ח מֹשֶׁ֜ה מִמַּחֲצִ֣ת בְּנֵֽי־יִשְׂרָאֵ֗ל אֶת־הָֽאָחֻז֙ אֶחָ֣ד מִן־הַחֲמִשִּׁ֔ים מִן־הָאָדָ֖ם וּמִן־הַבְּהֵמָ֑ה וַיִּתֵּ֨ן אֹתָ֜ם לַלְוִיִּ֗ם שֹֽׁמְרֵי֙ מִשְׁמֶ֙רֶת֙ מִשְׁכַּ֣ן יְהֹוָ֔ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ויקח משה ממחצת בני־ישראל את־האחז אחד מן־החמשים מן־האדם ומן־הבהמה ויתן אתם ללוים שמרי משמרת משכן יהוה כאשר צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse prit, sur cette moitié échue aux enfants d’Israël, indistinctement un sur cinquante, personnes et animaux, et il les donna aux Lévites, gardiens du tabernacle de l’Éternel, comme l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-31-48">
+      <span class="seif-num">31:48</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּקְרְבוּ֙ אֶל־מֹשֶׁ֔ה הַפְּקֻדִ֕ים אֲשֶׁ֖ר לְאַלְפֵ֣י הַצָּבָ֑א שָׂרֵ֥י הָאֲלָפִ֖ים וְשָׂרֵ֥י הַמֵּאֽוֹת׃</p></div><div class="heb-s"><p>ויקרבו אל־משה הפקדים אשר לאלפי הצבא שרי האלפים ושרי המאות׃</p></div></div>
+      <div class="texte-fr"><p>Les officiers des divers corps de la milice, chiliarques et centurions, s’approchèrent de Moïse,</p></div>
+    </div><div class="seif" id="v-31-49">
+      <span class="seif-num">31:49</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּֽאמְרוּ֙ אֶל־מֹשֶׁ֔ה עֲבָדֶ֣יךָ נָֽשְׂא֗וּ אֶת־רֹ֛אשׁ אַנְשֵׁ֥י הַמִּלְחָמָ֖ה אֲשֶׁ֣ר בְּיָדֵ֑נוּ וְלֹא־נִפְקַ֥ד מִמֶּ֖נּוּ אִֽישׁ׃</p></div><div class="heb-s"><p>ויאמרו אל־משה עבדיך נשאו את־ראש אנשי המלחמה אשר בידנו ולא־נפקד ממנו איש׃</p></div></div>
+      <div class="texte-fr"><p>et lui dirent: "Tes serviteurs ont fait le dénombrement des gens de guerre qui étaient sous leurs ordres, et il n’en manque pas un seul.</p></div>
+    </div><div class="seif" id="v-31-50">
+      <span class="seif-num">31:50</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַנַּקְרֵ֞ב אֶת־קׇרְבַּ֣ן יְהֹוָ֗ה אִישׁ֩ אֲשֶׁ֨ר מָצָ֤א כְלִֽי־זָהָב֙ אֶצְעָדָ֣ה וְצָמִ֔יד טַבַּ֖עַת עָגִ֣יל וְכוּמָ֑ז לְכַפֵּ֥ר עַל־נַפְשֹׁתֵ֖ינוּ לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ונקרב את־קרבן יהוה איש אשר מצא כלי־זהב אצעדה וצמיד טבעת עגיל וכומז לכפר על־נפשתינו לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Nous apportons donc en hommage à l’Éternel ce que chacun de nous a trouvé de joyaux d’or, chaînettes, bracelets, bagues, boucles et colliers, pour racheter nos personnes devant l’Éternel."</p></div>
+    </div><div class="seif" id="v-31-51">
+      <span class="seif-num">31:51</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֨ח מֹשֶׁ֜ה וְאֶלְעָזָ֧ר הַכֹּהֵ֛ן אֶת־הַזָּהָ֖ב מֵֽאִתָּ֑ם כֹּ֖ל כְּלִ֥י מַעֲשֶֽׂה׃</p></div><div class="heb-s"><p>ויקח משה ואלעזר הכהן את־הזהב מאתם כל כלי מעשה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse et le pontife Eléazar reçurent de leur main cet or, toutes ces pièces façonnées.</p></div>
+    </div><div class="seif" id="v-31-52">
+      <span class="seif-num">31:52</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> כׇּל־זְהַ֣ב הַתְּרוּמָ֗ה אֲשֶׁ֤ר הֵרִ֙ימוּ֙ לַֽיהֹוָ֔ה שִׁשָּׁ֨ה עָשָׂ֥ר אֶ֛לֶף שְׁבַע־מֵא֥וֹת וַחֲמִשִּׁ֖ים שָׁ֑קֶל מֵאֵת֙ שָׂרֵ֣י הָֽאֲלָפִ֔ים וּמֵאֵ֖ת שָׂרֵ֥י הַמֵּאֽוֹת׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> כל־זהב התרומה אשר הרימו ליהוה ששה עשר אלף שבע־מאות וחמשים שקל מאת שרי האלפים ומאת שרי המאות׃</p></div></div>
+      <div class="texte-fr"><p>Tout l’or de l’offrande, dont on fit ainsi hommage à l’Éternel, se montait à seize mille sept cent cinquante sicles, offert par les chiliarques et les centurions.</p></div>
+    </div><div class="seif" id="v-31-53">
+      <span class="seif-num">31:53</span>
+      <div class="texte-heb"><div class="heb-n"><p>אַנְשֵׁי֙ הַצָּבָ֔א בָּזְז֖וּ אִ֥ישׁ לֽוֹ׃</p></div><div class="heb-s"><p>אנשי הצבא בזזו איש לו׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux simples miliciens, ils avaient butiné chacun pour soi.</p></div>
+    </div><div class="seif" id="v-31-54">
+      <span class="seif-num">31:54</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֨ח מֹשֶׁ֜ה וְאֶלְעָזָ֤ר הַכֹּהֵן֙ אֶת־הַזָּהָ֔ב מֵאֵ֛ת שָׂרֵ֥י הָאֲלָפִ֖ים וְהַמֵּא֑וֹת וַיָּבִ֤אוּ אֹתוֹ֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד זִכָּר֥וֹן לִבְנֵֽי־יִשְׂרָאֵ֖ל לִפְנֵ֥י יְהֹוָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויקח משה ואלעזר הכהן את־הזהב מאת שרי האלפים והמאות ויבאו אתו אל־אהל מועד זכרון לבני־ישראל לפני יהוה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Moïse et le pontife Eléazar, ayant reçu l’or de la part des chiliarques et des centurions, l’apportèrent dans la tente d’assignation, comme mémorial des enfants d’Israël devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-32-1">
+      <span class="seif-num">32:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִקְנֶ֣ה&thinsp;<b>׀</b> רַ֗ב הָיָ֞ה לִבְנֵ֧י רְאוּבֵ֛ן וְלִבְנֵי־גָ֖ד עָצ֣וּם מְאֹ֑ד וַיִּרְא֞וּ אֶת־אֶ֤רֶץ יַעְזֵר֙ וְאֶת־אֶ֣רֶץ גִּלְעָ֔ד וְהִנֵּ֥ה הַמָּק֖וֹם מְק֥וֹם מִקְנֶֽה׃</p></div><div class="heb-s"><p>ומקנה&thinsp;<b>׀</b> רב היה לבני ראובן ולבני־גד עצום מאד ויראו את־ארץ יעזר ואת־ארץ גלעד והנה המקום מקום מקנה׃</p></div></div>
+      <div class="texte-fr"><p>Or, les enfants de Ruben et ceux de Gad possédaient de nombreux troupeaux, très considérables. Lorsqu’ils virent le pays de Yazer et celui de Galaad, ils trouvèrent cette contrée avantageuse pour le bétail.</p></div>
+    </div><div class="seif" id="v-32-2">
+      <span class="seif-num">32:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֥אוּ בְנֵֽי־גָ֖ד וּבְנֵ֣י רְאוּבֵ֑ן וַיֹּאמְר֤וּ אֶל־מֹשֶׁה֙ וְאֶל־אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֶל־נְשִׂיאֵ֥י הָעֵדָ֖ה לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויבאו בני־גד ובני ראובן ויאמרו אל־משה ואל־אלעזר הכהן ואל־נשיאי העדה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants de Gad et ceux de Ruben vinrent donc et parlèrent à Moïse, à Eléazar le pontife et aux phylarques de la communauté, en ces termes:</p></div>
+    </div><div class="seif" id="v-32-3">
+      <span class="seif-num">32:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>עֲטָר֤וֹת וְדִיבֹן֙ וְיַעְזֵ֣ר וְנִמְרָ֔ה וְחֶשְׁבּ֖וֹן וְאֶלְעָלֵ֑ה וּשְׂבָ֥ם וּנְב֖וֹ וּבְעֹֽן׃</p></div><div class="heb-s"><p>עטרות ודיבן ויעזר ונמרה וחשבון ואלעלה ושבם ונבו ובען׃</p></div></div>
+      <div class="texte-fr"><p>"Ataroth, Dibon, Yazer, Nimra, Hesbon et Elalê; Sebam, Nébo et Beôn,</p></div>
+    </div><div class="seif" id="v-32-4">
+      <span class="seif-num">32:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>הָאָ֗רֶץ אֲשֶׁ֨ר הִכָּ֤ה יְהֹוָה֙ לִפְנֵי֙ עֲדַ֣ת יִשְׂרָאֵ֔ל אֶ֥רֶץ מִקְנֶ֖ה הִ֑וא וְלַֽעֲבָדֶ֖יךָ מִקְנֶֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>הארץ אשר הכה יהוה לפני עדת ישראל ארץ מקנה הוא ולעבדיך מקנה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>ce pays, que l’Éternel a fait succomber devant les enfants d’Israël, est un pays propice au bétail; or, tes serviteurs ont du bétail."</p></div>
+    </div><div class="seif" id="v-32-5">
+      <span class="seif-num">32:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֗וּ אִם־מָצָ֤אנוּ חֵן֙ בְּעֵינֶ֔יךָ יֻתַּ֞ן אֶת־הָאָ֧רֶץ הַזֹּ֛את לַעֲבָדֶ֖יךָ לַאֲחֻזָּ֑ה אַל־תַּעֲבִרֵ֖נוּ אֶת־הַיַּרְדֵּֽן׃</p></div><div class="heb-s"><p>ויאמרו אם־מצאנו חן בעיניך יתן את־הארץ הזאת לעבדיך לאחזה אל־תעברנו את־הירדן׃</p></div></div>
+      <div class="texte-fr"><p>Ils dirent encore: "Si nous avons trouvé faveur à tes yeux, que ce pays soit donné en propriété à tes serviteurs; ne nous fais point passer le Jourdain."</p></div>
+    </div><div class="seif" id="v-32-6">
+      <span class="seif-num">32:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר מֹשֶׁ֔ה לִבְנֵי־גָ֖ד וְלִבְנֵ֣י רְאוּבֵ֑ן הַאַֽחֵיכֶ֗ם יָבֹ֙אוּ֙ לַמִּלְחָמָ֔ה וְאַתֶּ֖ם תֵּ֥שְׁבוּ פֹֽה׃</p></div><div class="heb-s"><p>ויאמר משה לבני־גד ולבני ראובן האחיכם יבאו למלחמה ואתם תשבו פה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse répondit aux enfants de Gad et à ceux de Ruben: "Quoi! Vos frères iraient au combat, et vous demeureriez ici!</p></div>
+    </div><div class="seif" id="v-32-7">
+      <span class="seif-num">32:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָ֣מָּה <span class="mam-kq"><span class="mam-kq-k">(תנואון)</span> <span class="mam-kq-q">[תְנִיא֔וּן]</span></span> אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל מֵֽעֲבֹר֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>ולמה <span class="mam-kq"><span class="mam-kq-k">(תנואון)</span> <span class="mam-kq-q">[תניאון]</span></span> את־לב בני ישראל מעבר אל־הארץ אשר־נתן להם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Pourquoi voulez-vous décourager les enfants d’Israël de marcher vers le pays que leur a donné l’Éternel?</p></div>
+    </div><div class="seif" id="v-32-8">
+      <span class="seif-num">32:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּ֥ה עָשׂ֖וּ אֲבֹתֵיכֶ֑ם בְּשׇׁלְחִ֥י אֹתָ֛ם מִקָּדֵ֥שׁ בַּרְנֵ֖עַ לִרְא֥וֹת אֶת־הָאָֽרֶץ׃</p></div><div class="heb-s"><p>כה עשו אבתיכם בשלחי אתם מקדש ברנע לראות את־הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Ainsi firent vos pères, alors que je les envoyai de Kadêch-Barnéa pour explorer ce pays.</p></div>
+    </div><div class="seif" id="v-32-9">
+      <span class="seif-num">32:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲל֞וּ עַד־נַ֣חַל אֶשְׁכּ֗וֹל וַיִּרְאוּ֙ אֶת־הָאָ֔רֶץ וַיָּנִ֕יאוּ אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל לְבִלְתִּי־בֹא֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויעלו עד־נחל אשכול ויראו את־הארץ ויניאו את־לב בני ישראל לבלתי־בא אל־הארץ אשר־נתן להם יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Ils montèrent jusqu’à la vallée d’Echkol, ils explorèrent le pays; puis ils découragèrent les enfants d’Israël de se rendre au pays que leur avait donné l’Éternel.</p></div>
+    </div><div class="seif" id="v-32-10">
+      <span class="seif-num">32:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּֽחַר־אַ֥ף יְהֹוָ֖ה בַּיּ֣וֹם הַה֑וּא וַיִּשָּׁבַ֖ע לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויחר־אף יהוה ביום ההוא וישבע לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Ce jour-là, le courroux de l’Éternel s’alluma, et il prononça ce serment:</p></div>
+    </div><div class="seif" id="v-32-11">
+      <span class="seif-num">32:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אִם־יִרְא֨וּ הָאֲנָשִׁ֜ים הָעֹלִ֣ים מִמִּצְרַ֗יִם מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה אֵ֚ת הָאֲדָמָ֔ה אֲשֶׁ֥ר נִשְׁבַּ֛עְתִּי לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹ֑ב כִּ֥י לֹא־מִלְא֖וּ אַחֲרָֽי׃</p></div><div class="heb-s"><p>אם־יראו האנשים העלים ממצרים מבן עשרים שנה ומעלה את האדמה אשר נשבעתי לאברהם ליצחק וליעקב כי לא־מלאו אחרי׃</p></div></div>
+      <div class="texte-fr"><p>"Si jamais ils voient, ces hommes sortis de l’Égypte, âgés de vingt ans ou plus, la contrée que j’ai, par serment, promise à Abraham, à Isaac et à Jacob!... Car ils m’ont été infidèles.</p></div>
+    </div><div class="seif" id="v-32-12">
+      <span class="seif-num">32:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּלְתִּ֞י כָּלֵ֤ב בֶּן־יְפֻנֶּה֙ הַקְּנִזִּ֔י וִיהוֹשֻׁ֖עַ בִּן־נ֑וּן כִּ֥י מִלְא֖וּ אַחֲרֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>בלתי כלב בן־יפנה הקנזי ויהושע בן־נון כי מלאו אחרי יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Seuls, Caleb, fils de Yefounné le Kenizzéen, et Josué, fils de Noun la verront, parce qu’ils sont restés fidèles au Seigneur."</p></div>
+    </div><div class="seif" id="v-32-13">
+      <span class="seif-num">32:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּֽחַר־אַ֤ף יְהֹוָה֙ בְּיִשְׂרָאֵ֔ל וַיְנִעֵם֙ בַּמִּדְבָּ֔ר אַרְבָּעִ֖ים שָׁנָ֑ה עַד־תֹּם֙ כׇּל־הַדּ֔וֹר הָעֹשֶׂ֥ה הָרַ֖ע בְּעֵינֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויחר־אף יהוה בישראל וינעם במדבר ארבעים שנה עד־תם כל־הדור העשה הרע בעיני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>Et le Seigneur, courroucé contre Israël, les a fait errer dans le désert pendant quarante années, jusqu’à l’extinction de cette génération entière, qui avait démérité devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-32-14">
+      <span class="seif-num">32:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִנֵּ֣ה קַמְתֶּ֗ם תַּ֚חַת אֲבֹ֣תֵיכֶ֔ם תַּרְבּ֖וּת אֲנָשִׁ֣ים חַטָּאִ֑ים לִסְפּ֣וֹת ע֗וֹד עַ֛ל חֲר֥וֹן אַף־יְהֹוָ֖ה אֶל־יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>והנה קמתם תחת אבתיכם תרבות אנשים חטאים לספות עוד על חרון אף־יהוה אל־ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Et maintenant, vous marchez sur les traces de vos pères, engeance de pécheurs, pour ajouter encore à la colère de Dieu contre Israël!</p></div>
+    </div><div class="seif" id="v-32-15">
+      <span class="seif-num">32:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֤י תְשׁוּבֻן֙ מֵֽאַחֲרָ֔יו וְיָסַ֣ף ע֔וֹד לְהַנִּיח֖וֹ בַּמִּדְבָּ֑ר וְשִֽׁחַתֶּ֖ם לְכׇל־הָעָ֥ם הַזֶּֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>כי תשובן מאחריו ויסף עוד להניחו במדבר ושחתם לכל־העם הזה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Oui, si vous vous détachez de lui, il continuera de le laisser dans le désert, et vous aurez fait le malheur de tout ce peuple."</p></div>
+    </div><div class="seif" id="v-32-16">
+      <span class="seif-num">32:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּגְּשׁ֤וּ אֵלָיו֙ וַיֹּ֣אמְר֔וּ גִּדְרֹ֥ת צֹ֛אן נִבְנֶ֥ה לְמִקְנֵ֖נוּ פֹּ֑ה וְעָרִ֖ים לְטַפֵּֽנוּ׃</p></div><div class="heb-s"><p>ויגשו אליו ויאמרו גדרת צאן נבנה למקננו פה וערים לטפנו׃</p></div></div>
+      <div class="texte-fr"><p>Alors ils s’approchèrent de Moïse et dirent: "Nous voulons construire ici des parcs à brebis pour notre bétail, et des villes pour nos familles.</p></div>
+    </div><div class="seif" id="v-32-17">
+      <span class="seif-num">32:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנַ֜חְנוּ נֵחָלֵ֣ץ חֻשִׁ֗ים לִפְנֵי֙ בְּנֵ֣י יִשְׂרָאֵ֔ל עַ֛ד אֲשֶׁ֥ר אִם־הֲבִֽיאֹנֻ֖ם אֶל־מְקוֹמָ֑ם וְיָשַׁ֤ב טַפֵּ֙נוּ֙ בְּעָרֵ֣י הַמִּבְצָ֔ר מִפְּנֵ֖י יֹשְׁבֵ֥י הָאָֽרֶץ׃</p></div><div class="heb-s"><p>ואנחנו נחלץ חשים לפני בני ישראל עד אשר אם־הביאנם אל־מקומם וישב טפנו בערי המבצר מפני ישבי הארץ׃</p></div></div>
+      <div class="texte-fr"><p>Mais nous, nous irons en armes, résolument, à la tête des enfants d’Israël, jusqu’à ce que nous les ayons amenés à leur destination, tandis que nos familles demeureront dans les villes fortes, à cause des habitants du pays.</p></div>
+    </div><div class="seif" id="v-32-18">
+      <span class="seif-num">32:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹ֥א נָשׁ֖וּב אֶל־בָּתֵּ֑ינוּ עַ֗ד הִתְנַחֵל֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אִ֖ישׁ נַחֲלָתֽוֹ׃</p></div><div class="heb-s"><p>לא נשוב אל־בתינו עד התנחל בני ישראל איש נחלתו׃</p></div></div>
+      <div class="texte-fr"><p>Nous ne rentrerons pas dans nos foyers, que les enfants d’Israël n’aient pris possession chacun de son héritage.</p></div>
+    </div><div class="seif" id="v-32-19">
+      <span class="seif-num">32:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּ֣י לֹ֤א נִנְחַל֙ אִתָּ֔ם מֵעֵ֥בֶר לַיַּרְדֵּ֖ן וָהָ֑לְאָה כִּ֣י בָ֤אָה נַחֲלָתֵ֙נוּ֙ אֵלֵ֔ינוּ מֵעֵ֥בֶר הַיַּרְדֵּ֖ן מִזְרָֽחָה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>כי לא ננחל אתם מעבר לירדן והלאה כי באה נחלתנו אלינו מעבר הירדן מזרחה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Nous ne prétendons point posséder avec eux de l’autre côté du Jourdain, puisque c’est en deçà du Jourdain, à l’orient, que notre possession nous sera échue."</p></div>
+    </div><div class="seif" id="v-32-20">
+      <span class="seif-num">32:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר אֲלֵיהֶם֙ מֹשֶׁ֔ה אִֽם־תַּעֲשׂ֖וּן אֶת־הַדָּבָ֣ר הַזֶּ֑ה אִם־תֵּחָ֥לְצ֛וּ לִפְנֵ֥י יְהֹוָ֖ה לַמִּלְחָמָֽה׃</p></div><div class="heb-s"><p>ויאמר אליהם משה אם־תעשון את־הדבר הזה אם־תחלצו לפני יהוה למלחמה׃</p></div></div>
+      <div class="texte-fr"><p>Moïse leur répondit: "Si vous tenez cette conduite, si vous marchez devant l’Éternel, équipés pour la guerre;</p></div>
+    </div><div class="seif" id="v-32-21">
+      <span class="seif-num">32:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעָבַ֨ר לָכֶ֧ם כׇּל־חָל֛וּץ אֶת־הַיַּרְדֵּ֖ן לִפְנֵ֣י יְהֹוָ֑ה עַ֧ד הוֹרִישׁ֛וֹ אֶת־אֹיְבָ֖יו מִפָּנָֽיו׃</p></div><div class="heb-s"><p>ועבר לכם כל־חלוץ את־הירדן לפני יהוה עד הורישו את־איביו מפניו׃</p></div></div>
+      <div class="texte-fr"><p>si tous vos guerriers passent le Jourdain pour combattre devant l’Éternel, jusqu’à ce qu’il ait dépossédé ses ennemis,</p></div>
+    </div><div class="seif" id="v-32-22">
+      <span class="seif-num">32:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנִכְבְּשָׁ֨ה הָאָ֜רֶץ לִפְנֵ֤י יְהֹוָה֙ וְאַחַ֣ר תָּשֻׁ֔בוּ וִהְיִיתֶ֧ם נְקִיִּ֛ם מֵיְהֹוָ֖ה וּמִיִּשְׂרָאֵ֑ל וְ֠הָיְתָ֠ה הָאָ֨רֶץ הַזֹּ֥את לָכֶ֛ם לַאֲחֻזָּ֖ה לִפְנֵ֥י יְהֹוָֽה׃</p></div><div class="heb-s"><p>ונכבשה הארץ לפני יהוה ואחר תשבו והייתם נקים מיהוה ומישראל והיתה הארץ הזאת לכם לאחזה לפני יהוה׃</p></div></div>
+      <div class="texte-fr"><p>et si, le pays une fois subjugué devant l’Éternel, alors seulement vous vous retirez, vous serez quittés envers Dieu et envers Israël, et cette contrée vous sera légitimement acquise devant le Seigneur.</p></div>
+    </div><div class="seif" id="v-32-23">
+      <span class="seif-num">32:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֤א תַעֲשׂוּן֙ כֵּ֔ן הִנֵּ֥ה חֲטָאתֶ֖ם לַיהֹוָ֑ה וּדְעוּ֙ חַטַּאתְכֶ֔ם אֲשֶׁ֥ר תִּמְצָ֖א אֶתְכֶֽם׃</p></div><div class="heb-s"><p>ואם־לא תעשון כן הנה חטאתם ליהוה ודעו חטאתכם אשר תמצא אתכם׃</p></div></div>
+      <div class="texte-fr"><p>Mais si vous agissez autrement, vous êtes coupables envers le Seigneur, et sachez que votre faute ne serait pas impunie!</p></div>
+    </div><div class="seif" id="v-32-24">
+      <span class="seif-num">32:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּנֽוּ־לָכֶ֤ם עָרִים֙ לְטַפְּכֶ֔ם וּגְדֵרֹ֖ת לְצֹנַאֲכֶ֑ם וְהַיֹּצֵ֥א מִפִּיכֶ֖ם תַּעֲשֽׂוּ׃</p></div><div class="heb-s"><p>בנו־לכם ערים לטפכם וגדרת לצנאכם והיצא מפיכם תעשו׃</p></div></div>
+      <div class="texte-fr"><p>Construisez donc des villes pour vos familles et des parcs pour vos brebis, et soyez fidèles à votre parole."</p></div>
+    </div><div class="seif" id="v-32-25">
+      <span class="seif-num">32:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר בְּנֵי־גָד֙ וּבְנֵ֣י רְאוּבֵ֔ן אֶל־מֹשֶׁ֖ה לֵאמֹ֑ר עֲבָדֶ֣יךָ יַעֲשׂ֔וּ כַּאֲשֶׁ֥ר אֲדֹנִ֖י מְצַוֶּֽה׃</p></div><div class="heb-s"><p>ויאמר בני־גד ובני ראובן אל־משה לאמר עבדיך יעשו כאשר אדני מצוה׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants de Gad et ceux de Ruben repartirent à Moïse en disant: "Tes serviteurs feront comme mon seigneur l’ordonne.</p></div>
+    </div><div class="seif" id="v-32-26">
+      <span class="seif-num">32:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>טַפֵּ֣נוּ נָשֵׁ֔ינוּ מִקְנֵ֖נוּ וְכׇל־בְּהֶמְתֵּ֑נוּ יִֽהְיוּ־שָׁ֖ם בְּעָרֵ֥י הַגִּלְעָֽד׃</p></div><div class="heb-s"><p>טפנו נשינו מקננו וכל־בהמתנו יהיו־שם בערי הגלעד׃</p></div></div>
+      <div class="texte-fr"><p>Nos enfants, nos femmes, nos troupeaux et tout notre bétail, resteront là, dans les villes de Galaad,</p></div>
+    </div><div class="seif" id="v-32-27">
+      <span class="seif-num">32:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַעֲבָדֶ֨יךָ יַֽעַבְר֜וּ כׇּל־חֲל֥וּץ צָבָ֛א לִפְנֵ֥י יְהֹוָ֖ה לַמִּלְחָמָ֑ה כַּאֲשֶׁ֥ר אֲדֹנִ֖י דֹּבֵֽר׃</p></div><div class="heb-s"><p>ועבדיך יעברו כל־חלוץ צבא לפני יהוה למלחמה כאשר אדני דבר׃</p></div></div>
+      <div class="texte-fr"><p>tandis que tes serviteurs, tous ceux qui peuvent s’armer pour la milice, marcheront aux combats devant l’Éternel, comme l’a dit mon seigneur."</p></div>
+    </div><div class="seif" id="v-32-28">
+      <span class="seif-num">32:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֤ו לָהֶם֙ מֹשֶׁ֔ה אֵ֚ת אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֵ֖ת יְהוֹשֻׁ֣עַ בִּן־נ֑וּן וְאֶת־רָאשֵׁ֛י אֲב֥וֹת הַמַּטּ֖וֹת לִבְנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויצו להם משה את אלעזר הכהן ואת יהושע בן־נון ואת־ראשי אבות המטות לבני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Moïse enjoignit, à leur sujet, au pontife Eléazar, à Josué, fils de Noun, et aux principaux membres des tribus des enfants d’Israël,</p></div>
+    </div><div class="seif" id="v-32-29">
+      <span class="seif-num">32:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר מֹשֶׁ֜ה אֲלֵהֶ֗ם אִם־יַעַבְר֣וּ בְנֵי־גָ֣ד וּבְנֵי־רְאוּבֵ֣ן&thinsp;<small>׀</small>&thinsp;אִ֠תְּכֶ֠ם אֶֽת־הַיַּרְדֵּ֞ן כׇּל־חָל֤וּץ לַמִּלְחָמָה֙ לִפְנֵ֣י יְהֹוָ֔ה וְנִכְבְּשָׁ֥ה הָאָ֖רֶץ לִפְנֵיכֶ֑ם וּנְתַתֶּ֥ם לָהֶ֛ם אֶת־אֶ֥רֶץ הַגִּלְעָ֖ד לַאֲחֻזָּֽה׃</p></div><div class="heb-s"><p>ויאמר משה אלהם אם־יעברו בני־גד ובני־ראובן&thinsp;<small>׀</small>&thinsp;אתכם את־הירדן כל־חלוץ למלחמה לפני יהוה ונכבשה הארץ לפניכם ונתתם להם את־ארץ הגלעד לאחזה׃</p></div></div>
+      <div class="texte-fr"><p>en leur disant: "Si les enfants de Gad et ceux de Ruben, tous ceux qui peuvent s’armer pour la lutte, passent avec vous le Jourdain devant le Seigneur et vous aident à soumettre le pays, vous leur attribuerez la contrée de Galaad comme propriété.</p></div>
+    </div><div class="seif" id="v-32-30">
+      <span class="seif-num">32:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֧א יַֽעַבְר֛וּ חֲלוּצִ֖ים אִתְּכֶ֑ם וְנֹֽאחֲז֥וּ בְתֹכְכֶ֖ם בְּאֶ֥רֶץ כְּנָֽעַן׃</p></div><div class="heb-s"><p>ואם־לא יעברו חלוצים אתכם ונאחזו בתככם בארץ כנען׃</p></div></div>
+      <div class="texte-fr"><p>Mais s’ils ne marchent point en armes avec vous, ils devront s’établir au milieu de vous, dans le pays de Canaan."</p></div>
+    </div><div class="seif" id="v-32-31">
+      <span class="seif-num">32:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּֽעֲנ֧וּ בְנֵי־גָ֛ד וּבְנֵ֥י רְאוּבֵ֖ן לֵאמֹ֑ר אֵת֩ אֲשֶׁ֨ר דִּבֶּ֧ר יְהֹוָ֛ה אֶל־עֲבָדֶ֖יךָ כֵּ֥ן נַעֲשֶֽׂה׃</p></div><div class="heb-s"><p>ויענו בני־גד ובני ראובן לאמר את אשר דבר יהוה אל־עבדיך כן נעשה׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants de Gad et ceux de Ruben répondirent en ces termes: "Ce que l’Éternel a dit à tes serviteurs, ils le feront exactement.</p></div>
+    </div><div class="seif" id="v-32-32">
+      <span class="seif-num">32:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַ֣חְנוּ נַעֲבֹ֧ר חֲלוּצִ֛ים לִפְנֵ֥י יְהֹוָ֖ה אֶ֣רֶץ כְּנָ֑עַן וְאִתָּ֙נוּ֙ אֲחֻזַּ֣ת נַחֲלָתֵ֔נוּ מֵעֵ֖בֶר לַיַּרְדֵּֽן׃</p></div><div class="heb-s"><p>נחנו נעבר חלוצים לפני יהוה ארץ כנען ואתנו אחזת נחלתנו מעבר לירדן׃</p></div></div>
+      <div class="texte-fr"><p>Oui, nous passerons en armes, devant le Seigneur, dans le pays de Canaan, conservant la possession de notre héritage de ce côté-ci du Jourdain."</p></div>
+    </div><div class="seif" id="v-32-33">
+      <span class="seif-num">32:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֣ן לָהֶ֣ם&thinsp;<small>׀</small>&thinsp;מֹשֶׁ֡ה לִבְנֵי־גָד֩ וְלִבְנֵ֨י רְאוּבֵ֜ן וְלַחֲצִ֣י&thinsp;<b>׀</b> שֵׁ֣בֶט&thinsp;<b>׀</b> מְנַשֶּׁ֣ה בֶן־יוֹסֵ֗ף אֶת־מַמְלֶ֙כֶת֙ סִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י וְאֶ֨ת־מַמְלֶ֔כֶת ע֖וֹג מֶ֣לֶךְ הַבָּשָׁ֑ן הָאָ֗רֶץ לְעָרֶ֙יהָ֙ בִּגְבֻלֹ֔ת עָרֵ֥י הָאָ֖רֶץ סָבִֽיב׃</p></div><div class="heb-s"><p>ויתן להם&thinsp;<small>׀</small>&thinsp;משה לבני־גד ולבני ראובן ולחצי&thinsp;<b>׀</b> שבט&thinsp;<b>׀</b> מנשה בן־יוסף את־ממלכת סיחן מלך האמרי ואת־ממלכת עוג מלך הבשן הארץ לעריה בגבלת ערי הארץ סביב׃</p></div></div>
+      <div class="texte-fr"><p>Alors Moïse octroya aux enfants de Gad et à ceux de Ruben, ainsi qu’à la moitié de la tribu de Manassé, fils de Joseph, le domaine de Sihôn, roi des Amorréens, et le domaine d’Og, roi du Basan; tout ce pays selon les limites de ses villes, les villes du pays dans toute son étendue.</p></div>
+    </div><div class="seif" id="v-32-34">
+      <span class="seif-num">32:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּבְנ֣וּ בְנֵי־גָ֔ד אֶת־דִּיבֹ֖ן וְאֶת־עֲטָרֹ֑ת וְאֵ֖ת עֲרֹעֵֽר׃</p></div><div class="heb-s"><p>ויבנו בני־גד את־דיבן ואת־עטרת ואת ערער׃</p></div></div>
+      <div class="texte-fr"><p>Et les enfants de Gad rebâtirent Dibôn, Ataroth et Arœr;</p></div>
+    </div><div class="seif" id="v-32-35">
+      <span class="seif-num">32:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־עַטְרֹ֥ת שׁוֹפָ֛ן וְאֶת־יַעְזֵ֖ר וְיׇגְבְּהָֽה׃</p></div><div class="heb-s"><p>ואת־עטרת שופן ואת־יעזר ויגבהה׃</p></div></div>
+      <div class="texte-fr"><p>Atroth-Chofân, Yazer et Yogbeha;</p></div>
+    </div><div class="seif" id="v-32-36">
+      <span class="seif-num">32:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־בֵּ֥ית נִמְרָ֖ה וְאֶת־בֵּ֣ית הָרָ֑ן עָרֵ֥י מִבְצָ֖ר וְגִדְרֹ֥ת צֹֽאן׃</p></div><div class="heb-s"><p>ואת־בית נמרה ואת־בית הרן ערי מבצר וגדרת צאן׃</p></div></div>
+      <div class="texte-fr"><p>Bêth-Nimra et Bêth-Harân, comme viles fortes et parcs à bétail.</p></div>
+    </div><div class="seif" id="v-32-37">
+      <span class="seif-num">32:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְנֵ֤י רְאוּבֵן֙ בָּנ֔וּ אֶת־חֶשְׁבּ֖וֹן וְאֶת־אֶלְעָלֵ֑א וְאֵ֖ת קִרְיָתָֽיִם׃</p></div><div class="heb-s"><p>ובני ראובן בנו את־חשבון ואת־אלעלא ואת קריתים׃</p></div></div>
+      <div class="texte-fr"><p>Et les enfants de Ruben rebâtirent Hesbon, Elalê et Kiryathayim;</p></div>
+    </div><div class="seif" id="v-32-38">
+      <span class="seif-num">32:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־נְב֞וֹ וְאֶת־בַּ֧עַל מְע֛וֹן מֽוּסַבֹּ֥ת שֵׁ֖ם וְאֶת־שִׂבְמָ֑ה וַיִּקְרְא֣וּ בְשֵׁמֹ֔ת אֶת־שְׁמ֥וֹת הֶעָרִ֖ים אֲשֶׁ֥ר בָּנֽוּ׃</p></div><div class="heb-s"><p>ואת־נבו ואת־בעל מעון מוסבת שם ואת־שבמה ויקראו בשמת את־שמות הערים אשר בנו׃</p></div></div>
+      <div class="texte-fr"><p>Nébo, Baal-Meôn (qui changèrent de nom) et Sibma. Ils remplacèrent par d’autres noms les noms des villes qu’ils rebâtirent. </p></div>
+    </div><div class="seif" id="v-32-39">
+      <span class="seif-num">32:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֨לְכ֜וּ בְּנֵ֨י מָכִ֧יר בֶּן־מְנַשֶּׁ֛ה גִּלְעָ֖דָה וַֽיִּלְכְּדֻ֑הָ וַיּ֖וֹרֶשׁ אֶת־הָאֱמֹרִ֥י אֲשֶׁר־בָּֽהּ׃</p></div><div class="heb-s"><p>וילכו בני מכיר בן־מנשה גלעדה וילכדה ויורש את־האמרי אשר־בה׃</p></div></div>
+      <div class="texte-fr"><p>Les enfants de Makhir, fils de Manassé, marchèrent sur le Galaad et s’en rendirent maîtres, et expulsèrent les Amorréens qui l’habitaient.</p></div>
+    </div><div class="seif" id="v-32-40">
+      <span class="seif-num">32:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֤ן מֹשֶׁה֙ אֶת־הַגִּלְעָ֔ד לְמָכִ֖יר בֶּן־מְנַשֶּׁ֑ה וַיֵּ֖שֶׁב בָּֽהּ׃</p></div><div class="heb-s"><p>ויתן משה את־הגלעד למכיר בן־מנשה וישב בה׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse donna le Galaad à Makhir, fils de Manassé, qui s’y établit.</p></div>
+    </div><div class="seif" id="v-32-41">
+      <span class="seif-num">32:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְיָאִ֤יר בֶּן־מְנַשֶּׁה֙ הָלַ֔ךְ וַיִּלְכֹּ֖ד אֶת־חַוֺּתֵיהֶ֑ם וַיִּקְרָ֥א אֶתְהֶ֖ן חַוֺּ֥ת יָאִֽיר׃</p></div><div class="heb-s"><p>ויאיר בן־מנשה הלך וילכד את־חותיהם ויקרא אתהן חות יאיר׃</p></div></div>
+      <div class="texte-fr"><p>Yaïr, descendant de Manassé, y alla aussi et s’empara de leurs bourgs, qu’il nomma Bourgs de Yaïr.</p></div>
+    </div><div class="seif" id="v-32-42">
+      <span class="seif-num">32:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנֹ֣בַח הָלַ֔ךְ וַיִּלְכֹּ֥ד אֶת־קְנָ֖ת וְאֶת־בְּנֹתֶ֑יהָ וַיִּקְרָ֧א לָ֦הֿ נֹ֖בַח בִּשְׁמֽוֹ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ונבח הלך וילכד את־קנת ואת־בנתיה ויקרא לה נבח בשמו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Nobah aussi y alla et s’empara de Kenath et de sa banlieue, qu’il appela Nobah, de son propre nom.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Moïse parla aux chefs des tribus des enfants d’Israël, en ces termes: &quot;Voici ce qu’a ordonné l’Éternel: Si un homme fait un vœu au Seigneur, ou s’impose, par un serment, quelque interdiction à lui-même, il ne peut violer sa parole: tout ce qu’a proféré sa bouche, il doit l’accomplir. Pour la femme, si elle fait un vœu au Seigneur ou s’impose une abstinence dans la maison de son père, pendant sa jeunesse, et que son père, ayant connaissance de son vœu ou de l’abstinence qu’elle s’est imposée, garde le silence vis-à-vis d’elle, ses vœux, quels qu’ils soient, seront valables; toute abstinence qu’elle a pu s’imposer sera maintenue. Mais si son père la désavoue le jour où il en a eu connaissance, tous ses vœux et les interdictions qu’elle a pu s’imposer seront nuls. Le Seigneur lui pardonnera, son père l’ayant désavouée. Que si elle passe en puissance d’époux étant soumise à des vœux ou à une promesse verbale qui lui impose une abstinence, que son époux l’apprenne à une époque quelconque et garde le silence à son égard, ses vœux seront valables, et les abstinences qu’elle s’est imposées subsisteront. Mais si, le jour où il en a eu connaissance, son époux la désavoue, il annule par là le vœu qui la lie ou la parole de ses lèvres qui lui imposait l’abstinence; et le Seigneur lui pardonnera. Quant aux vœux d’une femme veuve ou répudiée, tout ce qu’elle s’est imposé sera obligatoire pour elle. Au cas où c’est en puissance de mari qu’elle a fait un vœu ou s’est interdit quelque chose par serment; si son époux l’apprend et ne lui dit rien, ne la désavoue point, tous ses vœux et toute abstinence qu’elle a pu s’imposer restent obligatoires. Si, au contraire, son époux les annule le jour où il en a eu connaissance, tout ce qu’a proféré sa bouche, soit vœux, soit interdiction personnelle, sera sans effet: son époux les a annulés, Dieu sera indulgent pour elle. Tout vœu, tout serment d’abstinence, tendant à mortifier la personne, l’époux peut les ratifier ou il peut les rendre nuls. Si son époux ne s’en explique pas à elle du jour au lendemain, il sanctionne ses vœux ou les abstinences auxquelles elle s’est soumise, parce qu’il s’est tu lorsqu’il en a eu connaissance. Que s’il les invalidait après qu’il en a eu connaissance, sa faute à elle retomberait sur lui.&quot; Telles sont les règles que l’Éternel avait prescrites à Moïse sur les rapports entre l’homme et sa femme, entre le père et sa fille adolescente dans la maison paternelle.</p>
-      <p>L’Éternel parla ainsi à Moïse: &quot;Exerce sur les Madianites la vengeance due aux enfants d’Israël; après quoi tu seras réuni à tes pères.&quot; Et Moïse parla ainsi au peuple: &quot;Qu’un certain nombre d’entre vous s’apprêtent à combattre; ils marcheront contre Madian, pour exercer sur lui la vindicte de l’Éternel. Mille par tribu, mille pour chacune des tribus d’Israël, seront désignés par vous pour cette expédition.&quot; On recruta donc, parmi les familles d’Israël, mille hommes par tribu: en tout douze mille, équipés pour le combat. Moïse les envoya en campagne, mille par tribu; et avec eux, pour diriger l’expédition, Phinéas, fils d’Eléazar le pontife, muni de l’appareil sacré et des trompettes retentissantes; et ils livrèrent bataille à Madian, comme l’Éternel l’avait ordonné à Moïse, et ils tuèrent tous les mâles. Ils ajoutèrent à ces victimes les rois de Madian: Evi, Rékem, Cour, Heur et Réba, tous cinq rois de Madian, plus Balaam, fils de Beor, qu’ils firent périr par le glaive. Et les Israélites firent prisonnières les femmes de Madian, ainsi que leurs enfants; ils s’emparèrent de toutes leurs bêtes de somme, de tous leurs troupeaux et de tous leurs biens; et toutes les villes qu’ils habitaient et tous leurs villages, ils les incendièrent; Alors ils réunirent tout le butin, et tout ce qu’ils avaient pris d’hommes et d’animaux, et amenèrent le tout, prisonniers, bétail et dépouilles, devant Moïse, devant Eléazar le pontife et la communauté des enfants d’Israël, au camp, dans les plaines de Moab, qui sont près du Jourdain vers Jéricho. Moïse, le pontife Eléazar et tous les chefs de la communauté se portèrent à leur rencontre, hors du camp. Moïse se mit en colère contre les officiers de l’armée, chiliarques et centurions, qui revenaient de l’expédition de guerre, et Moïse leur dit: &quot;Quoi! Vous avez laissé vivre toutes les femmes? Ne sont-ce pas elles qui, à l’instigation de Balaam, ont porté les enfants d’Israël à trahir l’Éternel pour Baal-Peor, de sorte que la mort a sévi dans la communauté de l’Éternel? Et maintenant, tuez tous les enfants mâles; et toute femme qui a connu un homme par cohabitation, tuez-la. Quant à celles qui, encore enfants, n’ont pas cohabité avec un homme, conservez-les pour vous. De plus, restez sept jours hors du camp: vous tous qui avez tué une personne ou touché à quelque cadavre, vous devez vous purifier le troisième et le septième jour, vous et vos prisonniers. De même tout vêtement, tout ustensile de peau, tout objet fait de poil de chèvre et tout vaisseau de bois, ayez soin de le purifier.&quot; Eléazar le pontife dit aux hommes de la milice, qui avaient pris part au combat: &quot;Ceci est un statut de la loi que l’Éternel a donnée à Moïse. A la vérité, l’or et l’argent, le cuivre, le fer, l’étain et le plomb, tout ce qui supporte le feu, vous le passerez par le feu et il sera pur, après toutefois avoir été purifié par l’eau lustrale; et tout ce qui ne va pas au feu, vous le passerez par l’eau. Et vous laverez vos vêtements le septième jour, et vous deviendrez purs; après quoi vous pourrez rentrer au camp.&quot; L’Éternel parla à Moïse en ces termes: &quot;Fais le relevé de toutes les prises en personnes et en animaux, toi avec Eléazar le pontife et les principaux membres de la communauté. Tu partageras ces prises entre les guerriers qui ont pris part à l’expédition, et le reste de la communauté. Puis tu prélèveras comme tribut pour le Seigneur, de la part des gens de guerre qui ont fait l’expédition, une tête sur cinq cents: individus humains, bœufs, ânes et menu bétail. Vous le prendrez sur leur moitié et tu le donneras au pontife Eléazar comme prélèvement du Seigneur. Quant à la moitié afférente aux enfants d’Israël, tu en sépareras un cinquantième, pris au hasard, sur les personnes, sur les bœufs, les ânes et le menu bétail, sur tous les animaux; et tu les donneras aux Lévites, qui veillent à la garde de l’habitation du Seigneur.&quot; Moïse et le pontife Eléazar firent ce que l’Éternel avait ordonné à Moïse. Or la capture, complément de ce qu’avaient pillé les gens de guerre, se composait ainsi: menu bétail, six cent soixante-quinze mille pièces; gros bétail, soixante-douze mille; ânes, soixante et un mille. Quant aux créatures humaines, le nombre des femmes qui n’avaient pas cohabité avec un homme s’élevait à trente-deux mille. La moitié afférente aux hommes de l’expédition fut: en menu bétail, trois cent trente-sept mille cinq cents têtes; et la quotité réservée au Seigneur sur ce bétail fut de six cent soixante-quinze. En gros bétail, trente-six mille têtes; quotité pour le Seigneur, soixante-douze. Anes, trente mille cinq cents; quotité pour le Seigneur, soixante et un. Créatures humaines, seize mille; quotité pour le Seigneur, trente-deux personnes. Moïse remit ce tribut, prélevé pour l’Éternel, au pontife Eléazar, ainsi que l’Éternel l’avait ordonné à Moïse, A l’égard de la moitié afférente aux enfants d’Israël, part assignée par Moïse sur la prise des gens de guerre; cette part de la communauté fut: en menu bétail, trois cent trente-sept mille cinq cents têtes en gros bétail, trente-six mille; ânes, trente mille cinq cents; individus humains, seize mille. Moïse prit, sur cette moitié échue aux enfants d’Israël, indistinctement un sur cinquante, personnes et animaux, et il les donna aux Lévites, gardiens du tabernacle de l’Éternel, comme l’Éternel l’avait ordonné à Moïse. Les officiers des divers corps de la milice, chiliarques et centurions, s’approchèrent de Moïse, et lui dirent: &quot;Tes serviteurs ont fait le dénombrement des gens de guerre qui étaient sous leurs ordres, et il n’en manque pas un seul. Nous apportons donc en hommage à l’Éternel ce que chacun de nous a trouvé de joyaux d’or, chaînettes, bracelets, bagues, boucles et colliers, pour racheter nos personnes devant l’Éternel.&quot; Moïse et le pontife Eléazar reçurent de leur main cet or, toutes ces pièces façonnées. Tout l’or de l’offrande, dont on fit ainsi hommage à l’Éternel, se montait à seize mille sept cent cinquante sicles, offert par les chiliarques et les centurions. Quant aux simples miliciens, ils avaient butiné chacun pour soi. Moïse et le pontife Eléazar, ayant reçu l’or de la part des chiliarques et des centurions, l’apportèrent dans la tente d’assignation, comme mémorial des enfants d’Israël devant le Seigneur.</p>
-      <p>Or, les enfants de Ruben et ceux de Gad possédaient de nombreux troupeaux, très considérables. Lorsqu’ils virent le pays de Yazer et celui de Galaad, ils trouvèrent cette contrée avantageuse pour le bétail. Les enfants de Gad et ceux de Ruben vinrent donc et parlèrent à Moïse, à Eléazar le pontife et aux phylarques de la communauté, en ces termes: &quot;Ataroth, Dibon, Yazer, Nimra, Hesbon et Elalê; Sebam, Nébo et Beôn, ce pays, que l’Éternel a fait succomber devant les enfants d’Israël, est un pays propice au bétail; or, tes serviteurs ont du bétail.&quot; Ils dirent encore: &quot;Si nous avons trouvé faveur à tes yeux, que ce pays soit donné en propriété à tes serviteurs; ne nous fais point passer le Jourdain.&quot; Moïse répondit aux enfants de Gad et à ceux de Ruben: &quot;Quoi! Vos frères iraient au combat, et vous demeureriez ici! Pourquoi voulez-vous décourager les enfants d’Israël de marcher vers le pays que leur a donné l’Éternel? Ainsi firent vos pères, alors que je les envoyai de Kadêch-Barnéa pour explorer ce pays. Ils montèrent jusqu’à la vallée d’Echkol, ils explorèrent le pays; puis ils découragèrent les enfants d’Israël de se rendre au pays que leur avait donné l’Éternel. Ce jour-là, le courroux de l’Éternel s’alluma, et il prononça ce serment: &quot;Si jamais ils voient, ces hommes sortis de l’Égypte, âgés de vingt ans ou plus, la contrée que j’ai, par serment, promise à Abraham, à Isaac et à Jacob!... Car ils m’ont été infidèles. Seuls, Caleb, fils de Yefounné le Kenizzéen, et Josué, fils de Noun la verront, parce qu’ils sont restés fidèles au Seigneur.&quot; Et le Seigneur, courroucé contre Israël, les a fait errer dans le désert pendant quarante années, jusqu’à l’extinction de cette génération entière, qui avait démérité devant le Seigneur. Et maintenant, vous marchez sur les traces de vos pères, engeance de pécheurs, pour ajouter encore à la colère de Dieu contre Israël! Oui, si vous vous détachez de lui, il continuera de le laisser dans le désert, et vous aurez fait le malheur de tout ce peuple.&quot; Alors ils s’approchèrent de Moïse et dirent: &quot;Nous voulons construire ici des parcs à brebis pour notre bétail, et des villes pour nos familles. Mais nous, nous irons en armes, résolument, à la tête des enfants d’Israël, jusqu’à ce que nous les ayons amenés à leur destination, tandis que nos familles demeureront dans les villes fortes, à cause des habitants du pays. Nous ne rentrerons pas dans nos foyers, que les enfants d’Israël n’aient pris possession chacun de son héritage. Nous ne prétendons point posséder avec eux de l’autre côté du Jourdain, puisque c’est en deçà du Jourdain, à l’orient, que notre possession nous sera échue.&quot; Moïse leur répondit: &quot;Si vous tenez cette conduite, si vous marchez devant l’Éternel, équipés pour la guerre; si tous vos guerriers passent le Jourdain pour combattre devant l’Éternel, jusqu’à ce qu’il ait dépossédé ses ennemis, et si, le pays une fois subjugué devant l’Éternel, alors seulement vous vous retirez, vous serez quittés envers Dieu et envers Israël, et cette contrée vous sera légitimement acquise devant le Seigneur. Mais si vous agissez autrement, vous êtes coupables envers le Seigneur, et sachez que votre faute ne serait pas impunie! Construisez donc des villes pour vos familles et des parcs pour vos brebis, et soyez fidèles à votre parole.&quot; Les enfants de Gad et ceux de Ruben repartirent à Moïse en disant: &quot;Tes serviteurs feront comme mon seigneur l’ordonne. Nos enfants, nos femmes, nos troupeaux et tout notre bétail, resteront là, dans les villes de Galaad, tandis que tes serviteurs, tous ceux qui peuvent s’armer pour la milice, marcheront aux combats devant l’Éternel, comme l’a dit mon seigneur.&quot; Moïse enjoignit, à leur sujet, au pontife Eléazar, à Josué, fils de Noun, et aux principaux membres des tribus des enfants d’Israël, en leur disant: &quot;Si les enfants de Gad et ceux de Ruben, tous ceux qui peuvent s’armer pour la lutte, passent avec vous le Jourdain devant le Seigneur et vous aident à soumettre le pays, vous leur attribuerez la contrée de Galaad comme propriété. Mais s’ils ne marchent point en armes avec vous, ils devront s’établir au milieu de vous, dans le pays de Canaan.&quot; Les enfants de Gad et ceux de Ruben répondirent en ces termes: &quot;Ce que l’Éternel a dit à tes serviteurs, ils le feront exactement. Oui, nous passerons en armes, devant le Seigneur, dans le pays de Canaan, conservant la possession de notre héritage de ce côté-ci du Jourdain.&quot; Alors Moïse octroya aux enfants de Gad et à ceux de Ruben, ainsi qu’à la moitié de la tribu de Manassé, fils de Joseph, le domaine de Sihôn, roi des Amorréens, et le domaine d’Og, roi du Basan; tout ce pays selon les limites de ses villes, les villes du pays dans toute son étendue. Et les enfants de Gad rebâtirent Dibôn, Ataroth et Arœr; Atroth-Chofân, Yazer et Yogbeha; Bêth-Nimra et Bêth-Harân, comme viles fortes et parcs à bétail. Et les enfants de Ruben rebâtirent Hesbon, Elalê et Kiryathayim; Nébo, Baal-Meôn (qui changèrent de nom) et Sibma. Ils remplacèrent par d’autres noms les noms des villes qu’ils rebâtirent.  Les enfants de Makhir, fils de Manassé, marchèrent sur le Galaad et s’en rendirent maîtres, et expulsèrent les Amorréens qui l’habitaient. Et Moïse donna le Galaad à Makhir, fils de Manassé, qui s’y établit. Yaïr, descendant de Manassé, y alla aussi et s’empara de leurs bourgs, qu’il nomma Bourgs de Yaïr. Nobah aussi y alla et s’empara de Kenath et de sa banlieue, qu’il appela Nobah, de son propre nom.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -328,6 +806,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Pour toute situation concrète, il faut consulter un rabbin compétent.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_pinchas.html">← Pin&#x27;has</a><a class="hbtn qcm" href="qcm_paracha_matot.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_masei.html">Massé →</a></div>
 </main>
 
 <footer>

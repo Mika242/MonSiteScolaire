@@ -102,6 +102,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -121,6 +151,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -135,6 +175,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Chemot · Paracha</div>
     <h1>Pekudei – Le bilan du Michkan, les vêtements sacrés et la Gloire divine</h1>
     <p>Torah, Chemot (Exodus 38:21-40:38)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_vayakhel.html">← Vayakhel</a><a class="hbtn qcm" href="qcm_paracha_pekudei.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayikra-paracha.html">Vayikra →</a></div>
   </div>
 </header>
 
@@ -154,29 +195,386 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['אֵ֣לֶּה פְקוּדֵ֤י הַמִּשְׁכָּן֙ מִשְׁכַּ֣ן הָעֵדֻ֔ת אֲשֶׁ֥ר פֻּקַּ֖ד עַל־פִּ֣י מֹשֶׁ֑ה עֲבֹדַת֙ הַלְוִיִּ֔ם בְּיַד֙ אִֽיתָמָ֔ר בֶּֽן־אַהֲרֹ֖ן הַכֹּהֵֽן׃', 'וּבְצַלְאֵ֛ל בֶּן־אוּרִ֥י בֶן־ח֖וּר לְמַטֵּ֣ה יְהוּדָ֑ה עָשָׂ֕ה אֵ֛ת כׇּל־אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃', 'וְאִתּ֗וֹ אׇהֳלִיאָ֞ב בֶּן־אֲחִיסָמָ֛ךְ לְמַטֵּה־דָ֖ן חָרָ֣שׁ וְחֹשֵׁ֑ב וְרֹקֵ֗ם בַּתְּכֵ֙לֶת֙ וּבָֽאַרְגָּמָ֔ן וּבְתוֹלַ֥עַת הַשָּׁנִ֖י וּבַשֵּֽׁשׁ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'כׇּל־הַזָּהָ֗ב הֶֽעָשׂוּי֙ לַמְּלָאכָ֔ה בְּכֹ֖ל מְלֶ֣אכֶת הַקֹּ֑דֶשׁ וַיְהִ֣י&thinsp;<b>׀</b> זְהַ֣ב הַתְּנוּפָ֗ה תֵּ֤שַׁע וְעֶשְׂרִים֙ כִּכָּ֔ר וּשְׁבַ֨ע מֵא֧וֹת וּשְׁלֹשִׁ֛ים שֶׁ֖קֶל בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃', 'וְכֶ֛סֶף פְּקוּדֵ֥י הָעֵדָ֖ה מְאַ֣ת כִּכָּ֑ר וְאֶ֩לֶף֩ וּשְׁבַ֨ע מֵא֜וֹת וַחֲמִשָּׁ֧ה וְשִׁבְעִ֛ים שֶׁ֖קֶל בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃', 'בֶּ֚קַע לַגֻּלְגֹּ֔לֶת מַחֲצִ֥ית הַשֶּׁ֖קֶל בְּשֶׁ֣קֶל הַקֹּ֑דֶשׁ לְכֹ֨ל הָעֹבֵ֜ר עַל־הַפְּקֻדִ֗ים מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה לְשֵׁשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹ֣שֶׁת אֲלָפִ֔ים וַחֲמֵ֥שׁ מֵא֖וֹת וַחֲמִשִּֽׁים׃', 'וַיְהִ֗י מְאַת֙ כִּכַּ֣ר הַכֶּ֔סֶף לָצֶ֗קֶת אֵ֚ת אַדְנֵ֣י הַקֹּ֔דֶשׁ וְאֵ֖ת אַדְנֵ֣י הַפָּרֹ֑כֶת מְאַ֧ת אֲדָנִ֛ים לִמְאַ֥ת הַכִּכָּ֖ר כִּכָּ֥ר לָאָֽדֶן׃', 'וְאֶת־הָאֶ֜לֶף וּשְׁבַ֤ע הַמֵּאוֹת֙ וַחֲמִשָּׁ֣ה וְשִׁבְעִ֔ים עָשָׂ֥ה וָוִ֖ים לָעַמּוּדִ֑ים וְצִפָּ֥ה רָאשֵׁיהֶ֖ם וְחִשַּׁ֥ק אֹתָֽם׃', 'וּנְחֹ֥שֶׁת הַתְּנוּפָ֖ה שִׁבְעִ֣ים כִּכָּ֑ר וְאַלְפַּ֥יִם וְאַרְבַּע־מֵא֖וֹת שָֽׁקֶל׃', 'וַיַּ֣עַשׂ בָּ֗הּ אֶת־אַדְנֵי֙ פֶּ֚תַח אֹ֣הֶל מוֹעֵ֔ד וְאֵת֙ מִזְבַּ֣ח הַנְּחֹ֔שֶׁת וְאֶת־מִכְבַּ֥ר הַנְּחֹ֖שֶׁת אֲשֶׁר־ל֑וֹ וְאֵ֖ת כׇּל־כְּלֵ֥י הַמִּזְבֵּֽחַ׃', 'וְאֶת־אַדְנֵ֤י הֶֽחָצֵר֙ סָבִ֔יב וְאֶת־אַדְנֵ֖י שַׁ֣עַר הֶחָצֵ֑ר וְאֵ֨ת כׇּל־יִתְדֹ֧ת הַמִּשְׁכָּ֛ן וְאֶת־כׇּל־יִתְדֹ֥ת הֶחָצֵ֖ר סָבִֽיב׃']</p>
-      <p>['וּמִן־הַתְּכֵ֤לֶת וְהָֽאַרְגָּמָן֙ וְתוֹלַ֣עַת הַשָּׁנִ֔י עָשׂ֥וּ בִגְדֵי־שְׂרָ֖ד לְשָׁרֵ֣ת בַּקֹּ֑דֶשׁ וַֽיַּעֲשׂ֞וּ אֶת־בִּגְדֵ֤י הַקֹּ֙דֶשׁ֙ אֲשֶׁ֣ר לְאַהֲרֹ֔ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיַּ֖עַשׂ אֶת־הָאֵפֹ֑ד זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֥שׁ מׇשְׁזָֽר׃', 'וַֽיְרַקְּע֞וּ אֶת־פַּחֵ֣י הַזָּהָב֮ וְקִצֵּ֣ץ פְּתִילִם֒ לַעֲשׂ֗וֹת בְּת֤וֹךְ הַתְּכֵ֙לֶת֙ וּבְת֣וֹךְ הָֽאַרְגָּמָ֔ן וּבְת֛וֹךְ תּוֹלַ֥עַת הַשָּׁנִ֖י וּבְת֣וֹךְ הַשֵּׁ֑שׁ מַעֲשֵׂ֖ה חֹשֵֽׁב׃', 'כְּתֵפֹ֥ת עָֽשׂוּ־ל֖וֹ חֹבְרֹ֑ת עַל־שְׁנֵ֥י <span class="mam-kq"><span class="mam-kq-k">(קצוותו)</span> <span class="mam-kq-q">[קְצוֹתָ֖יו]</span></span> חֻבָּֽר׃', 'וְחֵ֨שֶׁב אֲפֻדָּת֜וֹ אֲשֶׁ֣ר עָלָ֗יו מִמֶּ֣נּוּ הוּא֮ כְּמַעֲשֵׂ֒הוּ֒ זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֣שׁ מׇשְׁזָ֑ר כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַֽיַּעֲשׂוּ֙ אֶת־אַבְנֵ֣י הַשֹּׁ֔הַם מֻֽסַבֹּ֖ת מִשְׁבְּצֹ֣ת זָהָ֑ב מְפֻתָּחֹת֙ פִּתּוּחֵ֣י חוֹתָ֔ם עַל־שְׁמ֖וֹת בְּנֵ֥י יִשְׂרָאֵֽל׃', 'וַיָּ֣שֶׂם אֹתָ֗ם עַ֚ל כִּתְפֹ֣ת הָאֵפֹ֔ד אַבְנֵ֥י זִכָּר֖וֹן לִבְנֵ֣י יִשְׂרָאֵ֑ל כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיַּ֧עַשׂ אֶת־הַחֹ֛שֶׁן מַעֲשֵׂ֥ה חֹשֵׁ֖ב כְּמַעֲשֵׂ֣ה אֵפֹ֑ד זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֥שׁ מׇשְׁזָֽר׃', 'רָב֧וּעַ הָיָ֛ה כָּפ֖וּל עָשׂ֣וּ אֶת־הַחֹ֑שֶׁן זֶ֧רֶת אׇרְכּ֛וֹ וְזֶ֥רֶת רׇחְבּ֖וֹ כָּפֽוּל׃', 'וַיְמַ֨לְאוּ־ב֔וֹ אַרְבָּעָ֖ה ט֣וּרֵי אָ֑בֶן ט֗וּר אֹ֤דֶם פִּטְדָה֙ וּבָרֶ֔קֶת הַטּ֖וּר הָאֶחָֽד׃', 'וְהַטּ֖וּר הַשֵּׁנִ֑י נֹ֥פֶךְ סַפִּ֖יר וְיָהֲלֹֽם׃', 'וְהַטּ֖וּר הַשְּׁלִישִׁ֑י לֶ֥שֶׁם שְׁב֖וֹ וְאַחְלָֽמָה׃', 'וְהַטּוּר֙ הָֽרְבִיעִ֔י תַּרְשִׁ֥ישׁ שֹׁ֖הַם וְיָשְׁפֵ֑ה מֽוּסַבֹּ֛ת מִשְׁבְּצֹ֥ת זָהָ֖ב בְּמִלֻּאֹתָֽם׃', 'וְ֠הָאֲבָנִ֠ים עַל־שְׁמֹ֨ת בְּנֵי־יִשְׂרָאֵ֥ל הֵ֛נָּה שְׁתֵּ֥ים עֶשְׂרֵ֖ה עַל־שְׁמֹתָ֑ם פִּתּוּחֵ֤י חֹתָם֙ אִ֣ישׁ עַל־שְׁמ֔וֹ לִשְׁנֵ֥ים עָשָׂ֖ר שָֽׁבֶט׃', 'וַיַּעֲשׂ֧וּ עַל־הַחֹ֛שֶׁן שַׁרְשְׁרֹ֥ת גַּבְלֻ֖ת מַעֲשֵׂ֣ה עֲבֹ֑ת זָהָ֖ב טָהֽוֹר׃', 'וַֽיַּעֲשׂ֗וּ שְׁתֵּי֙ מִשְׁבְּצֹ֣ת זָהָ֔ב וּשְׁתֵּ֖י טַבְּעֹ֣ת זָהָ֑ב וַֽיִּתְּנ֗וּ אֶת־שְׁתֵּי֙ הַטַּבָּעֹ֔ת עַל־שְׁנֵ֖י קְצ֥וֹת הַחֹֽשֶׁן׃', 'וַֽיִּתְּנ֗וּ שְׁתֵּי֙ הָעֲבֹתֹ֣ת הַזָּהָ֔ב עַל־שְׁתֵּ֖י הַטַּבָּעֹ֑ת עַל־קְצ֖וֹת הַחֹֽשֶׁן׃', 'וְאֵ֨ת שְׁתֵּ֤י קְצוֹת֙ שְׁתֵּ֣י הָֽעֲבֹתֹ֔ת נָתְנ֖וּ עַל־שְׁתֵּ֣י הַֽמִּשְׁבְּצֹ֑ת וַֽיִּתְּנֻ֛ם עַל־כִּתְפֹ֥ת הָאֵפֹ֖ד אֶל־מ֥וּל פָּנָֽיו׃', 'וַֽיַּעֲשׂ֗וּ שְׁתֵּי֙ טַבְּעֹ֣ת זָהָ֔ב וַיָּשִׂ֕ימוּ עַל־שְׁנֵ֖י קְצ֣וֹת הַחֹ֑שֶׁן עַל־שְׂפָת֕וֹ אֲשֶׁ֛ר אֶל־עֵ֥בֶר הָאֵפֹ֖ד בָּֽיְתָה׃', 'וַֽיַּעֲשׂוּ֮ שְׁתֵּ֣י טַבְּעֹ֣ת זָהָב֒ וַֽיִּתְּנֻ֡ם עַל־שְׁתֵּי֩ כִתְפֹ֨ת הָאֵפֹ֤ד מִלְּמַ֙טָּה֙ מִמּ֣וּל פָּנָ֔יו לְעֻמַּ֖ת מַחְבַּרְתּ֑וֹ מִמַּ֕עַל לְחֵ֖שֶׁב הָאֵפֹֽד׃', 'וַיִּרְכְּס֣וּ אֶת־הַחֹ֡שֶׁן מִטַּבְּעֹתָיו֩ אֶל־טַבְּעֹ֨ת הָאֵפֹ֜ד בִּפְתִ֣יל תְּכֵ֗לֶת לִֽהְיֹת֙ עַל־חֵ֣שֶׁב הָאֵפֹ֔ד וְלֹֽא־יִזַּ֣ח הַחֹ֔שֶׁן מֵעַ֖ל הָאֵפֹ֑ד כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיַּ֛עַשׂ אֶת־מְעִ֥יל הָאֵפֹ֖ד מַעֲשֵׂ֣ה אֹרֵ֑ג כְּלִ֖יל תְּכֵֽלֶת׃', 'וּפִֽי־הַמְּעִ֥יל בְּתוֹכ֖וֹ כְּפִ֣י תַחְרָ֑א שָׂפָ֥ה לְפִ֛יו סָבִ֖יב לֹ֥א יִקָּרֵֽעַ׃', 'וַֽיַּעֲשׂוּ֙ עַל־שׁוּלֵ֣י הַמְּעִ֔יל רִמּוֹנֵ֕י תְּכֵ֥לֶת וְאַרְגָּמָ֖ן וְתוֹלַ֣עַת שָׁנִ֑י מׇשְׁזָֽר׃', 'וַיַּעֲשׂ֥וּ פַעֲמֹנֵ֖י זָהָ֣ב טָה֑וֹר וַיִּתְּנ֨וּ אֶת־הַפַּֽעֲמֹנִ֜ים בְּת֣וֹךְ הָרִמֹּנִ֗ים עַל־שׁוּלֵ֤י הַמְּעִיל֙ סָבִ֔יב בְּת֖וֹךְ הָרִמֹּנִֽים׃', 'פַּעֲמֹ֤ן וְרִמֹּן֙ פַּעֲמֹ֣ן וְרִמֹּ֔ן עַל־שׁוּלֵ֥י הַמְּעִ֖יל סָבִ֑יב לְשָׁרֵ֕ת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַֽיַּעֲשׂ֛וּ אֶת־הַכׇּתְנֹ֥ת שֵׁ֖שׁ מַעֲשֵׂ֣ה אֹרֵ֑ג לְאַהֲרֹ֖ן וּלְבָנָֽיו׃', 'וְאֵת֙ הַמִּצְנֶ֣פֶת שֵׁ֔שׁ וְאֶת־פַּאֲרֵ֥י הַמִּגְבָּעֹ֖ת שֵׁ֑שׁ וְאֶת־מִכְנְסֵ֥י הַבָּ֖ד שֵׁ֥שׁ מׇשְׁזָֽר׃', 'וְֽאֶת־הָאַבְנֵ֞ט שֵׁ֣שׁ מׇשְׁזָ֗ר וּתְכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י מַעֲשֵׂ֣ה רֹקֵ֑ם כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַֽיַּעֲשׂ֛וּ אֶת־צִ֥יץ נֵֽזֶר־הַקֹּ֖דֶשׁ זָהָ֣ב טָה֑וֹר וַיִּכְתְּב֣וּ עָלָ֗יו מִכְתַּב֙ פִּתּוּחֵ֣י חוֹתָ֔ם קֹ֖דֶשׁ לַיהֹוָֽה׃', 'וַיִּתְּנ֤וּ עָלָיו֙ פְּתִ֣יל תְּכֵ֔לֶת לָתֵ֥ת עַל־הַמִּצְנֶ֖פֶת מִלְמָ֑עְלָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַתֵּ֕כֶל כׇּל־עֲבֹדַ֕ת מִשְׁכַּ֖ן אֹ֣הֶל מוֹעֵ֑ד וַֽיַּעֲשׂוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל כְּ֠כֹ֠ל אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֶת־מֹשֶׁ֖ה כֵּ֥ן עָשֽׂוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיָּבִ֤יאוּ אֶת־הַמִּשְׁכָּן֙ אֶל־מֹשֶׁ֔ה אֶת־הָאֹ֖הֶל וְאֶת־כׇּל־כֵּלָ֑יו קְרָסָ֣יו קְרָשָׁ֔יו <span class="mam-kq-trivial">בְּרִיחָ֖ו</span> וְעַמֻּדָ֥יו וַאֲדָנָֽיו׃', 'וְאֶת־מִכְסֵ֞ה עוֹרֹ֤ת הָֽאֵילִם֙ הַמְאׇדָּמִ֔ים וְאֶת־מִכְסֵ֖ה עֹרֹ֣ת הַתְּחָשִׁ֑ים וְאֵ֖ת פָּרֹ֥כֶת הַמָּסָֽךְ׃', 'אֶת־אֲר֥וֹן הָעֵדֻ֖ת וְאֶת־בַּדָּ֑יו וְאֵ֖ת הַכַּפֹּֽרֶת׃', 'אֶת־הַשֻּׁלְחָן֙ אֶת־כׇּל־כֵּלָ֔יו וְאֵ֖ת לֶ֥חֶם הַפָּנִֽים׃', 'אֶת־הַמְּנֹרָ֨ה הַטְּהֹרָ֜ה אֶת־נֵרֹתֶ֗יהָ נֵרֹ֛ת הַמַּֽעֲרָכָ֖ה וְאֶת־כׇּל־כֵּלֶ֑יהָ וְאֵ֖ת שֶׁ֥מֶן הַמָּאֽוֹר׃', 'וְאֵת֙ מִזְבַּ֣ח הַזָּהָ֔ב וְאֵת֙ שֶׁ֣מֶן הַמִּשְׁחָ֔ה וְאֵ֖ת קְטֹ֣רֶת הַסַּמִּ֑ים וְאֵ֕ת מָסַ֖ךְ פֶּ֥תַח הָאֹֽהֶל׃', 'אֵ֣ת&thinsp;<b>׀</b> מִזְבַּ֣ח הַנְּחֹ֗שֶׁת וְאֶת־מִכְבַּ֤ר הַנְּחֹ֙שֶׁת֙ אֲשֶׁר־ל֔וֹ אֶת־בַּדָּ֖יו וְאֶת־כׇּל־כֵּלָ֑יו אֶת־הַכִּיֹּ֖ר וְאֶת־כַּנּֽוֹ׃', 'אֵת֩ קַלְעֵ֨י הֶחָצֵ֜ר אֶת־עַמֻּדֶ֣יהָ וְאֶת־אֲדָנֶ֗יהָ וְאֶת־הַמָּסָךְ֙ לְשַׁ֣עַר הֶֽחָצֵ֔ר אֶת־מֵיתָרָ֖יו וִיתֵדֹתֶ֑יהָ וְאֵ֗ת כׇּל־כְּלֵ֛י עֲבֹדַ֥ת הַמִּשְׁכָּ֖ן לְאֹ֥הֶל מוֹעֵֽד׃', 'אֶת־בִּגְדֵ֥י הַשְּׂרָ֖ד לְשָׁרֵ֣ת בַּקֹּ֑דֶשׁ אֶת־בִּגְדֵ֤י הַקֹּ֙דֶשׁ֙ לְאַהֲרֹ֣ן הַכֹּהֵ֔ן וְאֶת־בִּגְדֵ֥י בָנָ֖יו לְכַהֵֽן׃', 'כְּכֹ֛ל אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶׁ֑ה כֵּ֤ן עָשׂוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אֵ֖ת כׇּל־הָעֲבֹדָֽה׃', 'וַיַּ֨רְא מֹשֶׁ֜ה אֶת־כׇּל־הַמְּלָאכָ֗ה וְהִנֵּה֙ עָשׂ֣וּ אֹתָ֔הּ כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה כֵּ֣ן עָשׂ֑וּ וַיְבָ֥רֶךְ אֹתָ֖ם מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃', 'בְּיוֹם־הַחֹ֥דֶשׁ הָרִאשׁ֖וֹן בְּאֶחָ֣ד לַחֹ֑דֶשׁ תָּקִ֕ים אֶת־מִשְׁכַּ֖ן אֹ֥הֶל מוֹעֵֽד׃', 'וְשַׂמְתָּ֣ שָׁ֔ם אֵ֖ת אֲר֣וֹן הָעֵד֑וּת וְסַכֹּתָ֥ עַל־הָאָרֹ֖ן אֶת־הַפָּרֹֽכֶת׃', 'וְהֵבֵאתָ֙ אֶת־הַשֻּׁלְחָ֔ן וְעָרַכְתָּ֖ אֶת־עֶרְכּ֑וֹ וְהֵבֵאתָ֙ אֶת־הַמְּנֹרָ֔ה וְהַעֲלֵיתָ֖ אֶת־נֵרֹתֶֽיהָ׃', 'וְנָתַתָּ֞ה אֶת־מִזְבַּ֤ח הַזָּהָב֙ לִקְטֹ֔רֶת לִפְנֵ֖י אֲר֣וֹן הָעֵדֻ֑ת וְשַׂמְתָּ֛ אֶת־מָסַ֥ךְ הַפֶּ֖תַח לַמִּשְׁכָּֽן׃', 'וְנָ֣תַתָּ֔ה אֵ֖ת מִזְבַּ֣ח הָעֹלָ֑ה לִפְנֵ֕י פֶּ֖תַח מִשְׁכַּ֥ן אֹֽהֶל־מוֹעֵֽד׃', 'וְנָֽתַתָּ֙ אֶת־הַכִּיֹּ֔ר בֵּֽין־אֹ֥הֶל מוֹעֵ֖ד וּבֵ֣ין הַמִּזְבֵּ֑חַ וְנָתַתָּ֥ שָׁ֖ם מָֽיִם׃', 'וְשַׂמְתָּ֥ אֶת־הֶחָצֵ֖ר סָבִ֑יב וְנָ֣תַתָּ֔ אֶת־מָסַ֖ךְ שַׁ֥עַר הֶחָצֵֽר׃', 'וְלָקַחְתָּ֙ אֶת־שֶׁ֣מֶן הַמִּשְׁחָ֔ה וּמָשַׁחְתָּ֥ אֶת־הַמִּשְׁכָּ֖ן וְאֶת־כׇּל־אֲשֶׁר־בּ֑וֹ וְקִדַּשְׁתָּ֥ אֹת֛וֹ וְאֶת־כׇּל־כֵּלָ֖יו וְהָ֥יָה קֹֽדֶשׁ׃', 'וּמָשַׁחְתָּ֛ אֶת־מִזְבַּ֥ח הָעֹלָ֖ה וְאֶת־כׇּל־כֵּלָ֑יו וְקִדַּשְׁתָּ֙ אֶת־הַמִּזְבֵּ֔חַ וְהָיָ֥ה הַמִּזְבֵּ֖חַ קֹ֥דֶשׁ קׇֽדָשִֽׁים׃', 'וּמָשַׁחְתָּ֥ אֶת־הַכִּיֹּ֖ר וְאֶת־כַּנּ֑וֹ וְקִדַּשְׁתָּ֖ אֹתֽוֹ׃', 'וְהִקְרַבְתָּ֤ אֶֽת־אַהֲרֹן֙ וְאֶת־בָּנָ֔יו אֶל־פֶּ֖תַח אֹ֣הֶל מוֹעֵ֑ד וְרָחַצְתָּ֥ אֹתָ֖ם בַּמָּֽיִם׃', 'וְהִלְבַּשְׁתָּ֙ אֶֽת־אַהֲרֹ֔ן אֵ֖ת בִּגְדֵ֣י הַקֹּ֑דֶשׁ וּמָשַׁחְתָּ֥ אֹת֛וֹ וְקִדַּשְׁתָּ֥ אֹת֖וֹ וְכִהֵ֥ן לִֽי׃', 'וְאֶת־בָּנָ֖יו תַּקְרִ֑יב וְהִלְבַּשְׁתָּ֥ אֹתָ֖ם כֻּתֳּנֹֽת׃', 'וּמָשַׁחְתָּ֣ אֹתָ֗ם כַּאֲשֶׁ֤ר מָשַׁ֙חְתָּ֙ אֶת־אֲבִיהֶ֔ם וְכִהֲנ֖וּ לִ֑י וְ֠הָיְתָ֠ה לִהְיֹ֨ת לָהֶ֧ם מׇשְׁחָתָ֛ם לִכְהֻנַּ֥ת עוֹלָ֖ם לְדֹרֹתָֽם׃', 'וַיַּ֖עַשׂ מֹשֶׁ֑ה כְּ֠כֹ֠ל אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֹת֖וֹ כֵּ֥ן עָשָֽׂה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיְהִ֞י בַּחֹ֧דֶשׁ הָרִאשׁ֛וֹן בַּשָּׁנָ֥ה הַשֵּׁנִ֖ית בְּאֶחָ֣ד לַחֹ֑דֶשׁ הוּקַ֖ם הַמִּשְׁכָּֽן׃', 'וַיָּ֨קֶם מֹשֶׁ֜ה אֶת־הַמִּשְׁכָּ֗ן וַיִּתֵּן֙ אֶת־אֲדָנָ֔יו וַיָּ֙שֶׂם֙ אֶת־קְרָשָׁ֔יו וַיִּתֵּ֖ן אֶת־בְּרִיחָ֑יו וַיָּ֖קֶם אֶת־עַמּוּדָֽיו׃', 'וַיִּפְרֹ֤שׂ אֶת־הָאֹ֙הֶל֙ עַל־הַמִּשְׁכָּ֔ן וַיָּ֜שֶׂם אֶת־מִכְסֵ֥ה הָאֹ֛הֶל עָלָ֖יו מִלְמָ֑עְלָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיִּקַּ֞ח וַיִּתֵּ֤ן אֶת־הָעֵדֻת֙ אֶל־הָ֣אָרֹ֔ן וַיָּ֥שֶׂם אֶת־הַבַּדִּ֖ים עַל־הָאָרֹ֑ן וַיִּתֵּ֧ן אֶת־הַכַּפֹּ֛רֶת עַל־הָאָרֹ֖ן מִלְמָֽעְלָה׃', 'וַיָּבֵ֣א אֶת־הָאָרֹן֮ אֶל־הַמִּשְׁכָּן֒ וַיָּ֗שֶׂם אֵ֚ת פָּרֹ֣כֶת הַמָּסָ֔ךְ וַיָּ֕סֶךְ עַ֖ל אֲר֣וֹן הָעֵד֑וּת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיִּתֵּ֤ן אֶת־הַשֻּׁלְחָן֙ בְּאֹ֣הֶל מוֹעֵ֔ד עַ֛ל יֶ֥רֶךְ הַמִּשְׁכָּ֖ן צָפֹ֑נָה מִח֖וּץ לַפָּרֹֽכֶת׃', 'וַיַּעֲרֹ֥ךְ עָלָ֛יו עֵ֥רֶךְ לֶ֖חֶם לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיָּ֤שֶׂם אֶת־הַמְּנֹרָה֙ בְּאֹ֣הֶל מוֹעֵ֔ד נֹ֖כַח הַשֻּׁלְחָ֑ן עַ֛ל יֶ֥רֶךְ הַמִּשְׁכָּ֖ן נֶֽגְבָּה׃', 'וַיַּ֥עַל הַנֵּרֹ֖ת לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיָּ֛שֶׂם אֶת־מִזְבַּ֥ח הַזָּהָ֖ב בְּאֹ֣הֶל מוֹעֵ֑ד לִפְנֵ֖י הַפָּרֹֽכֶת׃', 'וַיַּקְטֵ֥ר עָלָ֖יו קְטֹ֣רֶת סַמִּ֑ים כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיָּ֛שֶׂם אֶת־מָסַ֥ךְ הַפֶּ֖תַח לַמִּשְׁכָּֽן׃', 'וְאֵת֙ מִזְבַּ֣ח הָעֹלָ֔ה שָׂ֕ם פֶּ֖תַח מִשְׁכַּ֣ן אֹֽהֶל־מוֹעֵ֑ד וַיַּ֣עַל עָלָ֗יו אֶת־הָעֹלָה֙ וְאֶת־הַמִּנְחָ֔ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיָּ֙שֶׂם֙ אֶת־הַכִּיֹּ֔ר בֵּֽין־אֹ֥הֶל מוֹעֵ֖ד וּבֵ֣ין הַמִּזְבֵּ֑חַ וַיִּתֵּ֥ן שָׁ֛מָּה מַ֖יִם לְרׇחְצָֽה׃', 'וְרָחֲצ֣וּ מִמֶּ֔נּוּ מֹשֶׁ֖ה וְאַהֲרֹ֣ן וּבָנָ֑יו אֶת־יְדֵיהֶ֖ם וְאֶת־רַגְלֵיהֶֽם׃', 'בְּבֹאָ֞ם אֶל־אֹ֣הֶל מוֹעֵ֗ד וּבְקׇרְבָתָ֛ם אֶל־הַמִּזְבֵּ֖חַ יִרְחָ֑צוּ כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'וַיָּ֣קֶם אֶת־הֶחָצֵ֗ר סָבִיב֙ לַמִּשְׁכָּ֣ן וְלַמִּזְבֵּ֔חַ וַיִּתֵּ֕ן אֶת־מָסַ֖ךְ שַׁ֣עַר הֶחָצֵ֑ר וַיְכַ֥ל מֹשֶׁ֖ה אֶת־הַמְּלָאכָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'וַיְכַ֥ס הֶעָנָ֖ן אֶת־אֹ֣הֶל מוֹעֵ֑ד וּכְב֣וֹד יְהֹוָ֔ה מָלֵ֖א אֶת־הַמִּשְׁכָּֽן׃', 'וְלֹא־יָכֹ֣ל מֹשֶׁ֗ה לָבוֹא֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד כִּֽי־שָׁכַ֥ן עָלָ֖יו הֶעָנָ֑ן וּכְב֣וֹד יְהֹוָ֔ה מָלֵ֖א אֶת־הַמִּשְׁכָּֽן׃', 'וּבְהֵעָל֤וֹת הֶֽעָנָן֙ מֵעַ֣ל הַמִּשְׁכָּ֔ן יִסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל בְּכֹ֖ל מַסְעֵיהֶֽם׃', 'וְאִם־לֹ֥א יֵעָלֶ֖ה הֶעָנָ֑ן וְלֹ֣א יִסְע֔וּ עַד־י֖וֹם הֵעָלֹתֽוֹ׃', 'כִּי֩ עֲנַ֨ן יְהֹוָ֤ה עַֽל־הַמִּשְׁכָּן֙ יוֹמָ֔ם וְאֵ֕שׁ תִּהְיֶ֥ה לַ֖יְלָה בּ֑וֹ לְעֵינֵ֥י כׇל־בֵּֽית־יִשְׂרָאֵ֖ל בְּכׇל־מַסְעֵיהֶֽם׃']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-38-21">Chap. 38</a><a href="#v-39-1">Chap. 39</a><a href="#v-40-1">Chap. 40</a></div>
+  <div class="seif" id="v-38-21">
+      <span class="seif-num">38:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣לֶּה פְקוּדֵ֤י הַמִּשְׁכָּן֙ מִשְׁכַּ֣ן הָעֵדֻ֔ת אֲשֶׁ֥ר פֻּקַּ֖ד עַל־פִּ֣י מֹשֶׁ֑ה עֲבֹדַת֙ הַלְוִיִּ֔ם בְּיַד֙ אִֽיתָמָ֔ר בֶּֽן־אַהֲרֹ֖ן הַכֹּהֵֽן׃</p></div><div class="heb-s"><p>אלה פקודי המשכן משכן העדת אשר פקד על־פי משה עבדת הלוים ביד איתמר בן־אהרן הכהן׃</p></div></div>
+      <div class="texte-fr"><p>Telle est la distribution du tabernacle, résidence du Statut, comme elle fut établie par l’ordre de Moïse; tâche confiée aux Lévites, sous la direction d’Ithamar, fils d’Aaron le pontife.</p></div>
+    </div><div class="seif" id="v-38-22">
+      <span class="seif-num">38:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְצַלְאֵ֛ל בֶּן־אוּרִ֥י בֶן־ח֖וּר לְמַטֵּ֣ה יְהוּדָ֑ה עָשָׂ֕ה אֵ֛ת כׇּל־אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃</p></div><div class="heb-s"><p>ובצלאל בן־אורי בן־חור למטה יהודה עשה את כל־אשר־צוה יהוה את־משה׃</p></div></div>
+      <div class="texte-fr"><p>Beçalel, fils d’Ouri, fils dé Hour, de la tribu de Juda, exécuta donc tout ce que l’Éternel avait ordonné à Moïse,</p></div>
+    </div><div class="seif" id="v-38-23">
+      <span class="seif-num">38:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִתּ֗וֹ אׇהֳלִיאָ֞ב בֶּן־אֲחִיסָמָ֛ךְ לְמַטֵּה־דָ֖ן חָרָ֣שׁ וְחֹשֵׁ֑ב וְרֹקֵ֗ם בַּתְּכֵ֙לֶת֙ וּבָֽאַרְגָּמָ֔ן וּבְתוֹלַ֥עַת הַשָּׁנִ֖י וּבַשֵּֽׁשׁ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואתו אהליאב בן־אחיסמך למטה־דן חרש וחשב ורקם בתכלת ובארגמן ובתולעת השני ובשש׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>secondé par Oholiab, fils d’Ahisamak, de la tribu de Dan, artisan et artiste, brodeur en étoffes d’azur, de, pourpre, d’écarlate et de fin lin.</p></div>
+    </div><div class="seif" id="v-38-24">
+      <span class="seif-num">38:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־הַזָּהָ֗ב הֶֽעָשׂוּי֙ לַמְּלָאכָ֔ה בְּכֹ֖ל מְלֶ֣אכֶת הַקֹּ֑דֶשׁ וַיְהִ֣י&thinsp;<b>׀</b> זְהַ֣ב הַתְּנוּפָ֗ה תֵּ֤שַׁע וְעֶשְׂרִים֙ כִּכָּ֔ר וּשְׁבַ֨ע מֵא֧וֹת וּשְׁלֹשִׁ֛ים שֶׁ֖קֶל בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>כל־הזהב העשוי למלאכה בכל מלאכת הקדש ויהי&thinsp;<b>׀</b> זהב התנופה תשע ועשרים ככר ושבע מאות ושלשים שקל בשקל הקדש׃</p></div></div>
+      <div class="texte-fr"><p>Tout l’or employé à cette œuvre, aux diverses parties de l’œuvre sainte, cet or, produit de l’offrande, se monta à vingt-neuf kikkar, plus sept cent trente sicles, selon le poids du sanctuaire.</p></div>
+    </div><div class="seif" id="v-38-25">
+      <span class="seif-num">38:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֶ֛סֶף פְּקוּדֵ֥י הָעֵדָ֖ה מְאַ֣ת כִּכָּ֑ר וְאֶ֩לֶף֩ וּשְׁבַ֨ע מֵא֜וֹת וַחֲמִשָּׁ֧ה וְשִׁבְעִ֛ים שֶׁ֖קֶל בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃</p></div><div class="heb-s"><p>וכסף פקודי העדה מאת ככר ואלף ושבע מאות וחמשה ושבעים שקל בשקל הקדש׃</p></div></div>
+      <div class="texte-fr"><p>Ll’argent, produit du dénombrement de la communauté, fut de cent kikkar, plus mille sept cent soixante-quinze sicles, au poids du sanctuaire:</p></div>
+    </div><div class="seif" id="v-38-26">
+      <span class="seif-num">38:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>בֶּ֚קַע לַגֻּלְגֹּ֔לֶת מַחֲצִ֥ית הַשֶּׁ֖קֶל בְּשֶׁ֣קֶל הַקֹּ֑דֶשׁ לְכֹ֨ל הָעֹבֵ֜ר עַל־הַפְּקֻדִ֗ים מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה לְשֵׁשׁ־מֵא֥וֹת אֶ֙לֶף֙ וּשְׁלֹ֣שֶׁת אֲלָפִ֔ים וַחֲמֵ֥שׁ מֵא֖וֹת וַחֲמִשִּֽׁים׃</p></div><div class="heb-s"><p>בקע לגלגלת מחצית השקל בשקל הקדש לכל העבר על־הפקדים מבן עשרים שנה ומעלה לשש־מאות אלף ושלשת אלפים וחמש מאות וחמשים׃</p></div></div>
+      <div class="texte-fr"><p>à un béka par tête, soit un demi sicle au poids du sanctuaire, pour tous ceux qui firent partie du dénombrement, depuis l’âge de vingt ans et au-dessus, au nombre de six cent trois mille cinq cent cinquante.</p></div>
+    </div><div class="seif" id="v-38-27">
+      <span class="seif-num">38:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י מְאַת֙ כִּכַּ֣ר הַכֶּ֔סֶף לָצֶ֗קֶת אֵ֚ת אַדְנֵ֣י הַקֹּ֔דֶשׁ וְאֵ֖ת אַדְנֵ֣י הַפָּרֹ֑כֶת מְאַ֧ת אֲדָנִ֛ים לִמְאַ֥ת הַכִּכָּ֖ר כִּכָּ֥ר לָאָֽדֶן׃</p></div><div class="heb-s"><p>ויהי מאת ככר הכסף לצקת את אדני הקדש ואת אדני הפרכת מאת אדנים למאת הככר ככר לאדן׃</p></div></div>
+      <div class="texte-fr"><p>Or, les cent kikkar d’argent servirent à fondre les socles du sanctuaire et les socles du voile pour les cent socles cent kikkar, un kikkar par socle.</p></div>
+    </div><div class="seif" id="v-38-28">
+      <span class="seif-num">38:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־הָאֶ֜לֶף וּשְׁבַ֤ע הַמֵּאוֹת֙ וַחֲמִשָּׁ֣ה וְשִׁבְעִ֔ים עָשָׂ֥ה וָוִ֖ים לָעַמּוּדִ֑ים וְצִפָּ֥ה רָאשֵׁיהֶ֖ם וְחִשַּׁ֥ק אֹתָֽם׃</p></div><div class="heb-s"><p>ואת־האלף ושבע המאות וחמשה ושבעים עשה ווים לעמודים וצפה ראשיהם וחשק אתם׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux mille sept cent soixante quinze sicles, on en fit les crochets des piliers, la garniture de leurs chapiteaux et leurs tringles.</p></div>
+    </div><div class="seif" id="v-38-29">
+      <span class="seif-num">38:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּנְחֹ֥שֶׁת הַתְּנוּפָ֖ה שִׁבְעִ֣ים כִּכָּ֑ר וְאַלְפַּ֥יִם וְאַרְבַּע־מֵא֖וֹת שָֽׁקֶל׃</p></div><div class="heb-s"><p>ונחשת התנופה שבעים ככר ואלפים וארבע־מאות שקל׃</p></div></div>
+      <div class="texte-fr"><p>Le cuivre qu’on avait offert se monta à soixante-dix kikkar, plus deux mille quatre cents sicles.</p></div>
+    </div><div class="seif" id="v-38-30">
+      <span class="seif-num">38:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַשׂ בָּ֗הּ אֶת־אַדְנֵי֙ פֶּ֚תַח אֹ֣הֶל מוֹעֵ֔ד וְאֵת֙ מִזְבַּ֣ח הַנְּחֹ֔שֶׁת וְאֶת־מִכְבַּ֥ר הַנְּחֹ֖שֶׁת אֲשֶׁר־ל֑וֹ וְאֵ֖ת כׇּל־כְּלֵ֥י הַמִּזְבֵּֽחַ׃</p></div><div class="heb-s"><p>ויעש בה את־אדני פתח אהל מועד ואת מזבח הנחשת ואת־מכבר הנחשת אשר־לו ואת כל־כלי המזבח׃</p></div></div>
+      <div class="texte-fr"><p>On en fit les socles de l’entrée de la Tente d’assignation, l’autel de cuivre ainsi que son grillage de cuivre et tous les ustensiles de cet autel;</p></div>
+    </div><div class="seif" id="v-38-31">
+      <span class="seif-num">38:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־אַדְנֵ֤י הֶֽחָצֵר֙ סָבִ֔יב וְאֶת־אַדְנֵ֖י שַׁ֣עַר הֶחָצֵ֑ר וְאֵ֨ת כׇּל־יִתְדֹ֧ת הַמִּשְׁכָּ֛ן וְאֶת־כׇּל־יִתְדֹ֥ת הֶחָצֵ֖ר סָבִֽיב׃</p></div><div class="heb-s"><p>ואת־אדני החצר סביב ואת־אדני שער החצר ואת כל־יתדת המשכן ואת־כל־יתדת החצר סביב׃</p></div></div>
+      <div class="texte-fr"><p>les socles au pourtour du parvis, ceux de l’entrée du parvis; toutes les chevilles du tabernacle et toutes celles du parvis, tout autour.</p></div>
+    </div><div class="seif" id="v-39-1">
+      <span class="seif-num">39:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמִן־הַתְּכֵ֤לֶת וְהָֽאַרְגָּמָן֙ וְתוֹלַ֣עַת הַשָּׁנִ֔י עָשׂ֥וּ בִגְדֵי־שְׂרָ֖ד לְשָׁרֵ֣ת בַּקֹּ֑דֶשׁ וַֽיַּעֲשׂ֞וּ אֶת־בִּגְדֵ֤י הַקֹּ֙דֶשׁ֙ אֲשֶׁ֣ר לְאַהֲרֹ֔ן כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ומן־התכלת והארגמן ותולעת השני עשו בגדי־שרד לשרת בקדש ויעשו את־בגדי הקדש אשר לאהרן כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Des étoffes d’azur, de pourpre et d’écarlate, on fit des tapis d’emballage pour lé service des choses saintes; puis on fit le saint costume d’Aaron, ainsi que l’Éternel l’avait prescrit à Moïse.</p></div>
+    </div><div class="seif" id="v-39-2">
+      <span class="seif-num">39:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֖עַשׂ אֶת־הָאֵפֹ֑ד זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֥שׁ מׇשְׁזָֽר׃</p></div><div class="heb-s"><p>ויעש את־האפד זהב תכלת וארגמן ותולעת שני ושש משזר׃</p></div></div>
+      <div class="texte-fr"><p>On confectionna l’éphod, en or, azur, pourpre, écarlate et lin retors,</p></div>
+    </div><div class="seif" id="v-39-3">
+      <span class="seif-num">39:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְרַקְּע֞וּ אֶת־פַּחֵ֣י הַזָּהָב֮ וְקִצֵּ֣ץ פְּתִילִם֒ לַעֲשׂ֗וֹת בְּת֤וֹךְ הַתְּכֵ֙לֶת֙ וּבְת֣וֹךְ הָֽאַרְגָּמָ֔ן וּבְת֛וֹךְ תּוֹלַ֥עַת הַשָּׁנִ֖י וּבְת֣וֹךְ הַשֵּׁ֑שׁ מַעֲשֵׂ֖ה חֹשֵֽׁב׃</p></div><div class="heb-s"><p>וירקעו את־פחי הזהב וקצץ פתילם לעשות בתוך התכלת ובתוך הארגמן ובתוך תולעת השני ובתוך השש מעשה חשב׃</p></div></div>
+      <div class="texte-fr"><p>On laminait des lingots d’or, puis on y coupait des fils qu’on entremêlait aux fils d’azur, à ceux de pourpre, d’écarlate et de fin lin, en façon de damassé.</p></div>
+    </div><div class="seif" id="v-39-4">
+      <span class="seif-num">39:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּתֵפֹ֥ת עָֽשׂוּ־ל֖וֹ חֹבְרֹ֑ת עַל־שְׁנֵ֥י <span class="mam-kq"><span class="mam-kq-k">(קצוותו)</span> <span class="mam-kq-q">[קְצוֹתָ֖יו]</span></span> חֻבָּֽר׃</p></div><div class="heb-s"><p>כתפת עשו־לו חברת על־שני <span class="mam-kq"><span class="mam-kq-k">(קצוותו)</span> <span class="mam-kq-q">[קצותיו]</span></span> חבר׃</p></div></div>
+      <div class="texte-fr"><p>On y adapta des épaulières d’attache, par lesquelles ses deux extrémités se trouvèrent jointes.</p></div>
+    </div><div class="seif" id="v-39-5">
+      <span class="seif-num">39:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְחֵ֨שֶׁב אֲפֻדָּת֜וֹ אֲשֶׁ֣ר עָלָ֗יו מִמֶּ֣נּוּ הוּא֮ כְּמַעֲשֵׂ֒הוּ֒ זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֣שׁ מׇשְׁזָ֑ר כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וחשב אפדתו אשר עליו ממנו הוא כמעשהו זהב תכלת וארגמן ותולעת שני ושש משזר כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>La ceinture servant à le fixer faisait partie de son tissu, était ouvragée de même: or, azur, pourpre, écarlate et lin retors, comme l’Éternel l’avait prescrit à Moïse.</p></div>
+    </div><div class="seif" id="v-39-6">
+      <span class="seif-num">39:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂוּ֙ אֶת־אַבְנֵ֣י הַשֹּׁ֔הַם מֻֽסַבֹּ֖ת מִשְׁבְּצֹ֣ת זָהָ֑ב מְפֻתָּחֹת֙ פִּתּוּחֵ֣י חוֹתָ֔ם עַל־שְׁמ֖וֹת בְּנֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויעשו את־אבני השהם מסבת משבצת זהב מפתחת פתוחי חותם על־שמות בני ישראל׃</p></div></div>
+      <div class="texte-fr"><p>On mit en œuvre les pierres de choham, qu’on enchâssa dans des chatons d’or et où l’on grava, comme on grave un sceau, les noms des fils d’Israël.</p></div>
+    </div><div class="seif" id="v-39-7">
+      <span class="seif-num">39:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֣שֶׂם אֹתָ֗ם עַ֚ל כִּתְפֹ֣ת הָאֵפֹ֔ד אַבְנֵ֥י זִכָּר֖וֹן לִבְנֵ֣י יִשְׂרָאֵ֑ל כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וישם אתם על כתפת האפד אבני זכרון לבני ישראל כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>On les ajusta sur les épaulières de l’éphod, comme pierres de souvenir pour les Israélites, ainsi que l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-39-8">
+      <span class="seif-num">39:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֧עַשׂ אֶת־הַחֹ֛שֶׁן מַעֲשֵׂ֥ה חֹשֵׁ֖ב כְּמַעֲשֵׂ֣ה אֵפֹ֑ד זָהָ֗ב תְּכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י וְשֵׁ֥שׁ מׇשְׁזָֽר׃</p></div><div class="heb-s"><p>ויעש את־החשן מעשה חשב כמעשה אפד זהב תכלת וארגמן ותולעת שני ושש משזר׃</p></div></div>
+      <div class="texte-fr"><p>Puis on confectionna le pectoral damassé à la façon de l’éphod; en or, azur, pourpre, écarlate et lin retors.</p></div>
+    </div><div class="seif" id="v-39-9">
+      <span class="seif-num">39:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>רָב֧וּעַ הָיָ֛ה כָּפ֖וּל עָשׂ֣וּ אֶת־הַחֹ֑שֶׁן זֶ֧רֶת אׇרְכּ֛וֹ וְזֶ֥רֶת רׇחְבּ֖וֹ כָּפֽוּל׃</p></div><div class="heb-s"><p>רבוע היה כפול עשו את־החשן זרת ארכו וזרת רחבו כפול׃</p></div></div>
+      <div class="texte-fr"><p>Ce pectoral était carré, on l’avait plié en deux; ainsi plié, il avait un empan de long et un empan de large.</p></div>
+    </div><div class="seif" id="v-39-10">
+      <span class="seif-num">39:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְמַ֨לְאוּ־ב֔וֹ אַרְבָּעָ֖ה ט֣וּרֵי אָ֑בֶן ט֗וּר אֹ֤דֶם פִּטְדָה֙ וּבָרֶ֔קֶת הַטּ֖וּר הָאֶחָֽד׃</p></div><div class="heb-s"><p>וימלאו־בו ארבעה טורי אבן טור אדם פטדה וברקת הטור האחד׃</p></div></div>
+      <div class="texte-fr"><p>On y enchâssa quatre rangées de pierreries. Sur une rangée: un rubis, une topaze et une émeraude, première rangée;</p></div>
+    </div><div class="seif" id="v-39-11">
+      <span class="seif-num">39:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַטּ֖וּר הַשֵּׁנִ֑י נֹ֥פֶךְ סַפִּ֖יר וְיָהֲלֹֽם׃</p></div><div class="heb-s"><p>והטור השני נפך ספיר ויהלם׃</p></div></div>
+      <div class="texte-fr"><p>deuxième rangée: un nofek, un saphir et un diamant;</p></div>
+    </div><div class="seif" id="v-39-12">
+      <span class="seif-num">39:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַטּ֖וּר הַשְּׁלִישִׁ֑י לֶ֥שֶׁם שְׁב֖וֹ וְאַחְלָֽמָה׃</p></div><div class="heb-s"><p>והטור השלישי לשם שבו ואחלמה׃</p></div></div>
+      <div class="texte-fr"><p>troisième rangée: un léchem, un chebô et un ahlama;</p></div>
+    </div><div class="seif" id="v-39-13">
+      <span class="seif-num">39:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהַטּוּר֙ הָֽרְבִיעִ֔י תַּרְשִׁ֥ישׁ שֹׁ֖הַם וְיָשְׁפֵ֑ה מֽוּסַבֹּ֛ת מִשְׁבְּצֹ֥ת זָהָ֖ב בְּמִלֻּאֹתָֽם׃</p></div><div class="heb-s"><p>והטור הרביעי תרשיש שהם וישפה מוסבת משבצת זהב במלאתם׃</p></div></div>
+      <div class="texte-fr"><p>quatrième rangée: une tartessienne, un choham et un jaspe. Quant à leur sertissure, elles furent enchâssées dans des chatons d’or.</p></div>
+    </div><div class="seif" id="v-39-14">
+      <span class="seif-num">39:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְ֠הָאֲבָנִ֠ים עַל־שְׁמֹ֨ת בְּנֵי־יִשְׂרָאֵ֥ל הֵ֛נָּה שְׁתֵּ֥ים עֶשְׂרֵ֖ה עַל־שְׁמֹתָ֑ם פִּתּוּחֵ֤י חֹתָם֙ אִ֣ישׁ עַל־שְׁמ֔וֹ לִשְׁנֵ֥ים עָשָׂ֖ר שָֽׁבֶט׃</p></div><div class="heb-s"><p>והאבנים על־שמת בני־ישראל הנה שתים עשרה על־שמתם פתוחי חתם איש על־שמו לשנים עשר שבט׃</p></div></div>
+      <div class="texte-fr"><p>Ces pierres portant les noms des fils d’Israël, étaient douze selon ces mêmes noms; on y avait gravé comme sur un sceau, chacune par son nom, les douze tribus.</p></div>
+    </div><div class="seif" id="v-39-15">
+      <span class="seif-num">39:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲשׂ֧וּ עַל־הַחֹ֛שֶׁן שַׁרְשְׁרֹ֥ת גַּבְלֻ֖ת מַעֲשֵׂ֣ה עֲבֹ֑ת זָהָ֖ב טָהֽוֹר׃</p></div><div class="heb-s"><p>ויעשו על־החשן שרשרת גבלת מעשה עבת זהב טהור׃</p></div></div>
+      <div class="texte-fr"><p>On prépara, pour le pectoral, des chaînettes cordonnées, forme de torsade, en or pur; puis on fit deux chatons d’or et deux anneaux d’or.</p></div>
+    </div><div class="seif" id="v-39-16">
+      <span class="seif-num">39:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂ֗וּ שְׁתֵּי֙ מִשְׁבְּצֹ֣ת זָהָ֔ב וּשְׁתֵּ֖י טַבְּעֹ֣ת זָהָ֑ב וַֽיִּתְּנ֗וּ אֶת־שְׁתֵּי֙ הַטַּבָּעֹ֔ת עַל־שְׁנֵ֖י קְצ֥וֹת הַחֹֽשֶׁן׃</p></div><div class="heb-s"><p>ויעשו שתי משבצת זהב ושתי טבעת זהב ויתנו את־שתי הטבעת על־שני קצות החשן׃</p></div></div>
+      <div class="texte-fr"><p>On plaça ces deux anneaux aux deux coins du pectoral;</p></div>
+    </div><div class="seif" id="v-39-17">
+      <span class="seif-num">39:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיִּתְּנ֗וּ שְׁתֵּי֙ הָעֲבֹתֹ֣ת הַזָּהָ֔ב עַל־שְׁתֵּ֖י הַטַּבָּעֹ֑ת עַל־קְצ֖וֹת הַחֹֽשֶׁן׃</p></div><div class="heb-s"><p>ויתנו שתי העבתת הזהב על־שתי הטבעת על־קצות החשן׃</p></div></div>
+      <div class="texte-fr"><p>on passa les deux torsades d’or dans les deux anneaux sur les coins du pectoral et les deux extrémités de chaque torsade,</p></div>
+    </div><div class="seif" id="v-39-18">
+      <span class="seif-num">39:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֨ת שְׁתֵּ֤י קְצוֹת֙ שְׁתֵּ֣י הָֽעֲבֹתֹ֔ת נָתְנ֖וּ עַל־שְׁתֵּ֣י הַֽמִּשְׁבְּצֹ֑ת וַֽיִּתְּנֻ֛ם עַל־כִּתְפֹ֥ת הָאֵפֹ֖ד אֶל־מ֥וּל פָּנָֽיו׃</p></div><div class="heb-s"><p>ואת שתי קצות שתי העבתת נתנו על־שתי המשבצת ויתנם על־כתפת האפד אל־מול פניו׃</p></div></div>
+      <div class="texte-fr"><p>on les fixa sur deux chatons, les appliquant aux épaulières de l’éphod du côté de la face.</p></div>
+    </div><div class="seif" id="v-39-19">
+      <span class="seif-num">39:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂ֗וּ שְׁתֵּי֙ טַבְּעֹ֣ת זָהָ֔ב וַיָּשִׂ֕ימוּ עַל־שְׁנֵ֖י קְצ֣וֹת הַחֹ֑שֶׁן עַל־שְׂפָת֕וֹ אֲשֶׁ֛ר אֶל־עֵ֥בֶר הָאֵפֹ֖ד בָּֽיְתָה׃</p></div><div class="heb-s"><p>ויעשו שתי טבעת זהב וישימו על־שני קצות החשן על־שפתו אשר אל־עבר האפד ביתה׃</p></div></div>
+      <div class="texte-fr"><p>On fit aussi deux anneaux d’or, qu’on plaça aux deux coins du pectoral, sur le bord intérieur faisant face à l’éphod;</p></div>
+    </div><div class="seif" id="v-39-20">
+      <span class="seif-num">39:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂוּ֮ שְׁתֵּ֣י טַבְּעֹ֣ת זָהָב֒ וַֽיִּתְּנֻ֡ם עַל־שְׁתֵּי֩ כִתְפֹ֨ת הָאֵפֹ֤ד מִלְּמַ֙טָּה֙ מִמּ֣וּל פָּנָ֔יו לְעֻמַּ֖ת מַחְבַּרְתּ֑וֹ מִמַּ֕עַל לְחֵ֖שֶׁב הָאֵפֹֽד׃</p></div><div class="heb-s"><p>ויעשו שתי טבעת זהב ויתנם על־שתי כתפת האפד מלמטה ממול פניו לעמת מחברתו ממעל לחשב האפד׃</p></div></div>
+      <div class="texte-fr"><p>et l’on fit deux autres anneaux d’or, qu’on fixa aux deux épaulières de l’éphod, par en bas, au côté extérieur, à l’endroit de l’attache, au-dessus de la ceinture de l’éphod.</p></div>
+    </div><div class="seif" id="v-39-21">
+      <span class="seif-num">39:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְכְּס֣וּ אֶת־הַחֹ֡שֶׁן מִטַּבְּעֹתָיו֩ אֶל־טַבְּעֹ֨ת הָאֵפֹ֜ד בִּפְתִ֣יל תְּכֵ֗לֶת לִֽהְיֹת֙ עַל־חֵ֣שֶׁב הָאֵפֹ֔ד וְלֹֽא־יִזַּ֣ח הַחֹ֔שֶׁן מֵעַ֖ל הָאֵפֹ֑ד כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וירכסו את־החשן מטבעתיו אל־טבעת האפד בפתיל תכלת להית על־חשב האפד ולא־יזח החשן מעל האפד כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>On assujettit le pectoral en joignant ses anneaux à ceux de l’éphod par un cordon d’azur, afin que le pectoral fût maintenu sur la ceinture de f’éphod et n’y vacillât point, ainsi que l’Éternel l’avait prescrit à Moïse.</p></div>
+    </div><div class="seif" id="v-39-22">
+      <span class="seif-num">39:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֛עַשׂ אֶת־מְעִ֥יל הָאֵפֹ֖ד מַעֲשֵׂ֣ה אֹרֵ֑ג כְּלִ֖יל תְּכֵֽלֶת׃</p></div><div class="heb-s"><p>ויעש את־מעיל האפד מעשה ארג כליל תכלת׃</p></div></div>
+      <div class="texte-fr"><p>Ensuite on fit la robe de l’éphod selon l’art du tisserand, toute en étoffe d’azur.</p></div>
+    </div><div class="seif" id="v-39-23">
+      <span class="seif-num">39:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּפִֽי־הַמְּעִ֥יל בְּתוֹכ֖וֹ כְּפִ֣י תַחְרָ֑א שָׂפָ֥ה לְפִ֛יו סָבִ֖יב לֹ֥א יִקָּרֵֽעַ׃</p></div><div class="heb-s"><p>ופי־המעיל בתוכו כפי תחרא שפה לפיו סביב לא יקרע׃</p></div></div>
+      <div class="texte-fr"><p>L’ouverture de la robe était infléchie comme celle d’une cotte de mailles et garnie d’un ourlet tout autour, afin de ne pas se déchirer.</p></div>
+    </div><div class="seif" id="v-39-24">
+      <span class="seif-num">39:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂוּ֙ עַל־שׁוּלֵ֣י הַמְּעִ֔יל רִמּוֹנֵ֕י תְּכֵ֥לֶת וְאַרְגָּמָ֖ן וְתוֹלַ֣עַת שָׁנִ֑י מׇשְׁזָֽר׃</p></div><div class="heb-s"><p>ויעשו על־שולי המעיל רמוני תכלת וארגמן ותולעת שני משזר׃</p></div></div>
+      <div class="texte-fr"><p>On disposa, au bas de la robe, des grenades d’azur, de pourpre et d’écarlate, à brins retors;</p></div>
+    </div><div class="seif" id="v-39-25">
+      <span class="seif-num">39:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲשׂ֥וּ פַעֲמֹנֵ֖י זָהָ֣ב טָה֑וֹר וַיִּתְּנ֨וּ אֶת־הַפַּֽעֲמֹנִ֜ים בְּת֣וֹךְ הָרִמֹּנִ֗ים עַל־שׁוּלֵ֤י הַמְּעִיל֙ סָבִ֔יב בְּת֖וֹךְ הָרִמֹּנִֽים׃</p></div><div class="heb-s"><p>ויעשו פעמני זהב טהור ויתנו את־הפעמנים בתוך הרמנים על־שולי המעיל סביב בתוך הרמנים׃</p></div></div>
+      <div class="texte-fr"><p>et l’on fit des clochettes d’or pur et l’on entremêla les clochettes aux grenades, au bas de la robe, tout autour, entre les grenades:</p></div>
+    </div><div class="seif" id="v-39-26">
+      <span class="seif-num">39:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>פַּעֲמֹ֤ן וְרִמֹּן֙ פַּעֲמֹ֣ן וְרִמֹּ֔ן עַל־שׁוּלֵ֥י הַמְּעִ֖יל סָבִ֑יב לְשָׁרֵ֕ת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>פעמן ורמן פעמן ורמן על־שולי המעיל סביב לשרת כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>une clochette, puis une grenade; une clochette, puis une grenade, au bord de la robe, tout autour, pour le saint ministère, ainsi que l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-39-27">
+      <span class="seif-num">39:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂ֛וּ אֶת־הַכׇּתְנֹ֥ת שֵׁ֖שׁ מַעֲשֵׂ֣ה אֹרֵ֑ג לְאַהֲרֹ֖ן וּלְבָנָֽיו׃</p></div><div class="heb-s"><p>ויעשו את־הכתנת שש מעשה ארג לאהרן ולבניו׃</p></div></div>
+      <div class="texte-fr"><p>On confectionna les tuniques en fin lin, selon l’art du tisserand, pour Aaron et pour ses fils;</p></div>
+    </div><div class="seif" id="v-39-28">
+      <span class="seif-num">39:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֙ הַמִּצְנֶ֣פֶת שֵׁ֔שׁ וְאֶת־פַּאֲרֵ֥י הַמִּגְבָּעֹ֖ת שֵׁ֑שׁ וְאֶת־מִכְנְסֵ֥י הַבָּ֖ד שֵׁ֥שׁ מׇשְׁזָֽר׃</p></div><div class="heb-s"><p>ואת המצנפת שש ואת־פארי המגבעת שש ואת־מכנסי הבד שש משזר׃</p></div></div>
+      <div class="texte-fr"><p>et la tiare en fin lin, de même que les turbans pour coiffure;</p></div>
+    </div><div class="seif" id="v-39-29">
+      <span class="seif-num">39:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְֽאֶת־הָאַבְנֵ֞ט שֵׁ֣שׁ מׇשְׁזָ֗ר וּתְכֵ֧לֶת וְאַרְגָּמָ֛ן וְתוֹלַ֥עַת שָׁנִ֖י מַעֲשֵׂ֣ה רֹקֵ֑ם כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואת־האבנט שש משזר ותכלת וארגמן ותולעת שני מעשה רקם כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et les caleçons de toile, en lin retors; et l’écharpe, en lin retors, azur, pourpre et écarlate, ouvragé de broderie, ainsi que l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-39-30">
+      <span class="seif-num">39:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיַּעֲשׂ֛וּ אֶת־צִ֥יץ נֵֽזֶר־הַקֹּ֖דֶשׁ זָהָ֣ב טָה֑וֹר וַיִּכְתְּב֣וּ עָלָ֗יו מִכְתַּב֙ פִּתּוּחֵ֣י חוֹתָ֔ם קֹ֖דֶשׁ לַיהֹוָֽה׃</p></div><div class="heb-s"><p>ויעשו את־ציץ נזר־הקדש זהב טהור ויכתבו עליו מכתב פתוחי חותם קדש ליהוה׃</p></div></div>
+      <div class="texte-fr"><p>On exécuta la plaque, diadème sacré, en or pur et l’on y traça cette inscription gravée comme sur un sceau: "CONSACRÉ AU SEIGNEUR".</p></div>
+    </div><div class="seif" id="v-39-31">
+      <span class="seif-num">39:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתְּנ֤וּ עָלָיו֙ פְּתִ֣יל תְּכֵ֔לֶת לָתֵ֥ת עַל־הַמִּצְנֶ֖פֶת מִלְמָ֑עְלָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויתנו עליו פתיל תכלת לתת על־המצנפת מלמעלה כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>On y fixa un ruban d’azur, qui devait passer sur la tiare, vers le sommet, comme l’Éternel l’avait ordonné à Moïse.</p></div>
+    </div><div class="seif" id="v-39-32">
+      <span class="seif-num">39:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֕כֶל כׇּל־עֲבֹדַ֕ת מִשְׁכַּ֖ן אֹ֣הֶל מוֹעֵ֑ד וַֽיַּעֲשׂוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל כְּ֠כֹ֠ל אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֶת־מֹשֶׁ֖ה כֵּ֥ן עָשֽׂוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ותכל כל־עבדת משכן אהל מועד ויעשו בני ישראל ככל אשר צוה יהוה את־משה כן עשו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Ainsi fut terminé tout le travail du tabernacle de la Tente d’assignation; les Israélites l’avaient exécuté en agissant, de tout point, selon ce que l’Éternel avait enjoint à Moïse.</p></div>
+    </div><div class="seif" id="v-39-33">
+      <span class="seif-num">39:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבִ֤יאוּ אֶת־הַמִּשְׁכָּן֙ אֶל־מֹשֶׁ֔ה אֶת־הָאֹ֖הֶל וְאֶת־כׇּל־כֵּלָ֑יו קְרָסָ֣יו קְרָשָׁ֔יו <span class="mam-kq-trivial">בְּרִיחָ֖ו</span> וְעַמֻּדָ֥יו וַאֲדָנָֽיו׃</p></div><div class="heb-s"><p>ויביאו את־המשכן אל־משה את־האהל ואת־כל־כליו קרסיו קרשיו <span class="mam-kq-trivial">בריחו</span> ועמדיו ואדניו׃</p></div></div>
+      <div class="texte-fr"><p>Alors on apporta à Moïse le tabernacle et le pavillon avec toutes leurs pièces: agrafes, solives, traverses, piliers et socles;</p></div>
+    </div><div class="seif" id="v-39-34">
+      <span class="seif-num">39:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־מִכְסֵ֞ה עוֹרֹ֤ת הָֽאֵילִם֙ הַמְאׇדָּמִ֔ים וְאֶת־מִכְסֵ֖ה עֹרֹ֣ת הַתְּחָשִׁ֑ים וְאֵ֖ת פָּרֹ֥כֶת הַמָּסָֽךְ׃</p></div><div class="heb-s"><p>ואת־מכסה עורת האילם המאדמים ואת־מכסה ערת התחשים ואת פרכת המסך׃</p></div></div>
+      <div class="texte-fr"><p>la couverture de peaux de bélier teintes en rouge, la couverture de peaux de Tahach et le voile protecteur;</p></div>
+    </div><div class="seif" id="v-39-35">
+      <span class="seif-num">39:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־אֲר֥וֹן הָעֵדֻ֖ת וְאֶת־בַּדָּ֑יו וְאֵ֖ת הַכַּפֹּֽרֶת׃</p></div><div class="heb-s"><p>את־ארון העדת ואת־בדיו ואת הכפרת׃</p></div></div>
+      <div class="texte-fr"><p>l’arche du Statut avec ses barres et le propitiatoire;</p></div>
+    </div><div class="seif" id="v-39-36">
+      <span class="seif-num">39:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַשֻּׁלְחָן֙ אֶת־כׇּל־כֵּלָ֔יו וְאֵ֖ת לֶ֥חֶם הַפָּנִֽים׃</p></div><div class="heb-s"><p>את־השלחן את־כל־כליו ואת לחם הפנים׃</p></div></div>
+      <div class="texte-fr"><p>la table avec toutes ses pièces et les pains de proposition;</p></div>
+    </div><div class="seif" id="v-39-37">
+      <span class="seif-num">39:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־הַמְּנֹרָ֨ה הַטְּהֹרָ֜ה אֶת־נֵרֹתֶ֗יהָ נֵרֹ֛ת הַמַּֽעֲרָכָ֖ה וְאֶת־כׇּל־כֵּלֶ֑יהָ וְאֵ֖ת שֶׁ֥מֶן הַמָּאֽוֹר׃</p></div><div class="heb-s"><p>את־המנרה הטהרה את־נרתיה נרת המערכה ואת־כל־כליה ואת שמן המאור׃</p></div></div>
+      <div class="texte-fr"><p>le candélabre d’or pur, avec ses lampes tout arrangées et tous ses ustensiles; l’huile du luminaire;</p></div>
+    </div><div class="seif" id="v-39-38">
+      <span class="seif-num">39:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֙ מִזְבַּ֣ח הַזָּהָ֔ב וְאֵת֙ שֶׁ֣מֶן הַמִּשְׁחָ֔ה וְאֵ֖ת קְטֹ֣רֶת הַסַּמִּ֑ים וְאֵ֕ת מָסַ֖ךְ פֶּ֥תַח הָאֹֽהֶל׃</p></div><div class="heb-s"><p>ואת מזבח הזהב ואת שמן המשחה ואת קטרת הסמים ואת מסך פתח האהל׃</p></div></div>
+      <div class="texte-fr"><p>l’autel d’or, l’huile d’onction et le parfum aromatique; le rideau d’entrée de la Tente;</p></div>
+    </div><div class="seif" id="v-39-39">
+      <span class="seif-num">39:39</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵ֣ת&thinsp;<b>׀</b> מִזְבַּ֣ח הַנְּחֹ֗שֶׁת וְאֶת־מִכְבַּ֤ר הַנְּחֹ֙שֶׁת֙ אֲשֶׁר־ל֔וֹ אֶת־בַּדָּ֖יו וְאֶת־כׇּל־כֵּלָ֑יו אֶת־הַכִּיֹּ֖ר וְאֶת־כַּנּֽוֹ׃</p></div><div class="heb-s"><p>את&thinsp;<b>׀</b> מזבח הנחשת ואת־מכבר הנחשת אשר־לו את־בדיו ואת־כל־כליו את־הכיר ואת־כנו׃</p></div></div>
+      <div class="texte-fr"><p>l’autel de cuivre avec son grillage de cuivre, ses barres et tous ses ustensiles; la cuve avec son support;</p></div>
+    </div><div class="seif" id="v-39-40">
+      <span class="seif-num">39:40</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֵת֩ קַלְעֵ֨י הֶחָצֵ֜ר אֶת־עַמֻּדֶ֣יהָ וְאֶת־אֲדָנֶ֗יהָ וְאֶת־הַמָּסָךְ֙ לְשַׁ֣עַר הֶֽחָצֵ֔ר אֶת־מֵיתָרָ֖יו וִיתֵדֹתֶ֑יהָ וְאֵ֗ת כׇּל־כְּלֵ֛י עֲבֹדַ֥ת הַמִּשְׁכָּ֖ן לְאֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>את קלעי החצר את־עמדיה ואת־אדניה ואת־המסך לשער החצר את־מיתריו ויתדתיה ואת כל־כלי עבדת המשכן לאהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>les toiles du parvis, ses piliers et, ses socles; le rideau formant la porte du parvis, ainsi que ses cordages et ses chevilles, enfin tous les ustensiles nécessaires au tabernacle de la Tente d’assignation; les tapis d’emballage pour le service des choses saintes;</p></div>
+    </div><div class="seif" id="v-39-41">
+      <span class="seif-num">39:41</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֶת־בִּגְדֵ֥י הַשְּׂרָ֖ד לְשָׁרֵ֣ת בַּקֹּ֑דֶשׁ אֶת־בִּגְדֵ֤י הַקֹּ֙דֶשׁ֙ לְאַהֲרֹ֣ן הַכֹּהֵ֔ן וְאֶת־בִּגְדֵ֥י בָנָ֖יו לְכַהֵֽן׃</p></div><div class="heb-s"><p>את־בגדי השרד לשרת בקדש את־בגדי הקדש לאהרן הכהן ואת־בגדי בניו לכהן׃</p></div></div>
+      <div class="texte-fr"><p>les vêtements sacrés d’Aaron le pontife et les vêtements sacerdotaux de ses fils.</p></div>
+    </div><div class="seif" id="v-39-42">
+      <span class="seif-num">39:42</span>
+      <div class="texte-heb"><div class="heb-n"><p>כְּכֹ֛ל אֲשֶׁר־צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶׁ֑ה כֵּ֤ן עָשׂוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אֵ֖ת כׇּל־הָעֲבֹדָֽה׃</p></div><div class="heb-s"><p>ככל אשר־צוה יהוה את־משה כן עשו בני ישראל את כל־העבדה׃</p></div></div>
+      <div class="texte-fr"><p>Exactement comme le Seigneur l’avait commandé à Moïse, ainsi les Israélites avaient accompli toute la tâche.</p></div>
+    </div><div class="seif" id="v-39-43">
+      <span class="seif-num">39:43</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֨רְא מֹשֶׁ֜ה אֶת־כׇּל־הַמְּלָאכָ֗ה וְהִנֵּה֙ עָשׂ֣וּ אֹתָ֔הּ כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה כֵּ֣ן עָשׂ֑וּ וַיְבָ֥רֶךְ אֹתָ֖ם מֹשֶֽׁה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>וירא משה את־כל־המלאכה והנה עשו אתה כאשר צוה יהוה כן עשו ויברך אתם משה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Moïse examina tout le travail: or ils l’avaient exécuté conformément aux prescriptions du Seigneur. Et Moïse les bénit.</p></div>
+    </div><div class="seif" id="v-40-1">
+      <span class="seif-num">40:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְדַבֵּ֥ר יְהֹוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃</p></div><div class="heb-s"><p>וידבר יהוה אל־משה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>L’Éternel parla à Moïse en ces termes:</p></div>
+    </div><div class="seif" id="v-40-2">
+      <span class="seif-num">40:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּיוֹם־הַחֹ֥דֶשׁ הָרִאשׁ֖וֹן בְּאֶחָ֣ד לַחֹ֑דֶשׁ תָּקִ֕ים אֶת־מִשְׁכַּ֖ן אֹ֥הֶל מוֹעֵֽד׃</p></div><div class="heb-s"><p>ביום־החדש הראשון באחד לחדש תקים את־משכן אהל מועד׃</p></div></div>
+      <div class="texte-fr"><p>"A l’époque du premier mois, le premier jour du mois, tu érigeras le tabernacle de la Tente d’assignation.</p></div>
+    </div><div class="seif" id="v-40-3">
+      <span class="seif-num">40:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשַׂמְתָּ֣ שָׁ֔ם אֵ֖ת אֲר֣וֹן הָעֵד֑וּת וְסַכֹּתָ֥ עַל־הָאָרֹ֖ן אֶת־הַפָּרֹֽכֶת׃</p></div><div class="heb-s"><p>ושמת שם את ארון העדות וסכת על־הארן את־הפרכת׃</p></div></div>
+      <div class="texte-fr"><p>Tu y déposeras l’arche du Statut et tu abriteras cette arche au moyen du voile.</p></div>
+    </div><div class="seif" id="v-40-4">
+      <span class="seif-num">40:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהֵבֵאתָ֙ אֶת־הַשֻּׁלְחָ֔ן וְעָרַכְתָּ֖ אֶת־עֶרְכּ֑וֹ וְהֵבֵאתָ֙ אֶת־הַמְּנֹרָ֔ה וְהַעֲלֵיתָ֖ אֶת־נֵרֹתֶֽיהָ׃</p></div><div class="heb-s"><p>והבאת את־השלחן וערכת את־ערכו והבאת את־המנרה והעלית את־נרתיה׃</p></div></div>
+      <div class="texte-fr"><p>Tu introduiras la table et tu en disposeras l’appareil; tu introduiras le candélabre et tu en allumeras les lampes.</p></div>
+    </div><div class="seif" id="v-40-5">
+      <span class="seif-num">40:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָתַתָּ֞ה אֶת־מִזְבַּ֤ח הַזָּהָב֙ לִקְטֹ֔רֶת לִפְנֵ֖י אֲר֣וֹן הָעֵדֻ֑ת וְשַׂמְתָּ֛ אֶת־מָסַ֥ךְ הַפֶּ֖תַח לַמִּשְׁכָּֽן׃</p></div><div class="heb-s"><p>ונתתה את־מזבח הזהב לקטרת לפני ארון העדת ושמת את־מסך הפתח למשכן׃</p></div></div>
+      <div class="texte-fr"><p>Tu installeras l’autel d’or, destiné à l’encensement, devant l’arche du Statut, puis tu mettras le rideau d’entrée devant le tabernacle.</p></div>
+    </div><div class="seif" id="v-40-6">
+      <span class="seif-num">40:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָ֣תַתָּ֔ה אֵ֖ת מִזְבַּ֣ח הָעֹלָ֑ה לִפְנֵ֕י פֶּ֖תַח מִשְׁכַּ֥ן אֹֽהֶל־מוֹעֵֽד׃</p></div><div class="heb-s"><p>ונתתה את מזבח העלה לפני פתח משכן אהל־מועד׃</p></div></div>
+      <div class="texte-fr"><p>Tu installeras l’autel de l’holocauste devant l’entrée du tabernacle de la Tente d’assignation.</p></div>
+    </div><div class="seif" id="v-40-7">
+      <span class="seif-num">40:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְנָֽתַתָּ֙ אֶת־הַכִּיֹּ֔ר בֵּֽין־אֹ֥הֶל מוֹעֵ֖ד וּבֵ֣ין הַמִּזְבֵּ֑חַ וְנָתַתָּ֥ שָׁ֖ם מָֽיִם׃</p></div><div class="heb-s"><p>ונתת את־הכיר בין־אהל מועד ובין המזבח ונתת שם מים׃</p></div></div>
+      <div class="texte-fr"><p>Tu mettras la cuve entre la Tente d’assignation et l’autel et tu l’empliras d’eau.</p></div>
+    </div><div class="seif" id="v-40-8">
+      <span class="seif-num">40:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשַׂמְתָּ֥ אֶת־הֶחָצֵ֖ר סָבִ֑יב וְנָ֣תַתָּ֔ אֶת־מָסַ֖ךְ שַׁ֥עַר הֶחָצֵֽר׃</p></div><div class="heb-s"><p>ושמת את־החצר סביב ונתת את־מסך שער החצר׃</p></div></div>
+      <div class="texte-fr"><p>Tu dresseras le parvis tout autour et tu poseras le rideau-portière du parvis.</p></div>
+    </div><div class="seif" id="v-40-9">
+      <span class="seif-num">40:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלָקַחְתָּ֙ אֶת־שֶׁ֣מֶן הַמִּשְׁחָ֔ה וּמָשַׁחְתָּ֥ אֶת־הַמִּשְׁכָּ֖ן וְאֶת־כׇּל־אֲשֶׁר־בּ֑וֹ וְקִדַּשְׁתָּ֥ אֹת֛וֹ וְאֶת־כׇּל־כֵּלָ֖יו וְהָ֥יָה קֹֽדֶשׁ׃</p></div><div class="heb-s"><p>ולקחת את־שמן המשחה ומשחת את־המשכן ואת־כל־אשר־בו וקדשת אתו ואת־כל־כליו והיה קדש׃</p></div></div>
+      <div class="texte-fr"><p>Puis tu prendras l’huile d’onction, pour oindre le tabernacle et tout son contenu, tu le consacreras ainsi que toutes ses pièces et il deviendra chose sacrée. </p></div>
+    </div><div class="seif" id="v-40-10">
+      <span class="seif-num">40:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָשַׁחְתָּ֛ אֶת־מִזְבַּ֥ח הָעֹלָ֖ה וְאֶת־כׇּל־כֵּלָ֑יו וְקִדַּשְׁתָּ֙ אֶת־הַמִּזְבֵּ֔חַ וְהָיָ֥ה הַמִּזְבֵּ֖חַ קֹ֥דֶשׁ קׇֽדָשִֽׁים׃</p></div><div class="heb-s"><p>ומשחת את־מזבח העלה ואת־כל־כליו וקדשת את־המזבח והיה המזבח קדש קדשים׃</p></div></div>
+      <div class="texte-fr"><p>Tu en oindras l’autel de l’holocauste et tous ses ustensiles, tu consacreras ainsi cet autel et il deviendra éminemment saint.</p></div>
+    </div><div class="seif" id="v-40-11">
+      <span class="seif-num">40:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָשַׁחְתָּ֥ אֶת־הַכִּיֹּ֖ר וְאֶת־כַּנּ֑וֹ וְקִדַּשְׁתָּ֖ אֹתֽוֹ׃</p></div><div class="heb-s"><p>ומשחת את־הכיר ואת־כנו וקדשת אתו׃</p></div></div>
+      <div class="texte-fr"><p>Tu en oindras la cuve et son support et tu les consacreras.</p></div>
+    </div><div class="seif" id="v-40-12">
+      <span class="seif-num">40:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִקְרַבְתָּ֤ אֶֽת־אַהֲרֹן֙ וְאֶת־בָּנָ֔יו אֶל־פֶּ֖תַח אֹ֣הֶל מוֹעֵ֑ד וְרָחַצְתָּ֥ אֹתָ֖ם בַּמָּֽיִם׃</p></div><div class="heb-s"><p>והקרבת את־אהרן ואת־בניו אל־פתח אהל מועד ורחצת אתם במים׃</p></div></div>
+      <div class="texte-fr"><p>Alors tu feras avancer Aaron et ses fils à l’entrée de la Tente d’assignation et tu les feras baigner.</p></div>
+    </div><div class="seif" id="v-40-13">
+      <span class="seif-num">40:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְהִלְבַּשְׁתָּ֙ אֶֽת־אַהֲרֹ֔ן אֵ֖ת בִּגְדֵ֣י הַקֹּ֑דֶשׁ וּמָשַׁחְתָּ֥ אֹת֛וֹ וְקִדַּשְׁתָּ֥ אֹת֖וֹ וְכִהֵ֥ן לִֽי׃</p></div><div class="heb-s"><p>והלבשת את־אהרן את בגדי הקדש ומשחת אתו וקדשת אתו וכהן לי׃</p></div></div>
+      <div class="texte-fr"><p>Tu revêtiras Aaron du saint costume, tu l’oindras et le consacreras à mon ministère.</p></div>
+    </div><div class="seif" id="v-40-14">
+      <span class="seif-num">40:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֶת־בָּנָ֖יו תַּקְרִ֑יב וְהִלְבַּשְׁתָּ֥ אֹתָ֖ם כֻּתֳּנֹֽת׃</p></div><div class="heb-s"><p>ואת־בניו תקריב והלבשת אתם כתנת׃</p></div></div>
+      <div class="texte-fr"><p>Puis tu feras approcher ses fils et tu les vêtiras de leurs tuniques.</p></div>
+    </div><div class="seif" id="v-40-15">
+      <span class="seif-num">40:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמָשַׁחְתָּ֣ אֹתָ֗ם כַּאֲשֶׁ֤ר מָשַׁ֙חְתָּ֙ אֶת־אֲבִיהֶ֔ם וְכִהֲנ֖וּ לִ֑י וְ֠הָיְתָ֠ה לִהְיֹ֨ת לָהֶ֧ם מׇשְׁחָתָ֛ם לִכְהֻנַּ֥ת עוֹלָ֖ם לְדֹרֹתָֽם׃</p></div><div class="heb-s"><p>ומשחת אתם כאשר משחת את־אביהם וכהנו לי והיתה להית להם משחתם לכהנת עולם לדרתם׃</p></div></div>
+      <div class="texte-fr"><p>Tu les oindras, ainsi que tu auras oint leur père et ils deviendront mes ministres; et ainsi leur sera conféré le privilège d’un sacerdoce perpétuel, pour toutes leurs générations."</p></div>
+    </div><div class="seif" id="v-40-16">
+      <span class="seif-num">40:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֖עַשׂ מֹשֶׁ֑ה כְּ֠כֹ֠ל אֲשֶׁ֨ר צִוָּ֧ה יְהֹוָ֛ה אֹת֖וֹ כֵּ֥ן עָשָֽׂה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויעש משה ככל אשר צוה יהוה אתו כן עשה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Moïse obéit: tout ce que l’Éternel lui avait prescrit, il s’y conforma.</p></div>
+    </div><div class="seif" id="v-40-17">
+      <span class="seif-num">40:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֞י בַּחֹ֧דֶשׁ הָרִאשׁ֛וֹן בַּשָּׁנָ֥ה הַשֵּׁנִ֖ית בְּאֶחָ֣ד לַחֹ֑דֶשׁ הוּקַ֖ם הַמִּשְׁכָּֽן׃</p></div><div class="heb-s"><p>ויהי בחדש הראשון בשנה השנית באחד לחדש הוקם המשכן׃</p></div></div>
+      <div class="texte-fr"><p>Ce fut au premier mois de la deuxième année, au premier jour du mois, que fut érigé le Tabernacle.</p></div>
+    </div><div class="seif" id="v-40-18">
+      <span class="seif-num">40:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֨קֶם מֹשֶׁ֜ה אֶת־הַמִּשְׁכָּ֗ן וַיִּתֵּן֙ אֶת־אֲדָנָ֔יו וַיָּ֙שֶׂם֙ אֶת־קְרָשָׁ֔יו וַיִּתֵּ֖ן אֶת־בְּרִיחָ֑יו וַיָּ֖קֶם אֶת־עַמּוּדָֽיו׃</p></div><div class="heb-s"><p>ויקם משה את־המשכן ויתן את־אדניו וישם את־קרשיו ויתן את־בריחיו ויקם את־עמודיו׃</p></div></div>
+      <div class="texte-fr"><p>Moïse dressa d’abord le tabernacle; il en posa les socles, en planta les solives, en fixa les traverses, en érigea les piliers;</p></div>
+    </div><div class="seif" id="v-40-19">
+      <span class="seif-num">40:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפְרֹ֤שׂ אֶת־הָאֹ֙הֶל֙ עַל־הַמִּשְׁכָּ֔ן וַיָּ֜שֶׂם אֶת־מִכְסֵ֥ה הָאֹ֛הֶל עָלָ֖יו מִלְמָ֑עְלָה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויפרש את־האהל על־המשכן וישם את־מכסה האהל עליו מלמעלה כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>il étendit le pavillon sur le tabernacle et posa sur le pavillon sa couverture supérieure, ainsi que l’Éternel le lui avait ordonné.</p></div>
+    </div><div class="seif" id="v-40-20">
+      <span class="seif-num">40:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֞ח וַיִּתֵּ֤ן אֶת־הָעֵדֻת֙ אֶל־הָ֣אָרֹ֔ן וַיָּ֥שֶׂם אֶת־הַבַּדִּ֖ים עַל־הָאָרֹ֑ן וַיִּתֵּ֧ן אֶת־הַכַּפֹּ֛רֶת עַל־הָאָרֹ֖ן מִלְמָֽעְלָה׃</p></div><div class="heb-s"><p>ויקח ויתן את־העדת אל־הארן וישם את־הבדים על־הארן ויתן את־הכפרת על־הארן מלמעלה׃</p></div></div>
+      <div class="texte-fr"><p>Il prit ensuite le Statut qu’il déposa dans l’arche; il appliqua les barres à l’arche, plaça le propitiatoire par-dessus;</p></div>
+    </div><div class="seif" id="v-40-21">
+      <span class="seif-num">40:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֵ֣א אֶת־הָאָרֹן֮ אֶל־הַמִּשְׁכָּן֒ וַיָּ֗שֶׂם אֵ֚ת פָּרֹ֣כֶת הַמָּסָ֔ךְ וַיָּ֕סֶךְ עַ֖ל אֲר֣וֹן הָעֵד֑וּת כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויבא את־הארן אל־המשכן וישם את פרכת המסך ויסך על ארון העדות כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>introduisit l’arche dans le Tabernacle et suspendit le voile protecteur pour abriter l’arche du Statut, comme l’Éternel le lui avait ordonné.</p></div>
+    </div><div class="seif" id="v-40-22">
+      <span class="seif-num">40:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֤ן אֶת־הַשֻּׁלְחָן֙ בְּאֹ֣הֶל מוֹעֵ֔ד עַ֛ל יֶ֥רֶךְ הַמִּשְׁכָּ֖ן צָפֹ֑נָה מִח֖וּץ לַפָּרֹֽכֶת׃</p></div><div class="heb-s"><p>ויתן את־השלחן באהל מועד על ירך המשכן צפנה מחוץ לפרכת׃</p></div></div>
+      <div class="texte-fr"><p>II plaça la table dans la Tente d’assignation vers le flanc nord du Tabernacle, en dehors, du voile</p></div>
+    </div><div class="seif" id="v-40-23">
+      <span class="seif-num">40:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲרֹ֥ךְ עָלָ֛יו עֵ֥רֶךְ לֶ֖חֶם לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויערך עליו ערך לחם לפני יהוה כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et y disposa l’appareil des pains devant le Seigneur, comme celui-ci le lui avait ordonné.</p></div>
+    </div><div class="seif" id="v-40-24">
+      <span class="seif-num">40:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֤שֶׂם אֶת־הַמְּנֹרָה֙ בְּאֹ֣הֶל מוֹעֵ֔ד נֹ֖כַח הַשֻּׁלְחָ֑ן עַ֛ל יֶ֥רֶךְ הַמִּשְׁכָּ֖ן נֶֽגְבָּה׃</p></div><div class="heb-s"><p>וישם את־המנרה באהל מועד נכח השלחן על ירך המשכן נגבה׃</p></div></div>
+      <div class="texte-fr"><p>Il posa le candélabre dans la Tente d’assignation, en face de la table, au flanc méridional du Tabernacle</p></div>
+    </div><div class="seif" id="v-40-25">
+      <span class="seif-num">40:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥עַל הַנֵּרֹ֖ת לִפְנֵ֣י יְהֹוָ֑ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויעל הנרת לפני יהוה כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et alluma les lampes devant le Seigneur, comme celui-ci le lui avait ordonné.</p></div>
+    </div><div class="seif" id="v-40-26">
+      <span class="seif-num">40:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֛שֶׂם אֶת־מִזְבַּ֥ח הַזָּהָ֖ב בְּאֹ֣הֶל מוֹעֵ֑ד לִפְנֵ֖י הַפָּרֹֽכֶת׃</p></div><div class="heb-s"><p>וישם את־מזבח הזהב באהל מועד לפני הפרכת׃</p></div></div>
+      <div class="texte-fr"><p>Il établit l’autel d’or dans la Tente d’assignation, devant le voile</p></div>
+    </div><div class="seif" id="v-40-27">
+      <span class="seif-num">40:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּקְטֵ֥ר עָלָ֖יו קְטֹ֣רֶת סַמִּ֑ים כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ויקטר עליו קטרת סמים כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et y fit l’encensement aromatique, comme le Seigneur lui avait prescrit.</p></div>
+    </div><div class="seif" id="v-40-28">
+      <span class="seif-num">40:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֛שֶׂם אֶת־מָסַ֥ךְ הַפֶּ֖תַח לַמִּשְׁכָּֽן׃</p></div><div class="heb-s"><p>וישם את־מסך הפתח למשכן׃</p></div></div>
+      <div class="texte-fr"><p>Puis il fixa le rideau d’entrée du Tabernacle</p></div>
+    </div><div class="seif" id="v-40-29">
+      <span class="seif-num">40:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאֵת֙ מִזְבַּ֣ח הָעֹלָ֔ה שָׂ֕ם פֶּ֖תַח מִשְׁכַּ֣ן אֹֽהֶל־מוֹעֵ֑ד וַיַּ֣עַל עָלָ֗יו אֶת־הָעֹלָה֙ וְאֶת־הַמִּנְחָ֔ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואת מזבח העלה שם פתח משכן אהל־מועד ויעל עליו את־העלה ואת־המנחה כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>et l’autel aux holocaustes, il le dressa à l’entrée du tabernacle de la Tente d’assignation. Il y offrit l’holocauste et l’oblation, comme le lui avait prescrit le Seigneur.</p></div>
+    </div><div class="seif" id="v-40-30">
+      <span class="seif-num">40:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֙שֶׂם֙ אֶת־הַכִּיֹּ֔ר בֵּֽין־אֹ֥הֶל מוֹעֵ֖ד וּבֵ֣ין הַמִּזְבֵּ֑חַ וַיִּתֵּ֥ן שָׁ֛מָּה מַ֖יִם לְרׇחְצָֽה׃</p></div><div class="heb-s"><p>וישם את־הכיר בין־אהל מועד ובין המזבח ויתן שמה מים לרחצה׃</p></div></div>
+      <div class="texte-fr"><p>Il installa la cuve entre la Tente d’assignation et l’autel et y mit de l’eau pour les ablutions.</p></div>
+    </div><div class="seif" id="v-40-31">
+      <span class="seif-num">40:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְרָחֲצ֣וּ מִמֶּ֔נּוּ מֹשֶׁ֖ה וְאַהֲרֹ֣ן וּבָנָ֑יו אֶת־יְדֵיהֶ֖ם וְאֶת־רַגְלֵיהֶֽם׃</p></div><div class="heb-s"><p>ורחצו ממנו משה ואהרן ובניו את־ידיהם ואת־רגליהם׃</p></div></div>
+      <div class="texte-fr"><p>Moïse, Aaron et ses fils devaient s’y laver les mains et les pieds.</p></div>
+    </div><div class="seif" id="v-40-32">
+      <span class="seif-num">40:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּבֹאָ֞ם אֶל־אֹ֣הֶל מוֹעֵ֗ד וּבְקׇרְבָתָ֛ם אֶל־הַמִּזְבֵּ֖חַ יִרְחָ֑צוּ כַּאֲשֶׁ֛ר צִוָּ֥ה יְהֹוָ֖ה אֶת־מֹשֶֽׁה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>בבאם אל־אהל מועד ובקרבתם אל־המזבח ירחצו כאשר צוה יהוה את־משה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>C’est en entrant dans la Tente d’assignation ou quand ils s’approchaient de l’autel, qu’ils devaient faire ces ablutions, ainsi que le Seigneur l’avait prescrit à Moïse.</p></div>
+    </div><div class="seif" id="v-40-33">
+      <span class="seif-num">40:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֣קֶם אֶת־הֶחָצֵ֗ר סָבִיב֙ לַמִּשְׁכָּ֣ן וְלַמִּזְבֵּ֔חַ וַיִּתֵּ֕ן אֶת־מָסַ֖ךְ שַׁ֣עַר הֶחָצֵ֑ר וַיְכַ֥ל מֹשֶׁ֖ה אֶת־הַמְּלָאכָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויקם את־החצר סביב למשכן ולמזבח ויתן את־מסך שער החצר ויכל משה את־המלאכה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Il dressa le parvis autour du Tabernacle et de l’autel, il posa le rideau-portière du parvis; et ainsi Moïse termina sa tâche.</p></div>
+    </div><div class="seif" id="v-40-34">
+      <span class="seif-num">40:34</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְכַ֥ס הֶעָנָ֖ן אֶת־אֹ֣הֶל מוֹעֵ֑ד וּכְב֣וֹד יְהֹוָ֔ה מָלֵ֖א אֶת־הַמִּשְׁכָּֽן׃</p></div><div class="heb-s"><p>ויכס הענן את־אהל מועד וכבוד יהוה מלא את־המשכן׃</p></div></div>
+      <div class="texte-fr"><p>Alors la nuée enveloppa la Tente d’assignation et la majesté du Seigneur remplit le Tabernacle.</p></div>
+    </div><div class="seif" id="v-40-35">
+      <span class="seif-num">40:35</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְלֹא־יָכֹ֣ל מֹשֶׁ֗ה לָבוֹא֙ אֶל־אֹ֣הֶל מוֹעֵ֔ד כִּֽי־שָׁכַ֥ן עָלָ֖יו הֶעָנָ֑ן וּכְב֣וֹד יְהֹוָ֔ה מָלֵ֖א אֶת־הַמִּשְׁכָּֽן׃</p></div><div class="heb-s"><p>ולא־יכל משה לבוא אל־אהל מועד כי־שכן עליו הענן וכבוד יהוה מלא את־המשכן׃</p></div></div>
+      <div class="texte-fr"><p>Et Moïse ne put pénétrer dans la Tente d’assignation, parce que la nuée reposait au sommet et que la majesté divine remplissait le Tabernacle.</p></div>
+    </div><div class="seif" id="v-40-36">
+      <span class="seif-num">40:36</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּבְהֵעָל֤וֹת הֶֽעָנָן֙ מֵעַ֣ל הַמִּשְׁכָּ֔ן יִסְע֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל בְּכֹ֖ל מַסְעֵיהֶֽם׃</p></div><div class="heb-s"><p>ובהעלות הענן מעל המשכן יסעו בני ישראל בכל מסעיהם׃</p></div></div>
+      <div class="texte-fr"><p>Lorsque la nuée se retirait de dessus le tabernacle, les enfants d’Israël quittaient constamment leur station</p></div>
+    </div><div class="seif" id="v-40-37">
+      <span class="seif-num">40:37</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאִם־לֹ֥א יֵעָלֶ֖ה הֶעָנָ֑ן וְלֹ֣א יִסְע֔וּ עַד־י֖וֹם הֵעָלֹתֽוֹ׃</p></div><div class="heb-s"><p>ואם־לא יעלה הענן ולא יסעו עד־יום העלתו׃</p></div></div>
+      <div class="texte-fr"><p>et tant que la nuée ne se retirait pas, ils ne décampaient point jusqu’à l’instant où elle se retirait.</p></div>
+    </div><div class="seif" id="v-40-38">
+      <span class="seif-num">40:38</span>
+      <div class="texte-heb"><div class="heb-n"><p>כִּי֩ עֲנַ֨ן יְהֹוָ֤ה עַֽל־הַמִּשְׁכָּן֙ יוֹמָ֔ם וְאֵ֕שׁ תִּהְיֶ֥ה לַ֖יְלָה בּ֑וֹ לְעֵינֵ֥י כׇל־בֵּֽית־יִשְׂרָאֵ֖ל בְּכׇל־מַסְעֵיהֶֽם׃</p></div><div class="heb-s"><p>כי ענן יהוה על־המשכן יומם ואש תהיה לילה בו לעיני כל־בית־ישראל בכל־מסעיהם׃</p></div></div>
+      <div class="texte-fr"><p>Car une nuée divine couvrait le Tabernacle durant le jour et un feu y brillait la nuit, aux yeux de toute la maison d’Israël, dans toutes leurs stations.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Telle est la distribution du tabernacle, résidence du Statut, comme elle fut établie par l’ordre de Moïse; tâche confiée aux Lévites, sous la direction d’Ithamar, fils d’Aaron le pontife. Beçalel, fils d’Ouri, fils dé Hour, de la tribu de Juda, exécuta donc tout ce que l’Éternel avait ordonné à Moïse, secondé par Oholiab, fils d’Ahisamak, de la tribu de Dan, artisan et artiste, brodeur en étoffes d’azur, de, pourpre, d’écarlate et de fin lin. Tout l’or employé à cette œuvre, aux diverses parties de l’œuvre sainte, cet or, produit de l’offrande, se monta à vingt-neuf kikkar, plus sept cent trente sicles, selon le poids du sanctuaire. Ll’argent, produit du dénombrement de la communauté, fut de cent kikkar, plus mille sept cent soixante-quinze sicles, au poids du sanctuaire: à un béka par tête, soit un demi sicle au poids du sanctuaire, pour tous ceux qui firent partie du dénombrement, depuis l’âge de vingt ans et au-dessus, au nombre de six cent trois mille cinq cent cinquante. Or, les cent kikkar d’argent servirent à fondre les socles du sanctuaire et les socles du voile pour les cent socles cent kikkar, un kikkar par socle. Quant aux mille sept cent soixante quinze sicles, on en fit les crochets des piliers, la garniture de leurs chapiteaux et leurs tringles. Le cuivre qu’on avait offert se monta à soixante-dix kikkar, plus deux mille quatre cents sicles. On en fit les socles de l’entrée de la Tente d’assignation, l’autel de cuivre ainsi que son grillage de cuivre et tous les ustensiles de cet autel; les socles au pourtour du parvis, ceux de l’entrée du parvis; toutes les chevilles du tabernacle et toutes celles du parvis, tout autour.</p>
-      <p>Des étoffes d’azur, de pourpre et d’écarlate, on fit des tapis d’emballage pour lé service des choses saintes; puis on fit le saint costume d’Aaron, ainsi que l’Éternel l’avait prescrit à Moïse. On confectionna l’éphod, en or, azur, pourpre, écarlate et lin retors, On laminait des lingots d’or, puis on y coupait des fils qu’on entremêlait aux fils d’azur, à ceux de pourpre, d’écarlate et de fin lin, en façon de damassé. On y adapta des épaulières d’attache, par lesquelles ses deux extrémités se trouvèrent jointes. La ceinture servant à le fixer faisait partie de son tissu, était ouvragée de même: or, azur, pourpre, écarlate et lin retors, comme l’Éternel l’avait prescrit à Moïse. On mit en œuvre les pierres de choham, qu’on enchâssa dans des chatons d’or et où l’on grava, comme on grave un sceau, les noms des fils d’Israël. On les ajusta sur les épaulières de l’éphod, comme pierres de souvenir pour les Israélites, ainsi que l’Éternel l’avait ordonné à Moïse. Puis on confectionna le pectoral damassé à la façon de l’éphod; en or, azur, pourpre, écarlate et lin retors. Ce pectoral était carré, on l’avait plié en deux; ainsi plié, il avait un empan de long et un empan de large. On y enchâssa quatre rangées de pierreries. Sur une rangée: un rubis, une topaze et une émeraude, première rangée; deuxième rangée: un nofek, un saphir et un diamant; troisième rangée: un léchem, un chebô et un ahlama; quatrième rangée: une tartessienne, un choham et un jaspe. Quant à leur sertissure, elles furent enchâssées dans des chatons d’or. Ces pierres portant les noms des fils d’Israël, étaient douze selon ces mêmes noms; on y avait gravé comme sur un sceau, chacune par son nom, les douze tribus. On prépara, pour le pectoral, des chaînettes cordonnées, forme de torsade, en or pur; puis on fit deux chatons d’or et deux anneaux d’or. On plaça ces deux anneaux aux deux coins du pectoral; on passa les deux torsades d’or dans les deux anneaux sur les coins du pectoral et les deux extrémités de chaque torsade, on les fixa sur deux chatons, les appliquant aux épaulières de l’éphod du côté de la face. On fit aussi deux anneaux d’or, qu’on plaça aux deux coins du pectoral, sur le bord intérieur faisant face à l’éphod; et l’on fit deux autres anneaux d’or, qu’on fixa aux deux épaulières de l’éphod, par en bas, au côté extérieur, à l’endroit de l’attache, au-dessus de la ceinture de l’éphod. On assujettit le pectoral en joignant ses anneaux à ceux de l’éphod par un cordon d’azur, afin que le pectoral fût maintenu sur la ceinture de f’éphod et n’y vacillât point, ainsi que l’Éternel l’avait prescrit à Moïse. Ensuite on fit la robe de l’éphod selon l’art du tisserand, toute en étoffe d’azur. L’ouverture de la robe était infléchie comme celle d’une cotte de mailles et garnie d’un ourlet tout autour, afin de ne pas se déchirer. On disposa, au bas de la robe, des grenades d’azur, de pourpre et d’écarlate, à brins retors; et l’on fit des clochettes d’or pur et l’on entremêla les clochettes aux grenades, au bas de la robe, tout autour, entre les grenades: une clochette, puis une grenade; une clochette, puis une grenade, au bord de la robe, tout autour, pour le saint ministère, ainsi que l’Éternel l’avait ordonné à Moïse. On confectionna les tuniques en fin lin, selon l’art du tisserand, pour Aaron et pour ses fils; et la tiare en fin lin, de même que les turbans pour coiffure; et les caleçons de toile, en lin retors; et l’écharpe, en lin retors, azur, pourpre et écarlate, ouvragé de broderie, ainsi que l’Éternel l’avait ordonné à Moïse. On exécuta la plaque, diadème sacré, en or pur et l’on y traça cette inscription gravée comme sur un sceau: &quot;CONSACRÉ AU SEIGNEUR&quot;. On y fixa un ruban d’azur, qui devait passer sur la tiare, vers le sommet, comme l’Éternel l’avait ordonné à Moïse. Ainsi fut terminé tout le travail du tabernacle de la Tente d’assignation; les Israélites l’avaient exécuté en agissant, de tout point, selon ce que l’Éternel avait enjoint à Moïse. Alors on apporta à Moïse le tabernacle et le pavillon avec toutes leurs pièces: agrafes, solives, traverses, piliers et socles; la couverture de peaux de bélier teintes en rouge, la couverture de peaux de Tahach et le voile protecteur; l’arche du Statut avec ses barres et le propitiatoire; la table avec toutes ses pièces et les pains de proposition; le candélabre d’or pur, avec ses lampes tout arrangées et tous ses ustensiles; l’huile du luminaire; l’autel d’or, l’huile d’onction et le parfum aromatique; le rideau d’entrée de la Tente; l’autel de cuivre avec son grillage de cuivre, ses barres et tous ses ustensiles; la cuve avec son support; les toiles du parvis, ses piliers et, ses socles; le rideau formant la porte du parvis, ainsi que ses cordages et ses chevilles, enfin tous les ustensiles nécessaires au tabernacle de la Tente d’assignation; les tapis d’emballage pour le service des choses saintes; les vêtements sacrés d’Aaron le pontife et les vêtements sacerdotaux de ses fils. Exactement comme le Seigneur l’avait commandé à Moïse, ainsi les Israélites avaient accompli toute la tâche. Moïse examina tout le travail: or ils l’avaient exécuté conformément aux prescriptions du Seigneur. Et Moïse les bénit.</p>
-      <p>L’Éternel parla à Moïse en ces termes: &quot;A l’époque du premier mois, le premier jour du mois, tu érigeras le tabernacle de la Tente d’assignation. Tu y déposeras l’arche du Statut et tu abriteras cette arche au moyen du voile. Tu introduiras la table et tu en disposeras l’appareil; tu introduiras le candélabre et tu en allumeras les lampes. Tu installeras l’autel d’or, destiné à l’encensement, devant l’arche du Statut, puis tu mettras le rideau d’entrée devant le tabernacle. Tu installeras l’autel de l’holocauste devant l’entrée du tabernacle de la Tente d’assignation. Tu mettras la cuve entre la Tente d’assignation et l’autel et tu l’empliras d’eau. Tu dresseras le parvis tout autour et tu poseras le rideau-portière du parvis. Puis tu prendras l’huile d’onction, pour oindre le tabernacle et tout son contenu, tu le consacreras ainsi que toutes ses pièces et il deviendra chose sacrée.  Tu en oindras l’autel de l’holocauste et tous ses ustensiles, tu consacreras ainsi cet autel et il deviendra éminemment saint. Tu en oindras la cuve et son support et tu les consacreras. Alors tu feras avancer Aaron et ses fils à l’entrée de la Tente d’assignation et tu les feras baigner. Tu revêtiras Aaron du saint costume, tu l’oindras et le consacreras à mon ministère. Puis tu feras approcher ses fils et tu les vêtiras de leurs tuniques. Tu les oindras, ainsi que tu auras oint leur père et ils deviendront mes ministres; et ainsi leur sera conféré le privilège d’un sacerdoce perpétuel, pour toutes leurs générations.&quot; Moïse obéit: tout ce que l’Éternel lui avait prescrit, il s’y conforma. Ce fut au premier mois de la deuxième année, au premier jour du mois, que fut érigé le Tabernacle. Moïse dressa d’abord le tabernacle; il en posa les socles, en planta les solives, en fixa les traverses, en érigea les piliers; il étendit le pavillon sur le tabernacle et posa sur le pavillon sa couverture supérieure, ainsi que l’Éternel le lui avait ordonné. Il prit ensuite le Statut qu’il déposa dans l’arche; il appliqua les barres à l’arche, plaça le propitiatoire par-dessus; introduisit l’arche dans le Tabernacle et suspendit le voile protecteur pour abriter l’arche du Statut, comme l’Éternel le lui avait ordonné. II plaça la table dans la Tente d’assignation vers le flanc nord du Tabernacle, en dehors, du voile et y disposa l’appareil des pains devant le Seigneur, comme celui-ci le lui avait ordonné. Il posa le candélabre dans la Tente d’assignation, en face de la table, au flanc méridional du Tabernacle et alluma les lampes devant le Seigneur, comme celui-ci le lui avait ordonné. Il établit l’autel d’or dans la Tente d’assignation, devant le voile et y fit l’encensement aromatique, comme le Seigneur lui avait prescrit. Puis il fixa le rideau d’entrée du Tabernacle et l’autel aux holocaustes, il le dressa à l’entrée du tabernacle de la Tente d’assignation. Il y offrit l’holocauste et l’oblation, comme le lui avait prescrit le Seigneur. Il installa la cuve entre la Tente d’assignation et l’autel et y mit de l’eau pour les ablutions. Moïse, Aaron et ses fils devaient s’y laver les mains et les pieds. C’est en entrant dans la Tente d’assignation ou quand ils s’approchaient de l’autel, qu’ils devaient faire ces ablutions, ainsi que le Seigneur l’avait prescrit à Moïse. Il dressa le parvis autour du Tabernacle et de l’autel, il posa le rideau-portière du parvis; et ainsi Moïse termina sa tâche. Alors la nuée enveloppa la Tente d’assignation et la majesté du Seigneur remplit le Tabernacle. Et Moïse ne put pénétrer dans la Tente d’assignation, parce que la nuée reposait au sommet et que la majesté divine remplissait le Tabernacle. Lorsque la nuée se retirait de dessus le tabernacle, les enfants d’Israël quittaient constamment leur station et tant que la nuée ne se retirait pas, ils ne décampaient point jusqu’à l’instant où elle se retirait. Car une nuée divine couvrait le Tabernacle durant le jour et un feu y brillait la nuit, aux yeux de toute la maison d’Israël, dans toutes leurs stations.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -272,6 +670,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 </table><div class="commentaires-sources">D'apres Rashi</div></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_vayakhel.html">← Vayakhel</a><a class="hbtn qcm" href="qcm_paracha_pekudei.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_vayikra-paracha.html">Vayikra →</a></div>
 </main>
 
 <footer>
