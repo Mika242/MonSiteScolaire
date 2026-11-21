@@ -65,6 +65,13 @@ main{max-width:980px;margin:auto;padding:20px 16px 40px}
 .synthese-bloc table th,.synthese-bloc table td{padding:8px;text-align:left;border:1px solid #e2e8f0}
 .synthese-bloc table th{background:var(--surface2)}
 .synthese-bloc svg{max-width:100%;height:auto;display:block;margin:12px auto}
+.synthese-bloc h4{clear:both}
+.synthese-bloc .fig-syn{margin:4px 0 12px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow-card);background:var(--surface2)}
+.synthese-bloc .fig-syn img{display:block;width:100%;height:auto}
+.synthese-bloc .fig-syn.flot{float:right;width:min(40%,330px);margin:4px 0 12px 20px}
+.synthese-bloc .fig-syn.haut{max-width:520px;margin:12px auto}
+.synthese-bloc .fig-syn figcaption{font-size:.72rem;color:var(--ink2);font-style:italic;padding:6px 10px;text-align:center}
+@media (max-width:640px){.synthese-bloc .fig-syn.flot{float:none;width:100%;max-width:420px;margin:10px auto}}
 .commentaires-sources{margin-top:16px;padding-top:12px;border-top:1px dashed #e2e8f0;font-size:.75rem;color:var(--ink2);font-style:italic}
 
 .vide{color:var(--ink2);font-style:italic;font-size:.9rem;padding:20px;text-align:center}
@@ -102,36 +109,6 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
-
-/* --- nouvelle presentation (texte bilingue, navigation) --- */
-.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
-.hbtn:hover{background:rgba(255,255,255,.28)}
-.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
-.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
-.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
-.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
-.modes{display:flex;gap:6px;flex-wrap:wrap}
-.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
-.mode-btn.on{background:var(--primaire);color:#fff}
-.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
-.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
-.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
-.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
-.seif:last-child{border-bottom:none}
-.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
-.seif .texte-fr{margin-top:12px;padding-top:12px}
-.seif .texte-heb p,.seif .texte-fr p{margin:0}
-.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
-.bil[data-mode="fr"] .seif>.texte-heb{display:none}
-.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
-.bil[data-mode="heb"] .seif>.texte-fr{display:none}
-.bil .heb-s{display:none}
-.bil.sans-nikud .heb-n{display:none}
-.bil.sans-nikud .heb-s{display:block}
-.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
-.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
-.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -151,16 +128,6 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
-
-function setMode(m,btn){
-  var b=document.getElementById('sa-bil'); if(!b) return;
-  b.setAttribute('data-mode',m);
-  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
-}
-function toggleNikud(btn){
-  var b=document.getElementById('sa-bil'); if(!b) return;
-  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
-}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -175,7 +142,6 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bereshit · Paracha</div>
     <h1>Vayeshev — Yossef vendu, Yehouda et Tamar</h1>
     <p>Torah, Bereshit (Genesis 37:1-40:23)</p>
-    <div class="hnav"><a class="hbtn" href="paracha_vayishlach.html">← Vayishlach</a><a class="hbtn qcm" href="qcm_paracha_vayeshev.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_miketz.html">Miketz →</a></div>
   </div>
 </header>
 
@@ -195,472 +161,37 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
-  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
-    <span class="modes">
-      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
-      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
-      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
-      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
-    </span></div>
-  <div class="seif-nav"><a href="#v-37-1">Chap. 37</a><a href="#v-38-1">Chap. 38</a><a href="#v-39-1">Chap. 39</a><a href="#v-40-1">Chap. 40</a></div>
-  <div class="seif" id="v-37-1">
-      <span class="seif-num">37:1</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֣שֶׁב יַעֲקֹ֔ב בְּאֶ֖רֶץ מְגוּרֵ֣י אָבִ֑יו בְּאֶ֖רֶץ כְּנָֽעַן׃</p></div><div class="heb-s"><p>וישב יעקב בארץ מגורי אביו בארץ כנען׃</p></div></div>
-      <div class="texte-fr"><p>Jacob demeura dans le pays des pérégrinations de son père, dans le pays de Canaan.</p></div>
-    </div><div class="seif" id="v-37-2">
-      <span class="seif-num">37:2</span>
-      <div class="texte-heb"><div class="heb-n"><p>אֵ֣לֶּה&thinsp;<b>׀</b> תֹּלְד֣וֹת יַעֲקֹ֗ב יוֹסֵ֞ף בֶּן־שְׁבַֽע־עֶשְׂרֵ֤ה שָׁנָה֙ הָיָ֨ה רֹעֶ֤ה אֶת־אֶחָיו֙ בַּצֹּ֔אן וְה֣וּא נַ֗עַר אֶת־בְּנֵ֥י בִלְהָ֛ה וְאֶת־בְּנֵ֥י זִלְפָּ֖ה נְשֵׁ֣י אָבִ֑יו וַיָּבֵ֥א יוֹסֵ֛ף אֶת־דִּבָּתָ֥ם רָעָ֖ה אֶל־אֲבִיהֶֽם׃</p></div><div class="heb-s"><p>אלה&thinsp;<b>׀</b> תלדות יעקב יוסף בן־שבע־עשרה שנה היה רעה את־אחיו בצאן והוא נער את־בני בלהה ואת־בני זלפה נשי אביו ויבא יוסף את־דבתם רעה אל־אביהם׃</p></div></div>
-      <div class="texte-fr"><p>Voici l’histoire de la descendance de Jacob. Joseph, âgé de dix sept ans, menait paître les brebis avec ses frères. Passant son enfance avec les fils de Bilha et ceux de Zilpa, épouses de son père, Joseph débitait sur leur compte des médisances à leur père.</p></div>
-    </div><div class="seif" id="v-37-3">
-      <span class="seif-num">37:3</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְיִשְׂרָאֵ֗ל אָהַ֤ב אֶת־יוֹסֵף֙ מִכׇּל־בָּנָ֔יו כִּֽי־בֶן־זְקֻנִ֥ים ה֖וּא ל֑וֹ וְעָ֥שָׂה ל֖וֹ כְּתֹ֥נֶת פַּסִּֽים׃</p></div><div class="heb-s"><p>וישראל אהב את־יוסף מכל־בניו כי־בן־זקנים הוא לו ועשה לו כתנת פסים׃</p></div></div>
-      <div class="texte-fr"><p>Or Israël préférait Joseph à ses autres enfants parce qu’il était le fils de sa vieillesse; et il lui avait fait une tunique à rayures.</p></div>
-    </div><div class="seif" id="v-37-4">
-      <span class="seif-num">37:4</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְא֣וּ אֶחָ֗יו כִּֽי־אֹת֞וֹ אָהַ֤ב אֲבִיהֶם֙ מִכׇּל־אֶחָ֔יו וַֽיִּשְׂנְא֖וּ אֹת֑וֹ וְלֹ֥א יָכְל֖וּ דַּבְּר֥וֹ לְשָׁלֹֽם׃</p></div><div class="heb-s"><p>ויראו אחיו כי־אתו אהב אביהם מכל־אחיו וישנאו אתו ולא יכלו דברו לשלם׃</p></div></div>
-      <div class="texte-fr"><p>Ses frères, voyant que leur père l’aimait de préférence à eux tous, le prirent en haine et ne purent se résoudre à lui parler amicalement.</p></div>
-    </div><div class="seif" id="v-37-5">
-      <span class="seif-num">37:5</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּחֲלֹ֤ם יוֹסֵף֙ חֲל֔וֹם וַיַּגֵּ֖ד לְאֶחָ֑יו וַיּוֹסִ֥פוּ ע֖וֹד שְׂנֹ֥א אֹתֽוֹ׃</p></div><div class="heb-s"><p>ויחלם יוסף חלום ויגד לאחיו ויוספו עוד שנא אתו׃</p></div></div>
-      <div class="texte-fr"><p>Joseph, ayant eu un songe, le conta à ses frères et leur haine pour lui s’en accrut encore.</p></div>
-    </div><div class="seif" id="v-37-6">
-      <span class="seif-num">37:6</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֖אמֶר אֲלֵיהֶ֑ם שִׁמְעוּ־נָ֕א הַחֲל֥וֹם הַזֶּ֖ה אֲשֶׁ֥ר חָלָֽמְתִּי׃</p></div><div class="heb-s"><p>ויאמר אליהם שמעו־נא החלום הזה אשר חלמתי׃</p></div></div>
-      <div class="texte-fr"><p>Il leur dit: "Écoutez, je vous prie, ce songe que j’ai eu.</p></div>
-    </div><div class="seif" id="v-37-7">
-      <span class="seif-num">37:7</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְ֠הִנֵּ֠ה אֲנַ֜חְנוּ מְאַלְּמִ֤ים אֲלֻמִּים֙ בְּת֣וֹךְ הַשָּׂדֶ֔ה וְהִנֵּ֛ה קָ֥מָה אֲלֻמָּתִ֖י וְגַם־נִצָּ֑בָה וְהִנֵּ֤ה תְסֻבֶּ֙ינָה֙ אֲלֻמֹּ֣תֵיכֶ֔ם וַתִּֽשְׁתַּחֲוֶ֖יןָ לַאֲלֻמָּתִֽי׃</p></div><div class="heb-s"><p>והנה אנחנו מאלמים אלמים בתוך השדה והנה קמה אלמתי וגם־נצבה והנה תסבינה אלמתיכם ותשתחוין לאלמתי׃</p></div></div>
-      <div class="texte-fr"><p>Nous composions des gerbes dans le champ, soudain ma gerbe se dressa; elle resta debout et les vôtres se rangèrent à l’entour et s’inclinèrent devant la mienne."</p></div>
-    </div><div class="seif" id="v-37-8">
-      <span class="seif-num">37:8</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמְרוּ לוֹ֙ אֶחָ֔יו הֲמָלֹ֤ךְ תִּמְלֹךְ֙ עָלֵ֔ינוּ אִם־מָשׁ֥וֹל תִּמְשֹׁ֖ל בָּ֑נוּ וַיּוֹסִ֤פוּ עוֹד֙ שְׂנֹ֣א אֹת֔וֹ עַל־חֲלֹמֹתָ֖יו וְעַל־דְּבָרָֽיו׃</p></div><div class="heb-s"><p>ויאמרו לו אחיו המלך תמלך עלינו אם־משול תמשל בנו ויוספו עוד שנא אתו על־חלמתיו ועל־דבריו׃</p></div></div>
-      <div class="texte-fr"><p>Ses frères lui dirent: "Quoi! Régnerais-tu sur nous? Deviendrais-tu notre maître?" Et ils le haïrent plus encore, pour ses songes et pour ses propos.</p></div>
-    </div><div class="seif" id="v-37-9">
-      <span class="seif-num">37:9</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּחֲלֹ֥ם עוֹד֙ חֲל֣וֹם אַחֵ֔ר וַיְסַפֵּ֥ר אֹת֖וֹ לְאֶחָ֑יו וַיֹּ֗אמֶר הִנֵּ֨ה חָלַ֤מְתִּֽי חֲלוֹם֙ ע֔וֹד וְהִנֵּ֧ה הַשֶּׁ֣מֶשׁ וְהַיָּרֵ֗חַ וְאַחַ֤ד עָשָׂר֙ כּֽוֹכָבִ֔ים מִֽשְׁתַּחֲוִ֖ים לִֽי׃</p></div><div class="heb-s"><p>ויחלם עוד חלום אחר ויספר אתו לאחיו ויאמר הנה חלמתי חלום עוד והנה השמש והירח ואחד עשר כוכבים משתחוים לי׃</p></div></div>
-      <div class="texte-fr"><p>Il eut encore un autre songe et le raconta à ses frères en disant: "J’ai fait encore un songe où j’ai vu le soleil, la lune et onze étoiles se prosterner devant moi."</p></div>
-    </div><div class="seif" id="v-37-10">
-      <span class="seif-num">37:10</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְסַפֵּ֣ר אֶל־אָבִיו֮ וְאֶל־אֶחָיו֒ וַיִּגְעַר־בּ֣וֹ אָבִ֔יו וַיֹּ֣אמֶר ל֔וֹ מָ֛ה הַחֲל֥וֹם הַזֶּ֖ה אֲשֶׁ֣ר חָלָ֑מְתָּ הֲב֣וֹא נָב֗וֹא אֲנִי֙ וְאִמְּךָ֣ וְאַחֶ֔יךָ לְהִשְׁתַּחֲוֺ֥ת לְךָ֖ אָֽרְצָה׃</p></div><div class="heb-s"><p>ויספר אל־אביו ואל־אחיו ויגער־בו אביו ויאמר לו מה החלום הזה אשר חלמת הבוא נבוא אני ואמך ואחיך להשתחות לך ארצה׃</p></div></div>
-      <div class="texte-fr"><p>Il le répéta à son père et à ses frères. Son père le blâma et lui dit: "Qu’est ce qu’un pareil songe? Eh quoi! Nous viendrions, moi et ta mère et tes frères, nous prosterner à terre à tes pieds!"</p></div>
-    </div><div class="seif" id="v-37-11">
-      <span class="seif-num">37:11</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְקַנְאוּ־ב֖וֹ אֶחָ֑יו וְאָבִ֖יו שָׁמַ֥ר אֶת־הַדָּבָֽר׃</p></div><div class="heb-s"><p>ויקנאו־בו אחיו ואביו שמר את־הדבר׃</p></div></div>
-      <div class="texte-fr"><p>Les frères de Joseph le jalousèrent; mais son père retint l’affaire.</p></div>
-    </div><div class="seif" id="v-37-12">
-      <span class="seif-num">37:12</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּלְכ֖וּ אֶחָ֑יו לִרְע֛וֹת אֶׄתׄ־צֹ֥אן אֲבִיהֶ֖ם בִּשְׁכֶֽם׃</p></div><div class="heb-s"><p>וילכו אחיו לרעות את־צאן אביהם בשכם׃</p></div></div>
-      <div class="texte-fr"><p>Un jour ses frères étaient allés conduire les troupeaux de leur père à Sichem.</p></div>
-    </div><div class="seif" id="v-37-13">
-      <span class="seif-num">37:13</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר יִשְׂרָאֵ֜ל אֶל־יוֹסֵ֗ף הֲל֤וֹא אַחֶ֙יךָ֙ רֹעִ֣ים בִּשְׁכֶ֔ם לְכָ֖ה וְאֶשְׁלָחֲךָ֣ אֲלֵיהֶ֑ם וַיֹּ֥אמֶר ל֖וֹ הִנֵּֽנִי׃</p></div><div class="heb-s"><p>ויאמר ישראל אל־יוסף הלוא אחיך רעים בשכם לכה ואשלחך אליהם ויאמר לו הנני׃</p></div></div>
-      <div class="texte-fr"><p>Israël dit à Joseph: "Tes frères font paître les troupeaux à Sichem. Viens donc, je veux t’envoyer auprès d’eux." Il lui répondit:"Je suis prêt."</p></div>
-    </div><div class="seif" id="v-37-14">
-      <span class="seif-num">37:14</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר ל֗וֹ לֶךְ־נָ֨א רְאֵ֜ה אֶת־שְׁל֤וֹם אַחֶ֙יךָ֙ וְאֶת־שְׁל֣וֹם הַצֹּ֔אן וַהֲשִׁבֵ֖נִי דָּבָ֑ר וַיִּשְׁלָחֵ֙הוּ֙ מֵעֵ֣מֶק חֶבְר֔וֹן וַיָּבֹ֖א שְׁכֶֽמָה׃</p></div><div class="heb-s"><p>ויאמר לו לך־נא ראה את־שלום אחיך ואת־שלום הצאן והשבני דבר וישלחהו מעמק חברון ויבא שכמה׃</p></div></div>
-      <div class="texte-fr"><p>Il reprit: "Va voir, je te prie, comment se portent tes frères, comment se porte le bétail et rapporte m’en des nouvelles." Il l’envoya ainsi de la vallée d’Hébron et Joseph se rendit à Sichem.</p></div>
-    </div><div class="seif" id="v-37-15">
-      <span class="seif-num">37:15</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּמְצָאֵ֣הוּ אִ֔ישׁ וְהִנֵּ֥ה תֹעֶ֖ה בַּשָּׂדֶ֑ה וַיִּשְׁאָלֵ֧הוּ הָאִ֛ישׁ לֵאמֹ֖ר מַה־תְּבַקֵּֽשׁ׃</p></div><div class="heb-s"><p>וימצאהו איש והנה תעה בשדה וישאלהו האיש לאמר מה־תבקש׃</p></div></div>
-      <div class="texte-fr"><p>Un homme le rencontra errant dans la campagne; cet homme lui demanda: "Que cherches-tu?"</p></div>
-    </div><div class="seif" id="v-37-16">
-      <span class="seif-num">37:16</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֕אמֶר אֶת־אַחַ֖י אָנֹכִ֣י מְבַקֵּ֑שׁ הַגִּֽידָה־נָּ֣א לִ֔י אֵיפֹ֖ה הֵ֥ם רֹעִֽים׃</p></div><div class="heb-s"><p>ויאמר את־אחי אנכי מבקש הגידה־נא לי איפה הם רעים׃</p></div></div>
-      <div class="texte-fr"><p>Il répondit: "Ce sont mes frères que je cherche. Veuille me dire où ils font paître leur bétail."</p></div>
-    </div><div class="seif" id="v-37-17">
-      <span class="seif-num">37:17</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר הָאִישׁ֙ נָסְע֣וּ מִזֶּ֔ה כִּ֤י שָׁמַ֙עְתִּי֙ אֹֽמְרִ֔ים נֵלְכָ֖ה דֹּתָ֑יְנָה וַיֵּ֤לֶךְ יוֹסֵף֙ אַחַ֣ר אֶחָ֔יו וַיִּמְצָאֵ֖ם בְּדֹתָֽן׃</p></div><div class="heb-s"><p>ויאמר האיש נסעו מזה כי שמעתי אמרים נלכה דתינה וילך יוסף אחר אחיו וימצאם בדתן׃</p></div></div>
-      <div class="texte-fr"><p>L’homme dit: "Ils sont partis d’ici, car je les ai entendus dire: ‘Allons à Dothan’." Joseph s’en alla sur les pas de ses frères et il les trouva à Dothan.</p></div>
-    </div><div class="seif" id="v-37-18">
-      <span class="seif-num">37:18</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְא֥וּ אֹת֖וֹ מֵרָחֹ֑ק וּבְטֶ֙רֶם֙ יִקְרַ֣ב אֲלֵיהֶ֔ם וַיִּֽתְנַכְּל֥וּ אֹת֖וֹ לַהֲמִיתֽוֹ׃</p></div><div class="heb-s"><p>ויראו אתו מרחק ובטרם יקרב אליהם ויתנכלו אתו להמיתו׃</p></div></div>
-      <div class="texte-fr"><p>Ils l’aperçurent de loin; et, avant qu’il fût près d’eux, ils complotèrent de le faire mourir.</p></div>
-    </div><div class="seif" id="v-37-19">
-      <span class="seif-num">37:19</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֖וּ אִ֣ישׁ אֶל־אָחִ֑יו הִנֵּ֗ה בַּ֛עַל הַחֲלֹמ֥וֹת הַלָּזֶ֖ה בָּֽא׃</p></div><div class="heb-s"><p>ויאמרו איש אל־אחיו הנה בעל החלמות הלזה בא׃</p></div></div>
-      <div class="texte-fr"><p>Ils se dirent l’un à l’autre: "Voici venir l’homme aux songes.</p></div>
-    </div><div class="seif" id="v-37-20">
-      <span class="seif-num">37:20</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֣ה&thinsp;<b>׀</b> לְכ֣וּ וְנַֽהַרְגֵ֗הוּ וְנַשְׁלִכֵ֙הוּ֙ בְּאַחַ֣ד הַבֹּר֔וֹת וְאָמַ֕רְנוּ חַיָּ֥ה רָעָ֖ה אֲכָלָ֑תְהוּ וְנִרְאֶ֕ה מַה־יִּהְי֖וּ חֲלֹמֹתָֽיו׃</p></div><div class="heb-s"><p>ועתה&thinsp;<b>׀</b> לכו ונהרגהו ונשלכהו באחד הברות ואמרנו חיה רעה אכלתהו ונראה מה־יהיו חלמתיו׃</p></div></div>
-      <div class="texte-fr"><p>Or çà, venez, tuons le, jetons le dans quelque citerne, puis nous dirons qu’une bête féroce l’a dévoré. Nous verrons alors ce qui adviendra de ses rêves!"</p></div>
-    </div><div class="seif" id="v-37-21">
-      <span class="seif-num">37:21</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁמַ֣ע רְאוּבֵ֔ן וַיַּצִּלֵ֖הוּ מִיָּדָ֑ם וַיֹּ֕אמֶר לֹ֥א נַכֶּ֖נּוּ נָֽפֶשׁ׃</p></div><div class="heb-s"><p>וישמע ראובן ויצלהו מידם ויאמר לא נכנו נפש׃</p></div></div>
-      <div class="texte-fr"><p>Ruben l’entendit et voulut le sauver de leurs mains; il se dit: "N’attentons point à sa vie."</p></div>
-    </div><div class="seif" id="v-37-22">
-      <span class="seif-num">37:22</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֨אמֶר אֲלֵהֶ֣ם&thinsp;<small>׀</small>&thinsp;רְאוּבֵן֮ אַל־תִּשְׁפְּכוּ־דָם֒ הַשְׁלִ֣יכוּ אֹת֗וֹ אֶל־הַבּ֤וֹר הַזֶּה֙ אֲשֶׁ֣ר בַּמִּדְבָּ֔ר וְיָ֖ד אַל־תִּשְׁלְחוּ־ב֑וֹ לְמַ֗עַן הַצִּ֤יל אֹתוֹ֙ מִיָּדָ֔ם לַהֲשִׁיב֖וֹ אֶל־אָבִֽיו׃</p></div><div class="heb-s"><p>ויאמר אלהם&thinsp;<small>׀</small>&thinsp;ראובן אל־תשפכו־דם השליכו אתו אל־הבור הזה אשר במדבר ויד אל־תשלחו־בו למען הציל אתו מידם להשיבו אל־אביו׃</p></div></div>
-      <div class="texte-fr"><p>Ruben leur dit donc: "Ne versez point le sang! Jetez le dans cette citerne qui est dans le désert, mais ne portez point la main sur lui." C’était pour le sauver de leurs mains et le ramener à son père.</p></div>
-    </div><div class="seif" id="v-37-23">
-      <span class="seif-num">37:23</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֕י כַּֽאֲשֶׁר־בָּ֥א יוֹסֵ֖ף אֶל־אֶחָ֑יו וַיַּפְשִׁ֤יטוּ אֶת־יוֹסֵף֙ אֶת־כֻּתׇּנְתּ֔וֹ אֶת־כְּתֹ֥נֶת הַפַּסִּ֖ים אֲשֶׁ֥ר עָלָֽיו׃</p></div><div class="heb-s"><p>ויהי כאשר־בא יוסף אל־אחיו ויפשיטו את־יוסף את־כתנתו את־כתנת הפסים אשר עליו׃</p></div></div>
-      <div class="texte-fr"><p>En effet, lorsque Joseph fut arrivé près de ses frères ils le dépouillèrent de sa robe, de la tunique à rayures dont il était vêtu;</p></div>
-    </div><div class="seif" id="v-37-24">
-      <span class="seif-num">37:24</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּ֨קָּחֻ֔הוּ וַיַּשְׁלִ֥כוּ אֹת֖וֹ הַבֹּ֑רָה וְהַבּ֣וֹר רֵ֔ק אֵ֥ין בּ֖וֹ מָֽיִם׃</p></div><div class="heb-s"><p>ויקחהו וישלכו אתו הברה והבור רק אין בו מים׃</p></div></div>
-      <div class="texte-fr"><p>et ils le saisirent et ils le jetèrent dans la citerne. Cette citerne était vide et sans eau.</p></div>
-    </div><div class="seif" id="v-37-25">
-      <span class="seif-num">37:25</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּשְׁבוּ֮ לֶֽאֱכׇל־לֶ֒חֶם֒ וַיִּשְׂא֤וּ עֵֽינֵיהֶם֙ וַיִּרְא֔וּ וְהִנֵּה֙ אֹרְחַ֣ת יִשְׁמְעֵאלִ֔ים בָּאָ֖ה מִגִּלְעָ֑ד וּגְמַלֵּיהֶ֣ם נֹֽשְׂאִ֗ים נְכֹאת֙ וּצְרִ֣י וָלֹ֔ט הוֹלְכִ֖ים לְהוֹרִ֥יד מִצְרָֽיְמָה׃</p></div><div class="heb-s"><p>וישבו לאכל־לחם וישאו עיניהם ויראו והנה ארחת ישמעאלים באה מגלעד וגמליהם נשאים נכאת וצרי ולט הולכים להוריד מצרימה׃</p></div></div>
-      <div class="texte-fr"><p>Comme ils étaient assis pour prendre leur repas, ils levèrent les yeux et virent une caravane d’Ismaélites, laquelle venait de Galaad; leurs chameaux étaient chargés d’aromates, de baume et de lotus qu’ils allaient transporter en Égypte.</p></div>
-    </div><div class="seif" id="v-37-26">
-      <span class="seif-num">37:26</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֥אמֶר יְהוּדָ֖ה אֶל־אֶחָ֑יו מַה־בֶּ֗צַע כִּ֤י נַהֲרֹג֙ אֶת־אָחִ֔ינוּ וְכִסִּ֖ינוּ אֶת־דָּמֽוֹ׃</p></div><div class="heb-s"><p>ויאמר יהודה אל־אחיו מה־בצע כי נהרג את־אחינו וכסינו את־דמו׃</p></div></div>
-      <div class="texte-fr"><p>Juda dit à ses frères: "Quel avantage, si nous tuons notre frère et si nous scellons sa mort?</p></div>
-    </div><div class="seif" id="v-37-27">
-      <span class="seif-num">37:27</span>
-      <div class="texte-heb"><div class="heb-n"><p>לְכ֞וּ וְנִמְכְּרֶ֣נּוּ לַיִּשְׁמְעֵאלִ֗ים וְיָדֵ֙נוּ֙ אַל־תְּהִי־ב֔וֹ כִּֽי־אָחִ֥ינוּ בְשָׂרֵ֖נוּ ה֑וּא וַֽיִּשְׁמְע֖וּ אֶחָֽיו׃</p></div><div class="heb-s"><p>לכו ונמכרנו לישמעאלים וידנו אל־תהי־בו כי־אחינו בשרנו הוא וישמעו אחיו׃</p></div></div>
-      <div class="texte-fr"><p>Venez, vendons le aux Ismaélites et que notre main ne soit pas sur lui, car il est notre frère, notre chair!" Et ses frères consentirent.</p></div>
-    </div><div class="seif" id="v-37-28">
-      <span class="seif-num">37:28</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּֽעַבְרוּ֩ אֲנָשִׁ֨ים מִדְיָנִ֜ים סֹֽחֲרִ֗ים וַֽיִּמְשְׁכוּ֙ וַיַּֽעֲל֤וּ אֶת־יוֹסֵף֙ מִן־הַבּ֔וֹר וַיִּמְכְּר֧וּ אֶת־יוֹסֵ֛ף לַיִּשְׁמְעֵאלִ֖ים בְּעֶשְׂרִ֣ים כָּ֑סֶף וַיָּבִ֥יאוּ אֶת־יוֹסֵ֖ף מִצְרָֽיְמָה׃</p></div><div class="heb-s"><p>ויעברו אנשים מדינים סחרים וימשכו ויעלו את־יוסף מן־הבור וימכרו את־יוסף לישמעאלים בעשרים כסף ויביאו את־יוסף מצרימה׃</p></div></div>
-      <div class="texte-fr"><p>Or, plusieurs marchands madianites vinrent à passer, qui tirèrent et firent remonter Joseph de la citerne, puis le vendirent aux Ismaélites pour vingt pièces d’argent. Ceux ci emmenèrent Joseph en Égypte.</p></div>
-    </div><div class="seif" id="v-37-29">
-      <span class="seif-num">37:29</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֤שׇׁב רְאוּבֵן֙ אֶל־הַבּ֔וֹר וְהִנֵּ֥ה אֵין־יוֹסֵ֖ף בַּבּ֑וֹר וַיִּקְרַ֖ע אֶת־בְּגָדָֽיו׃</p></div><div class="heb-s"><p>וישב ראובן אל־הבור והנה אין־יוסף בבור ויקרע את־בגדיו׃</p></div></div>
-      <div class="texte-fr"><p>Ruben revint à la citerne et voyant que Joseph n’y était plus, il déchira ses vêtements,</p></div>
-    </div><div class="seif" id="v-37-30">
-      <span class="seif-num">37:30</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֥שׇׁב אֶל־אֶחָ֖יו וַיֹּאמַ֑ר הַיֶּ֣לֶד אֵינֶ֔נּוּ וַאֲנִ֖י אָ֥נָה אֲנִי־בָֽא׃</p></div><div class="heb-s"><p>וישב אל־אחיו ויאמר הילד איננו ואני אנה אני־בא׃</p></div></div>
-      <div class="texte-fr"><p>retourna vers ses frères et dit: "L’enfant n’y est plus et moi, où irai je?"</p></div>
-    </div><div class="seif" id="v-37-31">
-      <span class="seif-num">37:31</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְח֖וּ אֶת־כְּתֹ֣נֶת יוֹסֵ֑ף וַֽיִּשְׁחֲטוּ֙ שְׂעִ֣יר עִזִּ֔ים וַיִּטְבְּל֥וּ אֶת־הַכֻּתֹּ֖נֶת בַּדָּֽם׃</p></div><div class="heb-s"><p>ויקחו את־כתנת יוסף וישחטו שעיר עזים ויטבלו את־הכתנת בדם׃</p></div></div>
-      <div class="texte-fr"><p>Ils prirent la robe de Joseph, égorgèrent un chevreau et trempèrent la robe dans son sang;</p></div>
-    </div><div class="seif" id="v-37-32">
-      <span class="seif-num">37:32</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַֽיְשַׁלְּח֞וּ אֶת־כְּתֹ֣נֶת הַפַּסִּ֗ים וַיָּבִ֙יאוּ֙ אֶל־אֲבִיהֶ֔ם וַיֹּאמְר֖וּ זֹ֣את מָצָ֑אנוּ הַכֶּר־נָ֗א הַכְּתֹ֧נֶת בִּנְךָ֛ הִ֖וא אִם־לֹֽא׃</p></div><div class="heb-s"><p>וישלחו את־כתנת הפסים ויביאו אל־אביהם ויאמרו זאת מצאנו הכר־נא הכתנת בנך הוא אם־לא׃</p></div></div>
-      <div class="texte-fr"><p>puis ils envoyèrent cette tunique à rayures, qu’on apporta à leur père en disant: "Voici ce que nous avons trouvé; examine si c’est la tunique de ton fils ou non."</p></div>
-    </div><div class="seif" id="v-37-33">
-      <span class="seif-num">37:33</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּכִּירָ֤הּ וַיֹּ֙אמֶר֙ כְּתֹ֣נֶת בְּנִ֔י חַיָּ֥ה רָעָ֖ה אֲכָלָ֑תְהוּ טָרֹ֥ף טֹרַ֖ף יוֹסֵֽף׃</p></div><div class="heb-s"><p>ויכירה ויאמר כתנת בני חיה רעה אכלתהו טרף טרף יוסף׃</p></div></div>
-      <div class="texte-fr"><p>Il la reconnut et s’écria: "La tunique de mon fils! Une bête féroce l’a dévoré! Joseph, Joseph a été mis en pièces!"</p></div>
-    </div><div class="seif" id="v-37-34">
-      <span class="seif-num">37:34</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרַ֤ע יַעֲקֹב֙ שִׂמְלֹתָ֔יו וַיָּ֥שֶׂם שַׂ֖ק בְּמׇתְנָ֑יו וַיִּתְאַבֵּ֥ל עַל־בְּנ֖וֹ יָמִ֥ים רַבִּֽים׃</p></div><div class="heb-s"><p>ויקרע יעקב שמלתיו וישם שק במתניו ויתאבל על־בנו ימים רבים׃</p></div></div>
-      <div class="texte-fr"><p>Et Jacob déchira ses vêtements et il mit un cilice sur ses reins et il porta longtemps le deuil de son fils.</p></div>
-    </div><div class="seif" id="v-37-35">
-      <span class="seif-num">37:35</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּקֻ֩מוּ֩ כׇל־בָּנָ֨יו וְכׇל־בְּנֹתָ֜יו לְנַחֲמ֗וֹ וַיְמָאֵן֙ לְהִתְנַחֵ֔ם וַיֹּ֕אמֶר כִּֽי־אֵרֵ֧ד אֶל־בְּנִ֛י אָבֵ֖ל שְׁאֹ֑לָה וַיֵּ֥בְךְּ אֹת֖וֹ אָבִֽיו׃</p></div><div class="heb-s"><p>ויקמו כל־בניו וכל־בנתיו לנחמו וימאן להתנחם ויאמר כי־ארד אל־בני אבל שאלה ויבך אתו אביו׃</p></div></div>
-      <div class="texte-fr"><p>Tous ses fils et toutes ses filles se mirent en devoir de le consoler; mais il refusa toute consolation et dit: "Non! Je rejoindrai, en pleurant, mon fils dans la tombe!" Et son père continua de le pleurer.</p></div>
-    </div><div class="seif" id="v-37-36">
-      <span class="seif-num">37:36</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְהַ֨מְּדָנִ֔ים מָכְר֥וּ אֹת֖וֹ אֶל־מִצְרָ֑יִם לְפֽוֹטִיפַר֙ סְרִ֣יס פַּרְעֹ֔ה שַׂ֖ר הַטַּבָּחִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>והמדנים מכרו אתו אל־מצרים לפוטיפר סריס פרעה שר הטבחים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
-      <div class="texte-fr"><p>Quant aux Madianites, ils le vendirent en Égypte à Putiphar, officier de Pharaon, chef des gardes.</p></div>
-    </div><div class="seif" id="v-38-1">
-      <span class="seif-num">38:1</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ בָּעֵ֣ת הַהִ֔וא וַיֵּ֥רֶד יְהוּדָ֖ה מֵאֵ֣ת אֶחָ֑יו וַיֵּ֛ט עַד־אִ֥ישׁ עֲדֻלָּמִ֖י וּשְׁמ֥וֹ חִירָֽה׃</p></div><div class="heb-s"><p>ויהי בעת ההוא וירד יהודה מאת אחיו ויט עד־איש עדלמי ושמו חירה׃</p></div></div>
-      <div class="texte-fr"><p>Il arriva, en ce temps là, que Juda s’éloigna de ses frères et s’achemina vers un habitant d’Adoullam, nommé Hira.</p></div>
-    </div><div class="seif" id="v-38-2">
-      <span class="seif-num">38:2</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּרְא־שָׁ֧ם יְהוּדָ֛ה בַּת־אִ֥ישׁ כְּנַעֲנִ֖י וּשְׁמ֣וֹ שׁ֑וּעַ וַיִּקָּחֶ֖הָ וַיָּבֹ֥א אֵלֶֽיהָ׃</p></div><div class="heb-s"><p>וירא־שם יהודה בת־איש כנעני ושמו שוע ויקחה ויבא אליה׃</p></div></div>
-      <div class="texte-fr"><p>Là, Juda vit la fille d’un Cananéen, appelé Choua; il l’épousa et s’approcha d’elle.</p></div>
-    </div><div class="seif" id="v-38-3">
-      <span class="seif-num">38:3</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתַּ֖הַר וַתֵּ֣לֶד בֵּ֑ן וַיִּקְרָ֥א אֶת־שְׁמ֖וֹ עֵֽר׃</p></div><div class="heb-s"><p>ותהר ותלד בן ויקרא את־שמו ער׃</p></div></div>
-      <div class="texte-fr"><p>Elle conçut et enfanta un fils, à qui il donna le nom d’Ér.</p></div>
-    </div><div class="seif" id="v-38-4">
-      <span class="seif-num">38:4</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתַּ֥הַר ע֖וֹד וַתֵּ֣לֶד בֵּ֑ן וַתִּקְרָ֥א אֶת־שְׁמ֖וֹ אוֹנָֽן׃</p></div><div class="heb-s"><p>ותהר עוד ותלד בן ותקרא את־שמו אונן׃</p></div></div>
-      <div class="texte-fr"><p>Elle conçut encore et eut un fils et elle lui donna le nom d’Onàn.</p></div>
-    </div><div class="seif" id="v-38-5">
-      <span class="seif-num">38:5</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתֹּ֤סֶף עוֹד֙ וַתֵּ֣לֶד בֵּ֔ן וַתִּקְרָ֥א אֶת־שְׁמ֖וֹ שֵׁלָ֑ה וְהָיָ֥ה בִכְזִ֖יב בְּלִדְתָּ֥הּ אֹתֽוֹ׃</p></div><div class="heb-s"><p>ותסף עוד ותלד בן ותקרא את־שמו שלה והיה בכזיב בלדתה אתו׃</p></div></div>
-      <div class="texte-fr"><p>De nouveau elle enfanta un fils et elle le nomma Chéla. Il était à Kezib lorsqu’elle l’enfanta.</p></div>
-    </div><div class="seif" id="v-38-6">
-      <span class="seif-num">38:6</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֧ח יְהוּדָ֛ה אִשָּׁ֖ה לְעֵ֣ר בְּכוֹר֑וֹ וּשְׁמָ֖הּ תָּמָֽר׃</p></div><div class="heb-s"><p>ויקח יהודה אשה לער בכורו ושמה תמר׃</p></div></div>
-      <div class="texte-fr"><p>Juda choisit une épouse à Ér, son premier né; elle se nommait Thamar.</p></div>
-    </div><div class="seif" id="v-38-7">
-      <span class="seif-num">38:7</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י עֵ֚ר בְּכ֣וֹר יְהוּדָ֔ה רַ֖ע בְּעֵינֵ֣י יְהֹוָ֑ה וַיְמִתֵ֖הוּ יְהֹוָֽה׃</p></div><div class="heb-s"><p>ויהי ער בכור יהודה רע בעיני יהוה וימתהו יהוה׃</p></div></div>
-      <div class="texte-fr"><p>Ér, le premier né de Juda, ayant déplu au Seigneur, le Seigneur le fit mourir.</p></div>
-    </div><div class="seif" id="v-38-8">
-      <span class="seif-num">38:8</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהוּדָה֙ לְאוֹנָ֔ן בֹּ֛א אֶל־אֵ֥שֶׁת אָחִ֖יךָ וְיַבֵּ֣ם אֹתָ֑הּ וְהָקֵ֥ם זֶ֖רַע לְאָחִֽיךָ׃</p></div><div class="heb-s"><p>ויאמר יהודה לאונן בא אל־אשת אחיך ויבם אתה והקם זרע לאחיך׃</p></div></div>
-      <div class="texte-fr"><p>Alors Juda dit à Onàn: "Épouse la femme de ton frère en vertu du lévirat, afin de constituer une postérité à ton frère."</p></div>
-    </div><div class="seif" id="v-38-9">
-      <span class="seif-num">38:9</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֣דַע אוֹנָ֔ן כִּ֛י לֹּ֥א ל֖וֹ יִהְיֶ֣ה הַזָּ֑רַע וְהָיָ֞ה אִם־בָּ֨א אֶל־אֵ֤שֶׁת אָחִיו֙ וְשִׁחֵ֣ת אַ֔רְצָה לְבִלְתִּ֥י נְתׇן־זֶ֖רַע לְאָחִֽיו׃</p></div><div class="heb-s"><p>וידע אונן כי לא לו יהיה הזרע והיה אם־בא אל־אשת אחיו ושחת ארצה לבלתי נתן־זרע לאחיו׃</p></div></div>
-      <div class="texte-fr"><p>Onân comprit que cette postérité ne serait pas la sienne; et alors, chaque fois qu’il approchait de la femme de son frère, il corrompait sa voie, afin de ne pas donner de postérité à son frère.</p></div>
-    </div><div class="seif" id="v-38-10">
-      <span class="seif-num">38:10</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֛רַע בְּעֵינֵ֥י יְהֹוָ֖ה אֲשֶׁ֣ר עָשָׂ֑ה וַיָּ֖מֶת גַּם־אֹתֽוֹ׃</p></div><div class="heb-s"><p>וירע בעיני יהוה אשר עשה וימת גם־אתו׃</p></div></div>
-      <div class="texte-fr"><p>Sa conduite déplut au Seigneur, qui le fit mourir de même.</p></div>
-    </div><div class="seif" id="v-38-11">
-      <span class="seif-num">38:11</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר יְהוּדָה֩ לְתָמָ֨ר כַּלָּת֜וֹ שְׁבִ֧י אַלְמָנָ֣ה בֵית־אָבִ֗יךְ עַד־יִגְדַּל֙ שֵׁלָ֣ה בְנִ֔י כִּ֣י אָמַ֔ר פֶּן־יָמ֥וּת גַּם־ה֖וּא כְּאֶחָ֑יו וַתֵּ֣לֶךְ תָּמָ֔ר וַתֵּ֖שֶׁב בֵּ֥ית אָבִֽיהָ׃</p></div><div class="heb-s"><p>ויאמר יהודה לתמר כלתו שבי אלמנה בית־אביך עד־יגדל שלה בני כי אמר פן־ימות גם־הוא כאחיו ותלך תמר ותשב בית אביה׃</p></div></div>
-      <div class="texte-fr"><p>Et Juda dit à Thamar, sa belle fille: "Demeure veuve dans la maison de ton père, jusqu’à ce que mon fils Chéla soit plus grand," car il craignait qu’il ne meure, lui aussi, comme ses frères. Et Thamar s’en alla demeurer dans la maison de son père.</p></div>
-    </div><div class="seif" id="v-38-12">
-      <span class="seif-num">38:12</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְבּוּ֙ הַיָּמִ֔ים וַתָּ֖מׇת בַּת־שׁ֣וּעַ אֵֽשֶׁת־יְהוּדָ֑ה וַיִּנָּ֣חֶם יְהוּדָ֗ה וַיַּ֜עַל עַל־גֹּֽזְזֵ֤י צֹאנוֹ֙ ה֗וּא וְחִירָ֛ה רֵעֵ֥הוּ הָעֲדֻלָּמִ֖י תִּמְנָֽתָה׃</p></div><div class="heb-s"><p>וירבו הימים ותמת בת־שוע אשת־יהודה וינחם יהודה ויעל על־גזזי צאנו הוא וחירה רעהו העדלמי תמנתה׃</p></div></div>
-      <div class="texte-fr"><p>Longtemps après mourut la fille de Choua, femme de Juda. Quand Juda se fut consolé, il alla surveiller la tonte de ses brebis, avec Hira son ami l’Adoullamite, à Timna.</p></div>
-    </div><div class="seif" id="v-38-13">
-      <span class="seif-num">38:13</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֻּגַּ֥ד לְתָמָ֖ר לֵאמֹ֑ר הִנֵּ֥ה חָמִ֛יךְ עֹלֶ֥ה תִמְנָ֖תָה לָגֹ֥ז צֹאנֽוֹ׃</p></div><div class="heb-s"><p>ויגד לתמר לאמר הנה חמיך עלה תמנתה לגז צאנו׃</p></div></div>
-      <div class="texte-fr"><p>On informa Thamar en ces termes: "Ton beau père monte en ce moment à Timna pour tondre ses brebis."</p></div>
-    </div><div class="seif" id="v-38-14">
-      <span class="seif-num">38:14</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתָּ֩סַר֩ בִּגְדֵ֨י אַלְמְנוּתָ֜הּ מֵֽעָלֶ֗יהָ וַתְּכַ֤ס בַּצָּעִיף֙ וַתִּתְעַלָּ֔ף וַתֵּ֙שֶׁב֙ בְּפֶ֣תַח עֵינַ֔יִם אֲשֶׁ֖ר עַל־דֶּ֣רֶךְ תִּמְנָ֑תָה כִּ֤י רָאֲתָה֙ כִּֽי־גָדַ֣ל שֵׁלָ֔ה וְהִ֕וא לֹֽא־נִתְּנָ֥ה ל֖וֹ לְאִשָּֽׁה׃</p></div><div class="heb-s"><p>ותסר בגדי אלמנותה מעליה ותכס בצעיף ותתעלף ותשב בפתח עינים אשר על־דרך תמנתה כי ראתה כי־גדל שלה והוא לא־נתנה לו לאשה׃</p></div></div>
-      <div class="texte-fr"><p>Elle quitta ses vêtements de veuve, prit un voile et s’en couvrit; et elle s’assit au carrefour des Deux Sources, qui est sur le chemin de Timna. Car elle voyait que Chéla avait grandi et qu’elle ne lui avait pas été donnée pour épouse.</p></div>
-    </div><div class="seif" id="v-38-15">
-      <span class="seif-num">38:15</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְאֶ֣הָ יְהוּדָ֔ה וַֽיַּחְשְׁבֶ֖הָ לְזוֹנָ֑ה כִּ֥י כִסְּתָ֖ה פָּנֶֽיהָ׃</p></div><div class="heb-s"><p>ויראה יהודה ויחשבה לזונה כי כסתה פניה׃</p></div></div>
-      <div class="texte-fr"><p>Juda, l’ayant aperçue, la prit pour une prostituée; car elle avait voilé son visage.</p></div>
-    </div><div class="seif" id="v-38-16">
-      <span class="seif-num">38:16</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֨ט אֵלֶ֜יהָ אֶל־הַדֶּ֗רֶךְ וַיֹּ֙אמֶר֙ הָֽבָה־נָּא֙ אָב֣וֹא אֵלַ֔יִךְ כִּ֚י לֹ֣א יָדַ֔ע כִּ֥י כַלָּת֖וֹ הִ֑וא וַתֹּ֙אמֶר֙ מַה־תִּתֶּן־לִ֔י כִּ֥י תָב֖וֹא אֵלָֽי׃</p></div><div class="heb-s"><p>ויט אליה אל־הדרך ויאמר הבה־נא אבוא אליך כי לא ידע כי כלתו הוא ותאמר מה־תתן־לי כי תבוא אלי׃</p></div></div>
-      <div class="texte-fr"><p>Il se dirigea de son côté et lui dit: "Laisse moi te posséder." Car il ignorait que ce fût sa belle fille. Elle répondit: "Que me donneras-tu pour me posséder?"</p></div>
-    </div><div class="seif" id="v-38-17">
-      <span class="seif-num">38:17</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֕אמֶר אָנֹכִ֛י אֲשַׁלַּ֥ח גְּדִֽי־עִזִּ֖ים מִן־הַצֹּ֑אן וַתֹּ֕אמֶר אִם־תִּתֵּ֥ן עֵרָב֖וֹן עַ֥ד שׇׁלְחֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר אנכי אשלח גדי־עזים מן־הצאן ותאמר אם־תתן ערבון עד שלחך׃</p></div></div>
-      <div class="texte-fr"><p>Il répliqua: "Je t’enverrai un chevreau de mon troupeau." Et elle dit: "Bien, si tu me donnes un gage en attendant cet envoi."</p></div>
-    </div><div class="seif" id="v-38-18">
-      <span class="seif-num">38:18</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֗אמֶר מָ֣ה הָעֵֽרָבוֹן֮ אֲשֶׁ֣ר אֶתֶּן־לָךְ֒ וַתֹּ֗אמֶר חֹתָֽמְךָ֙ וּפְתִילֶ֔ךָ וּמַטְּךָ֖ אֲשֶׁ֣ר בְּיָדֶ֑ךָ וַיִּתֶּן־לָ֛הּ וַיָּבֹ֥א אֵלֶ֖יהָ וַתַּ֥הַר לֽוֹ׃</p></div><div class="heb-s"><p>ויאמר מה הערבון אשר אתן־לך ותאמר חתמך ופתילך ומטך אשר בידך ויתן־לה ויבא אליה ותהר לו׃</p></div></div>
-      <div class="texte-fr"><p>Il reprit: "Quel gage te donnerai-je?" Elle répondit: "Ton sceau, ton cordon et le bâton que tu as à la main." Il les lui donna, il approcha d’elle et elle conçut de son fait.</p></div>
-    </div><div class="seif" id="v-38-19">
-      <span class="seif-num">38:19</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתָּ֣קׇם וַתֵּ֔לֶךְ וַתָּ֥סַר צְעִיפָ֖הּ מֵעָלֶ֑יהָ וַתִּלְבַּ֖שׁ בִּגְדֵ֥י אַלְמְנוּתָֽהּ׃</p></div><div class="heb-s"><p>ותקם ותלך ותסר צעיפה מעליה ותלבש בגדי אלמנותה׃</p></div></div>
-      <div class="texte-fr"><p>Elle se leva et partit; elle quitta son voile et reprit les vêtements de son veuvage.</p></div>
-    </div><div class="seif" id="v-38-20">
-      <span class="seif-num">38:20</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַ֨ח יְהוּדָ֜ה אֶת־גְּדִ֣י הָֽעִזִּ֗ים בְּיַד֙ רֵעֵ֣הוּ הָֽעֲדֻלָּמִ֔י לָקַ֥חַת הָעֵרָב֖וֹן מִיַּ֣ד הָאִשָּׁ֑ה וְלֹ֖א מְצָאָֽהּ׃</p></div><div class="heb-s"><p>וישלח יהודה את־גדי העזים ביד רעהו העדלמי לקחת הערבון מיד האשה ולא מצאה׃</p></div></div>
-      <div class="texte-fr"><p>Juda envoya le chevreau par l’entremise de son ami l’Adoullamite, pour retirer le gage des mains de cette femme; il ne la trouva point.</p></div>
-    </div><div class="seif" id="v-38-21">
-      <span class="seif-num">38:21</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁאַ֞ל אֶת־אַנְשֵׁ֤י מְקֹמָהּ֙ לֵאמֹ֔ר אַיֵּ֧ה הַקְּדֵשָׁ֛ה הִ֥וא בָעֵינַ֖יִם עַל־הַדָּ֑רֶךְ וַיֹּ֣אמְר֔וּ לֹא־הָיְתָ֥ה בָזֶ֖ה קְדֵשָֽׁה׃</p></div><div class="heb-s"><p>וישאל את־אנשי מקמה לאמר איה הקדשה הוא בעינים על־הדרך ויאמרו לא־היתה בזה קדשה׃</p></div></div>
-      <div class="texte-fr"><p>Il questionna les gens de l’endroit, disant: "Où est la prostituée qui se tient aux Deux Sources, sur le chemin?" Ils répondirent:"Il n’y a point de prostituée ici."</p></div>
-    </div><div class="seif" id="v-38-22">
-      <span class="seif-num">38:22</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֙שׇׁב֙ אֶל־יְהוּדָ֔ה וַיֹּ֖אמֶר לֹ֣א מְצָאתִ֑יהָ וְגַ֨ם אַנְשֵׁ֤י הַמָּקוֹם֙ אָֽמְר֔וּ לֹא־הָיְתָ֥ה בָזֶ֖ה קְדֵשָֽׁה׃</p></div><div class="heb-s"><p>וישב אל־יהודה ויאמר לא מצאתיה וגם אנשי המקום אמרו לא־היתה בזה קדשה׃</p></div></div>
-      <div class="texte-fr"><p>Il retourna auprès de Juda et dit: "Je ne l’ai pas trouvée; et même les habitants de l’endroit ont dit qu’il n’y avait point là de prostituée."</p></div>
-    </div><div class="seif" id="v-38-23">
-      <span class="seif-num">38:23</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יְהוּדָה֙ תִּֽקַּֽח־לָ֔הּ פֶּ֖ן נִהְיֶ֣ה לָב֑וּז הִנֵּ֤ה שָׁלַ֙חְתִּי֙ הַגְּדִ֣י הַזֶּ֔ה וְאַתָּ֖ה לֹ֥א מְצָאתָֽהּ׃</p></div><div class="heb-s"><p>ויאמר יהודה תקח־לה פן נהיה לבוז הנה שלחתי הגדי הזה ואתה לא מצאתה׃</p></div></div>
-      <div class="texte-fr"><p>Et Juda dit: "Qu’elle garde ce qu’elle a et que nous n’ayons pas à rougir; car enfin, j’ai envoyé ce chevreau et tu n’as pu la trouver."</p></div>
-    </div><div class="seif" id="v-38-24">
-      <span class="seif-num">38:24</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> כְּמִשְׁלֹ֣שׁ חֳדָשִׁ֗ים וַיֻּגַּ֨ד לִֽיהוּדָ֤ה לֵאמֹר֙ זָֽנְתָה֙ תָּמָ֣ר כַּלָּתֶ֔ךָ וְגַ֛ם הִנֵּ֥ה הָרָ֖ה לִזְנוּנִ֑ים וַיֹּ֣אמֶר יְהוּדָ֔ה הוֹצִיא֖וּהָ וְתִשָּׂרֵֽף׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> כמשלש חדשים ויגד ליהודה לאמר זנתה תמר כלתך וגם הנה הרה לזנונים ויאמר יהודה הוציאוה ותשרף׃</p></div></div>
-      <div class="texte-fr"><p>Or, environ trois mois après, on informa Juda, en disant:"Thamar, ta bru, s’est prostituée et elle porte dans son sein le fruit de la débauche." Juda répondit: "Emmenez la et qu’elle soit brûlée!"</p></div>
-    </div><div class="seif" id="v-38-25">
-      <span class="seif-num">38:25</span>
-      <div class="texte-heb"><div class="heb-n"><p>הִ֣וא מוּצֵ֗את וְהִ֨יא שָׁלְחָ֤ה אֶל־חָמִ֙יהָ֙ לֵאמֹ֔ר לְאִישׁ֙ אֲשֶׁר־אֵ֣לֶּה לּ֔וֹ אָנֹכִ֖י הָרָ֑ה וַתֹּ֙אמֶר֙ הַכֶּר־נָ֔א לְמִ֞י הַחֹתֶ֧מֶת וְהַפְּתִילִ֛ים וְהַמַּטֶּ֖ה הָאֵֽלֶּה׃</p></div><div class="heb-s"><p>הוא מוצאת והיא שלחה אל־חמיה לאמר לאיש אשר־אלה לו אנכי הרה ותאמר הכר־נא למי החתמת והפתילים והמטה האלה׃</p></div></div>
-      <div class="texte-fr"><p>Comme on l’emmenait, elle envoya dire à son beau père: "Je suis enceinte du fait de l’homme à qui ces choses appartiennent." Et elle dit: "Examine, je te prie, à qui appartiennent ce sceau, ces cordons et ce bâton."</p></div>
-    </div><div class="seif" id="v-38-26">
-      <span class="seif-num">38:26</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּכֵּ֣ר יְהוּדָ֗ה וַיֹּ֙אמֶר֙ צָֽדְקָ֣ה מִמֶּ֔נִּי כִּֽי־עַל־כֵּ֥ן לֹא־נְתַתִּ֖יהָ לְשֵׁלָ֣ה בְנִ֑י וְלֹֽא־יָסַ֥ף ע֖וֹד לְדַעְתָּֽהּ׃</p></div><div class="heb-s"><p>ויכר יהודה ויאמר צדקה ממני כי־על־כן לא־נתתיה לשלה בני ולא־יסף עוד לדעתה׃</p></div></div>
-      <div class="texte-fr"><p>Juda les reconnut et dit: "Elle est plus juste que moi, car il est vrai que je ne l’ai point donnée à Chéla mon fils." Cependant il cessa, dès lors, de la connaître.</p></div>
-    </div><div class="seif" id="v-38-27">
-      <span class="seif-num">38:27</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֖י בְּעֵ֣ת לִדְתָּ֑הּ וְהִנֵּ֥ה תְאוֹמִ֖ים בְּבִטְנָֽהּ׃</p></div><div class="heb-s"><p>ויהי בעת לדתה והנה תאומים בבטנה׃</p></div></div>
-      <div class="texte-fr"><p>Or il se trouva, lors de son enfantement, qu’elle portait des jumeaux dans son sein.</p></div>
-    </div><div class="seif" id="v-38-28">
-      <span class="seif-num">38:28</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֥י בְלִדְתָּ֖הּ וַיִּתֶּן־יָ֑ד וַתִּקַּ֣ח הַמְיַלֶּ֗דֶת וַתִּקְשֹׁ֨ר עַל־יָד֤וֹ שָׁנִי֙ לֵאמֹ֔ר זֶ֖ה יָצָ֥א רִאשֹׁנָֽה׃</p></div><div class="heb-s"><p>ויהי בלדתה ויתן־יד ותקח המילדת ותקשר על־ידו שני לאמר זה יצא ראשנה׃</p></div></div>
-      <div class="texte-fr"><p>Au moment de sa délivrance, l’un d’eux avança la main; la sage femme la saisit et y attacha un fil d’écarlate, pour indiquer que celui ci était né le premier.</p></div>
-    </div><div class="seif" id="v-38-29">
-      <span class="seif-num">38:29</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> כְּמֵשִׁ֣יב יָד֗וֹ וְהִנֵּה֙ יָצָ֣א אָחִ֔יו וַתֹּ֕אמֶר מַה־פָּרַ֖צְתָּ עָלֶ֣יךָ פָּ֑רֶץ וַיִּקְרָ֥א שְׁמ֖וֹ פָּֽרֶץ׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> כמשיב ידו והנה יצא אחיו ותאמר מה־פרצת עליך פרץ ויקרא שמו פרץ׃</p></div></div>
-      <div class="texte-fr"><p>Comme il retirait sa main, voici que son frère vint au monde. Elle dit: "Avec quelle violence tu te fais jour!" Et on lui donna le nom de Péreç.</p></div>
-    </div><div class="seif" id="v-38-30">
-      <span class="seif-num">38:30</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְאַחַר֙ יָצָ֣א אָחִ֔יו אֲשֶׁ֥ר עַל־יָד֖וֹ הַשָּׁנִ֑י וַיִּקְרָ֥א שְׁמ֖וֹ זָֽרַח׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>ואחר יצא אחיו אשר על־ידו השני ויקרא שמו זרח׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
-      <div class="texte-fr"><p>Ensuite naquit son frère, dont la main portait le fil d’écarlate. On lui donna le nom de Zérah.</p></div>
-    </div><div class="seif" id="v-39-1">
-      <span class="seif-num">39:1</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְיוֹסֵ֖ף הוּרַ֣ד מִצְרָ֑יְמָה וַיִּקְנֵ֡הוּ פּוֹטִיפַר֩ סְרִ֨יס פַּרְעֹ֜ה שַׂ֤ר הַטַּבָּחִים֙ אִ֣ישׁ מִצְרִ֔י מִיַּד֙ הַיִּשְׁמְעֵאלִ֔ים אֲשֶׁ֥ר הוֹרִדֻ֖הוּ שָֽׁמָּה׃</p></div><div class="heb-s"><p>ויוסף הורד מצרימה ויקנהו פוטיפר סריס פרעה שר הטבחים איש מצרי מיד הישמעאלים אשר הורדהו שמה׃</p></div></div>
-      <div class="texte-fr"><p>Joseph fut donc emmené en Égypte. Putiphar, officier de Pharaon, chef des gardes, égyptien, l’acheta aux ismaélites qui l’avaient conduit dans ce pays.</p></div>
-    </div><div class="seif" id="v-39-2">
-      <span class="seif-num">39:2</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י יְהֹוָה֙ אֶת־יוֹסֵ֔ף וַיְהִ֖י אִ֣ישׁ מַצְלִ֑יחַ וַיְהִ֕י בְּבֵ֖ית אֲדֹנָ֥יו הַמִּצְרִֽי׃</p></div><div class="heb-s"><p>ויהי יהוה את־יוסף ויהי איש מצליח ויהי בבית אדניו המצרי׃</p></div></div>
-      <div class="texte-fr"><p>Le Seigneur fut avec Joseph, qui devint un homme heureux et fut admis dans la maison de son maître l’égyptien.</p></div>
-    </div><div class="seif" id="v-39-3">
-      <span class="seif-num">39:3</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣רְא אֲדֹנָ֔יו כִּ֥י יְהֹוָ֖ה אִתּ֑וֹ וְכֹל֙ אֲשֶׁר־ה֣וּא עֹשֶׂ֔ה יְהֹוָ֖ה מַצְלִ֥יחַ בְּיָדֽוֹ׃</p></div><div class="heb-s"><p>וירא אדניו כי יהוה אתו וכל אשר־הוא עשה יהוה מצליח בידו׃</p></div></div>
-      <div class="texte-fr"><p>Son maître vit que Dieu était avec lui; qu’il faisait prospérer toutes les oeuvres de ses mains,</p></div>
-    </div><div class="seif" id="v-39-4">
-      <span class="seif-num">39:4</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּמְצָ֨א יוֹסֵ֥ף חֵ֛ן בְּעֵינָ֖יו וַיְשָׁ֣רֶת אֹת֑וֹ וַיַּפְקִדֵ֙הוּ֙ עַל־בֵּית֔וֹ וְכׇל־יֶשׁ־ל֖וֹ נָתַ֥ן בְּיָדֽוֹ׃</p></div><div class="heb-s"><p>וימצא יוסף חן בעיניו וישרת אתו ויפקדהו על־ביתו וכל־יש־לו נתן בידו׃</p></div></div>
-      <div class="texte-fr"><p>et Joseph trouva faveur à ses yeux et il devint son serviteur; Putiphar le mit à la tête de sa maison et lui confia tout son avoir.</p></div>
-    </div><div class="seif" id="v-39-5">
-      <span class="seif-num">39:5</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֡י מֵאָז֩ הִפְקִ֨יד אֹת֜וֹ בְּבֵית֗וֹ וְעַל֙ כׇּל־אֲשֶׁ֣ר יֶשׁ־ל֔וֹ וַיְבָ֧רֶךְ יְהֹוָ֛ה אֶת־בֵּ֥ית הַמִּצְרִ֖י בִּגְלַ֣ל יוֹסֵ֑ף וַיְהִ֞י בִּרְכַּ֤ת יְהֹוָה֙ בְּכׇל־אֲשֶׁ֣ר יֶשׁ־ל֔וֹ בַּבַּ֖יִת וּבַשָּׂדֶֽה׃</p></div><div class="heb-s"><p>ויהי מאז הפקיד אתו בביתו ועל כל־אשר יש־לו ויברך יהוה את־בית המצרי בגלל יוסף ויהי ברכת יהוה בכל־אשר יש־לו בבית ובשדה׃</p></div></div>
-      <div class="texte-fr"><p>Du moment où il l’eut mis à la tête de sa maison et de toutes ses affaires, le Seigneur bénit la maison de l’Égyptien à cause de Joseph; et la bénédiction divine s’étendit sur tous ses biens, à la ville et aux champs.</p></div>
-    </div><div class="seif" id="v-39-6">
-      <span class="seif-num">39:6</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲזֹ֣ב כׇּל־אֲשֶׁר־לוֹ֮ בְּיַד־יוֹסֵף֒ וְלֹא־יָדַ֤ע אִתּוֹ֙ מְא֔וּמָה כִּ֥י אִם־הַלֶּ֖חֶם אֲשֶׁר־ה֣וּא אוֹכֵ֑ל וַיְהִ֣י יוֹסֵ֔ף יְפֵה־תֹ֖אַר וִיפֵ֥ה מַרְאֶֽה׃</p></div><div class="heb-s"><p>ויעזב כל־אשר־לו ביד־יוסף ולא־ידע אתו מאומה כי אם־הלחם אשר־הוא אוכל ויהי יוסף יפה־תאר ויפה מראה׃</p></div></div>
-      <div class="texte-fr"><p>Alors il abandonna tous ses intérêts aux mains de Joseph et il ne s’occupa plus avec lui de rien, sinon du pain qu’il mangeait. Or, Joseph était beau de taille et beau de visage.</p></div>
-    </div><div class="seif" id="v-39-7">
-      <span class="seif-num">39:7</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י אַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וַתִּשָּׂ֧א אֵֽשֶׁת־אֲדֹנָ֛יו אֶת־עֵינֶ֖יהָ אֶל־יוֹסֵ֑ף וַתֹּ֖אמֶר שִׁכְבָ֥ה עִמִּֽי׃</p></div><div class="heb-s"><p>ויהי אחר הדברים האלה ותשא אשת־אדניו את־עיניה אל־יוסף ותאמר שכבה עמי׃</p></div></div>
-      <div class="texte-fr"><p>Il arriva, après ces faits, que la femme de son maître jeta les yeux sur Joseph. Elle lui dit: "Viens reposer près de moi."</p></div>
-    </div><div class="seif" id="v-39-8">
-      <span class="seif-num">39:8</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְמָאֵ֓ן&thinsp;<b>׀</b> וַיֹּ֙אמֶר֙ אֶל־אֵ֣שֶׁת אֲדֹנָ֔יו הֵ֣ן אֲדֹנִ֔י לֹא־יָדַ֥ע אִתִּ֖י מַה־בַּבָּ֑יִת וְכֹ֥ל אֲשֶׁר־יֶשׁ־ל֖וֹ נָתַ֥ן בְּיָדִֽי׃</p></div><div class="heb-s"><p>וימאן&thinsp;<b>׀</b> ויאמר אל־אשת אדניו הן אדני לא־ידע אתי מה־בבית וכל אשר־יש־לו נתן בידי׃</p></div></div>
-      <div class="texte-fr"><p>Il s’y refusa, en disant à la femme de son maître: "Vois, mon maître ne me demande compte de rien dans sa maison et toutes ses affaires il les a remises en mes mains;</p></div>
-    </div><div class="seif" id="v-39-9">
-      <span class="seif-num">39:9</span>
-      <div class="texte-heb"><div class="heb-n"><p>אֵינֶ֨נּוּ גָד֜וֹל בַּבַּ֣יִת הַזֶּה֮ מִמֶּ֒נִּי֒ וְלֹֽא־חָשַׂ֤ךְ מִמֶּ֙נִּי֙ מְא֔וּמָה כִּ֥י אִם־אוֹתָ֖ךְ בַּאֲשֶׁ֣ר אַתְּ־אִשְׁתּ֑וֹ וְאֵ֨יךְ אֶֽעֱשֶׂ֜ה הָרָעָ֤ה הַגְּדֹלָה֙ הַזֹּ֔את וְחָטָ֖אתִי לֵֽאלֹהִֽים׃</p></div><div class="heb-s"><p>איננו גדול בבית הזה ממני ולא־חשך ממני מאומה כי אם־אותך באשר את־אשתו ואיך אעשה הרעה הגדלה הזאת וחטאתי לאלהים׃</p></div></div>
-      <div class="texte-fr"><p>il n’est pas plus grand que moi dans cette maison et il ne m’a rien défendu, sinon toi, parce que tu es son épouse; et comment puis je commettre un si grand méfait et offenser le Seigneur?"</p></div>
-    </div><div class="seif" id="v-39-10">
-      <span class="seif-num">39:10</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֕י כְּדַבְּרָ֥הּ אֶל־יוֹסֵ֖ף י֣וֹם&thinsp;<small>׀</small>&thinsp;י֑וֹם וְלֹא־שָׁמַ֥ע אֵלֶ֛יהָ לִשְׁכַּ֥ב אֶצְלָ֖הּ לִהְי֥וֹת עִמָּֽהּ׃</p></div><div class="heb-s"><p>ויהי כדברה אל־יוסף יום&thinsp;<small>׀</small>&thinsp;יום ולא־שמע אליה לשכב אצלה להיות עמה׃</p></div></div>
-      <div class="texte-fr"><p>Quoiqu’elle en parlât chaque jour à Joseph, il ne cédait point à ses vœux en venant à ses côtés pour avoir commerce avec elle.</p></div>
-    </div><div class="seif" id="v-39-11">
-      <span class="seif-num">39:11</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ כְּהַיּ֣וֹם הַזֶּ֔ה וַיָּבֹ֥א הַבַּ֖יְתָה לַעֲשׂ֣וֹת מְלַאכְתּ֑וֹ וְאֵ֨ין אִ֜ישׁ מֵאַנְשֵׁ֥י הַבַּ֛יִת שָׁ֖ם בַּבָּֽיִת׃</p></div><div class="heb-s"><p>ויהי כהיום הזה ויבא הביתה לעשות מלאכתו ואין איש מאנשי הבית שם בבית׃</p></div></div>
-      <div class="texte-fr"><p>Mais il arriva, à une de ces occasions, comme il était venu dans la maison pour faire sa besogne et qu’aucun des gens de la maison ne s’y trouvait,</p></div>
-    </div><div class="seif" id="v-39-12">
-      <span class="seif-num">39:12</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתִּתְפְּשֵׂ֧הוּ בְּבִגְד֛וֹ לֵאמֹ֖ר שִׁכְבָ֣ה עִמִּ֑י וַיַּעֲזֹ֤ב בִּגְדוֹ֙ בְּיָדָ֔הּ וַיָּ֖נׇס וַיֵּצֵ֥א הַחֽוּצָה׃</p></div><div class="heb-s"><p>ותתפשהו בבגדו לאמר שכבה עמי ויעזב בגדו בידה וינס ויצא החוצה׃</p></div></div>
-      <div class="texte-fr"><p>qu’elle le saisit par son vêtement, en disant: "Viens dans mes bras!" Il abandonna son vêtement dans sa main, s’enfuit et s’élança dehors.</p></div>
-    </div><div class="seif" id="v-39-13">
-      <span class="seif-num">39:13</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַֽיְהִי֙ כִּרְאוֹתָ֔הּ כִּֽי־עָזַ֥ב בִּגְד֖וֹ בְּיָדָ֑הּ וַיָּ֖נׇס הַחֽוּצָה׃</p></div><div class="heb-s"><p>ויהי כראותה כי־עזב בגדו בידה וינס החוצה׃</p></div></div>
-      <div class="texte-fr"><p>Lorsqu’elle vit qu’il avait laissé son vêtement dans sa main et qu’il s’était échappé,</p></div>
-    </div><div class="seif" id="v-39-14">
-      <span class="seif-num">39:14</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתִּקְרָ֞א לְאַנְשֵׁ֣י בֵיתָ֗הּ וַתֹּ֤אמֶר לָהֶם֙ לֵאמֹ֔ר רְא֗וּ הֵ֥בִיא לָ֛נוּ אִ֥ישׁ עִבְרִ֖י לְצַ֣חֶק בָּ֑נוּ בָּ֤א אֵלַי֙ לִשְׁכַּ֣ב עִמִּ֔י וָאֶקְרָ֖א בְּק֥וֹל גָּדֽוֹל׃</p></div><div class="heb-s"><p>ותקרא לאנשי ביתה ותאמר להם לאמר ראו הביא לנו איש עברי לצחק בנו בא אלי לשכב עמי ואקרא בקול גדול׃</p></div></div>
-      <div class="texte-fr"><p>elle appela les gens de sa maison et leur dit: "Voyez! On nous a amené un Hébreu pour nous insulter! Il m’a abordée pour coucher avec moi et j’ai appelé à grands cris.</p></div>
-    </div><div class="seif" id="v-39-15">
-      <span class="seif-num">39:15</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י כְשׇׁמְע֔וֹ כִּֽי־הֲרִימֹ֥תִי קוֹלִ֖י וָאֶקְרָ֑א וַיַּעֲזֹ֤ב בִּגְדוֹ֙ אֶצְלִ֔י וַיָּ֖נׇס וַיֵּצֵ֥א הַחֽוּצָה׃</p></div><div class="heb-s"><p>ויהי כשמעו כי־הרימתי קולי ואקרא ויעזב בגדו אצלי וינס ויצא החוצה׃</p></div></div>
-      <div class="texte-fr"><p>Lui, entendant que j’élevais la voix pour appeler à mon aide, a laissé son habit près de moi et il s’est échappé et il est sorti."</p></div>
-    </div><div class="seif" id="v-39-16">
-      <span class="seif-num">39:16</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתַּנַּ֥ח בִּגְד֖וֹ אֶצְלָ֑הּ עַד־בּ֥וֹא אֲדֹנָ֖יו אֶל־בֵּיתֽוֹ׃</p></div><div class="heb-s"><p>ותנח בגדו אצלה עד־בוא אדניו אל־ביתו׃</p></div></div>
-      <div class="texte-fr"><p>Elle garda le vêtement de Joseph par devers elle, jusqu’à ce que son maître fût rentré à la maison.</p></div>
-    </div><div class="seif" id="v-39-17">
-      <span class="seif-num">39:17</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַתְּדַבֵּ֣ר אֵלָ֔יו כַּדְּבָרִ֥ים הָאֵ֖לֶּה לֵאמֹ֑ר בָּֽא־אֵלַ֞י הָעֶ֧בֶד הָֽעִבְרִ֛י אֲשֶׁר־הֵבֵ֥אתָ לָּ֖נוּ לְצַ֥חֶק בִּֽי׃</p></div><div class="heb-s"><p>ותדבר אליו כדברים האלה לאמר בא־אלי העבד העברי אשר־הבאת לנו לצחק בי׃</p></div></div>
-      <div class="texte-fr"><p>Elle lui fit le même récit, disant: "L’esclave hébreu que tu nous a amené est venu près de moi pour m’insulter;</p></div>
-    </div><div class="seif" id="v-39-18">
-      <span class="seif-num">39:18</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֕י כַּהֲרִימִ֥י קוֹלִ֖י וָאֶקְרָ֑א וַיַּעֲזֹ֥ב בִּגְד֛וֹ אֶצְלִ֖י וַיָּ֥נׇס הַחֽוּצָה׃</p></div><div class="heb-s"><p>ויהי כהרימי קולי ואקרא ויעזב בגדו אצלי וינס החוצה׃</p></div></div>
-      <div class="texte-fr"><p>puis, comme j’ai élevé la voix et que j’ai appelé, il a laissé son vêtement près de moi et a pris la fuite."</p></div>
-    </div><div class="seif" id="v-39-19">
-      <span class="seif-num">39:19</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִי֩ כִשְׁמֹ֨עַ אֲדֹנָ֜יו אֶת־דִּבְרֵ֣י אִשְׁתּ֗וֹ אֲשֶׁ֨ר דִּבְּרָ֤ה אֵלָיו֙ לֵאמֹ֔ר כַּדְּבָרִ֣ים הָאֵ֔לֶּה עָ֥שָׂה לִ֖י עַבְדֶּ֑ךָ וַיִּ֖חַר אַפּֽוֹ׃</p></div><div class="heb-s"><p>ויהי כשמע אדניו את־דברי אשתו אשר דברה אליו לאמר כדברים האלה עשה לי עבדך ויחר אפו׃</p></div></div>
-      <div class="texte-fr"><p>Lorsque le maître entendit le récit que lui faisait son épouse, disant: "Voilà ce que m’a fait ton esclave", sa colère s’enflamma.</p></div>
-    </div><div class="seif" id="v-39-20">
-      <span class="seif-num">39:20</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּח֩ אֲדֹנֵ֨י יוֹסֵ֜ף אֹת֗וֹ וַֽיִּתְּנֵ֙הוּ֙ אֶל־בֵּ֣ית הַסֹּ֔הַר מְק֕וֹם אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[אֲסִירֵ֥י]</span> <span class="mam-kq-k">(אסורי)</span></span> הַמֶּ֖לֶךְ אֲסוּרִ֑ים וַֽיְהִי־שָׁ֖ם בְּבֵ֥ית הַסֹּֽהַר׃</p></div><div class="heb-s"><p>ויקח אדני יוסף אתו ויתנהו אל־בית הסהר מקום אשר־<span class="mam-kq"><span class="mam-kq-q">[אסירי]</span> <span class="mam-kq-k">(אסורי)</span></span> המלך אסורים ויהי־שם בבית הסהר׃</p></div></div>
-      <div class="texte-fr"><p>Le maître de Joseph le fit saisir; on l’enferma dans la Rotonde, endroit ou étaient détenus les prisonniers du roi; et il resta là dans la Rotonde.</p></div>
-    </div><div class="seif" id="v-39-21">
-      <span class="seif-num">39:21</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֤י יְהֹוָה֙ אֶת־יוֹסֵ֔ף וַיֵּ֥ט אֵלָ֖יו חָ֑סֶד וַיִּתֵּ֣ן חִנּ֔וֹ בְּעֵינֵ֖י שַׂ֥ר בֵּית־הַסֹּֽהַר׃</p></div><div class="heb-s"><p>ויהי יהוה את־יוסף ויט אליו חסד ויתן חנו בעיני שר בית־הסהר׃</p></div></div>
-      <div class="texte-fr"><p>Le Seigneur fut avec Joseph, lui attira de la bienveillance et le rendit agréable aux yeux du gouverneur de la Rotonde.</p></div>
-    </div><div class="seif" id="v-39-22">
-      <span class="seif-num">39:22</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֞ן שַׂ֤ר בֵּית־הַסֹּ֙הַר֙ בְּיַד־יוֹסֵ֔ף אֵ֚ת כׇּל־הָ֣אֲסִירִ֔ם אֲשֶׁ֖ר בְּבֵ֣ית הַסֹּ֑הַר וְאֵ֨ת כׇּל־אֲשֶׁ֤ר עֹשִׂים֙ שָׁ֔ם ה֖וּא הָיָ֥ה עֹשֶֽׂה׃</p></div><div class="heb-s"><p>ויתן שר בית־הסהר ביד־יוסף את כל־האסירם אשר בבית הסהר ואת כל־אשר עשים שם הוא היה עשה׃</p></div></div>
-      <div class="texte-fr"><p>Ce gouverneur mit sous la main de Joseph tous les prisonniers de la Rotonde; et tout ce qu’on y faisait, c’était lui qui le dirigeait.</p></div>
-    </div><div class="seif" id="v-39-23">
-      <span class="seif-num">39:23</span>
-      <div class="texte-heb"><div class="heb-n"><p>אֵ֣ין&thinsp;<b>׀</b> שַׂ֣ר בֵּית־הַסֹּ֗הַר רֹאֶ֤ה אֶֽת־כׇּל־מְא֙וּמָה֙ בְּיָד֔וֹ בַּאֲשֶׁ֥ר יְהֹוָ֖ה אִתּ֑וֹ וַֽאֲשֶׁר־ה֥וּא עֹשֶׂ֖ה יְהֹוָ֥ה מַצְלִֽיחַ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>אין&thinsp;<b>׀</b> שר בית־הסהר ראה את־כל־מאומה בידו באשר יהוה אתו ואשר־הוא עשה יהוה מצליח׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
-      <div class="texte-fr"><p>Le gouverneur de la Rotonde ne vérifiait rien de ce qui passait par sa main, parce que le Seigneur était avec lui; et ce qu’il entreprenait, le Seigneur le faisait réussir.</p></div>
-    </div><div class="seif" id="v-40-1">
-      <span class="seif-num">40:1</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י אַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה חָ֥טְא֛וּ מַשְׁקֵ֥ה מֶֽלֶךְ־מִצְרַ֖יִם וְהָאֹפֶ֑ה לַאֲדֹנֵיהֶ֖ם לְמֶ֥לֶךְ מִצְרָֽיִם׃</p></div><div class="heb-s"><p>ויהי אחר הדברים האלה חטאו משקה מלך־מצרים והאפה לאדניהם למלך מצרים׃</p></div></div>
-      <div class="texte-fr"><p>Il advint, après ces événements que l’échanson du roi d’Égypte et le panetier offensèrent leur maître, le roi d’Égypte.</p></div>
-    </div><div class="seif" id="v-40-2">
-      <span class="seif-num">40:2</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְצֹ֣ף פַּרְעֹ֔ה עַ֖ל שְׁנֵ֣י סָרִיסָ֑יו עַ֚ל שַׂ֣ר הַמַּשְׁקִ֔ים וְעַ֖ל שַׂ֥ר הָאוֹפִֽים׃</p></div><div class="heb-s"><p>ויקצף פרעה על שני סריסיו על שר המשקים ועל שר האופים׃</p></div></div>
-      <div class="texte-fr"><p>Pharaon, irrité contre ses deux officiers, le maître échanson et le maître panetier,</p></div>
-    </div><div class="seif" id="v-40-3">
-      <span class="seif-num">40:3</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּתֵּ֨ן אֹתָ֜ם בְּמִשְׁמַ֗ר בֵּ֛ית שַׂ֥ר הַטַּבָּחִ֖ים אֶל־בֵּ֣ית הַסֹּ֑הַר מְק֕וֹם אֲשֶׁ֥ר יוֹסֵ֖ף אָס֥וּר שָֽׁם׃</p></div><div class="heb-s"><p>ויתן אתם במשמר בית שר הטבחים אל־בית הסהר מקום אשר יוסף אסור שם׃</p></div></div>
-      <div class="texte-fr"><p>les fit mettre aux arrêts dans la maison du chef des gardes, dans la Rotonde, le même lieu où Joseph était captif.</p></div>
-    </div><div class="seif" id="v-40-4">
-      <span class="seif-num">40:4</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַ֠יִּפְקֹ֠ד שַׂ֣ר הַטַּבָּחִ֧ים אֶת־יוֹסֵ֛ף אִתָּ֖ם וַיְשָׁ֣רֶת אֹתָ֑ם וַיִּהְי֥וּ יָמִ֖ים בְּמִשְׁמָֽר׃</p></div><div class="heb-s"><p>ויפקד שר הטבחים את־יוסף אתם וישרת אתם ויהיו ימים במשמר׃</p></div></div>
-      <div class="texte-fr"><p>Le chef des gardes mit Joseph à leur disposition et celui ci les servit. Ils étaient depuis quelque temps aux arrêts,</p></div>
-    </div><div class="seif" id="v-40-5">
-      <span class="seif-num">40:5</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּֽחַלְמוּ֩ חֲל֨וֹם שְׁנֵיהֶ֜ם אִ֤ישׁ חֲלֹמוֹ֙ בְּלַ֣יְלָה אֶחָ֔ד אִ֖ישׁ כְּפִתְר֣וֹן חֲלֹמ֑וֹ הַמַּשְׁקֶ֣ה וְהָאֹפֶ֗ה אֲשֶׁר֙ לְמֶ֣לֶךְ מִצְרַ֔יִם אֲשֶׁ֥ר אֲסוּרִ֖ים בְּבֵ֥ית הַסֹּֽהַר׃</p></div><div class="heb-s"><p>ויחלמו חלום שניהם איש חלמו בלילה אחד איש כפתרון חלמו המשקה והאפה אשר למלך מצרים אשר אסורים בבית הסהר׃</p></div></div>
-      <div class="texte-fr"><p>lorsqu’ils eurent un rêve tous les deux, chacun le sien, la même nuit et chacun selon le sens de son rêve; l’échanson et le panetier du roi d’Égypte, détenus dans la Rotonde.</p></div>
-    </div><div class="seif" id="v-40-6">
-      <span class="seif-num">40:6</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֧א אֲלֵיהֶ֛ם יוֹסֵ֖ף בַּבֹּ֑קֶר וַיַּ֣רְא אֹתָ֔ם וְהִנָּ֖ם זֹעֲפִֽים׃</p></div><div class="heb-s"><p>ויבא אליהם יוסף בבקר וירא אתם והנם זעפים׃</p></div></div>
-      <div class="texte-fr"><p>Joseph, étant venu près d’eux le matin, remarqua qu’ils étaient soucieux.</p></div>
-    </div><div class="seif" id="v-40-7">
-      <span class="seif-num">40:7</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁאַ֞ל אֶת־סְרִיסֵ֣י פַרְעֹ֗ה אֲשֶׁ֨ר אִתּ֧וֹ בְמִשְׁמַ֛ר בֵּ֥ית אֲדֹנָ֖יו לֵאמֹ֑ר מַדּ֛וּעַ פְּנֵיכֶ֥ם רָעִ֖ים הַיּֽוֹם׃</p></div><div class="heb-s"><p>וישאל את־סריסי פרעה אשר אתו במשמר בית אדניו לאמר מדוע פניכם רעים היום׃</p></div></div>
-      <div class="texte-fr"><p>Il demanda aux officiers de Pharaon, qui étaient avec lui en prison chez son maître: "Pourquoi votre visage est-il sombre aujourd’hui?"</p></div>
-    </div><div class="seif" id="v-40-8">
-      <span class="seif-num">40:8</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּאמְר֣וּ אֵלָ֔יו חֲל֣וֹם חָלַ֔מְנוּ וּפֹתֵ֖ר אֵ֣ין אֹת֑וֹ וַיֹּ֨אמֶר אֲלֵהֶ֜ם יוֹסֵ֗ף הֲל֤וֹא לֵֽאלֹהִים֙ פִּתְרֹנִ֔ים סַפְּרוּ־נָ֖א לִֽי׃</p></div><div class="heb-s"><p>ויאמרו אליו חלום חלמנו ופתר אין אתו ויאמר אלהם יוסף הלוא לאלהים פתרנים ספרו־נא לי׃</p></div></div>
-      <div class="texte-fr"><p>Ils lui répondirent: "Nous avons fait un songe et il n’y a personne pour l’interpréter." Joseph leur dit: "L’interprétation n’est elle pas à Dieu? Dites les moi, je vous prie."</p></div>
-    </div><div class="seif" id="v-40-9">
-      <span class="seif-num">40:9</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְסַפֵּ֧ר שַֽׂר־הַמַּשְׁקִ֛ים אֶת־חֲלֹמ֖וֹ לְיוֹסֵ֑ף וַיֹּ֣אמֶר ל֔וֹ בַּחֲלוֹמִ֕י וְהִנֵּה־גֶ֖פֶן לְפָנָֽי׃</p></div><div class="heb-s"><p>ויספר שר־המשקים את־חלמו ליוסף ויאמר לו בחלומי והנה־גפן לפני׃</p></div></div>
-      <div class="texte-fr"><p>Le maître échanson raconta son rêve à Joseph, en disant:"Dans mon rêve, une vigne était devant moi.</p></div>
-    </div><div class="seif" id="v-40-10">
-      <span class="seif-num">40:10</span>
-      <div class="texte-heb"><div class="heb-n"><p>וּבַגֶּ֖פֶן שְׁלֹשָׁ֣ה שָׂרִיגִ֑ם וְהִ֤וא כְפֹרַ֙חַת֙ עָלְתָ֣ה נִצָּ֔הּ הִבְשִׁ֥ילוּ אַשְׁכְּלֹתֶ֖יהָ עֲנָבִֽים׃</p></div><div class="heb-s"><p>ובגפן שלשה שריגם והוא כפרחת עלתה נצה הבשילו אשכלתיה ענבים׃</p></div></div>
-      <div class="texte-fr"><p>A cette vigne étaient trois pampres. Or, elle semblait se couvrir de fleurs, ses bourgeons se développaient, ses grappes mûrissaient leurs raisins.</p></div>
-    </div><div class="seif" id="v-40-11">
-      <span class="seif-num">40:11</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְכ֥וֹס פַּרְעֹ֖ה בְּיָדִ֑י וָאֶקַּ֣ח אֶת־הָֽעֲנָבִ֗ים וָֽאֶשְׂחַ֤ט אֹתָם֙ אֶל־כּ֣וֹס פַּרְעֹ֔ה וָאֶתֵּ֥ן אֶת־הַכּ֖וֹס עַל־כַּ֥ף פַּרְעֹֽה׃</p></div><div class="heb-s"><p>וכוס פרעה בידי ואקח את־הענבים ואשחט אתם אל־כוס פרעה ואתן את־הכוס על־כף פרעה׃</p></div></div>
-      <div class="texte-fr"><p>J’avais en main la coupe de Pharaon; je cueillais les raisins, j’en exprimais le jus dans la coupe de Pharaon et je présentais la coupe à la main du roi."</p></div>
-    </div><div class="seif" id="v-40-12">
-      <span class="seif-num">40:12</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר לוֹ֙ יוֹסֵ֔ף זֶ֖ה פִּתְרֹנ֑וֹ שְׁלֹ֙שֶׁת֙ הַשָּׂ֣רִגִ֔ים שְׁלֹ֥שֶׁת יָמִ֖ים הֵֽם׃</p></div><div class="heb-s"><p>ויאמר לו יוסף זה פתרנו שלשת השרגים שלשת ימים הם׃</p></div></div>
-      <div class="texte-fr"><p>Joseph lui répondit: "En voici l’explication. Les trois pampres, ce sont trois jours.</p></div>
-    </div><div class="seif" id="v-40-13">
-      <span class="seif-num">40:13</span>
-      <div class="texte-heb"><div class="heb-n"><p>בְּע֣וֹד&thinsp;<b>׀</b> שְׁלֹ֣שֶׁת יָמִ֗ים יִשָּׂ֤א פַרְעֹה֙ אֶת־רֹאשֶׁ֔ךָ וַהֲשִֽׁיבְךָ֖ עַל־כַּנֶּ֑ךָ וְנָתַתָּ֤ כוֹס־פַּרְעֹה֙ בְּיָד֔וֹ כַּמִּשְׁפָּט֙ הָֽרִאשׁ֔וֹן אֲשֶׁ֥ר הָיִ֖יתָ מַשְׁקֵֽהוּ׃</p></div><div class="heb-s"><p>בעוד&thinsp;<b>׀</b> שלשת ימים ישא פרעה את־ראשך והשיבך על־כנך ונתת כוס־פרעה בידו כמשפט הראשון אשר היית משקהו׃</p></div></div>
-      <div class="texte-fr"><p>Trois jours encore et Pharaon te fera élargir et il te rétablira dans ton poste; et tu mettras la coupe de Pharaon dans sa main, comme tu le faisais précédemment en qualité d’échanson.</p></div>
-    </div><div class="seif" id="v-40-14">
-      <span class="seif-num">40:14</span>
-      <div class="texte-heb"><div class="heb-n"><p>כִּ֧י אִם־זְכַרְתַּ֣נִי אִתְּךָ֗ כַּאֲשֶׁר֙ יִ֣יטַב לָ֔ךְ וְעָשִֽׂיתָ־נָּ֥א עִמָּדִ֖י חָ֑סֶד וְהִזְכַּרְתַּ֙נִי֙ אֶל־פַּרְעֹ֔ה וְהוֹצֵאתַ֖נִי מִן־הַבַּ֥יִת הַזֶּֽה׃</p></div><div class="heb-s"><p>כי אם־זכרתני אתך כאשר ייטב לך ועשית־נא עמדי חסד והזכרתני אל־פרעה והוצאתני מן־הבית הזה׃</p></div></div>
-      <div class="texte-fr"><p>Si tu te souviens de moi lorsque tu seras heureux, rends-moi, de grâce, un bon office: parle de moi à Pharaon et fais moi sortir de cette demeure.</p></div>
-    </div><div class="seif" id="v-40-15">
-      <span class="seif-num">40:15</span>
-      <div class="texte-heb"><div class="heb-n"><p>כִּֽי־גֻנֹּ֣ב גֻּנַּ֔בְתִּי מֵאֶ֖רֶץ הָעִבְרִ֑ים וְגַם־פֹּה֙ לֹא־עָשִׂ֣יתִֽי מְא֔וּמָה כִּֽי־שָׂמ֥וּ אֹתִ֖י בַּבּֽוֹר׃</p></div><div class="heb-s"><p>כי־גנב גנבתי מארץ העברים וגם־פה לא־עשיתי מאומה כי־שמו אתי בבור׃</p></div></div>
-      <div class="texte-fr"><p>Car j’ai été enlevé, oui, enlevé du pays des Hébreux; et ici non plus je n’avais rien fait lorsqu’on m’a jeté dans ce cachot."</p></div>
-    </div><div class="seif" id="v-40-16">
-      <span class="seif-num">40:16</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥רְא שַׂר־הָאֹפִ֖ים כִּ֣י ט֣וֹב פָּתָ֑ר וַיֹּ֙אמֶר֙ אֶל־יוֹסֵ֔ף אַף־אֲנִי֙ בַּחֲלוֹמִ֔י וְהִנֵּ֗ה שְׁלֹשָׁ֛ה סַלֵּ֥י חֹרִ֖י עַל־רֹאשִֽׁי׃</p></div><div class="heb-s"><p>וירא שר־האפים כי טוב פתר ויאמר אל־יוסף אף־אני בחלומי והנה שלשה סלי חרי על־ראשי׃</p></div></div>
-      <div class="texte-fr"><p>Le maître panetier, voyant qu’il avait interprété dans un sens favorable, dit à Joseph: "Pour moi, dans mon songe j’avais trois corbeilles à claire voie sur la tête.</p></div>
-    </div><div class="seif" id="v-40-17">
-      <span class="seif-num">40:17</span>
-      <div class="texte-heb"><div class="heb-n"><p>וּבַסַּ֣ל הָֽעֶלְי֗וֹן מִכֹּ֛ל מַאֲכַ֥ל פַּרְעֹ֖ה מַעֲשֵׂ֣ה אֹפֶ֑ה וְהָע֗וֹף אֹכֵ֥ל אֹתָ֛ם מִן־הַסַּ֖ל מֵעַ֥ל רֹאשִֽׁי׃</p></div><div class="heb-s"><p>ובסל העליון מכל מאכל פרעה מעשה אפה והעוף אכל אתם מן־הסל מעל ראשי׃</p></div></div>
-      <div class="texte-fr"><p>La corbeille supérieure contenait tout ce que mange Pharaon en fait de boulangerie; et les oiseaux le becquetaient dans la corbeille, au dessus de ma tête."</p></div>
-    </div><div class="seif" id="v-40-18">
-      <span class="seif-num">40:18</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤עַן יוֹסֵף֙ וַיֹּ֔אמֶר זֶ֖ה פִּתְרֹנ֑וֹ שְׁלֹ֙שֶׁת֙ הַסַּלִּ֔ים שְׁלֹ֥שֶׁת יָמִ֖ים הֵֽם׃</p></div><div class="heb-s"><p>ויען יוסף ויאמר זה פתרנו שלשת הסלים שלשת ימים הם׃</p></div></div>
-      <div class="texte-fr"><p>Joseph répondit en ces termes: "En voici l’explication. Les trois corbeilles, ce sont trois jours.</p></div>
-    </div><div class="seif" id="v-40-19">
-      <span class="seif-num">40:19</span>
-      <div class="texte-heb"><div class="heb-n"><p>בְּע֣וֹד&thinsp;<b>׀</b> שְׁלֹ֣שֶׁת יָמִ֗ים יִשָּׂ֨א פַרְעֹ֤ה אֶת־רֹֽאשְׁךָ֙ מֵֽעָלֶ֔יךָ וְתָלָ֥ה אוֹתְךָ֖ עַל־עֵ֑ץ וְאָכַ֥ל הָע֛וֹף אֶת־בְּשָׂרְךָ֖ מֵעָלֶֽיךָ׃</p></div><div class="heb-s"><p>בעוד&thinsp;<b>׀</b> שלשת ימים ישא פרעה את־ראשך מעליך ותלה אותך על־עץ ואכל העוף את־בשרך מעליך׃</p></div></div>
-      <div class="texte-fr"><p>Trois jours encore et Pharaon te feratrancher la tête et attacher à un gibet; et les oiseaux viendront becqueter ta chair."</p></div>
-    </div><div class="seif" id="v-40-20">
-      <span class="seif-num">40:20</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֣י&thinsp;<b>׀</b> בַּיּ֣וֹם הַשְּׁלִישִׁ֗י י֚וֹם הֻלֶּ֣דֶת אֶת־פַּרְעֹ֔ה וַיַּ֥עַשׂ מִשְׁתֶּ֖ה לְכׇל־עֲבָדָ֑יו וַיִּשָּׂ֞א אֶת־רֹ֣אשׁ&thinsp;<b>׀</b> שַׂ֣ר הַמַּשְׁקִ֗ים וְאֶת־רֹ֛אשׁ שַׂ֥ר הָאֹפִ֖ים בְּת֥וֹךְ עֲבָדָֽיו׃</p></div><div class="heb-s"><p>ויהי&thinsp;<b>׀</b> ביום השלישי יום הלדת את־פרעה ויעש משתה לכל־עבדיו וישא את־ראש&thinsp;<b>׀</b> שר המשקים ואת־ראש שר האפים בתוך עבדיו׃</p></div></div>
-      <div class="texte-fr"><p>Or, le troisième jour, anniversaire de la naissance de Pharaon, celui ci donna un banquet à tous ses serviteurs. Il porta le maître échanson et le maître panetier sur la liste de ses serviteurs.</p></div>
-    </div><div class="seif" id="v-40-21">
-      <span class="seif-num">40:21</span>
-      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֛שֶׁב אֶת־שַׂ֥ר הַמַּשְׁקִ֖ים עַל־מַשְׁקֵ֑הוּ וַיִּתֵּ֥ן הַכּ֖וֹס עַל־כַּ֥ף פַּרְעֹֽה׃</p></div><div class="heb-s"><p>וישב את־שר המשקים על־משקהו ויתן הכוס על־כף פרעה׃</p></div></div>
-      <div class="texte-fr"><p>Il préposa de nouveau le maître échanson à sa boisson et celui-ci présenta la coupe à la main de Pharaon;</p></div>
-    </div><div class="seif" id="v-40-22">
-      <span class="seif-num">40:22</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְאֵ֛ת שַׂ֥ר הָאֹפִ֖ים תָּלָ֑ה כַּאֲשֶׁ֥ר פָּתַ֛ר לָהֶ֖ם יוֹסֵֽף׃</p></div><div class="heb-s"><p>ואת שר האפים תלה כאשר פתר להם יוסף׃</p></div></div>
-      <div class="texte-fr"><p>et le maître panetier, il le fit pendre, ainsi que l’avait présagé Joseph.</p></div>
-    </div><div class="seif" id="v-40-23">
-      <span class="seif-num">40:23</span>
-      <div class="texte-heb"><div class="heb-n"><p>וְלֹֽא־זָכַ֧ר שַֽׂר־הַמַּשְׁקִ֛ים אֶת־יוֹסֵ֖ף וַיִּשְׁכָּחֵֽהוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ולא־זכר שר־המשקים את־יוסף וישכחהו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
-      <div class="texte-fr"><p>Mais le maître échanson ne se souvint plus de Joseph, il l’oublia.</p></div>
+  <div class="bloc-texte">
+  <div class="bloc-hd">
+    <span>📜 Texte original</span>
+    <span>
+      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
+      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
+    </span>
+  </div>
+  <div class="bloc-corps">
+    <div class="texte-heb" id="txt-heb">
+      <p>['וַיֵּ֣שֶׁב יַעֲקֹ֔ב בְּאֶ֖רֶץ מְגוּרֵ֣י אָבִ֑יו בְּאֶ֖רֶץ כְּנָֽעַן׃', 'אֵ֣לֶּה&thinsp;<b>׀</b> תֹּלְד֣וֹת יַעֲקֹ֗ב יוֹסֵ֞ף בֶּן־שְׁבַֽע־עֶשְׂרֵ֤ה שָׁנָה֙ הָיָ֨ה רֹעֶ֤ה אֶת־אֶחָיו֙ בַּצֹּ֔אן וְה֣וּא נַ֗עַר אֶת־בְּנֵ֥י בִלְהָ֛ה וְאֶת־בְּנֵ֥י זִלְפָּ֖ה נְשֵׁ֣י אָבִ֑יו וַיָּבֵ֥א יוֹסֵ֛ף אֶת־דִּבָּתָ֥ם רָעָ֖ה אֶל־אֲבִיהֶֽם׃', 'וְיִשְׂרָאֵ֗ל אָהַ֤ב אֶת־יוֹסֵף֙ מִכׇּל־בָּנָ֔יו כִּֽי־בֶן־זְקֻנִ֥ים ה֖וּא ל֑וֹ וְעָ֥שָׂה ל֖וֹ כְּתֹ֥נֶת פַּסִּֽים׃', 'וַיִּרְא֣וּ אֶחָ֗יו כִּֽי־אֹת֞וֹ אָהַ֤ב אֲבִיהֶם֙ מִכׇּל־אֶחָ֔יו וַֽיִּשְׂנְא֖וּ אֹת֑וֹ וְלֹ֥א יָכְל֖וּ דַּבְּר֥וֹ לְשָׁלֹֽם׃', 'וַיַּחֲלֹ֤ם יוֹסֵף֙ חֲל֔וֹם וַיַּגֵּ֖ד לְאֶחָ֑יו וַיּוֹסִ֥פוּ ע֖וֹד שְׂנֹ֥א אֹתֽוֹ׃', 'וַיֹּ֖אמֶר אֲלֵיהֶ֑ם שִׁמְעוּ־נָ֕א הַחֲל֥וֹם הַזֶּ֖ה אֲשֶׁ֥ר חָלָֽמְתִּי׃', 'וְ֠הִנֵּ֠ה אֲנַ֜חְנוּ מְאַלְּמִ֤ים אֲלֻמִּים֙ בְּת֣וֹךְ הַשָּׂדֶ֔ה וְהִנֵּ֛ה קָ֥מָה אֲלֻמָּתִ֖י וְגַם־נִצָּ֑בָה וְהִנֵּ֤ה תְסֻבֶּ֙ינָה֙ אֲלֻמֹּ֣תֵיכֶ֔ם וַתִּֽשְׁתַּחֲוֶ֖יןָ לַאֲלֻמָּתִֽי׃', 'וַיֹּ֤אמְרוּ לוֹ֙ אֶחָ֔יו הֲמָלֹ֤ךְ תִּמְלֹךְ֙ עָלֵ֔ינוּ אִם־מָשׁ֥וֹל תִּמְשֹׁ֖ל בָּ֑נוּ וַיּוֹסִ֤פוּ עוֹד֙ שְׂנֹ֣א אֹת֔וֹ עַל־חֲלֹמֹתָ֖יו וְעַל־דְּבָרָֽיו׃', 'וַיַּחֲלֹ֥ם עוֹד֙ חֲל֣וֹם אַחֵ֔ר וַיְסַפֵּ֥ר אֹת֖וֹ לְאֶחָ֑יו וַיֹּ֗אמֶר הִנֵּ֨ה חָלַ֤מְתִּֽי חֲלוֹם֙ ע֔וֹד וְהִנֵּ֧ה הַשֶּׁ֣מֶשׁ וְהַיָּרֵ֗חַ וְאַחַ֤ד עָשָׂר֙ כּֽוֹכָבִ֔ים מִֽשְׁתַּחֲוִ֖ים לִֽי׃', 'וַיְסַפֵּ֣ר אֶל־אָבִיו֮ וְאֶל־אֶחָיו֒ וַיִּגְעַר־בּ֣וֹ אָבִ֔יו וַיֹּ֣אמֶר ל֔וֹ מָ֛ה הַחֲל֥וֹם הַזֶּ֖ה אֲשֶׁ֣ר חָלָ֑מְתָּ הֲב֣וֹא נָב֗וֹא אֲנִי֙ וְאִמְּךָ֣ וְאַחֶ֔יךָ לְהִשְׁתַּחֲוֺ֥ת לְךָ֖ אָֽרְצָה׃', 'וַיְקַנְאוּ־ב֖וֹ אֶחָ֑יו וְאָבִ֖יו שָׁמַ֥ר אֶת־הַדָּבָֽר׃', 'וַיֵּלְכ֖וּ אֶחָ֑יו לִרְע֛וֹת אֶׄתׄ־צֹ֥אן אֲבִיהֶ֖ם בִּשְׁכֶֽם׃', 'וַיֹּ֨אמֶר יִשְׂרָאֵ֜ל אֶל־יוֹסֵ֗ף הֲל֤וֹא אַחֶ֙יךָ֙ רֹעִ֣ים בִּשְׁכֶ֔ם לְכָ֖ה וְאֶשְׁלָחֲךָ֣ אֲלֵיהֶ֑ם וַיֹּ֥אמֶר ל֖וֹ הִנֵּֽנִי׃', 'וַיֹּ֣אמֶר ל֗וֹ לֶךְ־נָ֨א רְאֵ֜ה אֶת־שְׁל֤וֹם אַחֶ֙יךָ֙ וְאֶת־שְׁל֣וֹם הַצֹּ֔אן וַהֲשִׁבֵ֖נִי דָּבָ֑ר וַיִּשְׁלָחֵ֙הוּ֙ מֵעֵ֣מֶק חֶבְר֔וֹן וַיָּבֹ֖א שְׁכֶֽמָה׃', 'וַיִּמְצָאֵ֣הוּ אִ֔ישׁ וְהִנֵּ֥ה תֹעֶ֖ה בַּשָּׂדֶ֑ה וַיִּשְׁאָלֵ֧הוּ הָאִ֛ישׁ לֵאמֹ֖ר מַה־תְּבַקֵּֽשׁ׃', 'וַיֹּ֕אמֶר אֶת־אַחַ֖י אָנֹכִ֣י מְבַקֵּ֑שׁ הַגִּֽידָה־נָּ֣א לִ֔י אֵיפֹ֖ה הֵ֥ם רֹעִֽים׃', 'וַיֹּ֤אמֶר הָאִישׁ֙ נָסְע֣וּ מִזֶּ֔ה כִּ֤י שָׁמַ֙עְתִּי֙ אֹֽמְרִ֔ים נֵלְכָ֖ה דֹּתָ֑יְנָה וַיֵּ֤לֶךְ יוֹסֵף֙ אַחַ֣ר אֶחָ֔יו וַיִּמְצָאֵ֖ם בְּדֹתָֽן׃', 'וַיִּרְא֥וּ אֹת֖וֹ מֵרָחֹ֑ק וּבְטֶ֙רֶם֙ יִקְרַ֣ב אֲלֵיהֶ֔ם וַיִּֽתְנַכְּל֥וּ אֹת֖וֹ לַהֲמִיתֽוֹ׃', 'וַיֹּאמְר֖וּ אִ֣ישׁ אֶל־אָחִ֑יו הִנֵּ֗ה בַּ֛עַל הַחֲלֹמ֥וֹת הַלָּזֶ֖ה בָּֽא׃', 'וְעַתָּ֣ה&thinsp;<b>׀</b> לְכ֣וּ וְנַֽהַרְגֵ֗הוּ וְנַשְׁלִכֵ֙הוּ֙ בְּאַחַ֣ד הַבֹּר֔וֹת וְאָמַ֕רְנוּ חַיָּ֥ה רָעָ֖ה אֲכָלָ֑תְהוּ וְנִרְאֶ֕ה מַה־יִּהְי֖וּ חֲלֹמֹתָֽיו׃', 'וַיִּשְׁמַ֣ע רְאוּבֵ֔ן וַיַּצִּלֵ֖הוּ מִיָּדָ֑ם וַיֹּ֕אמֶר לֹ֥א נַכֶּ֖נּוּ נָֽפֶשׁ׃', 'וַיֹּ֨אמֶר אֲלֵהֶ֣ם&thinsp;<small>׀</small>&thinsp;רְאוּבֵן֮ אַל־תִּשְׁפְּכוּ־דָם֒ הַשְׁלִ֣יכוּ אֹת֗וֹ אֶל־הַבּ֤וֹר הַזֶּה֙ אֲשֶׁ֣ר בַּמִּדְבָּ֔ר וְיָ֖ד אַל־תִּשְׁלְחוּ־ב֑וֹ לְמַ֗עַן הַצִּ֤יל אֹתוֹ֙ מִיָּדָ֔ם לַהֲשִׁיב֖וֹ אֶל־אָבִֽיו׃', 'וַיְהִ֕י כַּֽאֲשֶׁר־בָּ֥א יוֹסֵ֖ף אֶל־אֶחָ֑יו וַיַּפְשִׁ֤יטוּ אֶת־יוֹסֵף֙ אֶת־כֻּתׇּנְתּ֔וֹ אֶת־כְּתֹ֥נֶת הַפַּסִּ֖ים אֲשֶׁ֥ר עָלָֽיו׃', 'וַיִּ֨קָּחֻ֔הוּ וַיַּשְׁלִ֥כוּ אֹת֖וֹ הַבֹּ֑רָה וְהַבּ֣וֹר רֵ֔ק אֵ֥ין בּ֖וֹ מָֽיִם׃', 'וַיֵּשְׁבוּ֮ לֶֽאֱכׇל־לֶ֒חֶם֒ וַיִּשְׂא֤וּ עֵֽינֵיהֶם֙ וַיִּרְא֔וּ וְהִנֵּה֙ אֹרְחַ֣ת יִשְׁמְעֵאלִ֔ים בָּאָ֖ה מִגִּלְעָ֑ד וּגְמַלֵּיהֶ֣ם נֹֽשְׂאִ֗ים נְכֹאת֙ וּצְרִ֣י וָלֹ֔ט הוֹלְכִ֖ים לְהוֹרִ֥יד מִצְרָֽיְמָה׃', 'וַיֹּ֥אמֶר יְהוּדָ֖ה אֶל־אֶחָ֑יו מַה־בֶּ֗צַע כִּ֤י נַהֲרֹג֙ אֶת־אָחִ֔ינוּ וְכִסִּ֖ינוּ אֶת־דָּמֽוֹ׃', 'לְכ֞וּ וְנִמְכְּרֶ֣נּוּ לַיִּשְׁמְעֵאלִ֗ים וְיָדֵ֙נוּ֙ אַל־תְּהִי־ב֔וֹ כִּֽי־אָחִ֥ינוּ בְשָׂרֵ֖נוּ ה֑וּא וַֽיִּשְׁמְע֖וּ אֶחָֽיו׃', 'וַיַּֽעַבְרוּ֩ אֲנָשִׁ֨ים מִדְיָנִ֜ים סֹֽחֲרִ֗ים וַֽיִּמְשְׁכוּ֙ וַיַּֽעֲל֤וּ אֶת־יוֹסֵף֙ מִן־הַבּ֔וֹר וַיִּמְכְּר֧וּ אֶת־יוֹסֵ֛ף לַיִּשְׁמְעֵאלִ֖ים בְּעֶשְׂרִ֣ים כָּ֑סֶף וַיָּבִ֥יאוּ אֶת־יוֹסֵ֖ף מִצְרָֽיְמָה׃', 'וַיָּ֤שׇׁב רְאוּבֵן֙ אֶל־הַבּ֔וֹר וְהִנֵּ֥ה אֵין־יוֹסֵ֖ף בַּבּ֑וֹר וַיִּקְרַ֖ע אֶת־בְּגָדָֽיו׃', 'וַיָּ֥שׇׁב אֶל־אֶחָ֖יו וַיֹּאמַ֑ר הַיֶּ֣לֶד אֵינֶ֔נּוּ וַאֲנִ֖י אָ֥נָה אֲנִי־בָֽא׃', 'וַיִּקְח֖וּ אֶת־כְּתֹ֣נֶת יוֹסֵ֑ף וַֽיִּשְׁחֲטוּ֙ שְׂעִ֣יר עִזִּ֔ים וַיִּטְבְּל֥וּ אֶת־הַכֻּתֹּ֖נֶת בַּדָּֽם׃', 'וַֽיְשַׁלְּח֞וּ אֶת־כְּתֹ֣נֶת הַפַּסִּ֗ים וַיָּבִ֙יאוּ֙ אֶל־אֲבִיהֶ֔ם וַיֹּאמְר֖וּ זֹ֣את מָצָ֑אנוּ הַכֶּר־נָ֗א הַכְּתֹ֧נֶת בִּנְךָ֛ הִ֖וא אִם־לֹֽא׃', 'וַיַּכִּירָ֤הּ וַיֹּ֙אמֶר֙ כְּתֹ֣נֶת בְּנִ֔י חַיָּ֥ה רָעָ֖ה אֲכָלָ֑תְהוּ טָרֹ֥ף טֹרַ֖ף יוֹסֵֽף׃', 'וַיִּקְרַ֤ע יַעֲקֹב֙ שִׂמְלֹתָ֔יו וַיָּ֥שֶׂם שַׂ֖ק בְּמׇתְנָ֑יו וַיִּתְאַבֵּ֥ל עַל־בְּנ֖וֹ יָמִ֥ים רַבִּֽים׃', 'וַיָּקֻ֩מוּ֩ כׇל־בָּנָ֨יו וְכׇל־בְּנֹתָ֜יו לְנַחֲמ֗וֹ וַיְמָאֵן֙ לְהִתְנַחֵ֔ם וַיֹּ֕אמֶר כִּֽי־אֵרֵ֧ד אֶל־בְּנִ֛י אָבֵ֖ל שְׁאֹ֑לָה וַיֵּ֥בְךְּ אֹת֖וֹ אָבִֽיו׃', 'וְהַ֨מְּדָנִ֔ים מָכְר֥וּ אֹת֖וֹ אֶל־מִצְרָ֑יִם לְפֽוֹטִיפַר֙ סְרִ֣יס פַּרְעֹ֔ה שַׂ֖ר הַטַּבָּחִֽים׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+      <p>['וַֽיְהִי֙ בָּעֵ֣ת הַהִ֔וא וַיֵּ֥רֶד יְהוּדָ֖ה מֵאֵ֣ת אֶחָ֑יו וַיֵּ֛ט עַד־אִ֥ישׁ עֲדֻלָּמִ֖י וּשְׁמ֥וֹ חִירָֽה׃', 'וַיַּרְא־שָׁ֧ם יְהוּדָ֛ה בַּת־אִ֥ישׁ כְּנַעֲנִ֖י וּשְׁמ֣וֹ שׁ֑וּעַ וַיִּקָּחֶ֖הָ וַיָּבֹ֥א אֵלֶֽיהָ׃', 'וַתַּ֖הַר וַתֵּ֣לֶד בֵּ֑ן וַיִּקְרָ֥א אֶת־שְׁמ֖וֹ עֵֽר׃', 'וַתַּ֥הַר ע֖וֹד וַתֵּ֣לֶד בֵּ֑ן וַתִּקְרָ֥א אֶת־שְׁמ֖וֹ אוֹנָֽן׃', 'וַתֹּ֤סֶף עוֹד֙ וַתֵּ֣לֶד בֵּ֔ן וַתִּקְרָ֥א אֶת־שְׁמ֖וֹ שֵׁלָ֑ה וְהָיָ֥ה בִכְזִ֖יב בְּלִדְתָּ֥הּ אֹתֽוֹ׃', 'וַיִּקַּ֧ח יְהוּדָ֛ה אִשָּׁ֖ה לְעֵ֣ר בְּכוֹר֑וֹ וּשְׁמָ֖הּ תָּמָֽר׃', 'וַיְהִ֗י עֵ֚ר בְּכ֣וֹר יְהוּדָ֔ה רַ֖ע בְּעֵינֵ֣י יְהֹוָ֑ה וַיְמִתֵ֖הוּ יְהֹוָֽה׃', 'וַיֹּ֤אמֶר יְהוּדָה֙ לְאוֹנָ֔ן בֹּ֛א אֶל־אֵ֥שֶׁת אָחִ֖יךָ וְיַבֵּ֣ם אֹתָ֑הּ וְהָקֵ֥ם זֶ֖רַע לְאָחִֽיךָ׃', 'וַיֵּ֣דַע אוֹנָ֔ן כִּ֛י לֹּ֥א ל֖וֹ יִהְיֶ֣ה הַזָּ֑רַע וְהָיָ֞ה אִם־בָּ֨א אֶל־אֵ֤שֶׁת אָחִיו֙ וְשִׁחֵ֣ת אַ֔רְצָה לְבִלְתִּ֥י נְתׇן־זֶ֖רַע לְאָחִֽיו׃', 'וַיֵּ֛רַע בְּעֵינֵ֥י יְהֹוָ֖ה אֲשֶׁ֣ר עָשָׂ֑ה וַיָּ֖מֶת גַּם־אֹתֽוֹ׃', 'וַיֹּ֣אמֶר יְהוּדָה֩ לְתָמָ֨ר כַּלָּת֜וֹ שְׁבִ֧י אַלְמָנָ֣ה בֵית־אָבִ֗יךְ עַד־יִגְדַּל֙ שֵׁלָ֣ה בְנִ֔י כִּ֣י אָמַ֔ר פֶּן־יָמ֥וּת גַּם־ה֖וּא כְּאֶחָ֑יו וַתֵּ֣לֶךְ תָּמָ֔ר וַתֵּ֖שֶׁב בֵּ֥ית אָבִֽיהָ׃', 'וַיִּרְבּוּ֙ הַיָּמִ֔ים וַתָּ֖מׇת בַּת־שׁ֣וּעַ אֵֽשֶׁת־יְהוּדָ֑ה וַיִּנָּ֣חֶם יְהוּדָ֗ה וַיַּ֜עַל עַל־גֹּֽזְזֵ֤י צֹאנוֹ֙ ה֗וּא וְחִירָ֛ה רֵעֵ֥הוּ הָעֲדֻלָּמִ֖י תִּמְנָֽתָה׃', 'וַיֻּגַּ֥ד לְתָמָ֖ר לֵאמֹ֑ר הִנֵּ֥ה חָמִ֛יךְ עֹלֶ֥ה תִמְנָ֖תָה לָגֹ֥ז צֹאנֽוֹ׃', 'וַתָּ֩סַר֩ בִּגְדֵ֨י אַלְמְנוּתָ֜הּ מֵֽעָלֶ֗יהָ וַתְּכַ֤ס בַּצָּעִיף֙ וַתִּתְעַלָּ֔ף וַתֵּ֙שֶׁב֙ בְּפֶ֣תַח עֵינַ֔יִם אֲשֶׁ֖ר עַל־דֶּ֣רֶךְ תִּמְנָ֑תָה כִּ֤י רָאֲתָה֙ כִּֽי־גָדַ֣ל שֵׁלָ֔ה וְהִ֕וא לֹֽא־נִתְּנָ֥ה ל֖וֹ לְאִשָּֽׁה׃', 'וַיִּרְאֶ֣הָ יְהוּדָ֔ה וַֽיַּחְשְׁבֶ֖הָ לְזוֹנָ֑ה כִּ֥י כִסְּתָ֖ה פָּנֶֽיהָ׃', 'וַיֵּ֨ט אֵלֶ֜יהָ אֶל־הַדֶּ֗רֶךְ וַיֹּ֙אמֶר֙ הָֽבָה־נָּא֙ אָב֣וֹא אֵלַ֔יִךְ כִּ֚י לֹ֣א יָדַ֔ע כִּ֥י כַלָּת֖וֹ הִ֑וא וַתֹּ֙אמֶר֙ מַה־תִּתֶּן־לִ֔י כִּ֥י תָב֖וֹא אֵלָֽי׃', 'וַיֹּ֕אמֶר אָנֹכִ֛י אֲשַׁלַּ֥ח גְּדִֽי־עִזִּ֖ים מִן־הַצֹּ֑אן וַתֹּ֕אמֶר אִם־תִּתֵּ֥ן עֵרָב֖וֹן עַ֥ד שׇׁלְחֶֽךָ׃', 'וַיֹּ֗אמֶר מָ֣ה הָעֵֽרָבוֹן֮ אֲשֶׁ֣ר אֶתֶּן־לָךְ֒ וַתֹּ֗אמֶר חֹתָֽמְךָ֙ וּפְתִילֶ֔ךָ וּמַטְּךָ֖ אֲשֶׁ֣ר בְּיָדֶ֑ךָ וַיִּתֶּן־לָ֛הּ וַיָּבֹ֥א אֵלֶ֖יהָ וַתַּ֥הַר לֽוֹ׃', 'וַתָּ֣קׇם וַתֵּ֔לֶךְ וַתָּ֥סַר צְעִיפָ֖הּ מֵעָלֶ֑יהָ וַתִּלְבַּ֖שׁ בִּגְדֵ֥י אַלְמְנוּתָֽהּ׃', 'וַיִּשְׁלַ֨ח יְהוּדָ֜ה אֶת־גְּדִ֣י הָֽעִזִּ֗ים בְּיַד֙ רֵעֵ֣הוּ הָֽעֲדֻלָּמִ֔י לָקַ֥חַת הָעֵרָב֖וֹן מִיַּ֣ד הָאִשָּׁ֑ה וְלֹ֖א מְצָאָֽהּ׃', 'וַיִּשְׁאַ֞ל אֶת־אַנְשֵׁ֤י מְקֹמָהּ֙ לֵאמֹ֔ר אַיֵּ֧ה הַקְּדֵשָׁ֛ה הִ֥וא בָעֵינַ֖יִם עַל־הַדָּ֑רֶךְ וַיֹּ֣אמְר֔וּ לֹא־הָיְתָ֥ה בָזֶ֖ה קְדֵשָֽׁה׃', 'וַיָּ֙שׇׁב֙ אֶל־יְהוּדָ֔ה וַיֹּ֖אמֶר לֹ֣א מְצָאתִ֑יהָ וְגַ֨ם אַנְשֵׁ֤י הַמָּקוֹם֙ אָֽמְר֔וּ לֹא־הָיְתָ֥ה בָזֶ֖ה קְדֵשָֽׁה׃', 'וַיֹּ֤אמֶר יְהוּדָה֙ תִּֽקַּֽח־לָ֔הּ פֶּ֖ן נִהְיֶ֣ה לָב֑וּז הִנֵּ֤ה שָׁלַ֙חְתִּי֙ הַגְּדִ֣י הַזֶּ֔ה וְאַתָּ֖ה לֹ֥א מְצָאתָֽהּ׃', 'וַיְהִ֣י&thinsp;<b>׀</b> כְּמִשְׁלֹ֣שׁ חֳדָשִׁ֗ים וַיֻּגַּ֨ד לִֽיהוּדָ֤ה לֵאמֹר֙ זָֽנְתָה֙ תָּמָ֣ר כַּלָּתֶ֔ךָ וְגַ֛ם הִנֵּ֥ה הָרָ֖ה לִזְנוּנִ֑ים וַיֹּ֣אמֶר יְהוּדָ֔ה הוֹצִיא֖וּהָ וְתִשָּׂרֵֽף׃', 'הִ֣וא מוּצֵ֗את וְהִ֨יא שָׁלְחָ֤ה אֶל־חָמִ֙יהָ֙ לֵאמֹ֔ר לְאִישׁ֙ אֲשֶׁר־אֵ֣לֶּה לּ֔וֹ אָנֹכִ֖י הָרָ֑ה וַתֹּ֙אמֶר֙ הַכֶּר־נָ֔א לְמִ֞י הַחֹתֶ֧מֶת וְהַפְּתִילִ֛ים וְהַמַּטֶּ֖ה הָאֵֽלֶּה׃', 'וַיַּכֵּ֣ר יְהוּדָ֗ה וַיֹּ֙אמֶר֙ צָֽדְקָ֣ה מִמֶּ֔נִּי כִּֽי־עַל־כֵּ֥ן לֹא־נְתַתִּ֖יהָ לְשֵׁלָ֣ה בְנִ֑י וְלֹֽא־יָסַ֥ף ע֖וֹד לְדַעְתָּֽהּ׃', 'וַיְהִ֖י בְּעֵ֣ת לִדְתָּ֑הּ וְהִנֵּ֥ה תְאוֹמִ֖ים בְּבִטְנָֽהּ׃', 'וַיְהִ֥י בְלִדְתָּ֖הּ וַיִּתֶּן־יָ֑ד וַתִּקַּ֣ח הַמְיַלֶּ֗דֶת וַתִּקְשֹׁ֨ר עַל־יָד֤וֹ שָׁנִי֙ לֵאמֹ֔ר זֶ֖ה יָצָ֥א רִאשֹׁנָֽה׃', 'וַיְהִ֣י&thinsp;<b>׀</b> כְּמֵשִׁ֣יב יָד֗וֹ וְהִנֵּה֙ יָצָ֣א אָחִ֔יו וַתֹּ֕אמֶר מַה־פָּרַ֖צְתָּ עָלֶ֣יךָ פָּ֑רֶץ וַיִּקְרָ֥א שְׁמ֖וֹ פָּֽרֶץ׃', 'וְאַחַר֙ יָצָ֣א אָחִ֔יו אֲשֶׁ֥ר עַל־יָד֖וֹ הַשָּׁנִ֑י וַיִּקְרָ֥א שְׁמ֖וֹ זָֽרַח׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;']</p>
+      <p>['וְיוֹסֵ֖ף הוּרַ֣ד מִצְרָ֑יְמָה וַיִּקְנֵ֡הוּ פּוֹטִיפַר֩ סְרִ֨יס פַּרְעֹ֜ה שַׂ֤ר הַטַּבָּחִים֙ אִ֣ישׁ מִצְרִ֔י מִיַּד֙ הַיִּשְׁמְעֵאלִ֔ים אֲשֶׁ֥ר הוֹרִדֻ֖הוּ שָֽׁמָּה׃', 'וַיְהִ֤י יְהֹוָה֙ אֶת־יוֹסֵ֔ף וַיְהִ֖י אִ֣ישׁ מַצְלִ֑יחַ וַיְהִ֕י בְּבֵ֖ית אֲדֹנָ֥יו הַמִּצְרִֽי׃', 'וַיַּ֣רְא אֲדֹנָ֔יו כִּ֥י יְהֹוָ֖ה אִתּ֑וֹ וְכֹל֙ אֲשֶׁר־ה֣וּא עֹשֶׂ֔ה יְהֹוָ֖ה מַצְלִ֥יחַ בְּיָדֽוֹ׃', 'וַיִּמְצָ֨א יוֹסֵ֥ף חֵ֛ן בְּעֵינָ֖יו וַיְשָׁ֣רֶת אֹת֑וֹ וַיַּפְקִדֵ֙הוּ֙ עַל־בֵּית֔וֹ וְכׇל־יֶשׁ־ל֖וֹ נָתַ֥ן בְּיָדֽוֹ׃', 'וַיְהִ֡י מֵאָז֩ הִפְקִ֨יד אֹת֜וֹ בְּבֵית֗וֹ וְעַל֙ כׇּל־אֲשֶׁ֣ר יֶשׁ־ל֔וֹ וַיְבָ֧רֶךְ יְהֹוָ֛ה אֶת־בֵּ֥ית הַמִּצְרִ֖י בִּגְלַ֣ל יוֹסֵ֑ף וַיְהִ֞י בִּרְכַּ֤ת יְהֹוָה֙ בְּכׇל־אֲשֶׁ֣ר יֶשׁ־ל֔וֹ בַּבַּ֖יִת וּבַשָּׂדֶֽה׃', 'וַיַּעֲזֹ֣ב כׇּל־אֲשֶׁר־לוֹ֮ בְּיַד־יוֹסֵף֒ וְלֹא־יָדַ֤ע אִתּוֹ֙ מְא֔וּמָה כִּ֥י אִם־הַלֶּ֖חֶם אֲשֶׁר־ה֣וּא אוֹכֵ֑ל וַיְהִ֣י יוֹסֵ֔ף יְפֵה־תֹ֖אַר וִיפֵ֥ה מַרְאֶֽה׃', 'וַיְהִ֗י אַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וַתִּשָּׂ֧א אֵֽשֶׁת־אֲדֹנָ֛יו אֶת־עֵינֶ֖יהָ אֶל־יוֹסֵ֑ף וַתֹּ֖אמֶר שִׁכְבָ֥ה עִמִּֽי׃', 'וַיְמָאֵ֓ן&thinsp;<b>׀</b> וַיֹּ֙אמֶר֙ אֶל־אֵ֣שֶׁת אֲדֹנָ֔יו הֵ֣ן אֲדֹנִ֔י לֹא־יָדַ֥ע אִתִּ֖י מַה־בַּבָּ֑יִת וְכֹ֥ל אֲשֶׁר־יֶשׁ־ל֖וֹ נָתַ֥ן בְּיָדִֽי׃', 'אֵינֶ֨נּוּ גָד֜וֹל בַּבַּ֣יִת הַזֶּה֮ מִמֶּ֒נִּי֒ וְלֹֽא־חָשַׂ֤ךְ מִמֶּ֙נִּי֙ מְא֔וּמָה כִּ֥י אִם־אוֹתָ֖ךְ בַּאֲשֶׁ֣ר אַתְּ־אִשְׁתּ֑וֹ וְאֵ֨יךְ אֶֽעֱשֶׂ֜ה הָרָעָ֤ה הַגְּדֹלָה֙ הַזֹּ֔את וְחָטָ֖אתִי לֵֽאלֹהִֽים׃', 'וַיְהִ֕י כְּדַבְּרָ֥הּ אֶל־יוֹסֵ֖ף י֣וֹם&thinsp;<small>׀</small>&thinsp;י֑וֹם וְלֹא־שָׁמַ֥ע אֵלֶ֛יהָ לִשְׁכַּ֥ב אֶצְלָ֖הּ לִהְי֥וֹת עִמָּֽהּ׃', 'וַֽיְהִי֙ כְּהַיּ֣וֹם הַזֶּ֔ה וַיָּבֹ֥א הַבַּ֖יְתָה לַעֲשׂ֣וֹת מְלַאכְתּ֑וֹ וְאֵ֨ין אִ֜ישׁ מֵאַנְשֵׁ֥י הַבַּ֛יִת שָׁ֖ם בַּבָּֽיִת׃', 'וַתִּתְפְּשֵׂ֧הוּ בְּבִגְד֛וֹ לֵאמֹ֖ר שִׁכְבָ֣ה עִמִּ֑י וַיַּעֲזֹ֤ב בִּגְדוֹ֙ בְּיָדָ֔הּ וַיָּ֖נׇס וַיֵּצֵ֥א הַחֽוּצָה׃', 'וַֽיְהִי֙ כִּרְאוֹתָ֔הּ כִּֽי־עָזַ֥ב בִּגְד֖וֹ בְּיָדָ֑הּ וַיָּ֖נׇס הַחֽוּצָה׃', 'וַתִּקְרָ֞א לְאַנְשֵׁ֣י בֵיתָ֗הּ וַתֹּ֤אמֶר לָהֶם֙ לֵאמֹ֔ר רְא֗וּ הֵ֥בִיא לָ֛נוּ אִ֥ישׁ עִבְרִ֖י לְצַ֣חֶק בָּ֑נוּ בָּ֤א אֵלַי֙ לִשְׁכַּ֣ב עִמִּ֔י וָאֶקְרָ֖א בְּק֥וֹל גָּדֽוֹל׃', 'וַיְהִ֣י כְשׇׁמְע֔וֹ כִּֽי־הֲרִימֹ֥תִי קוֹלִ֖י וָאֶקְרָ֑א וַיַּעֲזֹ֤ב בִּגְדוֹ֙ אֶצְלִ֔י וַיָּ֖נׇס וַיֵּצֵ֥א הַחֽוּצָה׃', 'וַתַּנַּ֥ח בִּגְד֖וֹ אֶצְלָ֑הּ עַד־בּ֥וֹא אֲדֹנָ֖יו אֶל־בֵּיתֽוֹ׃', 'וַתְּדַבֵּ֣ר אֵלָ֔יו כַּדְּבָרִ֥ים הָאֵ֖לֶּה לֵאמֹ֑ר בָּֽא־אֵלַ֞י הָעֶ֧בֶד הָֽעִבְרִ֛י אֲשֶׁר־הֵבֵ֥אתָ לָּ֖נוּ לְצַ֥חֶק בִּֽי׃', 'וַיְהִ֕י כַּהֲרִימִ֥י קוֹלִ֖י וָאֶקְרָ֑א וַיַּעֲזֹ֥ב בִּגְד֛וֹ אֶצְלִ֖י וַיָּ֥נׇס הַחֽוּצָה׃', 'וַיְהִי֩ כִשְׁמֹ֨עַ אֲדֹנָ֜יו אֶת־דִּבְרֵ֣י אִשְׁתּ֗וֹ אֲשֶׁ֨ר דִּבְּרָ֤ה אֵלָיו֙ לֵאמֹ֔ר כַּדְּבָרִ֣ים הָאֵ֔לֶּה עָ֥שָׂה לִ֖י עַבְדֶּ֑ךָ וַיִּ֖חַר אַפּֽוֹ׃', 'וַיִּקַּח֩ אֲדֹנֵ֨י יוֹסֵ֜ף אֹת֗וֹ וַֽיִּתְּנֵ֙הוּ֙ אֶל־בֵּ֣ית הַסֹּ֔הַר מְק֕וֹם אֲשֶׁר־<span class="mam-kq"><span class="mam-kq-q">[אֲסִירֵ֥י]</span> <span class="mam-kq-k">(אסורי)</span></span> הַמֶּ֖לֶךְ אֲסוּרִ֑ים וַֽיְהִי־שָׁ֖ם בְּבֵ֥ית הַסֹּֽהַר׃', 'וַיְהִ֤י יְהֹוָה֙ אֶת־יוֹסֵ֔ף וַיֵּ֥ט אֵלָ֖יו חָ֑סֶד וַיִּתֵּ֣ן חִנּ֔וֹ בְּעֵינֵ֖י שַׂ֥ר בֵּית־הַסֹּֽהַר׃', 'וַיִּתֵּ֞ן שַׂ֤ר בֵּית־הַסֹּ֙הַר֙ בְּיַד־יוֹסֵ֔ף אֵ֚ת כׇּל־הָ֣אֲסִירִ֔ם אֲשֶׁ֖ר בְּבֵ֣ית הַסֹּ֑הַר וְאֵ֨ת כׇּל־אֲשֶׁ֤ר עֹשִׂים֙ שָׁ֔ם ה֖וּא הָיָ֥ה עֹשֶֽׂה׃', 'אֵ֣ין&thinsp;<b>׀</b> שַׂ֣ר בֵּית־הַסֹּ֗הַר רֹאֶ֤ה אֶֽת־כׇּל־מְא֙וּמָה֙ בְּיָד֔וֹ בַּאֲשֶׁ֥ר יְהֹוָ֖ה אִתּ֑וֹ וַֽאֲשֶׁר־ה֥וּא עֹשֶׂ֖ה יְהֹוָ֥ה מַצְלִֽיחַ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
+      <p>['וַיְהִ֗י אַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה חָ֥טְא֛וּ מַשְׁקֵ֥ה מֶֽלֶךְ־מִצְרַ֖יִם וְהָאֹפֶ֑ה לַאֲדֹנֵיהֶ֖ם לְמֶ֥לֶךְ מִצְרָֽיִם׃', 'וַיִּקְצֹ֣ף פַּרְעֹ֔ה עַ֖ל שְׁנֵ֣י סָרִיסָ֑יו עַ֚ל שַׂ֣ר הַמַּשְׁקִ֔ים וְעַ֖ל שַׂ֥ר הָאוֹפִֽים׃', 'וַיִּתֵּ֨ן אֹתָ֜ם בְּמִשְׁמַ֗ר בֵּ֛ית שַׂ֥ר הַטַּבָּחִ֖ים אֶל־בֵּ֣ית הַסֹּ֑הַר מְק֕וֹם אֲשֶׁ֥ר יוֹסֵ֖ף אָס֥וּר שָֽׁם׃', 'וַ֠יִּפְקֹ֠ד שַׂ֣ר הַטַּבָּחִ֧ים אֶת־יוֹסֵ֛ף אִתָּ֖ם וַיְשָׁ֣רֶת אֹתָ֑ם וַיִּהְי֥וּ יָמִ֖ים בְּמִשְׁמָֽר׃', 'וַיַּֽחַלְמוּ֩ חֲל֨וֹם שְׁנֵיהֶ֜ם אִ֤ישׁ חֲלֹמוֹ֙ בְּלַ֣יְלָה אֶחָ֔ד אִ֖ישׁ כְּפִתְר֣וֹן חֲלֹמ֑וֹ הַמַּשְׁקֶ֣ה וְהָאֹפֶ֗ה אֲשֶׁר֙ לְמֶ֣לֶךְ מִצְרַ֔יִם אֲשֶׁ֥ר אֲסוּרִ֖ים בְּבֵ֥ית הַסֹּֽהַר׃', 'וַיָּבֹ֧א אֲלֵיהֶ֛ם יוֹסֵ֖ף בַּבֹּ֑קֶר וַיַּ֣רְא אֹתָ֔ם וְהִנָּ֖ם זֹעֲפִֽים׃', 'וַיִּשְׁאַ֞ל אֶת־סְרִיסֵ֣י פַרְעֹ֗ה אֲשֶׁ֨ר אִתּ֧וֹ בְמִשְׁמַ֛ר בֵּ֥ית אֲדֹנָ֖יו לֵאמֹ֑ר מַדּ֛וּעַ פְּנֵיכֶ֥ם רָעִ֖ים הַיּֽוֹם׃', 'וַיֹּאמְר֣וּ אֵלָ֔יו חֲל֣וֹם חָלַ֔מְנוּ וּפֹתֵ֖ר אֵ֣ין אֹת֑וֹ וַיֹּ֨אמֶר אֲלֵהֶ֜ם יוֹסֵ֗ף הֲל֤וֹא לֵֽאלֹהִים֙ פִּתְרֹנִ֔ים סַפְּרוּ־נָ֖א לִֽי׃', 'וַיְסַפֵּ֧ר שַֽׂר־הַמַּשְׁקִ֛ים אֶת־חֲלֹמ֖וֹ לְיוֹסֵ֑ף וַיֹּ֣אמֶר ל֔וֹ בַּחֲלוֹמִ֕י וְהִנֵּה־גֶ֖פֶן לְפָנָֽי׃', 'וּבַגֶּ֖פֶן שְׁלֹשָׁ֣ה שָׂרִיגִ֑ם וְהִ֤וא כְפֹרַ֙חַת֙ עָלְתָ֣ה נִצָּ֔הּ הִבְשִׁ֥ילוּ אַשְׁכְּלֹתֶ֖יהָ עֲנָבִֽים׃', 'וְכ֥וֹס פַּרְעֹ֖ה בְּיָדִ֑י וָאֶקַּ֣ח אֶת־הָֽעֲנָבִ֗ים וָֽאֶשְׂחַ֤ט אֹתָם֙ אֶל־כּ֣וֹס פַּרְעֹ֔ה וָאֶתֵּ֥ן אֶת־הַכּ֖וֹס עַל־כַּ֥ף פַּרְעֹֽה׃', 'וַיֹּ֤אמֶר לוֹ֙ יוֹסֵ֔ף זֶ֖ה פִּתְרֹנ֑וֹ שְׁלֹ֙שֶׁת֙ הַשָּׂ֣רִגִ֔ים שְׁלֹ֥שֶׁת יָמִ֖ים הֵֽם׃', 'בְּע֣וֹד&thinsp;<b>׀</b> שְׁלֹ֣שֶׁת יָמִ֗ים יִשָּׂ֤א פַרְעֹה֙ אֶת־רֹאשֶׁ֔ךָ וַהֲשִֽׁיבְךָ֖ עַל־כַּנֶּ֑ךָ וְנָתַתָּ֤ כוֹס־פַּרְעֹה֙ בְּיָד֔וֹ כַּמִּשְׁפָּט֙ הָֽרִאשׁ֔וֹן אֲשֶׁ֥ר הָיִ֖יתָ מַשְׁקֵֽהוּ׃', 'כִּ֧י אִם־זְכַרְתַּ֣נִי אִתְּךָ֗ כַּאֲשֶׁר֙ יִ֣יטַב לָ֔ךְ וְעָשִֽׂיתָ־נָּ֥א עִמָּדִ֖י חָ֑סֶד וְהִזְכַּרְתַּ֙נִי֙ אֶל־פַּרְעֹ֔ה וְהוֹצֵאתַ֖נִי מִן־הַבַּ֥יִת הַזֶּֽה׃', 'כִּֽי־גֻנֹּ֣ב גֻּנַּ֔בְתִּי מֵאֶ֖רֶץ הָעִבְרִ֑ים וְגַם־פֹּה֙ לֹא־עָשִׂ֣יתִֽי מְא֔וּמָה כִּֽי־שָׂמ֥וּ אֹתִ֖י בַּבּֽוֹר׃', 'וַיַּ֥רְא שַׂר־הָאֹפִ֖ים כִּ֣י ט֣וֹב פָּתָ֑ר וַיֹּ֙אמֶר֙ אֶל־יוֹסֵ֔ף אַף־אֲנִי֙ בַּחֲלוֹמִ֔י וְהִנֵּ֗ה שְׁלֹשָׁ֛ה סַלֵּ֥י חֹרִ֖י עַל־רֹאשִֽׁי׃', 'וּבַסַּ֣ל הָֽעֶלְי֗וֹן מִכֹּ֛ל מַאֲכַ֥ל פַּרְעֹ֖ה מַעֲשֵׂ֣ה אֹפֶ֑ה וְהָע֗וֹף אֹכֵ֥ל אֹתָ֛ם מִן־הַסַּ֖ל מֵעַ֥ל רֹאשִֽׁי׃', 'וַיַּ֤עַן יוֹסֵף֙ וַיֹּ֔אמֶר זֶ֖ה פִּתְרֹנ֑וֹ שְׁלֹ֙שֶׁת֙ הַסַּלִּ֔ים שְׁלֹ֥שֶׁת יָמִ֖ים הֵֽם׃', 'בְּע֣וֹד&thinsp;<b>׀</b> שְׁלֹ֣שֶׁת יָמִ֗ים יִשָּׂ֨א פַרְעֹ֤ה אֶת־רֹֽאשְׁךָ֙ מֵֽעָלֶ֔יךָ וְתָלָ֥ה אוֹתְךָ֖ עַל־עֵ֑ץ וְאָכַ֥ל הָע֛וֹף אֶת־בְּשָׂרְךָ֖ מֵעָלֶֽיךָ׃', 'וַיְהִ֣י&thinsp;<b>׀</b> בַּיּ֣וֹם הַשְּׁלִישִׁ֗י י֚וֹם הֻלֶּ֣דֶת אֶת־פַּרְעֹ֔ה וַיַּ֥עַשׂ מִשְׁתֶּ֖ה לְכׇל־עֲבָדָ֑יו וַיִּשָּׂ֞א אֶת־רֹ֣אשׁ&thinsp;<b>׀</b> שַׂ֣ר הַמַּשְׁקִ֗ים וְאֶת־רֹ֛אשׁ שַׂ֥ר הָאֹפִ֖ים בְּת֥וֹךְ עֲבָדָֽיו׃', 'וַיָּ֛שֶׁב אֶת־שַׂ֥ר הַמַּשְׁקִ֖ים עַל־מַשְׁקֵ֑הוּ וַיִּתֵּ֥ן הַכּ֖וֹס עַל־כַּ֥ף פַּרְעֹֽה׃', 'וְאֵ֛ת שַׂ֥ר הָאֹפִ֖ים תָּלָ֑ה כַּאֲשֶׁ֥ר פָּתַ֛ר לָהֶ֖ם יוֹסֵֽף׃', 'וְלֹֽא־זָכַ֧ר שַֽׂר־הַמַּשְׁקִ֛ים אֶת־יוֹסֵ֖ף וַיִּשְׁכָּחֵֽהוּ׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
     </div>
+    <div class="texte-fr masque" id="txt-fr">
+      <p>Jacob demeura dans le pays des pérégrinations de son père, dans le pays de Canaan. Voici l’histoire de la descendance de Jacob. Joseph, âgé de dix sept ans, menait paître les brebis avec ses frères. Passant son enfance avec les fils de Bilha et ceux de Zilpa, épouses de son père, Joseph débitait sur leur compte des médisances à leur père. Or Israël préférait Joseph à ses autres enfants parce qu’il était le fils de sa vieillesse; et il lui avait fait une tunique à rayures. Ses frères, voyant que leur père l’aimait de préférence à eux tous, le prirent en haine et ne purent se résoudre à lui parler amicalement. Joseph, ayant eu un songe, le conta à ses frères et leur haine pour lui s’en accrut encore. Il leur dit: &quot;Écoutez, je vous prie, ce songe que j’ai eu. Nous composions des gerbes dans le champ, soudain ma gerbe se dressa; elle resta debout et les vôtres se rangèrent à l’entour et s’inclinèrent devant la mienne.&quot; Ses frères lui dirent: &quot;Quoi! Régnerais-tu sur nous? Deviendrais-tu notre maître?&quot; Et ils le haïrent plus encore, pour ses songes et pour ses propos. Il eut encore un autre songe et le raconta à ses frères en disant: &quot;J’ai fait encore un songe où j’ai vu le soleil, la lune et onze étoiles se prosterner devant moi.&quot; Il le répéta à son père et à ses frères. Son père le blâma et lui dit: &quot;Qu’est ce qu’un pareil songe? Eh quoi! Nous viendrions, moi et ta mère et tes frères, nous prosterner à terre à tes pieds!&quot; Les frères de Joseph le jalousèrent; mais son père retint l’affaire. Un jour ses frères étaient allés conduire les troupeaux de leur père à Sichem. Israël dit à Joseph: &quot;Tes frères font paître les troupeaux à Sichem. Viens donc, je veux t’envoyer auprès d’eux.&quot; Il lui répondit:&quot;Je suis prêt.&quot; Il reprit: &quot;Va voir, je te prie, comment se portent tes frères, comment se porte le bétail et rapporte m’en des nouvelles.&quot; Il l’envoya ainsi de la vallée d’Hébron et Joseph se rendit à Sichem. Un homme le rencontra errant dans la campagne; cet homme lui demanda: &quot;Que cherches-tu?&quot; Il répondit: &quot;Ce sont mes frères que je cherche. Veuille me dire où ils font paître leur bétail.&quot; L’homme dit: &quot;Ils sont partis d’ici, car je les ai entendus dire: ‘Allons à Dothan’.&quot; Joseph s’en alla sur les pas de ses frères et il les trouva à Dothan. Ils l’aperçurent de loin; et, avant qu’il fût près d’eux, ils complotèrent de le faire mourir. Ils se dirent l’un à l’autre: &quot;Voici venir l’homme aux songes. Or çà, venez, tuons le, jetons le dans quelque citerne, puis nous dirons qu’une bête féroce l’a dévoré. Nous verrons alors ce qui adviendra de ses rêves!&quot; Ruben l’entendit et voulut le sauver de leurs mains; il se dit: &quot;N’attentons point à sa vie.&quot; Ruben leur dit donc: &quot;Ne versez point le sang! Jetez le dans cette citerne qui est dans le désert, mais ne portez point la main sur lui.&quot; C’était pour le sauver de leurs mains et le ramener à son père. En effet, lorsque Joseph fut arrivé près de ses frères ils le dépouillèrent de sa robe, de la tunique à rayures dont il était vêtu; et ils le saisirent et ils le jetèrent dans la citerne. Cette citerne était vide et sans eau. Comme ils étaient assis pour prendre leur repas, ils levèrent les yeux et virent une caravane d’Ismaélites, laquelle venait de Galaad; leurs chameaux étaient chargés d’aromates, de baume et de lotus qu’ils allaient transporter en Égypte. Juda dit à ses frères: &quot;Quel avantage, si nous tuons notre frère et si nous scellons sa mort? Venez, vendons le aux Ismaélites et que notre main ne soit pas sur lui, car il est notre frère, notre chair!&quot; Et ses frères consentirent. Or, plusieurs marchands madianites vinrent à passer, qui tirèrent et firent remonter Joseph de la citerne, puis le vendirent aux Ismaélites pour vingt pièces d’argent. Ceux ci emmenèrent Joseph en Égypte. Ruben revint à la citerne et voyant que Joseph n’y était plus, il déchira ses vêtements, retourna vers ses frères et dit: &quot;L’enfant n’y est plus et moi, où irai je?&quot; Ils prirent la robe de Joseph, égorgèrent un chevreau et trempèrent la robe dans son sang; puis ils envoyèrent cette tunique à rayures, qu’on apporta à leur père en disant: &quot;Voici ce que nous avons trouvé; examine si c’est la tunique de ton fils ou non.&quot; Il la reconnut et s’écria: &quot;La tunique de mon fils! Une bête féroce l’a dévoré! Joseph, Joseph a été mis en pièces!&quot; Et Jacob déchira ses vêtements et il mit un cilice sur ses reins et il porta longtemps le deuil de son fils. Tous ses fils et toutes ses filles se mirent en devoir de le consoler; mais il refusa toute consolation et dit: &quot;Non! Je rejoindrai, en pleurant, mon fils dans la tombe!&quot; Et son père continua de le pleurer. Quant aux Madianites, ils le vendirent en Égypte à Putiphar, officier de Pharaon, chef des gardes.</p>
+      <p>Il arriva, en ce temps là, que Juda s’éloigna de ses frères et s’achemina vers un habitant d’Adoullam, nommé Hira. Là, Juda vit la fille d’un Cananéen, appelé Choua; il l’épousa et s’approcha d’elle. Elle conçut et enfanta un fils, à qui il donna le nom d’Ér. Elle conçut encore et eut un fils et elle lui donna le nom d’Onàn. De nouveau elle enfanta un fils et elle le nomma Chéla. Il était à Kezib lorsqu’elle l’enfanta. Juda choisit une épouse à Ér, son premier né; elle se nommait Thamar. Ér, le premier né de Juda, ayant déplu au Seigneur, le Seigneur le fit mourir. Alors Juda dit à Onàn: &quot;Épouse la femme de ton frère en vertu du lévirat, afin de constituer une postérité à ton frère.&quot; Onân comprit que cette postérité ne serait pas la sienne; et alors, chaque fois qu’il approchait de la femme de son frère, il corrompait sa voie, afin de ne pas donner de postérité à son frère. Sa conduite déplut au Seigneur, qui le fit mourir de même. Et Juda dit à Thamar, sa belle fille: &quot;Demeure veuve dans la maison de ton père, jusqu’à ce que mon fils Chéla soit plus grand,&quot; car il craignait qu’il ne meure, lui aussi, comme ses frères. Et Thamar s’en alla demeurer dans la maison de son père. Longtemps après mourut la fille de Choua, femme de Juda. Quand Juda se fut consolé, il alla surveiller la tonte de ses brebis, avec Hira son ami l’Adoullamite, à Timna. On informa Thamar en ces termes: &quot;Ton beau père monte en ce moment à Timna pour tondre ses brebis.&quot; Elle quitta ses vêtements de veuve, prit un voile et s’en couvrit; et elle s’assit au carrefour des Deux Sources, qui est sur le chemin de Timna. Car elle voyait que Chéla avait grandi et qu’elle ne lui avait pas été donnée pour épouse. Juda, l’ayant aperçue, la prit pour une prostituée; car elle avait voilé son visage. Il se dirigea de son côté et lui dit: &quot;Laisse moi te posséder.&quot; Car il ignorait que ce fût sa belle fille. Elle répondit: &quot;Que me donneras-tu pour me posséder?&quot; Il répliqua: &quot;Je t’enverrai un chevreau de mon troupeau.&quot; Et elle dit: &quot;Bien, si tu me donnes un gage en attendant cet envoi.&quot; Il reprit: &quot;Quel gage te donnerai-je?&quot; Elle répondit: &quot;Ton sceau, ton cordon et le bâton que tu as à la main.&quot; Il les lui donna, il approcha d’elle et elle conçut de son fait. Elle se leva et partit; elle quitta son voile et reprit les vêtements de son veuvage. Juda envoya le chevreau par l’entremise de son ami l’Adoullamite, pour retirer le gage des mains de cette femme; il ne la trouva point. Il questionna les gens de l’endroit, disant: &quot;Où est la prostituée qui se tient aux Deux Sources, sur le chemin?&quot; Ils répondirent:&quot;Il n’y a point de prostituée ici.&quot; Il retourna auprès de Juda et dit: &quot;Je ne l’ai pas trouvée; et même les habitants de l’endroit ont dit qu’il n’y avait point là de prostituée.&quot; Et Juda dit: &quot;Qu’elle garde ce qu’elle a et que nous n’ayons pas à rougir; car enfin, j’ai envoyé ce chevreau et tu n’as pu la trouver.&quot; Or, environ trois mois après, on informa Juda, en disant:&quot;Thamar, ta bru, s’est prostituée et elle porte dans son sein le fruit de la débauche.&quot; Juda répondit: &quot;Emmenez la et qu’elle soit brûlée!&quot; Comme on l’emmenait, elle envoya dire à son beau père: &quot;Je suis enceinte du fait de l’homme à qui ces choses appartiennent.&quot; Et elle dit: &quot;Examine, je te prie, à qui appartiennent ce sceau, ces cordons et ce bâton.&quot; Juda les reconnut et dit: &quot;Elle est plus juste que moi, car il est vrai que je ne l’ai point donnée à Chéla mon fils.&quot; Cependant il cessa, dès lors, de la connaître. Or il se trouva, lors de son enfantement, qu’elle portait des jumeaux dans son sein. Au moment de sa délivrance, l’un d’eux avança la main; la sage femme la saisit et y attacha un fil d’écarlate, pour indiquer que celui ci était né le premier. Comme il retirait sa main, voici que son frère vint au monde. Elle dit: &quot;Avec quelle violence tu te fais jour!&quot; Et on lui donna le nom de Péreç. Ensuite naquit son frère, dont la main portait le fil d’écarlate. On lui donna le nom de Zérah.</p>
+      <p>Joseph fut donc emmené en Égypte. Putiphar, officier de Pharaon, chef des gardes, égyptien, l’acheta aux ismaélites qui l’avaient conduit dans ce pays. Le Seigneur fut avec Joseph, qui devint un homme heureux et fut admis dans la maison de son maître l’égyptien. Son maître vit que Dieu était avec lui; qu’il faisait prospérer toutes les oeuvres de ses mains, et Joseph trouva faveur à ses yeux et il devint son serviteur; Putiphar le mit à la tête de sa maison et lui confia tout son avoir. Du moment où il l’eut mis à la tête de sa maison et de toutes ses affaires, le Seigneur bénit la maison de l’Égyptien à cause de Joseph; et la bénédiction divine s’étendit sur tous ses biens, à la ville et aux champs. Alors il abandonna tous ses intérêts aux mains de Joseph et il ne s’occupa plus avec lui de rien, sinon du pain qu’il mangeait. Or, Joseph était beau de taille et beau de visage. Il arriva, après ces faits, que la femme de son maître jeta les yeux sur Joseph. Elle lui dit: &quot;Viens reposer près de moi.&quot; Il s’y refusa, en disant à la femme de son maître: &quot;Vois, mon maître ne me demande compte de rien dans sa maison et toutes ses affaires il les a remises en mes mains; il n’est pas plus grand que moi dans cette maison et il ne m’a rien défendu, sinon toi, parce que tu es son épouse; et comment puis je commettre un si grand méfait et offenser le Seigneur?&quot; Quoiqu’elle en parlât chaque jour à Joseph, il ne cédait point à ses vœux en venant à ses côtés pour avoir commerce avec elle. Mais il arriva, à une de ces occasions, comme il était venu dans la maison pour faire sa besogne et qu’aucun des gens de la maison ne s’y trouvait, qu’elle le saisit par son vêtement, en disant: &quot;Viens dans mes bras!&quot; Il abandonna son vêtement dans sa main, s’enfuit et s’élança dehors. Lorsqu’elle vit qu’il avait laissé son vêtement dans sa main et qu’il s’était échappé, elle appela les gens de sa maison et leur dit: &quot;Voyez! On nous a amené un Hébreu pour nous insulter! Il m’a abordée pour coucher avec moi et j’ai appelé à grands cris. Lui, entendant que j’élevais la voix pour appeler à mon aide, a laissé son habit près de moi et il s’est échappé et il est sorti.&quot; Elle garda le vêtement de Joseph par devers elle, jusqu’à ce que son maître fût rentré à la maison. Elle lui fit le même récit, disant: &quot;L’esclave hébreu que tu nous a amené est venu près de moi pour m’insulter; puis, comme j’ai élevé la voix et que j’ai appelé, il a laissé son vêtement près de moi et a pris la fuite.&quot; Lorsque le maître entendit le récit que lui faisait son épouse, disant: &quot;Voilà ce que m’a fait ton esclave&quot;, sa colère s’enflamma. Le maître de Joseph le fit saisir; on l’enferma dans la Rotonde, endroit ou étaient détenus les prisonniers du roi; et il resta là dans la Rotonde. Le Seigneur fut avec Joseph, lui attira de la bienveillance et le rendit agréable aux yeux du gouverneur de la Rotonde. Ce gouverneur mit sous la main de Joseph tous les prisonniers de la Rotonde; et tout ce qu’on y faisait, c’était lui qui le dirigeait. Le gouverneur de la Rotonde ne vérifiait rien de ce qui passait par sa main, parce que le Seigneur était avec lui; et ce qu’il entreprenait, le Seigneur le faisait réussir.</p>
+      <p>Il advint, après ces événements que l’échanson du roi d’Égypte et le panetier offensèrent leur maître, le roi d’Égypte. Pharaon, irrité contre ses deux officiers, le maître échanson et le maître panetier, les fit mettre aux arrêts dans la maison du chef des gardes, dans la Rotonde, le même lieu où Joseph était captif. Le chef des gardes mit Joseph à leur disposition et celui ci les servit. Ils étaient depuis quelque temps aux arrêts, lorsqu’ils eurent un rêve tous les deux, chacun le sien, la même nuit et chacun selon le sens de son rêve; l’échanson et le panetier du roi d’Égypte, détenus dans la Rotonde. Joseph, étant venu près d’eux le matin, remarqua qu’ils étaient soucieux. Il demanda aux officiers de Pharaon, qui étaient avec lui en prison chez son maître: &quot;Pourquoi votre visage est-il sombre aujourd’hui?&quot; Ils lui répondirent: &quot;Nous avons fait un songe et il n’y a personne pour l’interpréter.&quot; Joseph leur dit: &quot;L’interprétation n’est elle pas à Dieu? Dites les moi, je vous prie.&quot; Le maître échanson raconta son rêve à Joseph, en disant:&quot;Dans mon rêve, une vigne était devant moi. A cette vigne étaient trois pampres. Or, elle semblait se couvrir de fleurs, ses bourgeons se développaient, ses grappes mûrissaient leurs raisins. J’avais en main la coupe de Pharaon; je cueillais les raisins, j’en exprimais le jus dans la coupe de Pharaon et je présentais la coupe à la main du roi.&quot; Joseph lui répondit: &quot;En voici l’explication. Les trois pampres, ce sont trois jours. Trois jours encore et Pharaon te fera élargir et il te rétablira dans ton poste; et tu mettras la coupe de Pharaon dans sa main, comme tu le faisais précédemment en qualité d’échanson. Si tu te souviens de moi lorsque tu seras heureux, rends-moi, de grâce, un bon office: parle de moi à Pharaon et fais moi sortir de cette demeure. Car j’ai été enlevé, oui, enlevé du pays des Hébreux; et ici non plus je n’avais rien fait lorsqu’on m’a jeté dans ce cachot.&quot; Le maître panetier, voyant qu’il avait interprété dans un sens favorable, dit à Joseph: &quot;Pour moi, dans mon songe j’avais trois corbeilles à claire voie sur la tête. La corbeille supérieure contenait tout ce que mange Pharaon en fait de boulangerie; et les oiseaux le becquetaient dans la corbeille, au dessus de ma tête.&quot; Joseph répondit en ces termes: &quot;En voici l’explication. Les trois corbeilles, ce sont trois jours. Trois jours encore et Pharaon te feratrancher la tête et attacher à un gibet; et les oiseaux viendront becqueter ta chair.&quot; Or, le troisième jour, anniversaire de la naissance de Pharaon, celui ci donna un banquet à tous ses serviteurs. Il porta le maître échanson et le maître panetier sur la liste de ses serviteurs. Il préposa de nouveau le maître échanson à sa boisson et celui-ci présenta la coupe à la main de Pharaon; et le maître panetier, il le fit pendre, ainsi que l’avait présagé Joseph. Mais le maître échanson ne se souvint plus de Joseph, il l’oublia.</p>
+      
+      
+    </div>
+  </div>
 </div>
-
 </div>
 
 <div class="sec" id="s-t2">
   <div class="synthese-bloc"><p>La paracha Vayeshev, neuvième de la Torah, couvre Bereshit 37:1 à 40:23. Elle ouvre l'histoire de Yossef : préféré de son père, jalousé par ses frères, vendu comme esclave, il arrive en Égypte. Le récit est interrompu par l'épisode de Yehouda et Tamar, puis reprend avec Yossef chez Potiphar, son emprisonnement et les songes de l'échanson et du panetier.</p>
 
-<h4>Yossef et ses frères (37:1 – 37:36)</h4>
+<h4>Yossef et ses frères (37:1 – 37:36)</h4><figure class="fig-syn haut"><img src="images/vayeshev_1.jpg" alt="Yossef et ses frères (37:1 – 37:36)" loading="lazy"></figure>
 <table>
 <tr><th>Épisode</th><th>Ce qui se passe</th></tr>
 <tr><td>La préférence (37:1-4)</td><td>Yaakov s'installe en Canaan. Yossef, 17 ans, garde le troupeau avec ses frères et rapporte à son père de mauvais propos sur eux. Yaakov l'aime plus que tous et lui fait une tunique de couleurs ; ses frères le haïssent</td></tr>
@@ -670,10 +201,10 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <tr><td>Le deuil (37:31-36)</td><td>Les frères trempent la tunique dans le sang d'un bouc et la montrent à Yaakov, qui refuse toute consolation. Yossef est vendu en Égypte à Potiphar</td></tr>
 </table>
 
-<h4>Yehouda et Tamar (38:1 – 38:30)</h4>
+<h4>Yehouda et Tamar (38:1 – 38:30)</h4><figure class="fig-syn flot"><img src="images/vayeshev_2.jpg" alt="Yehouda et Tamar (38:1 – 38:30)" loading="lazy"></figure>
 <p>Yehouda quitte ses frères, épouse la fille de Shoua et a trois fils : Er, Onan et Shéla. Er épouse Tamar et meurt, car il est mauvais aux yeux de D.ieu. Yehouda ordonne à Onan d'accomplir le lévirat ; Onan refuse de donner une descendance à son frère et meurt aussi. Yehouda renvoie Tamar chez son père en lui promettant Shéla quand il aura grandi, sans tenir sa promesse. Veuf, Yehouda monte à Timna. Tamar se voile et s'assied sur la route ; Yehouda la prend pour une prostituée et lui laisse en gage son sceau, son cordon et son bâton. Trois mois plus tard, on apprend que Tamar est enceinte ; Yehouda ordonne de la brûler. Elle lui envoie les gages : « C'est de l'homme à qui ces objets appartiennent que je suis enceinte. » Yehouda reconnaît : « Elle est plus juste que moi. » Elle met au monde des jumeaux, Peretz et Zerah.</p>
 
-<h4>Yossef chez Potiphar et en prison (39:1 – 40:23)</h4>
+<h4>Yossef chez Potiphar et en prison (39:1 – 40:23)</h4><figure class="fig-syn flot"><img src="images/vayeshev_3.jpg" alt="Yossef chez Potiphar et en prison (39:1 – 40:23)" loading="lazy"></figure>
 <p>En Égypte, Yossef réussit tout ce qu'il entreprend et Potiphar le met à la tête de sa maison. La femme de Potiphar le convoque jour après jour ; il refuse (« comment ferais-je ce grand mal et pécherais-je contre D.ieu ? »). Un jour elle le saisit par son vêtement ; il s'enfuit en le laissant. Elle l'accuse d'avoir voulu la violer ; Yossef est jeté en prison. Là aussi D.ieu est avec lui, et le chef de la prison lui confie la gestion. L'échanson et le panetier de Pharaon, emprisonnés, font chacun un songe. Yossef interprète : l'échanson retrouvera sa charge dans trois jours, le panetier sera pendu. Il demande à l'échanson de se souvenir de lui ; mais celui-ci l'oublie.</p></div>
 </div>
 
@@ -736,7 +267,6 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Le Talmud (Berakhot 43b, Sota 10b, Ketoubot 67b) tire de l'attitude de Tamar un principe : « Il vaut mieux qu'un homme se jette dans une fournaise ardente plutôt que de faire honte à son prochain en public. » Le Rambam (Hilkhot Dé'ot 6:8 ; Hilkhot Tshouva 3:14) range le fait de faire honte à son prochain en public parmi les fautes graves, au point de priver de la part au monde à venir. Pour l'application concrète, on consultera un rabbin.</p></div>
 </div>
 
-<div class="nav-bas"><a class="hbtn" href="paracha_vayishlach.html">← Vayishlach</a><a class="hbtn qcm" href="qcm_paracha_vayeshev.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_miketz.html">Miketz →</a></div>
 </main>
 
 <footer>
