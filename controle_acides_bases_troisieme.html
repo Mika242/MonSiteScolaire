@@ -61,7 +61,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--violet);box-shadow:0 
 <main>
  <div class="card">
   <h2>Consignes</h2>
-  <p>Durée conseillée : 50 minutes · Barème : 20 points. Rédige des phrases complètes, justifie chaque réponse, soigne les équations et les unités. Ta copie est enregistrée automatiquement sur cet appareil ; quand tu as fini, envoie-la au coach, qui la corrigera, la notera et t'enverra un retour avec la rédaction attendue.</p>
+  <p>Durée conseillée : 50 minutes · Barème : 20 points. Rédige des phrases complètes, justifie chaque réponse, soigne les équations et les unités. Ta copie est enregistrée automatiquement sur cet appareil. Quand tu as fini, clique sur « Envoyer ma copie au coach » : ton mail s'ouvre avec toutes tes réponses, il ne reste qu'à l'envoyer. Tu recevras ta note, des commentaires et la rédaction attendue.</p>
   <h2 style="margin-top:12px">Ce qui est évalué</h2>
   <ul><li>Identifier les ions responsables de l'acidité et de la basicité</li><li>Relier la valeur du pH au type de solution (acide, neutre, basique)</li><li>Proposer une méthode pour modifier le caractère acide ou basique d'une solution</li><li>Identifier les produits d'une réaction chimique à partir de tests caractéristiques</li><li>Réactions entre solutions acides et métaux</li></ul>
  </div>
@@ -85,7 +85,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--violet);box-shadow:0 
 </div>
 <script>
 const REF="CTRL-PC3-ACIDEBASE-001", TITRE="Contrôle — Acides et bases (3ème)";
-const QIDS=["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "3.4", "3.5", "4.1", "4.2"]; const QTXT={"1.1": "Pour chaque solution, indique si elle est acide, neutre ou basique en justifiant avec la valeur du pH.", "1.2": "Quel ion est présent en plus grand nombre que l'autre dans le jus de citron ? Même question pour l'eau savonneuse. Que peux-tu dire des ions de l'eau pure ?", "1.3": "L'acide chlorhydrique est une solution qui contient des ions hydrogène H+ et des ions chlorure Cl−. Quel ion est responsable de son caractère acide ? Explique pourquoi l'autre ion n'intervient pas.", "2.1": "Un élève propose d'ajouter beaucoup d'eau distillée. Le pH peut-il atteindre 7 puis dépasser 7 ? Explique ce qui change dans la solution.", "2.2": "Propose une méthode (matériel, gestes, précautions) pour amener la solution à pH = 7. Précise comment tu sais que le but est atteint.", "2.3": "Quel ion apporte la soude, et avec quel ion de la solution acide va-t-il réagir ?", "3.1": "Quel gaz s'est dégagé ? Justifie avec l'observation de la flamme.", "3.2": "Quel ion métallique s'est formé ? Quel ion est identifié par le nitrate d'argent ? Pour chaque test, indique le résultat observé et la conclusion.", "3.3": "Écris l'équation de la réaction entre le fer et les ions hydrogène. Explique pourquoi les ions chlorure n'y figurent pas.", "3.4": "Le pH de la solution augmente, diminue ou reste constant au cours de la réaction ? Justifie avec les ions.", "3.5": "On remplace la poudre de fer par un morceau de cuivre. Que prévois-tu d'observer ? Et avec du zinc ?", "4.1": "Rédige une réponse argumentée (5 à 8 lignes) : explique d'où viennent les bulles, identifie le gaz, décris le test qui permettrait de le vérifier, et dis si l'affirmation du frère est correcte. Écris l'équation de la réaction.", "4.2": "Que doit faire Inès pour rendre la solution restante moins dangereuse avant de la jeter ? Précise comment elle contrôle le résultat."};
+const QIDS=["1.1", "1.2", "1.3", "2.1", "2.2", "2.3", "3.1", "3.2", "3.3", "3.4", "3.5", "4.1", "4.2"]; const QPTS={"1.1": "1,5", "1.2": "1,5", "1.3": "2", "2.1": "1,5", "2.2": "2", "2.3": "0,5", "3.1": "1,5", "3.2": "2", "3.3": "1,5", "3.4": "1", "3.5": "1", "4.1": "3", "4.2": "1"}; const FICHE="fiche_acides_bases_transformation_chimique_troisieme.html", QCM="qcm_acides_bases_transformation_chimique_troisieme.html";
 const CLE="ctrl_"+REF;
 function lire(){try{return JSON.parse(localStorage.getItem(CLE)||"{}")}catch(e){return {}}}
 function sauver(){const d={nom:document.getElementById('nom').value,classe:document.getElementById('classe').value,r:{}};
@@ -96,8 +96,11 @@ function sauver(){const d={nom:document.getElementById('nom').value,classe:docum
  document.querySelectorAll('input,textarea').forEach(e=>e.addEventListener('input',sauver));})();
 function copieTexte(){
  const nom=document.getElementById('nom').value.trim(),cl=document.getElementById('classe').value.trim();
- let t=TITRE+"\nRéférence : "+REF+"\nÉlève : "+(nom||"(non renseigné)")+" — Classe : "+(cl||"(non renseignée)")+"\nDate : "+new Date().toLocaleString('fr-FR')+"\n\n";
- QIDS.forEach(q=>{t+="── Question "+q+" ──\n"+QTXT[q]+"\nRéponse :\n"+(document.getElementById('r-'+q).value.trim()||"(sans réponse)")+"\n\n";});
+ const base='https://toncoachscolaire.fr/';
+ let t="DEMANDE DE CORRECTION — "+TITRE+"\n"+"Référence du contrôle : "+REF+"\n"+"Élève : "+(nom||"(non renseigné)")+" — Classe : "+(cl||"(non renseignée)")+"\n"+"Date d'envoi : "+new Date().toLocaleString('fr-FR')+"\n"+"Barème : 20 points (points par question indiqués ci-dessous)\n\n";
+ t+="Pour le coach : corriger cette copie d'après le corrigé de la référence "+REF+", noter sur 20, commenter chaque exercice, donner la rédaction attendue des questions ratées, puis renvoyer le tout à l'élève avec les liens :\nFiche : "+base+FICHE+"\nQCM : "+base+QCM+"\n\n";
+ t+="======== RÉPONSES DE L'ÉLÈVE ========\n\n";
+ QIDS.forEach(q=>{t+="Question "+q+" ("+QPTS[q]+" pt) : "+(document.getElementById('r-'+q).value.trim()||"(sans réponse)")+"\n\n";});
  return t;}
 function telecharger(){const nom=(document.getElementById('nom').value.trim()||'eleve').replace(/[^A-Za-z0-9À-ÿ_-]+/g,'_');
  const b=new Blob([copieTexte()],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='controle_acides_bases_'+nom+'.txt';a.click();}
@@ -108,13 +111,13 @@ async function envoyer(){
  const vides=QIDS.filter(q=>!document.getElementById('r-'+q).value.trim()).length;
  if(vides&&!confirm(vides+" question(s) sans réponse. Envoyer quand même ?"))return;
  const t=copieTexte();
+ try{await navigator.clipboard.writeText(t);}catch(e){}
  const sujet=encodeURIComponent("Contrôle - Acides et bases (3ème) - Copie de "+nom);
- let corps;
- if(t.length<1700){corps=encodeURIComponent(t);}
- else{try{await navigator.clipboard.writeText(t);}catch(e){}
-  corps=encodeURIComponent("Bonjour,\n\nVoici ma copie du contrôle « Acides et bases » (réf. "+REF+").\nElle est trop longue pour ce message : colle-la ici (Ctrl+V) ou joins le fichier .txt téléchargé.\n\nÉlève : "+nom+"\n\nMerci !");
+ let corps=encodeURIComponent(t);
+ if(corps.length>7000){
+  corps=encodeURIComponent("Bonjour\n\nVoici ma copie du contrôle « Acides et bases » (réf. "+REF+"). Elle est trop longue pour ce message : colle-la ici (Ctrl+V), elle est dans ton presse-papiers, ou joins le fichier .txt.\n\nÉlève : "+nom+"\n\nMerci !");
   telecharger();
-  alert("Ta copie est copiée dans le presse-papiers et téléchargée en .txt. Dans le mail qui s'ouvre, colle-la (Ctrl+V) ou joins le fichier, puis envoie.");}
+  alert("Ta copie est trop longue pour s'écrire seule dans le mail : elle est copiée dans le presse-papiers et téléchargée en .txt. Colle-la (Ctrl+V) dans le mail qui s'ouvre, ou joins le fichier, puis envoie.");}
  window.location.href="mailto:contact@toncoachscolaire.fr?subject="+sujet+"&body="+corps;}
 </script>
 </body>
