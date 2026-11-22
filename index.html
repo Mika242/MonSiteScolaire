@@ -115,6 +115,18 @@
       white-space: nowrap;
     }
     @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
+
+    /* ── Zone Contrôles ── */
+    .ctrl-section { padding: 28px 16px 12px; max-width: 920px; margin: 0 auto; }
+    .ctrl-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: var(--shadow-card); }
+    .ctrl-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .ctrl-sub { font-size: .85rem; color: var(--ink2); margin-bottom: 14px; }
+    .ctrl-row-label { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); margin: 10px 0 6px; }
+    .ctrl-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ctrl-pill { font: inherit; font-weight: 700; font-size: .85rem; padding: 8px 14px; border-radius: 99px; border: 2px solid var(--border); background: var(--surface2); color: var(--ink); cursor: pointer; }
+    .ctrl-pill.on { background: #7A4BC9; border-color: #7A4BC9; color: #fff; }
+    .ctrl-pill.off { opacity: .45; }
+    .ctrl-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
     .tiles-section { padding: 36px 16px 12px; max-width: 920px; margin: 0 auto; }
     .tiles-label {
       font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
@@ -301,6 +313,19 @@
 </div>
 
 <div id="reveal-panel"></div>
+
+<div class="ctrl-section" id="controles">
+  <div class="ctrl-box">
+    <div class="ctrl-title">📝 Contrôles à rédiger</div>
+    <div class="ctrl-sub">Choisis ta classe puis ta matière. Tu rédiges ta copie en ligne et tu l'envoies au coach, qui la corrige et te fait un retour.</div>
+    <div class="ctrl-row-label">1. Classe</div>
+    <div class="ctrl-pills" id="ctrl-classes"></div>
+    <div class="ctrl-row-label">2. Matière</div>
+    <div class="ctrl-pills" id="ctrl-matieres"></div>
+    <div class="ctrl-list" id="ctrl-liste"></div>
+  </div>
+</div>
+
 
 <footer>
   Fait avec soin pour bien réviser ✏️ &nbsp;·&nbsp;
@@ -844,6 +869,36 @@ function renderTiles() {
 }
 
 renderTiles();
+
+// ── Contrôles : classe puis matière ──
+const controles = {
+  '3e': { 'Physique-Chimie': [
+    { name: 'Chapitre 3 — Acides et bases', href: 'controle_acides_bases_troisieme.html', fiche: 'fiche_acides_bases_transformation_chimique_troisieme.html', qcm: 'qcm_acides_bases_transformation_chimique_troisieme.html' },
+  ] },
+};
+const ctrlMatieres = ['Physique-Chimie', 'Maths', 'SVT', 'Français', 'Histoire-Géographie', 'Anglais'];
+let ctrlClasse = '3e', ctrlMat = 'Physique-Chimie';
+function ctrlRender() {
+  const cl = document.getElementById('ctrl-classes');
+  if (!cl) return;
+  cl.innerHTML = ordreNiveaux.map(id => {
+    const n = Object.values(controles[id] || {}).reduce((a, l) => a + l.length, 0);
+    return `<button class="ctrl-pill ${id === ctrlClasse ? 'on' : ''} ${n ? '' : 'off'}" onclick="ctrlClasse='${id}';ctrlMat=Object.keys(controles['${id}']||{})[0]||ctrlMat;ctrlRender()">${niveauxMeta[id].court}${n ? ' · ' + n : ''}</button>`;
+  }).join('');
+  const dispo = controles[ctrlClasse] || {};
+  const mats = ctrlMatieres.concat(Object.keys(dispo).filter(m => !ctrlMatieres.includes(m)));
+  document.getElementById('ctrl-matieres').innerHTML = mats.map(m => {
+    const n = (dispo[m] || []).length;
+    return `<button class="ctrl-pill ${m === ctrlMat ? 'on' : ''} ${n ? '' : 'off'}" onclick="ctrlMat='${m}';ctrlRender()">${m}${n ? ' · ' + n : ''}</button>`;
+  }).join('');
+  const items = dispo[ctrlMat] || [];
+  document.getElementById('ctrl-liste').innerHTML = items.length
+    ? items.map(c => `<a class="fiche-link" href="${c.href}"><div class="fiche-ico">📝</div><div class="fiche-text">${c.name}</div></a>`
+        + (c.fiche ? `<a class="fiche-link" href="${c.fiche}"><div class="fiche-ico">📄</div><div class="fiche-text">Fiche de cours associée</div></a>` : '')
+        + (c.qcm ? `<a class="fiche-link" href="${c.qcm}"><div class="fiche-ico">✅</div><div class="fiche-text">QCM associé</div></a>` : '')).join('')
+    : `<div class="empty-msg">Pas encore de contrôle disponible pour ${niveauxMeta[ctrlClasse].nom} en ${ctrlMat}.</div>`;
+}
+ctrlRender();
 
 let current = null;
 
