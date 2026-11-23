@@ -109,6 +109,36 @@ footer a{color:var(--primaire)}
 }
 @media (max-width: 560px) { .ad-banner-sub { display: none; } .ad-banner-tag { display: none; } }
 
+
+/* --- nouvelle presentation (texte bilingue, navigation) --- */
+.hnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbtn{display:inline-block;background:rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:700;font-size:.82rem;padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.25)}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.qcm{background:#fff;color:var(--texte-primaire);border-color:#fff}
+.nav-bas{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:24px 0 0}
+.nav-bas .hbtn{background:#fff;color:var(--texte-primaire);border:1px solid #e2e8f0;box-shadow:var(--shadow-card)}
+.nav-bas .hbtn.qcm{background:var(--primaire);color:#fff;border-color:var(--primaire)}
+.modes{display:flex;gap:6px;flex-wrap:wrap}
+.mode-btn{background:#fff;border:1px solid var(--primaire);color:var(--primaire);border-radius:20px;padding:5px 14px;font-size:.75rem;font-weight:700;cursor:pointer}
+.mode-btn.on{background:var(--primaire);color:#fff}
+.seif-nav{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #eef2f7;background:#fff}
+.seif-nav a{min-width:30px;text-align:center;text-decoration:none;font-size:.75rem;font-weight:700;color:var(--ink2);background:var(--surface2);border-radius:8px;padding:4px 6px}
+.seif-nav a:hover{background:var(--primaire-clair);color:var(--texte-primaire)}
+.seif{padding:18px;border-bottom:1px solid #eef2f7;scroll-margin-top:64px}
+.seif:last-child{border-bottom:none}
+.seif-num{display:inline-block;background:var(--primaire);color:#fff;font-weight:800;font-size:.72rem;border-radius:8px;padding:3px 10px;margin-bottom:10px;letter-spacing:.03em}
+.seif .texte-fr{margin-top:12px;padding-top:12px}
+.seif .texte-heb p,.seif .texte-fr p{margin:0}
+.notes-vers{margin-top:8px;font-size:.78rem;color:var(--ink2);line-height:1.5}
+.bil[data-mode="fr"] .seif>.texte-heb{display:none}
+.bil[data-mode="fr"] .seif>.texte-fr{margin-top:0;padding-top:0;border-top:none}
+.bil[data-mode="heb"] .seif>.texte-fr{display:none}
+.bil .heb-s{display:none}
+.bil.sans-nikud .heb-n{display:none}
+.bil.sans-nikud .heb-s{display:block}
+.trad-redigee{margin-top:16px;border:1px solid #e2e8f0;border-radius:12px;background:var(--surface2)}
+.trad-redigee>summary{cursor:pointer;padding:10px 14px;font-weight:700;font-size:.85rem;color:var(--secondaire)}
+.trad-redigee .bloc-texte{margin:0;box-shadow:none}
 </style>
 <script>
 
@@ -128,6 +158,16 @@ function toggleLangue(blocId, langueAffichee){
   else if(langueAffichee==='fr'){ fr.classList.remove('masque'); }
   else if(langueAffichee==='src' && src){ src.classList.remove('masque'); }
 }
+
+function setMode(m,btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  b.setAttribute('data-mode',m);
+  document.querySelectorAll('.mode-btn[data-m]').forEach(function(x){x.classList.toggle('on',x===btn)});
+}
+function toggleNikud(btn){
+  var b=document.getElementById('sa-bil'); if(!b) return;
+  btn.classList.toggle('on',b.classList.toggle('sans-nikud'));
+}
 window.onload=()=>showTab('t1');
 
 </script>
@@ -142,6 +182,7 @@ window.onload=()=>showTab('t1');
     <div class="hbdg">Bereshit · Paracha</div>
     <h1>Vayechi – Les dernières paroles de Yaakov et les bénédictions des tribus</h1>
     <p>Torah, Bereshit (Genesis 47:28-50:26)</p>
+    <div class="hnav"><a class="hbtn" href="paracha_vayigash.html">← Vayigash</a><a class="hbtn qcm" href="qcm_paracha_vayechi.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_shemot-paracha.html">Chemot →</a></div>
   </div>
 </header>
 
@@ -161,31 +202,358 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <main>
 
 <div class="sec active" id="s-t1">
-  <div class="bloc-texte">
-  <div class="bloc-hd">
-    <span>📜 Texte original</span>
-    <span>
-      <button class="toggle-btn" onclick="toggleLangue('txt','heb')">עברית</button>
-      <button class="toggle-btn" onclick="toggleLangue('txt','fr')">Français</button>
-    </span>
-  </div>
-  <div class="bloc-corps">
-    <div class="texte-heb" id="txt-heb">
-      <p>['וַיְחִ֤י יַעֲקֹב֙ בְּאֶ֣רֶץ מִצְרַ֔יִם שְׁבַ֥ע עֶשְׂרֵ֖ה שָׁנָ֑ה וַיְהִ֤י יְמֵֽי־יַעֲקֹב֙ שְׁנֵ֣י חַיָּ֔יו שֶׁ֣בַע שָׁנִ֔ים וְאַרְבָּעִ֥ים וּמְאַ֖ת שָׁנָֽה׃', 'וַיִּקְרְב֣וּ יְמֵֽי־יִשְׂרָאֵל֮ לָמוּת֒ וַיִּקְרָ֣א&thinsp;<b>׀</b> לִבְנ֣וֹ לְיוֹסֵ֗ף וַיֹּ֤אמֶר לוֹ֙ אִם־נָ֨א מָצָ֤אתִי חֵן֙ בְּעֵינֶ֔יךָ שִֽׂים־נָ֥א יָדְךָ֖ תַּ֣חַת יְרֵכִ֑י וְעָשִׂ֤יתָ עִמָּדִי֙ חֶ֣סֶד וֶאֱמֶ֔ת אַל־נָ֥א תִקְבְּרֵ֖נִי בְּמִצְרָֽיִם׃', 'וְשָֽׁכַבְתִּי֙ עִם־אֲבֹתַ֔י וּנְשָׂאתַ֙נִי֙ מִמִּצְרַ֔יִם וּקְבַרְתַּ֖נִי בִּקְבֻרָתָ֑ם וַיֹּאמַ֕ר אָנֹכִ֖י אֶֽעֱשֶׂ֥ה כִדְבָרֶֽךָ׃', 'וַיֹּ֗אמֶר הִשָּֽׁבְעָה֙ לִ֔י וַיִּשָּׁבַ֖ע ל֑וֹ וַיִּשְׁתַּ֥חוּ יִשְׂרָאֵ֖ל עַל־רֹ֥אשׁ הַמִּטָּֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיְהִ֗י אַחֲרֵי֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וַיֹּ֣אמֶר לְיוֹסֵ֔ף הִנֵּ֥ה אָבִ֖יךָ חֹלֶ֑ה וַיִּקַּ֞ח אֶת־שְׁנֵ֤י בָנָיו֙ עִמּ֔וֹ אֶת־מְנַשֶּׁ֖ה וְאֶת־אֶפְרָֽיִם׃', 'וַיַּגֵּ֣ד לְיַעֲקֹ֔ב וַיֹּ֕אמֶר הִנֵּ֛ה בִּנְךָ֥ יוֹסֵ֖ף בָּ֣א אֵלֶ֑יךָ וַיִּתְחַזֵּק֙ יִשְׂרָאֵ֔ל וַיֵּ֖שֶׁב עַל־הַמִּטָּֽה׃', 'וַיֹּ֤אמֶר יַעֲקֹב֙ אֶל־יוֹסֵ֔ף אֵ֥ל שַׁדַּ֛י נִרְאָֽה־אֵלַ֥י בְּל֖וּז בְּאֶ֣רֶץ כְּנָ֑עַן וַיְבָ֖רֶךְ אֹתִֽי׃', 'וַיֹּ֣אמֶר אֵלַ֗י הִנְנִ֤י מַפְרְךָ֙ וְהִרְבִּיתִ֔ךָ וּנְתַתִּ֖יךָ לִקְהַ֣ל עַמִּ֑ים וְנָ֨תַתִּ֜י אֶת־הָאָ֧רֶץ הַזֹּ֛את לְזַרְעֲךָ֥ אַחֲרֶ֖יךָ אֲחֻזַּ֥ת עוֹלָֽם׃', 'וְעַתָּ֡ה שְׁנֵֽי־בָנֶ֩יךָ֩ הַנּוֹלָדִ֨ים לְךָ֜ בְּאֶ֣רֶץ מִצְרַ֗יִם עַד־בֹּאִ֥י אֵלֶ֛יךָ מִצְרַ֖יְמָה לִי־הֵ֑ם אֶפְרַ֙יִם֙ וּמְנַשֶּׁ֔ה כִּרְאוּבֵ֥ן וְשִׁמְע֖וֹן יִֽהְיוּ־לִֽי׃', 'וּמוֹלַדְתְּךָ֛ אֲשֶׁר־הוֹלַ֥דְתָּ אַחֲרֵיהֶ֖ם לְךָ֣ יִהְי֑וּ עַ֣ל שֵׁ֧ם אֲחֵיהֶ֛ם יִקָּרְא֖וּ בְּנַחֲלָתָֽם׃', 'וַאֲנִ֣י&thinsp;<b>׀</b> בְּבֹאִ֣י מִפַּדָּ֗ן מֵ֩תָה֩ עָלַ֨י רָחֵ֜ל בְּאֶ֤רֶץ כְּנַ֙עַן֙ בַּדֶּ֔רֶךְ בְּע֥וֹד כִּבְרַת־אֶ֖רֶץ לָבֹ֣א אֶפְרָ֑תָה וָאֶקְבְּרֶ֤הָ שָּׁם֙ בְּדֶ֣רֶךְ אֶפְרָ֔ת הִ֖וא בֵּ֥ית לָֽחֶם׃', 'וַיַּ֥רְא יִשְׂרָאֵ֖ל אֶת־בְּנֵ֣י יוֹסֵ֑ף וַיֹּ֖אמֶר מִי־אֵֽלֶּה׃', 'וַיֹּ֤אמֶר יוֹסֵף֙ אֶל־אָבִ֔יו בָּנַ֣י הֵ֔ם אֲשֶׁר־נָֽתַן־לִ֥י אֱלֹהִ֖ים בָּזֶ֑ה וַיֹּאמַ֕ר קָֽחֶם־נָ֥א אֵלַ֖י וַאֲבָרְכֵֽם׃', 'וְעֵינֵ֤י יִשְׂרָאֵל֙ כָּבְד֣וּ מִזֹּ֔קֶן לֹ֥א יוּכַ֖ל לִרְא֑וֹת וַיַּגֵּ֤שׁ אֹתָם֙ אֵלָ֔יו וַיִּשַּׁ֥ק לָהֶ֖ם וַיְחַבֵּ֥ק לָהֶֽם׃', 'וַיֹּ֤אמֶר יִשְׂרָאֵל֙ אֶל־יוֹסֵ֔ף רְאֹ֥ה פָנֶ֖יךָ לֹ֣א פִלָּ֑לְתִּי וְהִנֵּ֨ה הֶרְאָ֥ה אֹתִ֛י אֱלֹהִ֖ים גַּ֥ם אֶת־זַרְעֶֽךָ׃', 'וַיּוֹצֵ֥א יוֹסֵ֛ף אֹתָ֖ם מֵעִ֣ם בִּרְכָּ֑יו וַיִּשְׁתַּ֥חוּ לְאַפָּ֖יו אָֽרְצָה׃', 'וַיִּקַּ֣ח יוֹסֵף֮ אֶת־שְׁנֵיהֶם֒ אֶת־אֶפְרַ֤יִם בִּֽימִינוֹ֙ מִשְּׂמֹ֣אל יִשְׂרָאֵ֔ל וְאֶת־מְנַשֶּׁ֥ה בִשְׂמֹאל֖וֹ מִימִ֣ין יִשְׂרָאֵ֑ל וַיַּגֵּ֖שׁ אֵלָֽיו׃', 'וַיִּשְׁלַח֩ יִשְׂרָאֵ֨ל אֶת־יְמִינ֜וֹ וַיָּ֨שֶׁת עַל־רֹ֤אשׁ אֶפְרַ֙יִם֙ וְה֣וּא הַצָּעִ֔יר וְאֶת־שְׂמֹאל֖וֹ עַל־רֹ֣אשׁ מְנַשֶּׁ֑ה שִׂכֵּל֙ אֶת־יָדָ֔יו כִּ֥י מְנַשֶּׁ֖ה הַבְּכֽוֹר׃', 'וַיְבָ֥רֶךְ אֶת־יוֹסֵ֖ף וַיֹּאמַ֑ר הָֽאֱלֹהִ֡ים אֲשֶׁר֩ הִתְהַלְּכ֨וּ אֲבֹתַ֤י לְפָנָיו֙ אַבְרָהָ֣ם וְיִצְחָ֔ק הָֽאֱלֹהִים֙ הָרֹעֶ֣ה אֹתִ֔י מֵעוֹדִ֖י עַד־הַיּ֥וֹם הַזֶּֽה׃', 'הַמַּלְאָךְ֩ הַגֹּאֵ֨ל אֹתִ֜י מִכׇּל־רָ֗ע יְבָרֵךְ֮ אֶת־הַנְּעָרִים֒ וְיִקָּרֵ֤א בָהֶם֙ שְׁמִ֔י וְשֵׁ֥ם אֲבֹתַ֖י אַבְרָהָ֣ם וְיִצְחָ֑ק וְיִדְגּ֥וּ לָרֹ֖ב בְּקֶ֥רֶב הָאָֽרֶץ׃', 'וַיַּ֣רְא יוֹסֵ֗ף כִּי־יָשִׁ֨ית אָבִ֧יו יַד־יְמִינ֛וֹ עַל־רֹ֥אשׁ אֶפְרַ֖יִם וַיֵּ֣רַע בְּעֵינָ֑יו וַיִּתְמֹ֣ךְ יַד־אָבִ֗יו לְהָסִ֥יר אֹתָ֛הּ מֵעַ֥ל רֹאשׁ־אֶפְרַ֖יִם עַל־רֹ֥אשׁ מְנַשֶּֽׁה׃', 'וַיֹּ֧אמֶר יוֹסֵ֛ף אֶל־אָבִ֖יו לֹא־כֵ֣ן אָבִ֑י כִּי־זֶ֣ה הַבְּכֹ֔ר שִׂ֥ים יְמִינְךָ֖ עַל־רֹאשֽׁוֹ׃', 'וַיְמָאֵ֣ן אָבִ֗יו וַיֹּ֙אמֶר֙ יָדַ֤עְתִּֽי בְנִי֙ יָדַ֔עְתִּי גַּם־ה֥וּא יִֽהְיֶה־לְּעָ֖ם וְגַם־ה֣וּא יִגְדָּ֑ל וְאוּלָ֗ם אָחִ֤יו הַקָּטֹן֙ יִגְדַּ֣ל מִמֶּ֔נּוּ וְזַרְע֖וֹ יִהְיֶ֥ה מְלֹֽא־הַגּוֹיִֽם׃', 'וַיְבָ֨רְכֵ֜ם בַּיּ֣וֹם הַהוּא֮ לֵאמוֹר֒ בְּךָ֗ יְבָרֵ֤ךְ יִשְׂרָאֵל֙ לֵאמֹ֔ר יְשִֽׂמְךָ֣ אֱלֹהִ֔ים כְּאֶפְרַ֖יִם וְכִמְנַשֶּׁ֑ה וַיָּ֥שֶׂם אֶת־אֶפְרַ֖יִם לִפְנֵ֥י מְנַשֶּֽׁה׃', 'וַיֹּ֤אמֶר יִשְׂרָאֵל֙ אֶל־יוֹסֵ֔ף הִנֵּ֥ה אָנֹכִ֖י מֵ֑ת וְהָיָ֤ה אֱלֹהִים֙ עִמָּכֶ֔ם וְהֵשִׁ֣יב אֶתְכֶ֔ם אֶל־אֶ֖רֶץ אֲבֹתֵיכֶֽם׃', 'וַאֲנִ֞י נָתַ֧תִּֽי לְךָ֛ שְׁכֶ֥ם אַחַ֖ד עַל־אַחֶ֑יךָ אֲשֶׁ֤ר לָקַ֙חְתִּי֙ מִיַּ֣ד הָֽאֱמֹרִ֔י בְּחַרְבִּ֖י וּבְקַשְׁתִּֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>']</p>
-      <p>['וַיִּקְרָ֥א יַעֲקֹ֖ב אֶל־בָּנָ֑יו וַיֹּ֗אמֶר הֵאָֽסְפוּ֙ וְאַגִּ֣ידָה לָכֶ֔ם אֵ֛ת אֲשֶׁר־יִקְרָ֥א אֶתְכֶ֖ם בְּאַחֲרִ֥ית הַיָּמִֽים׃', 'הִקָּבְצ֥וּ וְשִׁמְע֖וּ בְּנֵ֣י יַעֲקֹ֑ב וְשִׁמְע֖וּ אֶל־יִשְׂרָאֵ֥ל אֲבִיכֶֽם׃', 'רְאוּבֵן֙ בְּכֹ֣רִי אַ֔תָּה כֹּחִ֖י וְרֵאשִׁ֣ית אוֹנִ֑י יֶ֥תֶר שְׂאֵ֖ת וְיֶ֥תֶר עָֽז׃', 'פַּ֤חַז כַּמַּ֙יִם֙ אַל־תּוֹתַ֔ר כִּ֥י עָלִ֖יתָ מִשְׁכְּבֵ֣י אָבִ֑יךָ אָ֥ז חִלַּ֖לְתָּ יְצוּעִ֥י עָלָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'שִׁמְע֥וֹן וְלֵוִ֖י אַחִ֑ים כְּלֵ֥י חָמָ֖ס מְכֵרֹתֵיהֶֽם׃', 'בְּסֹדָם֙ אַל־תָּבֹ֣א נַפְשִׁ֔י בִּקְהָלָ֖ם אַל־תֵּחַ֣ד כְּבֹדִ֑י כִּ֤י בְאַפָּם֙ הָ֣רְגוּ אִ֔ישׁ וּבִרְצֹנָ֖ם עִקְּרוּ־שֽׁוֹר׃', 'אָר֤וּר אַפָּם֙ כִּ֣י עָ֔ז וְעֶבְרָתָ֖ם כִּ֣י קָשָׁ֑תָה אֲחַלְּקֵ֣ם בְּיַעֲקֹ֔ב וַאֲפִיצֵ֖ם בְּיִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'יְהוּדָ֗ה אַתָּה֙ יוֹד֣וּךָ אַחֶ֔יךָ יָדְךָ֖ בְּעֹ֣רֶף אֹיְבֶ֑יךָ יִשְׁתַּחֲו֥וּ לְךָ֖ בְּנֵ֥י אָבִֽיךָ׃', 'גּ֤וּר אַרְיֵה֙ יְהוּדָ֔ה מִטֶּ֖רֶף בְּנִ֣י עָלִ֑יתָ כָּרַ֨ע רָבַ֧ץ כְּאַרְיֵ֛ה וּכְלָבִ֖יא מִ֥י יְקִימֶֽנּוּ׃', 'לֹֽא־יָס֥וּר שֵׁ֙בֶט֙ מִֽיהוּדָ֔ה וּמְחֹקֵ֖ק מִבֵּ֣ין רַגְלָ֑יו עַ֚ד כִּֽי־יָבֹ֣א <span class="mam-kq-trivial">שִׁילֹ֔ה</span> וְל֖וֹ יִקְּהַ֥ת עַמִּֽים׃', 'אֹסְרִ֤י לַגֶּ֙פֶן֙ <span class="mam-kq-trivial">עִירֹ֔ה</span> וְלַשֹּׂרֵקָ֖ה בְּנִ֣י אֲתֹנ֑וֹ כִּבֵּ֤ס בַּיַּ֙יִן֙ לְבֻשׁ֔וֹ וּבְדַם־עֲנָבִ֖ים <span class="mam-kq-trivial">סוּתֹֽה</span>׃', 'חַכְלִילִ֥י עֵינַ֖יִם מִיָּ֑יִן וּלְבֶן־שִׁנַּ֖יִם מֵחָלָֽב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'זְבוּלֻ֕ן לְח֥וֹף יַמִּ֖ים יִשְׁכֹּ֑ן וְהוּא֙ לְח֣וֹף אֳנִיֹּ֔ת וְיַרְכָת֖וֹ עַל־צִידֹֽן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'יִשָּׂשכָ֖ר חֲמֹ֣ר גָּ֑רֶם רֹבֵ֖ץ בֵּ֥ין הַֽמִּשְׁפְּתָֽיִם׃', 'וַיַּ֤רְא מְנֻחָה֙ כִּ֣י ט֔וֹב וְאֶת־הָאָ֖רֶץ כִּ֣י נָעֵ֑מָה וַיֵּ֤ט שִׁכְמוֹ֙ לִסְבֹּ֔ל וַיְהִ֖י לְמַס־עֹבֵֽד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'דָּ֖ן יָדִ֣ין עַמּ֑וֹ כְּאַחַ֖ד שִׁבְטֵ֥י יִשְׂרָאֵֽל׃', 'יְהִי־דָן֙ נָחָ֣שׁ עֲלֵי־דֶ֔רֶךְ שְׁפִיפֹ֖ן עֲלֵי־אֹ֑רַח הַנֹּשֵׁךְ֙ עִקְּבֵי־ס֔וּס וַיִּפֹּ֥ל רֹכְב֖וֹ אָחֽוֹר׃', 'לִישׁוּעָֽתְךָ֖ קִוִּ֥יתִי יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'גָּ֖ד גְּד֣וּד יְגוּדֶ֑נּוּ וְה֖וּא יָגֻ֥ד עָקֵֽב׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'מֵאָשֵׁ֖ר שְׁמֵנָ֣ה לַחְמ֑וֹ וְה֥וּא יִתֵּ֖ן מַֽעֲדַנֵּי־מֶֽלֶךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'נַפְתָּלִ֖י אַיָּלָ֣ה שְׁלֻחָ֑ה הַנֹּתֵ֖ן אִמְרֵי־שָֽׁפֶר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', 'בֵּ֤ן פֹּרָת֙ יוֹסֵ֔ף בֵּ֥ן פֹּרָ֖ת עֲלֵי־עָ֑יִן בָּנ֕וֹת צָעֲדָ֖ה עֲלֵי־שֽׁוּר׃', 'וַֽיְמָרְרֻ֖הוּ וָרֹ֑בּוּ וַֽיִּשְׂטְמֻ֖הוּ בַּעֲלֵ֥י חִצִּֽים׃', 'וַתֵּ֤שֶׁב בְּאֵיתָן֙ קַשְׁתּ֔וֹ וַיָּפֹ֖זּוּ זְרֹעֵ֣י יָדָ֑יו מִידֵי֙ אֲבִ֣יר יַעֲקֹ֔ב מִשָּׁ֥ם רֹעֶ֖ה אֶ֥בֶן יִשְׂרָאֵֽל׃', 'מֵאֵ֨ל אָבִ֜יךָ וְיַעְזְרֶ֗ךָּ וְאֵ֤ת שַׁדַּי֙ וִיבָ֣רְכֶ֔ךָּ בִּרְכֹ֤ת שָׁמַ֙יִם֙ מֵעָ֔ל בִּרְכֹ֥ת תְּה֖וֹם רֹבֶ֣צֶת תָּ֑חַת בִּרְכֹ֥ת שָׁדַ֖יִם וָרָֽחַם׃', 'בִּרְכֹ֣ת אָבִ֗יךָ גָּֽבְרוּ֙ עַל־בִּרְכֹ֣ת הוֹרַ֔י עַֽד־תַּאֲוַ֖ת גִּבְעֹ֣ת עוֹלָ֑ם תִּֽהְיֶ֙יןָ֙ לְרֹ֣אשׁ יוֹסֵ֔ף וּלְקׇדְקֹ֖ד נְזִ֥יר אֶחָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br>', 'בִּנְיָמִין֙ זְאֵ֣ב יִטְרָ֔ף בַּבֹּ֖קֶר יֹ֣אכַל עַ֑ד וְלָעֶ֖רֶב יְחַלֵּ֥ק שָׁלָֽל׃', 'כׇּל־אֵ֛לֶּה שִׁבְטֵ֥י יִשְׂרָאֵ֖ל שְׁנֵ֣ים עָשָׂ֑ר וְ֠זֹ֠את אֲשֶׁר־דִּבֶּ֨ר לָהֶ֤ם אֲבִיהֶם֙ וַיְבָ֣רֶךְ אוֹתָ֔ם אִ֛ישׁ אֲשֶׁ֥ר כְּבִרְכָת֖וֹ בֵּרַ֥ךְ אֹתָֽם׃', 'וַיְצַ֣ו אוֹתָ֗ם וַיֹּ֤אמֶר אֲלֵהֶם֙ אֲנִי֙ נֶאֱסָ֣ף אֶל־עַמִּ֔י קִבְר֥וּ אֹתִ֖י אֶל־אֲבֹתָ֑י אֶ֨ל־הַמְּעָרָ֔ה אֲשֶׁ֥ר בִּשְׂדֵ֖ה עֶפְר֥וֹן הַֽחִתִּֽי׃', 'בַּמְּעָרָ֞ה אֲשֶׁ֨ר בִּשְׂדֵ֧ה הַמַּכְפֵּלָ֛ה אֲשֶׁ֥ר עַל־פְּנֵי־מַמְרֵ֖א בְּאֶ֣רֶץ כְּנָ֑עַן אֲשֶׁר֩ קָנָ֨ה אַבְרָהָ֜ם אֶת־הַשָּׂדֶ֗ה מֵאֵ֛ת עֶפְרֹ֥ן הַחִתִּ֖י לַאֲחֻזַּת־קָֽבֶר׃', 'שָׁ֣מָּה קָֽבְר֞וּ אֶת־אַבְרָהָ֗ם וְאֵת֙ שָׂרָ֣ה אִשְׁתּ֔וֹ שָׁ֚מָּה קָבְר֣וּ אֶת־יִצְחָ֔ק וְאֵ֖ת רִבְקָ֣ה אִשְׁתּ֑וֹ וְשָׁ֥מָּה קָבַ֖רְתִּי אֶת־לֵאָֽה׃', 'מִקְנֵ֧ה הַשָּׂדֶ֛ה וְהַמְּעָרָ֥ה אֲשֶׁר־בּ֖וֹ מֵאֵ֥ת בְּנֵי־חֵֽת׃', 'וַיְכַ֤ל יַעֲקֹב֙ לְצַוֺּ֣ת אֶת־בָּנָ֔יו וַיֶּאֱסֹ֥ף רַגְלָ֖יו אֶל־הַמִּטָּ֑ה וַיִּגְוַ֖ע וַיֵּאָ֥סֶף אֶל־עַמָּֽיו׃']</p>
-      <p>['וַיִּפֹּ֥ל יוֹסֵ֖ף עַל־פְּנֵ֣י אָבִ֑יו וַיֵּ֥בְךְּ עָלָ֖יו וַיִּשַּׁק־לֽוֹ׃', 'וַיְצַ֨ו יוֹסֵ֤ף אֶת־עֲבָדָיו֙ אֶת־הָרֹ֣פְאִ֔ים לַחֲנֹ֖ט אֶת־אָבִ֑יו וַיַּחַנְט֥וּ הָרֹפְאִ֖ים אֶת־יִשְׂרָאֵֽל׃', 'וַיִּמְלְאוּ־לוֹ֙ אַרְבָּעִ֣ים י֔וֹם כִּ֛י כֵּ֥ן יִמְלְא֖וּ יְמֵ֣י הַחֲנֻטִ֑ים וַיִּבְכּ֥וּ אֹת֛וֹ מִצְרַ֖יִם שִׁבְעִ֥ים יֽוֹם׃', 'וַיַּֽעַבְרוּ֙ יְמֵ֣י בְכִית֔וֹ וַיְדַבֵּ֣ר יוֹסֵ֔ף אֶל־בֵּ֥ית פַּרְעֹ֖ה לֵאמֹ֑ר אִם־נָ֨א מָצָ֤אתִי חֵן֙ בְּעֵ֣ינֵיכֶ֔ם דַּבְּרוּ־נָ֕א בְּאׇזְנֵ֥י פַרְעֹ֖ה לֵאמֹֽר׃', 'אָבִ֞י הִשְׁבִּיעַ֣נִי לֵאמֹ֗ר הִנֵּ֣ה אָנֹכִי֮ מֵת֒ בְּקִבְרִ֗י אֲשֶׁ֨ר כָּרִ֤יתִי לִי֙ בְּאֶ֣רֶץ כְּנַ֔עַן שָׁ֖מָּה תִּקְבְּרֵ֑נִי וְעַתָּ֗ה אֶֽעֱלֶה־נָּ֛א וְאֶקְבְּרָ֥ה אֶת־אָבִ֖י וְאָשֽׁוּבָה׃', 'וַיֹּ֖אמֶר פַּרְעֹ֑ה עֲלֵ֛ה וּקְבֹ֥ר אֶת־אָבִ֖יךָ כַּאֲשֶׁ֥ר הִשְׁבִּיעֶֽךָ׃', 'וַיַּ֥עַל יוֹסֵ֖ף לִקְבֹּ֣ר אֶת־אָבִ֑יו וַיַּֽעֲל֨וּ אִתּ֜וֹ כׇּל־עַבְדֵ֤י פַרְעֹה֙ זִקְנֵ֣י בֵית֔וֹ וְכֹ֖ל זִקְנֵ֥י אֶֽרֶץ־מִצְרָֽיִם׃', 'וְכֹל֙ בֵּ֣ית יוֹסֵ֔ף וְאֶחָ֖יו וּבֵ֣ית אָבִ֑יו רַ֗ק טַפָּם֙ וְצֹאנָ֣ם וּבְקָרָ֔ם עָזְב֖וּ בְּאֶ֥רֶץ גֹּֽשֶׁן׃', 'וַיַּ֣עַל עִמּ֔וֹ גַּם־רֶ֖כֶב גַּם־פָּרָשִׁ֑ים וַיְהִ֥י הַֽמַּחֲנֶ֖ה כָּבֵ֥ד מְאֹֽד׃', 'וַיָּבֹ֜אוּ עַד־גֹּ֣רֶן הָאָטָ֗ד אֲשֶׁר֙ בְּעֵ֣בֶר הַיַּרְדֵּ֔ן וַיִּ֨סְפְּדוּ־שָׁ֔ם מִסְפֵּ֛ד גָּד֥וֹל וְכָבֵ֖ד מְאֹ֑ד וַיַּ֧עַשׂ לְאָבִ֛יו אֵ֖בֶל שִׁבְעַ֥ת יָמִֽים׃', 'וַיַּ֡רְא יוֹשֵׁב֩ הָאָ֨רֶץ הַֽכְּנַעֲנִ֜י אֶת־הָאֵ֗בֶל בְּגֹ֙רֶן֙ הָֽאָטָ֔ד וַיֹּ֣אמְר֔וּ אֵֽבֶל־כָּבֵ֥ד זֶ֖ה לְמִצְרָ֑יִם עַל־כֵּ֞ן קָרָ֤א שְׁמָהּ֙ אָבֵ֣ל מִצְרַ֔יִם אֲשֶׁ֖ר בְּעֵ֥בֶר הַיַּרְדֵּֽן׃', 'וַיַּעֲשׂ֥וּ בָנָ֖יו ל֑וֹ כֵּ֖ן כַּאֲשֶׁ֥ר צִוָּֽם׃', 'וַיִּשְׂא֨וּ אֹת֤וֹ בָנָיו֙ אַ֣רְצָה כְּנַ֔עַן וַיִּקְבְּר֣וּ אֹת֔וֹ בִּמְעָרַ֖ת שְׂדֵ֣ה הַמַּכְפֵּלָ֑ה אֲשֶׁ֣ר קָנָה֩ אַבְרָהָ֨ם אֶת־הַשָּׂדֶ֜ה לַאֲחֻזַּת־קֶ֗בֶר מֵאֵ֛ת עֶפְרֹ֥ן הַחִתִּ֖י עַל־פְּנֵ֥י מַמְרֵֽא׃', 'וַיָּ֨שׇׁב יוֹסֵ֤ף מִצְרַ֙יְמָה֙ ה֣וּא וְאֶחָ֔יו וְכׇל־הָעֹלִ֥ים אִתּ֖וֹ לִקְבֹּ֣ר אֶת־אָבִ֑יו אַחֲרֵ֖י קׇבְר֥וֹ אֶת־אָבִֽיו׃', 'וַיִּרְא֤וּ אֲחֵֽי־יוֹסֵף֙ כִּי־מֵ֣ת אֲבִיהֶ֔ם וַיֹּ֣אמְר֔וּ ל֥וּ יִשְׂטְמֵ֖נוּ יוֹסֵ֑ף וְהָשֵׁ֤ב יָשִׁיב֙ לָ֔נוּ אֵ֚ת כׇּל־הָ֣רָעָ֔ה אֲשֶׁ֥ר גָּמַ֖לְנוּ אֹתֽוֹ׃', 'וַיְצַוּ֕וּ אֶל־יוֹסֵ֖ף לֵאמֹ֑ר אָבִ֣יךָ צִוָּ֔ה לִפְנֵ֥י מוֹת֖וֹ לֵאמֹֽר׃', 'כֹּֽה־תֹאמְר֣וּ לְיוֹסֵ֗ף אָ֣נָּ֡א שָׂ֣א נָ֠א פֶּ֣שַׁע אַחֶ֤יךָ וְחַטָּאתָם֙ כִּי־רָעָ֣ה גְמָל֔וּךָ וְעַתָּה֙ שָׂ֣א נָ֔א לְפֶ֥שַׁע עַבְדֵ֖י אֱלֹהֵ֣י אָבִ֑יךָ וַיֵּ֥בְךְּ יוֹסֵ֖ף בְּדַבְּרָ֥ם אֵלָֽיו׃', 'וַיֵּלְכוּ֙ גַּם־אֶחָ֔יו וַֽיִּפְּל֖וּ לְפָנָ֑יו וַיֹּ֣אמְר֔וּ הִנֶּ֥נּֽוּ לְךָ֖ לַעֲבָדִֽים׃', 'וַיֹּ֧אמֶר אֲלֵהֶ֛ם יוֹסֵ֖ף אַל־תִּירָ֑אוּ כִּ֛י הֲתַ֥חַת אֱלֹהִ֖ים אָֽנִי׃', 'וְאַתֶּ֕ם חֲשַׁבְתֶּ֥ם עָלַ֖י רָעָ֑ה אֱלֹהִים֙ חֲשָׁבָ֣הּ לְטֹבָ֔ה לְמַ֗עַן עֲשֹׂ֛ה כַּיּ֥וֹם הַזֶּ֖ה לְהַחֲיֹ֥ת עַם־רָֽב׃', 'וְעַתָּה֙ אַל־תִּירָ֔אוּ אָנֹכִ֛י אֲכַלְכֵּ֥ל אֶתְכֶ֖ם וְאֶֽת־טַפְּכֶ֑ם וַיְנַחֵ֣ם אוֹתָ֔ם וַיְדַבֵּ֖ר עַל־לִבָּֽם׃', 'וַיֵּ֤שֶׁב יוֹסֵף֙ בְּמִצְרַ֔יִם ה֖וּא וּבֵ֣ית אָבִ֑יו וַיְחִ֣י יוֹסֵ֔ף מֵאָ֥ה וָעֶ֖שֶׂר שָׁנִֽים׃', 'וַיַּ֤רְא יוֹסֵף֙ לְאֶפְרַ֔יִם בְּנֵ֖י שִׁלֵּשִׁ֑ים גַּ֗ם בְּנֵ֤י מָכִיר֙ בֶּן־מְנַשֶּׁ֔ה יֻלְּד֖וּ עַל־בִּרְכֵּ֥י יוֹסֵֽף׃', 'וַיֹּ֤אמֶר יוֹסֵף֙ אֶל־אֶחָ֔יו אָנֹכִ֖י מֵ֑ת וֵֽאלֹהִ֞ים פָּקֹ֧ד יִפְקֹ֣ד אֶתְכֶ֗ם וְהֶעֱלָ֤ה אֶתְכֶם֙ מִן־הָאָ֣רֶץ הַזֹּ֔את אֶל־הָאָ֕רֶץ אֲשֶׁ֥ר נִשְׁבַּ֛ע לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹֽב׃', 'וַיַּשְׁבַּ֣ע יוֹסֵ֔ף אֶת־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר פָּקֹ֨ד יִפְקֹ֤ד אֱלֹהִים֙ אֶתְכֶ֔ם וְהַעֲלִתֶ֥ם אֶת־עַצְמֹתַ֖י מִזֶּֽה׃', 'וַיָּ֣מׇת יוֹסֵ֔ף בֶּן־מֵאָ֥ה וָעֶ֖שֶׂר שָׁנִ֑ים וַיַּחַנְט֣וּ אֹת֔וֹ וַיִּ֥ישֶׂם בָּאָר֖וֹן בְּמִצְרָֽיִם׃']</p>
+  <div class="bloc-texte bil" id="sa-bil" data-mode="bi">
+  <div class="bloc-hd"><span>📜 Texte hébreu et français</span>
+    <span class="modes">
+      <button class="mode-btn on" data-m="bi" onclick="setMode('bi',this)">Hébreu + français</button>
+      <button class="mode-btn" data-m="fr" onclick="setMode('fr',this)">Français</button>
+      <button class="mode-btn" data-m="heb" onclick="setMode('heb',this)">עברית</button>
+      <button class="mode-btn" onclick="toggleNikud(this)">Sans voyelles</button>
+    </span></div>
+  <div class="seif-nav"><a href="#v-47-28">Chap. 47</a><a href="#v-48-1">Chap. 48</a><a href="#v-49-1">Chap. 49</a><a href="#v-50-1">Chap. 50</a></div>
+  <div class="seif" id="v-47-28">
+      <span class="seif-num">47:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְחִ֤י יַעֲקֹב֙ בְּאֶ֣רֶץ מִצְרַ֔יִם שְׁבַ֥ע עֶשְׂרֵ֖ה שָׁנָ֑ה וַיְהִ֤י יְמֵֽי־יַעֲקֹב֙ שְׁנֵ֣י חַיָּ֔יו שֶׁ֣בַע שָׁנִ֔ים וְאַרְבָּעִ֥ים וּמְאַ֖ת שָׁנָֽה׃</p></div><div class="heb-s"><p>ויחי יעקב בארץ מצרים שבע עשרה שנה ויהי ימי־יעקב שני חייו שבע שנים וארבעים ומאת שנה׃</p></div></div>
+      <div class="texte-fr"><p>Jacob vécut dans le pays d’Égypte dix sept ans; la durée de la vie de Jacob fut donc de cent quarante-sept années.</p></div>
+    </div><div class="seif" id="v-47-29">
+      <span class="seif-num">47:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרְב֣וּ יְמֵֽי־יִשְׂרָאֵל֮ לָמוּת֒ וַיִּקְרָ֣א&thinsp;<b>׀</b> לִבְנ֣וֹ לְיוֹסֵ֗ף וַיֹּ֤אמֶר לוֹ֙ אִם־נָ֨א מָצָ֤אתִי חֵן֙ בְּעֵינֶ֔יךָ שִֽׂים־נָ֥א יָדְךָ֖ תַּ֣חַת יְרֵכִ֑י וְעָשִׂ֤יתָ עִמָּדִי֙ חֶ֣סֶד וֶאֱמֶ֔ת אַל־נָ֥א תִקְבְּרֵ֖נִי בְּמִצְרָֽיִם׃</p></div><div class="heb-s"><p>ויקרבו ימי־ישראל למות ויקרא&thinsp;<b>׀</b> לבנו ליוסף ויאמר לו אם־נא מצאתי חן בעיניך שים־נא ידך תחת ירכי ועשית עמדי חסד ואמת אל־נא תקברני במצרים׃</p></div></div>
+      <div class="texte-fr"><p>Les jours d’Israël approchant de leur terme, il manda son fils Joseph et lui dit: "Si tu as quelque affection pour moi, mets, je te prie, ta main sous ma hanche pour attester que tu agiras envers moi avec bonté et fidélité, en ne m’ensevelissant point en Egypte.</p></div>
+    </div><div class="seif" id="v-47-30">
+      <span class="seif-num">47:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְשָֽׁכַבְתִּי֙ עִם־אֲבֹתַ֔י וּנְשָׂאתַ֙נִי֙ מִמִּצְרַ֔יִם וּקְבַרְתַּ֖נִי בִּקְבֻרָתָ֑ם וַיֹּאמַ֕ר אָנֹכִ֖י אֶֽעֱשֶׂ֥ה כִדְבָרֶֽךָ׃</p></div><div class="heb-s"><p>ושכבתי עם־אבתי ונשאתני ממצרים וקברתני בקברתם ויאמר אנכי אעשה כדברך׃</p></div></div>
+      <div class="texte-fr"><p>Quand je dormirai avec mes pères, tu me transporteras hors de l’Égypte et tu m’enseveliras dans leur sépulcre." Il répondit: "Je ferai selon ta parole."</p></div>
+    </div><div class="seif" id="v-47-31">
+      <span class="seif-num">47:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֗אמֶר הִשָּֽׁבְעָה֙ לִ֔י וַיִּשָּׁבַ֖ע ל֑וֹ וַיִּשְׁתַּ֥חוּ יִשְׂרָאֵ֖ל עַל־רֹ֥אשׁ הַמִּטָּֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ויאמר השבעה לי וישבע לו וישתחו ישראל על־ראש המטה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Il reprit: "Jure-le-moi" et il le lui jura; et Israël s’inclina sur le chevet du lit.</p></div>
+    </div><div class="seif" id="v-48-1">
+      <span class="seif-num">48:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְהִ֗י אַחֲרֵי֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה וַיֹּ֣אמֶר לְיוֹסֵ֔ף הִנֵּ֥ה אָבִ֖יךָ חֹלֶ֑ה וַיִּקַּ֞ח אֶת־שְׁנֵ֤י בָנָיו֙ עִמּ֔וֹ אֶת־מְנַשֶּׁ֖ה וְאֶת־אֶפְרָֽיִם׃</p></div><div class="heb-s"><p>ויהי אחרי הדברים האלה ויאמר ליוסף הנה אביך חלה ויקח את־שני בניו עמו את־מנשה ואת־אפרים׃</p></div></div>
+      <div class="texte-fr"><p>Il arriva, après ces faits, qu’on dit à Joseph: "Ton père est malade." Et il partit emmenant ses deux fils, Manassé et Éphraïm.</p></div>
+    </div><div class="seif" id="v-48-2">
+      <span class="seif-num">48:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּגֵּ֣ד לְיַעֲקֹ֔ב וַיֹּ֕אמֶר הִנֵּ֛ה בִּנְךָ֥ יוֹסֵ֖ף בָּ֣א אֵלֶ֑יךָ וַיִּתְחַזֵּק֙ יִשְׂרָאֵ֔ל וַיֵּ֖שֶׁב עַל־הַמִּטָּֽה׃</p></div><div class="heb-s"><p>ויגד ליעקב ויאמר הנה בנך יוסף בא אליך ויתחזק ישראל וישב על־המטה׃</p></div></div>
+      <div class="texte-fr"><p>On l’annonça à Jacob, en disant: "Voici que ton fils Joseph vient te voir." Israël recueillit ses forces et s’assit sur le lit.</p></div>
+    </div><div class="seif" id="v-48-3">
+      <span class="seif-num">48:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יַעֲקֹב֙ אֶל־יוֹסֵ֔ף אֵ֥ל שַׁדַּ֛י נִרְאָֽה־אֵלַ֥י בְּל֖וּז בְּאֶ֣רֶץ כְּנָ֑עַן וַיְבָ֖רֶךְ אֹתִֽי׃</p></div><div class="heb-s"><p>ויאמר יעקב אל־יוסף אל שדי נראה־אלי בלוז בארץ כנען ויברך אתי׃</p></div></div>
+      <div class="texte-fr"><p>Et Jacob dit à Joseph: "Le Dieu tout-puissant m’est apparu à Louz, au pays de Canaan et m’a béni.</p></div>
+    </div><div class="seif" id="v-48-4">
+      <span class="seif-num">48:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֣אמֶר אֵלַ֗י הִנְנִ֤י מַפְרְךָ֙ וְהִרְבִּיתִ֔ךָ וּנְתַתִּ֖יךָ לִקְהַ֣ל עַמִּ֑ים וְנָ֨תַתִּ֜י אֶת־הָאָ֧רֶץ הַזֹּ֛את לְזַרְעֲךָ֥ אַחֲרֶ֖יךָ אֲחֻזַּ֥ת עוֹלָֽם׃</p></div><div class="heb-s"><p>ויאמר אלי הנני מפרך והרביתך ונתתיך לקהל עמים ונתתי את־הארץ הזאת לזרעך אחריך אחזת עולם׃</p></div></div>
+      <div class="texte-fr"><p>Il m’a dit: ‘Je veux te faire croître et fructifier et je te ferai devenir une multitude de peuples; et je donnerai ce pays à te postérité ultérieure, comme possession perpétuelle.’</p></div>
+    </div><div class="seif" id="v-48-5">
+      <span class="seif-num">48:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּ֡ה שְׁנֵֽי־בָנֶ֩יךָ֩ הַנּוֹלָדִ֨ים לְךָ֜ בְּאֶ֣רֶץ מִצְרַ֗יִם עַד־בֹּאִ֥י אֵלֶ֛יךָ מִצְרַ֖יְמָה לִי־הֵ֑ם אֶפְרַ֙יִם֙ וּמְנַשֶּׁ֔ה כִּרְאוּבֵ֥ן וְשִׁמְע֖וֹן יִֽהְיוּ־לִֽי׃</p></div><div class="heb-s"><p>ועתה שני־בניך הנולדים לך בארץ מצרים עד־באי אליך מצרימה לי־הם אפרים ומנשה כראובן ושמעון יהיו־לי׃</p></div></div>
+      <div class="texte-fr"><p>Eh bien! Tes deux fils, qui te sont nés au pays d’Égypte avant que je vinsse auprès de toi en Égypte, deviennent les miens; non moins que Ruben et Siméon, Éphraïm et Manassé seront à moi.</p></div>
+    </div><div class="seif" id="v-48-6">
+      <span class="seif-num">48:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וּמוֹלַדְתְּךָ֛ אֲשֶׁר־הוֹלַ֥דְתָּ אַחֲרֵיהֶ֖ם לְךָ֣ יִהְי֑וּ עַ֣ל שֵׁ֧ם אֲחֵיהֶ֛ם יִקָּרְא֖וּ בְּנַחֲלָתָֽם׃</p></div><div class="heb-s"><p>ומולדתך אשר־הולדת אחריהם לך יהיו על שם אחיהם יקראו בנחלתם׃</p></div></div>
+      <div class="texte-fr"><p>Quant aux enfants que tu engendrerais après eux, ils te seront attribués: ils s’appelleront du nom de leurs frères, à l’égard de leur héritage.</p></div>
+    </div><div class="seif" id="v-48-7">
+      <span class="seif-num">48:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֣י&thinsp;<b>׀</b> בְּבֹאִ֣י מִפַּדָּ֗ן מֵ֩תָה֩ עָלַ֨י רָחֵ֜ל בְּאֶ֤רֶץ כְּנַ֙עַן֙ בַּדֶּ֔רֶךְ בְּע֥וֹד כִּבְרַת־אֶ֖רֶץ לָבֹ֣א אֶפְרָ֑תָה וָאֶקְבְּרֶ֤הָ שָּׁם֙ בְּדֶ֣רֶךְ אֶפְרָ֔ת הִ֖וא בֵּ֥ית לָֽחֶם׃</p></div><div class="heb-s"><p>ואני&thinsp;<b>׀</b> בבאי מפדן מתה עלי רחל בארץ כנען בדרך בעוד כברת־ארץ לבא אפרתה ואקברה שם בדרך אפרת הוא בית לחם׃</p></div></div>
+      <div class="texte-fr"><p>Pour moi, quand je revins du territoire d’Aram, Rachel mourut dans mes bras au pays de Canaan pendant le voyage, lorsqu’une kibra de pays me séparait encore d’Éphrath; je l’inhumai là, sur le chemin d’Éphrath, qui est Bethléem."</p></div>
+    </div><div class="seif" id="v-48-8">
+      <span class="seif-num">48:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥רְא יִשְׂרָאֵ֖ל אֶת־בְּנֵ֣י יוֹסֵ֑ף וַיֹּ֖אמֶר מִי־אֵֽלֶּה׃</p></div><div class="heb-s"><p>וירא ישראל את־בני יוסף ויאמר מי־אלה׃</p></div></div>
+      <div class="texte-fr"><p>Israël remarqua les enfants de Joseph et il dit: "Qui sont ceux-là?"</p></div>
+    </div><div class="seif" id="v-48-9">
+      <span class="seif-num">48:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יוֹסֵף֙ אֶל־אָבִ֔יו בָּנַ֣י הֵ֔ם אֲשֶׁר־נָֽתַן־לִ֥י אֱלֹהִ֖ים בָּזֶ֑ה וַיֹּאמַ֕ר קָֽחֶם־נָ֥א אֵלַ֖י וַאֲבָרְכֵֽם׃</p></div><div class="heb-s"><p>ויאמר יוסף אל־אביו בני הם אשר־נתן־לי אלהים בזה ויאמר קחם־נא אלי ואברכם׃</p></div></div>
+      <div class="texte-fr"><p>Joseph répondit à son père: "Ce sont mes fils, que Dieu m’a donnés dans ce pays." Jacob reprit: "Approche-les de moi, je te prie, que je les bénisse."</p></div>
+    </div><div class="seif" id="v-48-10">
+      <span class="seif-num">48:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעֵינֵ֤י יִשְׂרָאֵל֙ כָּבְד֣וּ מִזֹּ֔קֶן לֹ֥א יוּכַ֖ל לִרְא֑וֹת וַיַּגֵּ֤שׁ אֹתָם֙ אֵלָ֔יו וַיִּשַּׁ֥ק לָהֶ֖ם וַיְחַבֵּ֥ק לָהֶֽם׃</p></div><div class="heb-s"><p>ועיני ישראל כבדו מזקן לא יוכל לראות ויגש אתם אליו וישק להם ויחבק להם׃</p></div></div>
+      <div class="texte-fr"><p>Or, les yeux d’Israël, appesantis par la vieillesse, ne pouvaient plus bien voir. Il fit approcher de lui ces jeunes gens, leur donna des baisers, les pressa dans ses bras;</p></div>
+    </div><div class="seif" id="v-48-11">
+      <span class="seif-num">48:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יִשְׂרָאֵל֙ אֶל־יוֹסֵ֔ף רְאֹ֥ה פָנֶ֖יךָ לֹ֣א פִלָּ֑לְתִּי וְהִנֵּ֨ה הֶרְאָ֥ה אֹתִ֛י אֱלֹהִ֖ים גַּ֥ם אֶת־זַרְעֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר ישראל אל־יוסף ראה פניך לא פללתי והנה הראה אתי אלהים גם את־זרעך׃</p></div></div>
+      <div class="texte-fr"><p>et Israël dit à Joseph: "Je ne comptais pas revoir ton visage et voici que Dieu m’a fait voir jusqu’à ta postérité".</p></div>
+    </div><div class="seif" id="v-48-12">
+      <span class="seif-num">48:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיּוֹצֵ֥א יוֹסֵ֛ף אֹתָ֖ם מֵעִ֣ם בִּרְכָּ֑יו וַיִּשְׁתַּ֥חוּ לְאַפָּ֖יו אָֽרְצָה׃</p></div><div class="heb-s"><p>ויוצא יוסף אתם מעם ברכיו וישתחו לאפיו ארצה׃</p></div></div>
+      <div class="texte-fr"><p>Joseph les retira d’entre ses genoux et se prosterna devant lui jusqu’à terre.</p></div>
+    </div><div class="seif" id="v-48-13">
+      <span class="seif-num">48:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקַּ֣ח יוֹסֵף֮ אֶת־שְׁנֵיהֶם֒ אֶת־אֶפְרַ֤יִם בִּֽימִינוֹ֙ מִשְּׂמֹ֣אל יִשְׂרָאֵ֔ל וְאֶת־מְנַשֶּׁ֥ה בִשְׂמֹאל֖וֹ מִימִ֣ין יִשְׂרָאֵ֑ל וַיַּגֵּ֖שׁ אֵלָֽיו׃</p></div><div class="heb-s"><p>ויקח יוסף את־שניהם את־אפרים בימינו משמאל ישראל ואת־מנשה בשמאלו מימין ישראל ויגש אליו׃</p></div></div>
+      <div class="texte-fr"><p>Puis Joseph les prit tous deux, Éphraïm de la main droite, à gauche d’Israël et Manassé de la main gauche, à droite d’Israël; et il les fit avancer vers lui.</p></div>
+    </div><div class="seif" id="v-48-14">
+      <span class="seif-num">48:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׁלַח֩ יִשְׂרָאֵ֨ל אֶת־יְמִינ֜וֹ וַיָּ֨שֶׁת עַל־רֹ֤אשׁ אֶפְרַ֙יִם֙ וְה֣וּא הַצָּעִ֔יר וְאֶת־שְׂמֹאל֖וֹ עַל־רֹ֣אשׁ מְנַשֶּׁ֑ה שִׂכֵּל֙ אֶת־יָדָ֔יו כִּ֥י מְנַשֶּׁ֖ה הַבְּכֽוֹר׃</p></div><div class="heb-s"><p>וישלח ישראל את־ימינו וישת על־ראש אפרים והוא הצעיר ואת־שמאלו על־ראש מנשה שכל את־ידיו כי מנשה הבכור׃</p></div></div>
+      <div class="texte-fr"><p>Israël étendit la main droite, l’imposa sur la tête d’Éphraïm, qui était le plus jeune et mit sa main gauche sur la tête de Manassé; il croisa ses mains, quoique Manassé fut l’aîné.</p></div>
+    </div><div class="seif" id="v-48-15">
+      <span class="seif-num">48:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְבָ֥רֶךְ אֶת־יוֹסֵ֖ף וַיֹּאמַ֑ר הָֽאֱלֹהִ֡ים אֲשֶׁר֩ הִתְהַלְּכ֨וּ אֲבֹתַ֤י לְפָנָיו֙ אַבְרָהָ֣ם וְיִצְחָ֔ק הָֽאֱלֹהִים֙ הָרֹעֶ֣ה אֹתִ֔י מֵעוֹדִ֖י עַד־הַיּ֥וֹם הַזֶּֽה׃</p></div><div class="heb-s"><p>ויברך את־יוסף ויאמר האלהים אשר התהלכו אבתי לפניו אברהם ויצחק האלהים הרעה אתי מעודי עד־היום הזה׃</p></div></div>
+      <div class="texte-fr"><p>Il bénit Joseph, puis dit: "Que la Divinité dont mes pères, Abraham et Isaac, ont suivi les voies; que la Divinité qui a veillé sur moi depuis ma naissance jusqu’à ce jour;</p></div>
+    </div><div class="seif" id="v-48-16">
+      <span class="seif-num">48:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>הַמַּלְאָךְ֩ הַגֹּאֵ֨ל אֹתִ֜י מִכׇּל־רָ֗ע יְבָרֵךְ֮ אֶת־הַנְּעָרִים֒ וְיִקָּרֵ֤א בָהֶם֙ שְׁמִ֔י וְשֵׁ֥ם אֲבֹתַ֖י אַבְרָהָ֣ם וְיִצְחָ֑ק וְיִדְגּ֥וּ לָרֹ֖ב בְּקֶ֥רֶב הָאָֽרֶץ׃</p></div><div class="heb-s"><p>המלאך הגאל אתי מכל־רע יברך את־הנערים ויקרא בהם שמי ושם אבתי אברהם ויצחק וידגו לרב בקרב הארץ׃</p></div></div>
+      <div class="texte-fr"><p>que l’ange qui m’a délivré de tout mal, bénisse ces jeunes gens! Puisse-t-il perpétuer mon nom et le nom de mes pères Abraham et Isaac! Puisse-t-il multiplier à l’infini au milieu de la contrée."</p></div>
+    </div><div class="seif" id="v-48-17">
+      <span class="seif-num">48:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣רְא יוֹסֵ֗ף כִּי־יָשִׁ֨ית אָבִ֧יו יַד־יְמִינ֛וֹ עַל־רֹ֥אשׁ אֶפְרַ֖יִם וַיֵּ֣רַע בְּעֵינָ֑יו וַיִּתְמֹ֣ךְ יַד־אָבִ֗יו לְהָסִ֥יר אֹתָ֛הּ מֵעַ֥ל רֹאשׁ־אֶפְרַ֖יִם עַל־רֹ֥אשׁ מְנַשֶּֽׁה׃</p></div><div class="heb-s"><p>וירא יוסף כי־ישית אביו יד־ימינו על־ראש אפרים וירע בעיניו ויתמך יד־אביו להסיר אתה מעל ראש־אפרים על־ראש מנשה׃</p></div></div>
+      <div class="texte-fr"><p>Joseph remarqua que son père posait sa main droite sur la tête d’Éphraïm et cela lui déplut; il souleva la main de son père pour la faire passer de la tête d’Éphraïm sur la tête de Manassé</p></div>
+    </div><div class="seif" id="v-48-18">
+      <span class="seif-num">48:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֧אמֶר יוֹסֵ֛ף אֶל־אָבִ֖יו לֹא־כֵ֣ן אָבִ֑י כִּי־זֶ֣ה הַבְּכֹ֔ר שִׂ֥ים יְמִינְךָ֖ עַל־רֹאשֽׁוֹ׃</p></div><div class="heb-s"><p>ויאמר יוסף אל־אביו לא־כן אבי כי־זה הבכר שים ימינך על־ראשו׃</p></div></div>
+      <div class="texte-fr"><p>et il dit à son père: "Pas ainsi, mon père! Puisque celui-ci est l’aîné, mets ta main droite sur sa tête."</p></div>
+    </div><div class="seif" id="v-48-19">
+      <span class="seif-num">48:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְמָאֵ֣ן אָבִ֗יו וַיֹּ֙אמֶר֙ יָדַ֤עְתִּֽי בְנִי֙ יָדַ֔עְתִּי גַּם־ה֥וּא יִֽהְיֶה־לְּעָ֖ם וְגַם־ה֣וּא יִגְדָּ֑ל וְאוּלָ֗ם אָחִ֤יו הַקָּטֹן֙ יִגְדַּ֣ל מִמֶּ֔נּוּ וְזַרְע֖וֹ יִהְיֶ֥ה מְלֹֽא־הַגּוֹיִֽם׃</p></div><div class="heb-s"><p>וימאן אביו ויאמר ידעתי בני ידעתי גם־הוא יהיה־לעם וגם־הוא יגדל ואולם אחיו הקטן יגדל ממנו וזרעו יהיה מלא־הגוים׃</p></div></div>
+      <div class="texte-fr"><p>Son père s’y refusa et dit: "Je le sais, mon fils, je le sais; lui aussi deviendra un peuple et lui aussi sera grand: mais son jeune frère sera plus grand que lui et sa postérité formera plusieurs nations."</p></div>
+    </div><div class="seif" id="v-48-20">
+      <span class="seif-num">48:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְבָ֨רְכֵ֜ם בַּיּ֣וֹם הַהוּא֮ לֵאמוֹר֒ בְּךָ֗ יְבָרֵ֤ךְ יִשְׂרָאֵל֙ לֵאמֹ֔ר יְשִֽׂמְךָ֣ אֱלֹהִ֔ים כְּאֶפְרַ֖יִם וְכִמְנַשֶּׁ֑ה וַיָּ֥שֶׂם אֶת־אֶפְרַ֖יִם לִפְנֵ֥י מְנַשֶּֽׁה׃</p></div><div class="heb-s"><p>ויברכם ביום ההוא לאמור בך יברך ישראל לאמר ישמך אלהים כאפרים וכמנשה וישם את־אפרים לפני מנשה׃</p></div></div>
+      <div class="texte-fr"><p>Il les bénit alors et il dit: "Israël te nommera dans ses bénédictions, en disant: Dieu te fasse devenir comme Éphraïm et Manassé!" Il plaça ainsi Éphraïm avant Manassé.</p></div>
+    </div><div class="seif" id="v-48-21">
+      <span class="seif-num">48:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יִשְׂרָאֵל֙ אֶל־יוֹסֵ֔ף הִנֵּ֥ה אָנֹכִ֖י מֵ֑ת וְהָיָ֤ה אֱלֹהִים֙ עִמָּכֶ֔ם וְהֵשִׁ֣יב אֶתְכֶ֔ם אֶל־אֶ֖רֶץ אֲבֹתֵיכֶֽם׃</p></div><div class="heb-s"><p>ויאמר ישראל אל־יוסף הנה אנכי מת והיה אלהים עמכם והשיב אתכם אל־ארץ אבתיכם׃</p></div></div>
+      <div class="texte-fr"><p>Israël dit à Joseph: "Voici, je vais mourir. Dieu sera avec vous et il vous ramènera au pays de vos aïeux.</p></div>
+    </div><div class="seif" id="v-48-22">
+      <span class="seif-num">48:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַאֲנִ֞י נָתַ֧תִּֽי לְךָ֛ שְׁכֶ֥ם אַחַ֖ד עַל־אַחֶ֑יךָ אֲשֶׁ֤ר לָקַ֙חְתִּי֙ מִיַּ֣ד הָֽאֱמֹרִ֔י בְּחַרְבִּ֖י וּבְקַשְׁתִּֽי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ואני נתתי לך שכם אחד על־אחיך אשר לקחתי מיד האמרי בחרבי ובקשתי׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Or, je te promets une portion supérieure à celle de tes frères, portion conquise sur l’Amorréen, à l’aide de mon épée et de mon arc."</p></div>
+    </div><div class="seif" id="v-49-1">
+      <span class="seif-num">49:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּקְרָ֥א יַעֲקֹ֖ב אֶל־בָּנָ֑יו וַיֹּ֗אמֶר הֵאָֽסְפוּ֙ וְאַגִּ֣ידָה לָכֶ֔ם אֵ֛ת אֲשֶׁר־יִקְרָ֥א אֶתְכֶ֖ם בְּאַחֲרִ֥ית הַיָּמִֽים׃</p></div><div class="heb-s"><p>ויקרא יעקב אל־בניו ויאמר האספו ואגידה לכם את אשר־יקרא אתכם באחרית הימים׃</p></div></div>
+      <div class="texte-fr"><p>Jacob fit venir ses fils et il dit: "Rassemblez-vous, je veux vous révéler ce qui vous arrivera dans la suite des jours.</p></div>
+    </div><div class="seif" id="v-49-2">
+      <span class="seif-num">49:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>הִקָּבְצ֥וּ וְשִׁמְע֖וּ בְּנֵ֣י יַעֲקֹ֑ב וְשִׁמְע֖וּ אֶל־יִשְׂרָאֵ֥ל אֲבִיכֶֽם׃</p></div><div class="heb-s"><p>הקבצו ושמעו בני יעקב ושמעו אל־ישראל אביכם׃</p></div></div>
+      <div class="texte-fr"><p>Pressez-vous pour écouter, enfants de Jacob, pour écouter Israël votre Père.</p></div>
+    </div><div class="seif" id="v-49-3">
+      <span class="seif-num">49:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>רְאוּבֵן֙ בְּכֹ֣רִי אַ֔תָּה כֹּחִ֖י וְרֵאשִׁ֣ית אוֹנִ֑י יֶ֥תֶר שְׂאֵ֖ת וְיֶ֥תֶר עָֽז׃</p></div><div class="heb-s"><p>ראובן בכרי אתה כחי וראשית אוני יתר שאת ויתר עז׃</p></div></div>
+      <div class="texte-fr"><p>Ruben! Tu fus mon premier-né, mon orgueil et les prémices de ma vigueur: le premier en dignité, le premier en puissance.</p></div>
+    </div><div class="seif" id="v-49-4">
+      <span class="seif-num">49:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>פַּ֤חַז כַּמַּ֙יִם֙ אַל־תּוֹתַ֔ר כִּ֥י עָלִ֖יתָ מִשְׁכְּבֵ֣י אָבִ֑יךָ אָ֥ז חִלַּ֖לְתָּ יְצוּעִ֥י עָלָֽה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>פחז כמים אל־תותר כי עלית משכבי אביך אז חללת יצועי עלה׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Impétueux comme l’onde, tu as perdu ta noblesse! Car tu as attenté au lit paternel, tu as flétri l’honneur de ma couche.</p></div>
+    </div><div class="seif" id="v-49-5">
+      <span class="seif-num">49:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>שִׁמְע֥וֹן וְלֵוִ֖י אַחִ֑ים כְּלֵ֥י חָמָ֖ס מְכֵרֹתֵיהֶֽם׃</p></div><div class="heb-s"><p>שמעון ולוי אחים כלי חמס מכרתיהם׃</p></div></div>
+      <div class="texte-fr"><p>Siméon et Lévi! Digne couple de frères; leurs armes sont des instruments de violence.</p></div>
+    </div><div class="seif" id="v-49-6">
+      <span class="seif-num">49:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>בְּסֹדָם֙ אַל־תָּבֹ֣א נַפְשִׁ֔י בִּקְהָלָ֖ם אַל־תֵּחַ֣ד כְּבֹדִ֑י כִּ֤י בְאַפָּם֙ הָ֣רְגוּ אִ֔ישׁ וּבִרְצֹנָ֖ם עִקְּרוּ־שֽׁוֹר׃</p></div><div class="heb-s"><p>בסדם אל־תבא נפשי בקהלם אל־תחד כבדי כי באפם הרגו איש וברצנם עקרו־שור׃</p></div></div>
+      <div class="texte-fr"><p>Ne t’associe point à leurs desseins, ô mon âme! Mon honneur, ne sois pas complice de leur alliance! Car, dans leur colère, ils ont immolé des hommes et pour leur passion ils ont frappé des taureaux.</p></div>
+    </div><div class="seif" id="v-49-7">
+      <span class="seif-num">49:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָר֤וּר אַפָּם֙ כִּ֣י עָ֔ז וְעֶבְרָתָ֖ם כִּ֣י קָשָׁ֑תָה אֲחַלְּקֵ֣ם בְּיַעֲקֹ֔ב וַאֲפִיצֵ֖ם בְּיִשְׂרָאֵֽל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ארור אפם כי עז ועברתם כי קשתה אחלקם ביעקב ואפיצם בישראל׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Maudite soit leur colère, car elle fut malfaisante et leur indignation, car elle a été funeste! Je veux les séparer dans Jacob, les disperser en Israël.</p></div>
+    </div><div class="seif" id="v-49-8">
+      <span class="seif-num">49:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהוּדָ֗ה אַתָּה֙ יוֹד֣וּךָ אַחֶ֔יךָ יָדְךָ֖ בְּעֹ֣רֶף אֹיְבֶ֑יךָ יִשְׁתַּחֲו֥וּ לְךָ֖ בְּנֵ֥י אָבִֽיךָ׃</p></div><div class="heb-s"><p>יהודה אתה יודוך אחיך ידך בערף איביך ישתחוו לך בני אביך׃</p></div></div>
+      <div class="texte-fr"><p>Pour toi, Juda, tes frères te rendront hommage; ta main fera ployer le cou de tes ennemis; les enfants de ton père s’inclineront devant toi!</p></div>
+    </div><div class="seif" id="v-49-9">
+      <span class="seif-num">49:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>גּ֤וּר אַרְיֵה֙ יְהוּדָ֔ה מִטֶּ֖רֶף בְּנִ֣י עָלִ֑יתָ כָּרַ֨ע רָבַ֧ץ כְּאַרְיֵ֛ה וּכְלָבִ֖יא מִ֥י יְקִימֶֽנּוּ׃</p></div><div class="heb-s"><p>גור אריה יהודה מטרף בני עלית כרע רבץ כאריה וכלביא מי יקימנו׃</p></div></div>
+      <div class="texte-fr"><p>Tu es un jeune lion, Juda, quand tu reviens, ô mon fils, avec ta capture! Il se couche; c’est le repos du lion et du léopard; qui oserait le réveiller?</p></div>
+    </div><div class="seif" id="v-49-10">
+      <span class="seif-num">49:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>לֹֽא־יָס֥וּר שֵׁ֙בֶט֙ מִֽיהוּדָ֔ה וּמְחֹקֵ֖ק מִבֵּ֣ין רַגְלָ֑יו עַ֚ד כִּֽי־יָבֹ֣א <span class="mam-kq-trivial">שִׁילֹ֔ה</span> וְל֖וֹ יִקְּהַ֥ת עַמִּֽים׃</p></div><div class="heb-s"><p>לא־יסור שבט מיהודה ומחקק מבין רגליו עד כי־יבא <span class="mam-kq-trivial">שילה</span> ולו יקהת עמים׃</p></div></div>
+      <div class="texte-fr"><p>Le sceptre n’échappera point à Juda, ni l’autorité à sa descendance, jusqu’à l’avènement du Pacifique auquel obéiront les peuples.</p></div>
+    </div><div class="seif" id="v-49-11">
+      <span class="seif-num">49:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>אֹסְרִ֤י לַגֶּ֙פֶן֙ <span class="mam-kq-trivial">עִירֹ֔ה</span> וְלַשֹּׂרֵקָ֖ה בְּנִ֣י אֲתֹנ֑וֹ כִּבֵּ֤ס בַּיַּ֙יִן֙ לְבֻשׁ֔וֹ וּבְדַם־עֲנָבִ֖ים <span class="mam-kq-trivial">סוּתֹֽה</span>׃</p></div><div class="heb-s"><p>אסרי לגפן <span class="mam-kq-trivial">עירה</span> ולשרקה בני אתנו כבס ביין לבשו ובדם־ענבים <span class="mam-kq-trivial">סותה</span>׃</p></div></div>
+      <div class="texte-fr"><p>Alors on attachera son ânon à la vigne, et à la treille le fils de son ânesse: on lavera son vêtement dans le vin, et dans le sang des raisins sa tunique;</p></div>
+    </div><div class="seif" id="v-49-12">
+      <span class="seif-num">49:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>חַכְלִילִ֥י עֵינַ֖יִם מִיָּ֑יִן וּלְבֶן־שִׁנַּ֖יִם מֵחָלָֽב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>חכלילי עינים מיין ולבן־שנים מחלב׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>les yeux seront pétillants de vin et les dents toutes blanches de lait.</p></div>
+    </div><div class="seif" id="v-49-13">
+      <span class="seif-num">49:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>זְבוּלֻ֕ן לְח֥וֹף יַמִּ֖ים יִשְׁכֹּ֑ן וְהוּא֙ לְח֣וֹף אֳנִיֹּ֔ת וְיַרְכָת֖וֹ עַל־צִידֹֽן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>זבולן לחוף ימים ישכן והוא לחוף אנית וירכתו על־צידן׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>Zabulon occupera le littoral des mers; il offrira des ports aux vaisseaux et sa plage atteindra Sidon.</p></div>
+    </div><div class="seif" id="v-49-14">
+      <span class="seif-num">49:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>יִשָּׂשכָ֖ר חֲמֹ֣ר גָּ֑רֶם רֹבֵ֖ץ בֵּ֥ין הַֽמִּשְׁפְּתָֽיִם׃</p></div><div class="heb-s"><p>יששכר חמר גרם רבץ בין המשפתים׃</p></div></div>
+      <div class="texte-fr"><p>Issachar est un âne musculeux qui se couche entre les collines.</p></div>
+    </div><div class="seif" id="v-49-15">
+      <span class="seif-num">49:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤רְא מְנֻחָה֙ כִּ֣י ט֔וֹב וְאֶת־הָאָ֖רֶץ כִּ֣י נָעֵ֑מָה וַיֵּ֤ט שִׁכְמוֹ֙ לִסְבֹּ֔ל וַיְהִ֖י לְמַס־עֹבֵֽד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>וירא מנחה כי טוב ואת־הארץ כי נעמה ויט שכמו לסבל ויהי למס־עבד׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Il a goûté le charme du repos et les délices du pâturage; et Il a livré son épaule au joug et Il est devenu tributaire.</p></div>
+    </div><div class="seif" id="v-49-16">
+      <span class="seif-num">49:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>דָּ֖ן יָדִ֣ין עַמּ֑וֹ כְּאַחַ֖ד שִׁבְטֵ֥י יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>דן ידין עמו כאחד שבטי ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Dan sera l’arbitre de son peuple, sous lui se grouperont les tribus d’Israël.</p></div>
+    </div><div class="seif" id="v-49-17">
+      <span class="seif-num">49:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>יְהִי־דָן֙ נָחָ֣שׁ עֲלֵי־דֶ֔רֶךְ שְׁפִיפֹ֖ן עֲלֵי־אֹ֑רַח הַנֹּשֵׁךְ֙ עִקְּבֵי־ס֔וּס וַיִּפֹּ֥ל רֹכְב֖וֹ אָחֽוֹר׃</p></div><div class="heb-s"><p>יהי־דן נחש עלי־דרך שפיפן עלי־ארח הנשך עקבי־סוס ויפל רכבו אחור׃</p></div></div>
+      <div class="texte-fr"><p>Il sera, Dan, un serpent sur le chemin, un aspic dans le sentier: il pique le pied du cheval et le cavalier tombe renversé.</p></div>
+    </div><div class="seif" id="v-49-18">
+      <span class="seif-num">49:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>לִישׁוּעָֽתְךָ֖ קִוִּ֥יתִי יְהֹוָֽה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>לישועתך קויתי יהוה׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>J’espère en ton assistance, Seigneur.</p></div>
+    </div><div class="seif" id="v-49-19">
+      <span class="seif-num">49:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>גָּ֖ד גְּד֣וּד יְגוּדֶ֑נּוּ וְה֖וּא יָגֻ֥ד עָקֵֽב׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>גד גדוד יגודנו והוא יגד עקב׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Gad sera assailli d’ennemis, mais il les assaillira à son tour.</p></div>
+    </div><div class="seif" id="v-49-20">
+      <span class="seif-num">49:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵאָשֵׁ֖ר שְׁמֵנָ֣ה לַחְמ֑וֹ וְה֥וּא יִתֵּ֖ן מַֽעֲדַנֵּי־מֶֽלֶךְ׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>מאשר שמנה לחמו והוא יתן מעדני־מלך׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Pour Asher, sa production sera abondante; c’est lui qui pourvoira aux jouissances des rois.</p></div>
+    </div><div class="seif" id="v-49-21">
+      <span class="seif-num">49:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>נַפְתָּלִ֖י אַיָּלָ֣ה שְׁלֻחָ֑ה הַנֹּתֵ֖ן אִמְרֵי־שָֽׁפֶר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div><div class="heb-s"><p>נפתלי אילה שלחה הנתן אמרי־שפר׃&nbsp;<span class="mam-spi-samekh">{ס}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></div>
+      <div class="texte-fr"><p>Nephtali est une biche qui s’élance; il apporte d’heureux messages.</p></div>
+    </div><div class="seif" id="v-49-22">
+      <span class="seif-num">49:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>בֵּ֤ן פֹּרָת֙ יוֹסֵ֔ף בֵּ֥ן פֹּרָ֖ת עֲלֵי־עָ֑יִן בָּנ֕וֹת צָעֲדָ֖ה עֲלֵי־שֽׁוּר׃</p></div><div class="heb-s"><p>בן פרת יוסף בן פרת עלי־עין בנות צעדה עלי־שור׃</p></div></div>
+      <div class="texte-fr"><p>C’est un rameau fertile que Joseph, un rameau fertile au bord d’une fontaine; il dépasse les autres rameaux le long de la muraille.</p></div>
+    </div><div class="seif" id="v-49-23">
+      <span class="seif-num">49:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַֽיְמָרְרֻ֖הוּ וָרֹ֑בּוּ וַֽיִּשְׂטְמֻ֖הוּ בַּעֲלֵ֥י חִצִּֽים׃</p></div><div class="heb-s"><p>וימררהו ורבו וישטמהו בעלי חצים׃</p></div></div>
+      <div class="texte-fr"><p>Ils l’ont exaspéré et frappé de leurs flèches; ils l’ont pris en haine, les fiers archers:</p></div>
+    </div><div class="seif" id="v-49-24">
+      <span class="seif-num">49:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַתֵּ֤שֶׁב בְּאֵיתָן֙ קַשְׁתּ֔וֹ וַיָּפֹ֖זּוּ זְרֹעֵ֣י יָדָ֑יו מִידֵי֙ אֲבִ֣יר יַעֲקֹ֔ב מִשָּׁ֥ם רֹעֶ֖ה אֶ֥בֶן יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ותשב באיתן קשתו ויפזו זרעי ידיו מידי אביר יעקב משם רעה אבן ישראל׃</p></div></div>
+      <div class="texte-fr"><p>mais son arc est resté plein de vigueur et les muscles de ses bras sont demeurés fermes grâce au Protecteur de Jacob, qui par là préparait la vie au rocher d’Israël;</p></div>
+    </div><div class="seif" id="v-49-25">
+      <span class="seif-num">49:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>מֵאֵ֨ל אָבִ֜יךָ וְיַעְזְרֶ֗ךָּ וְאֵ֤ת שַׁדַּי֙ וִיבָ֣רְכֶ֔ךָּ בִּרְכֹ֤ת שָׁמַ֙יִם֙ מֵעָ֔ל בִּרְכֹ֥ת תְּה֖וֹם רֹבֶ֣צֶת תָּ֑חַת בִּרְכֹ֥ת שָׁדַ֖יִם וָרָֽחַם׃</p></div><div class="heb-s"><p>מאל אביך ויעזרך ואת שדי ויברכך ברכת שמים מעל ברכת תהום רבצת תחת ברכת שדים ורחם׃</p></div></div>
+      <div class="texte-fr"><p>grâce au Dieu de ton père, qui sera ton appui et au Tout-Puissant, qui te bénira des bénédictions supérieures du ciel, des bénédictions souterraines de l’abîme, des bénédictions des mamelles et des entrailles! Les vœux de ton père,</p></div>
+    </div><div class="seif" id="v-49-26">
+      <span class="seif-num">49:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּרְכֹ֣ת אָבִ֗יךָ גָּֽבְרוּ֙ עַל־בִּרְכֹ֣ת הוֹרַ֔י עַֽד־תַּאֲוַ֖ת גִּבְעֹ֣ת עוֹלָ֑ם תִּֽהְיֶ֙יןָ֙ לְרֹ֣אשׁ יוֹסֵ֔ף וּלְקׇדְקֹ֖ד נְזִ֥יר אֶחָֽיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div><div class="heb-s"><p>ברכת אביך גברו על־ברכת הורי עד־תאות גבעת עולם תהיין לראש יוסף ולקדקד נזיר אחיו׃&nbsp;<span class="mam-spi-pe">{פ}</span><br></p></div></div>
+      <div class="texte-fr"><p>surpassant ceux de mes ancêtres, atteignent la limite des montagnes éternelles; ils s’accompliront sur la tête de Joseph, sur le front de l’Élu de ses frères!</p></div>
+    </div><div class="seif" id="v-49-27">
+      <span class="seif-num">49:27</span>
+      <div class="texte-heb"><div class="heb-n"><p>בִּנְיָמִין֙ זְאֵ֣ב יִטְרָ֔ף בַּבֹּ֖קֶר יֹ֣אכַל עַ֑ד וְלָעֶ֖רֶב יְחַלֵּ֥ק שָׁלָֽל׃</p></div><div class="heb-s"><p>בנימין זאב יטרף בבקר יאכל עד ולערב יחלק שלל׃</p></div></div>
+      <div class="texte-fr"><p>Benjamin est un loup ravisseur: le matin il s’assouvit de carnage, le soir il partagera le butin."</p></div>
+    </div><div class="seif" id="v-49-28">
+      <span class="seif-num">49:28</span>
+      <div class="texte-heb"><div class="heb-n"><p>כׇּל־אֵ֛לֶּה שִׁבְטֵ֥י יִשְׂרָאֵ֖ל שְׁנֵ֣ים עָשָׂ֑ר וְ֠זֹ֠את אֲשֶׁר־דִּבֶּ֨ר לָהֶ֤ם אֲבִיהֶם֙ וַיְבָ֣רֶךְ אוֹתָ֔ם אִ֛ישׁ אֲשֶׁ֥ר כְּבִרְכָת֖וֹ בֵּרַ֥ךְ אֹתָֽם׃</p></div><div class="heb-s"><p>כל־אלה שבטי ישראל שנים עשר וזאת אשר־דבר להם אביהם ויברך אותם איש אשר כברכתו ברך אתם׃</p></div></div>
+      <div class="texte-fr"><p>Tous ceux-là sont les douze tribus d’Israël; et c’est ainsi que leur père leur parla et les bénit, dispensant à chacun sa bénédiction propre.</p></div>
+    </div><div class="seif" id="v-49-29">
+      <span class="seif-num">49:29</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֣ו אוֹתָ֗ם וַיֹּ֤אמֶר אֲלֵהֶם֙ אֲנִי֙ נֶאֱסָ֣ף אֶל־עַמִּ֔י קִבְר֥וּ אֹתִ֖י אֶל־אֲבֹתָ֑י אֶ֨ל־הַמְּעָרָ֔ה אֲשֶׁ֥ר בִּשְׂדֵ֖ה עֶפְר֥וֹן הַֽחִתִּֽי׃</p></div><div class="heb-s"><p>ויצו אותם ויאמר אלהם אני נאסף אל־עמי קברו אתי אל־אבתי אל־המערה אשר בשדה עפרון החתי׃</p></div></div>
+      <div class="texte-fr"><p>Et il leur donna ses ordres en disant: "Je vais être réuni à mon peuple; ensevelissez-moi auprès de mes pères dans le caveau qui fait partie du domaine d’Éfrôn le Héthéen;</p></div>
+    </div><div class="seif" id="v-49-30">
+      <span class="seif-num">49:30</span>
+      <div class="texte-heb"><div class="heb-n"><p>בַּמְּעָרָ֞ה אֲשֶׁ֨ר בִּשְׂדֵ֧ה הַמַּכְפֵּלָ֛ה אֲשֶׁ֥ר עַל־פְּנֵי־מַמְרֵ֖א בְּאֶ֣רֶץ כְּנָ֑עַן אֲשֶׁר֩ קָנָ֨ה אַבְרָהָ֜ם אֶת־הַשָּׂדֶ֗ה מֵאֵ֛ת עֶפְרֹ֥ן הַחִתִּ֖י לַאֲחֻזַּת־קָֽבֶר׃</p></div><div class="heb-s"><p>במערה אשר בשדה המכפלה אשר על־פני־ממרא בארץ כנען אשר קנה אברהם את־השדה מאת עפרן החתי לאחזת־קבר׃</p></div></div>
+      <div class="texte-fr"><p>dans ce caveau qui appartient au territoire de Makhpêla, en face de Mamré, dans le pays de Canaan, territoire qu’Abraham acheta d’Éfrôn le Héthéen, comme sépulture héréditaire.</p></div>
+    </div><div class="seif" id="v-49-31">
+      <span class="seif-num">49:31</span>
+      <div class="texte-heb"><div class="heb-n"><p>שָׁ֣מָּה קָֽבְר֞וּ אֶת־אַבְרָהָ֗ם וְאֵת֙ שָׂרָ֣ה אִשְׁתּ֔וֹ שָׁ֚מָּה קָבְר֣וּ אֶת־יִצְחָ֔ק וְאֵ֖ת רִבְקָ֣ה אִשְׁתּ֑וֹ וְשָׁ֥מָּה קָבַ֖רְתִּי אֶת־לֵאָֽה׃</p></div><div class="heb-s"><p>שמה קברו את־אברהם ואת שרה אשתו שמה קברו את־יצחק ואת רבקה אשתו ושמה קברתי את־לאה׃</p></div></div>
+      <div class="texte-fr"><p>Là furent enterrés Abraham et Sara son épouse; là furent enterrés Isaac et Rébecca son épouse et là j’ai enterré Léa.</p></div>
+    </div><div class="seif" id="v-49-32">
+      <span class="seif-num">49:32</span>
+      <div class="texte-heb"><div class="heb-n"><p>מִקְנֵ֧ה הַשָּׂדֶ֛ה וְהַמְּעָרָ֥ה אֲשֶׁר־בּ֖וֹ מֵאֵ֥ת בְּנֵי־חֵֽת׃</p></div><div class="heb-s"><p>מקנה השדה והמערה אשר־בו מאת בני־חת׃</p></div></div>
+      <div class="texte-fr"><p>L’acquisition de ce territoire et du caveau qui s’y trouve a été faite chez les Héthéens."</p></div>
+    </div><div class="seif" id="v-49-33">
+      <span class="seif-num">49:33</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְכַ֤ל יַעֲקֹב֙ לְצַוֺּ֣ת אֶת־בָּנָ֔יו וַיֶּאֱסֹ֥ף רַגְלָ֖יו אֶל־הַמִּטָּ֑ה וַיִּגְוַ֖ע וַיֵּאָ֥סֶף אֶל־עַמָּֽיו׃</p></div><div class="heb-s"><p>ויכל יעקב לצות את־בניו ויאסף רגליו אל־המטה ויגוע ויאסף אל־עמיו׃</p></div></div>
+      <div class="texte-fr"><p>Jacob, ayant dicté à ses fils ses volontés dernières, ramena ses pieds dans sa couche; il expira et rejoignit ses pères.</p></div>
+    </div><div class="seif" id="v-50-1">
+      <span class="seif-num">50:1</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּפֹּ֥ל יוֹסֵ֖ף עַל־פְּנֵ֣י אָבִ֑יו וַיֵּ֥בְךְּ עָלָ֖יו וַיִּשַּׁק־לֽוֹ׃</p></div><div class="heb-s"><p>ויפל יוסף על־פני אביו ויבך עליו וישק־לו׃</p></div></div>
+      <div class="texte-fr"><p>Joseph se précipita sur le visage de son père et le couvrit de pleurs et de baisers.</p></div>
+    </div><div class="seif" id="v-50-2">
+      <span class="seif-num">50:2</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַ֨ו יוֹסֵ֤ף אֶת־עֲבָדָיו֙ אֶת־הָרֹ֣פְאִ֔ים לַחֲנֹ֖ט אֶת־אָבִ֑יו וַיַּחַנְט֥וּ הָרֹפְאִ֖ים אֶת־יִשְׂרָאֵֽל׃</p></div><div class="heb-s"><p>ויצו יוסף את־עבדיו את־הרפאים לחנט את־אביו ויחנטו הרפאים את־ישראל׃</p></div></div>
+      <div class="texte-fr"><p>Joseph ordonna aux médecins, ses serviteurs, d’embaumer son père; et les médecins embaumèrent Israël.</p></div>
+    </div><div class="seif" id="v-50-3">
+      <span class="seif-num">50:3</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּמְלְאוּ־לוֹ֙ אַרְבָּעִ֣ים י֔וֹם כִּ֛י כֵּ֥ן יִמְלְא֖וּ יְמֵ֣י הַחֲנֻטִ֑ים וַיִּבְכּ֥וּ אֹת֛וֹ מִצְרַ֖יִם שִׁבְעִ֥ים יֽוֹם׃</p></div><div class="heb-s"><p>וימלאו־לו ארבעים יום כי כן ימלאו ימי החנטים ויבכו אתו מצרים שבעים יום׃</p></div></div>
+      <div class="texte-fr"><p>On y employa quarante jours; car on emploie autant de jours pour ceux qu’on embaume. Les Égyptiens portèrent son deuil soixante-dix jours.</p></div>
+    </div><div class="seif" id="v-50-4">
+      <span class="seif-num">50:4</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּֽעַבְרוּ֙ יְמֵ֣י בְכִית֔וֹ וַיְדַבֵּ֣ר יוֹסֵ֔ף אֶל־בֵּ֥ית פַּרְעֹ֖ה לֵאמֹ֑ר אִם־נָ֨א מָצָ֤אתִי חֵן֙ בְּעֵ֣ינֵיכֶ֔ם דַּבְּרוּ־נָ֕א בְּאׇזְנֵ֥י פַרְעֹ֖ה לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויעברו ימי בכיתו וידבר יוסף אל־בית פרעה לאמר אם־נא מצאתי חן בעיניכם דברו־נא באזני פרעה לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Les jours de son deuil écoulés, Joseph parla ainsi aux gens de Pharaon: "De grâce, si j’ai trouvé faveur à vos yeux, veuillez porter aux oreilles de Pharaon ces paroles:</p></div>
+    </div><div class="seif" id="v-50-5">
+      <span class="seif-num">50:5</span>
+      <div class="texte-heb"><div class="heb-n"><p>אָבִ֞י הִשְׁבִּיעַ֣נִי לֵאמֹ֗ר הִנֵּ֣ה אָנֹכִי֮ מֵת֒ בְּקִבְרִ֗י אֲשֶׁ֨ר כָּרִ֤יתִי לִי֙ בְּאֶ֣רֶץ כְּנַ֔עַן שָׁ֖מָּה תִּקְבְּרֵ֑נִי וְעַתָּ֗ה אֶֽעֱלֶה־נָּ֛א וְאֶקְבְּרָ֥ה אֶת־אָבִ֖י וְאָשֽׁוּבָה׃</p></div><div class="heb-s"><p>אבי השביעני לאמר הנה אנכי מת בקברי אשר כריתי לי בארץ כנען שמה תקברני ועתה אעלה־נא ואקברה את־אבי ואשובה׃</p></div></div>
+      <div class="texte-fr"><p>Mon père m’a adjuré en ces termes: ‘Voici, je vais mourir; dans mon sépulcre, que j’ai acquis dans le pays de Canaan, là même tu m’enseveliras.’ Et maintenant, je voudrais partir, j’ensevelirai mon père et je reviendrai."</p></div>
+    </div><div class="seif" id="v-50-6">
+      <span class="seif-num">50:6</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֖אמֶר פַּרְעֹ֑ה עֲלֵ֛ה וּקְבֹ֥ר אֶת־אָבִ֖יךָ כַּאֲשֶׁ֥ר הִשְׁבִּיעֶֽךָ׃</p></div><div class="heb-s"><p>ויאמר פרעה עלה וקבר את־אביך כאשר השביעך׃</p></div></div>
+      <div class="texte-fr"><p>Pharaon répondit: "Pars et ensevelis ton père ainsi qu’il t’a adjuré."</p></div>
+    </div><div class="seif" id="v-50-7">
+      <span class="seif-num">50:7</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֥עַל יוֹסֵ֖ף לִקְבֹּ֣ר אֶת־אָבִ֑יו וַיַּֽעֲל֨וּ אִתּ֜וֹ כׇּל־עַבְדֵ֤י פַרְעֹה֙ זִקְנֵ֣י בֵית֔וֹ וְכֹ֖ל זִקְנֵ֥י אֶֽרֶץ־מִצְרָֽיִם׃</p></div><div class="heb-s"><p>ויעל יוסף לקבר את־אביו ויעלו אתו כל־עבדי פרעה זקני ביתו וכל זקני ארץ־מצרים׃</p></div></div>
+      <div class="texte-fr"><p>Joseph partit pour ensevelir son père. Il fut accompagné par tous les officiers de Pharaon qui avaient vieilli à sa cour, par tous les anciens du pays d’Égypte,</p></div>
+    </div><div class="seif" id="v-50-8">
+      <span class="seif-num">50:8</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְכֹל֙ בֵּ֣ית יוֹסֵ֔ף וְאֶחָ֖יו וּבֵ֣ית אָבִ֑יו רַ֗ק טַפָּם֙ וְצֹאנָ֣ם וּבְקָרָ֔ם עָזְב֖וּ בְּאֶ֥רֶץ גֹּֽשֶׁן׃</p></div><div class="heb-s"><p>וכל בית יוסף ואחיו ובית אביו רק טפם וצאנם ובקרם עזבו בארץ גשן׃</p></div></div>
+      <div class="texte-fr"><p>par toute la maison de Joseph, par ses frères et par la maison de son père. Leurs enfants seuls, avec leur menu et leur gros bétail, restèrent dans la province de Gessen.</p></div>
+    </div><div class="seif" id="v-50-9">
+      <span class="seif-num">50:9</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֣עַל עִמּ֔וֹ גַּם־רֶ֖כֶב גַּם־פָּרָשִׁ֑ים וַיְהִ֥י הַֽמַּחֲנֶ֖ה כָּבֵ֥ד מְאֹֽד׃</p></div><div class="heb-s"><p>ויעל עמו גם־רכב גם־פרשים ויהי המחנה כבד מאד׃</p></div></div>
+      <div class="texte-fr"><p>Il y eut à sa suite et des chars et des cavaliers; le convoi fut très considérable.</p></div>
+    </div><div class="seif" id="v-50-10">
+      <span class="seif-num">50:10</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּבֹ֜אוּ עַד־גֹּ֣רֶן הָאָטָ֗ד אֲשֶׁר֙ בְּעֵ֣בֶר הַיַּרְדֵּ֔ן וַיִּ֨סְפְּדוּ־שָׁ֔ם מִסְפֵּ֛ד גָּד֥וֹל וְכָבֵ֖ד מְאֹ֑ד וַיַּ֧עַשׂ לְאָבִ֛יו אֵ֖בֶל שִׁבְעַ֥ת יָמִֽים׃</p></div><div class="heb-s"><p>ויבאו עד־גרן האטד אשר בעבר הירדן ויספדו־שם מספד גדול וכבד מאד ויעש לאביו אבל שבעת ימים׃</p></div></div>
+      <div class="texte-fr"><p>Parvenus jusqu’à l’Aire-du-Buisson, située au bord du Jourdain, ils y célébrèrent de grandes et solennelles funérailles et Joseph ordonna en l’honneur de son père un deuil de sept jours.</p></div>
+    </div><div class="seif" id="v-50-11">
+      <span class="seif-num">50:11</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֡רְא יוֹשֵׁב֩ הָאָ֨רֶץ הַֽכְּנַעֲנִ֜י אֶת־הָאֵ֗בֶל בְּגֹ֙רֶן֙ הָֽאָטָ֔ד וַיֹּ֣אמְר֔וּ אֵֽבֶל־כָּבֵ֥ד זֶ֖ה לְמִצְרָ֑יִם עַל־כֵּ֞ן קָרָ֤א שְׁמָהּ֙ אָבֵ֣ל מִצְרַ֔יִם אֲשֶׁ֖ר בְּעֵ֥בֶר הַיַּרְדֵּֽן׃</p></div><div class="heb-s"><p>וירא יושב הארץ הכנעני את־האבל בגרן האטד ויאמרו אבל־כבד זה למצרים על־כן קרא שמה אבל מצרים אשר בעבר הירדן׃</p></div></div>
+      <div class="texte-fr"><p>L’habitant du pays, le Cananéen, vit ce deuil de l’Aire-du-Buisson et ils dirent: "Voilà un grand deuil pour l’Égypte!" C’est pourquoi on nomma Abêl-Miçrayim ce lieu situé de l’autre coté du Jourdain.</p></div>
+    </div><div class="seif" id="v-50-12">
+      <span class="seif-num">50:12</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּעֲשׂ֥וּ בָנָ֖יו ל֑וֹ כֵּ֖ן כַּאֲשֶׁ֥ר צִוָּֽם׃</p></div><div class="heb-s"><p>ויעשו בניו לו כן כאשר צום׃</p></div></div>
+      <div class="texte-fr"><p>Ses fils agirent à son égard, ponctuellement comme il leur avait enjoint:</p></div>
+    </div><div class="seif" id="v-50-13">
+      <span class="seif-num">50:13</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּשְׂא֨וּ אֹת֤וֹ בָנָיו֙ אַ֣רְצָה כְּנַ֔עַן וַיִּקְבְּר֣וּ אֹת֔וֹ בִּמְעָרַ֖ת שְׂדֵ֣ה הַמַּכְפֵּלָ֑ה אֲשֶׁ֣ר קָנָה֩ אַבְרָהָ֨ם אֶת־הַשָּׂדֶ֜ה לַאֲחֻזַּת־קֶ֗בֶר מֵאֵ֛ת עֶפְרֹ֥ן הַחִתִּ֖י עַל־פְּנֵ֥י מַמְרֵֽא׃</p></div><div class="heb-s"><p>וישאו אתו בניו ארצה כנען ויקברו אתו במערת שדה המכפלה אשר קנה אברהם את־השדה לאחזת־קבר מאת עפרן החתי על־פני ממרא׃</p></div></div>
+      <div class="texte-fr"><p>ils le transportèrent au pays de Canaan et l’inhumèrent dans le caveau du champ de Makhpêla, ce champ qu’Abraham avait acheté comme possession tumulaire à Éfrôn le Héthéen, en face de Mambré.</p></div>
+    </div><div class="seif" id="v-50-14">
+      <span class="seif-num">50:14</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֨שׇׁב יוֹסֵ֤ף מִצְרַ֙יְמָה֙ ה֣וּא וְאֶחָ֔יו וְכׇל־הָעֹלִ֥ים אִתּ֖וֹ לִקְבֹּ֣ר אֶת־אָבִ֑יו אַחֲרֵ֖י קׇבְר֥וֹ אֶת־אָבִֽיו׃</p></div><div class="heb-s"><p>וישב יוסף מצרימה הוא ואחיו וכל־העלים אתו לקבר את־אביו אחרי קברו את־אביו׃</p></div></div>
+      <div class="texte-fr"><p>Joseph, après avoir enseveli son père, retourna en Égypte avec ses frères et tous ceux qui l’avaient accompagné pour ensevelir son père.</p></div>
+    </div><div class="seif" id="v-50-15">
+      <span class="seif-num">50:15</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיִּרְא֤וּ אֲחֵֽי־יוֹסֵף֙ כִּי־מֵ֣ת אֲבִיהֶ֔ם וַיֹּ֣אמְר֔וּ ל֥וּ יִשְׂטְמֵ֖נוּ יוֹסֵ֑ף וְהָשֵׁ֤ב יָשִׁיב֙ לָ֔נוּ אֵ֚ת כׇּל־הָ֣רָעָ֔ה אֲשֶׁ֥ר גָּמַ֖לְנוּ אֹתֽוֹ׃</p></div><div class="heb-s"><p>ויראו אחי־יוסף כי־מת אביהם ויאמרו לו ישטמנו יוסף והשב ישיב לנו את כל־הרעה אשר גמלנו אתו׃</p></div></div>
+      <div class="texte-fr"><p>Or, les frères de Joseph, considérant que leur père était mort, se dirent: "Si Joseph nous prenait en haine! S’il allait nous rendre tout le mal que nous lui avons fait souffrir!"</p></div>
+    </div><div class="seif" id="v-50-16">
+      <span class="seif-num">50:16</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיְצַוּ֕וּ אֶל־יוֹסֵ֖ף לֵאמֹ֑ר אָבִ֣יךָ צִוָּ֔ה לִפְנֵ֥י מוֹת֖וֹ לֵאמֹֽר׃</p></div><div class="heb-s"><p>ויצוו אל־יוסף לאמר אביך צוה לפני מותו לאמר׃</p></div></div>
+      <div class="texte-fr"><p>Ils mandèrent à Joseph ce qui suit: "Ton père a commandé avant sa mort, en ces termes:</p></div>
+    </div><div class="seif" id="v-50-17">
+      <span class="seif-num">50:17</span>
+      <div class="texte-heb"><div class="heb-n"><p>כֹּֽה־תֹאמְר֣וּ לְיוֹסֵ֗ף אָ֣נָּ֡א שָׂ֣א נָ֠א פֶּ֣שַׁע אַחֶ֤יךָ וְחַטָּאתָם֙ כִּי־רָעָ֣ה גְמָל֔וּךָ וְעַתָּה֙ שָׂ֣א נָ֔א לְפֶ֥שַׁע עַבְדֵ֖י אֱלֹהֵ֣י אָבִ֑יךָ וַיֵּ֥בְךְּ יוֹסֵ֖ף בְּדַבְּרָ֥ם אֵלָֽיו׃</p></div><div class="heb-s"><p>כה־תאמרו ליוסף אנא שא נא פשע אחיך וחטאתם כי־רעה גמלוך ועתה שא נא לפשע עבדי אלהי אביך ויבך יוסף בדברם אליו׃</p></div></div>
+      <div class="texte-fr"><p>‘Parlez ainsi à Joseph: Oh! Pardonne, de grâce, l’offense de tes frères et leur faute et le mal qu’ils t’ont fait!’ Maintenant donc, pardonne leur tort aux serviteurs du Dieu de ton père!" Joseph pleura lorsqu’on lui parla ainsi.</p></div>
+    </div><div class="seif" id="v-50-18">
+      <span class="seif-num">50:18</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּלְכוּ֙ גַּם־אֶחָ֔יו וַֽיִּפְּל֖וּ לְפָנָ֑יו וַיֹּ֣אמְר֔וּ הִנֶּ֥נּֽוּ לְךָ֖ לַעֲבָדִֽים׃</p></div><div class="heb-s"><p>וילכו גם־אחיו ויפלו לפניו ויאמרו הננו לך לעבדים׃</p></div></div>
+      <div class="texte-fr"><p>Puis, ses frères vinrent eux-mêmes tomber à ses pieds, en disant: "Nous sommes prêts à devenir tes esclaves.</p></div>
+    </div><div class="seif" id="v-50-19">
+      <span class="seif-num">50:19</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֧אמֶר אֲלֵהֶ֛ם יוֹסֵ֖ף אַל־תִּירָ֑אוּ כִּ֛י הֲתַ֥חַת אֱלֹהִ֖ים אָֽנִי׃</p></div><div class="heb-s"><p>ויאמר אלהם יוסף אל־תיראו כי התחת אלהים אני׃</p></div></div>
+      <div class="texte-fr"><p>Joseph leur répondit: Soyez sans crainte; car suis-je à la place de Dieu?</p></div>
+    </div><div class="seif" id="v-50-20">
+      <span class="seif-num">50:20</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְאַתֶּ֕ם חֲשַׁבְתֶּ֥ם עָלַ֖י רָעָ֑ה אֱלֹהִים֙ חֲשָׁבָ֣הּ לְטֹבָ֔ה לְמַ֗עַן עֲשֹׂ֛ה כַּיּ֥וֹם הַזֶּ֖ה לְהַחֲיֹ֥ת עַם־רָֽב׃</p></div><div class="heb-s"><p>ואתם חשבתם עלי רעה אלהים חשבה לטבה למען עשה כיום הזה להחית עם־רב׃</p></div></div>
+      <div class="texte-fr"><p>Vous, vous aviez médité contre moi le mal: Dieu l’a combiné pour le bien, afin qu’il arrivât ce qui arrive aujourd’hui, qu’un peuple nombreux fût sauvé.</p></div>
+    </div><div class="seif" id="v-50-21">
+      <span class="seif-num">50:21</span>
+      <div class="texte-heb"><div class="heb-n"><p>וְעַתָּה֙ אַל־תִּירָ֔אוּ אָנֹכִ֛י אֲכַלְכֵּ֥ל אֶתְכֶ֖ם וְאֶֽת־טַפְּכֶ֑ם וַיְנַחֵ֣ם אוֹתָ֔ם וַיְדַבֵּ֖ר עַל־לִבָּֽם׃</p></div><div class="heb-s"><p>ועתה אל־תיראו אנכי אכלכל אתכם ואת־טפכם וינחם אותם וידבר על־לבם׃</p></div></div>
+      <div class="texte-fr"><p>Donc, soyez sans crainte: j’aurai soin de vous et de vos familles." Et il les rassura et il parla à leur cœur.</p></div>
+    </div><div class="seif" id="v-50-22">
+      <span class="seif-num">50:22</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֵּ֤שֶׁב יוֹסֵף֙ בְּמִצְרַ֔יִם ה֖וּא וּבֵ֣ית אָבִ֑יו וַיְחִ֣י יוֹסֵ֔ף מֵאָ֥ה וָעֶ֖שֶׂר שָׁנִֽים׃</p></div><div class="heb-s"><p>וישב יוסף במצרים הוא ובית אביו ויחי יוסף מאה ועשר שנים׃</p></div></div>
+      <div class="texte-fr"><p>Joseph demeura en Égypte, lui et la famille de son père et il vécut cent dix ans.</p></div>
+    </div><div class="seif" id="v-50-23">
+      <span class="seif-num">50:23</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּ֤רְא יוֹסֵף֙ לְאֶפְרַ֔יִם בְּנֵ֖י שִׁלֵּשִׁ֑ים גַּ֗ם בְּנֵ֤י מָכִיר֙ בֶּן־מְנַשֶּׁ֔ה יֻלְּד֖וּ עַל־בִּרְכֵּ֥י יוֹסֵֽף׃</p></div><div class="heb-s"><p>וירא יוסף לאפרים בני שלשים גם בני מכיר בן־מנשה ילדו על־ברכי יוסף׃</p></div></div>
+      <div class="texte-fr"><p>Il vit naître à Éphraïm des enfants de la troisième génération; de même les enfants de Makir, fils de Manassé, naquirent sur les genoux de Joseph.</p></div>
+    </div><div class="seif" id="v-50-24">
+      <span class="seif-num">50:24</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיֹּ֤אמֶר יוֹסֵף֙ אֶל־אֶחָ֔יו אָנֹכִ֖י מֵ֑ת וֵֽאלֹהִ֞ים פָּקֹ֧ד יִפְקֹ֣ד אֶתְכֶ֗ם וְהֶעֱלָ֤ה אֶתְכֶם֙ מִן־הָאָ֣רֶץ הַזֹּ֔את אֶל־הָאָ֕רֶץ אֲשֶׁ֥ר נִשְׁבַּ֛ע לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹֽב׃</p></div><div class="heb-s"><p>ויאמר יוסף אל־אחיו אנכי מת ואלהים פקד יפקד אתכם והעלה אתכם מן־הארץ הזאת אל־הארץ אשר נשבע לאברהם ליצחק וליעקב׃</p></div></div>
+      <div class="texte-fr"><p>Joseph dit à ses frères: "Je vais mourir. Sachez que le Seigneur vous visitera et vous ramènera de ce pays dans celui qu’il a promis par serment à Abraham, à Isaac et à Jacob."</p></div>
+    </div><div class="seif" id="v-50-25">
+      <span class="seif-num">50:25</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיַּשְׁבַּ֣ע יוֹסֵ֔ף אֶת־בְּנֵ֥י יִשְׂרָאֵ֖ל לֵאמֹ֑ר פָּקֹ֨ד יִפְקֹ֤ד אֱלֹהִים֙ אֶתְכֶ֔ם וְהַעֲלִתֶ֥ם אֶת־עַצְמֹתַ֖י מִזֶּֽה׃</p></div><div class="heb-s"><p>וישבע יוסף את־בני ישראל לאמר פקד יפקד אלהים אתכם והעלתם את־עצמתי מזה׃</p></div></div>
+      <div class="texte-fr"><p>Et Joseph adjura les enfants d’Israël en disant: "Oui, le Seigneur vous visitera et alors vous emporterez mes ossements de ce pays."</p></div>
+    </div><div class="seif" id="v-50-26">
+      <span class="seif-num">50:26</span>
+      <div class="texte-heb"><div class="heb-n"><p>וַיָּ֣מׇת יוֹסֵ֔ף בֶּן־מֵאָ֥ה וָעֶ֖שֶׂר שָׁנִ֑ים וַיַּחַנְט֣וּ אֹת֔וֹ וַיִּ֥ישֶׂם בָּאָר֖וֹן בְּמִצְרָֽיִם׃</p></div><div class="heb-s"><p>וימת יוסף בן־מאה ועשר שנים ויחנטו אתו ויישם בארון במצרים׃</p></div></div>
+      <div class="texte-fr"><p>Joseph mourut âgé de cent dix ans; on l’embauma et il fut déposé dans un cercueil en Égypte.</p></div>
     </div>
-    <div class="texte-fr masque" id="txt-fr">
-      <p>Jacob vécut dans le pays d’Égypte dix sept ans; la durée de la vie de Jacob fut donc de cent quarante-sept années. Les jours d’Israël approchant de leur terme, il manda son fils Joseph et lui dit: &quot;Si tu as quelque affection pour moi, mets, je te prie, ta main sous ma hanche pour attester que tu agiras envers moi avec bonté et fidélité, en ne m’ensevelissant point en Egypte. Quand je dormirai avec mes pères, tu me transporteras hors de l’Égypte et tu m’enseveliras dans leur sépulcre.&quot; Il répondit: &quot;Je ferai selon ta parole.&quot; Il reprit: &quot;Jure-le-moi&quot; et il le lui jura; et Israël s’inclina sur le chevet du lit.</p>
-      <p>Il arriva, après ces faits, qu’on dit à Joseph: &quot;Ton père est malade.&quot; Et il partit emmenant ses deux fils, Manassé et Éphraïm. On l’annonça à Jacob, en disant: &quot;Voici que ton fils Joseph vient te voir.&quot; Israël recueillit ses forces et s’assit sur le lit. Et Jacob dit à Joseph: &quot;Le Dieu tout-puissant m’est apparu à Louz, au pays de Canaan et m’a béni. Il m’a dit: ‘Je veux te faire croître et fructifier et je te ferai devenir une multitude de peuples; et je donnerai ce pays à te postérité ultérieure, comme possession perpétuelle.’ Eh bien! Tes deux fils, qui te sont nés au pays d’Égypte avant que je vinsse auprès de toi en Égypte, deviennent les miens; non moins que Ruben et Siméon, Éphraïm et Manassé seront à moi. Quant aux enfants que tu engendrerais après eux, ils te seront attribués: ils s’appelleront du nom de leurs frères, à l’égard de leur héritage. Pour moi, quand je revins du territoire d’Aram, Rachel mourut dans mes bras au pays de Canaan pendant le voyage, lorsqu’une kibra de pays me séparait encore d’Éphrath; je l’inhumai là, sur le chemin d’Éphrath, qui est Bethléem.&quot; Israël remarqua les enfants de Joseph et il dit: &quot;Qui sont ceux-là?&quot; Joseph répondit à son père: &quot;Ce sont mes fils, que Dieu m’a donnés dans ce pays.&quot; Jacob reprit: &quot;Approche-les de moi, je te prie, que je les bénisse.&quot; Or, les yeux d’Israël, appesantis par la vieillesse, ne pouvaient plus bien voir. Il fit approcher de lui ces jeunes gens, leur donna des baisers, les pressa dans ses bras; et Israël dit à Joseph: &quot;Je ne comptais pas revoir ton visage et voici que Dieu m’a fait voir jusqu’à ta postérité&quot;. Joseph les retira d’entre ses genoux et se prosterna devant lui jusqu’à terre. Puis Joseph les prit tous deux, Éphraïm de la main droite, à gauche d’Israël et Manassé de la main gauche, à droite d’Israël; et il les fit avancer vers lui. Israël étendit la main droite, l’imposa sur la tête d’Éphraïm, qui était le plus jeune et mit sa main gauche sur la tête de Manassé; il croisa ses mains, quoique Manassé fut l’aîné. Il bénit Joseph, puis dit: &quot;Que la Divinité dont mes pères, Abraham et Isaac, ont suivi les voies; que la Divinité qui a veillé sur moi depuis ma naissance jusqu’à ce jour; que l’ange qui m’a délivré de tout mal, bénisse ces jeunes gens! Puisse-t-il perpétuer mon nom et le nom de mes pères Abraham et Isaac! Puisse-t-il multiplier à l’infini au milieu de la contrée.&quot; Joseph remarqua que son père posait sa main droite sur la tête d’Éphraïm et cela lui déplut; il souleva la main de son père pour la faire passer de la tête d’Éphraïm sur la tête de Manassé et il dit à son père: &quot;Pas ainsi, mon père! Puisque celui-ci est l’aîné, mets ta main droite sur sa tête.&quot; Son père s’y refusa et dit: &quot;Je le sais, mon fils, je le sais; lui aussi deviendra un peuple et lui aussi sera grand: mais son jeune frère sera plus grand que lui et sa postérité formera plusieurs nations.&quot; Il les bénit alors et il dit: &quot;Israël te nommera dans ses bénédictions, en disant: Dieu te fasse devenir comme Éphraïm et Manassé!&quot; Il plaça ainsi Éphraïm avant Manassé. Israël dit à Joseph: &quot;Voici, je vais mourir. Dieu sera avec vous et il vous ramènera au pays de vos aïeux. Or, je te promets une portion supérieure à celle de tes frères, portion conquise sur l’Amorréen, à l’aide de mon épée et de mon arc.&quot;</p>
-      <p>Jacob fit venir ses fils et il dit: &quot;Rassemblez-vous, je veux vous révéler ce qui vous arrivera dans la suite des jours. Pressez-vous pour écouter, enfants de Jacob, pour écouter Israël votre Père. Ruben! Tu fus mon premier-né, mon orgueil et les prémices de ma vigueur: le premier en dignité, le premier en puissance. Impétueux comme l’onde, tu as perdu ta noblesse! Car tu as attenté au lit paternel, tu as flétri l’honneur de ma couche. Siméon et Lévi! Digne couple de frères; leurs armes sont des instruments de violence. Ne t’associe point à leurs desseins, ô mon âme! Mon honneur, ne sois pas complice de leur alliance! Car, dans leur colère, ils ont immolé des hommes et pour leur passion ils ont frappé des taureaux. Maudite soit leur colère, car elle fut malfaisante et leur indignation, car elle a été funeste! Je veux les séparer dans Jacob, les disperser en Israël. Pour toi, Juda, tes frères te rendront hommage; ta main fera ployer le cou de tes ennemis; les enfants de ton père s’inclineront devant toi! Tu es un jeune lion, Juda, quand tu reviens, ô mon fils, avec ta capture! Il se couche; c’est le repos du lion et du léopard; qui oserait le réveiller? Le sceptre n’échappera point à Juda, ni l’autorité à sa descendance, jusqu’à l’avènement du Pacifique auquel obéiront les peuples. Alors on attachera son ânon à la vigne, et à la treille le fils de son ânesse: on lavera son vêtement dans le vin, et dans le sang des raisins sa tunique; les yeux seront pétillants de vin et les dents toutes blanches de lait. Zabulon occupera le littoral des mers; il offrira des ports aux vaisseaux et sa plage atteindra Sidon. Issachar est un âne musculeux qui se couche entre les collines. Il a goûté le charme du repos et les délices du pâturage; et Il a livré son épaule au joug et Il est devenu tributaire. Dan sera l’arbitre de son peuple, sous lui se grouperont les tribus d’Israël. Il sera, Dan, un serpent sur le chemin, un aspic dans le sentier: il pique le pied du cheval et le cavalier tombe renversé. J’espère en ton assistance, Seigneur. Gad sera assailli d’ennemis, mais il les assaillira à son tour. Pour Asher, sa production sera abondante; c’est lui qui pourvoira aux jouissances des rois. Nephtali est une biche qui s’élance; il apporte d’heureux messages. C’est un rameau fertile que Joseph, un rameau fertile au bord d’une fontaine; il dépasse les autres rameaux le long de la muraille. Ils l’ont exaspéré et frappé de leurs flèches; ils l’ont pris en haine, les fiers archers: mais son arc est resté plein de vigueur et les muscles de ses bras sont demeurés fermes grâce au Protecteur de Jacob, qui par là préparait la vie au rocher d’Israël; grâce au Dieu de ton père, qui sera ton appui et au Tout-Puissant, qui te bénira des bénédictions supérieures du ciel, des bénédictions souterraines de l’abîme, des bénédictions des mamelles et des entrailles! Les vœux de ton père, surpassant ceux de mes ancêtres, atteignent la limite des montagnes éternelles; ils s’accompliront sur la tête de Joseph, sur le front de l’Élu de ses frères! Benjamin est un loup ravisseur: le matin il s’assouvit de carnage, le soir il partagera le butin.&quot; Tous ceux-là sont les douze tribus d’Israël; et c’est ainsi que leur père leur parla et les bénit, dispensant à chacun sa bénédiction propre. Et il leur donna ses ordres en disant: &quot;Je vais être réuni à mon peuple; ensevelissez-moi auprès de mes pères dans le caveau qui fait partie du domaine d’Éfrôn le Héthéen; dans ce caveau qui appartient au territoire de Makhpêla, en face de Mamré, dans le pays de Canaan, territoire qu’Abraham acheta d’Éfrôn le Héthéen, comme sépulture héréditaire. Là furent enterrés Abraham et Sara son épouse; là furent enterrés Isaac et Rébecca son épouse et là j’ai enterré Léa. L’acquisition de ce territoire et du caveau qui s’y trouve a été faite chez les Héthéens.&quot; Jacob, ayant dicté à ses fils ses volontés dernières, ramena ses pieds dans sa couche; il expira et rejoignit ses pères.</p>
-      <p>Joseph se précipita sur le visage de son père et le couvrit de pleurs et de baisers. Joseph ordonna aux médecins, ses serviteurs, d’embaumer son père; et les médecins embaumèrent Israël. On y employa quarante jours; car on emploie autant de jours pour ceux qu’on embaume. Les Égyptiens portèrent son deuil soixante-dix jours. Les jours de son deuil écoulés, Joseph parla ainsi aux gens de Pharaon: &quot;De grâce, si j’ai trouvé faveur à vos yeux, veuillez porter aux oreilles de Pharaon ces paroles: Mon père m’a adjuré en ces termes: ‘Voici, je vais mourir; dans mon sépulcre, que j’ai acquis dans le pays de Canaan, là même tu m’enseveliras.’ Et maintenant, je voudrais partir, j’ensevelirai mon père et je reviendrai.&quot; Pharaon répondit: &quot;Pars et ensevelis ton père ainsi qu’il t’a adjuré.&quot; Joseph partit pour ensevelir son père. Il fut accompagné par tous les officiers de Pharaon qui avaient vieilli à sa cour, par tous les anciens du pays d’Égypte, par toute la maison de Joseph, par ses frères et par la maison de son père. Leurs enfants seuls, avec leur menu et leur gros bétail, restèrent dans la province de Gessen. Il y eut à sa suite et des chars et des cavaliers; le convoi fut très considérable. Parvenus jusqu’à l’Aire-du-Buisson, située au bord du Jourdain, ils y célébrèrent de grandes et solennelles funérailles et Joseph ordonna en l’honneur de son père un deuil de sept jours. L’habitant du pays, le Cananéen, vit ce deuil de l’Aire-du-Buisson et ils dirent: &quot;Voilà un grand deuil pour l’Égypte!&quot; C’est pourquoi on nomma Abêl-Miçrayim ce lieu situé de l’autre coté du Jourdain. Ses fils agirent à son égard, ponctuellement comme il leur avait enjoint: ils le transportèrent au pays de Canaan et l’inhumèrent dans le caveau du champ de Makhpêla, ce champ qu’Abraham avait acheté comme possession tumulaire à Éfrôn le Héthéen, en face de Mambré. Joseph, après avoir enseveli son père, retourna en Égypte avec ses frères et tous ceux qui l’avaient accompagné pour ensevelir son père. Or, les frères de Joseph, considérant que leur père était mort, se dirent: &quot;Si Joseph nous prenait en haine! S’il allait nous rendre tout le mal que nous lui avons fait souffrir!&quot; Ils mandèrent à Joseph ce qui suit: &quot;Ton père a commandé avant sa mort, en ces termes: ‘Parlez ainsi à Joseph: Oh! Pardonne, de grâce, l’offense de tes frères et leur faute et le mal qu’ils t’ont fait!’ Maintenant donc, pardonne leur tort aux serviteurs du Dieu de ton père!&quot; Joseph pleura lorsqu’on lui parla ainsi. Puis, ses frères vinrent eux-mêmes tomber à ses pieds, en disant: &quot;Nous sommes prêts à devenir tes esclaves. Joseph leur répondit: Soyez sans crainte; car suis-je à la place de Dieu? Vous, vous aviez médité contre moi le mal: Dieu l’a combiné pour le bien, afin qu’il arrivât ce qui arrive aujourd’hui, qu’un peuple nombreux fût sauvé. Donc, soyez sans crainte: j’aurai soin de vous et de vos familles.&quot; Et il les rassura et il parla à leur cœur. Joseph demeura en Égypte, lui et la famille de son père et il vécut cent dix ans. Il vit naître à Éphraïm des enfants de la troisième génération; de même les enfants de Makir, fils de Manassé, naquirent sur les genoux de Joseph. Joseph dit à ses frères: &quot;Je vais mourir. Sachez que le Seigneur vous visitera et vous ramènera de ce pays dans celui qu’il a promis par serment à Abraham, à Isaac et à Jacob.&quot; Et Joseph adjura les enfants d’Israël en disant: &quot;Oui, le Seigneur vous visitera et alors vous emporterez mes ossements de ce pays.&quot; Joseph mourut âgé de cent dix ans; on l’embauma et il fut déposé dans un cercueil en Égypte.</p>
-      
-      
-    </div>
-  </div>
 </div>
+
 </div>
 
 <div class="sec" id="s-t2">
@@ -343,6 +711,7 @@ fetch('../pub.html').then(r => r.ok ? r.text() : '').then(html => {
 <p>Rachi (48:2) déduit du comportement de Yaakov envers Yossef que l'on doit un honneur particulier à la royauté, même quand le roi est son propre fils. Le Talmud (Berakhot 58a) mentionne d'ailleurs une bénédiction que l'on dit en voyant un roi non juif.</p></div>
 </div>
 
+<div class="nav-bas"><a class="hbtn" href="paracha_vayigash.html">← Vayigash</a><a class="hbtn qcm" href="qcm_paracha_vayechi.html">📝 Faire le QCM</a><a class="hbtn" href="index.html">☰ Toutes les parachiot</a><a class="hbtn" href="paracha_shemot-paracha.html">Chemot →</a></div>
 </main>
 
 <footer>
